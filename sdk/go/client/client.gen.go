@@ -15072,7 +15072,7 @@ type StatusIngressResult struct {
 
 // StatusMonitor defines model for StatusMonitor.
 type StatusMonitor struct {
-	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	// CertExpiresAt `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
 	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
 
 	// ComponentId The component whose state the monitor sets.
@@ -15205,7 +15205,7 @@ type StatusMonitorFailureState string
 type StatusMonitorHTTP struct {
 	Body *string `json:"body,omitempty"`
 
-	// CertWarnDays For https, a certificate expiring within this many days fails the check; 0 checks only that it is valid.
+	// CertWarnDays For https, a certificate of the URL's own host expiring within this many days fails the check; 0 checks only that it is valid.
 	CertWarnDays      int32 `json:"cert_warn_days"`
 	ExpectedStatusMax int32 `json:"expected_status_max"`
 	ExpectedStatusMin int32 `json:"expected_status_min"`
@@ -15293,7 +15293,7 @@ type StatusMonitorState string
 
 // StatusMonitorTCP defines model for StatusMonitorTCP.
 type StatusMonitorTCP struct {
-	// Host A host name or an IP address.
+	// Host A host name or an IP address (IPv6 without brackets), without a port.
 	Host string `json:"host"`
 	Port int32  `json:"port"`
 }
@@ -15318,7 +15318,7 @@ type StatusMonitorUpdate struct {
 
 // StatusMonitorWithToken defines model for StatusMonitorWithToken.
 type StatusMonitorWithToken struct {
-	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	// CertExpiresAt `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
 	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
 
 	// ComponentId The component whose state the monitor sets.
@@ -29519,9 +29519,10 @@ type ClientInterface interface {
 	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-	// failures are dropped and change nothing.
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+	// all fail, while they answered within the last hour, is the server's own trouble: its failures
+	// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+	// of a redirect target.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
 	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -29560,9 +29561,10 @@ type ClientInterface interface {
 	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-	// failures are dropped and change nothing.
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+	// all fail, while they answered within the last hour, is the server's own trouble: its failures
+	// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+	// of a redirect target.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
 	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -40663,9 +40665,10 @@ func (c *Client) ListStatusMonitors(ctx context.Context, pageId StatusPageId, pa
 // a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 // cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 // with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-// failures are dropped and change nothing.
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+// all fail, while they answered within the last hour, is the server's own trouble: its failures
+// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+// of a redirect target.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
 // `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -40714,9 +40717,10 @@ func (c *Client) CreateStatusMonitorWithBody(ctx context.Context, pageId StatusP
 // a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 // cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 // with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-// failures are dropped and change nothing.
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+// all fail, while they answered within the last hour, is the server's own trouble: its failures
+// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+// of a redirect target.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
 // `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -69813,9 +69817,10 @@ type ClientWithResponsesInterface interface {
 	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-	// failures are dropped and change nothing.
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+	// all fail, while they answered within the last hour, is the server's own trouble: its failures
+	// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+	// of a redirect target.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
 	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -69854,9 +69859,10 @@ type ClientWithResponsesInterface interface {
 	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-	// failures are dropped and change nothing.
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+	// all fail, while they answered within the last hour, is the server's own trouble: its failures
+	// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+	// of a redirect target.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
 	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -103270,9 +103276,10 @@ func (c *ClientWithResponses) ListStatusMonitorsWithResponse(ctx context.Context
 // a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 // cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 // with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-// failures are dropped and change nothing.
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+// all fail, while they answered within the last hour, is the server's own trouble: its failures
+// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+// of a redirect target.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
 // `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -103317,9 +103324,10 @@ func (c *ClientWithResponses) CreateStatusMonitorWithBodyWithResponse(ctx contex
 // a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
 // cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
 // with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-// which more than half of the checks (at least 10) fail, is the server's own trouble: its
-// failures are dropped and change nothing.
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+// all fail, while they answered within the last hour, is the server's own trouble: its failures
+// are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+// of a redirect target.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
 // `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2

@@ -59,8 +59,9 @@ type StatusSettings struct {
 	MaxSubscribers int
 	// MinInterval is the shortest interval of http and tcp monitors in seconds, at least 60.
 	MinInterval int
-	// CanaryURLs are checked every round; nil checks the built-in two.
-	CanaryURLs []string
+	// CanaryURLs are checked when a round has failures; nil checks the built-in two.
+	CanaryURLs  []string
+	CanariesOff bool
 	// AllowPrivate lets http and tcp monitors reach private and loopback addresses (a self-hosted
 	// server with YUVA_WEBHOOK_ALLOW_PRIVATE); link-local and metadata addresses stay refused.
 	AllowPrivate bool

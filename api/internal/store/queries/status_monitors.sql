@@ -105,18 +105,26 @@ SELECT EXISTS (SELECT 1 FROM status_monitors WHERE check_at IS NOT NULL AND NOT 
 
 -- name: ClaimDueStatusChecks :many
 -- The documented exception: the sweep claims the outside checks due before until in every workspace
--- at once and moves each to its next slot, interval apart at an offset its id spreads over the interval.
-UPDATE status_monitors m SET check_at = to_timestamp(
-    (floor((date_part('epoch', @until::timestamptz) - d.phase) / m.interval_seconds) + 1) * m.interval_seconds + d.phase)
-FROM (
-    SELECT c.workspace_id, c.id, c.check_at AS due, mod(abs(hashtext(c.id::text)::bigint), c.interval_seconds) AS phase
+-- at once, oldest first while their timeouts fit in budget seconds, and moves each to its next slot,
+-- interval apart at an offset its id spreads over the interval.
+WITH due AS (
+    SELECT c.workspace_id, c.id, c.check_at, c.timeout_seconds
     FROM status_monitors c
     WHERE c.check_at IS NOT NULL AND NOT c.paused AND c.check_at < @until::timestamptz
-    ORDER BY c.check_at
-    LIMIT 2000
-    FOR UPDATE SKIP LOCKED) d
-WHERE m.workspace_id = d.workspace_id AND m.id = d.id
-RETURNING m.workspace_id, m.id, d.due::timestamptz AS due;
+    ORDER BY c.check_at, c.id
+    LIMIT @budget::int
+    FOR UPDATE SKIP LOCKED
+), fit AS (
+    SELECT due.workspace_id, due.id, due.check_at,
+        sum(coalesce(due.timeout_seconds, 30)) OVER (ORDER BY due.check_at, due.id) AS load
+    FROM due
+)
+UPDATE status_monitors m SET check_at = to_timestamp(
+    (floor((date_part('epoch', @until::timestamptz) - mod(abs(hashtext(m.id::text)::bigint), m.interval_seconds)) / m.interval_seconds) + 1)
+        * m.interval_seconds + mod(abs(hashtext(m.id::text)::bigint), m.interval_seconds))
+FROM fit
+WHERE m.workspace_id = fit.workspace_id AND m.id = fit.id AND fit.load <= @budget::int
+RETURNING m.workspace_id, m.id, fit.check_at::timestamptz AS due;
 
 -- name: CreatePendingStatusCheck :exec
 INSERT INTO status_checks (id, workspace_id, monitor_id, at, ok, source, error, duration_ms, status_code, round_id, pending)
@@ -124,7 +132,11 @@ VALUES (@id, @workspace_id, @monitor_id, @at, @ok, @source, sqlc.narg(error), sq
 
 -- name: ListRoundStatusChecks :many
 -- The documented exception: a round is judged over the checks of every workspace it ran.
-SELECT workspace_id, id, monitor_id, ok, source, error FROM status_checks WHERE round_id = @round_id AND pending ORDER BY at, id;
+SELECT workspace_id, id, monitor_id, ok, source, error, round_dropped FROM status_checks WHERE round_id = @round_id AND pending ORDER BY at, id;
+
+-- name: DecideStatusRound :exec
+-- The documented exception: a round's judgement is stored on its checks in every workspace.
+UPDATE status_checks SET round_dropped = @dropped WHERE round_id = @round_id AND pending AND round_dropped IS NULL;
 
 -- name: FinishStatusCheck :execrows
 UPDATE status_checks SET pending = false, state = sqlc.narg(state)

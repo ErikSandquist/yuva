@@ -1562,19 +1562,20 @@ type Session struct {
 }
 
 type StatusCheck struct {
-	ID          uuid.UUID
-	WorkspaceID uuid.UUID
-	MonitorID   uuid.UUID
-	At          time.Time
-	Ok          bool
-	Source      string
-	State       *string
-	Message     *string
-	Error       *string
-	DurationMs  *int32
-	StatusCode  *int32
-	RoundID     *uuid.UUID
-	Pending     bool
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	MonitorID    uuid.UUID
+	At           time.Time
+	Ok           bool
+	Source       string
+	State        *string
+	Message      *string
+	Error        *string
+	DurationMs   *int32
+	StatusCode   *int32
+	RoundID      *uuid.UUID
+	Pending      bool
+	RoundDropped *bool
 }
 
 type StatusComponent struct {

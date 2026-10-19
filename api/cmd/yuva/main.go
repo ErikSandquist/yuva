@@ -266,7 +266,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		Analytics: analyticsSettings(cfg),
 		SES:       sesSettings(cfg),
 		Status: api.StatusSettings{URL: cfg.StatusURL, Monitors: cfg.StatusMonitors, NoticesOff: !cfg.StatusNotices, NoticesDaily: cfg.StatusNoticesDaily, MaxSubscribers: cfg.StatusMaxSubscribers,
-			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen},
+			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, CanariesOff: cfg.StatusCanariesOff, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen},
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")

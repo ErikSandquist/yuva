@@ -27,3 +27,9 @@ func SetStatusReplyBatchSize(n int) (restore func()) {
 func (s *Server) ManageURL(ws, list, contact uuid.UUID) string {
 	return s.manageURL(ws, list, contact, uuid.Nil())
 }
+
+func SetStatusClaimBudget(n int32) (restore func()) {
+	old := claimBudget
+	claimBudget = n
+	return func() { claimBudget = old }
+}

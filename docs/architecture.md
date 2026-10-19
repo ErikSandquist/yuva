@@ -2152,8 +2152,10 @@ incident before a customer writes, and the conversations an outage brings are an
     300 with `YUVA_SIGNUP=open`) and expects a status range, optionally a keyword in the first 64 KiB, an
     answer within `timeout` (at most 30 seconds) and, for https, a certificate valid for more than
     `cert_warn_days` (default 14; a certificate expiring sooner fails the check, it does not degrade).
+    The certificate is the one of the monitored URL's own host, never of a redirect target.
     Header names are returned, values never; a redirect to another host drops the monitor's headers.
-  - `tcp`: a connection to host and port within `timeout`.
+  - `tcp`: a connection to host and port within `timeout`. The host is a name or an IP address, an
+    IPv6 address bare (no brackets); a host with a port or brackets is refused, the port is its own field.
   Outside checks follow the webhook rules for outbound requests (resolve once, refuse loopback, private,
   link-local, CGNAT and reserved addresses, connect to the resolved address, no proxy; redirects are
   followed only when the monitor allows it, at most 5, each hop checked again), with
@@ -2179,17 +2181,28 @@ incident before a customer writes, and the conversations an outage brings are an
   for subscribers `YUVA_STATUS_NOTICES` (`on|off`), `YUVA_STATUS_NOTICES_DAILY` and
   `YUVA_STATUS_MAX_SUBSCRIBERS` (see Subscribers).
   Checks run from the server's own place and a multi-location check is not planned, so the server
-  tells its own trouble from its customers': each round also checks `YUVA_STATUS_CANARY_URLS` (unset:
+  tells its own trouble from its customers' with canaries alone: `YUVA_STATUS_CANARY_URLS` (unset:
   `https://www.google.com/generate_204` and `https://www.cloudflare.com/cdn-cgi/trace`; any answer
-  counts) and, when every canary fails or more than half of the round's outside
-  checks fail (at least 10 of them), the round's failures are dropped, no state changes, the operator
-  gets a log line and the `yuva_status_rounds_dropped_total` metric (`reason` `canaries` or
-  `majority`). A round is one sweep: it claims the checks due in the next 30 seconds, keeps their
-  results pending in `status_checks` and judges them together after the last can have finished; a
-  round's successes always count. The sweep, the claim and the judging read across workspaces (the
-  documented exception, like the overdue-beat sweep) and act on each monitor in its workspace; heartbeats and pushes are not
-  affected by this, but a heartbeat whose beats stop while the server itself was not taking requests
-  (its own start within the grace) waits one more interval.
+  counts; `off` turns the guard off). How many checks fail never decides it, since across workspaces
+  one tenant's failing monitors would erase another's real outage and within one it would hide a
+  shared backend dying. The canaries are probed only when a round has a failure, and their verdict
+  is kept for 60 seconds. The guard is armed only while the canaries answered at least once in the last
+  hour: then a round whose canaries all fail has its failures dropped, no state changes, the operator
+  gets a log line and the `yuva_status_rounds_dropped_total` metric. Canaries that have not answered
+  for an hour (a firewalled or offline server) leave the guard off, failures count, and the server
+  logs once an hour that the canaries are unreachable and `YUVA_STATUS_CANARY_URLS` should name URLs
+  it can reach or be `off`. A round is one sweep: it claims the checks due in the next 30 seconds,
+  oldest first, as long as their timeouts add up to no more than the check queue's workers can run
+  before the round's deadline (20 workers × 40 seconds), so the rest wait for the next sweep instead
+  of starting late; it keeps their results pending in `status_checks` and judges them together after
+  the last can have finished. The judgement is stored on the round's checks (`round_dropped`) before
+  any is applied, so a retried judging applies the same one; a round's successes always count. A
+  check that still starts too late to finish by its round's deadline runs anyway and is judged at once
+  in a round of its own, by the same rule, so no monitor goes unchecked. The sweep, the claim and the
+  judging read across workspaces (the documented exception, like the overdue-beat sweep) and act on
+  each monitor in its workspace; heartbeats and pushes are not affected by this, but a heartbeat whose
+  beats stop while the server itself was not taking requests (its own start within the grace) waits
+  one more interval.
 - **Support.** `GET /client/v1/channels/{key}`, the client session and the realtime `inbox.updated` carry `status` on the
   inbox: the page URL, the overall state and the open published incidents and running maintenance (id,
   title, impact, state, last update, URL). The widget and the Swift and Kotlin SDKs show a dismissible

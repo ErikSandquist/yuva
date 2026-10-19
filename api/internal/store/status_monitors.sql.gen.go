@@ -25,18 +25,30 @@ func (q *Queries) AnyDueStatusChecks(ctx context.Context, until time.Time) (bool
 }
 
 const claimDueStatusChecks = `-- name: ClaimDueStatusChecks :many
-UPDATE status_monitors m SET check_at = to_timestamp(
-    (floor((date_part('epoch', $1::timestamptz) - d.phase) / m.interval_seconds) + 1) * m.interval_seconds + d.phase)
-FROM (
-    SELECT c.workspace_id, c.id, c.check_at AS due, mod(abs(hashtext(c.id::text)::bigint), c.interval_seconds) AS phase
+WITH due AS (
+    SELECT c.workspace_id, c.id, c.check_at, c.timeout_seconds
     FROM status_monitors c
     WHERE c.check_at IS NOT NULL AND NOT c.paused AND c.check_at < $1::timestamptz
-    ORDER BY c.check_at
-    LIMIT 2000
-    FOR UPDATE SKIP LOCKED) d
-WHERE m.workspace_id = d.workspace_id AND m.id = d.id
-RETURNING m.workspace_id, m.id, d.due::timestamptz AS due
+    ORDER BY c.check_at, c.id
+    LIMIT $2::int
+    FOR UPDATE SKIP LOCKED
+), fit AS (
+    SELECT due.workspace_id, due.id, due.check_at,
+        sum(coalesce(due.timeout_seconds, 30)) OVER (ORDER BY due.check_at, due.id) AS load
+    FROM due
+)
+UPDATE status_monitors m SET check_at = to_timestamp(
+    (floor((date_part('epoch', $1::timestamptz) - mod(abs(hashtext(m.id::text)::bigint), m.interval_seconds)) / m.interval_seconds) + 1)
+        * m.interval_seconds + mod(abs(hashtext(m.id::text)::bigint), m.interval_seconds))
+FROM fit
+WHERE m.workspace_id = fit.workspace_id AND m.id = fit.id AND fit.load <= $2::int
+RETURNING m.workspace_id, m.id, fit.check_at::timestamptz AS due
 `
+
+type ClaimDueStatusChecksParams struct {
+	Until  time.Time
+	Budget int32
+}
 
 type ClaimDueStatusChecksRow struct {
 	WorkspaceID uuid.UUID
@@ -45,9 +57,10 @@ type ClaimDueStatusChecksRow struct {
 }
 
 // The documented exception: the sweep claims the outside checks due before until in every workspace
-// at once and moves each to its next slot, interval apart at an offset its id spreads over the interval.
-func (q *Queries) ClaimDueStatusChecks(ctx context.Context, until time.Time) ([]ClaimDueStatusChecksRow, error) {
-	rows, err := q.db.Query(ctx, claimDueStatusChecks, until)
+// at once, oldest first while their timeouts fit in budget seconds, and moves each to its next slot,
+// interval apart at an offset its id spreads over the interval.
+func (q *Queries) ClaimDueStatusChecks(ctx context.Context, arg ClaimDueStatusChecksParams) ([]ClaimDueStatusChecksRow, error) {
+	rows, err := q.db.Query(ctx, claimDueStatusChecks, arg.Until, arg.Budget)
 	if err != nil {
 		return nil, err
 	}
@@ -264,6 +277,21 @@ func (q *Queries) CreateStatusMonitor(ctx context.Context, arg CreateStatusMonit
 		&i.CheckAt,
 	)
 	return i, err
+}
+
+const decideStatusRound = `-- name: DecideStatusRound :exec
+UPDATE status_checks SET round_dropped = $1 WHERE round_id = $2 AND pending AND round_dropped IS NULL
+`
+
+type DecideStatusRoundParams struct {
+	Dropped *bool
+	RoundID *uuid.UUID
+}
+
+// The documented exception: a round's judgement is stored on its checks in every workspace.
+func (q *Queries) DecideStatusRound(ctx context.Context, arg DecideStatusRoundParams) error {
+	_, err := q.db.Exec(ctx, decideStatusRound, arg.Dropped, arg.RoundID)
+	return err
 }
 
 const deleteOldStatusChecks = `-- name: DeleteOldStatusChecks :execrows
@@ -581,16 +609,17 @@ func (q *Queries) ListDueStatusMonitors(ctx context.Context, now time.Time) ([]L
 }
 
 const listRoundStatusChecks = `-- name: ListRoundStatusChecks :many
-SELECT workspace_id, id, monitor_id, ok, source, error FROM status_checks WHERE round_id = $1 AND pending ORDER BY at, id
+SELECT workspace_id, id, monitor_id, ok, source, error, round_dropped FROM status_checks WHERE round_id = $1 AND pending ORDER BY at, id
 `
 
 type ListRoundStatusChecksRow struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-	MonitorID   uuid.UUID
-	Ok          bool
-	Source      string
-	Error       *string
+	WorkspaceID  uuid.UUID
+	ID           uuid.UUID
+	MonitorID    uuid.UUID
+	Ok           bool
+	Source       string
+	Error        *string
+	RoundDropped *bool
 }
 
 // The documented exception: a round is judged over the checks of every workspace it ran.
@@ -610,6 +639,7 @@ func (q *Queries) ListRoundStatusChecks(ctx context.Context, roundID *uuid.UUID)
 			&i.Ok,
 			&i.Source,
 			&i.Error,
+			&i.RoundDropped,
 		); err != nil {
 			return nil, err
 		}
@@ -622,7 +652,7 @@ func (q *Queries) ListRoundStatusChecks(ctx context.Context, roundID *uuid.UUID)
 }
 
 const listStatusChecks = `-- name: ListStatusChecks :many
-SELECT id, workspace_id, monitor_id, at, ok, source, state, message, error, duration_ms, status_code, round_id, pending FROM status_checks
+SELECT id, workspace_id, monitor_id, at, ok, source, state, message, error, duration_ms, status_code, round_id, pending, round_dropped FROM status_checks
 WHERE workspace_id = $1 AND monitor_id = $2 AND NOT pending
   AND ($3::timestamptz IS NULL
        OR (at, id) < ($3::timestamptz, $4::uuid))
@@ -667,6 +697,7 @@ func (q *Queries) ListStatusChecks(ctx context.Context, arg ListStatusChecksPara
 			&i.StatusCode,
 			&i.RoundID,
 			&i.Pending,
+			&i.RoundDropped,
 		); err != nil {
 			return nil, err
 		}

@@ -15026,7 +15026,7 @@ type StatusIngressResult struct {
 
 // StatusMonitor defines model for StatusMonitor.
 type StatusMonitor struct {
-	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	// CertExpiresAt `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
 	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
 
 	// ComponentId The component whose state the monitor sets.
@@ -15159,7 +15159,7 @@ type StatusMonitorFailureState string
 type StatusMonitorHTTP struct {
 	Body *string `json:"body,omitempty"`
 
-	// CertWarnDays For https, a certificate expiring within this many days fails the check; 0 checks only that it is valid.
+	// CertWarnDays For https, a certificate of the URL's own host expiring within this many days fails the check; 0 checks only that it is valid.
 	CertWarnDays      int32 `json:"cert_warn_days"`
 	ExpectedStatusMax int32 `json:"expected_status_max"`
 	ExpectedStatusMin int32 `json:"expected_status_min"`
@@ -15247,7 +15247,7 @@ type StatusMonitorState string
 
 // StatusMonitorTCP defines model for StatusMonitorTCP.
 type StatusMonitorTCP struct {
-	// Host A host name or an IP address.
+	// Host A host name or an IP address (IPv6 without brackets), without a port.
 	Host string `json:"host"`
 	Port int32  `json:"port"`
 }
@@ -15272,7 +15272,7 @@ type StatusMonitorUpdate struct {
 
 // StatusMonitorWithToken defines model for StatusMonitorWithToken.
 type StatusMonitorWithToken struct {
-	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	// CertExpiresAt `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
 	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
 
 	// ComponentId The component whose state the monitor sets.

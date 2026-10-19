@@ -10511,9 +10511,10 @@ paths:
         a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
         cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
         with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
-        or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
-        which more than half of the checks (at least 10) fail, is the server's own trouble: its
-        failures are dropped and change nothing.
+        or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+        all fail, while they answered within the last hour, is the server's own trouble: its failures
+        are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+        of a redirect target.
 
         The monitor fails after `failure_threshold` failures in a row and recovers after
         `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
@@ -25575,7 +25576,7 @@ components:
         cert_expires_at:
           type: string
           format: date-time
-          description: "`http` on https: when the certificate the last check saw expires."
+          description: "`http` on https: when the certificate of the URL's own host, as the last check saw it, expires."
         grace:
           type: integer
           format: int32
@@ -25768,7 +25769,7 @@ components:
         cert_warn_days:
           type: integer
           format: int32
-          description: For https, a certificate expiring within this many days fails the check; 0 checks only that it is valid.
+          description: For https, a certificate of the URL's own host expiring within this many days fails the check; 0 checks only that it is valid.
     StatusMonitorHeader:
       type: object
       required: [name]
@@ -25873,7 +25874,7 @@ components:
           type: string
           minLength: 1
           maxLength: 253
-          description: A host name or an IP address.
+          description: A host name or an IP address (IPv6 without brackets), without a port.
         port:
           type: integer
           format: int32

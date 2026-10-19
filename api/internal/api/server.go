@@ -76,6 +76,7 @@ type Server struct {
 	ses         SESSettings
 	status      StatusSettings
 	statusCache *statusCache
+	canaries    canaryGuard
 	started     time.Time
 	sesCaller   atomic.Pointer[string]
 

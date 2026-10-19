@@ -78,3 +78,27 @@ func TestSESSettings(t *testing.T) {
 		})
 	}
 }
+
+func TestStatusCanaryURLs(t *testing.T) {
+	for _, tc := range []struct {
+		env   string
+		off   bool
+		urls  int
+		fails bool
+	}{
+		{env: ""},
+		{env: "off", off: true},
+		{env: " OFF ", off: true},
+		{env: "https://a.example/ping, http://b.example/", urls: 2},
+		{env: "off,https://a.example/", fails: true},
+		{env: "a.example", fails: true},
+	} {
+		t.Setenv("YUVA_STATUS_CANARY_URLS", tc.env)
+		t.Setenv("YUVA_STATUS_MIN_INTERVAL", "")
+		var c Config
+		err := c.loadStatusChecks()
+		if (err != nil) != tc.fails || c.StatusCanariesOff != tc.off || len(c.StatusCanaryURLs) != tc.urls {
+			t.Errorf("env %q: off %v, urls %v, error %v", tc.env, c.StatusCanariesOff, c.StatusCanaryURLs, err)
+		}
+	}
+}

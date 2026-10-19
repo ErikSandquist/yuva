@@ -92,10 +92,12 @@ type Config struct {
 	StatusNoticesDaily   int64
 	StatusMaxSubscribers int
 	// StatusMinInterval is the shortest interval of http and tcp monitors in seconds
-	// (YUVA_STATUS_MIN_INTERVAL; 60, or 300 with open signup). StatusCanaryURLs are checked every
-	// round to tell the server's own trouble (YUVA_STATUS_CANARY_URLS; nil for the built-in two).
+	// (YUVA_STATUS_MIN_INTERVAL; 60, or 300 with open signup). StatusCanaryURLs tell the server's own
+	// trouble from its customers' (YUVA_STATUS_CANARY_URLS; nil for the built-in two, off sets
+	// StatusCanariesOff).
 	StatusMinInterval int
 	StatusCanaryURLs  []string
+	StatusCanariesOff bool
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -398,7 +400,12 @@ func (c *Config) loadStatusChecks() error {
 	if c.StatusMinInterval, err = strconv.Atoi(env("YUVA_STATUS_MIN_INTERVAL", def)); err != nil || c.StatusMinInterval < 60 || c.StatusMinInterval > 86400 {
 		return errors.New("YUVA_STATUS_MIN_INTERVAL must be 60 to 86400 seconds")
 	}
-	for _, item := range strings.Split(env("YUVA_STATUS_CANARY_URLS", ""), ",") {
+	canaries := env("YUVA_STATUS_CANARY_URLS", "")
+	if strings.EqualFold(strings.TrimSpace(canaries), "off") {
+		c.StatusCanariesOff = true
+		return nil
+	}
+	for _, item := range strings.Split(canaries, ",") {
 		if item = strings.TrimSpace(item); item == "" {
 			continue
 		}

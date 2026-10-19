@@ -11,6 +11,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	"net/netip"
 	"net/url"
 	"strconv"
 	"strings"
@@ -48,13 +49,18 @@ const (
 	maxMonitorRedirects    = 5
 
 	canaryTimeout = 5 * time.Second
+	canaryCache   = time.Minute
+	canaryArmed   = time.Hour
+	canaryWarn    = time.Hour
 	// A round's checks are scheduled within one sweep interval and may take maxCheckTimeout each; the
 	// round is judged after both and this slack.
-	roundSlack = 10 * time.Second
-	// roundDropFloor is the least number of failures that, as more than half a round, drop it.
-	roundDropFloor = 10
-	staleCheckAge  = time.Hour
+	roundSlack    = 10 * time.Second
+	staleCheckAge = time.Hour
 )
+
+// claimBudget is the worker-seconds the check queue has before a round's checks would start too
+// late, if every check took its whole timeout; a sweep claims no more timeout than that.
+var claimBudget = int32(jobs.StatusCheckWorkers * int((jobs.StatusMonitorSweepInterval+roundSlack)/time.Second))
 
 var defaultCanaryURLs = []string{"https://www.google.com/generate_204", "https://www.cloudflare.com/cdn-cgi/trace"}
 
@@ -70,7 +76,6 @@ type monitorHeader struct {
 	Value string `json:"value"`
 }
 
-// outsideSpec is what an http or tcp monitor checks.
 type outsideSpec struct {
 	target    string
 	timeout   int32
@@ -169,9 +174,13 @@ func (s *Server) checkHTTPURL(ctx context.Context, raw string) (string, error) {
 
 func (s *Server) checkTCPTarget(ctx context.Context, t oas.StatusMonitorTCP) (string, error) {
 	host := strings.TrimSpace(t.Host)
-	host = strings.TrimSuffix(strings.TrimPrefix(host, "["), "]")
-	if host == "" || len(host) > 253 || strings.ContainsAny(host, "/ @?#") {
+	if host == "" || len(host) > 253 || strings.ContainsAny(host, "/ @?#[]%") {
 		return "", errValidation("tcp.host must be a host name or an IP address")
+	}
+	if strings.Contains(host, ":") {
+		if _, err := netip.ParseAddr(host); err != nil {
+			return "", errValidation("tcp.host must be a host name or an IP address without a port; the port goes in tcp.port")
+		}
 	}
 	if t.Port < 1 || t.Port > 65535 {
 		return "", errValidation("tcp.port must be 1 to 65535")
@@ -231,7 +240,6 @@ func monitorText(v string, max int, field string) (*string, error) {
 	return &v, nil
 }
 
-// httpFields applies the given http settings over o, as given on create (in) or update (up).
 type httpFields struct {
 	url       *string
 	method    *oas.StatusMonitorHTTPMethod
@@ -305,7 +313,6 @@ func (s *Server) applyHTTP(ctx context.Context, o *outsideSpec, f httpFields, st
 	return nil
 }
 
-// newOutsideSpec reads an http or tcp monitor's settings from a create request.
 func (s *Server) newOutsideSpec(ctx context.Context, b oas.CreateStatusMonitorJSONRequestBody) (outsideSpec, error) {
 	kind := string(b.Kind)
 	o := outsideSpec{timeout: defaultCheckTimeout, interval: s.minOutsideInterval()}
@@ -358,7 +365,6 @@ func storedSpec(m store.StatusMonitor) outsideSpec {
 	return o
 }
 
-// updateOutsideSpec applies an update request to an http or tcp monitor's stored settings.
 func (s *Server) updateOutsideSpec(ctx context.Context, m store.StatusMonitor, b oas.UpdateStatusMonitorJSONRequestBody) (outsideSpec, bool, error) {
 	o := storedSpec(m)
 	if b.Grace != nil {
@@ -452,7 +458,6 @@ func millis(d time.Duration) *int32 {
 	return &v
 }
 
-// describeCheckError names why a request or connection failed, without Go's wrapping.
 func describeCheckError(err error, timeout time.Duration) string {
 	if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, http.ErrHandlerTimeout) {
 		return fmt.Sprintf("no answer within %d seconds", int(timeout/time.Second))
@@ -474,9 +479,14 @@ func (s *Server) dialCheck(allowPrivate bool, timeout time.Duration) func(ctx co
 	}
 }
 
-// checkClient follows redirects only when follow is set, at most 5, each hop checked again; the
-// monitor's own headers never go to another host.
-func (s *Server) checkClient(follow bool, timeout time.Duration, own []monitorHeader) *http.Client {
+// firstHop keeps the TLS state of the monitored URL's own answer when a redirect is followed, since
+// the certificate checked is its host's and not a redirect target's.
+type firstHop struct {
+	redirected bool
+	tls        *tls.ConnectionState
+}
+
+func (s *Server) checkClient(follow bool, timeout time.Duration, own []monitorHeader, first *firstHop) *http.Client {
 	allow := s.status.AllowPrivate
 	return &http.Client{
 		Transport: &http.Transport{
@@ -486,6 +496,9 @@ func (s *Server) checkClient(follow bool, timeout time.Duration, own []monitorHe
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if !follow {
 				return http.ErrUseLastResponse
+			}
+			if len(via) == 1 && req.Response != nil {
+				first.redirected, first.tls = true, req.Response.TLS
 			}
 			if len(via) > maxMonitorRedirects {
 				return fmt.Errorf("more than %d redirects", maxMonitorRedirects)
@@ -536,14 +549,19 @@ func (s *Server) runOutsideCheck(ctx context.Context, m store.StatusMonitor) che
 		req.Header.Set(h.Name, h.Value)
 	}
 	start := time.Now()
-	res, err := s.checkClient(m.FollowRedirects, timeout, headers).Do(req)
+	var first firstHop
+	res, err := s.checkClient(m.FollowRedirects, timeout, headers, &first).Do(req)
 	if err != nil {
 		return out.fail("%s", describeCheckError(err, timeout))
 	}
 	defer res.Body.Close()
 	out.durationMs, out.statusCode = millis(time.Since(start)), new(int32(res.StatusCode))
-	if res.TLS != nil && len(res.TLS.PeerCertificates) > 0 {
-		exp := res.TLS.PeerCertificates[0].NotAfter
+	state := res.TLS
+	if first.redirected {
+		state = first.tls
+	}
+	if state != nil && len(state.PeerCertificates) > 0 {
+		exp := state.PeerCertificates[0].NotAfter
 		out.certExpires = &exp
 	}
 	if res.StatusCode < int(*m.StatusMin) || res.StatusCode > int(*m.StatusMax) {
@@ -571,8 +589,8 @@ func (s *Server) runOutsideCheck(ctx context.Context, m store.StatusMonitor) che
 	return out
 }
 
-// canariesAnswer reports whether any canary answers at all; the server's own network is then up.
-func (s *Server) canariesAnswer(ctx context.Context) bool {
+// canariesAnswer reports whether any canary answers at all, and otherwise the last error.
+func (s *Server) canariesAnswer(ctx context.Context) (bool, error) {
 	urls := s.status.CanaryURLs
 	if len(urls) == 0 {
 		urls = defaultCanaryURLs
@@ -583,34 +601,79 @@ func (s *Server) canariesAnswer(ctx context.Context) bool {
 		CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
 	}
 	var (
-		wg sync.WaitGroup
-		mu sync.Mutex
-		up bool
+		wg   sync.WaitGroup
+		mu   sync.Mutex
+		up   bool
+		last error
 	)
 	for _, u := range urls {
 		wg.Go(func() {
 			req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
-			if err != nil {
-				return
+			if err == nil {
+				req.Header.Set("User-Agent", "Yuva-Status/"+s.version)
+				var res *http.Response
+				if res, err = client.Do(req); err == nil {
+					_ = res.Body.Close()
+				}
 			}
-			req.Header.Set("User-Agent", "Yuva-Status/"+s.version)
-			res, err := client.Do(req)
-			if err != nil {
-				s.log.WarnContext(ctx, "status canary failed", slog.String("url", u), slog.Any("error", err))
-				return
-			}
-			_ = res.Body.Close()
 			mu.Lock()
+			defer mu.Unlock()
+			if err != nil {
+				last = err
+				return
+			}
 			up = true
-			mu.Unlock()
 		})
 	}
 	wg.Wait()
-	return up
+	return up, last
 }
 
-// StatusCheckArgs is one http or tcp check of a round; a check that cannot finish before the
-// round's deadline is skipped.
+type canaryGuard struct {
+	mu       sync.Mutex
+	probedAt time.Time
+	up       bool
+	lastUp   time.Time
+	lastErr  error
+	warnedAt time.Time
+}
+
+// serverTrouble reports whether failing checks are the server's own trouble: every canary fails while
+// they answered within the last hour. Canaries that have not answered for an hour leave the guard
+// off, so failures count, and the server says so once an hour.
+func (s *Server) serverTrouble(ctx context.Context) bool {
+	if s.status.CanariesOff {
+		return false
+	}
+	g := &s.canaries
+	g.mu.Lock()
+	defer g.mu.Unlock()
+	now := s.now()
+	if g.probedAt.IsZero() || now.Sub(g.probedAt) >= canaryCache {
+		up, err := s.canariesAnswer(ctx)
+		g.probedAt, g.up = now, up
+		if up {
+			g.lastUp = now
+		} else {
+			g.lastErr = err
+		}
+	}
+	if g.up {
+		return false
+	}
+	if !g.lastUp.IsZero() && now.Sub(g.lastUp) < canaryArmed {
+		return true
+	}
+	if g.warnedAt.IsZero() || now.Sub(g.warnedAt) >= canaryWarn {
+		g.warnedAt = now
+		s.log.WarnContext(ctx, "status canaries are unreachable, so failed checks count even when this server's own network is down; "+
+			"set YUVA_STATUS_CANARY_URLS to URLs this server can reach, or to off", slog.Any("error", g.lastErr))
+	}
+	return false
+}
+
+// StatusCheckArgs is one http or tcp check of a round; a check that starts too late to finish by the
+// round's deadline still runs and is judged in a round of its own.
 type StatusCheckArgs struct {
 	WorkspaceID uuid.UUID `json:"workspace_id"`
 	MonitorID   uuid.UUID `json:"monitor_id"`
@@ -624,10 +687,8 @@ func (StatusCheckArgs) InsertOpts() river.InsertOpts {
 	return river.InsertOpts{Queue: jobs.StatusCheckQueue, MaxAttempts: 1}
 }
 
-// StatusRoundArgs judges a round once its checks are done.
 type StatusRoundArgs struct {
-	RoundID      uuid.UUID `json:"round_id"`
-	CanariesDown bool      `json:"canaries_down"`
+	RoundID uuid.UUID `json:"round_id"`
 }
 
 func (StatusRoundArgs) Kind() string { return "status_round" }
@@ -658,8 +719,8 @@ func (w *statusRoundWorker) Work(ctx context.Context, job *river.Job[StatusRound
 	return w.s.SettleStatusRound(ctx, job.Args)
 }
 
-// ScheduleStatusChecks starts a round: it claims the http and tcp checks due within the next sweep,
-// checks the canaries, and queues each check at its time and the round's judging after them.
+// ScheduleStatusChecks starts a round: it claims the http and tcp checks due within the next sweep and
+// queues each at its time and the round's judging after them.
 func (s *Server) ScheduleStatusChecks(ctx context.Context) error {
 	now := s.now()
 	until := now.Add(jobs.StatusMonitorSweepInterval)
@@ -667,11 +728,10 @@ func (s *Server) ScheduleStatusChecks(ctx context.Context) error {
 	if err != nil || !due {
 		return err
 	}
-	canariesDown := !s.canariesAnswer(ctx)
 	round := newID()
 	deadline := until.Add(maxCheckTimeout*time.Second + roundSlack)
 	return s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
-		claimed, err := q.ClaimDueStatusChecks(ctx, until)
+		claimed, err := q.ClaimDueStatusChecks(ctx, store.ClaimDueStatusChecksParams{Until: until, Budget: claimBudget})
 		if err != nil || len(claimed) == 0 {
 			return err
 		}
@@ -683,7 +743,7 @@ func (s *Server) ScheduleStatusChecks(ctx context.Context) error {
 			})
 		}
 		params = append(params, river.InsertManyParams{
-			Args:       StatusRoundArgs{RoundID: round, CanariesDown: canariesDown},
+			Args:       StatusRoundArgs{RoundID: round},
 			InsertOpts: &river.InsertOpts{Queue: jobs.StatusCheckQueue, MaxAttempts: 5, ScheduledAt: deadline.Add(roundSlack)},
 		})
 		_, err = s.jobs.InsertManyTx(ctx, tx, params)
@@ -691,7 +751,7 @@ func (s *Server) ScheduleStatusChecks(ctx context.Context) error {
 	})
 }
 
-// RunStatusCheck runs one check and keeps its result pending until the round is judged.
+// RunStatusCheck runs one check and keeps its result pending until its round is judged.
 func (s *Server) RunStatusCheck(ctx context.Context, a StatusCheckArgs) error {
 	m, err := s.st.GetStatusMonitorByID(ctx, store.GetStatusMonitorByIDParams{WorkspaceID: a.WorkspaceID, ID: a.MonitorID})
 	if store.IsNotFound(err) {
@@ -703,58 +763,69 @@ func (s *Server) RunStatusCheck(ctx context.Context, a StatusCheckArgs) error {
 	if m.Paused || !outsideKind(m.Kind) || m.Target == nil || m.TimeoutSeconds == nil {
 		return nil
 	}
-	at := s.now()
-	if at.Add(time.Duration(*m.TimeoutSeconds) * time.Second).After(a.Deadline) {
-		s.log.WarnContext(ctx, "status check started too late for its round", slog.String("workspace_id", a.WorkspaceID.String()),
-			slog.String("monitor_id", a.MonitorID.String()))
-		return nil
-	}
 	if live, err := s.workspaceLive(ctx, a.WorkspaceID); err != nil || !live {
 		return err
 	}
+	at := s.now()
+	round, late := a.RoundID, at.Add(time.Duration(*m.TimeoutSeconds)*time.Second).After(a.Deadline)
+	if late {
+		round = newID()
+		s.log.WarnContext(ctx, "status check started too late for its round and is judged on its own", slog.String("workspace_id", a.WorkspaceID.String()),
+			slog.String("monitor_id", a.MonitorID.String()))
+	}
 	out := s.runOutsideCheck(ctx, m)
-	round := a.RoundID
-	if err := s.st.CreatePendingStatusCheck(ctx, store.CreatePendingStatusCheckParams{
-		ID: newID(), WorkspaceID: m.WorkspaceID, MonitorID: m.ID, At: at, Ok: out.ok, Source: m.Kind, Error: messagePtr(out.errText),
-		DurationMs: out.durationMs, StatusCode: out.statusCode, RoundID: &round,
-	}); err != nil {
-		return err
-	}
-	if out.certExpires != nil {
-		return s.st.SetStatusMonitorCert(ctx, store.SetStatusMonitorCertParams{WorkspaceID: m.WorkspaceID, ID: m.ID, CertExpiresAt: out.certExpires})
-	}
-	return nil
+	return s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
+		if err := q.CreatePendingStatusCheck(ctx, store.CreatePendingStatusCheckParams{
+			ID: newID(), WorkspaceID: m.WorkspaceID, MonitorID: m.ID, At: at, Ok: out.ok, Source: m.Kind, Error: messagePtr(out.errText),
+			DurationMs: out.durationMs, StatusCode: out.statusCode, RoundID: &round,
+		}); err != nil {
+			return err
+		}
+		if out.certExpires != nil {
+			if err := q.SetStatusMonitorCert(ctx, store.SetStatusMonitorCertParams{WorkspaceID: m.WorkspaceID, ID: m.ID, CertExpiresAt: out.certExpires}); err != nil {
+				return err
+			}
+		}
+		if late {
+			_, err := s.jobs.InsertTx(ctx, tx, StatusRoundArgs{RoundID: round}, nil)
+			return err
+		}
+		return nil
+	})
 }
 
-// SettleStatusRound counts a round's results, or, when every canary failed or more than half of
-// its checks (at least 10) failed, drops its failures as the server's own trouble.
+// SettleStatusRound applies a round's results, or drops its failures when they are the server's own
+// trouble. The judgement is stored on the round's checks before any is applied, so a retry applies
+// the same one.
 func (s *Server) SettleStatusRound(ctx context.Context, a StatusRoundArgs) error {
 	rows, err := s.st.ListRoundStatusChecks(ctx, &a.RoundID)
-	if err != nil {
+	if err != nil || len(rows) == 0 {
 		return err
 	}
+	var decided *bool
 	failures := 0
 	for _, r := range rows {
 		if !r.Ok {
 			failures++
 		}
+		if r.RoundDropped != nil {
+			decided = r.RoundDropped
+		}
 	}
-	reason := ""
-	switch {
-	case failures == 0:
-	case a.CanariesDown:
-		reason = "canaries"
-	case failures >= roundDropFloor && failures*2 > len(rows):
-		reason = "majority"
+	drop := decided == nil && failures > 0 && s.serverTrouble(ctx)
+	if decided != nil {
+		drop = *decided
 	}
-	if reason != "" {
-		metrics.StatusRoundsDropped.WithLabelValues(reason).Inc()
-		s.log.WarnContext(ctx, "status round dropped as the server's own trouble", slog.String("reason", reason),
-			slog.Int("failures", failures), slog.Int("checks", len(rows)))
+	if err := s.st.DecideStatusRound(ctx, store.DecideStatusRoundParams{Dropped: &drop, RoundID: &a.RoundID}); err != nil {
+		return err
+	}
+	if drop && decided == nil {
+		metrics.StatusRoundsDropped.Inc()
+		s.log.WarnContext(ctx, "status round dropped because every canary failed", slog.Int("failures", failures), slog.Int("checks", len(rows)))
 	}
 	var errs []error
 	for _, r := range rows {
-		if reason != "" && !r.Ok {
+		if drop && !r.Ok {
 			if err := s.st.DeleteStatusCheck(ctx, store.DeleteStatusCheckParams{WorkspaceID: r.WorkspaceID, ID: r.ID}); err != nil {
 				errs = append(errs, err)
 			}
