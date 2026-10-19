@@ -66,10 +66,18 @@ func incidentOutMCP(in oas.StatusIncident) mcpIncident {
 	return out
 }
 
+type mcpSubscriberCounts struct {
+	Enabled      bool  `json:"enabled" jsonschema:"whether the page mails its e-mail subscribers"`
+	Subscribed   int64 `json:"subscribed"`
+	Pending      int64 `json:"pending" jsonschema:"waiting for their confirmation"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
 type mcpStatusDetail struct {
-	Page       mcpStatusPage        `json:"page"`
-	Components []mcpStatusComponent `json:"components"`
-	Open       []mcpIncident        `json:"open" jsonschema:"open incidents and maintenance, drafts included"`
+	Page        mcpStatusPage        `json:"page"`
+	Subscribers mcpSubscriberCounts  `json:"subscribers" jsonschema:"the page's e-mail subscribers, counts only"`
+	Components  []mcpStatusComponent `json:"components"`
+	Open        []mcpIncident        `json:"open" jsonschema:"open incidents and maintenance, drafts included"`
 }
 
 type statusPageIn struct {
@@ -93,6 +101,7 @@ type createIncidentIn struct {
 	Message    string                `json:"message" jsonschema:"the first update, plain text that customers read"`
 	Impact     string                `json:"impact,omitempty"`
 	Components []incidentComponentIn `json:"components,omitempty"`
+	Notify     *bool                 `json:"notify,omitempty" jsonschema:"mail the page's subscribers when a member publishes it; default true"`
 }
 
 type incidentUpdateIn struct {
@@ -100,6 +109,7 @@ type incidentUpdateIn struct {
 	IncidentID uuid.UUID `json:"incident_id"`
 	Body       string    `json:"body" jsonschema:"plain text that customers read"`
 	State      string    `json:"state,omitempty" jsonschema:"the incident's new state; its current one when empty"`
+	Notify     *bool     `json:"notify,omitempty" jsonschema:"mail the page's subscribers about it; default true when the state changes, false when it only adds text"`
 }
 
 type resolveIncidentIn struct {
@@ -138,9 +148,9 @@ type mcpMonitorContent struct {
 	LastMessage string `json:"last_message" jsonschema:"what the host's monitoring sent last"`
 }
 
-func (c *mcpCall) statusIncidentUpdate(ctx context.Context, page, incident uuid.UUID, body string, state *oas.StatusIncidentState) (mcpIncident, error) {
+func (c *mcpCall) statusIncidentUpdate(ctx context.Context, page, incident uuid.UUID, body string, state *oas.StatusIncidentState, notify *bool) (mcpIncident, error) {
 	res, err := c.s.CreateStatusIncidentUpdate(ctx, oas.CreateStatusIncidentUpdateRequestObject{PageId: page, IncidentId: incident,
-		Body: &oas.StatusIncidentUpdateCreate{Body: body, State: state}})
+		Body: &oas.StatusIncidentUpdateCreate{Body: body, State: state, Notify: notify}})
 	if err != nil {
 		return mcpIncident{}, err
 	}
@@ -170,7 +180,10 @@ var mcpStatusTools = []mcpTool{
 			if err != nil {
 				return mcpStatusDetail{}, err
 			}
-			out := mcpStatusDetail{Page: statusPageOutMCP(oas.StatusPage(res.(oas.GetStatusPage200JSONResponse))), Components: []mcpStatusComponent{}, Open: []mcpIncident{}}
+			pg := oas.StatusPage(res.(oas.GetStatusPage200JSONResponse))
+			es := pg.EmailSubscribers
+			out := mcpStatusDetail{Page: statusPageOutMCP(pg), Components: []mcpStatusComponent{}, Open: []mcpIncident{},
+				Subscribers: mcpSubscriberCounts{Enabled: es.Enabled, Subscribed: es.Counts.Subscribed, Pending: es.Counts.Pending, Unsubscribed: es.Counts.Unsubscribed}}
 			comps, err := c.s.ListStatusComponents(ctx, oas.ListStatusComponentsRequestObject{PageId: in.PageID})
 			if err != nil {
 				return mcpStatusDetail{}, err
@@ -224,7 +237,7 @@ var mcpStatusTools = []mcpTool{
 		"Drafts an incident on a status page with its first update and the components it touches. It stays a draft that only the team sees, and changes no component, until a member publishes it in Yuva. Maps to POST /v1/status-pages/{id}/incidents.",
 		additive, map[string][]any{"impact": statusImpactEnum, "components.state": statusStateEnum}, mcpTool{ops: []string{"CreateStatusIncident"}},
 		func(ctx context.Context, c *mcpCall, in createIncidentIn) (mcpIncident, error) {
-			body := oas.StatusIncidentCreate{Title: in.Title, Message: in.Message, Impact: optString[oas.StatusIncidentImpact](in.Impact)}
+			body := oas.StatusIncidentCreate{Title: in.Title, Message: in.Message, Impact: optString[oas.StatusIncidentImpact](in.Impact), Notify: in.Notify}
 			if len(in.Components) > 0 {
 				comps := make([]oas.StatusIncidentComponentInput, len(in.Components))
 				for i, cp := range in.Components {
@@ -242,7 +255,7 @@ var mcpStatusTools = []mcpTool{
 		"Adds an update to an incident or maintenance and optionally moves it to another state. On a published incident customers see it at once. Maps to POST /v1/status-pages/{id}/incidents/{id}/updates.",
 		additive, map[string][]any{"state": incidentStatesEnum}, mcpTool{ops: []string{"CreateStatusIncidentUpdate"}},
 		func(ctx context.Context, c *mcpCall, in incidentUpdateIn) (mcpIncident, error) {
-			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, optString[oas.StatusIncidentState](in.State))
+			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, optString[oas.StatusIncidentState](in.State), in.Notify)
 		}),
 	defineTool("link_conversation_to_incident", "Link a conversation to an incident",
 		"Links a conversation to an incident or maintenance of a status page, so the team sees it with the incident and a member's \"Reply to linked\" reaches it. Linking twice changes nothing. Needs the scopes status:manage and conversations:read. Maps to PUT /v1/status-pages/{id}/incidents/{id}/conversations/{id}.",
@@ -266,6 +279,6 @@ var mcpStatusTools = []mcpTool{
 			if res.(oas.GetStatusIncident200JSONResponse).Kind == oas.StatusKindMaintenance {
 				state = oas.StatusCompleted
 			}
-			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, &state)
+			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, &state, nil)
 		}),
 }

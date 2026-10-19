@@ -141,9 +141,9 @@ ORDER BY component_id, started_at;
 
 -- name: CreateStatusIncident :one
 INSERT INTO status_incidents (id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end,
-    published_at, started_at, created_by, created_at, updated_at)
+    published_at, started_at, created_by, notify, created_at, updated_at)
 VALUES (@id, @workspace_id, @page_id, @kind, @title, @impact, @state, sqlc.narg(scheduled_start), sqlc.narg(scheduled_end),
-    sqlc.narg(published_at), sqlc.narg(started_at), sqlc.narg(created_by), @now, @now)
+    sqlc.narg(published_at), sqlc.narg(started_at), sqlc.narg(created_by), @notify, @now, @now)
 RETURNING *;
 
 -- name: GetStatusIncident :one

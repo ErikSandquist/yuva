@@ -656,7 +656,7 @@ func (s *Server) monitorIncident(ctx context.Context, q *store.Queries, ev *even
 	words := statusWordsFor(pg.Locale)
 	arg := store.CreateStatusIncidentParams{
 		ID: newID(), WorkspaceID: pg.WorkspaceID, PageID: pg.ID, Kind: kindIncident, Title: truncateRunes(fmt.Sprintf(words.MonitorTitle, c.Name), 200),
-		Impact: monitorImpact(state), State: incInvestigating, Now: now,
+		Impact: monitorImpact(state), State: incInvestigating, Notify: true, Now: now,
 	}
 	if m.OnFailure == onFailurePublish {
 		arg.PublishedAt = &now
@@ -672,6 +672,9 @@ func (s *Server) monitorIncident(ctx context.Context, q *store.Queries, ev *even
 		ID: newID(), WorkspaceID: pg.WorkspaceID, IncidentID: inc.ID, State: incInvestigating, Body: fmt.Sprintf(words.MonitorBody, c.Name), Now: now,
 	})
 	if err != nil {
+		return nil, err
+	}
+	if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
 		return nil, err
 	}
 	if _, err := s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangeCreated, &up); err != nil {
@@ -735,7 +738,7 @@ func (s *Server) resolveMonitorIncident(ctx context.Context, q *store.Queries, e
 		format = words.MonitorRemoved
 	}
 	body := fmt.Sprintf(format, name)
-	if _, err := s.moveIncidentWith(ctx, q, ev, pg, inc, incResolved, body, nil, nil, oas.StatusChangeResolved, false, now); err != nil {
+	if _, err := s.moveIncidentWith(ctx, q, ev, pg, inc, incResolved, body, nil, nil, oas.StatusChangeResolved, false, true, now); err != nil {
 		return nil, err
 	}
 	return &inc.ID, nil

@@ -95,6 +95,9 @@ func (s *Server) incidentBody(pg store.StatusPage, inc store.StatusIncident, par
 	for _, u := range parts.updates[inc.ID] {
 		out.Updates = append(out.Updates, updateBody(u))
 	}
+	if inc.PublishedAt == nil {
+		out.Notify = &inc.Notify
+	}
 	return out
 }
 
@@ -422,6 +425,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		state = want
 	}
 	publish := b.Publish != nil && *b.Publish
+	notify := b.Notify == nil || *b.Notify
 	var out oas.StatusIncident
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, ev *eventBatch) error {
 		pg, err := visibleStatusPage(ctx, q, p, req.PageId, true)
@@ -438,7 +442,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		}
 		arg := store.CreateStatusIncidentParams{
 			ID: newID(), WorkspaceID: p.workspaceID, PageID: pg.ID, Kind: kind, Title: title, Impact: impact, State: state,
-			ScheduledStart: b.ScheduledStart, ScheduledEnd: b.ScheduledEnd, CreatedBy: p.creator(), Now: now,
+			ScheduledStart: b.ScheduledStart, ScheduledEnd: b.ScheduledEnd, CreatedBy: p.creator(), Notify: notify, Now: now,
 		}
 		if publish {
 			arg.PublishedAt = &now
@@ -470,6 +474,11 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 			}
 		}
 		queueMaintenance(ev, inc, now)
+		if notify {
+			if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
+				return err
+			}
+		}
 		out, err = s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangeCreated, &up)
 		return err
 	})
@@ -585,6 +594,11 @@ func (s *Server) UpdateStatusIncident(ctx context.Context, req oas.UpdateStatusI
 		}
 		if windowChanged {
 			queueMaintenance(ev, inc, now)
+			if b.Notify == nil || *b.Notify {
+				if err := s.queueNotice(ctx, q, ev, pg, inc, nil); err != nil {
+					return err
+				}
+			}
 		}
 		out, err = s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangeChanged, nil)
 		return err
@@ -650,6 +664,23 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 			}
 		}
 		queueMaintenance(ev, inc, now)
+		notify := inc.Notify
+		if req.Body != nil && req.Body.Notify != nil {
+			notify = *req.Body.Notify
+		}
+		if notify {
+			ups, err := q.ListStatusIncidentUpdates(ctx, store.ListStatusIncidentUpdatesParams{WorkspaceID: inc.WorkspaceID, IncidentIds: []uuid.UUID{inc.ID}})
+			if err != nil {
+				return err
+			}
+			var latest *uuid.UUID
+			if len(ups) > 0 {
+				latest = &ups[0].ID
+			}
+			if err := s.queueNotice(ctx, q, ev, pg, inc, latest); err != nil {
+				return err
+			}
+		}
 		out, err = s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangePublished, nil)
 		return err
 	})
@@ -660,14 +691,15 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 }
 
 func (s *Server) moveIncident(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident,
-	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, now time.Time) (oas.StatusIncident, error) {
-	return s.moveIncidentWith(ctx, q, ev, pg, inc, state, body, member, key, change, true, now)
+	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, notify bool, now time.Time) (oas.StatusIncident, error) {
+	return s.moveIncidentWith(ctx, q, ev, pg, inc, state, body, member, key, change, true, notify, now)
 }
 
 // moveIncidentWith moves an incident to state with an update. Closing it puts its components back to
-// operational when restoreAll is set; without it only those an incident or monitor set go back.
+// operational when restoreAll is set; without it only those an incident or monitor set go back. With
+// notify the update asks for a notice to the page's subscribers.
 func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident,
-	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, restoreAll bool, now time.Time) (oas.StatusIncident, error) {
+	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, restoreAll, notify bool, now time.Time) (oas.StatusIncident, error) {
 	held := incidentHolds(inc.PublishedAt != nil, inc.State)
 	arg := incidentUpdateArg(inc, now)
 	arg.State = state
@@ -704,6 +736,11 @@ func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eve
 			return oas.StatusIncident{}, err
 		}
 	}
+	if notify {
+		if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
+			return oas.StatusIncident{}, err
+		}
+	}
 	return s.incidentEvent(ctx, q, ev, pg, inc, change, &up)
 }
 
@@ -730,8 +767,12 @@ func (s *Server) CreateStatusIncidentUpdate(ctx context.Context, req oas.CreateS
 		if err := checkIncidentMove(inc.Kind, inc.State, state); err != nil {
 			return err
 		}
+		notify := state != inc.State
+		if req.Body.Notify != nil {
+			notify = *req.Body.Notify
+		}
 		member, key := statusAuthor(p)
-		out, err = s.moveIncident(ctx, q, ev, pg, inc, state, body, member, key, oas.StatusChangeUpdatePosted, s.now())
+		out, err = s.moveIncident(ctx, q, ev, pg, inc, state, body, member, key, oas.StatusChangeUpdatePosted, notify, s.now())
 		return err
 	})
 	if err != nil {
@@ -804,7 +845,7 @@ func (s *Server) RunStatusMaintenance(ctx context.Context, a StatusMaintenanceAr
 		}
 		now := s.now()
 		if inc.State == incScheduled && !inc.ScheduledStart.After(now) {
-			if _, err := s.moveIncident(ctx, q, ev, pg, inc, incInProgress, "", nil, nil, oas.StatusChangeStarted, now); err != nil {
+			if _, err := s.moveIncident(ctx, q, ev, pg, inc, incInProgress, "", nil, nil, oas.StatusChangeStarted, true, now); err != nil {
 				return err
 			}
 			if inc, err = lockedStatusIncident(ctx, q, pg, a.IncidentID); err != nil {
@@ -812,7 +853,7 @@ func (s *Server) RunStatusMaintenance(ctx context.Context, a StatusMaintenanceAr
 			}
 		}
 		if inc.State == incInProgress && !inc.ScheduledEnd.After(now) {
-			_, err := s.moveIncident(ctx, q, ev, pg, inc, incCompleted, "", nil, nil, oas.StatusChangeResolved, now)
+			_, err := s.moveIncident(ctx, q, ev, pg, inc, incCompleted, "", nil, nil, oas.StatusChangeResolved, true, now)
 			return err
 		}
 		return nil

@@ -1,0 +1,14 @@
+{{if .Maintenance}}{{template "heading" (print "Maintenance: " .Title)}}{{else}}{{template "heading" .Title}}{{end}}
+<p style="margin:0 0 16px 0;"><strong>{{.State}}</strong>{{if .Impact}} · Impact: {{.Impact}}{{end}}{{if .Window}}<br>Scheduled: {{.Window}}{{end}}</p>
+{{- if .Components}}
+<p style="margin:0 0 16px 0;">Affected:{{range .Components}}<br>{{.Name}}: <strong>{{.State}}</strong>{{end}}</p>
+{{- end}}
+{{- range .Updates}}
+<p class="y-muted" style="margin:16px 0 4px 0;font-size:13px;line-height:20px;color:#71717a;"><strong>{{.State}}</strong> · {{.At}}{{if .Edited}} · edited{{end}}</p>
+{{- if .Text}}
+<p dir="auto" style="margin:0 0 8px 0;">{{.HTML}}</p>
+{{- end}}
+{{- end}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Times are in {{.Zone}}.</p>
+{{template "button" (button .URL "View details")}}
+{{define "status_notice.footer"}}You get this e-mail because you asked for notices from {{.Page}}. <a href="{{.ManageURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Choose components or unsubscribe</a>{{if .Sender}}<br>{{.Sender}}{{end}}{{end}}

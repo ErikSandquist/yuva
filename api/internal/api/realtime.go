@@ -319,7 +319,7 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		if requireScope(f.p, oas.BroadcastsRead) != nil {
 			return false, nil
 		}
-	case statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved, statusEventMonitorDown, statusEventMonitorUp:
+	case statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved, statusEventMonitorDown, statusEventMonitorUp, eventStatusNotice:
 		if requireScope(f.p, oas.StatusRead) != nil && requireScope(f.p, oas.StatusManage) != nil {
 			return false, nil
 		}

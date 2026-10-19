@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"html/template"
 	"io"
 	"io/fs"
 	"mime"
@@ -77,8 +78,17 @@ func samples(inbox, text string) map[string]map[string]any {
 		},
 		"rating_request": {"Inbox": inbox, "GoodURL": "https://yuva.example.com/rate/tok?rating=good",
 			"BadURL": "https://yuva.example.com/rate/tok?rating=bad"},
-		"list_confirm": {"Inbox": inbox, "List": "Product news", "URL": "https://yuva.example.com/s/tok"},
+		"list_confirm":   {"Inbox": inbox, "List": "Product news", "URL": "https://yuva.example.com/s/tok"},
 		"status_confirm": {"Inbox": inbox, "Page": text, "Components": "API, Dashboard", "URL": "https://yuva.example.com/s/tok"},
+		"status_notice": {"Inbox": inbox, "Page": "Acme status", "Title": text, "State": "In progress", "Impact": "Major", "Maintenance": true,
+			"Window":     "Oct 19, 2026, 14:00 – 16:00 CEST",
+			"Components": []map[string]string{{"Name": "API", "State": "Major outage"}, {"Name": "Website", "State": "Degraded performance"}},
+			"Updates": []map[string]any{
+				{"State": "Identified", "At": "Oct 19, 2026, 14:05 CEST", "Text": text, "HTML": template.HTML(template.HTMLEscapeString(text)), "Edited": true},
+				{"State": "Investigating", "At": "Oct 19, 2026, 13:50 CEST", "Text": "We are looking into it.", "HTML": template.HTML("We are looking into it.")},
+			},
+			"Zone": "Europe/Berlin", "URL": "https://status.example.com/acme/incidents/1", "ManageURL": "https://yuva.example.com/m/tok",
+			"Sender": "Acme Ltd, 1 Main Street, Springfield"},
 		"status_monitor": {"Inbox": inbox, "Page": "Acme status", "Monitor": "Nightly backup", "Component": "Backups", "Down": true,
 			"State": "Major outage", "Message": text, "URL": "https://yuva.example.com/status-pages/1/monitors",
 			"SettingsURL": "https://yuva.example.com/settings/notifications"},
@@ -88,7 +98,7 @@ func samples(inbox, text string) map[string]map[string]any {
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "status_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert", "status_monitor"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "status_confirm", "status_notice", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert", "status_monitor"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

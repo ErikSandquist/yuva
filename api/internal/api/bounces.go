@@ -348,8 +348,7 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 func (s *Server) applyBroadcastSES(ctx context.Context, id string, recipients []bounced, tenant string) error {
 	d, err := s.st.FindBroadcastDeliveryAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {
-		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
-		return nil
+		return s.applyNoticeSES(ctx, id, recipients, tenant)
 	}
 	if err != nil {
 		return err
@@ -403,5 +402,63 @@ func (s *Server) applyBroadcastDSN(ctx context.Context, ch store.FindEmailChanne
 		}
 		return IngestResult{Status: IngestBounce}, true, nil
 	}
-	return IngestResult{}, false, nil
+	return s.applyNoticeDSN(ctx, ch, m)
+}
+
+// applyNoticeDSN applies a delivery report about a status notice of the channel's workspace: a
+// permanent failure of the delivery's own address is a bounce.
+func (s *Server) applyNoticeDSN(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
+	d, err := noticeDeliveryOf(ctx, s.st.Queries, ch.WorkspaceID, slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References))
+	if err != nil || d == nil {
+		return IngestResult{}, false, err
+	}
+	for _, r := range m.Bounce.Failed() {
+		if r.Email != d.Email || !r.Permanent() {
+			continue
+		}
+		if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, d.Email, d.HeaderMessageID, d.RelayMessageID); err != nil || !ok {
+			return IngestResult{}, false, err
+		}
+		if err := s.noticeFeedback(ctx, *d, false, strings.TrimSpace(r.Status+" "+r.Diagnostic)); err != nil {
+			return IngestResult{}, false, err
+		}
+		break
+	}
+	return IngestResult{Status: IngestBounce}, true, nil
+}
+
+// applyNoticeSES applies an SES bounce or complaint about a status notice. SES names only the
+// message, so the delivery is found across workspaces and everything after is scoped by its own.
+func (s *Server) applyNoticeSES(ctx context.Context, id string, recipients []bounced, tenant string) error {
+	d, err := s.st.FindStatusNoticeDeliveryAnyWorkspace(ctx, id)
+	if store.IsNotFound(err) {
+		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	if tenant != "" {
+		var channel *uuid.UUID
+		if inc, err := s.st.StatusNoticeIncident(ctx, store.StatusNoticeIncidentParams{WorkspaceID: d.WorkspaceID, NoticeID: d.NoticeID}); err == nil {
+			if pg, err := s.st.GetStatusPage(ctx, store.GetStatusPageParams{WorkspaceID: d.WorkspaceID, ID: inc.PageID}); err == nil && pg.MailingListID != nil {
+				if l, err := s.st.GetMailingList(ctx, store.GetMailingListParams{WorkspaceID: d.WorkspaceID, ID: *pg.MailingListID}); err == nil {
+					channel = l.ChannelID
+				}
+			}
+		}
+		if foreign, err := s.sesTenantForeign(ctx, d.WorkspaceID, channel, tenant); err != nil {
+			return err
+		} else if foreign {
+			s.log.WarnContext(ctx, "ses notification of another tenant dropped", slog.String("message_id", id), slog.String("tenant", tenant))
+			return nil
+		}
+	}
+	for _, r := range recipients {
+		if r.email == d.Email {
+			return s.noticeFeedback(ctx, d, r.reason == suppressComplaint, r.detail)
+		}
+	}
+	s.log.InfoContext(ctx, "ses notification names no recipient of the message", slog.String("message_id", id))
+	return nil
 }

@@ -1,0 +1,22 @@
+[Acme status] Wartung: Hello, my invoice is wrong.
+
+In progress · Auswirkung: Major
+Geplant: Oct 19, 2026, 14:00 – 16:00 CEST
+
+Betroffen:
+- API: Major outage
+- Website: Degraded performance
+
+Identified · Oct 19, 2026, 14:05 CEST · bearbeitet
+Hello, my invoice is wrong.
+
+Investigating · Oct 19, 2026, 13:50 CEST
+We are looking into it.
+
+Zeiten in Europe/Berlin.
+
+Details: https://status.example.com/acme/incidents/1
+
+Sie erhalten diese E-Mail, weil Sie Meldungen von Acme status angefordert haben.
+Komponenten wählen oder abmelden: https://yuva.example.com/m/tok
+Acme Ltd, 1 Main Street, Springfield

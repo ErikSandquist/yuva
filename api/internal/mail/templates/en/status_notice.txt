@@ -1,0 +1,28 @@
+[{{.Page}}] {{if .Maintenance}}Maintenance: {{end}}{{.Title}}
+
+{{.State}}{{if .Impact}} · Impact: {{.Impact}}{{end}}
+{{- if .Window}}
+Scheduled: {{.Window}}
+{{- end}}
+{{- if .Components}}
+
+Affected:
+{{- range .Components}}
+- {{.Name}}: {{.State}}
+{{- end}}
+{{- end}}
+{{range .Updates}}
+{{.State}} · {{.At}}{{if .Edited}} · edited{{end}}
+{{- if .Text}}
+{{.Text}}
+{{- end}}
+{{end}}
+Times are in {{.Zone}}.
+
+Details: {{.URL}}
+
+You get this e-mail because you asked for notices from {{.Page}}.
+Choose components or unsubscribe: {{.ManageURL}}
+{{- if .Sender}}
+{{.Sender}}
+{{- end}}

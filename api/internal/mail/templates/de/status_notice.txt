@@ -1,0 +1,28 @@
+[{{.Page}}] {{if .Maintenance}}Wartung: {{end}}{{.Title}}
+
+{{.State}}{{if .Impact}} · Auswirkung: {{.Impact}}{{end}}
+{{- if .Window}}
+Geplant: {{.Window}}
+{{- end}}
+{{- if .Components}}
+
+Betroffen:
+{{- range .Components}}
+- {{.Name}}: {{.State}}
+{{- end}}
+{{- end}}
+{{range .Updates}}
+{{.State}} · {{.At}}{{if .Edited}} · bearbeitet{{end}}
+{{- if .Text}}
+{{.Text}}
+{{- end}}
+{{end}}
+Zeiten in {{.Zone}}.
+
+Details: {{.URL}}
+
+Sie erhalten diese E-Mail, weil Sie Meldungen von {{.Page}} angefordert haben.
+Komponenten wählen oder abmelden: {{.ManageURL}}
+{{- if .Sender}}
+{{.Sender}}
+{{- end}}

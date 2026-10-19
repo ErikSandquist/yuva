@@ -1,0 +1,28 @@
+[{{.Page}}] {{if .Maintenance}}Bakım: {{end}}{{.Title}}
+
+{{.State}}{{if .Impact}} · Etki: {{.Impact}}{{end}}
+{{- if .Window}}
+Planlanan: {{.Window}}
+{{- end}}
+{{- if .Components}}
+
+Etkilenenler:
+{{- range .Components}}
+- {{.Name}}: {{.State}}
+{{- end}}
+{{- end}}
+{{range .Updates}}
+{{.State}} · {{.At}}{{if .Edited}} · düzenlendi{{end}}
+{{- if .Text}}
+{{.Text}}
+{{- end}}
+{{end}}
+Saatler {{.Zone}} saat dilimindedir.
+
+Ayrıntılar: {{.URL}}
+
+Bu e-postayı {{.Page}} bildirimlerini istediğiniz için alıyorsunuz.
+Bileşen seçin ya da aboneliği sonlandırın: {{.ManageURL}}
+{{- if .Sender}}
+{{.Sender}}
+{{- end}}

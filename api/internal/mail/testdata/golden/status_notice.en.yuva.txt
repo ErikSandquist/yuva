@@ -1,0 +1,22 @@
+[Acme status] Maintenance: Hello, my invoice is wrong.
+
+In progress · Impact: Major
+Scheduled: Oct 19, 2026, 14:00 – 16:00 CEST
+
+Affected:
+- API: Major outage
+- Website: Degraded performance
+
+Identified · Oct 19, 2026, 14:05 CEST · edited
+Hello, my invoice is wrong.
+
+Investigating · Oct 19, 2026, 13:50 CEST
+We are looking into it.
+
+Times are in Europe/Berlin.
+
+Details: https://status.example.com/acme/incidents/1
+
+You get this e-mail because you asked for notices from Acme status.
+Choose components or unsubscribe: https://yuva.example.com/m/tok
+Acme Ltd, 1 Main Street, Springfield

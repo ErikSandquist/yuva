@@ -43,7 +43,12 @@ const (
 	SESTenantStatusInterval     = 5 * time.Minute
 	StatusMonitorSweepInterval  = 30 * time.Second
 	StatusChecksCleanupInterval = time.Hour
+	StatusNoticeSweepInterval   = time.Minute
 )
+
+// StatusNoticeQueue holds the status notice jobs, so a notice about an outage never waits behind a
+// newsletter on the broadcast queue.
+const StatusNoticeQueue = "status_notice"
 
 // BroadcastQueue holds the broadcast sending jobs, so a large send never delays replies,
 // notifications or webhooks on the default queue.
@@ -74,7 +79,7 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
 	}
-	queues := map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}}
+	queues := map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}, StatusNoticeQueue: {MaxWorkers: 2}}
 	if migrationWorkers > 0 {
 		queues[MigrationQueue] = river.QueueConfig{MaxWorkers: migrationWorkers}
 	}
@@ -111,6 +116,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 		river.NewPeriodicJob(river.PeriodicInterval(StatusChecksCleanupInterval), func() (river.JobArgs, *river.InsertOpts) {
 			return StatusChecksCleanupArgs{}, nil
 		}, &river.PeriodicJobOpts{ID: "status_checks_cleanup", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(StatusNoticeSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return StatusNoticeSweepArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "status_notice_sweep", RunOnStart: true}),
 	}
 	if sesTenants {
 		periodic = append(periodic, river.NewPeriodicJob(river.PeriodicInterval(SESTenantStatusInterval), func() (river.JobArgs, *river.InsertOpts) {
@@ -215,6 +223,12 @@ func (SESTenantStatusArgs) InsertOpts() river.InsertOpts {
 		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
 	}}}
 }
+
+// StatusNoticeSweepArgs is worked by the api package: it queues status notices that are due and
+// sending ones whose lease ran out.
+type StatusNoticeSweepArgs struct{}
+
+func (StatusNoticeSweepArgs) Kind() string { return "status_notice_sweep" }
 
 // StatusMonitorSweepArgs is worked by the api package: it fails heartbeats whose beat is overdue.
 type StatusMonitorSweepArgs struct{}

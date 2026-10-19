@@ -2266,6 +2266,9 @@ now; per-channel limits can narrow them later.
   (25); salts are deleted two hours after their day. Members delete a property's data for a range or in
   full; a property, a consented visitor, a contact with linked visits and a deleted workspace take their
   analytics rows with them. Workspace `retention_days` does not apply to analytics.
+- Status page subscribers (M19) are subscriptions of a status list and follow the list rules above
+  (pending ones after 30 days with the contacts only they created, unsubscribed ones after 3 years);
+  notice deliveries and their addresses go after 90 days, the notice keeps its counts.
 - Nothing is sent to third parties except what a channel is configured to send (SMTP, webhooks);
   the monthly GeoIP download from DB-IP fetches a file and sends nothing about anyone.
 
@@ -2281,7 +2284,8 @@ now; per-channel limits can narrow them later.
     `/ingress/ses` finds the message a bounce refers to by our Message-ID
     (`message_emails.header_message_id` of outbound mail). Everything after that lookup is scoped
     by the workspace it returned. `/ingress/ses` also finds a broadcast delivery by its Message-ID
-    (`broadcast_deliveries.header_message_id`, unique across the server), and `/i/{token}` finds an
+    (`broadcast_deliveries.header_message_id`, unique across the server) and a status notice delivery by
+    `status_notice_deliveries.header_message_id` (unique across the server too), and `/i/{token}` finds an
     e-mail image by its token (`email_images.token`, unique across the server) before the workspace
     is known; everything after those lookups is scoped by the workspace they returned.
   - The widget and the apps name only a chat or app channel's public key, which is unique across
@@ -2294,7 +2298,7 @@ now; per-channel limits can narrow them later.
     `status_page_slugs` or a verified `status_pages.custom_domain` (a slug's availability is checked the
     same way), and a heartbeat or push finds its monitor by
     `status_monitors.token_hash` (the sweep of overdue heartbeats lists the due monitors of every workspace
-    in one query), and an SES notification finds a notice delivery by
+    in one query, and the notice sweep the due notices of every workspace), and an SES notification finds a notice delivery by
     `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is
     scoped by the workspace they returned.
   - The person-level identity tables `people`, `sessions`, `login_codes`, `passkeys`,
@@ -2334,7 +2338,7 @@ now; per-channel limits can narrow them later.
     and go with the workspace.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
-- Usage counters (conversations, messages, members, storage, broadcast recipients) recorded per workspace per month.
+- Usage counters (conversations, messages, members, storage, broadcast recipients, status notice mails) recorded per workspace per month.
 - Billing and plans are not part of the open-source core. Sign-up is: `YUVA_SIGNUP=open` lets
   anyone create an account and a workspace, within per-person and per-address limits (see Panel).
 

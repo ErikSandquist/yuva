@@ -343,8 +343,11 @@ func (s *Server) broadcastAutoReply(ctx context.Context, ch store.FindEmailChann
 		return false, err
 	}
 	d, err := deliveryOfTokens(ctx, s.st.Queries, ch, m, uuid.Nil())
-	if err != nil || d == nil {
+	if err != nil {
 		return false, err
+	}
+	if d == nil {
+		return s.noticeAutoReply(ctx, ch, m)
 	}
 	err = s.st.InTx(ctx, func(q *store.Queries) error {
 		n, err := q.MarkDeliveryAutoReplied(ctx, store.MarkDeliveryAutoRepliedParams{WorkspaceID: d.WorkspaceID, ID: d.ID, Now: s.now()})
@@ -409,6 +412,20 @@ func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChan
 	}
 	if !store.IsNotFound(err) {
 		return IngestResult{}, false, err
+	}
+	if nd, err := noticeDeliveryOf(ctx, s.st.Queries, ch.WorkspaceID, []string{f.OriginalMessageID}); err != nil {
+		return IngestResult{}, false, err
+	} else if nd != nil {
+		if f.OriginalRcptTo != "" && f.OriginalRcptTo != nd.Email {
+			return IngestResult{}, false, nil
+		}
+		if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, nd.Email, nd.HeaderMessageID, nd.RelayMessageID); err != nil || !ok {
+			return IngestResult{}, false, err
+		}
+		if err := s.noticeFeedback(ctx, *nd, true, "feedback report: "+f.Type); err != nil {
+			return IngestResult{}, false, err
+		}
+		return IngestResult{Status: IngestBounce}, true, nil
 	}
 	sent, err := s.st.FindOutboundEmailByHeader(ctx, store.FindOutboundEmailByHeaderParams{WorkspaceID: ch.WorkspaceID, HeaderMessageID: f.OriginalMessageID})
 	if store.IsNotFound(err) {

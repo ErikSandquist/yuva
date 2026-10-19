@@ -1625,6 +1625,7 @@ type StatusIncident struct {
 	CreatedBy      *uuid.UUID
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
+	Notify         bool
 }
 
 type StatusIncidentComponent struct {
@@ -1677,6 +1678,7 @@ type StatusIncidentUpdate struct {
 	AuthorKeyID    *uuid.UUID
 	CreatedAt      time.Time
 	EditedAt       *time.Time
+	NoticeID       *uuid.UUID
 }
 
 type StatusMonitor struct {
@@ -1707,6 +1709,49 @@ type StatusMonitor struct {
 	ChangedAt            time.Time
 	CreatedAt            time.Time
 	UpdatedAt            time.Time
+}
+
+type StatusNotice struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	PageID       uuid.UUID
+	IncidentID   uuid.UUID
+	State        string
+	Final        bool
+	DueAt        time.Time
+	SkipReason   *string
+	Counts       []byte
+	SnapshotDone bool
+	LeaseUntil   *time.Time
+	StartedAt    *time.Time
+	FinishedAt   *time.Time
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+}
+
+type StatusNoticeDelivery struct {
+	ID                uuid.UUID
+	WorkspaceID       uuid.UUID
+	NoticeID          uuid.UUID
+	SubscriptionID    uuid.UUID
+	ContactID         uuid.UUID
+	Email             string
+	EmailToken        string
+	HeaderMessageID   string
+	PreviousMessageID *string
+	RelayMessageID    *string
+	State             string
+	SkipReason        *string
+	Attempts          int32
+	NextAttemptAt     *time.Time
+	Error             *string
+	SentAt            *time.Time
+	BouncedAt         *time.Time
+	ComplainedAt      *time.Time
+	RepliedAt         *time.Time
+	AutoRepliedAt     *time.Time
+	ConversationID    *uuid.UUID
+	CreatedAt         time.Time
 }
 
 type StatusPage struct {
@@ -1757,6 +1802,7 @@ type UsageCounter struct {
 	ImportedBytes           int64
 	AnalyticsEvents         int64
 	AnalyticsLimitReachedAt *time.Time
+	StatusNotices           int64
 }
 
 type WebauthnCeremony struct {

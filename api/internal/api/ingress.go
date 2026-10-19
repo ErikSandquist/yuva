@@ -650,10 +650,26 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 		related = &found.ID
 		found = nil
 	}
-	var delivery *store.BroadcastDelivery
+	var (
+		delivery *store.BroadcastDelivery
+		notice   *store.StatusNoticeDelivery
+	)
 	if found == nil && related == nil && !spam {
 		if delivery, err = deliveryOfTokens(ctx, q, ch, m, contactID); err != nil {
 			return store.Conversation{}, false, err
+		}
+		if delivery == nil {
+			if notice, err = noticeDeliveryOfTokens(ctx, q, ch, m, contactID); err != nil {
+				return store.Conversation{}, false, err
+			}
+		}
+		if notice != nil && notice.ContactID == contactID && notice.ConversationID != nil {
+			c, err := q.GetConversation(ctx, store.GetConversationParams{WorkspaceID: ws, ID: *notice.ConversationID})
+			if err == nil && c.ContactID == contactID && c.InboxID == ch.InboxID {
+				found, notice = &c, nil
+			} else if err != nil && !store.IsNotFound(err) {
+				return c, false, err
+			}
 		}
 		if delivery != nil && delivery.ContactID == contactID && delivery.ConversationID != nil {
 			c, err := q.GetConversation(ctx, store.GetConversationParams{WorkspaceID: ws, ID: *delivery.ConversationID})
@@ -677,7 +693,7 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 				return latest, false, err
 			}
 			if !spam || latest.Spam {
-				found, delivery = &latest, nil
+				found, delivery, notice = &latest, nil, nil
 			}
 		}
 	}
@@ -703,6 +719,11 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 		reply = func() error {
 			_, err := s.broadcastReplyStart(ctx, q, events, c, d, contactID, now)
 			return err
+		}
+	}
+	if notice != nil {
+		if err := s.noticeReplyStart(ctx, q, c, *notice, contactID, now); err != nil {
+			return c, false, err
 		}
 	}
 	events.conversation(realtime.ConversationCreated, c, conversationBody(c, nil))

@@ -376,10 +376,10 @@ func (q *Queries) CreateStatusGroup(ctx context.Context, arg CreateStatusGroupPa
 
 const createStatusIncident = `-- name: CreateStatusIncident :one
 INSERT INTO status_incidents (id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end,
-    published_at, started_at, created_by, created_at, updated_at)
+    published_at, started_at, created_by, notify, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
-    $10, $11, $12, $13, $13)
-RETURNING id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at
+    $10, $11, $12, $13, $14, $14)
+RETURNING id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify
 `
 
 type CreateStatusIncidentParams struct {
@@ -395,6 +395,7 @@ type CreateStatusIncidentParams struct {
 	PublishedAt    *time.Time
 	StartedAt      *time.Time
 	CreatedBy      *uuid.UUID
+	Notify         bool
 	Now            time.Time
 }
 
@@ -412,6 +413,7 @@ func (q *Queries) CreateStatusIncident(ctx context.Context, arg CreateStatusInci
 		arg.PublishedAt,
 		arg.StartedAt,
 		arg.CreatedBy,
+		arg.Notify,
 		arg.Now,
 	)
 	var i StatusIncident
@@ -431,6 +433,7 @@ func (q *Queries) CreateStatusIncident(ctx context.Context, arg CreateStatusInci
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Notify,
 	)
 	return i, err
 }
@@ -492,7 +495,7 @@ func (q *Queries) CreateStatusIncidentReply(ctx context.Context, arg CreateStatu
 const createStatusIncidentUpdate = `-- name: CreateStatusIncidentUpdate :one
 INSERT INTO status_incident_updates (id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at
+RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id
 `
 
 type CreateStatusIncidentUpdateParams struct {
@@ -528,6 +531,7 @@ func (q *Queries) CreateStatusIncidentUpdate(ctx context.Context, arg CreateStat
 		&i.AuthorKeyID,
 		&i.CreatedAt,
 		&i.EditedAt,
+		&i.NoticeID,
 	)
 	return i, err
 }
@@ -704,7 +708,7 @@ func (q *Queries) DeleteUnconfirmedContacts(ctx context.Context, arg DeleteUncon
 const editStatusIncidentUpdate = `-- name: EditStatusIncidentUpdate :one
 UPDATE status_incident_updates SET body = $1, edited_at = $2
 WHERE workspace_id = $3 AND incident_id = $4 AND id = $5
-RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at
+RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id
 `
 
 type EditStatusIncidentUpdateParams struct {
@@ -734,6 +738,7 @@ func (q *Queries) EditStatusIncidentUpdate(ctx context.Context, arg EditStatusIn
 		&i.AuthorKeyID,
 		&i.CreatedAt,
 		&i.EditedAt,
+		&i.NoticeID,
 	)
 	return i, err
 }
@@ -940,7 +945,7 @@ func (q *Queries) GetStatusGroup(ctx context.Context, arg GetStatusGroupParams) 
 }
 
 const getStatusIncident = `-- name: GetStatusIncident :one
-SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents WHERE workspace_id = $1 AND page_id = $2 AND id = $3
+SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify FROM status_incidents WHERE workspace_id = $1 AND page_id = $2 AND id = $3
 `
 
 type GetStatusIncidentParams struct {
@@ -968,6 +973,7 @@ func (q *Queries) GetStatusIncident(ctx context.Context, arg GetStatusIncidentPa
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Notify,
 	)
 	return i, err
 }
@@ -1156,7 +1162,7 @@ func (q *Queries) LinkStatusIncidentConversation(ctx context.Context, arg LinkSt
 }
 
 const listConversationIncidents = `-- name: ListConversationIncidents :many
-SELECT i.id, i.workspace_id, i.page_id, i.kind, i.title, i.impact, i.state, i.scheduled_start, i.scheduled_end, i.published_at, i.started_at, i.resolved_at, i.created_by, i.created_at, i.updated_at, p.name AS page_name, p.slug AS page_slug, l.linked_at FROM status_incident_conversations l
+SELECT i.id, i.workspace_id, i.page_id, i.kind, i.title, i.impact, i.state, i.scheduled_start, i.scheduled_end, i.published_at, i.started_at, i.resolved_at, i.created_by, i.created_at, i.updated_at, i.notify, p.name AS page_name, p.slug AS page_slug, l.linked_at FROM status_incident_conversations l
 JOIN status_incidents i ON i.workspace_id = l.workspace_id AND i.id = l.incident_id
 JOIN status_pages p ON p.workspace_id = i.workspace_id AND p.id = i.page_id
 WHERE l.workspace_id = $1 AND l.conversation_id = $2
@@ -1210,6 +1216,7 @@ func (q *Queries) ListConversationIncidents(ctx context.Context, arg ListConvers
 			&i.StatusIncident.CreatedBy,
 			&i.StatusIncident.CreatedAt,
 			&i.StatusIncident.UpdatedAt,
+			&i.StatusIncident.Notify,
 			&i.PageName,
 			&i.PageSlug,
 			&i.LinkedAt,
@@ -1225,7 +1232,7 @@ func (q *Queries) ListConversationIncidents(ctx context.Context, arg ListConvers
 }
 
 const listPublicStatusIncidents = `-- name: ListPublicStatusIncidents :many
-SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents
+SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify FROM status_incidents
 WHERE workspace_id = $1 AND page_id = $2 AND published_at IS NOT NULL
   AND (resolved_at IS NULL OR resolved_at >= $3::timestamptz)
 ORDER BY coalesce(scheduled_start, published_at) DESC, id DESC
@@ -1269,6 +1276,7 @@ func (q *Queries) ListPublicStatusIncidents(ctx context.Context, arg ListPublicS
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Notify,
 		); err != nil {
 			return nil, err
 		}
@@ -1532,7 +1540,7 @@ func (q *Queries) ListStatusIncidentConversations(ctx context.Context, arg ListS
 }
 
 const listStatusIncidentUpdates = `-- name: ListStatusIncidentUpdates :many
-SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at FROM status_incident_updates WHERE workspace_id = $1 AND incident_id = ANY($2::uuid[])
+SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id FROM status_incident_updates WHERE workspace_id = $1 AND incident_id = ANY($2::uuid[])
 ORDER BY created_at DESC, id DESC
 `
 
@@ -1560,6 +1568,7 @@ func (q *Queries) ListStatusIncidentUpdates(ctx context.Context, arg ListStatusI
 			&i.AuthorKeyID,
 			&i.CreatedAt,
 			&i.EditedAt,
+			&i.NoticeID,
 		); err != nil {
 			return nil, err
 		}
@@ -1572,7 +1581,7 @@ func (q *Queries) ListStatusIncidentUpdates(ctx context.Context, arg ListStatusI
 }
 
 const listStatusIncidents = `-- name: ListStatusIncidents :many
-SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents
+SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify FROM status_incidents
 WHERE workspace_id = $1 AND page_id = $2
   AND ($3::text IS NULL OR kind = $3::text)
   AND (NOT $4::bool OR resolved_at IS NULL)
@@ -1625,6 +1634,7 @@ func (q *Queries) ListStatusIncidents(ctx context.Context, arg ListStatusInciden
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Notify,
 		); err != nil {
 			return nil, err
 		}
@@ -1637,7 +1647,7 @@ func (q *Queries) ListStatusIncidents(ctx context.Context, arg ListStatusInciden
 }
 
 const listStatusIncidentsByIDs = `-- name: ListStatusIncidentsByIDs :many
-SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents WHERE workspace_id = $1 AND id = ANY($2::uuid[])
+SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify FROM status_incidents WHERE workspace_id = $1 AND id = ANY($2::uuid[])
 `
 
 type ListStatusIncidentsByIDsParams struct {
@@ -1670,6 +1680,7 @@ func (q *Queries) ListStatusIncidentsByIDs(ctx context.Context, arg ListStatusIn
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Notify,
 		); err != nil {
 			return nil, err
 		}
@@ -1946,7 +1957,7 @@ func (q *Queries) LockStatusComponent(ctx context.Context, arg LockStatusCompone
 }
 
 const lockStatusIncident = `-- name: LockStatusIncident :one
-SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents WHERE workspace_id = $1 AND page_id = $2 AND id = $3 FOR UPDATE
+SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify FROM status_incidents WHERE workspace_id = $1 AND page_id = $2 AND id = $3 FOR UPDATE
 `
 
 type LockStatusIncidentParams struct {
@@ -1974,6 +1985,7 @@ func (q *Queries) LockStatusIncident(ctx context.Context, arg LockStatusIncident
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Notify,
 	)
 	return i, err
 }
@@ -2450,7 +2462,7 @@ UPDATE status_incidents SET title = $1, impact = $2, state = $3, scheduled_start
     scheduled_end = $5, published_at = $6, started_at = $7,
     resolved_at = $8, updated_at = $9
 WHERE workspace_id = $10 AND id = $11
-RETURNING id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at
+RETURNING id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at, notify
 `
 
 type UpdateStatusIncidentParams struct {
@@ -2498,6 +2510,7 @@ func (q *Queries) UpdateStatusIncident(ctx context.Context, arg UpdateStatusInci
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Notify,
 	)
 	return i, err
 }
