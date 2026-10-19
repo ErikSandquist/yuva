@@ -1,9 +1,13 @@
 package api
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func TestUptimeDays(t *testing.T) {
@@ -116,5 +120,33 @@ func TestRichStatusText(t *testing.T) {
 	}
 	if s, err := statusText(" a\r\nb "); err != nil || s != "a\nb" {
 		t.Fatalf("statusText %q %v", s, err)
+	}
+}
+
+func TestRichStatusTextLeavesHostlessURLsAlone(t *testing.T) {
+	got := string(richStatusText("Try http://. and https:///x then https://example.com/ok."))
+	want := `Try http://. and https:///x then <a href="https://example.com/ok" rel="nofollow noopener">https://example.com/ok</a>.`
+	if got != want {
+		t.Fatalf("got  %s\nwant %s", got, want)
+	}
+}
+
+func TestStatusUniqueConflict(t *testing.T) {
+	violation := func(constraint string) error {
+		return fmt.Errorf("insert: %w", &pgconn.PgError{Code: "23505", ConstraintName: constraint})
+	}
+	if err := statusUniqueConflict(violation("status_pages_workspace_id_inbox_id_key")); err != errStatusPageExists {
+		t.Fatalf("one page per inbox maps to %v", err)
+	}
+	if err := statusUniqueConflict(violation("status_pages_slug_key")); err != errStatusSlugTaken {
+		t.Fatalf("slug maps to %v", err)
+	}
+	other := violation("status_components_pkey")
+	if err := statusUniqueConflict(other); err != other {
+		t.Fatalf("an unrelated violation became %v", err)
+	}
+	plain := errors.New("boom")
+	if err := statusUniqueConflict(plain); err != plain {
+		t.Fatalf("a plain error became %v", err)
 	}
 }

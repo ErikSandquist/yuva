@@ -61,6 +61,16 @@ func (s *Server) statusURL(slug, path string) string {
 	return s.statusBase() + "/" + slug + path
 }
 
+func statusUniqueConflict(err error) error {
+	switch store.UniqueViolationConstraint(err) {
+	case "status_pages_workspace_id_inbox_id_key":
+		return errStatusPageExists
+	case "status_pages_slug_key", "status_page_slugs_pkey":
+		return errStatusSlugTaken
+	}
+	return err
+}
+
 func validStatusSlug(slug string) error {
 	if len(slug) < 3 || len(slug) > 48 || !statusSlugPattern.MatchString(slug) {
 		return errValidation("slug must be 3 to 48 lowercase letters, digits and single dashes")
@@ -275,11 +285,8 @@ func (s *Server) CreateStatusPage(ctx context.Context, req oas.CreateStatusPageR
 		})
 		return err
 	})
-	if store.IsUniqueViolation(err) {
-		return nil, errStatusSlugTaken
-	}
 	if err != nil {
-		return nil, err
+		return nil, statusUniqueConflict(err)
 	}
 	return oas.CreateStatusPage201JSONResponse(s.statusPageBody(pg, stOperational)), nil
 }
@@ -365,10 +372,19 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 				return err
 			}
 		}
+		now := s.now()
+		if f.slug != cur.Slug {
+			if err := q.ReleaseStatusFormerSlug(ctx, store.ReleaseStatusFormerSlugParams{WorkspaceID: cur.WorkspaceID, PageID: cur.ID, Slug: f.slug}); err != nil {
+				return err
+			}
+			if err := q.AddStatusFormerSlug(ctx, store.AddStatusFormerSlugParams{Slug: cur.Slug, WorkspaceID: cur.WorkspaceID, PageID: cur.ID, Now: now}); err != nil {
+				return err
+			}
+		}
 		pg, err := q.UpdateStatusPage(ctx, store.UpdateStatusPageParams{
 			WorkspaceID: p.workspaceID, ID: cur.ID, Name: f.name, Description: f.description, Slug: f.slug, LogoUrl: f.logo,
 			AccentColor: f.color, SiteUrl: f.site, SupportUrl: f.support, Locale: f.locale, Timezone: f.timezone,
-			HistoryDays: f.history, ShowUptime: f.uptime, Published: f.published, Now: s.now(),
+			HistoryDays: f.history, ShowUptime: f.uptime, Published: f.published, Now: now,
 		})
 		if err != nil {
 			return err
@@ -376,11 +392,8 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 		out, err = s.statusPageOut(ctx, q, pg)
 		return err
 	})
-	if store.IsUniqueViolation(err) {
-		return nil, errStatusSlugTaken
-	}
 	if err != nil {
-		return nil, err
+		return nil, statusUniqueConflict(err)
 	}
 	return oas.UpdateStatusPage200JSONResponse(out), nil
 }
@@ -582,7 +595,10 @@ func (s *Server) componentEvent(ctx context.Context, q *store.Queries, ev *event
 func (s *Server) setComponentState(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, c store.StatusComponent,
 	state, source string, sourceID *uuid.UUID, now time.Time) (store.StatusComponent, error) {
 	if c.State == state {
-		return c, nil
+		err := q.HandOverStatusComponentState(ctx, store.HandOverStatusComponentStateParams{
+			WorkspaceID: c.WorkspaceID, ComponentID: c.ID, Source: source, SourceID: sourceID,
+		})
+		return c, err
 	}
 	if err := q.EndStatusComponentState(ctx, store.EndStatusComponentStateParams{WorkspaceID: c.WorkspaceID, ComponentID: c.ID, Now: now}); err != nil {
 		return c, err

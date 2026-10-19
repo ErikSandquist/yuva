@@ -6905,6 +6905,7 @@ type ApiKeyList struct {
 //	  - `status:read`: status pages, their groups, components and incidents.
 //	  - `status:manage`: set component states, open, change and resolve incidents and their
 //	    updates; create, change and delete pages, groups and components (owners and admins).
+//	    Never implied: a key made without naming its scopes does not hold it.
 //
 // `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
 type ApiKeyScope string
@@ -22506,7 +22507,8 @@ type ClientInterface interface {
 	// components by group with their uptime, open incidents and running or planned maintenance, and
 	// the incidents of the last 14 days. Needs no credentials and sends
 	// `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
-	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`. Limited
+	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
+	// slug the page was renamed from answers `301` with the current address in `Location`. Limited
 	// to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
 	//
 	// Corresponds with GET /client/v1/status/{slug} (the `GetClientStatusPage` operationId).
@@ -27135,7 +27137,8 @@ type ClientInterface interface {
 	//
 	// A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 	// URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-	// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+	// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+	// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 	// to the inbox's.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
@@ -27149,7 +27152,8 @@ type ClientInterface interface {
 	//
 	// A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 	// URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-	// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+	// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+	// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 	// to the inbox's.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
@@ -27178,7 +27182,8 @@ type ClientInterface interface {
 	// UpdateStatusPageWithBody Update a status page
 	//
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-	// takes the page off the web (`404`) at once.
+	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+	// redirect to the new one, until the page is deleted.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -27190,7 +27195,8 @@ type ClientInterface interface {
 	// UpdateStatusPage Update a status page
 	//
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-	// takes the page off the web (`404`) at once.
+	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+	// redirect to the new one, until the page is deleted.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29259,7 +29265,8 @@ func (c *Client) CreateClientSession(ctx context.Context, body CreateClientSessi
 // components by group with their uptime, open incidents and running or planned maintenance, and
 // the incidents of the last 14 days. Needs no credentials and sends
 // `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
-// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`. Limited
+// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
+// slug the page was renamed from answers `301` with the current address in `Location`. Limited
 // to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
 //
 // Corresponds with GET /client/v1/status/{slug} (the `GetClientStatusPage` operationId).
@@ -37348,7 +37355,8 @@ func (c *Client) ListStatusPages(ctx context.Context, params *ListStatusPagesPar
 //
 // A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 // URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 // to the inbox's.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
@@ -37372,7 +37380,8 @@ func (c *Client) CreateStatusPageWithBody(ctx context.Context, params *CreateSta
 //
 // A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 // URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 // to the inbox's.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
@@ -37431,7 +37440,8 @@ func (c *Client) GetStatusPage(ctx context.Context, pageId StatusPageId, params 
 // UpdateStatusPageWithBody Update a status page
 //
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-// takes the page off the web (`404`) at once.
+// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+// redirect to the new one, until the page is deleted.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -37453,7 +37463,8 @@ func (c *Client) UpdateStatusPageWithBody(ctx context.Context, pageId StatusPage
 // UpdateStatusPage Update a status page
 //
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-// takes the page off the web (`404`) at once.
+// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+// redirect to the new one, until the page is deleted.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -59667,7 +59678,8 @@ type ClientWithResponsesInterface interface {
 	// components by group with their uptime, open incidents and running or planned maintenance, and
 	// the incidents of the last 14 days. Needs no credentials and sends
 	// `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
-	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`. Limited
+	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
+	// slug the page was renamed from answers `301` with the current address in `Location`. Limited
 	// to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -64638,7 +64650,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 	// URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-	// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+	// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+	// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 	// to the inbox's.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
@@ -64652,7 +64665,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 	// URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-	// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+	// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+	// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 	// to the inbox's.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
@@ -64685,7 +64699,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateStatusPageWithBodyWithResponse Update a status page
 	//
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-	// takes the page off the web (`404`) at once.
+	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+	// redirect to the new one, until the page is deleted.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -64697,7 +64712,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateStatusPageWithResponse Update a status page
 	//
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-	// takes the page off the web (`404`) at once.
+	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+	// redirect to the new one, until the page is deleted.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -67788,6 +67804,11 @@ func (r CreateClientSessionResponse) ContentType() string {
 	return ""
 }
 
+// GetClientStatusPageResponse301Headers the declared response headers of an HTTP 301 response for GetClientStatusPage
+type GetClientStatusPageResponse301Headers struct {
+	Location *string
+}
+
 type GetClientStatusPageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -67797,6 +67818,8 @@ type GetClientStatusPageResponse struct {
 	ApplicationproblemJSON404 *Problem
 	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
 	ApplicationproblemJSON429 *Problem
+	// Headers301 the parsed response headers for an HTTP 301 response
+	Headers301 *GetClientStatusPageResponse301Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -88745,7 +88768,8 @@ func (c *ClientWithResponses) CreateClientSessionWithResponse(ctx context.Contex
 // components by group with their uptime, open incidents and running or planned maintenance, and
 // the incidents of the last 14 days. Needs no credentials and sends
 // `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
-// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`. Limited
+// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
+// slug the page was renamed from answers `301` with the current address in `Location`. Limited
 // to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
 //
 // Returns a wrapper object for the known response body format(s).
@@ -95792,7 +95816,8 @@ func (c *ClientWithResponses) ListStatusPagesWithResponse(ctx context.Context, p
 //
 // A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 // URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 // to the inbox's.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
@@ -95812,7 +95837,8 @@ func (c *ClientWithResponses) CreateStatusPageWithBodyWithResponse(ctx context.C
 //
 // A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
 // URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
-// (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+// (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+// is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
 // to the inbox's.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
@@ -95863,7 +95889,8 @@ func (c *ClientWithResponses) GetStatusPageWithResponse(ctx context.Context, pag
 // UpdateStatusPageWithBodyWithResponse Update a status page
 //
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-// takes the page off the web (`404`) at once.
+// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+// redirect to the new one, until the page is deleted.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -95881,7 +95908,8 @@ func (c *ClientWithResponses) UpdateStatusPageWithBodyWithResponse(ctx context.C
 // UpdateStatusPageWithResponse Update a status page
 //
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
-// takes the page off the web (`404`) at once.
+// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+// redirect to the new one, until the page is deleted.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -98812,6 +98840,9 @@ func ParseGetClientStatusPageResponse(rsp *http.Response) (*GetClientStatusPageR
 		}
 		response.JSON200 = &dest
 
+	case rsp.StatusCode == 301:
+		break // No content-type
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest Problem
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -98826,6 +98857,19 @@ func ParseGetClientStatusPageResponse(rsp *http.Response) (*GetClientStatusPageR
 		}
 		response.ApplicationproblemJSON429 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 301:
+		var headers GetClientStatusPageResponse301Headers
+		if values := rsp.Header.Values("Location"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Location", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Location = &value
+		}
+		response.Headers301 = &headers
 	}
 
 	return response, nil

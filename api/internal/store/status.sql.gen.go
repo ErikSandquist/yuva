@@ -53,6 +53,27 @@ func (q *Queries) ActiveStatusHolders(ctx context.Context, arg ActiveStatusHolde
 	return items, nil
 }
 
+const addStatusFormerSlug = `-- name: AddStatusFormerSlug :exec
+INSERT INTO status_page_slugs (slug, workspace_id, page_id, created_at) VALUES ($1, $2, $3, $4)
+`
+
+type AddStatusFormerSlugParams struct {
+	Slug        string
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) AddStatusFormerSlug(ctx context.Context, arg AddStatusFormerSlugParams) error {
+	_, err := q.db.Exec(ctx, addStatusFormerSlug,
+		arg.Slug,
+		arg.WorkspaceID,
+		arg.PageID,
+		arg.Now,
+	)
+	return err
+}
+
 const addStatusIncidentComponent = `-- name: AddStatusIncidentComponent :exec
 INSERT INTO status_incident_components (workspace_id, incident_id, component_id, state)
 VALUES ($1, $2, $3, $4)
@@ -489,6 +510,39 @@ func (q *Queries) EndStatusComponentState(ctx context.Context, arg EndStatusComp
 	return err
 }
 
+const findStatusPageByFormerSlug = `-- name: FindStatusPageByFormerSlug :one
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at FROM status_page_slugs s
+JOIN status_pages p ON p.workspace_id = s.workspace_id AND p.id = s.page_id
+WHERE s.slug = $1
+`
+
+// The documented exception: a public page is found by a former slug before its workspace is known.
+func (q *Queries) FindStatusPageByFormerSlug(ctx context.Context, slug string) (StatusPage, error) {
+	row := q.db.QueryRow(ctx, findStatusPageByFormerSlug, slug)
+	var i StatusPage
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.LogoUrl,
+		&i.AccentColor,
+		&i.SiteUrl,
+		&i.SupportUrl,
+		&i.Locale,
+		&i.Timezone,
+		&i.HistoryDays,
+		&i.ShowUptime,
+		&i.Published,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const findStatusPageBySlug = `-- name: FindStatusPageBySlug :one
 SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE slug = $1
 `
@@ -675,6 +729,29 @@ func (q *Queries) GetStatusPage(ctx context.Context, arg GetStatusPageParams) (S
 		&i.UpdatedAt,
 	)
 	return i, err
+}
+
+const handOverStatusComponentState = `-- name: HandOverStatusComponentState :exec
+UPDATE status_component_states SET source = $1, source_id = $2
+WHERE workspace_id = $3 AND component_id = $4 AND ended_at IS NULL
+  AND (source <> $1 OR source_id IS DISTINCT FROM $2::uuid)
+`
+
+type HandOverStatusComponentStateParams struct {
+	Source      string
+	SourceID    *uuid.UUID
+	WorkspaceID uuid.UUID
+	ComponentID uuid.UUID
+}
+
+func (q *Queries) HandOverStatusComponentState(ctx context.Context, arg HandOverStatusComponentStateParams) error {
+	_, err := q.db.Exec(ctx, handOverStatusComponentState,
+		arg.Source,
+		arg.SourceID,
+		arg.WorkspaceID,
+		arg.ComponentID,
+	)
+	return err
 }
 
 const listPublicStatusIncidents = `-- name: ListPublicStatusIncidents :many
@@ -1238,6 +1315,21 @@ func (q *Queries) OpenStatusComponentStates(ctx context.Context, arg OpenStatusC
 	return items, nil
 }
 
+const releaseStatusFormerSlug = `-- name: ReleaseStatusFormerSlug :exec
+DELETE FROM status_page_slugs WHERE workspace_id = $1 AND page_id = $2 AND slug = $3
+`
+
+type ReleaseStatusFormerSlugParams struct {
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+	Slug        string
+}
+
+func (q *Queries) ReleaseStatusFormerSlug(ctx context.Context, arg ReleaseStatusFormerSlugParams) error {
+	_, err := q.db.Exec(ctx, releaseStatusFormerSlug, arg.WorkspaceID, arg.PageID, arg.Slug)
+	return err
+}
+
 const setStatusComponentState = `-- name: SetStatusComponentState :one
 UPDATE status_components SET state = $1, updated_at = $2
 WHERE workspace_id = $3 AND id = $4
@@ -1358,7 +1450,8 @@ func (q *Queries) StatusComponentSpans(ctx context.Context, arg StatusComponentS
 }
 
 const statusSlugTaken = `-- name: StatusSlugTaken :one
-SELECT EXISTS (SELECT 1 FROM status_pages WHERE slug = $1 AND id <> $2)::bool
+SELECT (EXISTS (SELECT 1 FROM status_pages p WHERE p.slug = $1 AND p.id <> $2)
+    OR EXISTS (SELECT 1 FROM status_page_slugs f WHERE f.slug = $1 AND f.page_id <> $2))::bool
 `
 
 type StatusSlugTakenParams struct {
@@ -1366,6 +1459,7 @@ type StatusSlugTakenParams struct {
 	ID   uuid.UUID
 }
 
+// The documented exception: slugs, current and former, are unique across the server, so availability is checked across workspaces.
 func (q *Queries) StatusSlugTaken(ctx context.Context, arg StatusSlugTakenParams) (bool, error) {
 	row := q.db.QueryRow(ctx, statusSlugTaken, arg.Slug, arg.ID)
 	var column_1 bool
@@ -1533,7 +1627,7 @@ const updateStatusPage = `-- name: UpdateStatusPage :one
 UPDATE status_pages SET name = $1, description = $2, slug = $3, logo_url = $4,
     accent_color = $5, site_url = $6, support_url = $7,
     locale = $8, timezone = $9, history_days = $10, show_uptime = $11, published = $12,
-    changed_at = $13, updated_at = $13
+    changed_at = greatest(changed_at + interval '1 microsecond', $13::timestamptz), updated_at = $13
 WHERE workspace_id = $14 AND id = $15
 RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at
 `

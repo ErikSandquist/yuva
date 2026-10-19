@@ -250,9 +250,9 @@ scoped API keys, and every key-authored message names its bot.
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
 before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
-added to existing keys, and `broadcasts:send` is never implied: a key made without naming its scopes holds
-every scope but that one. `yuva api-key create` takes `--scope` (repeatable, default every scope but
-`broadcasts:send`) and `--inbox` (repeatable).
+added to existing keys, and `broadcasts:send` and `status:manage` are never implied: a key made without
+naming its scopes holds every scope but those. `yuva api-key create` takes `--scope` (repeatable, default
+every scope but `broadcasts:send` and `status:manage`) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
 inboxes sees; it cannot hold `inboxes:manage`, `webhooks:manage`, `workspace:manage` or `migrations:manage` (refused when
@@ -1899,7 +1899,10 @@ incident before a customer writes, and the conversations an outage brings are an
   (unique across the server, `a-z0-9-`, 3–48 characters, reserved words refused), logo (storage), accent
   colour, site and support links, locale (`en`, `tr`, `de`, …; the page's words follow it), time zone,
   `history_days` (90), whether uptime is shown, and `published`. An unpublished page answers 404 to
-  everyone but members, who preview it in the panel. Owners and admins manage pages and monitors;
+  everyone but members, who preview it in the panel. Renaming a slug keeps the old one in
+  `status_page_slugs`: it stays reserved for that page, its public paths (page, history, incidents, feed,
+  badge, JSON) answer `301` to the current slug, and it is freed only when the page is deleted; a page
+  may take one of its own former slugs back. Owners and admins manage pages and monitors;
   agents with access to the inbox open, update and resolve incidents and set component states.
 - **Components.** `status_components` (name, description, optional group from `status_component_groups`,
   position, `hidden`) have a state: `operational`, `degraded`, `partial_outage`, `major_outage`,
@@ -2152,16 +2155,18 @@ incident before a customer writes, and the conversations an outage brings are an
 - **API and access.** `/v1/status-pages`, `/v1/status-pages/{id}/components`, `/groups`,
   `/incidents`, `/incidents/{id}/updates`, `/incidents/{id}/conversations`, `/monitors`,
   `/monitors/{id}/checks`; `/v1/status-pages/{id}/preview` renders the public page for members.
-  Scopes `status:read` and `status:manage`; like `analytics:*` they go to keys made after M19 without
-  named scopes, never to existing keys. A key limited to inboxes sees the pages of those inboxes. Stored
+  Scopes `status:read` and `status:manage`; neither goes to existing keys, `status:read` goes to keys
+  made after M19 without named scopes, and `status:manage` never does (like `broadcasts:send`: name it
+  when the key is made). A key limited to inboxes sees the pages of those inboxes. Stored
   events and webhook types: `status.component.updated`, `status.incident.created`,
   `status.incident.updated` (every published update), `status.incident.resolved`,
   `status.monitor.down`, `status.monitor.up`. MCP tools: `list_status_pages`, `get_status_page`,
   `set_component_state`, `create_incident`, `post_incident_update`, `resolve_incident`,
   `list_monitors`; publishing from MCP follows the same draft rule as the panel unless the workspace lets
   assistants publish incidents.
-- **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug` or a
-  verified `status_pages.custom_domain`, both unique across the server; a heartbeat or push finds its
+- **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug`, a
+  former slug in `status_page_slugs` or a verified `status_pages.custom_domain`, all unique across the
+  server, and a slug's availability is checked against current and former slugs of every workspace; a heartbeat or push finds its
   monitor by `status_monitors.token_hash`; an SES notification finds a notice delivery by
   `status_notice_deliveries.header_message_id`, unique across the server. Everything after those lookups is scoped by the workspace
   they returned.
@@ -2246,8 +2251,9 @@ now; per-channel limits can narrow them later.
     carries neither the key nor the session, asks whether any chat channel allows its origin. A
     contact session token is looked up by its hash in `contact_sessions` before its workspace is
     known. Everything after those lookups is scoped by the workspace they returned.
-  - Status pages (M19): a public page finds its page by `status_pages.slug` or a verified
-    `status_pages.custom_domain`, and a heartbeat or push finds its monitor by
+  - Status pages (M19): a public page finds its page by `status_pages.slug`, a former slug in
+    `status_page_slugs` or a verified `status_pages.custom_domain` (a slug's availability is checked the
+    same way), and a heartbeat or push finds its monitor by
     `status_monitors.token_hash`, and an SES notification finds a notice delivery by
     `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is
     scoped by the workspace they returned.

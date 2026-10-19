@@ -6907,6 +6907,7 @@ type ApiKeyList struct {
 //	  - `status:read`: status pages, their groups, components and incidents.
 //	  - `status:manage`: set component states, open, change and resolve incidents and their
 //	    updates; create, change and delete pages, groups and components (owners and admins).
+//	    Never implied: a key made without naming its scopes does not hold it.
 //
 // `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
 type ApiKeyScope string
@@ -45958,6 +45959,22 @@ func (response GetClientStatusPage200JSONResponse) VisitGetClientStatusPageRespo
 	w.WriteHeader(200)
 	_, err := buf.WriteTo(w)
 	return err
+}
+
+type GetClientStatusPage301ResponseHeaders struct {
+	Location *string
+}
+
+type GetClientStatusPage301Response struct {
+	Headers GetClientStatusPage301ResponseHeaders
+}
+
+func (response GetClientStatusPage301Response) VisitGetClientStatusPageResponse(w http.ResponseWriter) error {
+	if response.Headers.Location != nil {
+		w.Header().Set("Location", fmt.Sprint(*response.Headers.Location))
+	}
+	w.WriteHeader(301)
+	return nil
 }
 
 type GetClientStatusPage404ApplicationProblemPlusJSONResponse struct {

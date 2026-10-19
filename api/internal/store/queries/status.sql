@@ -15,7 +15,21 @@ SELECT * FROM status_pages WHERE workspace_id = $1 AND id = $2 FOR UPDATE;
 SELECT * FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2;
 
 -- name: StatusSlugTaken :one
-SELECT EXISTS (SELECT 1 FROM status_pages WHERE slug = @slug AND id <> @id)::bool;
+-- The documented exception: slugs, current and former, are unique across the server, so availability is checked across workspaces.
+SELECT (EXISTS (SELECT 1 FROM status_pages p WHERE p.slug = @slug AND p.id <> @id)
+    OR EXISTS (SELECT 1 FROM status_page_slugs f WHERE f.slug = @slug AND f.page_id <> @id))::bool;
+
+-- name: AddStatusFormerSlug :exec
+INSERT INTO status_page_slugs (slug, workspace_id, page_id, created_at) VALUES (@slug, @workspace_id, @page_id, @now);
+
+-- name: ReleaseStatusFormerSlug :exec
+DELETE FROM status_page_slugs WHERE workspace_id = @workspace_id AND page_id = @page_id AND slug = @slug;
+
+-- name: FindStatusPageByFormerSlug :one
+-- The documented exception: a public page is found by a former slug before its workspace is known.
+SELECT p.* FROM status_page_slugs s
+JOIN status_pages p ON p.workspace_id = s.workspace_id AND p.id = s.page_id
+WHERE s.slug = $1;
 
 -- name: FindStatusPageBySlug :one
 -- The documented exception: a public page is found by its slug before its workspace is known.
@@ -25,7 +39,7 @@ SELECT * FROM status_pages WHERE slug = $1;
 UPDATE status_pages SET name = @name, description = @description, slug = @slug, logo_url = sqlc.narg(logo_url),
     accent_color = sqlc.narg(accent_color), site_url = sqlc.narg(site_url), support_url = sqlc.narg(support_url),
     locale = @locale, timezone = @timezone, history_days = @history_days, show_uptime = @show_uptime, published = @published,
-    changed_at = @now, updated_at = @now
+    changed_at = greatest(changed_at + interval '1 microsecond', @now::timestamptz), updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;
 
@@ -104,6 +118,11 @@ SELECT * FROM status_components WHERE workspace_id = @workspace_id AND page_id =
 -- name: EndStatusComponentState :exec
 UPDATE status_component_states SET ended_at = greatest(started_at, @now::timestamptz)
 WHERE workspace_id = @workspace_id AND component_id = @component_id AND ended_at IS NULL;
+
+-- name: HandOverStatusComponentState :exec
+UPDATE status_component_states SET source = @source, source_id = sqlc.narg(source_id)
+WHERE workspace_id = @workspace_id AND component_id = @component_id AND ended_at IS NULL
+  AND (source <> @source OR source_id IS DISTINCT FROM sqlc.narg(source_id)::uuid);
 
 -- name: StartStatusComponentState :one
 INSERT INTO status_component_states (id, workspace_id, component_id, state, source, source_id, started_at)

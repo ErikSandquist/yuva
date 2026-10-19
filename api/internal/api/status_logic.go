@@ -3,6 +3,7 @@ package api
 import (
 	"html/template"
 	"math"
+	"net/url"
 	"regexp"
 	"slices"
 	"strings"
@@ -213,6 +214,11 @@ func richStatusText(s string) template.HTML {
 			break
 		}
 		link := strings.TrimRight(rest[loc[0]:loc[1]], ".,;:!?)]")
+		if u, err := url.Parse(link); err != nil || u.Host == "" {
+			b.WriteString(template.HTMLEscapeString(rest[:loc[0]+len(link)]))
+			rest = rest[loc[0]+len(link):]
+			continue
+		}
 		b.WriteString(template.HTMLEscapeString(rest[:loc[0]]))
 		esc := template.HTMLEscapeString(link)
 		b.WriteString(`<a href="` + esc + `" rel="nofollow noopener">` + esc + `</a>`)

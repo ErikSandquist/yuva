@@ -135,6 +135,17 @@ func (s *Server) serveStatus(view string) http.HandlerFunc {
 			return
 		}
 		pg, err := s.st.FindStatusPageBySlug(ctx, slug)
+		if store.IsNotFound(err) {
+			pg, err = s.st.FindStatusPageByFormerSlug(ctx, slug)
+			if err == nil && pg.Published {
+				target := s.statusURL(pg.Slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
+				if r.URL.RawQuery != "" {
+					target += "?" + r.URL.RawQuery
+				}
+				http.Redirect(w, r, target, http.StatusMovedPermanently)
+				return
+			}
+		}
 		if store.IsNotFound(err) || (err == nil && !pg.Published) {
 			s.statusGone(w)
 			return
@@ -206,6 +217,17 @@ func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, view str
 	if e, ok := s.statusCache.get(key, pg.ChangedAt, now); ok {
 		return e, nil
 	}
+	var inc store.StatusIncident
+	if view == "incident" {
+		var err error
+		inc, err = s.st.GetStatusIncident(ctx, store.GetStatusIncidentParams{WorkspaceID: pg.WorkspaceID, PageID: pg.ID, ID: incident})
+		if store.IsNotFound(err) || (err == nil && inc.PublishedAt == nil) {
+			return statusCacheEntry{}, errStatusIncidentGone
+		}
+		if err != nil {
+			return statusCacheEntry{}, err
+		}
+	}
 	snap, err := s.statusSnapshot(ctx, s.st.Queries, pg, now)
 	if err != nil {
 		return statusCacheEntry{}, err
@@ -222,14 +244,6 @@ func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, view str
 		e.ctype = "image/svg+xml"
 		e.body = statusBadge(snap)
 	case "incident":
-		var inc store.StatusIncident
-		inc, err = s.st.GetStatusIncident(ctx, store.GetStatusIncidentParams{WorkspaceID: pg.WorkspaceID, PageID: pg.ID, ID: incident})
-		if store.IsNotFound(err) || (err == nil && inc.PublishedAt == nil) {
-			return e, errStatusIncidentGone
-		}
-		if err != nil {
-			return e, err
-		}
 		var parts incidentParts
 		if parts, err = loadIncidentParts(ctx, s.st.Queries, pg.WorkspaceID, []store.StatusIncident{inc}); err != nil {
 			return e, err
@@ -389,6 +403,13 @@ func (s *Server) GetClientStatusPage(ctx context.Context, req oas.GetClientStatu
 		return nil, err
 	}
 	pg, err := s.st.FindStatusPageBySlug(ctx, req.Slug)
+	if store.IsNotFound(err) {
+		pg, err = s.st.FindStatusPageByFormerSlug(ctx, req.Slug)
+		if err == nil && pg.Published {
+			target := s.statusURL(pg.Slug, "")
+			return oas.GetClientStatusPage301Response{Headers: oas.GetClientStatusPage301ResponseHeaders{Location: &target}}, nil
+		}
+	}
 	if store.IsNotFound(err) || (err == nil && !pg.Published) {
 		return nil, errStatusPageGone
 	}

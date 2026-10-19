@@ -1652,6 +1652,13 @@ type StatusPage struct {
 	UpdatedAt   time.Time
 }
 
+type StatusPageSlug struct {
+	Slug        string
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+	CreatedAt   time.Time
+}
+
 type UsageCounter struct {
 	WorkspaceID             uuid.UUID
 	Month                   time.Time

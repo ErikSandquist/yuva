@@ -16,7 +16,7 @@ var allScopes = []oas.ApiKeyScope{
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
-var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend}
+var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage}
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage, oas.AnalyticsManage}
 

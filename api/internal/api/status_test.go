@@ -10,6 +10,7 @@ import (
 	"uuid"
 
 	"github.com/productdevbook/yuva/api/internal/api"
+	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 type statusTeam struct {
@@ -374,4 +375,102 @@ func TestStatusWebhooks(t *testing.T) {
 	if !slices.Equal(types, want) {
 		t.Fatalf("webhooks %v, want %v", types, want)
 	}
+}
+
+func TestStatusPageChangedAtNeverMovesBack(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	ws, page := uuid.MustParse(st.ws), uuid.MustParse(st.page)
+	changed := func() time.Time {
+		pg, err := h.st.GetStatusPage(context.Background(), store.GetStatusPageParams{WorkspaceID: ws, ID: page})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return pg.ChangedAt
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"name": "One"})
+	first := changed()
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"name": "Two"})
+	same := changed()
+	h.clock.Set(first.Add(-time.Hour))
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"name": "Three"})
+	back := changed()
+	if !same.After(first) || !back.After(same) {
+		t.Fatalf("changed_at %v, %v, %v must only grow", first, same, back)
+	}
+}
+
+func TestStatusComponentHolderHandover(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	open := func(id string) store.StatusComponentState {
+		rows, err := h.st.OpenStatusComponentStates(context.Background(), store.OpenStatusComponentStatesParams{
+			WorkspaceID: uuid.MustParse(st.ws), ComponentIds: []uuid.UUID{uuid.MustParse(id)},
+		})
+		if err != nil || len(rows) != 1 {
+			t.Fatalf("open spans %v %v", rows, err)
+		}
+		return rows[0]
+	}
+	raise := func(title string) string {
+		return st.owner.expect(http.StatusCreated, "POST", st.path("/incidents"), map[string]any{
+			"title": title, "message": "Looking.", "publish": true,
+			"components": []map[string]any{{"component_id": st.api, "state": "major_outage"}},
+		}).str("id")
+	}
+	a, b := raise("First"), raise("Second")
+	st.owner.expect(http.StatusCreated, "POST", st.path("/incidents/"+a+"/updates"), map[string]any{"state": "resolved", "body": "Fixed."})
+	if got := st.componentState(t, st.api); got != "major_outage" {
+		t.Fatalf("the second incident still holds the component: %s", got)
+	}
+	if o := open(st.api); o.Source != "incident" || o.SourceID == nil || o.SourceID.String() != b {
+		t.Fatalf("holder %v %v, want incident %s", o.Source, o.SourceID, b)
+	}
+}
+
+func TestStatusSlugRenameRedirects(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	stranger := newTeam(t, h)
+	old, current := st.slug, unique("st")
+
+	full := h.client()
+	full.bearer = st.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "full"}).str("secret")
+	full.expectProblem(http.StatusForbidden, "insufficient_scope", "POST", st.path("/components/"+st.web+"/state"), map[string]any{"state": "degraded"})
+
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"slug": current})
+	visitor := h.client()
+	visitor.http.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
+	for _, suffix := range []string{"", "/history", "/feed.atom", "/badge.svg", "/incidents/" + uuid.New().String()} {
+		r := visitor.do("GET", "/status/"+old+suffix, nil)
+		if want := "/status/" + current + suffix; r.status != http.StatusMovedPermanently || !strings.HasSuffix(r.header.Get("Location"), want) {
+			t.Fatalf("%s: %d %q, want 301 to ...%s", suffix, r.status, r.header.Get("Location"), want)
+		}
+	}
+	if r := visitor.do("GET", "/client/v1/status/"+old, nil); r.status != http.StatusMovedPermanently || !strings.HasSuffix(r.header.Get("Location"), "/status/"+current) {
+		t.Fatalf("JSON: %d %q", r.status, r.header.Get("Location"))
+	}
+	if r := visitor.do("GET", "/status/"+current, nil); r.status != http.StatusOK {
+		t.Fatalf("current slug answers %d", r.status)
+	}
+
+	stranger.owner.expectProblem(http.StatusConflict, "slug_taken", "POST", "/v1/status-pages", map[string]any{"inbox_id": stranger.inbox, "name": "Mine", "slug": old})
+	mine := stranger.owner.expect(http.StatusCreated, "POST", "/v1/status-pages", map[string]any{"inbox_id": stranger.inbox, "name": "Mine", "slug": unique("st")}).str("id")
+	stranger.owner.expectProblem(http.StatusConflict, "slug_taken", "PATCH", "/v1/status-pages/"+mine, map[string]any{"slug": old})
+
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"slug": old})
+	if r := visitor.do("GET", "/status/"+old, nil); r.status != http.StatusOK {
+		t.Fatalf("the page took its own former slug back: %d", r.status)
+	}
+	if r := visitor.do("GET", "/status/"+current, nil); r.status != http.StatusMovedPermanently {
+		t.Fatalf("the slug it left answers %d", r.status)
+	}
+	stranger.owner.expectProblem(http.StatusConflict, "slug_taken", "PATCH", "/v1/status-pages/"+mine, map[string]any{"slug": current})
+
+	st.owner.expect(http.StatusNoContent, "DELETE", st.path(""), nil)
+	if r := visitor.do("GET", "/status/"+current, nil); r.status != http.StatusNotFound {
+		t.Fatalf("a deleted page's former slug answers %d", r.status)
+	}
+	stranger.owner.expect(http.StatusOK, "PATCH", "/v1/status-pages/"+mine, map[string]any{"slug": current})
 }
