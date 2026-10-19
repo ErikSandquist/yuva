@@ -43,7 +43,8 @@ final class StatusDismissals {
     }
 
     func prune(keeping status: YuvaInboxStatus?) {
-        let open = Set((status?.open ?? []).map(Self.entry))
+        guard let status else { return }
+        let open = Set(status.open.map(Self.entry))
         let kept = entries.intersection(open)
         guard kept != entries else { return }
         entries = kept

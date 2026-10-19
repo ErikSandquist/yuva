@@ -35,7 +35,8 @@ internal class StatusDismissals(private val save: (Set<String>) -> Unit, initial
     }
 
     fun prune(status: YuvaInboxStatus?) {
-        val kept = entries intersect status?.open.orEmpty().map(::entry).toSet()
+        if (status == null) return
+        val kept = entries intersect status.open.map(::entry).toSet()
         if (kept == entries) return
         entries = kept
         save(kept)

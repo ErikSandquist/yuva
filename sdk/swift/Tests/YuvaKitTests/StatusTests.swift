@@ -84,6 +84,9 @@ import Testing
         let restarted = StatusDismissals(defaults: defaults, key: "d")
         #expect(restarted.notice(for: open) == nil)
 
+        restarted.prune(keeping: nil)
+        #expect(restarted.notice(for: open) == nil)
+
         restarted.prune(keeping: status([]))
         #expect(restarted.entries.isEmpty)
         #expect(StatusDismissals(defaults: defaults, key: "d").entries.isEmpty)

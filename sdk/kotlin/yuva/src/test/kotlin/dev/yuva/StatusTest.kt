@@ -84,6 +84,9 @@ class StatusTest {
 
         assertNull(dismissals(initial = saved.last()).notice(open))
 
+        store.prune(null)
+        assertNull(store.notice(open))
+
         store.prune(status())
         assertTrue(store.entries.isEmpty())
         assertTrue(saved.last().isEmpty())
