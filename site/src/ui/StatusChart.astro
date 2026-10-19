@@ -1,0 +1,32 @@
+---
+import { chart, GAP, PITCH, type ChartKey } from "@/lib/statusBars"
+
+interface Props {
+  rows: number[]
+}
+
+const height = 10
+const paths = chart(Astro.props.rows, height)
+const count = Astro.props.rows.length
+const keys = Object.keys(paths) as ChartKey[]
+const style: Record<ChartKey, string> = {
+  solid: "fill:var(--brand)",
+  solidSlow: "fill:var(--st-warn)",
+  wash: "fill:var(--brand);fill-opacity:0.13",
+  washSlow: "fill:var(--st-warn);fill-opacity:0.13",
+  off: "fill:color-mix(in srgb, var(--ink-faint) 28%, transparent)",
+}
+---
+
+<svg
+  viewBox={`0 0 ${count * PITCH - GAP} ${height * PITCH - GAP}`}
+  shape-rendering="crispEdges"
+  class="block h-auto w-full"
+  data-fit
+  data-count={count}
+  data-pitch={PITCH}
+  data-gap={GAP}
+  aria-hidden="true"
+>
+  {keys.map((k) => paths[k] && <path d={paths[k]} style={style[k]} />)}
+</svg>

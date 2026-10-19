@@ -1,21 +1,45 @@
 ---
-import { bars, type BarTone } from "@/lib/statusBars"
+import { bars, GAP, PITCH, type BarTone } from "@/lib/statusBars"
 
 interface Props {
   marks: Record<number, BarTone>
+  off?: number
   class?: string
 }
 
-const paths = bars(Astro.props.marks)
+const count = 90
+const paths = bars(Astro.props.marks, count, Astro.props.off)
 const tones = Object.keys(paths) as BarTone[]
+const fill = (t: BarTone) =>
+  t === "off" ? "fill:color-mix(in srgb, var(--ink-faint) 28%, transparent)" : `fill:var(--st-${t})`
 ---
 
 <svg
-  viewBox="0 0 180 8"
-  preserveAspectRatio="none"
+  viewBox={`0 0 ${count * PITCH - GAP} 8`}
   shape-rendering="crispEdges"
-  class:list={["block h-3 w-full", Astro.props.class]}
+  class:list={["block h-auto w-full", Astro.props.class]}
+  data-fit
+  data-count={count}
+  data-pitch={PITCH}
+  data-gap={GAP}
   aria-hidden="true"
 >
-  {tones.map((t) => paths[t] && <path d={paths[t]} style={`fill:var(--st-${t})`} />)}
+  {tones.map((t) => paths[t] && <path d={paths[t]} style={fill(t)} />)}
 </svg>
+
+<script>
+  const fit = () => {
+    document.querySelectorAll<SVGSVGElement>("svg[data-fit]").forEach((svg) => {
+      const count = Number(svg.dataset.count)
+      const pitch = Number(svg.dataset.pitch)
+      const gap = Number(svg.dataset.gap)
+      const rows = svg.viewBox.baseVal.height
+      const width = svg.getBoundingClientRect().width
+      if (!width) return
+      const shown = Math.max(1, Math.min(count, Math.floor(width / 7)))
+      svg.setAttribute("viewBox", `${(count - shown) * pitch} 0 ${shown * pitch - gap} ${rows}`)
+    })
+  }
+  addEventListener("resize", fit)
+  fit()
+</script>
