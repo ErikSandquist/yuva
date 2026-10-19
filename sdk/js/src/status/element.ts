@@ -71,13 +71,15 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .strip{flex:1;min-inline-size:0;block-size:12px;display:block}
 .strip path{fill:var(--tone)}
 .uptime{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.by{gap:6px;font-size:12px;color:var(--faint);white-space:nowrap}
+.by{min-inline-size:max-content;gap:6px;font-size:12px;color:var(--faint);white-space:nowrap}
 .by svg{flex:none;inline-size:14px;block-size:14px;display:block}
 .parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block-start:1px solid var(--rule)}
-.part{justify-content:space-between;gap:8px;min-block-size:44px;font-size:13px}
-.part:not(:nth-child(4n+1)){border-inline-start:1px solid var(--rule)}
-.part .name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.part .state{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--state-text,var(--soft))}
+.part{justify-content:space-between;align-items:baseline;gap:8px;min-block-size:44px;padding-block:12px;font-size:13px}
+.part:not(:nth-child(4n+1)),.blank:not(:nth-child(4n+1)){border-inline-start:1px solid var(--rule)}
+.part .name,.part .state{display:flex;align-items:center;block-size:20px;line-height:20px}
+.part .name{min-width:0;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blank{min-block-size:44px}
+.part .state{flex:none;align-items:center;gap:6px;font-size:12px;color:var(--state-text,var(--soft))}
 .part .dot{inline-size:6px;block-size:6px}
 .ok{--tone:var(--ok)}.warn{--tone:var(--warn)}.partial{--tone:var(--partial)}.maint{--tone:var(--maint)}.bad{--tone:var(--bad)}
 .part.ok{--state-text:var(--ok-text)}.part.warn{--state-text:var(--warn-text)}.part.partial,.part.bad{--state-text:var(--bad-text)}
@@ -85,8 +87,9 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .bar{grid-template-columns:minmax(0,1fr)}
 .bar>.cell+.cell{border-inline-start:0;border-block-start:1px solid var(--rule)}
 .parts{grid-template-columns:repeat(2,minmax(0,1fr))}
-.part:not(:nth-child(4n+1)){border-inline-start:0}
-.part:nth-child(2n){border-inline-start:1px solid var(--rule)}
+.part:not(:nth-child(4n+1)),.blank:not(:nth-child(4n+1)){border-inline-start:0}
+.blank.wide{display:none}
+.part:nth-child(2n),.blank:nth-child(2n){border-inline-start:1px solid var(--rule)}
 }
 @container (max-width:600px){
 section{padding:0 16px}
@@ -369,6 +372,10 @@ export class YuvaStatusElement extends Base {
         status.append(marker)
         part.append(el("span", "name", component.name), status)
         parts.append(part)
+      }
+      const count = data.components.length
+      for (let index = count; index % 4 !== 0; index++) {
+        parts.append(el("span", index >= Math.ceil(count / 2) * 2 ? "cell blank wide" : "cell blank"))
       }
       frame.append(parts)
     }
