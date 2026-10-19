@@ -12,6 +12,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/email"
+	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 type noticeTeam struct {
@@ -370,29 +371,44 @@ func TestStatusNoticeCoversExactlyItsUpdates(t *testing.T) {
 	nt.update(t, loud, map[string]any{"body": "Second text.", "state": "identified"})
 	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+loud+"/publish"), nil)
 	ns := nt.notices(t, loud)
-	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 2 {
-		t.Fatalf("publish attaches every notified update: %v", ns)
+	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 3 {
+		t.Fatalf("publish attaches every draft update: %v", ns)
 	}
 	h.clock.Advance(61 * time.Second)
 	nt.runNotices(t)
 	env := lastNoticeMail(t, bs, "ada@example.org")
 	for name, body := range map[string]string{"text": env.Text, "html": env.HTML} {
 		first, second := strings.Index(body, "Second text."), strings.Index(body, "Public text.")
-		if first < 0 || second < 0 || first > second || strings.Contains(body, "Draft remark.") {
+		if first < 0 || second < 0 || first > second || !strings.Contains(body, "Draft remark.") {
 			t.Fatalf("publish %s part: %s", name, body)
 		}
 	}
 
-	before := bs.count()
-	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+quiet+"/publish"), map[string]any{"notify": true})
-	ns = nt.notices(t, quiet)
-	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 0 {
-		t.Fatalf("a published quiet incident: %v", ns)
+	nt.update(t, loud, map[string]any{"body": "Hidden remark.", "notify": false})
+	if ns = nt.notices(t, loud); len(ns[0]["update_ids"].([]any)) != 3 {
+		t.Fatalf("a published update with notify false was attached: %v", ns)
 	}
-	h.clock.Advance(16 * time.Minute)
+}
+
+func TestStatusPublishDraftNoticeCarriesOpeningText(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+
+	quiet := nt.incident(t, map[string]any{"title": "Quiet", "message": "Quiet text.", "notify": false})
+	nt.update(t, quiet, map[string]any{"body": "Draft remark.", "notify": false})
+	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+quiet+"/publish"), map[string]any{"notify": true})
+	ns := nt.notices(t, quiet)
+	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 2 {
+		t.Fatalf("publish attaches every draft update: %v", ns)
+	}
+	h.clock.Advance(61 * time.Second)
 	nt.runNotices(t)
-	if bs.count() != before+1 || strings.Contains(lastNoticeMail(t, bs, "ada@example.org").Text, "Quiet text.") {
-		t.Fatalf("a notice without updates repeated a hidden one: %s", lastNoticeMail(t, bs, "ada@example.org").Text)
+	env := lastNoticeMail(t, bs, "ada@example.org")
+	for name, body := range map[string]string{"text": env.Text, "html": env.HTML} {
+		if !strings.Contains(body, "Quiet text.") || !strings.Contains(body, "Draft remark.") {
+			t.Fatalf("publish %s part: %s", name, body)
+		}
 	}
 }
 
@@ -455,5 +471,132 @@ func TestStatusQuietCloseCancelsPendingNotices(t *testing.T) {
 	ns = nt.notices(t, loud)
 	if len(ns) != 1 || ns[0]["state"] != "pending" || ns[0]["final"] != true {
 		t.Fatalf("after a notifying close: %v", ns)
+	}
+}
+
+func TestStatusWindowWordingOnlyForAWindowChange(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+	start := h.clock.Now().Add(48 * time.Hour)
+	window := func(shift time.Duration) map[string]any {
+		return map[string]any{"scheduled_start": start.Add(shift).Format(time.RFC3339), "scheduled_end": start.Add(shift + time.Hour).Format(time.RFC3339)}
+	}
+	body := window(0)
+	body["kind"], body["title"], body["message"], body["publish"] = "maintenance", "Upgrade", "Planned.", true
+	maint := nt.incident(t, body)
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	first := lastNoticeMail(t, bs, "ada@example.org")
+	for name, text := range map[string]string{"text": first.Text, "html": first.HTML} {
+		if strings.Contains(text, "now scheduled for") || !strings.Contains(text, "Planned.") || !strings.Contains(text, "Scheduled") {
+			t.Fatalf("first announcement %s part: %s", name, text)
+		}
+	}
+
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), window(0))
+	if ns := nt.notices(t, maint); len(ns) != 1 {
+		t.Fatalf("an unchanged window queued a notice: %v", ns)
+	}
+
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), window(time.Hour))
+	h.clock.Advance(16 * time.Minute)
+	nt.runNotices(t)
+	moved := lastNoticeMail(t, bs, "ada@example.org")
+	if !strings.Contains(moved.Text, "The maintenance is now scheduled for") {
+		t.Fatalf("window change: %s", moved.Text)
+	}
+
+	nt.update(t, maint, map[string]any{"body": "Still on.", "notify": true})
+	h.clock.Advance(16 * time.Minute)
+	nt.runNotices(t)
+	again := lastNoticeMail(t, bs, "ada@example.org")
+	if strings.Contains(again.Text, "now scheduled for") || !strings.Contains(again.Text, "Still on.") {
+		t.Fatalf("update after a window change: %s", again.Text)
+	}
+}
+
+func TestStatusWindowChangeFollowsIncidentNotify(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+	start := h.clock.Now().Add(48 * time.Hour)
+	window := func(shift time.Duration) map[string]any {
+		return map[string]any{"scheduled_start": start.Add(shift).Format(time.RFC3339), "scheduled_end": start.Add(shift + time.Hour).Format(time.RFC3339)}
+	}
+	body := window(0)
+	body["kind"], body["title"], body["message"], body["publish"], body["notify"] = "maintenance", "Quiet upgrade", "Planned.", true, false
+	maint := nt.incident(t, body)
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), window(time.Hour))
+	if ns := nt.notices(t, maint); len(ns) != 0 {
+		t.Fatalf("a not-notify maintenance mailed a window change: %v", ns)
+	}
+	explicit := window(2 * time.Hour)
+	explicit["notify"] = true
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), explicit)
+	if ns := nt.notices(t, maint); len(ns) != 1 {
+		t.Fatalf("an explicit notify did not mail the window change: %v", ns)
+	}
+
+	loud := window(0)
+	loud["kind"], loud["title"], loud["message"], loud["publish"] = "maintenance", "Loud upgrade", "Planned.", true
+	other := nt.incident(t, loud)
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	off := window(time.Hour)
+	off["notify"] = false
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+other), off)
+	if ns := nt.notices(t, other); len(ns) != 1 {
+		t.Fatalf("notify false on the change still queued a notice: %v", ns)
+	}
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+other), window(2*time.Hour))
+	if ns := nt.notices(t, other); len(ns) != 2 {
+		t.Fatalf("a window change without notify did not follow the incident: %v", ns)
+	}
+}
+
+func TestStatusAttachTakesOnlyFreeUpdatesOfTheSameIncident(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+	one := nt.incident(t, map[string]any{"title": "One", "message": "One.", "publish": true})
+	two := nt.incident(t, map[string]any{"title": "Two", "message": "Two.", "publish": true})
+	noticeOf := func(incident string) (uuid.UUID, uuid.UUID) {
+		ns := nt.notices(t, incident)
+		return uuid.MustParse(ns[0]["id"].(string)), uuid.MustParse(ns[0]["update_ids"].([]any)[0].(string))
+	}
+	noticeOne, updateOne := noticeOf(one)
+	noticeTwo, updateTwo := noticeOf(two)
+
+	ctx := context.Background()
+	ws := uuid.MustParse(nt.ws)
+	if err := h.st.AttachStatusNoticeUpdates(ctx, store.AttachStatusNoticeUpdatesParams{
+		WorkspaceID: ws, IncidentID: uuid.MustParse(two), NoticeID: &noticeTwo, Ids: []uuid.UUID{updateOne, updateTwo},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	owner := func(update uuid.UUID) uuid.UUID {
+		var n *uuid.UUID
+		if err := h.st.Pool.QueryRow(ctx, "SELECT notice_id FROM status_incident_updates WHERE workspace_id = $1 AND id = $2", ws, update).Scan(&n); err != nil || n == nil {
+			t.Fatalf("notice of %s: %v", update, err)
+		}
+		return *n
+	}
+	if owner(updateOne) != noticeOne || owner(updateTwo) != noticeTwo {
+		t.Fatalf("an update of another incident was moved: %v %v", owner(updateOne), owner(updateTwo))
+	}
+
+	if err := h.st.AttachStatusNoticeUpdates(ctx, store.AttachStatusNoticeUpdatesParams{
+		WorkspaceID: ws, IncidentID: uuid.MustParse(one), NoticeID: &noticeTwo, Ids: []uuid.UUID{updateOne},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if owner(updateOne) != noticeOne {
+		t.Fatal("an update already covered by a notice was re-pointed")
+	}
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	if got := len(bs.to("ada@example.org")); got != 2 {
+		t.Fatalf("%d notices went out", got)
 	}
 }

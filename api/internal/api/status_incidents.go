@@ -475,7 +475,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		}
 		queueMaintenance(ev, inc, now)
 		if notify {
-			if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}); err != nil {
+			if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}, false); err != nil {
 				return err
 			}
 		}
@@ -506,6 +506,13 @@ func (s *Server) GetStatusIncident(ctx context.Context, req oas.GetStatusInciden
 		return nil, err
 	}
 	return oas.GetStatusIncident200JSONResponse(out), nil
+}
+
+func sameMoment(a, b *time.Time) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+	return a.Equal(*b)
 }
 
 func incidentUpdateArg(inc store.StatusIncident, now time.Time) store.UpdateStatusIncidentParams {
@@ -545,6 +552,7 @@ func (s *Server) UpdateStatusIncident(ctx context.Context, req oas.UpdateStatusI
 			arg.Impact = string(*b.Impact)
 		}
 		windowChanged := b.ScheduledStart != nil || b.ScheduledEnd != nil
+		oldStart, oldEnd := inc.ScheduledStart, inc.ScheduledEnd
 		if windowChanged {
 			if inc.Kind != kindMaintenance {
 				return errValidation("only maintenance has a scheduled window")
@@ -594,8 +602,12 @@ func (s *Server) UpdateStatusIncident(ctx context.Context, req oas.UpdateStatusI
 		}
 		if windowChanged {
 			queueMaintenance(ev, inc, now)
-			if b.Notify == nil || *b.Notify {
-				if err := s.queueNotice(ctx, q, ev, pg, inc, nil); err != nil {
+			notify := inc.Notify
+			if b.Notify != nil {
+				notify = *b.Notify
+			}
+			if notify && (!sameMoment(oldStart, inc.ScheduledStart) || !sameMoment(oldEnd, inc.ScheduledEnd)) {
+				if err := s.queueNotice(ctx, q, ev, pg, inc, nil, true); err != nil {
 					return err
 				}
 			}
@@ -673,7 +685,11 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 			if err != nil {
 				return err
 			}
-			if err := s.queueNotice(ctx, q, ev, pg, inc, notifiedUpdates(ups)); err != nil {
+			ids := make([]uuid.UUID, len(ups))
+			for i, u := range ups {
+				ids[i] = u.ID
+			}
+			if err := s.queueNotice(ctx, q, ev, pg, inc, ids, false); err != nil {
 				return err
 			}
 		}
@@ -731,7 +747,7 @@ func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eve
 		}
 	}
 	if notify {
-		if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}); err != nil {
+		if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}, false); err != nil {
 			return oas.StatusIncident{}, err
 		}
 	} else if incidentClosed(state) {

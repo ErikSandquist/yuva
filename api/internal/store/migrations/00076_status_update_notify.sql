@@ -13,7 +13,10 @@ ALTER TABLE status_notices DROP CONSTRAINT status_notices_skip_reason_check;
 ALTER TABLE status_notices ADD CONSTRAINT status_notices_skip_reason_check
     CHECK (skip_reason IN ('rate', 'suspended', 'email_off', 'unpublished', 'sender_not_ready', 'no_recipients', 'nothing_earlier', 'closed_quietly'));
 
+ALTER TABLE status_notices ADD COLUMN window_changed boolean NOT NULL DEFAULT false;
+
 -- +goose Down
+ALTER TABLE status_notices DROP COLUMN window_changed;
 UPDATE status_notices SET skip_reason = NULL WHERE skip_reason = 'closed_quietly';
 ALTER TABLE status_notices DROP CONSTRAINT status_notices_skip_reason_check;
 ALTER TABLE status_notices ADD CONSTRAINT status_notices_skip_reason_check

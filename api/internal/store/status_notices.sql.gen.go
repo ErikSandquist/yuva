@@ -31,24 +31,30 @@ func (q *Queries) AddStatusNoticeUsage(ctx context.Context, arg AddStatusNoticeU
 
 const attachStatusNoticeUpdates = `-- name: AttachStatusNoticeUpdates :exec
 UPDATE status_incident_updates SET notice_id = $1
-WHERE workspace_id = $2 AND id = ANY($3::uuid[])
+WHERE workspace_id = $2 AND incident_id = $3 AND notice_id IS NULL AND id = ANY($4::uuid[])
 `
 
 type AttachStatusNoticeUpdatesParams struct {
 	NoticeID    *uuid.UUID
 	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
 	Ids         []uuid.UUID
 }
 
 func (q *Queries) AttachStatusNoticeUpdates(ctx context.Context, arg AttachStatusNoticeUpdatesParams) error {
-	_, err := q.db.Exec(ctx, attachStatusNoticeUpdates, arg.NoticeID, arg.WorkspaceID, arg.Ids)
+	_, err := q.db.Exec(ctx, attachStatusNoticeUpdates,
+		arg.NoticeID,
+		arg.WorkspaceID,
+		arg.IncidentID,
+		arg.Ids,
+	)
 	return err
 }
 
 const cancelPendingStatusNotices = `-- name: CancelPendingStatusNotices :many
 UPDATE status_notices SET state = 'cancelled', skip_reason = 'closed_quietly', finished_at = $1::timestamptz, updated_at = $1
 WHERE workspace_id = $2 AND incident_id = $3 AND state = 'pending'
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type CancelPendingStatusNoticesParams struct {
@@ -82,6 +88,7 @@ func (q *Queries) CancelPendingStatusNotices(ctx context.Context, arg CancelPend
 			&i.FinishedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.WindowChanged,
 		); err != nil {
 			return nil, err
 		}
@@ -96,7 +103,7 @@ func (q *Queries) CancelPendingStatusNotices(ctx context.Context, arg CancelPend
 const cancelStatusNotice = `-- name: CancelStatusNotice :one
 UPDATE status_notices SET state = 'cancelled', finished_at = $1::timestamptz, updated_at = $1
 WHERE workspace_id = $2 AND page_id = $3 AND id = $4 AND state = 'pending'
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type CancelStatusNoticeParams struct {
@@ -130,6 +137,7 @@ func (q *Queries) CancelStatusNotice(ctx context.Context, arg CancelStatusNotice
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -195,19 +203,20 @@ func (q *Queries) CountStatusNoticeReach(ctx context.Context, arg CountStatusNot
 }
 
 const createStatusNotice = `-- name: CreateStatusNotice :one
-INSERT INTO status_notices (id, workspace_id, page_id, incident_id, final, due_at, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $7)
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+INSERT INTO status_notices (id, workspace_id, page_id, incident_id, final, due_at, window_changed, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $8)
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type CreateStatusNoticeParams struct {
-	ID          uuid.UUID
-	WorkspaceID uuid.UUID
-	PageID      uuid.UUID
-	IncidentID  uuid.UUID
-	Final       bool
-	DueAt       time.Time
-	Now         time.Time
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	PageID        uuid.UUID
+	IncidentID    uuid.UUID
+	Final         bool
+	DueAt         time.Time
+	WindowChanged bool
+	Now           time.Time
 }
 
 func (q *Queries) CreateStatusNotice(ctx context.Context, arg CreateStatusNoticeParams) (StatusNotice, error) {
@@ -218,6 +227,7 @@ func (q *Queries) CreateStatusNotice(ctx context.Context, arg CreateStatusNotice
 		arg.IncidentID,
 		arg.Final,
 		arg.DueAt,
+		arg.WindowChanged,
 		arg.Now,
 	)
 	var i StatusNotice
@@ -237,6 +247,7 @@ func (q *Queries) CreateStatusNotice(ctx context.Context, arg CreateStatusNotice
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -506,7 +517,7 @@ func (q *Queries) FinishStatusNoticeSnapshot(ctx context.Context, arg FinishStat
 }
 
 const getStatusNotice = `-- name: GetStatusNotice :one
-SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at FROM status_notices WHERE workspace_id = $1 AND page_id = $2 AND id = $3
+SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed FROM status_notices WHERE workspace_id = $1 AND page_id = $2 AND id = $3
 `
 
 type GetStatusNoticeParams struct {
@@ -534,6 +545,7 @@ func (q *Queries) GetStatusNotice(ctx context.Context, arg GetStatusNoticeParams
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -698,7 +710,7 @@ func (q *Queries) ListStatusNoticeUpdates(ctx context.Context, arg ListStatusNot
 }
 
 const listStatusNotices = `-- name: ListStatusNotices :many
-SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at FROM status_notices
+SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed FROM status_notices
 WHERE workspace_id = $1 AND page_id = $2
   AND ($3::uuid IS NULL OR incident_id = $3)
   AND ($4::text IS NULL OR state = $4)
@@ -750,6 +762,7 @@ func (q *Queries) ListStatusNotices(ctx context.Context, arg ListStatusNoticesPa
 			&i.FinishedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.WindowChanged,
 		); err != nil {
 			return nil, err
 		}
@@ -762,7 +775,7 @@ func (q *Queries) ListStatusNotices(ctx context.Context, arg ListStatusNoticesPa
 }
 
 const lockPendingStatusNotice = `-- name: LockPendingStatusNotice :one
-SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at FROM status_notices
+SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed FROM status_notices
 WHERE workspace_id = $1 AND incident_id = $2 AND state = 'pending'
 FOR UPDATE
 `
@@ -791,12 +804,13 @@ func (q *Queries) LockPendingStatusNotice(ctx context.Context, arg LockPendingSt
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
 
 const lockStatusNotice = `-- name: LockStatusNotice :one
-SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at FROM status_notices WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed FROM status_notices WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockStatusNoticeParams struct {
@@ -823,6 +837,7 @@ func (q *Queries) LockStatusNotice(ctx context.Context, arg LockStatusNoticePara
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -915,10 +930,46 @@ func (q *Queries) MarkStatusDeliveryReplied(ctx context.Context, arg MarkStatusD
 	return result.RowsAffected(), nil
 }
 
+const markStatusNoticeWindowChanged = `-- name: MarkStatusNoticeWindowChanged :one
+UPDATE status_notices SET window_changed = true, updated_at = $1
+WHERE workspace_id = $2 AND id = $3
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
+`
+
+type MarkStatusNoticeWindowChangedParams struct {
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) MarkStatusNoticeWindowChanged(ctx context.Context, arg MarkStatusNoticeWindowChangedParams) (StatusNotice, error) {
+	row := q.db.QueryRow(ctx, markStatusNoticeWindowChanged, arg.Now, arg.WorkspaceID, arg.ID)
+	var i StatusNotice
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PageID,
+		&i.IncidentID,
+		&i.State,
+		&i.Final,
+		&i.DueAt,
+		&i.SkipReason,
+		&i.Counts,
+		&i.SnapshotDone,
+		&i.LeaseUntil,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.WindowChanged,
+	)
+	return i, err
+}
+
 const moveStatusNotice = `-- name: MoveStatusNotice :one
 UPDATE status_notices SET final = $1, due_at = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type MoveStatusNoticeParams struct {
@@ -954,6 +1005,7 @@ func (q *Queries) MoveStatusNotice(ctx context.Context, arg MoveStatusNoticePara
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -1037,7 +1089,7 @@ UPDATE status_notices n SET counts = (
         'replied', count(*) FILTER (WHERE d.replied_at IS NOT NULL), 'auto_replied', count(*) FILTER (WHERE d.auto_replied_at IS NOT NULL))
     FROM status_notice_deliveries d WHERE d.workspace_id = n.workspace_id AND d.notice_id = n.id), updated_at = $1
 WHERE n.workspace_id = $2 AND n.id = $3
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type RecountStatusNoticeParams struct {
@@ -1065,6 +1117,7 @@ func (q *Queries) RecountStatusNotice(ctx context.Context, arg RecountStatusNoti
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }
@@ -1131,7 +1184,7 @@ const setStatusNoticeState = `-- name: SetStatusNoticeState :one
 UPDATE status_notices SET state = $1, skip_reason = $2, lease_until = $3,
     started_at = coalesce(started_at, $4), finished_at = $5, updated_at = $6
 WHERE workspace_id = $7 AND id = $8
-RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at, window_changed
 `
 
 type SetStatusNoticeStateParams struct {
@@ -1173,6 +1226,7 @@ func (q *Queries) SetStatusNoticeState(ctx context.Context, arg SetStatusNoticeS
 		&i.FinishedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.WindowChanged,
 	)
 	return i, err
 }

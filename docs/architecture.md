@@ -2088,13 +2088,17 @@ incident before a customer writes, and the conversations an outage brings are an
     maintenance has started." / "The maintenance is complete.", also in `tr` and `de`), so pages and notices
     say something. Component changes alone, drafts, and published updates with `notify=false`
     send nothing. Every update stores `notify`; the opening update of an incident takes the incident's.
-    Publishing a draft sends one notice attaching every `notify` update of the draft (shown newest first).
+    Publishing a draft sends one notice attaching every update of the draft, `notify` or not, so the notice
+    always carries the opening text (shown newest first). A window edit of a maintenance mails when the
+    window actually moved and the request's `notify`, else the incident's, is true.
     Resolving or completing with `notify=false` cancels the notices still waiting (`state` `cancelled`,
     `skip_reason` `closed_quietly`), so nothing mails after a quiet close. Monitor-opened published incidents notify like a member's; the budget below
     keeps a flapping monitor from mailing people. A notice is a `status_notices` row (page, incident,
     `due_at`, `state` `pending|sending|sent|skipped|cancelled`, `final`, `skip_reason`, counts) covering
-    exactly the updates whose `status_incident_updates.notice_id` points at it (only `notify` updates are
-    attached, and a notice never falls back to another update), and one `status_notice_deliveries`
+    exactly the updates whose `status_incident_updates.notice_id` points at it (a later update is attached
+    only when it asked to notify; attaching takes only updates of the same incident that no notice
+    covers yet, and a notice never falls back to another update), `window_changed` (the notice was queued or
+    joined by a change of the maintenance window), and one `status_notice_deliveries`
     row per recipient (notice, subscription, address, `email_token` and unique `header_message_id` like
     broadcast deliveries, `previous_message_id`, `state` `queued|sent|failed|bounced|complained|skipped`,
     skip reason, attempts, next attempt, times, error). Deliveries and addresses go after 90 days; the
@@ -2111,9 +2115,9 @@ incident before a customer writes, and the conversations an outage brings are an
     the affected components with the states the incident set (a final notice, resolved or completed, lists
     them by name only), the attached updates newest first with times in the page's zone and its name, the
     incident's text (plain text; the HTML part escapes it and links only `http` and `https` URLs, marks
-    "edited"); a notice with no attached update (a maintenance window change) shows a sentence for what
+    "edited"); a notice with `window_changed` shows a sentence for what
     changed ("The maintenance is now scheduled for {window}", the window in the page's zone, also in `tr`
-    and `de`) and no update text. Then a link to
+    and `de`) above its updates; the first announcement of a scheduled maintenance uses the normal wording. Then a link to
     `/status/{slug}/incidents/{id}` (on the verified custom domain when there is one), the footer: why
     the person gets it, the page, "Choose components or unsubscribe" to `/m/{token}`, the inbox's
     legal name and postal address when set (never required: notices are not commercial). A notice is

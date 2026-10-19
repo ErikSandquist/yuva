@@ -149,17 +149,7 @@ func finalNotice(inc store.StatusIncident) bool {
 	return incidentClosed(inc.State) || (inc.Kind == kindMaintenance && inc.State == incInProgress)
 }
 
-func notifiedUpdates(ups []store.StatusIncidentUpdate) []uuid.UUID {
-	var ids []uuid.UUID
-	for _, u := range ups {
-		if u.Notify {
-			ids = append(ids, u.ID)
-		}
-	}
-	return ids
-}
-
-func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident, updates []uuid.UUID) error {
+func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident, updates []uuid.UUID, windowChange bool) error {
 	if s.status.NoticesOff || !pg.EmailEnabled || pg.MailingListID == nil || !pg.Published || inc.PublishedAt == nil {
 		return nil
 	}
@@ -190,7 +180,7 @@ func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBat
 			}
 		}
 		if n, err = q.CreateStatusNotice(ctx, store.CreateStatusNoticeParams{
-			ID: newID(), WorkspaceID: inc.WorkspaceID, PageID: pg.ID, IncidentID: inc.ID, Final: final, DueAt: due, Now: now,
+			ID: newID(), WorkspaceID: inc.WorkspaceID, PageID: pg.ID, IncidentID: inc.ID, Final: final, DueAt: due, WindowChanged: windowChange, Now: now,
 		}); err != nil {
 			return err
 		}
@@ -198,8 +188,13 @@ func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBat
 	default:
 		return err
 	}
+	if windowChange && !n.WindowChanged {
+		if n, err = q.MarkStatusNoticeWindowChanged(ctx, store.MarkStatusNoticeWindowChangedParams{WorkspaceID: n.WorkspaceID, ID: n.ID, Now: now}); err != nil {
+			return err
+		}
+	}
 	if len(updates) > 0 {
-		if err := q.AttachStatusNoticeUpdates(ctx, store.AttachStatusNoticeUpdatesParams{WorkspaceID: inc.WorkspaceID, Ids: updates, NoticeID: &n.ID}); err != nil {
+		if err := q.AttachStatusNoticeUpdates(ctx, store.AttachStatusNoticeUpdatesParams{WorkspaceID: inc.WorkspaceID, IncidentID: inc.ID, Ids: updates, NoticeID: &n.ID}); err != nil {
 			return err
 		}
 	}
@@ -908,7 +903,7 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 			"HTML": template.HTML(richStatusText(u.Body)), "Edited": u.EditedAt != nil})
 	}
 	d["Updates"] = ups
-	if len(ups) == 0 && d["Window"] != nil && !incidentClosed(inc.State) {
+	if ns.n.WindowChanged && d["Window"] != nil && !incidentClosed(inc.State) {
 		d["Change"] = fmt.Sprintf(w.WindowNow, d["Window"])
 	}
 	ns.data[w.Lang] = d

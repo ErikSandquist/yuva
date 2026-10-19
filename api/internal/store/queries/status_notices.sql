@@ -10,8 +10,13 @@ ORDER BY started_at DESC
 LIMIT 1;
 
 -- name: CreateStatusNotice :one
-INSERT INTO status_notices (id, workspace_id, page_id, incident_id, final, due_at, created_at, updated_at)
-VALUES (@id, @workspace_id, @page_id, @incident_id, @final, @due_at, @now, @now)
+INSERT INTO status_notices (id, workspace_id, page_id, incident_id, final, due_at, window_changed, created_at, updated_at)
+VALUES (@id, @workspace_id, @page_id, @incident_id, @final, @due_at, @window_changed, @now, @now)
+RETURNING *;
+
+-- name: MarkStatusNoticeWindowChanged :one
+UPDATE status_notices SET window_changed = true, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;
 
 -- name: MoveStatusNotice :one
@@ -21,7 +26,7 @@ RETURNING *;
 
 -- name: AttachStatusNoticeUpdates :exec
 UPDATE status_incident_updates SET notice_id = @notice_id
-WHERE workspace_id = @workspace_id AND id = ANY(@ids::uuid[]);
+WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND notice_id IS NULL AND id = ANY(@ids::uuid[]);
 
 -- name: GetStatusNotice :one
 SELECT * FROM status_notices WHERE workspace_id = @workspace_id AND page_id = @page_id AND id = @id;

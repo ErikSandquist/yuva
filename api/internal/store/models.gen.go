@@ -1730,21 +1730,22 @@ type StatusMonitor struct {
 }
 
 type StatusNotice struct {
-	ID           uuid.UUID
-	WorkspaceID  uuid.UUID
-	PageID       uuid.UUID
-	IncidentID   uuid.UUID
-	State        string
-	Final        bool
-	DueAt        time.Time
-	SkipReason   *string
-	Counts       []byte
-	SnapshotDone bool
-	LeaseUntil   *time.Time
-	StartedAt    *time.Time
-	FinishedAt   *time.Time
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	PageID        uuid.UUID
+	IncidentID    uuid.UUID
+	State         string
+	Final         bool
+	DueAt         time.Time
+	SkipReason    *string
+	Counts        []byte
+	SnapshotDone  bool
+	LeaseUntil    *time.Time
+	StartedAt     *time.Time
+	FinishedAt    *time.Time
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	WindowChanged bool
 }
 
 type StatusNoticeDelivery struct {
