@@ -503,7 +503,8 @@ func (s *Server) syncCloudflareHostname(ctx context.Context, pg store.StatusPage
 		s.log.ErrorContext(ctx, "cloudflare custom hostname", slog.String("workspace_id", pg.WorkspaceID.String()),
 			slog.String("domain", domain), slog.Any("error", err))
 	}
-	return s.inTx(ctx, pg.WorkspaceID, func(q *store.Queries, ev *eventBatch) error {
+	changed := false
+	err = s.inTx(ctx, pg.WorkspaceID, func(q *store.Queries, ev *eventBatch) error {
 		cur, lerr := q.LockStatusPage(ctx, store.LockStatusPageParams{WorkspaceID: pg.WorkspaceID, ID: pg.ID})
 		gone := store.IsNotFound(lerr) || (lerr == nil && (cur.CustomDomain == nil || *cur.CustomDomain != domain || *cur.DomainState != domainVerified))
 		if gone {
@@ -528,14 +529,14 @@ func (s *Server) syncCloudflareHostname(ctx context.Context, pg store.StatusPage
 			}
 		}
 		_, err := q.SetStatusPageCloudflare(ctx, arg)
-		if err == nil && (arg.Status != cur.CfStatus || arg.SslStatus != cur.CfSslStatus) {
-			s.statusHint(ctx, pg.WorkspaceID, pg.InboxID)
-		}
-		if err == nil {
-			s.statusPageSignal(ctx, pg.WorkspaceID, pg.InboxID, pg.ID)
-		}
+		changed = !sameString(arg.Status, cur.CfStatus) || !sameString(arg.SslStatus, cur.CfSslStatus)
 		return err
 	})
+	if err == nil && changed {
+		s.statusHint(ctx, pg.WorkspaceID, pg.InboxID)
+		s.statusPageSignal(ctx, pg.WorkspaceID, pg.InboxID, pg.ID)
+	}
+	return err
 }
 
 // ReleaseStatusDomain deletes a custom hostname at Cloudflare; an error asks River to try again.
