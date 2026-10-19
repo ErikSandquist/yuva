@@ -13,7 +13,7 @@ import { useState } from "react"
 import { Link } from "react-router"
 
 import { ErrorLine, toast, useConfirm } from "@/components/common"
-import { formatDuration, formatRelative } from "@/components/common/text"
+import { formatDate, formatDuration, formatMs, formatRelative } from "@/components/common/text"
 import { keyLabel, STATUS_KEYS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import {
@@ -28,7 +28,13 @@ import { Card, EmptyRow, Rows, StatusTag } from "@/features/settings/ui"
 import { MonitorChecksDialog } from "@/features/status/MonitorChecks"
 import { MonitorDialog } from "@/features/status/MonitorDialog"
 import { MonitorTokenDialog } from "@/features/status/MonitorToken"
-import { incidentLink, useMonitorMutations, useStatusComponents, useStatusMonitors } from "@/features/status/queries"
+import {
+  incidentLink,
+  useLastCheck,
+  useMonitorMutations,
+  useStatusComponents,
+  useStatusMonitors,
+} from "@/features/status/queries"
 import { useStatusText } from "@/features/status/text"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { StatusComponent, StatusMonitor, StatusMonitorWithToken, StatusPage } from "@/lib/api"
@@ -42,6 +48,16 @@ function overridden(m: StatusMonitor, c?: StatusComponent) {
     (c.state_source === "member" || c.state_source === "api_key") &&
     Date.parse(c.state_since) > Date.parse(m.state_since)
   )
+}
+
+function target(m: StatusMonitor) {
+  if (m.kind === "http") return m.http?.url
+  if (m.kind === "tcp" && m.tcp) return `${m.tcp.host.includes(":") ? `[${m.tcp.host}]` : m.tcp.host}:${m.tcp.port}`
+}
+
+function certDays(m: StatusMonitor) {
+  if (!m.cert_expires_at) return null
+  return Math.floor((Date.parse(m.cert_expires_at) - Date.now()) / 86400000)
 }
 
 function Row({
@@ -70,10 +86,21 @@ function Row({
   const name = m.name
   const failureState = text.component[m.failure_state]
   const onFailure = text.onFailure[m.on_failure]
+  const outside = m.kind === "http" || m.kind === "tcp"
+  const lastCheck = useLastCheck(page.id, m.id, outside)
+  const took = lastCheck.data?.duration_ms === undefined ? "" : formatMs(lastCheck.data.duration_ms, i18n.locale)
+  const goal = target(m)
+  const days = certDays(m)
+  const warnDays = Math.max(m.http?.cert_warn_days ?? 0, 14)
+  const certTone = days === null ? "" : days < 0 ? "text-destructive" : days <= warnDays ? "text-warning" : ""
+  const next = m.next_check_at ? formatRelative(m.next_check_at, i18n.locale) : null
+  const expires = m.cert_expires_at ? formatDate(m.cert_expires_at, i18n.locale) : null
   const last = m.last_result_at ? formatRelative(m.last_result_at, i18n.locale) : null
   const lastLabel = last ? (
     m.kind === "heartbeat" ? (
       <Trans>Last beat {last}</Trans>
+    ) : outside ? (
+      <Trans>Last check {last}</Trans>
     ) : (
       <Trans>Last state {last}</Trans>
     )
@@ -99,10 +126,30 @@ function Row({
         <p className="mt-px text-small text-faint">
           {text.monitorKind[m.kind]}
           {component ? ` · ${component.name}` : ""}
-          {m.kind === "heartbeat" && m.interval ? ` · ${formatDuration(m.interval, i18n.locale)}` : ""}
+          {(m.kind === "heartbeat" || outside) && m.interval ? ` · ${formatDuration(m.interval, i18n.locale)}` : ""}
           {" · "}
           {lastLabel}
         </p>
+        {outside && (
+          <p className="mt-px flex flex-wrap gap-x-3 text-small text-faint" data-testid="status-monitor-outside">
+            {goal && <span className="min-w-0 font-mono break-all text-muted-foreground">{goal}</span>}
+            {lastCheck.data?.duration_ms !== undefined && (
+              <span data-testid="status-monitor-response">
+                <Trans>Responded in {took}</Trans>
+              </span>
+            )}
+            {next && !m.paused && (
+              <span>
+                <Trans>Next check {next}</Trans>
+              </span>
+            )}
+            {expires && days !== null && (
+              <span className={certTone} data-testid="status-monitor-cert">
+                {days < 0 ? <Trans>Certificate expired {expires}</Trans> : <Trans>Certificate expires {expires}</Trans>}
+              </span>
+            )}
+          </p>
+        )}
         <p className="text-small text-faint">
           <Trans>
             Sets {failureState}. {onFailure}.
@@ -147,19 +194,21 @@ function Row({
                 {m.paused ? <PlayIcon /> : <PauseIcon />}
                 {m.paused ? <Trans>Resume</Trans> : <Trans>Pause</Trans>}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  confirm({
-                    title: <Trans>Make a new address for {name}?</Trans>,
-                    description: <Trans>The current address stops working at once. Update whatever calls it.</Trans>,
-                    confirm: <Trans>Make new address</Trans>,
-                    run: () => mut.rotate.mutate(m.id, { onSuccess: (r) => onToken(r, true) }),
-                  })
-                }
-              >
-                <KeyRoundIcon />
-                <Trans>New address</Trans>
-              </DropdownMenuItem>
+              {!outside && (
+                <DropdownMenuItem
+                  onClick={() =>
+                    confirm({
+                      title: <Trans>Make a new address for {name}?</Trans>,
+                      description: <Trans>The current address stops working at once. Update whatever calls it.</Trans>,
+                      confirm: <Trans>Make new address</Trans>,
+                      run: () => mut.rotate.mutate(m.id, { onSuccess: (r) => onToken(r, true) }),
+                    })
+                  }
+                >
+                  <KeyRoundIcon />
+                  <Trans>New address</Trans>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 variant="destructive"
@@ -205,7 +254,8 @@ export function MonitorsTab({ page }: { page: StatusPage }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="min-w-60 flex-1 text-body text-muted-foreground">
           <Trans>
-            Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state.
+            Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own
+            monitoring pushes its state.
           </Trans>
         </p>
         {canManage && (
@@ -227,7 +277,7 @@ export function MonitorsTab({ page }: { page: StatusPage }) {
         <Card flush>
           {items.length === 0 ? (
             <EmptyRow>
-              <Trans>No monitors yet. Add one to let a job or your monitoring set a component’s state.</Trans>
+              <Trans>No monitors yet. Add one to let a check, a job or your monitoring set a component’s state.</Trans>
             </EmptyRow>
           ) : (
             <Rows>
@@ -253,7 +303,7 @@ export function MonitorsTab({ page }: { page: StatusPage }) {
           onClose={() => setDialog(null)}
           onCreated={(monitor) => {
             setDialog(null)
-            setToken({ monitor, rotated: false })
+            if (monitor.url) setToken({ monitor, rotated: false })
           }}
         />
       )}

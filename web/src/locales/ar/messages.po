@@ -788,6 +788,14 @@ msgstr "12 شهرًا"
 msgid "2. Check that it arrives"
 msgstr "2. تحقق من وصوله"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "القيمة الافتراضية من 200 إلى 299."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 ساعة"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 شهرًا"
@@ -804,9 +812,17 @@ msgstr "من 3 إلى 48 حرفًا وأرقامًا وشرطات. فريد عل
 msgid "3. Finish"
 msgstr "3. إنهاء"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 أيام"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "من 7 إلى 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "المئين 95"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "إضافة نقطة نهاية"
 msgid "Add group"
 msgstr "إضافة مجموعة"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "إضافة ترويسة"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "أضافه الفريق"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "كما سبق ({current})"
 msgid "As fast as allowed"
 msgstr "بأسرع ما يُسمح"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "بأقصى تكرار مسموح"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "اطلب من الجميع التأكيد مجددًا"
@@ -2043,6 +2068,10 @@ msgstr "الخصائص"
 msgid "Audience"
 msgstr "الجمهور"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "ردود تلقائية ونشرات بريدية وتقارير تسليم لم يجب عنها أحد."
@@ -2150,6 +2179,10 @@ msgstr "محظور"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "جهات الاتصال المحظورة"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "المحتوى"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "الفئة"
 msgid "Cc: {cc}"
 msgstr "نسخة: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "انتهت صلاحية الشهادة في {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "تنتهي صلاحية الشهادة في {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "تغيير العنوان"
@@ -2505,6 +2546,10 @@ msgstr "فحص قابلية التسليم وإعداد DKIM"
 msgid "Check DNS and start signing"
 msgstr "فحص DNS وبدء التوقيع"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "الفحص كل"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "تحقق من أن التحويل مفعّل، وفي Gmail من أنه مؤكَّد بالرمز."
@@ -2561,6 +2606,10 @@ msgstr "جارٍ فحص ما على الخادم"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "جارٍ الفحص…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "الفحوصات"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "التواريخ"
 msgid "Days"
 msgstr "الأيام"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "عدد الأيام قبل انتهاء الصلاحية الذي يفشل عنده الفحص. القيمة 0 تتحقق فقط من أن الشهادة صالحة."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "أيام السجل"
@@ -4150,6 +4203,10 @@ msgstr "النهاية"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "أدخل اسم مضيف أو عنوان IP."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "أدخل اسم مضيف أو عنوان IP."
@@ -4162,6 +4219,10 @@ msgstr "أدخل عنوان بريد إلكتروني صالحًا، أو اتر
 msgid "Enter a valid e-mail address."
 msgstr "أدخل عنوان بريد إلكتروني صالحًا."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "أدخل عنوان http أو https يتضمن مضيفًا وبدون اسم مستخدم أو كلمة مرور."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "أدخل عنوان URL بصيغة http أو https بلا اسم مستخدم أو كلمة مرور."
@@ -4169,6 +4230,10 @@ msgstr "أدخل عنوان URL بصيغة http أو https بلا اسم مست�
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "أدخل عنوان صندوق البريد الذي تردّ منه اليوم. تجد Yuva مزوّده؛ ولا يُقرأ شيء حتى تتصل به."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "أدخل المضيف بدون منفذ. للمنفذ حقله الخاص."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "فشلت كل المحاولات منذ {failingSince}. بعد 24 ساع
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "كل إشارة وإشارة فائتة وحالة مرسلة خلال آخر 30 يومًا، الأحدث أولًا."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "كل فحص خلال آخر 30 يومًا، الأحدث أولًا."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "شركة Example المحدودة"
 msgid "Expected every"
 msgstr "المتوقع كل"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "الحالة المتوقعة من"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "الحالة المتوقعة إلى"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "انتهت صلاحيته {expires}"
@@ -4359,6 +4436,10 @@ msgstr "معرّفات خارجية"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "فشل"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "الفحوصات الفاشلة"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "مجلدات لم تُختر أو لم تُقرأ أبدًا"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "مجلدات ملفات .eml أو Maildir أو تصدير Proton Mail: ضع المجلد في ملف .zip وارفعه. تصبح مجلداته وسومًا."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "اتباع إعادة التوجيه"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "سُلّمت إلى {name}"
 msgid "Has an open conversation"
 msgstr "لديه محادثة مفتوحة"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "اسم الترويسة"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "قيمة الترويسة"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "الترويسات"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "نبض"
@@ -4985,6 +5082,10 @@ msgstr "أُزيل السجل"
 msgid "Home"
 msgstr "الرئيسية"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "المضيف"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "كيف وافقوا؟"
@@ -5040,6 +5141,14 @@ msgstr "كيفية إرسال البريد"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "كيفية التحقق"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "فحص HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "لا يجوز للمفاتيح والمساعدين جدولة الرس�
 msgid "Keys and assistants may send broadcasts"
 msgstr "يجوز للمفاتيح والمساعدين إرسال الرسائل الجماعية"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "كلمة مفتاحية"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "النوع"
@@ -5694,6 +5807,10 @@ msgstr "آخر رسالة جماعية"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "آخر فحص"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "آخر فحص {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "الوسائط"
 msgid "Media, links and docs"
 msgstr "الوسائط والروابط والمستندات"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "الوسيط"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "تم استيراد الرسائل"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "تعرض الرسائل التي يرسلها المفتاح اسم الروبوت وصورته."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "الطريقة"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "سر توقيع جديد"
 msgid "New subscribers added"
 msgstr "أُضيف مشتركون جدد"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "قيمة جديدة"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "البريد الأحدث والتحويل"
@@ -6841,6 +6970,10 @@ msgstr "المحاولة التالية"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "المحاولة التالية {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "الفحص التالي {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "لا رسائل بعد"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "لا يوجد مراقبون بعد. أضف واحدًا ليضبط عمل أو نظام مراقبتك حالة مكوّن."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "لا توجد مراقبات بعد. أضف واحدة ليحدد فحص أو مهمة أو مراقبتك حالة أحد المكونات."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "لا ردود بعد."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "لا حساب رد"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "لا توجد أزمنة استجابة في هذا النطاق بعد."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "متوقف لهذا الجهاز."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "عند الإيقاف يُرسل بأسرع ما تسمح به القناة والحد اليومي لمساحة العمل. وعند التفعيل يوزّع الرسائل بالتساوي، فلا تتجاوز أي 60 دقيقة أو 24 ساعة أو 30 يومًا ما حددته."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "عند الإيقاف يُحكم على إعادة التوجيه بحسب الحالة المتوقعة."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational يعيد؛ وdegraded وpartial_outage وmajor_outage تُس
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "اختياري. يظهر في الصفحة العامة."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "اختياري. يجب أن تحتوي عليه أول 64 كيبي بايت من الرد، مع مراعاة حالة الأحرف."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "وجّه سجلات MX إلى Yuva كما يصف دليل البريد �
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "المنفذ"
 
@@ -8900,6 +9046,10 @@ msgstr "في قائمة الانتظار. تظهر المحاولة الجديد
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "تنظيف سريع"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "النطاق"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "يمكن للصور البعيدة إخبار المرسِل بأنك ف
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "إزالة"
 
@@ -9199,6 +9350,10 @@ msgstr "إزالة الشرط {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "إزالة نقطة النهاية"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "إزالة الترويسة {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "إعادة الفتح"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "استبدال"
 
@@ -9490,6 +9646,14 @@ msgstr "حل أو إكمال"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resolved"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "استجاب خلال {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "زمن الاستجابة"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "ابحث وافرز واكتب مسودات الردود من Codex. ي�
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "ابحث وافرز واكتب مسودات الردود من طرفيتك. يعمل باسمك، بالصلاحيات التي تمنحها."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "بالثواني، من 1 إلى 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "مستأجر SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "اضبط حالة مكوّن من الخارج: عمل يبلّغ عن نفسه، أو نظام مراقبتك الذي يرسل حالته."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "حدّد حالة أحد المكونات من الخارج: يفحص Yuva موقعًا أو منفذًا، أو تُبلّغ مهمة، أو ترسل مراقبتك الخاصة الحالة."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "العلامات"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "جارٍ أخذ المستلمين: {prepared} حتى الآن"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "فحص TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "قناة البريد الإلكتروني في صندوق الوارد 
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "الحادث محلول أو مكتمل بالفعل، فلا يقبل مزيدًا من التغييرات."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "يجب أن تكون الفترة من {lo} إلى {hi} ثانية."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "يحتوي ملف İYS على صف لكل مشترك بأعمدة İYS، ONAY للمشترك وRET لمن ألغى الاشتراك، ليرفعه المرسلون الأتراك إلى İYS بأنفسهم. تُستبعد الاشتراكات المعلّقة."
@@ -11741,6 +11921,10 @@ msgstr "السياسة quarantine: البريد الفاشل يذهب إلى ا�
 msgid "The policy is reject: mail that fails is refused."
 msgstr "السياسة reject: البريد الفاشل يُرفض."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "يجب أن يكون المنفذ بين 1 و65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "يوقّع السر السابق أيضًا حتى {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "يذهب الاختبار فقط إلى الأعضاء الذين اخت
 msgid "The test stopped at a step."
 msgstr "توقف الاختبار عند خطوة."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "يجب أن تكون مهلة الانتظار من 1 إلى 30 ثانية."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "يُحذف الملف المرفوع عند انتهاء النقل. تحتفظ Yuva بما استوردته فقط."
@@ -12043,6 +12231,10 @@ msgstr "تلقى هذا العنوان العدد المسموح به من رس�
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "ليس لهذا العنوان حساب SMTP بعد. أضف واحدًا في إعدادات صندوق الوارد قبل أول رسالة جماعية."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "هذا العنوان خاص أو حلقة رجعية أو محلي الارتباط. لا تصل الفحوصات إلا إلى العناوين العامة."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "الوقت"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "المنطقة الزمنية"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "مهلة الانتظار"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "تم رفع {step}%"
 msgid "Uploading…"
 msgstr "جارٍ الرفع…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "وقت التشغيل"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "عاجل"
@@ -12997,9 +13197,17 @@ msgstr "القيمة"
 msgid "Value"
 msgstr "القيمة"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "القيمة محفوظة"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "قيمة الشرط {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "تُخزَّن القيم مشفّرة ولا تُعرض مرة أخرى. لتغيير قيمة، استبدلها."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "في انتظار حد المزوّد؛ يتابع في {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "الأطول انتظارًا: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "التنبيه بشأن الشهادة"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "تقرأ Yuva فقط. عدا تسجيل الدخول، لا يرسل ا�
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "تقرأ Yuva فقط. لا تحذف ولا تنقل ولا تؤرشف ولا تعلّم أي شيء كمقروء في {provider}، ويبقى بريدك حيث هو."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "يفتح Yuva اتصالًا بمضيف ومنفذ بشكل دوري."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "تقرأ Yuva الملف الذي ترفعه فقط وتحذفه عند انتهاء النقل. يصل السجل بهدوء: بلا إشعارات ولا ردود تلقائية."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "يطلب Yuva عنوانًا بشكل دوري ويفحص الرد."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

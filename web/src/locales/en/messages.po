@@ -788,6 +788,14 @@ msgstr "12 months"
 msgid "2. Check that it arrives"
 msgstr "2. Check that it arrives"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "200 to 299 by default."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 hours"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 months"
@@ -804,9 +812,17 @@ msgstr "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgid "3. Finish"
 msgstr "3. Finish"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 days"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 to 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95th percentile"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Add endpoint"
 msgid "Add group"
 msgstr "Add group"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Add header"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Added by the team"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "As above ({current})"
 msgid "As fast as allowed"
 msgstr "As fast as allowed"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "As often as allowed"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Ask everyone to confirm again"
@@ -2043,6 +2068,10 @@ msgstr "Attributes"
 msgid "Audience"
 msgstr "Audience"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Auto-replies, newsletters and delivery reports nobody answered."
@@ -2150,6 +2179,10 @@ msgstr "Blocked"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Blocked contacts"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Body"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Category"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Certificate expired {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Certificate expires {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Change address"
@@ -2505,6 +2546,10 @@ msgstr "Check deliverability and set up DKIM"
 msgid "Check DNS and start signing"
 msgstr "Check DNS and start signing"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Check every"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2561,6 +2606,10 @@ msgstr "Checking what is on the server"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Checking…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Checks"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Dates"
 msgid "Days"
 msgstr "Days"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Days before it expires that the check fails. 0 only checks that it is valid."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Days of history"
@@ -4150,6 +4203,10 @@ msgstr "Ends"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Enter a host name or an IP address."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Enter a host name or IP address."
@@ -4162,6 +4219,10 @@ msgstr "Enter a valid e-mail address, or leave it empty."
 msgid "Enter a valid e-mail address."
 msgstr "Enter a valid e-mail address."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Enter an http or https address with a host and without a user name or password."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Enter an http or https URL without a user name or password."
@@ -4169,6 +4230,10 @@ msgstr "Enter an http or https URL without a user name or password."
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Enter the host without a port. The port has its own field."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Every attempt has failed since {failingSince}. After 24 hours of failure
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Every beat, missed beat and pushed state of the last 30 days, newest first."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Every check of the last 30 days, newest first."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "Expected every"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Expected status from"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Expected status to"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Expired {expires}"
@@ -4359,6 +4436,10 @@ msgstr "External ids"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Failed"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Failed checks"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Folders not chosen or never read"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Follow redirects"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Handed to {name}"
 msgid "Has an open conversation"
 msgstr "Has an open conversation"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Header name"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Header value"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Headers"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "History removed"
 msgid "Home"
 msgstr "Home"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Host"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "How did they agree?"
@@ -5040,6 +5141,14 @@ msgstr "How to send the mail"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "How to verify"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP check"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Keys and assistants may not schedule broadcasts in this workspace."
 msgid "Keys and assistants may send broadcasts"
 msgstr "Keys and assistants may send broadcasts"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Keyword"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Kind"
@@ -5694,6 +5807,10 @@ msgstr "Last broadcast"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Last check"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Last check {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Media"
 msgid "Media, links and docs"
 msgstr "Media, links and docs"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Median"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Messages imported"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Messages the key sends show its bot name and picture."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Method"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "New signing secret"
 msgid "New subscribers added"
 msgstr "New subscribers added"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "New value"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Newer mail and the switch"
@@ -6841,6 +6970,10 @@ msgstr "Next attempt"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "next attempt {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Next check {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "No messages yet"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "No replies yet."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "No reply account"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "No response times in this range yet."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Off for this device."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Off, a redirect is judged against the expected status."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational recovers; degraded, partial_outage and major_outage fail."
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Optional. Shown on the public page."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Point the MX records at Yuva as the e-mail guide describes. Sync catches
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Port"
 
@@ -8900,6 +9046,10 @@ msgstr "Queued. The new attempt shows up below in a moment."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Quick cleanup"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Range"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Remote images can tell the sender that you opened the mail."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Remove"
 
@@ -9199,6 +9350,10 @@ msgstr "Remove condition {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Remove endpoint"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Remove header {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Reopen"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Replace"
 
@@ -9490,6 +9646,14 @@ msgstr "Resolve or complete"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resolved"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Responded in {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Response time"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Search, triage and draft replies from Codex. It acts as you, with the ac
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Seconds, 1 to 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES tenant"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Tags"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Taking the recipients: {prepared} so far"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP check"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "The inbox’s e-mail channel that sends confirmations and notices."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "The incident is already resolved or completed, so it takes no more changes."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "The interval must be {lo} to {hi} seconds."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
@@ -11741,6 +11921,10 @@ msgstr "The policy is quarantine: mail that fails goes to spam."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "The policy is reject: mail that fails is refused."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "The port must be 1 to 65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "The previous secret also signs until {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "The test still goes only to the members you picked, never to the contact
 msgid "The test stopped at a step."
 msgstr "The test stopped at a step."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "The timeout must be 1 to 30 seconds."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
@@ -12043,6 +12231,10 @@ msgstr "This address got as many confirmation mails as allowed for now. Try agai
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "This address is private, loopback or link-local. Checks only reach public addresses."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Time"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Time zone"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Timeout"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Uploaded {step}%"
 msgid "Uploading…"
 msgstr "Uploading…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Uptime"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Urgent"
@@ -12997,9 +13197,17 @@ msgstr "value"
 msgid "Value"
 msgstr "Value"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Value kept"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Value of condition {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Values are stored encrypted and never shown again. To change one, replace it."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Waiting for the provider's limit; continues at {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Waiting longest: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Warn about the certificate"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva only reads. Besides signing in, its connection sends {provider} not
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva opens a connection to a host and port on a schedule."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva requests an address on a schedule and checks the answer."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

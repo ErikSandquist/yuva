@@ -513,3 +513,9 @@ export function formatDuration(seconds: number, locale: string) {
     Math.round(seconds / size)
   )
 }
+
+export function formatMs(ms: number, locale: string) {
+  if (ms >= 1000)
+    return new Intl.NumberFormat(locale, { style: "unit", unit: "second", maximumFractionDigits: 1 }).format(ms / 1000)
+  return new Intl.NumberFormat(locale, { style: "unit", unit: "millisecond", maximumFractionDigits: 0 }).format(ms)
+}

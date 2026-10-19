@@ -788,6 +788,14 @@ msgstr "12 个月"
 msgid "2. Check that it arrives"
 msgstr "2. 检查是否送达"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "默认 200 到 299。"
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 小时"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 个月"
@@ -804,9 +812,17 @@ msgstr "3 到 48 个字母、数字和连字符，在此服务器上唯一。"
 msgid "3. Finish"
 msgstr "3. 完成"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 天"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 到 90。"
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "第 95 百分位"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "添加端点"
 msgid "Add group"
 msgstr "添加分组"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "添加请求头"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "由团队添加"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "同上({current})"
 msgid "As fast as allowed"
 msgstr "尽可能快"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "允许的最高频率"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "要求所有人重新确认"
@@ -2043,6 +2068,10 @@ msgstr "属性"
 msgid "Audience"
 msgstr "受众"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "没人回复过的自动回复、新闻简报和送达报告。"
@@ -2150,6 +2179,10 @@ msgstr "已屏蔽"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "已屏蔽的联系人"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "正文"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "类别"
 msgid "Cc: {cc}"
 msgstr "抄送:{cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "证书已于 {expires} 过期"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "证书将于 {expires} 过期"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "更改地址"
@@ -2505,6 +2546,10 @@ msgstr "检查送达率并设置 DKIM"
 msgid "Check DNS and start signing"
 msgstr "检查 DNS 并开始签名"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "检查间隔"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "请检查转发是否已开启,对于 Gmail,还要确认已用验证码确认。"
@@ -2561,6 +2606,10 @@ msgstr "正在检查服务器上的内容"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "检查中…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "检查"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "日期"
 msgid "Days"
 msgstr "天数"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "证书到期前多少天检查算作失败。填 0 则只检查证书是否有效。"
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "历史天数"
@@ -4150,6 +4203,10 @@ msgstr "结束"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "请输入主机名或 IP 地址。"
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "请输入主机名或 IP 地址。"
@@ -4162,6 +4219,10 @@ msgstr "请输入有效的电子邮件地址,或留空。"
 msgid "Enter a valid e-mail address."
 msgstr "请输入有效的电子邮件地址。"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "请输入带主机、不含用户名和密码的 http 或 https 地址。"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "请输入不带用户名或密码的 http 或 https URL。"
@@ -4169,6 +4230,10 @@ msgstr "请输入不带用户名或密码的 http 或 https URL。"
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "输入你目前用来回复的邮箱地址。Yuva 会找到它的服务商;连接之前不会读取任何内容。"
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "请输入不带端口的主机。端口有单独的输入框。"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "自 {failingSince} 起每次尝试都失败了。连续失败 24 小时�
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "最近 30 天的每个心跳信号、漏掉的信号和推送状态，最新的在前。"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "最近 30 天的每次检查,最新的在前。"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "预期间隔"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "期望状态码从"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "期望状态码到"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires} 过期"
@@ -4359,6 +4436,10 @@ msgstr "外部 ID"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "失败"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "失败的检查"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "未选择或从未读取的文件夹"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr ".eml 文件的文件夹、Maildir 或 Proton Mail 的导出:把文件夹放进 .zip 并上传。其文件夹会变成标签。"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "跟随重定向"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "已交给 {name}"
 msgid "Has an open conversation"
 msgstr "有未关闭的对话"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "请求头名称"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "请求头值"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "请求头"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "心跳"
@@ -4985,6 +5082,10 @@ msgstr "历史记录已移除"
 msgid "Home"
 msgstr "首页"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "主机"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "他们是怎么同意的?"
@@ -5040,6 +5141,14 @@ msgstr "如何发送邮件"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "如何验证"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP 检查"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "此工作区中,密钥和助手不能安排群发。"
 msgid "Keys and assistants may send broadcasts"
 msgstr "密钥和助手可以发送群发"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "关键词"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "类型"
@@ -5694,6 +5807,10 @@ msgstr "最近一次群发"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "最近检查"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "上次检查 {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "媒体"
 msgid "Media, links and docs"
 msgstr "媒体、链接和文档"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "中位数"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "消息已导入"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "密钥发送的消息会显示其机器人名称和头像。"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "方法"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "新签名密钥"
 msgid "New subscribers added"
 msgstr "新增的订阅者"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "新值"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "较新的邮件与切换"
@@ -6841,6 +6970,10 @@ msgstr "下次尝试"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "下次尝试 {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "下次检查 {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "还没有消息"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "还没有监控。添加一个，让任务或你自己的监控系统设置组件的状态。"
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "还没有监控项。添加一个,让检查、任务或你自己的监控来设置组件的状态。"
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "还没有回复。"
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "没有回复账号"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "此时间范围内还没有响应时间。"
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "此设备已关闭。"
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "关闭时,会按渠道和工作区每日上限允许的最快速度发送。开启时,会把邮件均匀分散,使任意 60 分钟、24 小时或 30 天内都不会超过你的设置。"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "关闭时,重定向按期望状态码判断。"
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational 表示恢复；degraded、partial_outage 和 major_outage �
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "可选。显示在公开页面上。"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "可选。响应的前 64 KiB 必须包含它,区分大小写。"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "按邮件指南所述,把 MX 记录指向 Yuva。同步会补上这期�
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "端口"
 
@@ -8900,6 +9046,10 @@ msgstr "已排队。新的尝试稍后会显示在下面。"
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "快速清理"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "范围"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "远程图片可能会让发件人知道你已打开邮件。"
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "移除"
 
@@ -9199,6 +9350,10 @@ msgstr "移除条件 {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "移除端点"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "移除请求头 {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "重新打开"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "替换"
 
@@ -9490,6 +9646,14 @@ msgstr "解决或完成"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "已解决"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "响应用时 {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "响应时间"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "在 Codex 中搜索、分诊和起草回复。它以你的身份运行,�
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "在你的终端中搜索、分诊和起草回复。它以你的身份运行,访问范围由你授权。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "秒,1 到 30。"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES 租户"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "从外部设置组件的状态：由会主动上报的任务，或由推送状态的你自己的监控系统来完成。"
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "从外部设置组件的状态:Yuva 检查网站或端口,任务主动上报,或你自己的监控推送状态。"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "标签"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "正在确定收件人:目前 {prepared} 位"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP 检查"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "收件箱中用于发送确认邮件和通知的邮件渠道。"
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "该事件已解决或已完成，不再接受更改。"
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "间隔必须为 {lo} 到 {hi} 秒。"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS 文件按 İYS 的列格式,每位订阅者一行,订阅为 ONAY,退订为 RET,供土耳其的发件人自行上传到 İYS。待确认的订阅不包含在内。"
@@ -11741,6 +11921,10 @@ msgstr "策略为 quarantine:未通过的邮件会进入垃圾邮件。"
 msgid "The policy is reject: mail that fails is refused."
 msgstr "策略为 reject:未通过的邮件会被拒收。"
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "端口必须为 1 到 65535。"
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "之前的密钥在 {rotatedUntil} 之前也会签名。"
@@ -11923,6 +12107,10 @@ msgstr "测试仍然只会发给你选择的成员,绝不会发给联系人。"
 msgid "The test stopped at a step."
 msgstr "测试在某一步停止了。"
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "超时必须为 1 到 30 秒。"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "迁移结束时会删除上传的文件。Yuva 只保留它导入的内容。"
@@ -12043,6 +12231,10 @@ msgstr "此地址已收到目前允许数量的确认邮件。请明天再试。
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "此地址还没有 SMTP 账号。请在第一次群发前在收件箱设置中添加。"
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "此地址是私有、回环或链路本地地址。检查只能访问公网地址。"
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "时间"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "时区"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "超时"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "已上传 {step}%"
 msgid "Uploading…"
 msgstr "上传中…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "可用率"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "紧急"
@@ -12997,9 +13197,17 @@ msgstr "值"
 msgid "Value"
 msgstr "值"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "值已保存"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "条件 {n} 的值"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "值以加密方式存储,不会再次显示。要修改,请替换它。"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "正在等待服务商的限制;将在 {time} 继续。"
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "等待最久:<0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "证书提醒"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva 只读取。除登录外,其连接只会向 {provider} 发送读取
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva 只读取。它绝不会在 {provider} 中删除、移动、归档任何内容或将其标为已读,你的邮件保持原样。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva 会定期与主机和端口建立连接。"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva 只读取你上传的文件,并在迁移结束时将其删除。历史记录会静悄悄地到达:没有通知,没有自动回复。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva 会定期请求一个地址并检查响应。"
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

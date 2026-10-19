@@ -788,6 +788,14 @@ msgstr "12 tháng"
 msgid "2. Check that it arrives"
 msgstr "2. Kiểm tra thư đã đến chưa"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Mặc định từ 200 đến 299."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 giờ"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 tháng"
@@ -804,9 +812,17 @@ msgstr "Từ 3 đến 48 chữ cái, chữ số và dấu gạch ngang. Là duy 
 msgid "3. Finish"
 msgstr "3. Hoàn tất"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 ngày"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "Từ 7 đến 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "Phân vị thứ 95"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Thêm endpoint"
 msgid "Add group"
 msgstr "Thêm nhóm"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Thêm header"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Do nhóm thêm"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Như ở trên ({current})"
 msgid "As fast as allowed"
 msgstr "Nhanh nhất có thể"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "Thường xuyên nhất có thể"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Yêu cầu mọi người xác nhận lại"
@@ -2043,6 +2068,10 @@ msgstr "Thuộc tính"
 msgid "Audience"
 msgstr "Đối tượng"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Phản hồi tự động, bản tin và báo cáo gửi thư mà không ai trả lời."
@@ -2150,6 +2179,10 @@ msgstr "Đã chặn"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Liên hệ bị chặn"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Nội dung"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Danh mục"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Chứng chỉ đã hết hạn vào {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Chứng chỉ hết hạn vào {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Đổi địa chỉ"
@@ -2505,6 +2546,10 @@ msgstr "Kiểm tra khả năng gửi thư và thiết lập DKIM"
 msgid "Check DNS and start signing"
 msgstr "Kiểm tra DNS và bắt đầu ký"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Kiểm tra mỗi"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Hãy kiểm tra việc chuyển tiếp đã được bật và, với Gmail, đã được xác nhận bằng mã."
@@ -2561,6 +2606,10 @@ msgstr "Đang kiểm tra những gì có trên máy chủ"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Đang kiểm tra…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Lần kiểm tra"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Ngày"
 msgid "Days"
 msgstr "Ngày"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Số ngày trước khi hết hạn mà lần kiểm tra bị coi là thất bại. Với 0, chỉ kiểm tra chứng chỉ còn hợp lệ."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Số ngày lịch sử"
@@ -4150,6 +4203,10 @@ msgstr "Kết thúc"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Nhập tên máy chủ hoặc địa chỉ IP."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Hãy nhập tên máy chủ hoặc địa chỉ IP."
@@ -4162,6 +4219,10 @@ msgstr "Hãy nhập địa chỉ email hợp lệ, hoặc để trống."
 msgid "Enter a valid e-mail address."
 msgstr "Hãy nhập địa chỉ email hợp lệ."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Nhập địa chỉ http hoặc https có máy chủ và không có tên người dùng, mật khẩu."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Hãy nhập URL http hoặc https không có tên người dùng hay mật khẩu."
@@ -4169,6 +4230,10 @@ msgstr "Hãy nhập URL http hoặc https không có tên người dùng hay m�
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Nhập địa chỉ của hộp thư bạn đang trả lời hiện nay. Yuva sẽ tìm nhà cung cấp của nó; chưa có gì được đọc cho đến khi bạn kết nối."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Nhập máy chủ không kèm cổng. Cổng có ô riêng."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Mọi lần thử đều thất bại từ {failingSince}. Sau 24 giờ 
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Mọi tín hiệu, tín hiệu bị lỡ và trạng thái được gửi trong 30 ngày qua, mới nhất trước."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Mọi lần kiểm tra trong 30 ngày qua, mới nhất trước."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "Dự kiến mỗi"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Trạng thái mong đợi từ"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Trạng thái mong đợi đến"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Đã hết hạn {expires}"
@@ -4359,6 +4436,10 @@ msgstr "ID bên ngoài"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Thất bại"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Lần kiểm tra thất bại"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Thư mục chưa chọn hoặc chưa từng đọc"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "Thư mục chứa tệp .eml, Maildir hoặc bản xuất của Proton Mail: đưa thư mục vào một tệp .zip và tải lên. Các thư mục của nó trở thành nhãn."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Theo chuyển hướng"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Đã giao cho {name}"
 msgid "Has an open conversation"
 msgstr "Có cuộc trò chuyện đang mở"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Tên header"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Giá trị header"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Header"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Đã xóa lịch sử"
 msgid "Home"
 msgstr "Trang chủ"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Máy chủ"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Họ đã đồng ý bằng cách nào?"
@@ -5040,6 +5141,14 @@ msgstr "Cách gửi thư"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Cách xác minh"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "Kiểm tra HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Khóa và trợ lý không được lên lịch thư hàng loạt trong 
 msgid "Keys and assistants may send broadcasts"
 msgstr "Khóa và trợ lý được gửi thư hàng loạt"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Từ khóa"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Loại"
@@ -5694,6 +5807,10 @@ msgstr "Thư hàng loạt gần nhất"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Lần kiểm tra cuối"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Lần kiểm tra gần nhất {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Phương tiện"
 msgid "Media, links and docs"
 msgstr "Phương tiện, liên kết và tài liệu"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Trung vị"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Đã nhập tin nhắn"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Tin nhắn do khóa gửi hiện tên và ảnh bot của nó."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Phương thức"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Signing secret mới"
 msgid "New subscribers added"
 msgstr "Người đăng ký mới được thêm"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Giá trị mới"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Thư mới hơn và việc chuyển đổi"
@@ -6841,6 +6970,10 @@ msgstr "Lần thử tiếp theo"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "lần thử tiếp theo {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Lần kiểm tra tiếp theo {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Chưa có tin nhắn"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Chưa có trình giám sát nào. Hãy thêm một cái để tác vụ hoặc hệ thống giám sát của bạn đặt trạng thái cho thành phần."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Chưa có trình giám sát nào. Hãy thêm một cái để một lần kiểm tra, một tác vụ hoặc hệ thống giám sát của bạn đặt trạng thái cho thành phần."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Chưa có phản hồi."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Không có tài khoản phản hồi"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "Chưa có thời gian phản hồi trong khoảng này."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Tắt cho thiết bị này."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Tắt thì gửi nhanh hết mức kênh và giới hạn hằng ngày của không gian làm việc cho phép. Bật thì rải đều thư, nên trong bất kỳ 60 phút, 24 giờ hay 30 ngày nào cũng không vượt quá mức bạn đặt."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Tắt: chuyển hướng được đánh giá theo trạng thái mong đợi."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational khôi phục; degraded, partial_outage và major_outage làm
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Tùy chọn. Hiển thị trên trang công khai."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Tùy chọn. 64 KiB đầu của phản hồi phải chứa nó; phân biệt chữ hoa và chữ thường."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Trỏ các bản ghi MX về Yuva như hướng dẫn email mô tả. Đ
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Cổng"
 
@@ -8900,6 +9046,10 @@ msgstr "Đã xếp hàng. Lần thử mới sẽ hiện bên dưới trong giây
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Dọn dẹp nhanh"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Khoảng"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Hình ảnh từ xa có thể cho người gửi biết bạn đã mở 
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Gỡ"
 
@@ -9199,6 +9350,10 @@ msgstr "Gỡ điều kiện {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Gỡ endpoint"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Xóa header {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Mở lại"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Thay thế"
 
@@ -9490,6 +9646,14 @@ msgstr "Xử lý xong hoặc hoàn tất"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Đã giải quyết"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Phản hồi trong {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Thời gian phản hồi"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Tìm kiếm, phân loại và soạn phản hồi từ Codex. Nó hành 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Tìm kiếm, phân loại và soạn phản hồi từ terminal của bạn. Nó hành động với danh nghĩa bạn, với quyền truy cập bạn cho phép."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Giây, từ 1 đến 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "Tenant SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Đặt trạng thái của thành phần từ bên ngoài: một tác vụ tự báo cáo hoặc hệ thống giám sát riêng của bạn gửi trạng thái."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Đặt trạng thái cho thành phần từ bên ngoài: Yuva kiểm tra một trang web hoặc một cổng, một tác vụ báo về, hoặc hệ thống giám sát của bạn gửi trạng thái."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Thẻ"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Đang lấy người nhận: đến giờ được {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "Kiểm tra TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "Kênh e-mail của hộp thư dùng để gửi thư xác nhận và th�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Sự cố đã được xử lý hoặc hoàn tất, nên không nhận thêm thay đổi."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Khoảng thời gian phải từ {lo} đến {hi} giây."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Tệp İYS có một dòng cho mỗi người đăng ký theo các cột của İYS, ONAY cho đã đăng ký và RET cho đã hủy đăng ký, để người gửi Thổ Nhĩ Kỳ tự tải lên İYS. Các đăng ký đang chờ bị loại ra."
@@ -11741,6 +11921,10 @@ msgstr "Chính sách là quarantine: thư không đạt vào thư rác."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "Chính sách là reject: thư không đạt bị từ chối."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "Cổng phải từ 1 đến 65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Secret trước đó cũng ký đến {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "Thử nghiệm vẫn chỉ gửi đến các thành viên bạn chọn, 
 msgid "The test stopped at a step."
 msgstr "Phép thử dừng ở một bước."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Thời gian chờ phải từ 1 đến 30 giây."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "Tệp đã tải lên bị xóa khi quá trình di chuyển kết thúc. Yuva chỉ giữ những gì đã nhập."
@@ -12043,6 +12231,10 @@ msgstr "Địa chỉ này đã nhận đủ số thư xác nhận được phép
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Địa chỉ này chưa có tài khoản SMTP. Hãy thêm trong cài đặt hộp thư trước thư hàng loạt đầu tiên."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Địa chỉ này là riêng tư, loopback hoặc link-local. Các lần kiểm tra chỉ tới được địa chỉ công khai."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Thời gian"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Múi giờ"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Thời gian chờ"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Đã tải lên {step}%"
 msgid "Uploading…"
 msgstr "Đang tải lên…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Thời gian hoạt động"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Khẩn cấp"
@@ -12997,9 +13197,17 @@ msgstr "giá trị"
 msgid "Value"
 msgstr "Giá trị"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Đã lưu giá trị"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Giá trị của điều kiện {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Giá trị được lưu đã mã hóa và không bao giờ hiển thị lại. Để đổi một giá trị, hãy thay thế nó."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Đang chờ giới hạn của nhà cung cấp; tiếp tục lúc {time}
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Chờ lâu nhất: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Cảnh báo về chứng chỉ"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva chỉ đọc. Ngoài đăng nhập, kết nối của nó chỉ g�
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva chỉ đọc. Nó không bao giờ xóa, di chuyển, lưu trữ hay đánh dấu đã đọc bất cứ thứ gì trong {provider}, và thư của bạn vẫn ở nguyên chỗ."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva mở kết nối tới một máy chủ và cổng theo định kỳ."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva chỉ đọc tệp bạn tải lên và xóa nó khi quá trình di chuyển kết thúc. Lịch sử đến một cách lặng lẽ: không thông báo, không phản hồi tự động."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva yêu cầu một địa chỉ theo định kỳ và kiểm tra phản hồi."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

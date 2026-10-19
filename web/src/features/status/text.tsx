@@ -24,7 +24,7 @@ export const COMPONENT_STATES: StatusComponentStateValue[] = [
 
 export const FAILURE_STATES: StatusMonitorFailureState[] = ["degraded", "partial_outage", "major_outage"]
 export const ON_FAILURE: StatusMonitorOnFailure[] = ["none", "draft", "publish"]
-export const MONITOR_KINDS: StatusMonitorKind[] = ["heartbeat", "push"]
+export const MONITOR_KINDS: StatusMonitorKind[] = ["http", "tcp", "heartbeat", "push"]
 
 export const IMPACTS: StatusIncidentImpact[] = ["none", "minor", "major", "critical"]
 
@@ -83,6 +83,8 @@ export function useStatusText() {
   const monitorKind: Record<StatusMonitorKind, string> = {
     heartbeat: t`Heartbeat`,
     push: t`Pushed state`,
+    http: t`HTTP`,
+    tcp: t`TCP`,
   }
   const monitorState: Record<StatusMonitorState | "paused", string> = {
     pending: t`Waiting for the first result`,
@@ -102,6 +104,8 @@ export function useStatusText() {
     push: t`Pushed`,
     alertmanager: t`Alertmanager`,
     grafana: t`Grafana`,
+    http: t`HTTP check`,
+    tcp: t`TCP check`,
   }
   return { component, impact, incident, kind, monitorKind, monitorState, onFailure, checkSource }
 }

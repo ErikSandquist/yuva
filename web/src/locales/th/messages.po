@@ -788,6 +788,14 @@ msgstr "12 เดือน"
 msgid "2. Check that it arrives"
 msgstr "2. ตรวจสอบว่าอีเมลมาถึง"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "ค่าเริ่มต้น 200 ถึง 299"
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 ชั่วโมง"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 เดือน"
@@ -804,9 +812,17 @@ msgstr "ตัวอักษร ตัวเลข และขีดกลา�
 msgid "3. Finish"
 msgstr "3. เสร็จสิ้น"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 วัน"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 ถึง 90"
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "เปอร์เซ็นไทล์ที่ 95"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "เพิ่มเอนด์พอยต์"
 msgid "Add group"
 msgstr "เพิ่มกลุ่ม"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "เพิ่มเฮดเดอร์"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "เพิ่มโดยทีม"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "เหมือนข้างต้น ({current})"
 msgid "As fast as allowed"
 msgstr "เร็วที่สุดเท่าที่อนุญาต"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "ถี่เท่าที่อนุญาต"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "ขอให้ทุกคนยืนยันอีกครั้ง"
@@ -2043,6 +2068,10 @@ msgstr "แอตทริบิวต์"
 msgid "Audience"
 msgstr "กลุ่มเป้าหมาย"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "การตอบกลับอัตโนมัติ จดหมายข่าว และรายงานการส่งที่ไม่มีใครตอบ"
@@ -2150,6 +2179,10 @@ msgstr "ถูกบล็อก"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "รายชื่อติดต่อที่ถูกบล็อก"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "เนื้อหา"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "หมวดหมู่"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "ใบรับรองหมดอายุเมื่อ {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "ใบรับรองจะหมดอายุ {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "เปลี่ยนที่อยู่"
@@ -2505,6 +2546,10 @@ msgstr "ตรวจสอบความสามารถในการส่
 msgid "Check DNS and start signing"
 msgstr "ตรวจสอบ DNS และเริ่มลงนาม"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "ตรวจสอบทุก"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "ตรวจสอบว่าเปิดการส่งต่อแล้ว และสำหรับ Gmail ยืนยันด้วยรหัสแล้ว"
@@ -2561,6 +2606,10 @@ msgstr "กำลังตรวจสอบสิ่งที่อยู่บ
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "กำลังตรวจสอบ…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "การตรวจสอบ"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "วันที่"
 msgid "Days"
 msgstr "วัน"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "จำนวนวันก่อนหมดอายุที่การตรวจสอบจะล้มเหลว ถ้าเป็น 0 จะตรวจแค่ว่ายังใช้ได้"
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "จำนวนวันของประวัติ"
@@ -4150,6 +4203,10 @@ msgstr "สิ้นสุด"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "ใส่ชื่อโฮสต์หรือที่อยู่ IP"
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "ใส่ชื่อโฮสต์หรือที่อยู่ IP"
@@ -4162,6 +4219,10 @@ msgstr "ใส่ที่อยู่อีเมลที่ถูกต้อ
 msgid "Enter a valid e-mail address."
 msgstr "ใส่ที่อยู่อีเมลที่ถูกต้อง"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "ใส่ที่อยู่ http หรือ https ที่มีโฮสต์ และไม่มีชื่อผู้ใช้หรือรหัสผ่าน"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "ใส่ URL แบบ http หรือ https ที่ไม่มีชื่อผู้ใช้หรือรหัสผ่าน"
@@ -4169,6 +4230,10 @@ msgstr "ใส่ URL แบบ http หรือ https ที่ไม่มี
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "ใส่ที่อยู่ของกล่องจดหมายที่คุณตอบอยู่ในปัจจุบัน Yuva จะหาผู้ให้บริการของกล่องนั้น จะไม่มีการอ่านอะไรจนกว่าคุณจะเชื่อมต่อ"
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "ใส่โฮสต์โดยไม่ต้องมีพอร์ต พอร์ตมีช่องของตัวเอง"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "ทุกครั้งที่ลองล้มเหลวตั้
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "ทุกสัญญาณ สัญญาณที่พลาด และสถานะที่ส่งมาในช่วง 30 วันที่ผ่านมา เรียงจากใหม่ไปเก่า"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "ทุกการตรวจสอบใน 30 วันที่ผ่านมา เรียงใหม่สุดก่อน"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "คาดว่าจะมาทุก"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "สถานะที่คาดหวัง ตั้งแต่"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "สถานะที่คาดหวัง ถึง"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "หมดอายุเมื่อ {expires}"
@@ -4359,6 +4436,10 @@ msgstr "รหัสภายนอก"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "ล้มเหลว"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "การตรวจสอบที่ล้มเหลว"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "โฟลเดอร์ที่ไม่ได้เลือกหร
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "โฟลเดอร์ของไฟล์ .eml, Maildir หรือไฟล์ส่งออกของ Proton Mail ให้ใส่โฟลเดอร์ในไฟล์ .zip แล้วอัปโหลด โฟลเดอร์ของไฟล์จะกลายเป็นป้ายกำกับ"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "ตามการเปลี่ยนเส้นทาง"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "ส่งต่อให้ {name} แล้ว"
 msgid "Has an open conversation"
 msgstr "มีการสนทนาที่เปิดอยู่"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "ชื่อเฮดเดอร์"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "ค่าเฮดเดอร์"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "เฮดเดอร์"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "ลบประวัติแล้ว"
 msgid "Home"
 msgstr "หน้าแรก"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "โฮสต์"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "พวกเขายินยอมอย่างไร"
@@ -5040,6 +5141,14 @@ msgstr "วิธีส่งอีเมล"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "วิธียืนยัน"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "การตรวจสอบ HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "คีย์และผู้ช่วยตั้งเวลาบร
 msgid "Keys and assistants may send broadcasts"
 msgstr "คีย์และผู้ช่วยส่งบรอดคาสต์ได้"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "คีย์เวิร์ด"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "ประเภท"
@@ -5694,6 +5807,10 @@ msgstr "บรอดคาสต์ล่าสุด"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "การตรวจสอบล่าสุด"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "ตรวจสอบล่าสุด {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "สื่อ"
 msgid "Media, links and docs"
 msgstr "สื่อ ลิงก์ และเอกสาร"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "ค่ามัธยฐาน"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "นำเข้าข้อความแล้ว"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "ข้อความที่คีย์ส่งแสดงชื่อและรูปของบอทของคีย์"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "เมธอด"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Signing secret ใหม่"
 msgid "New subscribers added"
 msgstr "เพิ่มผู้สมัครรับใหม่"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "ค่าใหม่"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "อีเมลที่ใหม่กว่าและการสลับ"
@@ -6841,6 +6970,10 @@ msgstr "ความพยายามครั้งถัดไป"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "ความพยายามครั้งถัดไป {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "ตรวจสอบครั้งถัดไป {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "ยังไม่มีข้อความ"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "ยังไม่มีมอนิเตอร์ เพิ่มหนึ่งรายการเพื่อให้งานหรือระบบเฝ้าระวังของคุณตั้งสถานะของคอมโพเนนต์"
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "ยังไม่มีมอนิเตอร์ เพิ่มหนึ่งตัวเพื่อให้การตรวจสอบ งาน หรือระบบมอนิเตอร์ของคุณตั้งสถานะของคอมโพเนนต์"
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "ยังไม่มีการตอบกลับ"
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "ไม่มีบัญชีตอบกลับ"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "ยังไม่มีเวลาตอบสนองในช่วงนี้"
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "ปิดสำหรับอุปกรณ์นี้"
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "ปิดจะส่งเร็วที่สุดเท่าที่ช่องทางและขีดจำกัดต่อวันของพื้นที่ทำงานอนุญาต เปิดจะกระจายอีเมลอย่างสม่ำเสมอ ไม่มี 60 นาที 24 ชั่วโมง หรือ 30 วันใดได้เกินที่คุณตั้ง"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "ปิด: การเปลี่ยนเส้นทางจะถูกตัดสินจากสถานะที่คาดหวัง"
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational ทำให้กลับมาปกติ ส่วน d
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "ไม่บังคับ แสดงบนหน้าสาธารณะ"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "ไม่บังคับ 64 KiB แรกของคำตอบต้องมีคำนี้ และตัวพิมพ์เล็กใหญ่มีผล"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "ชี้ระเบียน MX ไปที่ Yuva ตามที�
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "พอร์ต"
 
@@ -8900,6 +9046,10 @@ msgstr "อยู่ในคิวแล้ว ความพยายาม�
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "ล้างอย่างรวดเร็ว"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "ช่วง"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "รูปภาพระยะไกลอาจบอกผู้ส่
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "นำออก"
 
@@ -9199,6 +9350,10 @@ msgstr "นำเงื่อนไข {n} ออก"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "นำเอนด์พอยต์ออก"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "ลบเฮดเดอร์ {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "เปิดอีกครั้ง"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "แทนที่"
 
@@ -9490,6 +9646,14 @@ msgstr "แก้ไขแล้วหรือเสร็จสิ้น"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resolved"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "ตอบสนองใน {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "เวลาตอบสนอง"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "ค้นหา คัดแยก และร่างการตอ�
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "ค้นหา คัดแยก และร่างการตอบกลับจากเทอร์มินัลของคุณ ทำงานในนามของคุณ ภายใต้สิทธิ์ที่คุณอนุญาต"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "วินาที 1 ถึง 30"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "tenant SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "ตั้งสถานะของคอมโพเนนต์จากภายนอก: งานที่รายงานเข้ามา หรือระบบเฝ้าระวังของคุณเองที่ส่งสถานะ"
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "ตั้งสถานะของคอมโพเนนต์จากภายนอก: Yuva ตรวจสอบเว็บไซต์หรือพอร์ต งานรายงานเข้ามา หรือระบบมอนิเตอร์ของคุณส่งสถานะ"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "แท็ก"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "กำลังเลือกผู้รับ: ตอนนี้ได้ {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "การตรวจสอบ TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "ช่องทางอีเมลของกล่องข้อค
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "เหตุการณ์ได้รับการแก้ไขหรือเสร็จสิ้นแล้ว จึงไม่รับการเปลี่ยนแปลงอีก"
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "ช่วงเวลาต้องอยู่ระหว่าง {lo} ถึง {hi} วินาที"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "ไฟล์ İYS มีหนึ่งแถวต่อผู้สมัครรับตามคอลัมน์ของ İYS โดย ONAY สำหรับสมัครรับแล้วและ RET สำหรับยกเลิกการสมัครรับ ให้ผู้ส่งชาวตุรกีอัปโหลดไป İYS เอง การสมัครรับที่รออยู่ถูกตัดออก"
@@ -11741,6 +11921,10 @@ msgstr "นโยบายคือ quarantine: อีเมลที่ไม�
 msgid "The policy is reject: mail that fails is refused."
 msgstr "นโยบายคือ reject: อีเมลที่ไม่ผ่านถูกปฏิเสธ"
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "พอร์ตต้องอยู่ระหว่าง 1 ถึง 65535"
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "secret ก่อนหน้ายังลงนามจนถึง {rotatedUntil}"
@@ -11923,6 +12107,10 @@ msgstr "การทดสอบยังคงส่งถึงเฉพาะ
 msgid "The test stopped at a step."
 msgstr "การทดสอบหยุดที่ขั้นตอนหนึ่ง"
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "หมดเวลาต้องอยู่ระหว่าง 1 ถึง 30 วินาที"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "ไฟล์ที่อัปโหลดถูกลบเมื่อการย้ายสิ้นสุด Yuva เก็บเฉพาะสิ่งที่นำเข้า"
@@ -12043,6 +12231,10 @@ msgstr "ที่อยู่นี้ได้รับอีเมลยืน
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "ที่อยู่นี้ยังไม่มีบัญชี SMTP เพิ่มในการตั้งค่ากล่องข้อความก่อนบรอดคาสต์แรก"
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "ที่อยู่นี้เป็นแบบส่วนตัว ลูปแบ็ก หรือลิงก์โลคัล การตรวจสอบเข้าถึงได้เฉพาะที่อยู่สาธารณะ"
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "เวลา"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "เขตเวลา"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "หมดเวลา"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "อัปโหลดแล้ว {step}%"
 msgid "Uploading…"
 msgstr "กำลังอัปโหลด…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "เวลาทำงาน"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "ด่วน"
@@ -12997,9 +13197,17 @@ msgstr "ค่า"
 msgid "Value"
 msgstr "ค่า"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "เก็บค่าไว้แล้ว"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "ค่าของเงื่อนไข {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "ค่าถูกเก็บแบบเข้ารหัสและจะไม่แสดงอีก หากต้องการเปลี่ยน ให้แทนที่ค่านั้น"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "รอขีดจำกัดของผู้ให้บริกา
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "รอนานที่สุด: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "เตือนเรื่องใบรับรอง"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva อ่านอย่างเดียว นอกจากลง
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva อ่านอย่างเดียว ไม่เคยลบ ย้าย เก็บถาวร หรือทำเครื่องหมายว่าอ่านแล้วกับสิ่งใดใน {provider} และอีเมลของคุณอยู่ที่เดิม"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva เปิดการเชื่อมต่อไปยังโฮสต์และพอร์ตเป็นระยะ"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva อ่านเฉพาะไฟล์ที่คุณอัปโหลดและลบเมื่อการย้ายสิ้นสุด ประวัติเข้ามาอย่างเงียบ ๆ ไม่มีการแจ้งเตือน ไม่มีการตอบกลับอัตโนมัติ"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva ขอที่อยู่หนึ่งเป็นระยะและตรวจสอบคำตอบ"
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

@@ -788,6 +788,14 @@ msgstr "12 μήνες"
 msgid "2. Check that it arrives"
 msgstr "2. Ελέγξτε ότι φτάνει"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Από 200 έως 299 από προεπιλογή."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 ώρες"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 μήνες"
@@ -804,9 +812,17 @@ msgstr "3 έως 48 γράμματα, αριθμοί και παύλες. Μον
 msgid "3. Finish"
 msgstr "3. Ολοκλήρωση"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 ημέρες"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 έως 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95ο εκατοστημόριο"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Προσθήκη endpoint"
 msgid "Add group"
 msgstr "Προσθήκη ομάδας"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Προσθήκη κεφαλίδας"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Προστέθηκε από την ομάδα"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Όπως παραπάνω ({current})"
 msgid "As fast as allowed"
 msgstr "Όσο πιο γρήγορα επιτρέπεται"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "Όσο συχνά επιτρέπεται"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Να ζητηθεί από όλους να επιβεβαιώσουν ξανά"
@@ -2043,6 +2068,10 @@ msgstr "Χαρακτηριστικά"
 msgid "Audience"
 msgstr "Κοινό"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Αυτόματες απαντήσεις, ενημερωτικά δελτία και αναφορές παράδοσης που δεν απάντησε κανείς."
@@ -2150,6 +2179,10 @@ msgstr "Αποκλεισμένοι"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Αποκλεισμένες επαφές"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Σώμα"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Κατηγορία"
 msgid "Cc: {cc}"
 msgstr "Κοιν.: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Το πιστοποιητικό έληξε στις {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Το πιστοποιητικό λήγει στις {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Αλλαγή διεύθυνσης"
@@ -2505,6 +2546,10 @@ msgstr "Έλεγχος παραδοσιμότητας και ρύθμιση DKIM
 msgid "Check DNS and start signing"
 msgstr "Έλεγχος DNS και έναρξη υπογραφής"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Έλεγχος κάθε"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Ελέγξτε ότι η προώθηση είναι ενεργή και, για το Gmail, επιβεβαιωμένη με τον κωδικό."
@@ -2561,6 +2606,10 @@ msgstr "Έλεγχος του τι υπάρχει στον διακομιστή"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Έλεγχος…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Έλεγχοι"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Ημερομηνίες"
 msgid "Days"
 msgstr "Ημέρες"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Πόσες ημέρες πριν από τη λήξη αποτυγχάνει ο έλεγχος. Με 0 ελέγχεται μόνο ότι είναι έγκυρο."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Ημέρες ιστορικού"
@@ -4150,6 +4203,10 @@ msgstr "Λήξη"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Εισαγάγετε όνομα κεντρικού υπολογιστή ή διεύθυνση IP."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Εισαγάγετε όνομα υπολογιστή ή διεύθυνση IP."
@@ -4162,6 +4219,10 @@ msgstr "Εισαγάγετε μια έγκυρη διεύθυνση e-mail ή α
 msgid "Enter a valid e-mail address."
 msgstr "Εισαγάγετε μια έγκυρη διεύθυνση e-mail."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Εισαγάγετε διεύθυνση http ή https με κεντρικό υπολογιστή και χωρίς όνομα χρήστη και κωδικό."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Εισαγάγετε μια διεύθυνση URL http ή https χωρίς όνομα χρήστη ή κωδικό."
@@ -4169,6 +4230,10 @@ msgstr "Εισαγάγετε μια διεύθυνση URL http ή https χωρ�
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Εισαγάγετε τη διεύθυνση του γραμματοκιβωτίου από το οποίο απαντάτε σήμερα. Το Yuva βρίσκει τον πάροχό του· τίποτα δεν διαβάζεται μέχρι να το συνδέσετε."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Εισαγάγετε τον κεντρικό υπολογιστή χωρίς θύρα. Η θύρα έχει δικό της πεδίο."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Κάθε προσπάθεια έχει αποτύχει από {failingS
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Κάθε σήμα, χαμένο σήμα και απεσταλμένη κατάσταση των τελευταίων 30 ημερών, τα νεότερα πρώτα."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Κάθε έλεγχος των τελευταίων 30 ημερών, με τον πιο πρόσφατο πρώτο."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Παράδειγμα Ε.Π.Ε."
 msgid "Expected every"
 msgstr "Αναμένεται κάθε"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Αναμενόμενη κατάσταση από"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Αναμενόμενη κατάσταση έως"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Έληξε {expires}"
@@ -4359,6 +4436,10 @@ msgstr "Εξωτερικά αναγνωριστικά"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Απέτυχε"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Αποτυχημένοι έλεγχοι"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Φάκελοι που δεν επιλέχθηκαν ή δεν διαβά
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "Φάκελοι αρχείων .eml, Maildir ή εξαγωγή Proton Mail: βάλτε τον φάκελο σε .zip και ανεβάστε το. Οι φάκελοί του γίνονται ετικέτες."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Ακολούθηση ανακατευθύνσεων"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Παραδόθηκε στον/στην {name}"
 msgid "Has an open conversation"
 msgstr "Έχει ανοιχτή συνομιλία"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Όνομα κεφαλίδας"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Τιμή κεφαλίδας"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Κεφαλίδες"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Το ιστορικό αφαιρέθηκε"
 msgid "Home"
 msgstr "Αρχική"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Κεντρικός υπολογιστής"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Πώς συναίνεσαν;"
@@ -5040,6 +5141,14 @@ msgstr "Πώς να στείλετε την αλληλογραφία"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Πώς να επαληθεύσετε"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "Έλεγχος HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Τα κλειδιά και οι βοηθοί δεν μπορούν να 
 msgid "Keys and assistants may send broadcasts"
 msgstr "Τα κλειδιά και οι βοηθοί μπορούν να στέλνουν μαζικές αποστολές"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Λέξη-κλειδί"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Είδος"
@@ -5694,6 +5807,10 @@ msgstr "Τελευταία μαζική αποστολή"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Τελευταίος έλεγχος"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Τελευταίος έλεγχος {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Πολυμέσα"
 msgid "Media, links and docs"
 msgstr "Πολυμέσα, σύνδεσμοι και έγγραφα"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Διάμεσος"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Τα μηνύματα εισήχθησαν"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Τα μηνύματα που στέλνει το κλειδί δείχνουν το όνομα και την εικόνα του bot του."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Μέθοδος"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Νέο μυστικό υπογραφής"
 msgid "New subscribers added"
 msgstr "Νέοι συνδρομητές που προστέθηκαν"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Νέα τιμή"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Νεότερη αλληλογραφία και η αλλαγή"
@@ -6841,6 +6970,10 @@ msgstr "Επόμενη προσπάθεια"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "επόμενη προσπάθεια {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Επόμενος έλεγχος {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Κανένα μήνυμα ακόμη"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Δεν υπάρχουν ακόμη παρακολουθήσεις. Προσθέστε μία ώστε μια εργασία ή η παρακολούθησή σας να ορίζει την κατάσταση ενός στοιχείου."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Δεν υπάρχουν ακόμη παρακολουθήσεις. Προσθέστε μία ώστε ένας έλεγχος, μια εργασία ή η δική σας παρακολούθηση να ορίζει την κατάσταση ενός στοιχείου."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Καμία απάντηση ακόμη."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Χωρίς λογαριασμό απαντήσεων"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "Δεν υπάρχουν ακόμη χρόνοι απόκρισης σε αυτό το εύρος."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Ανενεργό για αυτή τη συσκευή."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Ανενεργό: η αποστολή γίνεται όσο πιο γρήγορα επιτρέπουν το κανάλι και το ημερήσιο όριο του χώρου εργασίας. Ενεργό: τα e-mail κατανέμονται ομοιόμορφα, ώστε σε κανένα διάστημα 60 λεπτών, 24 ωρών ή 30 ημερών να μη φεύγουν περισσότερα από όσα ορίσατε."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Απενεργοποιημένο: η ανακατεύθυνση κρίνεται με βάση την αναμενόμενη κατάσταση."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "το operational αποκαθιστά· τα degraded, partial_outage κ
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Προαιρετικό. Εμφανίζεται στη δημόσια σελίδα."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Προαιρετικό. Τα πρώτα 64 KiB της απάντησης πρέπει να το περιέχουν· τα κεφαλαία και τα πεζά διακρίνονται."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Δείξτε τις εγγραφές MX στο Yuva όπως περιγ�
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Θύρα"
 
@@ -8900,6 +9046,10 @@ msgstr "Στην ουρά. Η νέα προσπάθεια εμφανίζεται
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Γρήγορος καθαρισμός"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Εύρος"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Οι απομακρυσμένες εικόνες μπορούν να π�
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -9199,6 +9350,10 @@ msgstr "Αφαίρεση συνθήκης {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Αφαίρεση endpoint"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Αφαίρεση κεφαλίδας {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Άνοιγμα ξανά"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Αντικατάσταση"
 
@@ -9490,6 +9646,14 @@ msgstr "Επίλυση ή ολοκλήρωση"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Επιλύθηκε"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Απάντησε σε {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Χρόνος απόκρισης"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Αναζητήστε, διαχωρίστε και συντάξτε πρ�
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Αναζητήστε, διαχωρίστε και συντάξτε πρόχειρες απαντήσεις από το τερματικό σας. Ενεργεί εξ ονόματός σας, με την πρόσβαση που επιτρέπετε."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Δευτερόλεπτα, από 1 έως 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "Μισθωτής SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Ορίστε την κατάσταση ενός στοιχείου απ' έξω: μια εργασία που αναφέρεται ή η δική σας παρακολούθηση που στέλνει την κατάστασή της."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Ορίστε την κατάσταση ενός στοιχείου από έξω: το Yuva ελέγχει έναν ιστότοπο ή μια θύρα, μια εργασία αναφέρεται ή η δική σας παρακολούθηση στέλνει την κατάσταση."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Ετικέτες"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Λήψη των παραληπτών: μέχρι στιγμής {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "Έλεγχος TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "Το κανάλι e-mail των εισερχομένων που στέλ
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Το περιστατικό έχει ήδη επιλυθεί ή ολοκληρωθεί, οπότε δεν δέχεται άλλες αλλαγές."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Το διάστημα πρέπει να είναι από {lo} έως {hi} δευτερόλεπτα."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Το αρχείο İYS έχει μία γραμμή ανά συνδρομητή στις στήλες του İYS, ONAY για εγγεγραμμένους και RET για όσους διαγράφηκαν, ώστε οι Τούρκοι αποστολείς να το ανεβάσουν μόνοι τους στο İYS. Οι εκκρεμείς συνδρομές εξαιρούνται."
@@ -11741,6 +11921,10 @@ msgstr "Η πολιτική είναι quarantine: η αλληλογραφία �
 msgid "The policy is reject: mail that fails is refused."
 msgstr "Η πολιτική είναι reject: η αλληλογραφία που αποτυγχάνει απορρίπτεται."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "Η θύρα πρέπει να είναι από 1 έως 65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Το προηγούμενο μυστικό υπογράφει επίσης μέχρι {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "Η δοκιμή πηγαίνει και πάλι μόνο στα μέλ�
 msgid "The test stopped at a step."
 msgstr "Η δοκιμή σταμάτησε σε ένα βήμα."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Το χρονικό όριο πρέπει να είναι από 1 έως 30 δευτερόλεπτα."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "Το αρχείο που ανέβηκε διαγράφεται όταν τελειώσει η μεταφορά. Το Yuva κρατά μόνο ό,τι εισήγαγε."
@@ -12043,6 +12231,10 @@ msgstr "Αυτή η διεύθυνση έλαβε όσα e-mail επιβεβαί
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Αυτή η διεύθυνση δεν έχει ακόμη λογαριασμό SMTP. Προσθέστε έναν στις ρυθμίσεις εισερχομένων πριν από την πρώτη μαζική αποστολή."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Αυτή η διεύθυνση είναι ιδιωτική, loopback ή link-local. Οι έλεγχοι φτάνουν μόνο σε δημόσιες διευθύνσεις."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Ώρα"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Ζώνη ώρας"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Χρονικό όριο"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Ανέβηκε {step}%"
 msgid "Uploading…"
 msgstr "Μεταφόρτωση…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Διαθεσιμότητα"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Επείγον"
@@ -12997,9 +13197,17 @@ msgstr "τιμή"
 msgid "Value"
 msgstr "Τιμή"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Η τιμή αποθηκεύτηκε"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Τιμή της συνθήκης {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Οι τιμές αποθηκεύονται κρυπτογραφημένες και δεν εμφανίζονται ξανά. Για να αλλάξετε μία, αντικαταστήστε την."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Αναμονή για το όριο του παρόχου· συνεχί
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Περιμένει περισσότερο: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Προειδοποίηση για το πιστοποιητικό"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Το Yuva μόνο διαβάζει. Εκτός από τη σύνδεσ
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Το Yuva μόνο διαβάζει. Δεν διαγράφει, μετακινεί, αρχειοθετεί ή σημαίνει ποτέ τίποτα ως αναγνωσμένο στο {provider}, και η αλληλογραφία σας μένει εκεί που είναι."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Το Yuva ανοίγει τακτικά σύνδεση με έναν κεντρικό υπολογιστή και μια θύρα."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Το Yuva διαβάζει μόνο το αρχείο που ανεβάζετε και το διαγράφει όταν τελειώσει η μεταφορά. Το ιστορικό έρχεται αθόρυβα: χωρίς ειδοποιήσεις, χωρίς αυτόματες απαντήσεις."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Το Yuva ζητά τακτικά μια διεύθυνση και ελέγχει την απάντηση."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

@@ -788,6 +788,14 @@ msgstr "12개월"
 msgid "2. Check that it arrives"
 msgstr "2. 도착하는지 확인"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "기본값은 200에서 299입니다."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24시간"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24개월"
@@ -804,9 +812,17 @@ msgstr "영문자, 숫자, 하이픈 3~48자. 이 서버에서 고유해야 합�
 msgid "3. Finish"
 msgstr "3. 마무리"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7일"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7~90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95번째 백분위수"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "엔드포인트 추가"
 msgid "Add group"
 msgstr "그룹 추가"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "헤더 추가"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "팀이 추가함"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "위와 동일({current})"
 msgid "As fast as allowed"
 msgstr "허용되는 가장 빠르게"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "허용되는 가장 짧은 간격"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "모두에게 다시 확인 요청"
@@ -2043,6 +2068,10 @@ msgstr "속성"
 msgid "Audience"
 msgstr "대상"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "아무도 답하지 않은 자동 응답, 뉴스레터, 배달 보고서."
@@ -2150,6 +2179,10 @@ msgstr "차단됨"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "차단된 연락처"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "본문"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "카테고리"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "인증서가 {expires}에 만료되었습니다"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "인증서가 {expires}에 만료됩니다"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "주소 변경"
@@ -2505,6 +2546,10 @@ msgstr "전달률을 확인하고 DKIM 설정"
 msgid "Check DNS and start signing"
 msgstr "DNS를 확인하고 서명 시작"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "확인 간격"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "전달이 켜져 있는지, Gmail이라면 코드로 확인되었는지 확인하세요."
@@ -2561,6 +2606,10 @@ msgstr "서버에 있는 항목 확인 중"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "확인 중…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "확인"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "날짜"
 msgid "Days"
 msgstr "일"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "만료 며칠 전부터 확인을 실패로 처리할지 정합니다. 0이면 유효한지만 확인합니다."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "기록 일수"
@@ -4150,6 +4203,10 @@ msgstr "종료"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "호스트 이름 또는 IP 주소를 입력하세요."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "호스트 이름 또는 IP 주소를 입력하세요."
@@ -4162,6 +4219,10 @@ msgstr "올바른 이메일 주소를 입력하거나 비워 두세요."
 msgid "Enter a valid e-mail address."
 msgstr "올바른 이메일 주소를 입력하세요."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "호스트가 있고 사용자 이름과 비밀번호가 없는 http 또는 https 주소를 입력하세요."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "사용자 이름과 비밀번호가 없는 http 또는 https URL을 입력하세요."
@@ -4169,6 +4230,10 @@ msgstr "사용자 이름과 비밀번호가 없는 http 또는 https URL을 입�
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "지금 답장하고 있는 메일함의 주소를 입력하세요. Yuva가 제공업체를 찾습니다. 연결하기 전에는 아무것도 읽지 않습니다."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "호스트를 포트 없이 입력하세요. 포트는 별도 입력란이 있습니다."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "{failingSince}부터 모든 시도가 실패했습니다. 실패가 24�
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "최근 30일의 모든 비트, 누락된 비트, 보낸 상태를 최신순으로 표시합니다."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "최근 30일의 모든 확인, 최신순입니다."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "예상 주기"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "기대 상태 시작"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "기대 상태 끝"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires}에 만료됨"
@@ -4359,6 +4436,10 @@ msgstr "외부 ID"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "실패"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "실패한 확인"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "선택하지 않았거나 읽지 않은 폴더"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr ".eml 파일 폴더, Maildir 또는 Proton Mail 내보내기: 폴더를 .zip으로 묶어 업로드하세요. 폴더는 레이블이 됩니다."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "리디렉션 따라가기"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "{name}님에게 넘겼습니다"
 msgid "Has an open conversation"
 msgstr "열린 대화 있음"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "헤더 이름"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "헤더 값"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "헤더"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "하트비트"
@@ -4985,6 +5082,10 @@ msgstr "기록을 삭제했습니다"
 msgid "Home"
 msgstr "홈"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "호스트"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "어떻게 동의했나요?"
@@ -5040,6 +5141,14 @@ msgstr "메일 보내는 방법"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "확인 방법"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP 확인"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "이 워크스페이스에서는 키와 어시스턴트가 일괄 발송�
 msgid "Keys and assistants may send broadcasts"
 msgstr "키와 어시스턴트의 일괄 발송 허용"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "키워드"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "종류"
@@ -5694,6 +5807,10 @@ msgstr "마지막 일괄 발송"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "마지막 확인"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "마지막 확인 {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "미디어"
 msgid "Media, links and docs"
 msgstr "미디어, 링크, 문서"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "중앙값"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "메시지를 가져왔습니다"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "키가 보내는 메시지에는 봇 이름과 사진이 표시됩니다."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "메서드"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "새 서명 시크릿"
 msgid "New subscribers added"
 msgstr "추가된 새 구독자"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "새 값"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "최신 메일과 전환"
@@ -6841,6 +6970,10 @@ msgstr "다음 시도"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "다음 시도 {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "다음 확인 {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "아직 메시지가 없습니다"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "아직 모니터가 없습니다. 작업이나 모니터링 도구가 구성 요소의 상태를 설정하도록 모니터를 추가하세요."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "아직 모니터가 없습니다. 확인, 작업 또는 자체 모니터링이 구성 요소의 상태를 설정하도록 모니터를 추가하세요."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "아직 답글이 없습니다."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "답장 계정 없음"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "이 기간에는 아직 응답 시간이 없습니다."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "이 기기에서는 꺼짐."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "끄면 채널과 워크스페이스의 일일 한도가 허용하는 가장 빠른 속도로 보냅니다. 켜면 60분, 24시간, 30일 어느 구간에서도 설정한 값을 넘지 않도록 메일을 고르게 나눠 보냅니다."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "끄면 리디렉션은 기대 상태로 판정합니다."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational은 복구하고, degraded, partial_outage, major_outage는 �
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "선택 사항. 공개 페이지에 표시됩니다."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "선택 사항. 응답의 처음 64 KiB에 포함되어야 하며 대소문자를 구분합니다."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "메일 가이드의 설명대로 MX 레코드를 Yuva로 향하게 하�
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "포트"
 
@@ -8900,6 +9046,10 @@ msgstr "대기열에 추가했습니다. 새 시도가 곧 아래에 표시됩�
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "빠른 정리"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "기간"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "원격 이미지는 보낸 사람에게 메일을 열었음을 알릴 �
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "제거"
 
@@ -9199,6 +9350,10 @@ msgstr "조건 {n} 제거"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "엔드포인트 제거"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "헤더 {header} 제거"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "다시 열기"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "교체"
 
@@ -9490,6 +9646,14 @@ msgstr "해결 또는 완료"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "해결됨"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "{took} 만에 응답"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "응답 시간"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Codex에서 검색, 분류, 답장 초안 작성을 할 수 있습니다
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "터미널에서 검색, 분류, 답장 초안 작성을 할 수 있습니다. 사용자 권한으로 동작하며, 허용한 접근 범위 안에서 작업합니다."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "초 단위, 1에서 30까지."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES 테넌트"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "구성 요소의 상태를 외부에서 설정하세요. 보고하는 작업이나 상태를 푸시하는 자체 모니터링 도구를 사용할 수 있습니다."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "구성 요소의 상태를 외부에서 설정합니다. Yuva가 웹사이트나 포트를 확인하거나, 작업이 보고하거나, 자체 모니터링이 상태를 보냅니다."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "태그"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "수신자를 확정하는 중: 지금까지 {prepared}명"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP 확인"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "확인 메일과 알림을 보내는 받은 편지함의 이메일 채�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "인시던트가 이미 해결되었거나 완료되어 더 이상 변경할 수 없습니다."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "간격은 {lo}초에서 {hi}초여야 합니다."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS 파일에는 구독자마다 İYS의 열 형식으로 한 행이 있으며, 구독은 ONAY, 구독 취소는 RET입니다. 튀르키예 발송자가 직접 İYS에 업로드하기 위한 것입니다. 대기 중인 구독은 제외됩니다."
@@ -11741,6 +11921,10 @@ msgstr "정책이 quarantine입니다. 실패한 메일은 스팸함으로 갑�
 msgid "The policy is reject: mail that fails is refused."
 msgstr "정책이 reject입니다. 실패한 메일은 거부됩니다."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "포트는 1에서 65535 사이여야 합니다."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "이전 시크릿도 {rotatedUntil}까지 서명합니다."
@@ -11923,6 +12107,10 @@ msgstr "테스트는 선택한 멤버에게만 가며 연락처에게는 가지 
 msgid "The test stopped at a step."
 msgstr "테스트가 한 단계에서 멈췄습니다."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "제한 시간은 1초에서 30초여야 합니다."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "업로드한 파일은 이전이 끝나면 삭제됩니다. Yuva는 가져온 것만 보관합니다."
@@ -12043,6 +12231,10 @@ msgstr "이 주소는 현재 허용된 만큼 확인 메일을 받았습니다. 
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "이 주소에는 아직 SMTP 계정이 없습니다. 첫 일괄 발송 전에 받은 편지함 설정에서 추가하세요."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "이 주소는 사설, 루프백 또는 링크 로컬 주소입니다. 확인은 공개 주소에만 닿습니다."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "시간"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "시간대"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "제한 시간"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "업로드 {step}%"
 msgid "Uploading…"
 msgstr "업로드 중…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "가동률"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "긴급"
@@ -12997,9 +13197,17 @@ msgstr "값"
 msgid "Value"
 msgstr "값"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "값 저장됨"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "조건 {n}의 값"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "값은 암호화되어 저장되며 다시 표시되지 않습니다. 바꾸려면 새 값으로 교체하세요."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "제공업체의 한도를 기다리는 중입니다. {time}에 이어 �
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "가장 오래 기다림: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "인증서에 대해 경고"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva는 읽기만 합니다. 로그인 외에 연결이 {provider}에 �
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva는 읽기만 합니다. {provider}에서 아무것도 삭제, 이동, 보관, 읽음 표시하지 않으며 메일은 그대로 남습니다."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva가 주기적으로 호스트와 포트에 연결합니다."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva는 업로드한 파일만 읽고 이전이 끝나면 삭제합니다. 기록은 조용히 도착합니다. 알림도 자동 응답도 없습니다."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva가 주기적으로 주소를 요청하고 응답을 확인합니다."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

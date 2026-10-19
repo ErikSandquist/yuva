@@ -6,6 +6,7 @@ import {
   type StatusComponentStateValue,
   type StatusIncidentCreate,
   type StatusIncidentPatch,
+  type StatusCheckRange,
   type StatusMonitorCreate,
   type StatusMonitorUpdate,
   type StatusNotice,
@@ -308,6 +309,33 @@ export function useMonitorChecks(pageId: string, monitorId: string) {
       ),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
+  })
+}
+
+export function useLastCheck(pageId: string, monitorId: string, enabled: boolean) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: [...keys.statusChecks(ws, pageId, monitorId), "last"],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/status-pages/{pageId}/monitors/{monitorId}/checks", {
+          params: { path: { pageId, monitorId }, query: { limit: 1 } },
+        })
+      ).then((r) => r.items[0]),
+    enabled,
+  })
+}
+
+export function useMonitorSummary(pageId: string, monitorId: string, range: StatusCheckRange) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: [...keys.statusChecks(ws, pageId, monitorId), "summary", range],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary", {
+          params: { path: { pageId, monitorId }, query: { range } },
+        })
+      ),
   })
 }
 

@@ -788,6 +788,14 @@ msgstr "12 mesecev"
 msgid "2. Check that it arrives"
 msgstr "2. Preverite, ali prispe"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Privzeto od 200 do 299."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 ur"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 mesecev"
@@ -804,9 +812,17 @@ msgstr "Od 3 do 48 črk, številk in vezajev. Edinstveno na tem strežniku."
 msgid "3. Finish"
 msgstr "3. Dokončaj"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 dni"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "Od 7 do 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95. percentil"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Dodaj končno točko"
 msgid "Add group"
 msgstr "Dodaj skupino"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Dodaj glavo"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Dodala ekipa"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Kot zgoraj ({current})"
 msgid "As fast as allowed"
 msgstr "Čim hitreje, kot je dovoljeno"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "Tako pogosto, kot je dovoljeno"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Prosi vse, naj znova potrdijo"
@@ -2043,6 +2068,10 @@ msgstr "Atributi"
 msgid "Audience"
 msgstr "Občinstvo"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Samodejni odgovori, novice in poročila o dostavi, na katere nihče ni odgovoril."
@@ -2150,6 +2179,10 @@ msgstr "Blokirano"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Blokirani stiki"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Telo"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Kategorija"
 msgid "Cc: {cc}"
 msgstr "Kp: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Potrdilo je poteklo {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Potrdilo poteče {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Spremeni naslov"
@@ -2505,6 +2546,10 @@ msgstr "Preveri dostavljivost in nastavi DKIM"
 msgid "Check DNS and start signing"
 msgstr "Preveri DNS in začni podpisovati"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Preverjaj vsakih"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Preverite, ali je preusmeritev vklopljena in pri Gmailu potrjena s kodo."
@@ -2561,6 +2606,10 @@ msgstr "Preverjanje, kaj je na strežniku"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Preverjanje …"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Preverjanja"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Datumi"
 msgid "Days"
 msgstr "Dnevi"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Koliko dni pred iztekom preverjanje ne uspe. Pri 0 se preverja le veljavnost."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Dni zgodovine"
@@ -4150,6 +4203,10 @@ msgstr "Konec"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Vnesite ime gostitelja ali naslov IP."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Vnesite ime gostitelja ali naslov IP."
@@ -4162,6 +4219,10 @@ msgstr "Vnesite veljaven e-poštni naslov ali pustite prazno."
 msgid "Enter a valid e-mail address."
 msgstr "Vnesite veljaven e-poštni naslov."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Vnesite naslov http ali https z gostiteljem in brez uporabniškega imena in gesla."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Vnesite URL http ali https brez uporabniškega imena ali gesla."
@@ -4169,6 +4230,10 @@ msgstr "Vnesite URL http ali https brez uporabniškega imena ali gesla."
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Vnesite naslov nabiralnika, iz katerega danes odgovarjate. Yuva najde njegovega ponudnika; nič se ne bere, dokler ga ne povežete."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Vnesite gostitelja brez vrat. Vrata imajo svoje polje."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Vsak poskus ne uspe od {failingSince}. Po 24 urah neuspehov Yuva končno
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Vsak signal, zamujen signal in poslano stanje zadnjih 30 dni, najnovejši najprej."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Vsako preverjanje zadnjih 30 dni, najnovejše prvo."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Primer d.o.o."
 msgid "Expected every"
 msgstr "Pričakovano vsakih"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Pričakovani status od"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Pričakovani status do"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Poteklo {expires}"
@@ -4359,6 +4436,10 @@ msgstr "Zunanji ID-ji"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Neuspešno"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Neuspela preverjanja"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Mape, ki niso izbrane ali nikoli prebrane"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "Mape datotek .eml, Maildir ali izvoz iz Proton Mail: dajte mapo v .zip in jo naložite. Njene mape postanejo oznake."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Sledi preusmeritvam"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Predano uporabniku {name}"
 msgid "Has an open conversation"
 msgstr "Ima odprt pogovor"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Ime glave"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Vrednost glave"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Glave"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Zgodovina odstranjena"
 msgid "Home"
 msgstr "Domov"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Gostitelj"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Kako so privolili?"
@@ -5040,6 +5141,14 @@ msgstr "Kako poslati pošto"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Kako preveriti"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "Preverjanje HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Ključi in pomočniki v tem delovnem prostoru ne smejo načrtovati množ
 msgid "Keys and assistants may send broadcasts"
 msgstr "Ključi in pomočniki smejo pošiljati množična sporočila"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Ključna beseda"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Vrsta"
@@ -5694,6 +5807,10 @@ msgstr "Zadnje množično sporočilo"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Zadnje preverjanje"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Zadnje preverjanje {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Mediji"
 msgid "Media, links and docs"
 msgstr "Mediji, povezave in dokumenti"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Mediana"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Sporočila uvožena"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Sporočila, ki jih pošlje ključ, prikazujejo ime in sliko njegovega bota."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Metoda"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Nova skrivnost za podpisovanje"
 msgid "New subscribers added"
 msgstr "Novi naročniki dodani"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Nova vrednost"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Novejša pošta in preklop"
@@ -6841,6 +6970,10 @@ msgstr "Naslednji poskus"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "naslednji poskus {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Naslednje preverjanje {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Še ni sporočil"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Še ni monitorjev. Dodajte monitor, da stanje komponente nastavlja opravilo ali vaše spremljanje."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Še ni nadzornikov. Dodajte enega, da stanje komponente nastavi preverjanje, opravilo ali vaš nadzor."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Še ni odgovorov."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Brez računa za odgovore"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "V tem obdobju še ni odzivnih časov."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Izklopljeno za to napravo."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Izklopljeno pošilja tako hitro, kot dovoljujeta kanal in dnevna omejitev delovnega prostora. Vklopljeno enakomerno porazdeli sporočila, tako da nobenih 60 minut, 24 ur ali 30 dni ne dobi več, kot ste nastavili."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Izklopljeno: preusmeritev se presoja glede na pričakovani status."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational obnovi; degraded, partial_outage in major_outage ustavijo."
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Neobvezno. Prikazano na javni strani."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Neobvezno. Prvih 64 KiB odgovora ga mora vsebovati; velikost črk šteje."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Usmerite zapise MX na Yuvo, kot opisuje vodnik za e-pošto. Sinhronizaci
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Vrata"
 
@@ -8900,6 +9046,10 @@ msgstr "V čakalni vrsti. Nov poskus se čez trenutek prikaže spodaj."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Hitro čiščenje"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Obdobje"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Oddaljene slike lahko pošiljatelju povedo, da ste sporočilo odprli."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Odstrani"
 
@@ -9199,6 +9350,10 @@ msgstr "Odstrani pogoj {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Odstrani končno točko"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Odstrani glavo {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Znova odpri"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Zamenjaj"
 
@@ -9490,6 +9646,14 @@ msgstr "Reši ali dokončaj"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Rešeno"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Odgovoril v {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Odzivni čas"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Iščite, razvrščajte in pripravljajte osnutke odgovorov iz Codexa. De
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Iščite, razvrščajte in pripravljajte osnutke odgovorov iz svojega terminala. Deluje kot vi, z dostopom, ki ga dovolite."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Sekunde, od 1 do 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "Najemnik SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Stanje komponente nastavljajte od zunaj: opravilo, ki se javi, ali vaše spremljanje, ki pošlje stanje."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Stanje komponente nastavite od zunaj: Yuva preverja spletno mesto ali vrata, opravilo se javi ali pa vaš nadzor pošlje stanje."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Oznake"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Določanje prejemnikov: doslej {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "Preverjanje TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "E-poštni kanal nabiralnika, ki pošilja potrditve in obvestila."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incident je že rešen ali dokončan, zato ne sprejema več sprememb."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Interval mora biti od {lo} do {hi} sekund."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Datoteka İYS ima eno vrstico na naročnika v stolpcih İYS, ONAY za naročene in RET za odjavljene, da jo turški pošiljatelji lahko sami naložijo v İYS. Čakajoče naročnine so izpuščene."
@@ -11741,6 +11921,10 @@ msgstr "Pravilnik je quarantine: pošta, ki ne uspe, gre med vsiljeno pošto."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "Pravilnik je reject: pošta, ki ne uspe, je zavrnjena."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "Vrata morajo biti od 1 do 65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Prejšnja skrivnost tudi podpisuje do {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "Preizkus še vedno gre samo članom, ki ste jih izbrali, nikoli stiku."
 msgid "The test stopped at a step."
 msgstr "Preizkus se je ustavil pri koraku."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Časovna omejitev mora biti od 1 do 30 sekund."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "Naložena datoteka se izbriše, ko se selitev konča. Yuva obdrži samo tisto, kar je uvozila."
@@ -12043,6 +12231,10 @@ msgstr "Ta naslov je dobil toliko potrditvenih sporočil, kolikor jih je zaenkra
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Ta naslov še nima računa SMTP. Pred prvim množičnim sporočilom ga dodajte v nastavitvah nabiralnika."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Ta naslov je zaseben, povratni ali link-local. Preverjanja dosežejo le javne naslove."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Čas"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Časovni pas"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Časovna omejitev"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Naloženo {step} %"
 msgid "Uploading…"
 msgstr "Nalaganje …"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Razpoložljivost"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Nujno"
@@ -12997,9 +13197,17 @@ msgstr "vrednost"
 msgid "Value"
 msgstr "Vrednost"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Vrednost shranjena"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Vrednost pogoja {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Vrednosti so shranjene šifrirane in se ne prikažejo več. Če jo želite spremeniti, jo zamenjajte."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Čakanje na omejitev ponudnika; nadaljuje se {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Čaka najdlje: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Opozori na potrdilo"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva samo bere. Poleg prijave njena povezava pošilja {provider} samo za
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva samo bere. Pri {provider} nikoli ničesar ne briše, premika, arhivira ali označuje kot prebrano, vaša pošta pa ostane, kjer je."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva redno odpre povezavo z gostiteljem in vrati."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva bere samo datoteko, ki jo naložite, in jo izbriše, ko se selitev konča. Zgodovina prihaja tiho: brez obvestil, brez samodejnih odgovorov."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva redno zahteva naslov in preveri odgovor."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

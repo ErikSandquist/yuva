@@ -6218,14 +6218,31 @@ export interface paths {
          *       `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
          *     - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
          *       `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+         *     - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+         *       within `timeout` seconds with a status in the expected range, the keyword in the first
+         *       64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+         *       days (a certificate expiring sooner fails the check).
+         *     - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+         *       `timeout` seconds.
+         *
+         *     `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+         *     address the host resolves to is checked when the monitor is saved and on every check;
+         *     a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+         *     cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+         *     with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+         *     or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+         *     all fail, while they answered within the last hour, is the server's own trouble: its failures
+         *     are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+         *     of a redirect target.
          *
          *     The monitor fails after `failure_threshold` failures in a row and recovers after
-         *     `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+         *     `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+         *     for `http` and `tcp`). Failing sets the component to
          *     `failure_state`, never over a state a member set later than the monitor's last change, and
          *     opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-         *     it opened and puts the component back. The answer carries `token` and `url` once; only a
-         *     hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-         *     unset, `403 status_monitor_limit`).
+         *     it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+         *     and `url` once; only a hash of the token is kept. A workspace has at most
+         *     `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6252,8 +6269,8 @@ export interface paths {
         post?: never;
         /**
          * Delete a monitor
-         * @description With its checks. A component it set goes back to `operational` unless something else holds
-         *     it; an incident it opened stays.
+         * @description With its checks. An open incident it opened is resolved with an update saying so, and a
+         *     component it set goes back to `operational` unless something else holds it.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6265,7 +6282,9 @@ export interface paths {
          * @description Changes the given fields. Pausing stops results from counting and lets go of the component
          *     (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
          *     starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-         *     later. A new `interval` or `grace` moves the next beat's due time.
+         *     later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+         *     given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+         *     its stored value, and `headers` replaces the whole list. A target is checked again as on create.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6284,6 +6303,7 @@ export interface paths {
         /**
          * Rotate a monitor's token
          * @description Makes a new token and drops the old one at once: calls with the old token answer `404`.
+         *     `http` and `tcp` monitors have no token (`409 monitor_kind`).
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6303,12 +6323,37 @@ export interface paths {
         };
         /**
          * List a monitor's checks
-         * @description Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-         *     while the monitor is paused are not kept.
+         * @description Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+         *     that arrive while the monitor is paused, and failures of a dropped round, are not kept.
          *
          *     Scope: `status:read`.
          */
         get: operations["listStatusMonitorChecks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A monitor's response times and uptime
+         * @description The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+         *     last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+         *     share of checks that succeeded; response times are the 50th and 95th percentile of the
+         *     successful checks that measured one (`http` and `tcp`), absent when there are none.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["getStatusMonitorCheckSummary"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8077,7 +8122,7 @@ export interface webhooks {
         put?: never;
         /**
          * A monitor failed
-         * @description A heartbeat or push monitor reached its failure threshold. `incident_id` names the incident it
+         * @description A monitor reached its failure threshold. `incident_id` names the incident it
          *     opened, when `on_failure` opened one. Endpoints of an inbox get the monitors of that inbox's
          *     page.
          */
@@ -15729,9 +15774,10 @@ export interface components {
         };
         /**
          * @description `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+         *     `http`: the server sends a request. `tcp`: the server opens a connection.
          * @enum {string}
          */
-        StatusMonitorKind: "heartbeat" | "push";
+        StatusMonitorKind: "heartbeat" | "push" | "http" | "tcp";
         /**
          * @description `pending` until the first result decides, then `up` or `down`.
          * @enum {string}
@@ -15779,9 +15825,26 @@ export interface components {
             recovery_threshold: number;
             /**
              * Format: int32
-             * @description `heartbeat`: seconds between beats.
+             * @description `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
              */
             interval?: number;
+            /**
+             * Format: int32
+             * @description `http` and `tcp`: seconds the check waits for an answer.
+             */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTP"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
+            /**
+             * Format: date-time
+             * @description `http` and `tcp`, not paused: when the next check is due.
+             */
+            next_check_at?: string;
+            /**
+             * Format: date-time
+             * @description `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
+             */
+            cert_expires_at?: string;
             /**
              * Format: int32
              * @description `heartbeat`: seconds a beat may be late.
@@ -15819,13 +15882,13 @@ export interface components {
             items: components["schemas"]["StatusMonitor"][];
         };
         StatusMonitorWithToken: components["schemas"]["StatusMonitor"] & {
-            /** @description Shown only now; only its hash is kept. */
-            token: string;
+            /** @description `heartbeat` and `push`: shown only now; only its hash is kept. */
+            token?: string;
             /**
-             * @description Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
-             *     run) or `<public URL>/ingress/status/{token}`.
+             * @description `heartbeat` and `push`: where the host calls, `<public URL>/ingress/heartbeat/{token}` (add
+             *     `/fail` for a failed run) or `<public URL>/ingress/status/{token}`.
              */
-            url: string;
+            url?: string;
         };
         StatusMonitorCreate: {
             kind: components["schemas"]["StatusMonitorKind"];
@@ -15838,17 +15901,18 @@ export interface components {
             on_failure?: components["schemas"]["StatusMonitorOnFailure"];
             /**
              * Format: int32
-             * @description Default 1.
+             * @description Default 1, or 3 for `http` and `tcp`.
              */
             failure_threshold?: number;
             /**
              * Format: int32
-             * @description Default 1.
+             * @description Default 1, or 2 for `http` and `tcp`.
              */
             recovery_threshold?: number;
             /**
              * Format: int32
-             * @description `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+             * @description `heartbeat`: seconds between beats, 30 seconds to 30 days; default 300. `http` and `tcp`:
+             *     seconds between checks, 60 (or `YUVA_STATUS_MIN_INTERVAL`) to 86400; default that minimum.
              */
             interval?: number;
             /**
@@ -15856,6 +15920,13 @@ export interface components {
              * @description `heartbeat` only: seconds a beat may be late, up to a day; default 60.
              */
             grace?: number;
+            /**
+             * Format: int32
+             * @description `http` and `tcp` only: seconds to wait for an answer, at most 30; default 10.
+             */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTPInput"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
             paused?: boolean;
         };
         StatusMonitorUpdate: {
@@ -15872,14 +15943,132 @@ export interface components {
             interval?: number;
             /** Format: int32 */
             grace?: number;
+            /** Format: int32 */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTPUpdate"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
             paused?: boolean;
+        };
+        /** @enum {string} */
+        StatusMonitorHTTPMethod: "GET" | "HEAD" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS";
+        /** @description What an `http` monitor sends and expects. Header values are never returned. */
+        StatusMonitorHTTP: {
+            url: string;
+            method: components["schemas"]["StatusMonitorHTTPMethod"];
+            /** @description The names of the headers sent; their values are kept encrypted and never shown. */
+            header_names: string[];
+            body?: string;
+            /** Format: int32 */
+            expected_status_min: number;
+            /** Format: int32 */
+            expected_status_max: number;
+            /** @description Text the first 64 KiB of the answer must contain, case-sensitive. */
+            keyword?: string;
+            follow_redirects: boolean;
+            /**
+             * Format: int32
+             * @description For https, a certificate of the URL's own host expiring within this many days fails the check; 0 checks only that it is valid.
+             */
+            cert_warn_days: number;
+        };
+        StatusMonitorHeader: {
+            name: string;
+            /** @description Required on create. On update, leaving it out keeps the value stored for this name. */
+            value?: string;
+        };
+        StatusMonitorHTTPInput: {
+            /** @description An http or https URL without credentials. */
+            url: string;
+            /** @description Default `GET`. */
+            method?: components["schemas"]["StatusMonitorHTTPMethod"];
+            /** @description Not `Host`, `Content-Length`, `Transfer-Encoding` or `Connection`. */
+            headers?: components["schemas"]["StatusMonitorHeader"][];
+            body?: string;
+            /**
+             * Format: int32
+             * @description Default 200.
+             */
+            expected_status_min?: number;
+            /**
+             * Format: int32
+             * @description Default 299.
+             */
+            expected_status_max?: number;
+            /** @description Empty for none. */
+            keyword?: string;
+            /** @description Default false; a 3xx answer is then judged against the expected range. */
+            follow_redirects?: boolean;
+            /**
+             * Format: int32
+             * @description Default 14.
+             */
+            cert_warn_days?: number;
+        };
+        StatusMonitorHTTPUpdate: {
+            url?: string;
+            method?: components["schemas"]["StatusMonitorHTTPMethod"];
+            headers?: components["schemas"]["StatusMonitorHeader"][];
+            /** @description Empty for none. */
+            body?: string;
+            /** Format: int32 */
+            expected_status_min?: number;
+            /** Format: int32 */
+            expected_status_max?: number;
+            /** @description Empty for none. */
+            keyword?: string;
+            follow_redirects?: boolean;
+            /** Format: int32 */
+            cert_warn_days?: number;
+        };
+        StatusMonitorTCP: {
+            /** @description A host name or an IP address (IPv6 without brackets), without a port. */
+            host: string;
+            /** Format: int32 */
+            port: number;
+        };
+        /** @enum {string} */
+        StatusCheckRange: "24h" | "7d";
+        StatusCheckBucket: {
+            /** Format: date-time */
+            start: string;
+            /** Format: int32 */
+            checks: number;
+            /** Format: int32 */
+            failures: number;
+            /** Format: int32 */
+            p50_ms?: number;
+            /** Format: int32 */
+            p95_ms?: number;
+        };
+        StatusCheckSummary: {
+            range: components["schemas"]["StatusCheckRange"];
+            /** Format: date-time */
+            from: string;
+            /** Format: date-time */
+            to: string;
+            /** Format: int32 */
+            bucket_seconds: number;
+            /** Format: int32 */
+            checks: number;
+            /** Format: int32 */
+            failures: number;
+            /**
+             * Format: double
+             * @description Percent of checks that succeeded, absent without checks.
+             */
+            uptime?: number;
+            /** Format: int32 */
+            p50_ms?: number;
+            /** Format: int32 */
+            p95_ms?: number;
+            buckets: components["schemas"]["StatusCheckBucket"][];
         };
         /**
          * @description `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-         *     `grafana` (pushed states).
+         *     `grafana` (pushed states), `http` and `tcp` (outside checks).
          * @enum {string}
          */
-        StatusCheckSource: "beat" | "fail" | "missed" | "push" | "alertmanager" | "grafana";
+        StatusCheckSource: "beat" | "fail" | "missed" | "push" | "alertmanager" | "grafana" | "http" | "tcp";
         StatusCheck: {
             /** Format: uuid */
             id: string;
@@ -15894,12 +16083,12 @@ export interface components {
             error?: string;
             /**
              * Format: int32
-             * @description For outside checks, which come later.
+             * @description `http` and `tcp`: milliseconds until the answer's headers or the connection.
              */
             duration_ms?: number;
             /**
              * Format: int32
-             * @description For outside checks, which come later.
+             * @description `http`: the final answer's status.
              */
             status_code?: number;
         };
@@ -27059,6 +27248,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     listStatusMonitorChecks: {
@@ -27088,6 +27278,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusCheckList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusMonitorCheckSummary: {
+        parameters: {
+            query?: {
+                range?: components["schemas"]["StatusCheckRange"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The summary. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusCheckSummary"];
                 };
             };
             400: components["responses"]["Problem"];

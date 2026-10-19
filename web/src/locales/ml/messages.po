@@ -788,6 +788,14 @@ msgstr "12 മാസം"
 msgid "2. Check that it arrives"
 msgstr "2. അത് എത്തിയോ എന്ന് പരിശോധിക്കുക"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "ഡിഫോൾട്ടായി 200 മുതൽ 299 വരെ."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 മണിക്കൂർ"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 മാസം"
@@ -804,9 +812,17 @@ msgstr "3 മുതൽ 48 വരെ അക്ഷരങ്ങൾ, അക്കങ
 msgid "3. Finish"
 msgstr "3. പൂർത്തിയാക്കുക"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 ദിവസം"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 മുതൽ 90 വരെ."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95-ാം പെർസെൻ്റൈൽ"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "എൻഡ്‌പോയിന്റ് ചേർക്കുക"
 msgid "Add group"
 msgstr "ഗ്രൂപ്പ് ചേർക്കുക"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "ഹെഡർ ചേർക്കുക"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "ടീം ചേർത്തത്"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "മുകളിലേതുപോലെ ({current})"
 msgid "As fast as allowed"
 msgstr "അനുവദിക്കുന്നത്ര വേഗത്തിൽ"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "അനുവദിക്കുന്നത്ര ഇടവിട്ട്"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "എല്ലാവരോടും വീണ്ടും സ്ഥിരീകരിക്കാൻ ആവശ്യപ്പെടുക"
@@ -2043,6 +2068,10 @@ msgstr "ആട്രിബ്യൂട്ടുകൾ"
 msgid "Audience"
 msgstr "പ്രേക്ഷകർ"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "ആരും മറുപടി നൽകാത്ത ഓട്ടോ-മറുപടികൾ, ന്യൂസ്‌ലെറ്ററുകൾ, ഡെലിവറി റിപ്പോർട്ടുകൾ."
@@ -2150,6 +2179,10 @@ msgstr "തടഞ്ഞു"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "തടഞ്ഞ കോൺടാക്റ്റുകൾ"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "ബോഡി"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "വിഭാഗം"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "സർട്ടിഫിക്കറ്റിൻ്റെ കാലാവധി {expires}-ന് അവസാനിച്ചു"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "സർട്ടിഫിക്കറ്റിൻ്റെ കാലാവധി {expires}-ന് അവസാനിക്കും"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "വിലാസം മാറ്റുക"
@@ -2505,6 +2546,10 @@ msgstr "ഡെലിവറബിലിറ്റി പരിശോധിച്�
 msgid "Check DNS and start signing"
 msgstr "DNS പരിശോധിച്ച് സൈനിംഗ് ആരംഭിക്കുക"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "പരിശോധന ഓരോ"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "ഫോർവേഡിംഗ് ഓണാണെന്നും, Gmail-ന്, കോഡ് ഉപയോഗിച്ച് സ്ഥിരീകരിച്ചിട്ടുണ്ടെന്നും പരിശോധിക്കുക."
@@ -2561,6 +2606,10 @@ msgstr "സെർവറിൽ എന്തുണ്ടെന്ന് പരി�
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "പരിശോധിക്കുന്നു…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "പരിശോധനകൾ"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "തീയതികൾ"
 msgid "Days"
 msgstr "ദിവസങ്ങൾ"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "കാലാവധി തീരുന്നതിന് എത്ര ദിവസം മുമ്പ് പരിശോധന പരാജയമായി കണക്കാക്കും. 0 ആണെങ്കിൽ സാധുവാണോ എന്ന് മാത്രം നോക്കും."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "ചരിത്രത്തിന്റെ ദിവസങ്ങൾ"
@@ -4150,6 +4203,10 @@ msgstr "അവസാനം"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "ഹോസ്റ്റ് പേരോ IP വിലാസമോ നൽകുക."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "ഒരു ഹോസ്റ്റ് പേര് അല്ലെങ്കിൽ IP വിലാസം നൽകുക."
@@ -4162,6 +4219,10 @@ msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം �
 msgid "Enter a valid e-mail address."
 msgstr "സാധുവായ ഇമെയിൽ വിലാസം നൽകുക."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "ഹോസ്റ്റോടുകൂടിയ, ഉപയോക്തൃനാമവും പാസ്‌വേഡും ഇല്ലാത്ത http അല്ലെങ്കിൽ https വിലാസം നൽകുക."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "ഉപയോക്തൃനാമമോ പാസ്‌വേഡോ ഇല്ലാത്ത http അല്ലെങ്കിൽ https URL നൽകുക."
@@ -4169,6 +4230,10 @@ msgstr "ഉപയോക്തൃനാമമോ പാസ്‌വേഡോ ഇ�
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "നിങ്ങൾ ഇന്ന് മറുപടി നൽകുന്ന മെയിൽബോക്സിന്റെ വിലാസം നൽകുക. Yuva അതിന്റെ ദാതാവിനെ കണ്ടെത്തും; നിങ്ങൾ കണക്റ്റ് ചെയ്യുന്നതുവരെ ഒന്നും വായിക്കില്ല."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "ഹോസ്റ്റ് പോർട്ട് ഇല്ലാതെ നൽകുക. പോർട്ടിന് സ്വന്തം ഫീൽഡ് ഉണ്ട്."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "{failingSince} മുതൽ ഓരോ ശ്രമവും പരാജ
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "കഴിഞ്ഞ 30 ദിവസത്തെ എല്ലാ സിഗ്നലുകളും, നഷ്ടമായ സിഗ്നലുകളും, അയച്ച അവസ്ഥകളും, പുതിയത് ആദ്യം."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "കഴിഞ്ഞ 30 ദിവസത്തെ ഓരോ പരിശോധനയും, പുതിയത് ആദ്യം."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Example Ltd."
 msgid "Expected every"
 msgstr "പ്രതീക്ഷിക്കുന്നത് ഓരോ"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "പ്രതീക്ഷിക്കുന്ന സ്റ്റാറ്റസ് മുതൽ"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "പ്രതീക്ഷിക്കുന്ന സ്റ്റാറ്റസ് വരെ"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires} കാലഹരണപ്പെട്ടു"
@@ -4359,6 +4436,10 @@ msgstr "ബാഹ്യ ഐഡികൾ"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "പരാജയപ്പെട്ടു"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "പരാജയപ്പെട്ട പരിശോധനകൾ"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "തിരഞ്ഞെടുക്കാത്തതോ ഒരിക്�
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr ".eml ഫയലുകളുടെ ഫോൾഡറുകൾ, Maildir അല്ലെങ്കിൽ Proton Mail-ന്റെ എക്സ്പോർട്ട്: ഫോൾഡർ ഒരു .zip-ൽ ആക്കി അപ്‌ലോഡ് ചെയ്യുക. അതിന്റെ ഫോൾഡറുകൾ ലേബലുകളാകും."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "റീഡയറക്ടുകൾ പിന്തുടരുക"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "{name}-ന് കൈമാറി"
 msgid "Has an open conversation"
 msgstr "തുറന്ന സംഭാഷണം ഉണ്ട്"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "ഹെഡറിൻ്റെ പേര്"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "ഹെഡറിൻ്റെ മൂല്യം"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "ഹെഡറുകൾ"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "ഹാർട്ട്ബീറ്റ്"
@@ -4985,6 +5082,10 @@ msgstr "ചരിത്രം നീക്കം ചെയ്തു"
 msgid "Home"
 msgstr "ഹോം"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "ഹോസ്റ്റ്"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "അവർ എങ്ങനെ സമ്മതിച്ചു?"
@@ -5040,6 +5141,14 @@ msgstr "മെയിൽ എങ്ങനെ അയയ്ക്കാം"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "എങ്ങനെ സ്ഥിരീകരിക്കാം"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP പരിശോധന"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "ഈ വർക്ക്സ്പേസിൽ കീകൾക്കും 
 msgid "Keys and assistants may send broadcasts"
 msgstr "കീകൾക്കും അസിസ്റ്റന്റുകൾക്കും ബ്രോഡ്കാസ്റ്റുകൾ അയയ്ക്കാം"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "കീവേഡ്"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "തരം"
@@ -5694,6 +5807,10 @@ msgstr "അവസാന ബ്രോഡ്കാസ്റ്റ്"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "അവസാന പരിശോധന"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "അവസാന പരിശോധന {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "മീഡിയ"
 msgid "Media, links and docs"
 msgstr "മീഡിയ, ലിങ്കുകൾ, ഡോക്സ്"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "മീഡിയൻ"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "സന്ദേശങ്ങൾ ഇറക്കുമതി ചെയ്�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "കീ അയയ്ക്കുന്ന സന്ദേശങ്ങൾ അതിന്റെ ബോട്ട് പേരും ചിത്രവും കാണിക്കുന്നു."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "മെത്തേഡ്"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "പുതിയ സൈനിംഗ് സീക്രട്ട്"
 msgid "New subscribers added"
 msgstr "പുതിയ സബ്സ്ക്രൈബർമാരെ ചേർത്തു"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "പുതിയ മൂല്യം"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "പുതിയ മെയിലും സ്വിച്ചും"
@@ -6841,6 +6970,10 @@ msgstr "അടുത്ത ശ്രമം"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "അടുത്ത ശ്രമം {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "അടുത്ത പരിശോധന {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "ഇതുവരെ സന്ദേശങ്ങളില്ല"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "ഇതുവരെ മോണിറ്ററുകളില്ല. ഒരു ജോലിയോ നിങ്ങളുടെ സ്വന്തം നിരീക്ഷണമോ ഘടകത്തിന്റെ അവസ്ഥ സജ്ജമാക്കാൻ ഒന്ന് ചേർക്കുക."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "ഇതുവരെ മോണിറ്ററുകളില്ല. ഒരു പരിശോധനയോ ജോലിയോ നിങ്ങളുടെ സ്വന്തം നിരീക്ഷണമോ ഘടകത്തിൻ്റെ അവസ്ഥ നിശ്ചയിക്കാൻ ഒന്ന് ചേർക്കുക."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "ഇതുവരെ മറുപടികളില്ല."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "മറുപടി അക്കൗണ്ട് ഇല്ല"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "ഈ പരിധിയിൽ ഇതുവരെ പ്രതികരണ സമയങ്ങളില്ല."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "ഈ ഉപകരണത്തിന് ഓഫ്."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "ഓഫ് ആയിരിക്കുമ്പോൾ ചാനലും വർക്ക്സ്പേസിന്റെ ദൈനംദിന പരിധിയും അനുവദിക്കുന്നത്ര വേഗത്തിൽ അയയ്ക്കുന്നു. ഓൺ ആയിരിക്കുമ്പോൾ മെയിലുകൾ ഒരേപോലെ വ്യാപിപ്പിക്കുന്നു, അതിനാൽ ഒരു 60 മിനിറ്റോ 24 മണിക്കൂറോ 30 ദിവസമോ നിങ്ങൾ സജ്ജമാക്കിയതിൽ കൂടുതൽ നേടില്ല."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "ഓഫ് ആണെങ്കിൽ റീഡയറക്ട് പ്രതീക്ഷിക്കുന്ന സ്റ്റാറ്റസ് വച്ച് വിലയിരുത്തും."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational വീണ്ടെടുക്കുന്നു; degraded, 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "ഓപ്ഷണൽ. പൊതു പേജിൽ കാണിക്കുന്നു."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "ഓപ്ഷണൽ. ഉത്തരത്തിൻ്റെ ആദ്യ 64 KiB-യിൽ ഇത് ഉണ്ടായിരിക്കണം; വലിയതും ചെറിയതുമായ അക്ഷരങ്ങൾ വ്യത്യസ്തമായി കണക്കാക്കും."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "ഇമെയിൽ ഗൈഡ് വിവരിക്കുന്നത�
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "പോർട്ട്"
 
@@ -8900,6 +9046,10 @@ msgstr "ക്യൂവിലാണ്. പുതിയ ശ്രമം ഒര�
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "പെട്ടെന്നുള്ള വൃത്തിയാക്കൽ"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "പരിധി"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "റിമോട്ട് ചിത്രങ്ങൾക്ക് നി�
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "നീക്കം ചെയ്യുക"
 
@@ -9199,6 +9350,10 @@ msgstr "നിബന്ധന {n} നീക്കം ചെയ്യുക"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "എൻഡ്‌പോയിന്റ് നീക്കം ചെയ്യുക"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "{header} ഹെഡർ നീക്കം ചെയ്യുക"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "വീണ്ടും തുറക്കുക"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "മാറ്റിസ്ഥാപിക്കുക"
 
@@ -9490,6 +9646,14 @@ msgstr "പരിഹരിക്കുക അല്ലെങ്കിൽ പൂ�
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resolved"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "{took} കൊണ്ട് പ്രതികരിച്ചു"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "പ്രതികരണ സമയം"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Codex-ൽ നിന്ന് തിരയുക, തരംതിരി�
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "നിങ്ങളുടെ ടെർമിനലിൽ നിന്ന് തിരയുക, തരംതിരിക്കുക, മറുപടികൾ ഡ്രാഫ്റ്റ് ചെയ്യുക. നിങ്ങൾ അനുവദിക്കുന്ന ആക്‌സസോടെ ഇത് നിങ്ങളുടെ പേരിൽ പ്രവർത്തിക്കുന്നു."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "സെക്കൻഡ്, 1 മുതൽ 30 വരെ."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES ടെനന്റ്"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "ഘടകത്തിന്റെ അവസ്ഥ പുറത്തുനിന്ന് സജ്ജമാക്കുക: സ്വയം റിപ്പോർട്ട് ചെയ്യുന്ന ജോലി, അല്ലെങ്കിൽ അവസ്ഥ അയയ്ക്കുന്ന നിങ്ങളുടെ സ്വന്തം നിരീക്ഷണം."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "ഘടകത്തിൻ്റെ അവസ്ഥ പുറത്തുനിന്ന് നിശ്ചയിക്കുക: Yuva ഒരു വെബ്സൈറ്റോ പോർട്ടോ പരിശോധിക്കുന്നു, ഒരു ജോലി റിപ്പോർട്ട് ചെയ്യുന്നു, അല്ലെങ്കിൽ നിങ്ങളുടെ സ്വന്തം നിരീക്ഷണം അവസ്ഥ അയയ്ക്കുന്നു."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "ടാഗുകൾ"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "സ്വീകർത്താക്കളെ എടുക്കുന്നു: ഇതുവരെ {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP പരിശോധന"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "സ്ഥിരീകരണങ്ങളും അറിയിപ്പ�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "സംഭവം ഇതിനകം പരിഹരിച്ചതോ പൂർത്തിയായതോ ആണ്, അതിനാൽ ഇനി മാറ്റങ്ങൾ സ്വീകരിക്കില്ല."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "ഇടവേള {lo} മുതൽ {hi} സെക്കൻഡ് വരെ ആയിരിക്കണം."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS ഫയലിൽ İYS-ന്റെ കോളങ്ങളിൽ ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു വരിയുണ്ട്, സബ്സ്ക്രൈബ് ചെയ്തവർക്ക് ONAY, അൺസബ്സ്ക്രൈബ് ചെയ്തവർക്ക് RET, ടർക്കിഷ് അയയ്ക്കുന്നവർക്ക് İYS-ലേക്ക് സ്വയം അപ്‌ലോഡ് ചെയ്യാൻ. തീർപ്പാക്കാത്ത സബ്സ്ക്രിപ്ഷനുകൾ ഒഴിവാക്കിയിരിക്കുന്നു."
@@ -11741,6 +11921,10 @@ msgstr "നയം quarantine ആണ്: പരാജയപ്പെടുന്�
 msgid "The policy is reject: mail that fails is refused."
 msgstr "നയം reject ആണ്: പരാജയപ്പെടുന്ന മെയിൽ നിരസിക്കപ്പെടുന്നു."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "പോർട്ട് 1 മുതൽ 65535 വരെ ആയിരിക്കണം."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "മുൻ സീക്രട്ടും {rotatedUntil} വരെ സൈൻ ചെയ്യുന്നു."
@@ -11923,6 +12107,10 @@ msgstr "ടെസ്റ്റ് ഇപ്പോഴും നിങ്ങൾ ത
 msgid "The test stopped at a step."
 msgstr "ടെസ്റ്റ് ഒരു ഘട്ടത്തിൽ നിലച്ചു."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "ടൈംഔട്ട് 1 മുതൽ 30 സെക്കൻഡ് വരെ ആയിരിക്കണം."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "മൈഗ്രേഷൻ അവസാനിക്കുമ്പോൾ അപ്‌ലോഡ് ചെയ്ത ഫയൽ ഇല്ലാതാക്കപ്പെടും. Yuva ഇറക്കുമതി ചെയ്തത് മാത്രം സൂക്ഷിക്കുന്നു."
@@ -12043,6 +12231,10 @@ msgstr "ഈ വിലാസത്തിന് തൽക്കാലം അനു
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "ഈ വിലാസത്തിന് ഇതുവരെ SMTP അക്കൗണ്ട് ഇല്ല. ആദ്യ ബ്രോഡ്കാസ്റ്റിന് മുമ്പ് ഇൻബോക്സ് ക്രമീകരണങ്ങളിൽ ഒന്ന് ചേർക്കുക."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "ഈ വിലാസം സ്വകാര്യമോ ലൂപ്പ്ബാക്കോ ലിങ്ക്-ലോക്കലോ ആണ്. പരിശോധനകൾ പൊതു വിലാസങ്ങളിൽ മാത്രമേ എത്തൂ."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "സമയം"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "സമയമേഖല"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "ടൈംഔട്ട്"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "{step}% അപ്‌ലോഡ് ചെയ്തു"
 msgid "Uploading…"
 msgstr "അപ്‌ലോഡ് ചെയ്യുന്നു…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "അപ്‌ടൈം"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "അടിയന്തരം"
@@ -12997,9 +13197,17 @@ msgstr "മൂല്യം"
 msgid "Value"
 msgstr "മൂല്യം"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "മൂല്യം സൂക്ഷിച്ചിരിക്കുന്നു"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "നിബന്ധന {n}-ന്റെ മൂല്യം"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "മൂല്യങ്ങൾ എൻക്രിപ്റ്റ് ചെയ്ത് സൂക്ഷിക്കുന്നു, വീണ്ടും കാണിക്കില്ല. ഒന്ന് മാറ്റാൻ അത് മാറ്റിസ്ഥാപിക്കുക."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "ദാതാവിന്റെ പരിധിക്കായി കാ�
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "ഏറ്റവും കൂടുതൽ കാത്തിരിക്കുന്നത്: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "സർട്ടിഫിക്കറ്റിനെക്കുറിച്ച് മുന്നറിയിപ്പ് നൽകുക"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva വായിക്കുക മാത്രം ചെയ്യു�
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva വായിക്കുക മാത്രം ചെയ്യുന്നു. അത് {provider}-ൽ ഒന്നും ഒരിക്കലും ഇല്ലാതാക്കുകയോ നീക്കുകയോ ആർക്കൈവ് ചെയ്യുകയോ വായിച്ചതായി അടയാളപ്പെടുത്തുകയോ ചെയ്യുന്നില്ല, നിങ്ങളുടെ മെയിൽ ഇരിക്കുന്നിടത്ത് തന്നെ തുടരും."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva കൃത്യമായ ഇടവേളകളിൽ ഒരു ഹോസ്റ്റിലേക്കും പോർട്ടിലേക്കും കണക്ഷൻ തുറക്കുന്നു."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva നിങ്ങൾ അപ്‌ലോഡ് ചെയ്യുന്ന ഫയൽ മാത്രം വായിക്കുകയും മൈഗ്രേഷൻ അവസാനിക്കുമ്പോൾ അത് ഇല്ലാതാക്കുകയും ചെയ്യുന്നു. ചരിത്രം നിശ്ശബ്ദമായി വരുന്നു: അറിയിപ്പുകളില്ല, ഓട്ടോ-മറുപടികളില്ല."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva കൃത്യമായ ഇടവേളകളിൽ ഒരു വിലാസം അഭ്യർഥിച്ച് ഉത്തരം പരിശോധിക്കുന്നു."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

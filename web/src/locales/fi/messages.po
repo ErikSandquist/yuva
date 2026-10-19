@@ -788,6 +788,14 @@ msgstr "12 kuukautta"
 msgid "2. Check that it arrives"
 msgstr "2. Tarkista, että se saapuu"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Oletuksena 200–299."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 tuntia"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 kuukautta"
@@ -804,9 +812,17 @@ msgstr "3–48 kirjainta, numeroa ja yhdysmerkkiä. Yksilöllinen tällä palvel
 msgid "3. Finish"
 msgstr "3. Valmis"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 päivää"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7–90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95. persentiili"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Lisää päätepiste"
 msgid "Add group"
 msgstr "Lisää ryhmä"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Lisää otsake"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Tiimin lisäämä"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Kuten yllä ({current})"
 msgid "As fast as allowed"
 msgstr "Niin nopeasti kuin sallittu"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "Niin usein kuin sallittu"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Pyydä kaikkia vahvistamaan uudelleen"
@@ -2043,6 +2068,10 @@ msgstr "Attribuutit"
 msgid "Audience"
 msgstr "Yleisö"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Automaattivastaukset, uutiskirjeet ja toimitusraportit, joihin kukaan ei vastannut."
@@ -2150,6 +2179,10 @@ msgstr "Estetty"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Estetyt kontaktit"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Runko"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Luokka"
 msgid "Cc: {cc}"
 msgstr "Kopio: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Varmenne vanheni {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Varmenne vanhenee {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Vaihda osoite"
@@ -2505,6 +2546,10 @@ msgstr "Tarkista toimitettavuus ja määritä DKIM"
 msgid "Check DNS and start signing"
 msgstr "Tarkista DNS ja aloita allekirjoitus"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Tarkista joka"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Tarkista, että ohjaus on päällä ja Gmailissa vahvistettu koodilla."
@@ -2561,6 +2606,10 @@ msgstr "Tarkistetaan, mitä palvelimella on"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Tarkistetaan …"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Tarkistukset"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Päivämäärät"
 msgid "Days"
 msgstr "Päivät"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Montako päivää ennen vanhenemista tarkistus epäonnistuu. Arvo 0 tarkistaa vain, että varmenne on voimassa."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Historian päivät"
@@ -4150,6 +4203,10 @@ msgstr "Päättyy"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Anna isäntänimi tai IP-osoite."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Anna isäntänimi tai IP-osoite."
@@ -4162,6 +4219,10 @@ msgstr "Anna kelvollinen sähköpostiosoite tai jätä tyhjäksi."
 msgid "Enter a valid e-mail address."
 msgstr "Anna kelvollinen sähköpostiosoite."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Anna http- tai https-osoite, jossa on isäntä mutta ei käyttäjätunnusta eikä salasanaa."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Anna http- tai https-URL ilman käyttäjätunnusta tai salasanaa."
@@ -4169,6 +4230,10 @@ msgstr "Anna http- tai https-URL ilman käyttäjätunnusta tai salasanaa."
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Anna sen postilaatikon osoite, josta vastaat tänään. Yuva löytää sen palveluntarjoajan; mitään ei lueta, ennen kuin yhdistät sen."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Anna isäntä ilman porttia. Portilla on oma kenttänsä."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Jokainen yritys on epäonnistunut {failingSince} lähtien. 24 tunnin ep�
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Jokainen signaali, myöhästynyt signaali ja lähetetty tila viimeisten 30 päivän ajalta, uusimmat ensin."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Jokainen tarkistus viimeisen 30 päivän ajalta, uusin ensin."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Esimerkki Oy"
 msgid "Expected every"
 msgstr "Odotetaan joka"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Odotettu tila alkaen"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Odotettu tila asti"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Vanheni {expires}"
@@ -4359,6 +4436,10 @@ msgstr "Ulkoiset tunnukset"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Epäonnistui"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Epäonnistuneet tarkistukset"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Kansiot, joita ei valittu tai luettu koskaan"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr ".eml-tiedostojen kansiot, Maildir tai Proton Mailin vienti: laita kansio .zip-tiedostoon ja lataa se. Sen kansioista tulee tunnisteita."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Seuraa uudelleenohjauksia"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Luovutettu henkilölle {name}"
 msgid "Has an open conversation"
 msgstr "On avoin keskustelu"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Otsakkeen nimi"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Otsakkeen arvo"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Otsakkeet"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Historia poistettu"
 msgid "Home"
 msgstr "Etusivu"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Isäntä"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Miten he suostuivat?"
@@ -5040,6 +5141,14 @@ msgstr "Miten posti lähetetään"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Miten vahvistaa"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP-tarkistus"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Avaimet ja avustajat eivät saa ajastaa joukkolähetyksiä tässä työt
 msgid "Keys and assistants may send broadcasts"
 msgstr "Avaimet ja avustajat saavat lähettää joukkolähetyksiä"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Avainsana"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Tyyppi"
@@ -5694,6 +5807,10 @@ msgstr "Viimeisin joukkolähetys"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Viimeisin tarkistus"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Viimeisin tarkistus {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Media"
 msgid "Media, links and docs"
 msgstr "Media, linkit ja dokumentit"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Mediaani"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Viestit tuotu"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Avaimen lähettämissä viesteissä näkyvät sen botin nimi ja kuva."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Menetelmä"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Uusi allekirjoitussalaisuus"
 msgid "New subscribers added"
 msgstr "Uudet tilaajat lisätty"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Uusi arvo"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Uudempi posti ja vaihto"
@@ -6841,6 +6970,10 @@ msgstr "Seuraava yritys"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "seuraava yritys {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Seuraava tarkistus {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Ei vielä viestejä"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Ei vielä valvontoja. Lisää yksi, jotta työ tai oma valvontasi asettaa komponentin tilan."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Ei vielä valvontoja. Lisää yksi, jotta tarkistus, työ tai oma valvontasi asettaa komponentin tilan."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Ei vielä vastauksia."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Ei vastaustiliä"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "Tällä aikavälillä ei ole vielä vasteaikoja."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Pois tälle laitteelle."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Pois lähettää niin nopeasti kuin kanava ja työtilan päiväraja sallivat. Päällä levittää viestit tasaisesti, jotta mikään 60 minuutin, 24 tunnin tai 30 päivän jakso ei saa enempää kuin asetit."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Pois: uudelleenohjausta arvioidaan odotettua tilaa vasten."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational palauttaa; degraded, partial_outage ja major_outage kaatavat
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Valinnainen. Näytetään julkisella sivulla."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Valinnainen. Vastauksen ensimmäisten 64 KiB:n on sisällettävä se; isot ja pienet kirjaimet erotetaan."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Osoita MX-tietueet Yuvaan sähköpostioppaan mukaan. Synkronointi nappaa
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Portti"
 
@@ -8900,6 +9046,10 @@ msgstr "Jonossa. Uusi yritys näkyy alla hetken kuluttua."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Pikasiivous"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Aikaväli"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Etäkuvat voivat kertoa lähettäjälle, että avasit viestin."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Poista"
 
@@ -9199,6 +9350,10 @@ msgstr "Poista ehto {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Poista päätepiste"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Poista otsake {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Avaa uudelleen"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Korvaa"
 
@@ -9490,6 +9646,14 @@ msgstr "Ratkaise tai viimeistele"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Ratkaistu"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Vastasi ajassa {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Vasteaika"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Hae, lajittele ja luonnostele vastauksia Codexista. Se toimii sinuna, sa
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Hae, lajittele ja luonnostele vastauksia päätteestäsi. Se toimii sinuna, sallimallasi oikeuksilla."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Sekuntia, 1–30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES-tenant"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Aseta komponentin tila ulkopuolelta: työ, joka ilmoittautuu, tai oma valvontasi, joka lähettää tilansa."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Aseta komponentin tila ulkoa: Yuva tarkistaa verkkosivuston tai portin, työ ilmoittautuu tai oma valvontasi lähettää tilan."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Tagit"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Poimitaan vastaanottajia: {prepared} toistaiseksi"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP-tarkistus"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "Postilaatikon sähköpostikanava, joka lähettää vahvistukset ja ilmoi
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Häiriö on jo ratkaistu tai viimeistelty, joten se ei ota enää muutoksia."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Välin on oltava {lo}–{hi} sekuntia."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS-tiedostossa on yksi rivi per tilaaja İYS:n sarakkeissa, ONAY tilanneille ja RET peruneille, jotta turkkilaiset lähettäjät voivat ladata sen itse İYS:ään. Odottavat tilaukset jätetään pois."
@@ -11741,6 +11921,10 @@ msgstr "Käytäntö on quarantine: epäonnistuva posti menee roskapostiin."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "Käytäntö on reject: epäonnistuva posti hylätään."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "Portin on oltava 1–65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Edellinen salaisuus allekirjoittaa myös {rotatedUntil} asti."
@@ -11923,6 +12107,10 @@ msgstr "Testi menee edelleen vain valitsemillesi jäsenille, ei koskaan kontakti
 msgid "The test stopped at a step."
 msgstr "Testi pysähtyi vaiheeseen."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Aikakatkaisun on oltava 1–30 sekuntia."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "Ladattu tiedosto poistetaan, kun siirto päättyy. Yuva säilyttää vain sen, minkä se toi."
@@ -12043,6 +12231,10 @@ msgstr "Tämä osoite sai niin monta vahvistusviestiä kuin tällä hetkellä sa
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Tällä osoitteella ei vielä ole SMTP-tiliä. Lisää sellainen postilaatikon asetuksissa ennen ensimmäistä joukkolähetystä."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Osoite on yksityinen, loopback tai link-local. Tarkistukset tavoittavat vain julkisia osoitteita."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Aika"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Aikavyöhyke"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Aikakatkaisu"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Ladattu {step} %"
 msgid "Uploading…"
 msgstr "Ladataan …"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Käytettävyys"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Kiireellinen"
@@ -12997,9 +13197,17 @@ msgstr "arvo"
 msgid "Value"
 msgstr "Arvo"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Arvo tallennettu"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Ehdon {n} arvo"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Arvot tallennetaan salattuina, eikä niitä näytetä enää. Vaihda arvo korvaamalla se."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Odotetaan palveluntarjoajan rajaa; jatkuu {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Odottanut pisimpään: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Varoita varmenteesta"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva vain lukee. Kirjautumisen lisäksi sen yhteys ei lähetä palveluun
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva vain lukee. Se ei koskaan poista, siirrä, arkistoi tai merkitse mitään luetuksi palvelussa {provider}, ja postisi pysyy paikoillaan."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva avaa säännöllisesti yhteyden isäntään ja porttiin."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva lukee vain lataamasi tiedoston ja poistaa sen siirron päättyessä. Historia saapuu hiljaa: ei ilmoituksia, ei automaattivastauksia."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva hakee säännöllisesti osoitteen ja tarkistaa vastauksen."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

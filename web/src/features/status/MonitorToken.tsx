@@ -101,6 +101,7 @@ export function MonitorTokenDialog({
   onClose: () => void
 }) {
   const name = monitor.name
+  const url = monitor.url ?? ""
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="sm:max-w-2xl" data-testid="status-monitor-token">
@@ -121,12 +122,12 @@ export function MonitorTokenDialog({
           <h3 className="text-body font-medium">
             <Trans>Address</Trans>
           </h3>
-          <CodeLine value={monitor.url} testId="status-monitor-url" />
+          <CodeLine value={url} testId="status-monitor-url" />
         </section>
         {monitor.kind === "heartbeat" ? (
-          <HeartbeatSnippets url={monitor.url} interval={monitor.interval ?? 300} />
+          <HeartbeatSnippets url={url} interval={monitor.interval ?? 300} />
         ) : (
-          <PushSnippets url={monitor.url} />
+          <PushSnippets url={url} />
         )}
         <DialogFooter>
           <Button onClick={onClose} data-testid="status-monitor-token-done">

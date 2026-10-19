@@ -1,12 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 
 import { ErrorLine } from "@/components/common"
-import { formatDateTime } from "@/components/common/text"
+import { formatDateTime, formatMs } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, EmptyRow, Rows } from "@/features/settings/ui"
 import { useMonitorChecks } from "@/features/status/queries"
+import { ResponseChart } from "@/features/status/ResponseChart"
 import { useStatusText } from "@/features/status/text"
 import type { StatusMonitor } from "@/lib/api"
 
@@ -21,17 +22,23 @@ export function MonitorChecksDialog({
 }) {
   const { i18n } = useLingui()
   const text = useStatusText()
+  const outside = monitor.kind === "http" || monitor.kind === "tcp"
   const list = useMonitorChecks(pageId, monitor.id)
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-xl" data-testid="status-monitor-checks">
+      <DialogContent className="sm:max-w-2xl" data-testid="status-monitor-checks">
         <DialogHeader>
           <DialogTitle>{monitor.name}</DialogTitle>
           <DialogDescription>
-            <Trans>Every beat, missed beat and pushed state of the last 30 days, newest first.</Trans>
+            {outside ? (
+              <Trans>Every check of the last 30 days, newest first.</Trans>
+            ) : (
+              <Trans>Every beat, missed beat and pushed state of the last 30 days, newest first.</Trans>
+            )}
           </DialogDescription>
         </DialogHeader>
+        {outside && <ResponseChart pageId={pageId} monitorId={monitor.id} />}
         <ErrorLine error={list.error} />
         {list.isPending ? (
           <Skeleton className="h-32 w-full rounded-2xl" />
@@ -57,6 +64,12 @@ export function MonitorChecksDialog({
                             <span className="text-muted-foreground"> · {text.component[c.state]}</span>
                           )}
                         </span>
+                        {c.duration_ms !== undefined && (
+                          <span className="shrink-0 font-mono text-caption text-muted-foreground tabular-nums">
+                            {c.status_code ? `${c.status_code} · ` : ""}
+                            {formatMs(c.duration_ms, i18n.locale)}
+                          </span>
+                        )}
                         <span className="shrink-0 text-caption text-faint">{formatDateTime(c.at, i18n.locale)}</span>
                       </span>
                       {detail && <span className="text-small break-words text-muted-foreground">{detail}</span>}

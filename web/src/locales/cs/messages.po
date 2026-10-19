@@ -788,6 +788,14 @@ msgstr "12 měsíců"
 msgid "2. Check that it arrives"
 msgstr "2. Zkontrolujte, že dorazí"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Ve výchozím nastavení 200 až 299."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 hodin"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 měsíců"
@@ -804,9 +812,17 @@ msgstr "3 až 48 písmen, číslic a spojovníků. Jedinečné na tomto serveru.
 msgid "3. Finish"
 msgstr "3. Dokončit"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 dní"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7 až 90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95. percentil"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Přidat koncový bod"
 msgid "Add group"
 msgstr "Přidat skupinu"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Přidat hlavičku"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "Přidáno týmem"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Jako výše ({current})"
 msgid "As fast as allowed"
 msgstr "Tak rychle, jak je povoleno"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "Tak často, jak je povoleno"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Požádat všechny o nové potvrzení"
@@ -2043,6 +2068,10 @@ msgstr "Atributy"
 msgid "Audience"
 msgstr "Publikum"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Automatické odpovědi, newslettery a doručenky, na které nikdo neodpověděl."
@@ -2150,6 +2179,10 @@ msgstr "Zablokováno"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Zablokované kontakty"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Tělo"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Kategorie"
 msgid "Cc: {cc}"
 msgstr "Kopie: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "Certifikát vypršel {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "Certifikát vyprší {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Změnit adresu"
@@ -2505,6 +2546,10 @@ msgstr "Zkontrolovat doručitelnost a nastavit DKIM"
 msgid "Check DNS and start signing"
 msgstr "Zkontrolovat DNS a začít podepisovat"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Kontrolovat každých"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Zkontrolujte, že je přeposílání zapnuté a u Gmailu potvrzené kódem."
@@ -2561,6 +2606,10 @@ msgstr "Kontroluje se, co je na serveru"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Kontroluje se…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Kontroly"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Data"
 msgid "Days"
 msgstr "Dny"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Kolik dní před vypršením kontrola selže. Hodnota 0 ověřuje jen platnost."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Dnů historie"
@@ -4150,6 +4203,10 @@ msgstr "Konec"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Zadejte název hostitele nebo IP adresu."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Zadejte název hostitele nebo adresu IP."
@@ -4162,6 +4219,10 @@ msgstr "Zadejte platnou e-mailovou adresu, nebo nechte prázdné."
 msgid "Enter a valid e-mail address."
 msgstr "Zadejte platnou e-mailovou adresu."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Zadejte adresu http nebo https s hostitelem a bez uživatelského jména a hesla."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Zadejte URL http nebo https bez uživatelského jména a hesla."
@@ -4169,6 +4230,10 @@ msgstr "Zadejte URL http nebo https bez uživatelského jména a hesla."
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Zadejte adresu schránky, ze které dnes odpovídáte. Yuva najde jejího poskytovatele; nic se nečte, dokud ji nepřipojíte."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Zadejte hostitele bez portu. Port má vlastní pole."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Každý pokus selhává od {failingSince}. Po 24 hodinách selhávání 
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Každý signál, zmeškaný signál a odeslaný stav za posledních 30 dní, nejnovější první."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Každá kontrola za posledních 30 dní, nejnovější první."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Příklad s.r.o."
 msgid "Expected every"
 msgstr "Očekáváno každých"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Očekávaný stav od"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Očekávaný stav do"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Vypršelo {expires}"
@@ -4359,6 +4436,10 @@ msgstr "Externí ID"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Selhalo"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Neúspěšné kontroly"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Složky nevybrané nebo nikdy nepřečtené"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr "Složky souborů .eml, Maildir nebo export z Proton Mail: vložte složku do .zip a nahrajte ji. Její složky se stanou štítky."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Sledovat přesměrování"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Předáno uživateli {name}"
 msgid "Has an open conversation"
 msgstr "Má otevřenou konverzaci"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Název hlavičky"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Hodnota hlavičky"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Hlavičky"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Historie odstraněna"
 msgid "Home"
 msgstr "Domů"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Hostitel"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Jak souhlasili?"
@@ -5040,6 +5141,14 @@ msgstr "Jak poštu odeslat"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Jak ověřit"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "Kontrola HTTP"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "Klíče a asistenti v tomto pracovním prostoru nesmějí plánovat hrom
 msgid "Keys and assistants may send broadcasts"
 msgstr "Klíče a asistenti smějí odesílat hromadné zprávy"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Klíčové slovo"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Druh"
@@ -5694,6 +5807,10 @@ msgstr "Poslední hromadná zpráva"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Poslední kontrola"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Poslední kontrola {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Média"
 msgid "Media, links and docs"
 msgstr "Média, odkazy a dokumenty"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Medián"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Zprávy importovány"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Zprávy, které klíč posílá, zobrazují jméno a obrázek jeho bota."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Metoda"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Nový podpisový tajný klíč"
 msgid "New subscribers added"
 msgstr "Noví odběratelé přidáni"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Nová hodnota"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Novější pošta a přepnutí"
@@ -6841,6 +6970,10 @@ msgstr "Další pokus"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "další pokus {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Další kontrola {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Zatím žádné zprávy"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Zatím žádné monitory. Přidejte monitor, aby stav komponenty nastavovala úloha nebo vaše monitorování."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Zatím žádné monitory. Přidejte jeden, aby stav komponenty nastavovala kontrola, úloha nebo váš monitoring."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Zatím žádné odpovědi."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Žádný účet pro odpovědi"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "V tomto rozsahu zatím nejsou žádné doby odezvy."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Pro toto zařízení vypnuto."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Vypnuto odesílá tak rychle, jak dovolí kanál a denní limit pracovního prostoru. Zapnuto rozloží zprávy rovnoměrně, takže žádných 60 minut, 24 hodin ani 30 dní nedostane víc, než nastavíte."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Vypnuto: přesměrování se posuzuje podle očekávaného stavu."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "operational obnoví; degraded, partial_outage a major_outage vyřadí."
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Volitelné. Zobrazí se na veřejné stránce."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Volitelné. Prvních 64 KiB odpovědi ho musí obsahovat; záleží na velikosti písmen."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Nasměrujte záznamy MX na Yuvu, jak popisuje průvodce e-mailem. Synchr
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Port"
 
@@ -8900,6 +9046,10 @@ msgstr "Ve frontě. Nový pokus se za okamžik zobrazí níže."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Rychlý úklid"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Rozsah"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "Vzdálené obrázky mohou odesílateli prozradit, že jste zprávu otev�
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Odebrat"
 
@@ -9199,6 +9350,10 @@ msgstr "Odebrat podmínku {n}"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Odebrat koncový bod"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "Odebrat hlavičku {header}"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Znovu otevřít"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Nahradit"
 
@@ -9490,6 +9646,14 @@ msgstr "Vyřešit nebo dokončit"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Vyřešeno"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Odpověděl za {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Doba odezvy"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Hledejte, třiďte a připravujte koncepty odpovědí z Codexu. Jedná j
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Hledejte, třiďte a připravujte koncepty odpovědí z terminálu. Jedná jako vy, s přístupem, který povolíte."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Sekundy, 1 až 30."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "Tenant SES"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Nastavujte stav komponenty zvenčí: úloha, která se hlásí, nebo vaše monitorování, které odesílá stav."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Nastavujte stav komponenty zvenčí: Yuva kontroluje web nebo port, úloha se ohlásí, nebo váš monitoring pošle stav."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Tagy"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Určují se příjemci: zatím {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "Kontrola TCP"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "E-mailový kanál schránky, který odesílá potvrzení a oznámení."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incident je už vyřešený nebo dokončený, takže nepřijímá další změny."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Interval musí být {lo} až {hi} sekund."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Soubor İYS má jeden řádek na odběratele ve sloupcích İYS, ONAY pro přihlášené a RET pro odhlášené, aby ho turečtí odesílatelé mohli sami nahrát do İYS. Čekající odběry se vynechávají."
@@ -11741,6 +11921,10 @@ msgstr "Zásada je quarantine: pošta, která neprojde, jde do spamu."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "Zásada je reject: pošta, která neprojde, je odmítnuta."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "Port musí být 1 až 65535."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Předchozí tajný klíč také podepisuje do {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "Test stále jde jen členům, které jste vybrali, nikdy kontaktu."
 msgid "The test stopped at a step."
 msgstr "Test se zastavil u kroku."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Časový limit musí být 1 až 30 sekund."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "Nahraný soubor se po skončení migrace smaže. Yuva si ponechá jen to, co importovala."
@@ -12043,6 +12231,10 @@ msgstr "Tato adresa dostala tolik potvrzovacích zpráv, kolik je zatím povolen
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Tato adresa zatím nemá účet SMTP. Před první hromadnou zprávou ho přidejte v nastavení schránky."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Tato adresa je soukromá, loopback nebo link-local. Kontroly dosáhnou jen na veřejné adresy."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Čas"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Časové pásmo"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Časový limit"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Nahráno {step} %"
 msgid "Uploading…"
 msgstr "Nahrává se…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Dostupnost"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Naléhavé"
@@ -12997,9 +13197,17 @@ msgstr "hodnota"
 msgid "Value"
 msgstr "Hodnota"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Hodnota uložena"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Hodnota podmínky {n}"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Hodnoty se ukládají šifrovaně a už se nezobrazují. Chcete-li hodnotu změnit, nahraďte ji."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Čeká se na limit poskytovatele; pokračuje {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Čeká nejdéle: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Upozornit na certifikát"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "Yuva jen čte. Kromě přihlášení její připojení posílá {provide
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva jen čte. U {provider} nikdy nic nemaže, nepřesouvá, nearchivuje ani neoznačuje jako přečtené a vaše pošta zůstává, kde je."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "Yuva pravidelně naváže spojení s hostitelem a portem."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva čte jen soubor, který nahrajete, a po skončení migrace ho smaže. Historie přichází tiše: žádná oznámení, žádné automatické odpovědi."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "Yuva pravidelně načte adresu a zkontroluje odpověď."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

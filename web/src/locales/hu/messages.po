@@ -788,6 +788,14 @@ msgstr "12 hónap"
 msgid "2. Check that it arrives"
 msgstr "2. Ellenőrizd, hogy megérkezik-e"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "200 to 299 by default."
+msgstr "Alapértelmezés szerint 200-tól 299-ig."
+
+#: src/features/status/ResponseChart.tsx
+msgid "24 hours"
+msgstr "24 óra"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
 msgstr "24 hónap"
@@ -804,9 +812,17 @@ msgstr "3–48 betű, számjegy és kötőjel. Egyedi ezen a kiszolgálón."
 msgid "3. Finish"
 msgstr "3. Befejezés"
 
+#: src/features/status/ResponseChart.tsx
+msgid "7 days"
+msgstr "7 nap"
+
 #: src/features/status/SettingsTab.tsx
 msgid "7 to 90."
 msgstr "7–90."
+
+#: src/features/status/ResponseChart.tsx
+msgid "95th percentile"
+msgstr "95. percentilis"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -1268,6 +1284,10 @@ msgstr "Végpont hozzáadása"
 msgid "Add group"
 msgstr "Csoport hozzáadása"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Add header"
+msgstr "Fejléc hozzáadása"
+
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/MonitorsTab.tsx
 msgid "Add monitor"
@@ -1348,6 +1368,7 @@ msgstr "A csapat adta hozzá"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorHttpFields.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1886,6 +1907,10 @@ msgstr "Mint fent ({current})"
 msgid "As fast as allowed"
 msgstr "Amilyen gyorsan csak lehet"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "As often as allowed"
+msgstr "A megengedett leggyakrabban"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
 msgstr "Kérj mindenkit újabb megerősítésre"
@@ -2043,6 +2068,10 @@ msgstr "Attribútumok"
 msgid "Audience"
 msgstr "Közönség"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Authorization"
+msgstr "Authorization"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Automatikus válaszok, hírlevelek és kézbesítési jelentések, amelyekre senki sem válaszolt."
@@ -2150,6 +2179,10 @@ msgstr "Letiltva"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Letiltott kontaktok"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Body"
+msgstr "Törzs"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2430,6 +2463,14 @@ msgstr "Kategória"
 msgid "Cc: {cc}"
 msgstr "Másolat: {cc}"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expired {expires}"
+msgstr "A tanúsítvány lejárt: {expires}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Certificate expires {expires}"
+msgstr "A tanúsítvány lejár: {expires}"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Cím módosítása"
@@ -2505,6 +2546,10 @@ msgstr "Kézbesíthetőség ellenőrzése és DKIM beállítása"
 msgid "Check DNS and start signing"
 msgstr "DNS ellenőrzése és aláírás indítása"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Check every"
+msgstr "Ellenőrzés ennyi időnként"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Ellenőrizd, hogy az átirányítás be van-e kapcsolva, és Gmailnél a kóddal megerősítették-e."
@@ -2561,6 +2606,10 @@ msgstr "Annak ellenőrzése, mi van a szerveren"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Checking…"
 msgstr "Ellenőrzés…"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Checks"
+msgstr "Ellenőrzések"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -3383,6 +3432,10 @@ msgstr "Dátumok"
 msgid "Days"
 msgstr "Napok"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Days before it expires that the check fails. 0 only checks that it is valid."
+msgstr "Hány nappal a lejárat előtt hibás az ellenőrzés. A 0 csak azt nézi, hogy érvényes-e."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Days of history"
 msgstr "Előzmények napjai"
@@ -4150,6 +4203,10 @@ msgstr "Vége"
 msgid "English"
 msgstr "English"
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter a host name or an IP address."
+msgstr "Adjon meg egy gépnevet vagy IP-címet."
+
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
 msgstr "Adj meg egy gépnevet vagy IP-címet."
@@ -4162,6 +4219,10 @@ msgstr "Adj meg érvényes e-mail-címet, vagy hagyd üresen."
 msgid "Enter a valid e-mail address."
 msgstr "Adj meg érvényes e-mail-címet."
 
+#: src/features/status/monitorErrors.ts
+msgid "Enter an http or https address with a host and without a user name or password."
+msgstr "Adjon meg http- vagy https-címet gazdával, felhasználónév és jelszó nélkül."
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Adj meg egy http vagy https URL-t felhasználónév és jelszó nélkül."
@@ -4169,6 +4230,10 @@ msgstr "Adj meg egy http vagy https URL-t felhasználónév és jelszó nélkül
 #: src/features/migrations/SourceStep.tsx
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Add meg annak a postafióknak a címét, amelyből ma válaszolsz. A Yuva megkeresi a szolgáltatóját; semmi sem kerül olvasásra, amíg nem csatlakoztatod."
+
+#: src/features/status/monitorErrors.ts
+msgid "Enter the host without a port. The port has its own field."
+msgstr "Adja meg a gazdát port nélkül. A portnak külön mezője van."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Enter the SMTP password from the SES console."
@@ -4207,6 +4272,10 @@ msgstr "Minden kísérlet sikertelen {failingSince} óta. 24 órányi hiba után
 #: src/features/status/MonitorChecks.tsx
 msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
 msgstr "Minden jel, kihagyott jel és elküldött állapot az elmúlt 30 napból, legújabb elöl."
+
+#: src/features/status/MonitorChecks.tsx
+msgid "Every check of the last 30 days, newest first."
+msgstr "Az elmúlt 30 nap minden ellenőrzése, a legújabb elöl."
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -4314,6 +4383,14 @@ msgstr "Példa Kft."
 msgid "Expected every"
 msgstr "Várt gyakoriság"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status from"
+msgstr "Várt állapot (tól)"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Expected status to"
+msgstr "Várt állapot (ig)"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Lejárt: {expires}"
@@ -4359,6 +4436,10 @@ msgstr "Külső azonosítók"
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Sikertelen"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Failed checks"
+msgstr "Sikertelen ellenőrzések"
 
 #: src/features/migrations/text.ts
 msgid "Failed five times"
@@ -4550,6 +4631,10 @@ msgstr "Nem kiválasztott vagy soha nem olvasott mappák"
 #: src/features/migrations/text.ts
 msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
 msgstr ".eml fájlokat tartalmazó mappák, Maildir vagy a Proton Mail exportja: tedd a mappát egy .zip-be, és töltsd fel. A mappáiból címkék lesznek."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Follow redirects"
+msgstr "Átirányítások követése"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -4860,6 +4945,18 @@ msgstr "Átadva: {name}"
 msgid "Has an open conversation"
 msgstr "Van nyitott beszélgetése"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header name"
+msgstr "Fejléc neve"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Header value"
+msgstr "Fejléc értéke"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Headers"
+msgstr "Fejlécek"
+
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
@@ -4985,6 +5082,10 @@ msgstr "Előzmények eltávolítva"
 msgid "Home"
 msgstr "Főoldal"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Host"
+msgstr "Gazda"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Hogyan egyeztek bele?"
@@ -5040,6 +5141,14 @@ msgstr "Hogyan küldd el a leveleket"
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "How to verify"
 msgstr "Hogyan ellenőrizd"
+
+#: src/features/status/text.tsx
+msgid "HTTP"
+msgstr "HTTP"
+
+#: src/features/status/text.tsx
+msgid "HTTP check"
+msgstr "HTTP-ellenőrzés"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -5612,6 +5721,10 @@ msgstr "A kulcsok és asszisztensek ebben a munkaterületben nem ütemezhetnek t
 msgid "Keys and assistants may send broadcasts"
 msgstr "A kulcsok és asszisztensek küldhetnek tömeges leveleket"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Keyword"
+msgstr "Kulcsszó"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Kind"
 msgstr "Típus"
@@ -5694,6 +5807,10 @@ msgstr "Utolsó tömeges levél"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Last check"
 msgstr "Utolsó ellenőrzés"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last check {last}"
+msgstr "Utolsó ellenőrzés: {last}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -6249,6 +6366,10 @@ msgstr "Média"
 msgid "Media, links and docs"
 msgstr "Média, linkek és dokumentumok"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Median"
+msgstr "Medián"
+
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "median first reply"
@@ -6339,6 +6460,10 @@ msgstr "Üzenetek importálva"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "A kulcs által küldött üzeneteken a bot neve és képe látszik."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Method"
+msgstr "Metódus"
 
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
@@ -6794,6 +6919,10 @@ msgstr "Új aláírási titok"
 msgid "New subscribers added"
 msgstr "Új feliratkozók hozzáadva"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "New value"
+msgstr "Új érték"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Újabb levelek és az átállás"
@@ -6841,6 +6970,10 @@ msgstr "Következő kísérlet"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "következő kísérlet: {when}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Next check {next}"
+msgstr "Következő ellenőrzés: {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -7114,8 +7247,8 @@ msgid "No messages yet"
 msgstr "Még nincsenek üzenetek"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
-msgstr "Még nincs figyelő. Adjon hozzá egyet, hogy egy feladat vagy a saját felügyelete állítsa be egy összetevő állapotát."
+msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
+msgstr "Még nincs figyelő. Adjon hozzá egyet, hogy egy ellenőrzés, egy feladat vagy a saját megfigyelése állítsa egy komponens állapotát."
 
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
@@ -7169,6 +7302,10 @@ msgstr "Még nincsenek válaszok."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Nincs válaszfiók"
+
+#: src/features/status/ResponseChart.tsx
+msgid "No response times in this range yet."
+msgstr "Ebben a tartományban még nincs válaszidő."
 
 #: src/features/status/MonitorsTab.tsx
 msgid "No result yet"
@@ -7604,6 +7741,10 @@ msgstr "Ki ennél az eszköznél."
 #: src/features/broadcasts/Composer.tsx
 msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
 msgstr "Kikapcsolva olyan gyorsan küld, amennyire a csatorna és a munkaterület napi korlátja engedi. Bekapcsolva egyenletesen elosztja a leveleket, így semmilyen 60 perc, 24 óra vagy 30 nap nem kap többet, mint amit beállítottál."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Off, a redirect is judged against the expected status."
+msgstr "Kikapcsolva az átirányítást a várt állapot alapján értékeli."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -8109,6 +8250,10 @@ msgstr "az operational helyreállít; a degraded, partial_outage és major_outag
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
 msgstr "Nem kötelező. A nyilvános oldalon jelenik meg."
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Optional. The first 64 KiB of the answer must contain it, upper and lower case matter."
+msgstr "Nem kötelező. A válasz első 64 KiB-jának tartalmaznia kell; a kis- és nagybetű számít."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -8662,6 +8807,7 @@ msgstr "Irányítsd az MX-rekordokat a Yuvára, ahogy az e-mail-útmutató leír
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Port"
 msgstr "Port"
 
@@ -8900,6 +9046,10 @@ msgstr "Sorban áll. Az új kísérlet egy pillanat múlva megjelenik alább."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Gyors takarítás"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Range"
+msgstr "Tartomány"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -9161,6 +9311,7 @@ msgstr "A távoli képek elárulhatják a feladónak, hogy megnyitottad a levele
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Eltávolítás"
 
@@ -9199,6 +9350,10 @@ msgstr "A(z) {n}. feltétel eltávolítása"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Végpont eltávolítása"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Remove header {header}"
+msgstr "A(z) {header} fejléc eltávolítása"
 
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
@@ -9270,6 +9425,7 @@ msgid "Reopen"
 msgstr "Újranyitás"
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/status/MonitorHttpFields.tsx
 msgid "Replace"
 msgstr "Csere"
 
@@ -9490,6 +9646,14 @@ msgstr "Megoldás vagy befejezés"
 #: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Megoldva"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Responded in {took}"
+msgstr "Válaszidő: {took}"
+
+#: src/features/status/ResponseChart.tsx
+msgid "Response time"
+msgstr "Válaszidő"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -9854,6 +10018,10 @@ msgstr "Keress, rendezz és írj válaszpiszkozatokat a Codexből. Úgy jár el,
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Keress, rendezz és írj válaszpiszkozatokat a terminálodból. Úgy jár el, mint te, az engedélyezett hozzáféréssel."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Seconds, 1 to 30."
+msgstr "Másodperc, 1-től 30-ig."
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Secret"
@@ -10240,8 +10408,8 @@ msgid "SES tenant"
 msgstr "SES-bérlő"
 
 #: src/features/status/MonitorsTab.tsx
-msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
-msgstr "Állítsa be egy összetevő állapotát kívülről: egy jelentkező feladat vagy a saját felügyelete, amely elküldi az állapotát."
+msgid "Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own monitoring pushes its state."
+msgstr "Állítsa egy komponens állapotát kívülről: a Yuva ellenőriz egy weboldalt vagy portot, egy feladat jelentkezik, vagy a saját megfigyelése küldi az állapotot."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
@@ -11117,6 +11285,14 @@ msgstr "Címkék"
 msgid "Taking the recipients: {prepared} so far"
 msgstr "A címzettek kiválasztása: eddig {prepared}"
 
+#: src/features/status/text.tsx
+msgid "TCP"
+msgstr "TCP"
+
+#: src/features/status/text.tsx
+msgid "TCP check"
+msgstr "TCP-ellenőrzés"
+
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
 #: src/components/common/DiscussionAuthor.tsx
@@ -11533,6 +11709,10 @@ msgstr "A postafiók e-mail-csatornája, amely a megerősítéseket és az érte
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Az incidens már megoldódott vagy befejeződött, ezért nem fogad több módosítást."
 
+#: src/features/status/monitorErrors.ts
+msgid "The interval must be {lo} to {hi} seconds."
+msgstr "Az időköznek {lo} és {hi} másodperc között kell lennie."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Az İYS-fájlban feliratkozónként egy sor van az İYS oszlopaiban, ONAY a feliratkozottakhoz és RET a leiratkozottakhoz, hogy a török feladók maguk tölthessék fel az İYS-be. A függő feliratkozások kimaradnak."
@@ -11741,6 +11921,10 @@ msgstr "A szabályzat quarantine: a sikertelen levelek a spamba kerülnek."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "A szabályzat reject: a sikertelen levelek elutasításra kerülnek."
 
+#: src/features/status/monitorErrors.ts
+msgid "The port must be 1 to 65535."
+msgstr "A portnak 1 és 65535 között kell lennie."
+
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Az előző titok is aláír eddig: {rotatedUntil}."
@@ -11923,6 +12107,10 @@ msgstr "A teszt továbbra is csak az általad kiválasztott tagoknak megy, soha 
 msgid "The test stopped at a step."
 msgstr "A teszt megállt egy lépésnél."
 
+#: src/features/status/monitorErrors.ts
+msgid "The timeout must be 1 to 30 seconds."
+msgstr "Az időkorlátnak 1 és 30 másodperc között kell lennie."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "A feltöltött fájl törlődik, amikor az átvitel véget ér. A Yuva csak azt tartja meg, amit importált."
@@ -12043,6 +12231,10 @@ msgstr "Ez a cím annyi megerősítő levelet kapott, amennyi egyelőre megenged
 #: src/features/setup/NewsletterStep.tsx
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Ennek a címnek még nincs SMTP-fiókja. Az első tömeges levél előtt adj hozzá egyet a postafiók beállításaiban."
+
+#: src/features/status/monitorErrors.ts
+msgid "This address is private, loopback or link-local. Checks only reach public addresses."
+msgstr "Ez a cím privát, visszahurkoló vagy link-local. Az ellenőrzések csak nyilvános címeket érnek el."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
@@ -12416,6 +12608,10 @@ msgstr "Idő"
 #: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Időzóna"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Timeout"
+msgstr "Időkorlát"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12842,6 +13038,10 @@ msgstr "Feltöltve {step}%"
 msgid "Uploading…"
 msgstr "Feltöltés…"
 
+#: src/features/status/ResponseChart.tsx
+msgid "Uptime"
+msgstr "Rendelkezésre állás"
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Sürgős"
@@ -12997,9 +13197,17 @@ msgstr "érték"
 msgid "Value"
 msgstr "Érték"
 
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Value kept"
+msgstr "Érték megőrizve"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "A(z) {n}. feltétel értéke"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Values are stored encrypted and never shown again. To change one, replace it."
+msgstr "Az értékek titkosítva tárolódnak, és többé nem jelennek meg. Módosításhoz cserélje le az értéket."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
@@ -13155,6 +13363,10 @@ msgstr "Várakozás a szolgáltató korlátjára; folytatódik: {time}."
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
 msgstr "Legrégebben vár: <0>{name}</0>"
+
+#: src/features/status/MonitorHttpFields.tsx
+msgid "Warn about the certificate"
+msgstr "Figyelmeztetés a tanúsítványról"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -13963,9 +14175,17 @@ msgstr "A Yuva csak olvas. A bejelentkezésen kívül a kapcsolata csak olvasás
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "A Yuva csak olvas. Soha nem töröl, nem mozgat, nem archivál és nem jelöl olvasottnak semmit a(z) {provider} szolgáltatásban, és a leveleid ott maradnak, ahol vannak."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva opens a connection to a host and port on a schedule."
+msgstr "A Yuva rendszeresen kapcsolatot nyit egy gazdával és porttal."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "A Yuva csak az általad feltöltött fájlt olvassa, és törli, amikor az átvitel véget ér. Az előzmények csendben érkeznek: nincs értesítés, nincs automatikus válasz."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Yuva requests an address on a schedule and checks the answer."
+msgstr "A Yuva rendszeresen lekér egy címet, és ellenőrzi a választ."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
