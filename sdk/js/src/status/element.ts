@@ -17,6 +17,7 @@ import { directionOf, localeIn, translate } from "../translate"
 type Tone = "ok" | "warn" | "partial" | "maint" | "bad"
 
 const days = 90
+const steps = [90, 60, 30, 14]
 const gap = 2
 const minCell = 4
 const maxCell = 8
@@ -62,7 +63,7 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .cross.b{bottom:-6px}
 .cross.s{left:-6px}
 .cross.e{right:-6px}
-.bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,680px) auto}
+.bar{display:grid;grid-template-columns:auto minmax(220px,1fr) auto}
 .cell{display:flex;align-items:center;gap:12px;min-width:0;min-height:52px;padding:0 20px;background:var(--paper)}
 .bar>.cell+.cell{border-inline-start:1px solid var(--rule)}
 .dot{flex:none;inline-size:8px;block-size:8px;background:var(--tone)}
@@ -279,12 +280,8 @@ export class YuvaStatusElement extends Base {
     const draw = () => {
       const width = box.clientWidth
       if (!width) return
-      let count = days
-      let size = Math.min(maxCell, Math.floor((width + gap) / days - gap))
-      if (size < minCell) {
-        size = minCell
-        count = Math.max(1, Math.floor((width + gap) / (minCell + gap)))
-      }
+      const count = steps.find((n) => (width + gap) / n - gap >= minCell) ?? 14
+      const size = Math.max(minCell, Math.min(maxCell, Math.floor((width + gap) / count - gap)))
       const step = size + gap
       const shown = list.slice(-count)
       const first = count - shown.length
