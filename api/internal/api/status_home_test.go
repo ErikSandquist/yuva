@@ -104,8 +104,8 @@ func TestStatusHomeServesEveryLanguage(t *testing.T) {
 		t.Fatal("German words")
 	}
 	code, ar, _ := homeGet(t, h, "/ar/")
-	if code != http.StatusOK || !strings.Contains(ar, `<html lang="ar" dir="rtl">`) || !strings.Contains(ar, "Tell your customers before they ask.") {
-		t.Fatalf("/ar/ answers %d without right-to-left or the English fallback", code)
+	if code != http.StatusOK || !strings.Contains(ar, `<html lang="ar" dir="rtl">`) || !strings.Contains(ar, "أخبر عملاءك قبل أن يسألوا.") {
+		t.Fatalf("/ar/ answers %d without right-to-left or the Arabic words", code)
 	}
 	if code, _, _ := homeGet(t, h, "/zh-hans/"); code != http.StatusOK {
 		t.Fatalf("/zh-hans/: %d", code)
