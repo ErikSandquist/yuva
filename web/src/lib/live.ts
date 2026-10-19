@@ -654,6 +654,7 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       void qc.invalidateQueries({ queryKey: keys.discussions(ctx.ws) })
       refreshCounts(qc, ctx.ws)
       return
+    case "status.page.updated":
     case "status.component.updated":
     case "status.incident.created":
     case "status.incident.updated":

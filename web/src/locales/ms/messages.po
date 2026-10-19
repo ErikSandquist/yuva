@@ -11807,6 +11807,10 @@ msgstr "Saluran e-mel peti masuk yang menghantar pengesahan dan notis."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Insiden sudah diselesaikan atau dilengkapkan, jadi ia tidak menerima perubahan lagi."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Insiden ditutup tanpa memberi notis kepada pelanggan"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Selang mesti {lo} hingga {hi} saat."

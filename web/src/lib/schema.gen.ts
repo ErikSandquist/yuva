@@ -5942,8 +5942,8 @@ export interface paths {
         /**
          * Publish a draft incident
          * @description Shows it on the page and, while it is open, sets the components it touches, and queues one
-         *     notice to the page's e-mail subscribers with the current state and the latest update unless
-         *     `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+         *     notice to the page's e-mail subscribers covering every update of the draft that asked to notify,
+         *     unless `notify` is `false` (see the notices endpoints). Publishing a published incident changes
          *     nothing.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
@@ -5972,7 +5972,8 @@ export interface paths {
          *     incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
          *     completing puts its components back; see the tag. On a published incident, `notify` (default
          *     `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
-         *     subscribers or joins the one waiting.
+         *     subscribers or joins the one waiting. Resolving or completing with `notify` `false` cancels the
+         *     notices still waiting (`skip_reason` `closed_quietly`).
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -11882,7 +11883,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -15223,10 +15224,24 @@ export interface components {
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
             custom_domain?: components["schemas"]["StatusCustomDomain"];
+            own_domains?: components["schemas"]["StatusOwnDomains"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description Whether the server lets pages use their own domain (`YUVA_STATUS_DOMAINS`). Absent when it
+         *     is `off`; setting `custom_domain` is then refused.
+         */
+        StatusOwnDomains: {
+            /**
+             * @description `ask`: the owner points the records and asks for the certificate elsewhere (a proxy in
+             *     front). `cloudflare`: verified domains are registered as Cloudflare for SaaS custom
+             *     hostnames, which issue the certificate.
+             * @enum {string}
+             */
+            mode: "ask" | "cloudflare";
         };
         /**
          * @description `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
@@ -15694,7 +15709,7 @@ export interface components {
         };
         /**
          * @description `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
-         *     `skip_reason`), `cancelled` (a member stopped it while it waited).
+         *     `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
          * @enum {string}
          */
         StatusNoticeState: "pending" | "sending" | "sent" | "skipped" | "cancelled";
@@ -15704,9 +15719,11 @@ export interface components {
          *     notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
          *     channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
          *     notice, and no earlier notice of the incident was sent, so nobody had heard of it.
+         *     `closed_quietly`: the incident was resolved or completed without notifying, which cancels
+         *     the notices that still waited.
          * @enum {string}
          */
-        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients" | "nothing_earlier";
+        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients" | "nothing_earlier" | "closed_quietly";
         /**
          * @description Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
          *     `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
@@ -15765,6 +15782,29 @@ export interface components {
         StatusNoticeReach: {
             /** Format: int64 */
             subscribers: number;
+        };
+        /**
+         * @description `status.page.updated`, on `/v1/realtime` only: the page's own domain changed state, its
+         *     Cloudflare hostname or certificate status moved, or the page was edited. Not stored, no id,
+         *     never replayed; reload the page (`GET /v1/status-pages/{id}`) after it and after a reconnect.
+         *     Reaches whoever may read the page with `status:read` or `status:manage` and sees its inbox.
+         */
+        StatusPageEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status.page.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: {
+                /** Format: uuid */
+                page_id: string;
+            };
         };
         /**
          * @description `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved

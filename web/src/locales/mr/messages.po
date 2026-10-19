@@ -11807,6 +11807,10 @@ msgstr "पुष्टीकरणे आणि सूचना पाठवण
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "घटना आधीच सोडवली किंवा पूर्ण झाली आहे, म्हणून ती आणखी बदल स्वीकारत नाही."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "सदस्यांना कळवल्याशिवाय घटना बंद केली"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "अंतर {lo} ते {hi} सेकंद असावे."

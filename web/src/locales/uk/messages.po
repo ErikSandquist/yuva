@@ -11807,6 +11807,10 @@ msgstr "E-mail-канал скриньки, який надсилає підтв
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Інцидент уже розв’язано або завершено, тому зміни більше не приймаються."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Інцидент закрито без сповіщення підписників"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Інтервал має бути від {lo} до {hi} секунд."

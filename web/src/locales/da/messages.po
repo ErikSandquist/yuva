@@ -11807,6 +11807,10 @@ msgstr "Postkassens e-mailkanal, der sender bekræftelser og underretninger."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Hændelsen er allerede løst eller afsluttet, så den tager ikke imod flere ændringer."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Hændelsen blev lukket uden at give abonnenterne besked"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Intervallet skal være {lo} til {hi} sekunder."

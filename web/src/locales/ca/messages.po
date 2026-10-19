@@ -11807,6 +11807,10 @@ msgstr "El canal de correu de la safata que envia confirmacions i avisos."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "L’incident ja està resolt o completat, així que no admet més canvis."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "La incidència s’ha tancat sense avisar els subscriptors"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "L’interval ha de ser de {lo} a {hi} segons."

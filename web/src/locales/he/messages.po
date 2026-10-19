@@ -11807,6 +11807,10 @@ msgstr "ערוץ הדוא״ל של תיבת הדואר ששולח אישורים
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "האירוע כבר נפתר או הושלם, ולכן הוא לא מקבל שינויים נוספים."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "התקלה נסגרה בלי להודיע למנויים"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "המרווח חייב להיות בין {lo} ל-{hi} שניות."

@@ -11807,6 +11807,10 @@ msgstr "इनबॉक्स का ईमेल चैनल, जो पुष
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "घटना पहले ही सुलझ चुकी या पूरी हो चुकी है, इसलिए अब बदलाव नहीं लेती।"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "सब्सक्राइबरों को सूचित किए बिना घटना बंद कर दी गई"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "अंतराल {lo} से {hi} सेकंड के बीच होना चाहिए।"

@@ -11807,6 +11807,10 @@ msgstr "Het e-mailkanaal van de mailbox dat bevestigingen en berichten verzendt.
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Het incident is al opgelost of afgerond en accepteert geen wijzigingen meer."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Het incident is gesloten zonder abonnees te informeren"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Het interval moet {lo} tot {hi} seconden zijn."

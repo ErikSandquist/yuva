@@ -11807,6 +11807,10 @@ msgstr "ช่องทางอีเมลของกล่องข้อค
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "เหตุการณ์ได้รับการแก้ไขหรือเสร็จสิ้นแล้ว จึงไม่รับการเปลี่ยนแปลงอีก"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "ปิดเหตุการณ์โดยไม่แจ้งผู้สมัครรับ"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "ช่วงเวลาต้องอยู่ระหว่าง {lo} ถึง {hi} วินาที"

@@ -11807,6 +11807,10 @@ msgstr "Onay e-postalarını ve bildirimleri gönderen gelen kutusu e-posta kana
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Olay zaten çözüldü ya da tamamlandı; artık değişiklik kabul etmez."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Olay, aboneler bilgilendirilmeden kapatıldı"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Aralık {lo} ile {hi} saniye arasında olmalı."

@@ -11807,6 +11807,10 @@ msgstr "ଇନବକ୍ସର ଇମେଲ୍ ଚ୍ୟାନେଲ, ଯାହ�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "ଘଟଣାର ପୂର୍ବରୁ ସମାଧାନ ହୋଇଛି କିମ୍ବା ସମ୍ପୂର୍ଣ୍ଣ ହୋଇଛି, ତେଣୁ ଆଉ ପରିବର୍ତ୍ତନ ଗ୍ରହଣ କରେ ନାହିଁ।"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "ଗ୍ରାହକଙ୍କୁ ଜଣାଇ ନଥାଇ ଘଟଣାଟି ବନ୍ଦ କରାଯାଇଛି"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "ବ୍ୟବଧାନ {lo} ରୁ {hi} ସେକେଣ୍ଡ ମଧ୍ୟରେ ହେବା ଆବଶ୍ୟକ।"

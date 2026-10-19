@@ -11807,6 +11807,10 @@ msgstr "확인 메일과 알림을 보내는 받은 편지함의 이메일 채�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "인시던트가 이미 해결되었거나 완료되어 더 이상 변경할 수 없습니다."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "구독자에게 알리지 않고 인시던트를 종료했습니다"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "간격은 {lo}초에서 {hi}초여야 합니다."

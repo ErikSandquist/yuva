@@ -11807,6 +11807,10 @@ msgstr "ان باکس کا ای میل چینل جو تصدیقیں اور نو�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "واقعہ پہلے ہی حل یا مکمل ہو چکا ہے، اس لیے مزید تبدیلیاں قبول نہیں کرتا۔"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "سبسکرائبرز کو مطلع کیے بغیر واقعہ بند کر دیا گیا"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "وقفہ {lo} سے {hi} سیکنڈ کے درمیان ہونا چاہیے۔"

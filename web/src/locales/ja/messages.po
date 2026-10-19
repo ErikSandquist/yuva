@@ -11807,6 +11807,10 @@ msgstr "確認メールと通知を送信する、受信トレイのメールチ
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "インシデントはすでに解決または完了しているため、これ以上変更できません。"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "購読者に通知せずにインシデントを終了しました"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "間隔は {lo} 秒から {hi} 秒にしてください。"

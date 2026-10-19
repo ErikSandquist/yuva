@@ -11807,6 +11807,10 @@ msgstr "నిర్ధారణలు, నోటీసులు పంపే �
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "ఘటన ఇప్పటికే పరిష్కరించబడింది లేదా పూర్తయింది, కాబట్టి ఇకపై మార్పులను తీసుకోదు."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "చందాదారులకు తెలియజేయకుండా ఘటనను మూసివేశారు"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "విరామం {lo} నుండి {hi} సెకన్ల మధ్య ఉండాలి."

@@ -136,7 +136,7 @@ export function useRealtime(ws: string, memberId: string) {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data })
           return
         }
-        if (msg.type === "status_notice.updated") {
+        if (msg.type === "status_notice.updated" || msg.type === "status.page.updated") {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
           return
         }

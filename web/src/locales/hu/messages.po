@@ -11807,6 +11807,10 @@ msgstr "A postafiók e-mail-csatornája, amely a megerősítéseket és az érte
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Az incidens már megoldódott vagy befejeződött, ezért nem fogad több módosítást."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Az eseményt az előfizetők értesítése nélkül zárták le"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Az időköznek {lo} és {hi} másodperc között kell lennie."

@@ -11807,6 +11807,10 @@ msgstr "Το κανάλι e-mail των εισερχομένων που στέλ
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Το περιστατικό έχει ήδη επιλυθεί ή ολοκληρωθεί, οπότε δεν δέχεται άλλες αλλαγές."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Το περιστατικό έκλεισε χωρίς ειδοποίηση των συνδρομητών"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Το διάστημα πρέπει να είναι από {lo} έως {hi} δευτερόλεπτα."

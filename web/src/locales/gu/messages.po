@@ -11807,6 +11807,10 @@ msgstr "ઇનબૉક્સની ઇમેઇલ ચેનલ જે પુ�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "ઘટનાનો પહેલેથી ઉકેલ આવી ગયો છે અથવા તે પૂર્ણ થઈ છે, તેથી હવે ફેરફાર સ્વીકારતી નથી."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "સબ્સ્ક્રાઇબર્સને જાણ કર્યા વિના ઘટના બંધ કરવામાં આવી"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "અંતરાલ {lo} થી {hi} સેકન્ડ વચ્ચે હોવો જોઈએ."

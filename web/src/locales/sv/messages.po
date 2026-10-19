@@ -11807,6 +11807,10 @@ msgstr "Brevlådans e-postkanal som skickar bekräftelser och notiser."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incidenten är redan löst eller slutförd, så den tar inte emot fler ändringar."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Händelsen stängdes utan att meddela prenumeranterna"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Intervallet måste vara {lo} till {hi} sekunder."

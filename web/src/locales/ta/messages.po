@@ -11807,6 +11807,10 @@ msgstr "உறுதிப்படுத்தல்களையும் அ�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "சம்பவம் ஏற்கெனவே தீர்க்கப்பட்டது அல்லது முடிந்தது; எனவே இனி மாற்றங்களை ஏற்காது."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "சந்தாதாரர்களுக்குத் தெரிவிக்காமல் சம்பவம் மூடப்பட்டது"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "இடைவெளி {lo} முதல் {hi} விநாடிகள் வரை இருக்க வேண்டும்."

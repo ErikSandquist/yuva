@@ -11807,6 +11807,10 @@ msgstr "Saluran email kotak masuk yang mengirim konfirmasi dan pemberitahuan."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Insiden sudah diselesaikan atau dituntaskan, jadi tidak menerima perubahan lagi."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Insiden ditutup tanpa memberi tahu pelanggan"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Interval harus {lo} sampai {hi} detik."

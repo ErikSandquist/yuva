@@ -11807,6 +11807,10 @@ msgstr "Der E-Mail-Kanal des Postfachs, der Bestätigungen und Benachrichtigunge
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Der Vorfall ist bereits behoben oder abgeschlossen und nimmt keine Änderungen mehr an."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Der Vorfall wurde geschlossen, ohne die Abonnenten zu benachrichtigen"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Das Intervall muss {lo} bis {hi} Sekunden betragen."

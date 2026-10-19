@@ -19,6 +19,7 @@ function useReasons(): Record<StatusNoticeSkipReason, string> {
     sender_not_ready: t`The sending channel cannot send`,
     no_recipients: t`No subscriber matched`,
     nothing_earlier: t`This was a closing notice and no earlier notice was sent, so nobody had heard of the incident`,
+    closed_quietly: t`The incident was closed without notifying subscribers`,
   }
 }
 

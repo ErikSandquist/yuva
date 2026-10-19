@@ -11807,6 +11807,10 @@ msgstr "El canal de correo del buzón que envía confirmaciones y avisos."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "El incidente ya está resuelto o completado, así que no admite más cambios."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "La incidencia se cerró sin avisar a los suscriptores"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "El intervalo debe ser de {lo} a {hi} segundos."

@@ -11807,6 +11807,10 @@ msgstr "Canalul de e-mail al căsuței care trimite confirmările și notificăr
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incidentul este deja rezolvat sau încheiat, deci nu mai primește modificări."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Incidentul a fost închis fără a anunța abonații"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Intervalul trebuie să fie de la {lo} la {hi} secunde."

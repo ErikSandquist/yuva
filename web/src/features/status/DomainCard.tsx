@@ -370,6 +370,7 @@ function Add({ page }: { page: StatusPage }) {
 }
 
 export function DomainCard({ page }: { page: StatusPage }) {
+  if (!page.own_domains) return null
   return (
     <Section
       title={<Trans>Own domain</Trans>}

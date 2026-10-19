@@ -11807,6 +11807,10 @@ msgstr "E-mail kanal pretinca koji šalje potvrde i obavijesti."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incident je već riješen ili dovršen pa ne prima daljnje izmjene."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Incident je zatvoren bez obavijesti pretplatnicima"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Interval mora biti od {lo} do {hi} sekundi."

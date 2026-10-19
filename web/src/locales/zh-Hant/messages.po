@@ -11807,6 +11807,10 @@ msgstr "收件匣中用於傳送確認信和通知的電子郵件管道。"
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "該事件已解決或已完成，不再接受變更。"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "此事件已關閉，未通知訂閱者"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "間隔必須為 {lo} 到 {hi} 秒。"

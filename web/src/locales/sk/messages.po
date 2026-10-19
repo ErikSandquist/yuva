@@ -11807,6 +11807,10 @@ msgstr "E-mailový kanál schránky, ktorý odosiela potvrdenia a upozornenia."
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Incident je už vyriešený alebo dokončený, takže neprijíma ďalšie zmeny."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Incident bol uzavretý bez upozornenia odberateľov"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Interval musí byť {lo} až {hi} sekúnd."

@@ -11807,6 +11807,10 @@ msgstr "ইনবক্সের যে ইমেইল চ্যানেল �
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "ঘটনাটি ইতিমধ্যে সমাধান বা সম্পন্ন হয়েছে, তাই আর পরিবর্তন নেয় না।"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "গ্রাহকদের জানানো ছাড়াই ঘটনাটি বন্ধ করা হয়েছে"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "বিরতি {lo} থেকে {hi} সেকেন্ডের মধ্যে হতে হবে।"

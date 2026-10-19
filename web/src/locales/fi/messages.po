@@ -11807,6 +11807,10 @@ msgstr "Postilaatikon sähköpostikanava, joka lähettää vahvistukset ja ilmoi
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Häiriö on jo ratkaistu tai viimeistelty, joten se ei ota enää muutoksia."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Häiriö suljettiin ilmoittamatta tilaajille"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Välin on oltava {lo}–{hi} sekuntia."

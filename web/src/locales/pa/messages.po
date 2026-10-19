@@ -11807,6 +11807,10 @@ msgstr "ਇਨਬਾਕਸ ਦਾ ਈਮੇਲ ਚੈਨਲ ਜੋ ਪੁਸ਼�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "ਘਟਨਾ ਪਹਿਲਾਂ ਹੀ ਹੱਲ ਜਾਂ ਪੂਰੀ ਹੋ ਚੁੱਕੀ ਹੈ, ਇਸ ਲਈ ਹੋਰ ਤਬਦੀਲੀਆਂ ਨਹੀਂ ਲੈਂਦੀ।"
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "ਗਾਹਕਾਂ ਨੂੰ ਦੱਸੇ ਬਿਨਾਂ ਘਟਨਾ ਬੰਦ ਕੀਤੀ ਗਈ"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "ਵਕਫ਼ਾ {lo} ਤੋਂ {hi} ਸਕਿੰਟ ਵਿਚਕਾਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"

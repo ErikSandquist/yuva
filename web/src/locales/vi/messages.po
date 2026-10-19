@@ -11807,6 +11807,10 @@ msgstr "Kênh e-mail của hộp thư dùng để gửi thư xác nhận và th�
 msgid "The incident is already resolved or completed, so it takes no more changes."
 msgstr "Sự cố đã được xử lý hoặc hoàn tất, nên không nhận thêm thay đổi."
 
+#: src/features/status/Notices.tsx
+msgid "The incident was closed without notifying subscribers"
+msgstr "Sự cố đã được đóng mà không thông báo cho người đăng ký"
+
 #: src/features/status/monitorErrors.ts
 msgid "The interval must be {lo} to {hi} seconds."
 msgstr "Khoảng thời gian phải từ {lo} đến {hi} giây."
