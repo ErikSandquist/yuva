@@ -87,6 +87,11 @@ type Config struct {
 	StatusMonitors int
 	// StatusNotices is YUVA_STATUS_NOTICES: off hides the subscribe form and sends no notices.
 	StatusNotices bool
+	// StatusHome is YUVA_STATUS_HOME: off makes the root of the status host answer a plain 404.
+	// StatusHomePage is YUVA_STATUS_HOME_PAGE, the slug of the published page the home page shows as
+	// its live card; empty leaves the card out.
+	StatusHome     bool
+	StatusHomePage string
 	// StatusNoticesDaily caps notice mails per workspace and UTC day (YUVA_STATUS_NOTICES_DAILY); 0 is
 	// no limit. StatusMaxSubscribers caps subscribed addresses per page (YUVA_STATUS_MAX_SUBSCRIBERS).
 	StatusNoticesDaily   int64
@@ -257,6 +262,14 @@ func Load(version string) (Config, error) {
 			return c, errors.New("YUVA_STATUS_URL must name another host than YUVA_PUBLIC_URL; leave it unset for <YUVA_PUBLIC_URL>/status")
 		}
 	}
+	switch strings.ToLower(env("YUVA_STATUS_HOME", "on")) {
+	case "on":
+		c.StatusHome = true
+	case "off":
+	default:
+		return c, errors.New("YUVA_STATUS_HOME must be on or off")
+	}
+	c.StatusHomePage = strings.ToLower(strings.TrimSpace(env("YUVA_STATUS_HOME_PAGE", "")))
 	if c.StatusMonitors, err = strconv.Atoi(env("YUVA_STATUS_MONITORS", "20")); err != nil || c.StatusMonitors < 0 {
 		return c, errors.New("YUVA_STATUS_MONITORS must be a number of monitors, 0 for no limit")
 	}

@@ -297,7 +297,7 @@ func TestStatusURLRedirect(t *testing.T) {
 	if res.StatusCode != http.StatusFound || res.Header.Get("Location") != "https://status.example.test/"+st.slug+"/history" {
 		t.Fatalf("redirect %d %s", res.StatusCode, res.Header.Get("Location"))
 	}
-	for path, want := range map[string]int{"/" + st.slug: http.StatusOK, "/" + st.slug + "/badge.svg": http.StatusOK, "/v1/me": http.StatusNotFound, "/": http.StatusNotFound} {
+	for path, want := range map[string]int{"/" + st.slug: http.StatusOK, "/" + st.slug + "/badge.svg": http.StatusOK, "/v1/me": http.StatusNotFound, "/": http.StatusOK} {
 		req, _ := http.NewRequest("GET", h.url+path, nil)
 		req.Host = "status.example.test"
 		res, err := noFollow.Do(req)

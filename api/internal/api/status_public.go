@@ -107,6 +107,9 @@ func (s *Server) statusHost(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case statusHost != "" && strings.EqualFold(r.Host, statusHost):
+			if s.serveStatusRoot(w, r) {
+				return
+			}
 			if r.URL.Path == "/" || strings.HasPrefix(r.URL.Path, statusPathPrefix) || strings.Count(r.URL.Path, "/") > 3 {
 				writeProblem(w, errNotFound)
 				return

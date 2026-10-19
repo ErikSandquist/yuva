@@ -1974,6 +1974,16 @@ incident before a customer writes, and the conversations an outage brings are an
     it, and with it set `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. When the page names an
     analytics property of the workspace, the page sends a cookieless page view to it with the
     analytics script.
+    The bare status origin also serves a server-rendered home page (`status_home.go`): English at `/`,
+    every panel locale at `/{locale}/` (lowercase code; `?lang=` answers a 301 to that path, no
+    Accept-Language redirect), each with its own canonical, `hreflang` set with `x-default`, Open Graph
+    and Twitter tags, a static 1200x630 share image and JSON-LD (`Organization`, `WebSite`,
+    `SoftwareApplication` without offers, `FAQPage`). Words live in `homeCatalog` (one entry per locale,
+    English fills what is missing); the page has no script, so its CSP has no `script-src`. The live card
+    shows the published page named by `YUVA_STATUS_HOME_PAGE`; `YUVA_STATUS_HOME=off` makes `/` a plain
+    404. `/robots.txt`, `/sitemap.xml` (home pages only: status pages carry no listing flag),
+    `/favicon.svg`, `/og.png` and `/fonts/` are served on the same origin. Own domains keep `/` for
+    their page.
 - **Panel.** A Status entry in the rail (`/status`, shortcut `g s`) follows the inbox filter: the page of each
   visible inbox, or "Create status page" for owners and admins on an inbox without one. A page opens at
   `/status-pages/{id}` (not under `/status/`, which the server answers with the public page) with Incidents,

@@ -266,7 +266,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		},
 		Analytics: analyticsSettings(cfg),
 		SES:       sesSettings(cfg),
-		Status: api.StatusSettings{URL: cfg.StatusURL, Monitors: cfg.StatusMonitors, NoticesOff: !cfg.StatusNotices, NoticesDaily: cfg.StatusNoticesDaily, MaxSubscribers: cfg.StatusMaxSubscribers,
+		Status: api.StatusSettings{URL: cfg.StatusURL, HomeOff: !cfg.StatusHome, HomePage: cfg.StatusHomePage, Monitors: cfg.StatusMonitors, NoticesOff: !cfg.StatusNotices, NoticesDaily: cfg.StatusNoticesDaily, MaxSubscribers: cfg.StatusMaxSubscribers,
 			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, CanariesOff: cfg.StatusCanariesOff, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen,
 			Domains: cfg.StatusDomains, CNAME: cfg.StatusCNAME, DomainLimit: cfg.StatusDomainLimit, Cloudflare: cloudflareClient(cfg)},
 	})

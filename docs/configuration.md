@@ -146,6 +146,8 @@ a request over one is refused with `422 hosted_limit` naming it.
 | Variable | Default | Meaning |
 |---|---|---|
 | `YUVA_STATUS_URL` | unset | Origin that public status pages are served from, such as `https://status.example.com` (no path). It must reach this server and differ from `YUVA_PUBLIC_URL`. Pages are then at `<origin>/{slug}`, and `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. Unset, pages are at `<YUVA_PUBLIC_URL>/status/{slug}`. |
+| `YUVA_STATUS_HOME` | `on` | `off` turns off the home page at the root of the `YUVA_STATUS_URL` origin (and its language paths such as `/tr/`, `robots.txt`, `sitemap.xml`); the root then answers a plain `404` page. Own domains are not affected. Needs `YUVA_STATUS_URL`. |
+| `YUVA_STATUS_HOME_PAGE` | unset | Slug of a published status page that the home page shows as its live card (state, first five components, 60-day strips). Unset, or while that page is unpublished, the card is left out. Sign-in and create links go to `YUVA_PUBLIC_URL`. |
 | `YUVA_STATUS_MONITORS` | `20` | Most monitors one workspace may have; `0` is no limit. Beyond it, creating one answers `403 status_monitor_limit`. |
 | `YUVA_STATUS_NOTICES` | `on` | `off` hides the subscribe form (it answers `404`) and sends no notices. |
 | `YUVA_STATUS_NOTICES_DAILY` | `5000` when `YUVA_SIGNUP=open`, else `0` | Most notice mails one workspace sends per UTC day; `0` is no limit. What is over waits for the next day. |

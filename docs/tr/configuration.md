@@ -147,6 +147,8 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | Değişken | Varsayılan | Anlamı |
 |---|---|---|
 | `YUVA_STATUS_URL` | atanmamış | Herkese açık durum sayfalarının sunulduğu kaynak, ör. `https://status.example.com` (yol yok). Bu sunucuya ulaşmalı ve `YUVA_PUBLIC_URL` alan adından farklı olmalıdır. Sayfalar o zaman `<kaynak>/{slug}` adresindedir ve `<YUVA_PUBLIC_URL>/status/{slug}` oraya yönlenir. Atanmamışsa sayfalar `<YUVA_PUBLIC_URL>/status/{slug}` adresindedir. |
+| `YUVA_STATUS_HOME` | `on` | `off`, `YUVA_STATUS_URL` kaynağının kökündeki ana sayfayı (ve `/tr/` gibi dil yollarını, `robots.txt` ile `sitemap.xml` dosyasını) kapatır; kök o zaman düz bir `404` sayfası döner. Kendi alan adları etkilenmez. `YUVA_STATUS_URL` gerekir. |
+| `YUVA_STATUS_HOME_PAGE` | atanmamış | Ana sayfanın canlı kart olarak gösterdiği yayımlanmış durum sayfasının slug'ı (durum, ilk beş bileşen, 60 günlük şeritler). Atanmamışsa ya da sayfa yayından kalkmışsa kart gösterilmez. Giriş ve oluşturma bağlantıları `YUVA_PUBLIC_URL` adresine gider. |
 | `YUVA_STATUS_MONITORS` | `20` | Bir çalışma alanının en fazla kaç monitörü olabileceği; `0` sınırsız. Aşılırsa monitör oluşturma `403 status_monitor_limit` döner. |
 | `YUVA_STATUS_NOTICES` | `on` | `off` abonelik formunu gizler (`404` döner) ve hiçbir bildirim göndermez. |
 | `YUVA_STATUS_NOTICES_DAILY` | `YUVA_SIGNUP=open` ise `5000`, değilse `0` | Bir çalışma alanının UTC günü başına gönderdiği en fazla bildirim e-postası; `0` sınırsız. Aşan kısım ertesi güne kalır. |

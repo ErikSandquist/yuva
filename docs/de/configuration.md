@@ -148,6 +148,8 @@ Einstellung nennt.
 | Variable | Standard | Bedeutung |
 |---|---|---|
 | `YUVA_STATUS_URL` | nicht gesetzt | Ursprung, von dem öffentliche Statusseiten ausgeliefert werden, z. B. `https://status.example.com` (kein Pfad). Er muss diesen Server erreichen und sich von `YUVA_PUBLIC_URL` unterscheiden. Die Seiten liegen dann unter `<Ursprung>/{slug}`, und `<YUVA_PUBLIC_URL>/status/{slug}` leitet dorthin um. Nicht gesetzt, liegen die Seiten unter `<YUVA_PUBLIC_URL>/status/{slug}`. |
+| `YUVA_STATUS_HOME` | `on` | `off` schaltet die Startseite an der Wurzel des Ursprungs von `YUVA_STATUS_URL` ab (samt Sprachpfaden wie `/tr/`, `robots.txt` und `sitemap.xml`); die Wurzel antwortet dann mit einer schlichten `404`-Seite. Eigene Domains bleiben unberührt. Braucht `YUVA_STATUS_URL`. |
+| `YUVA_STATUS_HOME_PAGE` | nicht gesetzt | Slug einer veröffentlichten Statusseite, die die Startseite als Live-Karte zeigt (Zustand, die ersten fünf Komponenten, 60-Tage-Streifen). Nicht gesetzt oder solange die Seite unveröffentlicht ist, entfällt die Karte. Die Links zu Anmeldung und Erstellen führen zu `YUVA_PUBLIC_URL`. |
 | `YUVA_STATUS_MONITORS` | `20` | Höchstzahl der Monitore eines Workspace; `0` heißt unbegrenzt. Darüber antwortet das Anlegen mit `403 status_monitor_limit`. |
 | `YUVA_STATUS_NOTICES` | `on` | `off` blendet das Anmeldeformular aus (es antwortet `404`) und sendet keine Benachrichtigungen. |
 | `YUVA_STATUS_NOTICES_DAILY` | `5000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl der Benachrichtigungsmails, die ein Workspace pro UTC-Tag sendet; `0` heißt unbegrenzt. Der Rest wartet auf den nächsten Tag. |

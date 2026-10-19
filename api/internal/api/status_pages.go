@@ -52,8 +52,12 @@ var (
 // Monitors is YUVA_STATUS_MONITORS, the most monitors a workspace may have; 0 means no limit.
 // NoticesOff is YUVA_STATUS_NOTICES=off; NoticesDaily and MaxSubscribers are
 // YUVA_STATUS_NOTICES_DAILY and YUVA_STATUS_MAX_SUBSCRIBERS, 0 meaning no limit.
+// HomeOff is YUVA_STATUS_HOME=off; HomePage is YUVA_STATUS_HOME_PAGE, the slug of the page shown as the
+// home page's live card.
 type StatusSettings struct {
 	URL            string
+	HomeOff        bool
+	HomePage       string
 	Monitors       int
 	NoticesOff     bool
 	NoticesDaily   int64
