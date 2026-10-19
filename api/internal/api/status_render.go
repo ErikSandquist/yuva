@@ -151,7 +151,7 @@ type monthView struct {
 
 type chartView struct {
 	ID, Name, Stat, StatLabel, Sub, Label string
-	Line, Area, Band                      string
+	Grid                                  *cellGrid
 	Axis                                  []template.HTML
 	Empty                                 bool
 }
@@ -373,22 +373,17 @@ func (snap *statusSnap) dayTitle(d uptimeDay) (string, string) {
 }
 
 func (snap *statusSnap) dayBars(days []uptimeDay, label string) template.HTML {
-	var b strings.Builder
-	fmt.Fprintf(&b, `<svg class="bars" viewBox="0 0 %g 4" preserveAspectRatio="none" shape-rendering="crispEdges" role="img" aria-label="%s">`,
-		float64(2*len(days))-0.5, template.HTMLEscapeString(label))
+	g := newCellGrid(len(days), 1)
 	for i, d := range days {
 		cls, title := snap.dayTitle(d)
-		fmt.Fprintf(&b, `<rect x="%d" width="1.5" height="4" class="d-%s"><title>%s</title></rect>`, 2*i, cls, template.HTMLEscapeString(title))
+		g.addTitled("d-"+cls, i, 0, title)
 	}
-	b.WriteString(`</svg>`)
-	return template.HTML(b.String())
+	return g.svg("bars", label)
 }
 
 func (snap *statusSnap) monthStrip(month time.Time, byDate map[string]uptimeDay, label string) template.HTML {
 	n := time.Date(month.Year(), month.Month()+1, 0, 0, 0, 0, 0, snap.loc).Day()
-	var b strings.Builder
-	fmt.Fprintf(&b, `<svg class="strip" viewBox="0 0 %g 3" preserveAspectRatio="none" shape-rendering="crispEdges" role="img" aria-label="%s">`,
-		float64(2*n)-0.5, template.HTMLEscapeString(label))
+	g := newCellGrid(31, 1)
 	for i := range n {
 		day := time.Date(month.Year(), month.Month(), i+1, 0, 0, 0, 0, snap.loc)
 		d, ok := byDate[day.Format(time.DateOnly)]
@@ -396,10 +391,9 @@ func (snap *statusSnap) monthStrip(month time.Time, byDate map[string]uptimeDay,
 			d = uptimeDay{date: day}
 		}
 		cls, title := snap.dayTitle(d)
-		fmt.Fprintf(&b, `<rect x="%d" width="1.5" height="3" class="d-%s"><title>%s</title></rect>`, 2*i, cls, template.HTMLEscapeString(title))
+		g.addTitled("d-"+cls, i, 0, title)
 	}
-	b.WriteString(`</svg>`)
-	return template.HTML(b.String())
+	return g.svg("strip", label)
 }
 
 // stepHold is how many empty steps between two measured ones the line bridges: a step can be
@@ -408,10 +402,20 @@ func stepHold(interval, step time.Duration) int {
 	return int(math.Ceil(1.5 * float64(interval) / float64(step)))
 }
 
-// stepPath draws the points as a stepped line two units per point and the area under it. A run of
-// at most hold missing points between two measured ones keeps the last value; longer runs break
-// the line.
-func stepPath(points []int32, hold int) (line, area string, empty bool) {
+const (
+	chartRows = 10
+	chartCols = statusResponseSteps
+)
+
+// chartHot is how far above the median a value is drawn in the warn colour.
+const chartHot = 2
+
+// stepCells draws the points as a grid of squares, one column per point: a solid cell at the point's
+// row, solid cells filling the step to the previous row, a faint wash below and empty cells above. A
+// run of at most hold missing points between two measured ones keeps the last value; longer runs
+// leave the column empty. Rows run from zero to three times the median, or to the peak when that is
+// higher, so a flat line sits low and a spike climbs. Empty cells in columns band..bandEnd are tinted.
+func stepCells(points []int32, hold, band, bandEnd int) (grid *cellGrid, empty bool) {
 	points = slices.Clone(points)
 	last := -1
 	for i, p := range points {
@@ -425,32 +429,53 @@ func stepPath(points []int32, hold int) (line, area string, empty bool) {
 		}
 		last = i
 	}
-	lo, hi := int32(math.MaxInt32), int32(-1)
+	var measured []int32
 	for _, p := range points {
 		if p >= 0 {
-			lo, hi = min(lo, p), max(hi, p)
+			measured = append(measured, p)
 		}
 	}
-	if hi < 0 {
-		return "", "", true
+	if len(measured) == 0 {
+		return nil, true
 	}
-	span := max(float64(hi-lo), 1)
-	y := func(p int32) int { return 29 - int(math.Round(float64(p-lo)/span*22)) }
-	var l, a strings.Builder
-	for i := 0; i < len(points); i++ {
-		if points[i] < 0 {
-			continue
-		}
-		fmt.Fprintf(&l, "M%d %dH%d", 2*i, y(points[i]), 2*i+2)
-		fmt.Fprintf(&a, "M%d 32V%dH%d", 2*i, y(points[i]), 2*i+2)
-		for i+1 < len(points) && points[i+1] >= 0 {
-			i++
-			fmt.Fprintf(&l, "V%dH%d", y(points[i]), 2*i+2)
-			fmt.Fprintf(&a, "V%dH%d", y(points[i]), 2*i+2)
-		}
-		a.WriteString("V32Z")
+	slices.Sort(measured)
+	median := float64(measured[len(measured)/2])
+	top := max(float64(measured[len(measured)-1]), chartHot*1.5*median, 1)
+	row := func(p int32) int {
+		return chartRows - 1 - int(math.Round(float64(p)/top*(chartRows-1)))
 	}
-	return l.String(), a.String(), false
+	hot := func(p int32) bool { return median > 0 && float64(p) >= chartHot*median }
+	grid = newCellGrid(len(points), chartRows)
+	for c, p := range points {
+		prevRow, r := 0, 0
+		if p >= 0 {
+			r = row(p)
+			prevRow = r
+			if c > 0 && points[c-1] >= 0 {
+				prevRow = row(points[c-1])
+			}
+		}
+		lo, hi := min(r, prevRow), max(r, prevRow)
+		for y := range chartRows {
+			var k string
+			switch {
+			case p < 0 || y < lo:
+				k = "off"
+				if c >= band && c < bandEnd {
+					k = "band"
+				}
+			case y <= hi:
+				k = "on"
+			default:
+				k = "on w"
+			}
+			if p >= 0 && hot(p) && k != "off" && k != "band" {
+				k = "hot" + k[2:]
+			}
+			grid.add(k, c, y)
+		}
+	}
+	return grid, false
 }
 
 func (snap *statusSnap) componentName(id uuid.UUID) string {
@@ -476,7 +501,7 @@ func (snap *statusSnap) pageResponse(num string) *responseView {
 		r := snap.response[id]
 		name := snap.componentName(id)
 		c := chartView{ID: strconv.Itoa(i), Name: name, StatLabel: name + " · " + w.Median, Stat: "–", Label: name + ": " + w.ResponseTime}
-		c.Line, c.Area, c.Empty = stepPath(r.points, stepHold(snap.intervals[id], r.step))
+		c.Grid, c.Empty = stepCells(r.points, stepHold(snap.intervals[id], r.step), 0, 0)
 		if r.median != nil {
 			c.Stat, c.Sub = formatMs(*r.median), fillS(w.P95, formatMs(*r.p95))
 		}
@@ -806,7 +831,6 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 		if err != nil {
 			return err
 		}
-		x := func(t time.Time) int { return int(2 * t.Sub(from) / step) }
 		hm := func(t time.Time, mark string) template.HTML {
 			h := timeHTML(timeView{ISO: t.UTC().Format(time.RFC3339), Text: t.In(snap.loc).Format("15:04")}, "data-hm")
 			if mark != "" {
@@ -819,7 +843,9 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 			r := series[id]
 			name := snap.componentName(id)
 			c := chartView{ID: strconv.Itoa(i), Name: name, StatLabel: name + " · " + w.Peak, Stat: "–", Label: name + ": " + w.ResponseDuring}
-			c.Line, c.Area, c.Empty = stepPath(r.points, stepHold(snap.intervals[id], step))
+			bandFrom := max(int(start.Sub(from)/step), 0)
+			bandTo := min(int((end.Sub(from)+step-1)/step), statusResponseSteps)
+			c.Grid, c.Empty = stepCells(r.points, stepHold(snap.intervals[id], step), bandFrom, bandTo)
 			if c.Empty {
 				continue
 			}
@@ -838,7 +864,6 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 					c.Sub = fillS(w.Usually, formatMs(b.P50))
 				}
 			}
-			c.Band = fmt.Sprintf("M%d 0H%dV32H%dZ", max(x(start), 0), min(x(end), 2*statusResponseSteps), max(x(start), 0))
 			c.Axis = []template.HTML{hm(from, ""), hm(start, w.StartMark)}
 			if incidentEnd(inc) != nil {
 				c.Axis = append(c.Axis, hm(end, w.EndMark), hm(minTime(end.Add(pad), snap.now), ""))

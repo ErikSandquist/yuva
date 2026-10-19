@@ -48,7 +48,6 @@ a.hbtn:hover{text-decoration:none;opacity:.9}
 .hc-row.nobars{grid-template-columns:minmax(0,1fr) auto}
 .hc-row b{font-weight:500;overflow-wrap:anywhere}
 .hc-row .mono{font-size:11px;color:var(--cross);text-align:end}
-.hc-row .strip{height:12px}
 .hc-foot{display:flex;justify-content:space-between;padding:10px 16px;font-size:11px;color:var(--cross)}
 .fact{padding:24px 24px 22px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .fact b{font-size:26px;font-weight:600;letter-spacing:-.8px;overflow-wrap:anywhere}
@@ -66,8 +65,6 @@ a.hbtn:hover{text-decoration:none;opacity:.9}
 .step small{display:block;font-size:14px;color:var(--soft)}
 .illus{background:var(--deep)!important;padding:32px 40px;display:flex;flex-direction:column;gap:16px}
 .illus .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font-size:14px}
-.chart .mk{stroke:var(--strong);stroke-width:.5;stroke-dasharray:1 1;fill:none}
-.chart .base{stroke:var(--rule);stroke-width:.5;fill:none}
 .reach{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:8px}
 .reach span{background:var(--paper);padding:14px;display:flex;flex-direction:column;gap:2px;min-width:0}
 .reach b{font-size:20px;font-weight:600;letter-spacing:-.5px}
@@ -83,7 +80,7 @@ a.hbtn:hover{text-decoration:none;opacity:.9}
 .fbar .msg{height:48px;padding:0 18px;font-size:14px;white-space:nowrap;overflow:hidden}
 .fbar .msg span:last-child{color:var(--soft);overflow:hidden;text-overflow:ellipsis}
 .fbar .up{padding:0 18px;gap:12px}
-.fbar .up .strip{flex:1;height:10px;min-width:0}
+.fbar .up .strip{flex:1;min-width:0}
 .fbar .up small{font-size:10px;color:var(--cross)}
 .fbar .pw{padding:0 18px;font-size:12px;color:var(--cross);white-space:nowrap}
 .fbar .pw img{width:14px;height:14px}
@@ -159,7 +156,7 @@ var homeTemplate = template.Must(template.New("home").Parse(`<!doctype html>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr))">
 <div class="tl">{{range .Steps}}<div class="step"><span class="mono">{{.Time}}</span><span><b><i class="q q-{{.Class}}"></i>{{.Title}}</b><small>{{.Text}}</small></span></div>{{end}}</div>
 <div class="illus"><span class="row"><b>{{.W.ResponseTitle}}</b><span class="soft">{{.W.ResponsePeak}} · {{.W.SampleData}}</span></span>
-<svg class="chart" viewBox="0 0 192 48" shape-rendering="crispEdges" role="img" aria-label="{{.W.ResponseAlt}}"><path class="base" d="M0 44H192"/><path class="mk" d="M60 0V48M132 0V48"/><path class="area" d="{{.ChartArea}}"/><path class="line" d="{{.ChartLine}}"/></svg>
+{{.Chart}}
 <div class="scale mono"><span>19:35</span><span>20:05 {{.W.Opened}}</span><span>20:52 {{.W.Resolved}}</span><span>21:20</span></div>
 <div class="reach">{{range .Reach}}<span><b>{{.N}}</b><small>{{.Label}}</small></span>{{end}}</div></div>
 </div></div></section>

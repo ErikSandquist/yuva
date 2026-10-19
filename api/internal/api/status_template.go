@@ -80,8 +80,7 @@ select{appearance:none;-webkit-appearance:none;font:500 14px Geist,ui-sans-serif
 .st{font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .st .q{width:7px;height:7px}
 .cbars{display:flex;flex-direction:column;justify-content:center;gap:6px}
-.bars{display:block;width:100%;max-width:100%;height:14px}
-.strip{display:block;width:100%;height:12px}
+.bars,.strip{display:block;width:100%;max-width:100%;height:auto}
 .scale{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font-size:11px;color:var(--soft)}
 .d-none{fill:var(--rule)}
 .d-operational,.q-operational{fill:var(--ok);background:var(--ok)}
@@ -106,10 +105,11 @@ select{appearance:none;-webkit-appearance:none;font:500 14px Geist,ui-sans-serif
 .rt-chart .plot{grid-column:span 3;gap:8px}
 .big{font-size:32px;font-weight:600;letter-spacing:-1px}
 .chart{display:block;width:100%;max-width:100%;height:auto}
-.chart .grid-l{stroke:var(--rule);stroke-width:.5;fill:none}
-.chart .area{fill:var(--wash)}
-.chart .band{fill:var(--warn-wash)}
-.chart .line{fill:none;stroke:var(--brand);stroke-width:1}
+.chart .off{fill:var(--rule)}
+.chart .band{fill:var(--warn);opacity:.2}
+.chart .on{fill:var(--brand)}
+.chart .hot{fill:var(--warn)}
+.chart .w{opacity:.13}
 .past{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px 16px;font-size:14px}
 .past .mono{font-size:12px}
 .picks{display:flex;flex-wrap:wrap;gap:6px}
@@ -171,8 +171,7 @@ var statusTemplate = template.Must(template.New("status").Parse(`<!doctype html>
 </div>
 {{range $i, $c := .Charts}}<div class="rt-chart c{{$i}}" data-rt-chart="{{$i}}">
 <div><span class="label">{{.StatLabel}}</span><span class="big">{{.Stat}}</span>{{if .Sub}}<span class="sm soft">{{.Sub}}</span>{{end}}</div>
-<div class="plot">{{if .Empty}}<p class="soft">{{$.W.NoChecks}}</p>{{else}}<svg class="chart" viewBox="0 0 192 32" shape-rendering="crispEdges" role="img" aria-label="{{.Label}}">
-<path class="grid-l" d="M0 8H192M0 16H192M0 24H192M48 0V32M96 0V32M144 0V32"/>{{if .Band}}<path class="band" d="{{.Band}}"/>{{end}}<path class="area" d="{{.Area}}"/><path class="line" d="{{.Line}}"/></svg>{{end}}
+<div class="plot">{{if .Empty}}<p class="soft">{{$.W.NoChecks}}</p>{{else}}<svg class="chart" viewBox="{{.Grid.ViewBox}}" shape-rendering="crispEdges" role="img" aria-label="{{.Label}}">{{range .Grid.Cells}}<path class="{{.Class}}" d="{{.D}}"/>{{end}}</svg>{{end}}
 <div class="scale mono">{{range .Axis}}<span>{{.}}</span>{{end}}</div></div>
 </div>{{end}}
 </div></section>{{end}}

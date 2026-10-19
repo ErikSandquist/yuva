@@ -151,10 +151,49 @@ func TestStatusUniqueConflict(t *testing.T) {
 	}
 }
 
-func TestStepPathBridgesOnlyGapsWithinTheInterval(t *testing.T) {
-	line, _, _ := stepPath([]int32{100, -1, 120, -1, -1, -1, 130}, 1)
-	if line != "M0 29H2V29H4V14H6M12 7H14" {
-		t.Fatalf("line %q", line)
+func cellColumn(grid *cellGrid, class string, col int) int {
+	n := 0
+	for _, c := range grid.Cells() {
+		if c.Class != class {
+			continue
+		}
+		for _, m := range strings.Split(c.D, "Z") {
+			var x, y int
+			if _, err := fmt.Sscanf(m, "M%d %d", &x, &y); err == nil && x == col*cellPitch {
+				n++
+			}
+		}
+	}
+	return n
+}
+
+func TestStepCellsBridgesOnlyGapsWithinTheIntervalAndWarnsOnSpikes(t *testing.T) {
+	points := make([]int32, 20)
+	for i := range points {
+		points[i] = 100
+	}
+	points[5] = 900
+	points[10], points[15], points[16], points[17] = -1, -1, -1, -1
+	cells, empty := stepCells(points, 1, 0, 0)
+	if empty {
+		t.Fatal("empty")
+	}
+	if cellColumn(cells, "hot", 5) == 0 {
+		t.Fatal("spike has no warn cell")
+	}
+	if cellColumn(cells, "hot", 4)+cellColumn(cells, "hot", 3) != 0 {
+		t.Fatal("a flat value drew warn cells")
+	}
+	for _, class := range []string{"on", "hot", "on w", "hot w"} {
+		if n := cellColumn(cells, class, 16); n != 0 {
+			t.Fatalf("null column has %d %q cells", n, class)
+		}
+	}
+	if cellColumn(cells, "off", 16) != chartRows {
+		t.Fatal("null column is not all off")
+	}
+	if cellColumn(cells, "on", 10) == 0 {
+		t.Fatal("a gap within the interval was not bridged")
 	}
 	if hold := stepHold(60*time.Second, 67*time.Second); hold != 2 {
 		t.Fatalf("hold %d", hold)

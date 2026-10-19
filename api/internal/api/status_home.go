@@ -77,7 +77,7 @@ type homeView struct {
 	Mark                                    template.HTML
 	LD                                      template.HTML
 	Style                                   template.CSS
-	ChartLine, ChartArea                    string
+	Chart                                   template.HTML
 	Globe                                   template.HTML
 }
 
@@ -99,20 +99,36 @@ func (s *Server) homeAlternates(origin string) []homeAlt {
 }
 
 func sampleStrip(days int, marks map[int]string) template.HTML {
-	var b strings.Builder
-	fmt.Fprintf(&b, `<svg class="strip" viewBox="0 0 %d 8" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">`, 2*days)
+	g := newCellGrid(days/2, 2)
 	for i := range days {
 		st := marks[i]
 		if st == "" {
 			st = stOperational
 		}
-		fmt.Fprintf(&b, `<rect x="%d" width="1.4" height="8" class="d-%s"/>`, 2*i, st)
+		g.add("d-"+st, i%(days/2), i/(days/2))
 	}
-	b.WriteString(`</svg>`)
-	return template.HTML(b.String())
+	return g.svg("strip", "")
 }
 
-const homeChartLine = "M0 40 H20 V39 H34 V40 H48 V34 H56 V24 H64 V14 H72 V10 H84 V11 H96 V16 H104 V24 H112 V32 H120 V37 H132 V40 H150 V39 H170 V40 H192"
+func sampleChart(label string) template.HTML {
+	points := make([]int32, chartCols)
+	for i := range points {
+		points[i] = 120
+	}
+	for _, seg := range []struct {
+		from, to int
+		ms       int32
+	}{
+		{17, 23, 300}, {24, 27, 650}, {28, 32, 1100}, {33, 36, 1500}, {37, 42, 1400},
+		{43, 50, 900}, {51, 56, 500}, {57, 60, 250},
+	} {
+		for i := seg.from; i <= seg.to; i++ {
+			points[i] = seg.ms
+		}
+	}
+	g, _ := stepCells(points, 0, 30, 66)
+	return g.svg("chart", label)
+}
 
 func (s *Server) homeCard(ctx context.Context, words statusWords) (*homeCard, error) {
 	if s.status.HomePage == "" {
@@ -162,7 +178,7 @@ func (s *Server) homeView(ctx context.Context, l homeLocale) (homeView, error) {
 		DocsURL: docsBase, GuideURL: docsBase + "status-pages/", GitHubURL: "https://github.com/productdevbook/yuva", SiteURL: yuvaSite,
 		Style: template.CSS(statusStyle + homeStyle), Mark: yuvaMark, Globe: homeGlobe,
 		Snippet: `<script src="` + panel + `/yuva-status.js" defer></script>` + "\n" + `<yuva-status page="northwind" theme="auto"></yuva-status>`,
-		Facts:   w.Facts, ChartLine: homeChartLine, ChartArea: homeChartLine + " V48 H0 Z",
+		Facts:   w.Facts, Chart: sampleChart(w.ResponseAlt),
 		Band: sampleStrip(90, map[int]string{14: stDegraded, 37: stMaintenance, 71: stDegraded})}
 	v.HomePath = l.path()
 	if l.Code == "en" {
