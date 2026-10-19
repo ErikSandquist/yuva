@@ -18,6 +18,7 @@ import { addStyles } from "../styles"
 import { styles } from "./styles"
 import { richText } from "./text"
 
+const impactRank = { none: 0, minor: 1, major: 2, critical: 3 }
 const maxFiles = 10
 const groupGap = 5 * 60_000
 
@@ -117,6 +118,7 @@ export class Chat implements PanelController {
   #banner = el("div", "banner")
   #body = el("div", "body")
   #scroll = el("div", "scroll")
+  #notice = el("div", "notice")
   #email = el("div", "card")
   #emailInput = el("input")
   #composer = el("div", "composer")
@@ -326,7 +328,53 @@ export class Chat implements PanelController {
     this.#inbox = inbox
     const launcher = launcherOf(inbox)
     this.#host.setLauncher(launcher)
-    if (channel) writeStored(channel, { ...readStored(channel), launcher })
+    if (!channel) return
+    const stored = readStored(channel)
+    const open = new Set(inbox.status?.open.map((incident) => incident.id))
+    const kept = Object.fromEntries(Object.entries(stored.dismissed_status ?? {}).filter(([id]) => open.has(id)))
+    const next = { ...stored, launcher }
+    if (Object.keys(kept).length > 0) next.dismissed_status = kept
+    else delete next.dismissed_status
+    writeStored(channel, next)
+  }
+
+  #renderNotice(): void {
+    const { channel } = this.#host.config()
+    const dismissed = (channel && readStored(channel).dismissed_status) || {}
+    const shown = [...(this.#inbox?.status?.open ?? [])]
+      .filter((incident) => dismissed[incident.id] !== incident.updated_at)
+      .sort((a, b) => impactRank[b.impact] - impactRank[a.impact])[0]
+    this.#notice.hidden = !shown
+    if (!shown) return this.#notice.replaceChildren()
+    const states = {
+      investigating: msg`Investigating`,
+      identified: msg`Identified`,
+      monitoring: msg`Monitoring`,
+      resolved: msg`Resolved`,
+      scheduled: msg`Scheduled`,
+      in_progress: msg`In progress`,
+      completed: msg`Completed`,
+    }
+    const link = el("a", "", shown.title)
+    link.href = shown.url
+    link.target = "_blank"
+    link.rel = "noopener noreferrer"
+    link.dir = "auto"
+    const text = el("div", "notice-text")
+    text.append(el("strong", "", this.#t(states[shown.state])), " ", link)
+    this.#notice.className = `notice impact-${shown.impact}`
+    this.#notice.replaceChildren(
+      text,
+      iconButton(icons.close, this.#t(msg`Dismiss`), () => {
+        if (!channel) return
+        const stored = readStored(channel)
+        writeStored(channel, {
+          ...stored,
+          dismissed_status: { ...stored.dismissed_status, [shown.id]: shown.updated_at },
+        })
+        this.#render()
+      })
+    )
   }
 
   async #refreshInbox(): Promise<void> {
@@ -779,6 +827,7 @@ export class Chat implements PanelController {
       this.#body.replaceChildren(center)
       return
     }
+    this.#renderNotice()
     if (this.#view?.kind === "list") this.#renderList()
     else this.#renderThread()
   }
@@ -911,7 +960,7 @@ export class Chat implements PanelController {
       this.#render()
       this.#textarea.focus()
     })
-    this.#body.replaceChildren(list, start)
+    this.#body.replaceChildren(this.#notice, list, start)
   }
 
   async #openThread(id: string): Promise<void> {
@@ -1066,7 +1115,8 @@ export class Chat implements PanelController {
       this.#rateComment.setSelectionRange(selectionStart, selectionEnd)
     }
     this.#renderEmail()
-    if (this.#body.firstChild !== this.#scroll) this.#body.replaceChildren(this.#scroll, this.#email, this.#composer)
+    if (this.#body.firstChild !== this.#scroll)
+      this.#body.replaceChildren(this.#scroll, this.#notice, this.#email, this.#composer)
     this.#scrollThread = id
     if (!sameThread || atEnd) this.#scrollToEnd()
   }

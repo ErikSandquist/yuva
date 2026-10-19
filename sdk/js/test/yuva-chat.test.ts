@@ -329,4 +329,103 @@ describe("<yuva-chat> realtime", () => {
       document.title = previousTitle
     }
   })
+
+  describe("status line", () => {
+    const incident = (id: string, impact: "none" | "minor" | "major" | "critical", updated_at = at) => ({
+      id,
+      kind: "incident" as const,
+      title: `Incident ${id}`,
+      impact,
+      state: "investigating" as const,
+      updated_at,
+      url: `https://status.example.com/incidents/${id}`,
+    })
+    const withStatus = (open: ReturnType<typeof incident>[]): ClientInbox => ({
+      ...inbox,
+      status: { url: "https://status.example.com", state: "degraded", open },
+    })
+
+    async function connected(first: ClientInbox): Promise<YuvaChatElement> {
+      globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+        const route = `${init?.method ?? "GET"} ${new URL(String(input)).pathname}`
+        const reply = (status: number, body: unknown) =>
+          new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } })
+        if (route === "GET /client/v1/channels/pk_test") return reply(200, first)
+        if (route === "POST /client/v1/session") return reply(201, { ...session, inbox: first })
+        if (route === "GET /client/v1/session") return reply(200, { ...session, token: undefined, inbox: first })
+        if (route === "GET /client/v1/conversations") return reply(200, { items: [] })
+        return reply(204, {})
+      }) as typeof fetch
+      globalThis.WebSocket = FakeSocket as unknown as typeof WebSocket
+      const stored = JSON.parse(localStorage.getItem("yuva:pk_test") ?? "{}")
+      localStorage.setItem(
+        "yuva:pk_test",
+        JSON.stringify({
+          ...stored,
+          visitor_id: "v1",
+          session: { token: "t1", expires_at: session.expires_at, sub: null },
+        })
+      )
+      const element = mount({ layout: "embedded", channel: "pk_test", server: "http://yuva.test", locale: "en" })
+      await until(() => panel(element).querySelector("textarea") !== null)
+      return element
+    }
+
+    const notice = (element: YuvaChatElement) => panel(element).querySelector<HTMLElement>(".notice")
+    const noticeText = (element: YuvaChatElement) => notice(element)?.textContent ?? ""
+
+    test("shows the worst open incident with its state in words and a safe link", async () => {
+      const element = await connected(withStatus([incident("a", "minor"), incident("b", "critical")]))
+      expect(notice(element)?.hidden).toBe(false)
+      expect(noticeText(element)).toContain("Investigating")
+      expect(noticeText(element)).toContain("Incident b")
+      const link = notice(element)!.querySelector("a")!
+      expect(link.href).toBe("https://status.example.com/incidents/b")
+      expect(link.target).toBe("_blank")
+      expect(link.rel).toContain("noopener")
+    })
+
+    test("is absent without a status or without open incidents", async () => {
+      const element = await connected(inbox)
+      expect(notice(element)?.hidden ?? true).toBe(true)
+      const empty = await connected(withStatus([]))
+      expect(notice(empty)?.hidden ?? true).toBe(true)
+    })
+
+    test("dismissal hides it until a new update and is remembered", async () => {
+      const element = await connected(withStatus([incident("a", "major")]))
+      notice(element)!.querySelector<HTMLButtonElement>("button")!.click()
+      expect(notice(element)?.hidden).toBe(true)
+      expect(JSON.parse(localStorage.getItem("yuva:pk_test")!).dismissed_status).toEqual({ a: at })
+
+      document.body.replaceChildren()
+      const again = await connected(withStatus([incident("a", "major")]))
+      expect(notice(again)?.hidden).toBe(true)
+
+      sockets.at(-1)!.receive({
+        type: "inbox.updated",
+        created_at: at,
+        data: withStatus([incident("a", "major", "2026-10-13T11:00:00Z")]),
+      })
+      await until(() => notice(again)?.hidden === false)
+      expect(noticeText(again)).toContain("Incident a")
+    })
+
+    test("follows inbox.updated and forgets dismissals when the incident closes", async () => {
+      const element = await connected(inbox)
+      await until(() => sockets.length > 0)
+      const live = sockets.at(-1)!
+      live.receive({ type: "inbox.updated", created_at: at, data: withStatus([incident("a", "minor")]) })
+      await until(() => notice(element)?.hidden === false)
+      expect(noticeText(element)).toContain("Incident a")
+
+      notice(element)!.querySelector<HTMLButtonElement>("button")!.click()
+      expect(notice(element)?.hidden).toBe(true)
+
+      live.receive({ type: "inbox.updated", created_at: at, data: withStatus([]) })
+      await until(() => JSON.parse(localStorage.getItem("yuva:pk_test")!).dismissed_status === undefined)
+      expect(notice(element)?.hidden).toBe(true)
+      expect(JSON.parse(localStorage.getItem("yuva:pk_test")!).dismissed_status).toBeUndefined()
+    })
+  })
 })

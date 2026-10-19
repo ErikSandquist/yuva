@@ -191,5 +191,12 @@ export const styles = `
 .chip .icon { inline-size: 22px; block-size: 22px; }
 .banner { padding: 6px 12px; background: var(--yuva-soft); color: var(--yuva-muted); font-size: 13px; text-align: center; }
 @media (max-width: 480px) { .composer textarea, .card input, .card textarea { font-size: 16px; } }
+.notice { display: flex; align-items: center; gap: 6px; margin: 8px 8px 0; padding-block: 6px; padding-inline: 10px 4px; border-inline-start: 3px solid var(--yuva-muted); border-radius: 8px; background: var(--yuva-soft); font-size: 13px; }
+.notice-text { flex: 1; min-inline-size: 0; overflow-wrap: anywhere; }
+.notice a { color: inherit; text-decoration: underline; }
+.notice .icon { inline-size: 24px; block-size: 24px; color: var(--yuva-muted); }
+.notice.impact-minor { border-inline-start-color: #d97706; }
+.notice.impact-major { border-inline-start-color: #ea580c; }
+.notice.impact-critical { border-inline-start-color: var(--yuva-danger); }
 .sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 `

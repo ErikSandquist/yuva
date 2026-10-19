@@ -61,6 +61,7 @@ export interface StoredState {
   visitor_id?: string
   session?: { token: string; expires_at: string; sub: string | null }
   launcher?: LauncherStyle
+  dismissed_status?: Record<string, string>
 }
 
 export function storageKey(channel: string): string {
