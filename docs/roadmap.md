@@ -370,8 +370,9 @@ the panel shows the response times of the last 24 hours.
 
 ### M19.6 — Own domains
 
-- `custom_domain` with CNAME and TXT checks, `/status-domains/check` for on-demand TLS, the Caddy
-  example in `deploy/`.
+- `custom_domain` with CNAME and TXT checks; `YUVA_STATUS_DOMAINS=ask` with `/status-domains/check` and
+  the Caddy example in `deploy/`, and `cloudflare` with Cloudflare for SaaS custom hostnames.
 
-Accept: a page on a verified domain answers at `/` behind Caddy with a certificate issued on demand; an
-unverified or removed domain gets 404 from the check and no certificate.
+Accept: a page on a verified domain answers at `/` behind Caddy with a certificate issued on demand, and
+on a server behind Cloudflare with the custom hostname active; an unverified or removed domain gets 404
+from the check and is not (or no longer) a custom hostname.

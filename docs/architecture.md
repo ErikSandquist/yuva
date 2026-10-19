@@ -1936,12 +1936,20 @@ incident before a customer writes, and the conversations an outage brings are an
   cookieless page view to it with the analytics script.
 - **Own domain.** A page may name `custom_domain` (`status.example.com`). The owner adds a CNAME to
   `YUVA_STATUS_CNAME` (unset: the host of `YUVA_PUBLIC_URL`) and a TXT record `_yuva-status.<domain>`
-  with the page's verification value; a River job checks both every 10 minutes until they are seen and
-  every day afterwards, and a domain whose records go away is turned off after 3 days. A request whose
-  `Host` is a verified domain is served that page at `/`. Yuva does not terminate TLS: the operator's
-  proxy issues certificates on demand and asks `GET /status-domains/check?domain=` (200 for a verified
-  domain, 404 otherwise; the Caddy `on_demand_tls` `ask` form). `deploy/` documents Caddy;
-  `YUVA_STATUS_DOMAINS=off` turns the feature off.
+  with the page's verification value, so nobody claims a domain they do not hold; a River job checks
+  both every 10 minutes until they are seen and every day afterwards, and a domain whose records go
+  away is turned off after 3 days. A request whose `Host` is a verified domain is served that page at
+  `/`. Yuva does not terminate TLS; who issues the certificate is `YUVA_STATUS_DOMAINS`:
+  - `ask` (default): the operator's proxy issues certificates on demand and asks
+    `GET /status-domains/check?domain=` (200 for a verified domain, 404 otherwise; the Caddy
+    `on_demand_tls` `ask` form). `deploy/` documents Caddy.
+  - `cloudflare`: the server registers each verified domain as a Cloudflare for SaaS custom hostname
+    in `YUVA_CLOUDFLARE_ZONE_ID` (token `YUVA_CLOUDFLARE_API_TOKEN`, permission SSL and Certificates
+    edit) with HTTP validation, so Cloudflare issues and renews the certificate once the CNAME points
+    at the zone's fallback origin; the panel shows the hostname's and the certificate's state from
+    Cloudflare, and a removed or turned-off domain is deleted there. For servers behind Cloudflare.
+  - `off`: no own domains.
+  `YUVA_STATUS_DOMAIN_LIMIT` caps verified domains per workspace on a hosted server (unset: 1).
 - **Subscribers.** Each page may have e-mail subscribers through a mailing list of its inbox
   (`status_pages.mailing_list_id`, double opt-in, the list's consent records, `/s/` and `/m/` links and
   list headers) and choose per incident and per update whether to notify. Who gets which notice
