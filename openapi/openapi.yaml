@@ -1,7 +1,7 @@
 openapi: 3.1.1
 info:
   title: Yuva API
-  version: 0.0.25
+  version: 0.0.26
   summary: Customer messaging for many products in one inbox.
   license:
     name: MIT
