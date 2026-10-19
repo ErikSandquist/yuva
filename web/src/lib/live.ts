@@ -453,12 +453,21 @@ function byName(a: Inbox, b: Inbox) {
   return a.name.localeCompare(b.name) || (a.id < b.id ? -1 : 1)
 }
 
+function refreshLinked(qc: QueryClient, ws: string, id: string) {
+  for (const q of qc.getQueryCache().findAll({ queryKey: keys.statusLinked(ws) })) {
+    const data = q.state.data as { pages?: { items: { id: string }[] }[] } | undefined
+    if (data?.pages?.some((p) => p.items.some((x) => x.id === id)))
+      void qc.invalidateQueries({ queryKey: q.queryKey, exact: true, refetchType: "active" })
+  }
+}
+
 export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) {
   switch (event.type) {
     case "conversation.created":
     case "conversation.updated":
       knowMember(qc, ctx.ws, event.data.assignee_id)
       setConversation(qc, ctx, event.data)
+      refreshLinked(qc, ctx.ws, event.data.id)
       if (
         event.type === "conversation.updated" &&
         listsDraftsOf(qc, ctx.ws, (x) => x.conversation.id === event.data.id)

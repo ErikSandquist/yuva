@@ -1889,6 +1889,29 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/conversations/{conversationId}/incidents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the incidents a conversation is linked to
+         * @description The status incidents and maintenance the conversation is linked to, the most recently
+         *     linked first. Incidents of pages whose inbox the caller cannot see are left out.
+         *
+         *     Scopes: `conversations:read` and `status:read`.
+         */
+        get: operations["listConversationIncidents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/conversations/{conversationId}/typing": {
         parameters: {
             query?: never;
@@ -2530,7 +2553,8 @@ export interface paths {
         /**
          * List mailing lists
          * @description The lists of the inboxes the caller can see, newest first, with their subscription counts.
-         *     Archived lists are left out unless `archived=true`, which lists only them.
+         *     Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+         *     `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
          *
          *     Scope: `lists:read`.
          */
@@ -2572,7 +2596,7 @@ export interface paths {
          * @description Deletes the list with its subscriptions and their consent events. Addresses that had
          *     unsubscribed from it are remembered as opted out first, so they cannot be added back by a
          *     member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-         *     broadcast sends to it.
+         *     broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2582,7 +2606,9 @@ export interface paths {
         /**
          * Update a mailing list
          * @description Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-         *     `archived: true` hides it from forms, the preference page and the default list.
+         *     `archived: true` hides it from forms, the preference page and the default list. A status
+         *     list takes only `name` and `description`; its channel is set on its status page (`409
+         *     list_kind` for anything else).
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2653,6 +2679,11 @@ export interface paths {
          *     bounced or was reported as spam, `400 validation_failed` without `consent` or
          *     `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
          *     got 3 confirmation mails today.
+         *
+         *     A status list (`kind: status`) takes no declared consent: every new subscription is
+         *     `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+         *     `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+         *     suppressed address still gets `409 suppressed`.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2747,7 +2778,8 @@ export interface paths {
          *     rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
          *     in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
          *     agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-         *     your own records before uploading; only commercial lists need registering.
+         *     your own records before uploading; only commercial lists need registering. A status list
+         *     has no İYS export (`409 list_kind`).
          *
          *     The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
          *     Owners, admins and API keys. Scope: `lists:read`.
@@ -2798,7 +2830,8 @@ export interface paths {
          *     limit, 100,000 by default, fails). Start it with `/start`.
          *
          *     One import per workspace validates or imports at a time (`409 import_running`). A file
-         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+         *     list takes no imports (`409 list_kind`): its subscribers ask on the status page.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -5618,7 +5651,8 @@ export interface paths {
         post?: never;
         /**
          * Delete a status page
-         * @description The page with its groups, components, their history, incidents and updates.
+         * @description The page with its groups, components, their history, incidents and updates, its notices
+         *     and its subscriber list with the subscriptions and their consent events.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5630,6 +5664,13 @@ export interface paths {
          * @description Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
          *     takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
          *     redirect to the new one, until the page is deleted.
+         *
+         *     `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+         *     needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+         *     before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+         *     like the page (with ` (status)` added when the inbox has a list of that name). `false`
+         *     stops the form and the notices and keeps the subscribers. On a server with
+         *     `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5817,6 +5858,7 @@ export interface paths {
          *     `in_progress` when its start has passed. `components` name the components it touches with the
          *     state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
          *     incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+         *     Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
          *
          *     An incident created through MCP is always a draft.
          *
@@ -5856,7 +5898,8 @@ export interface paths {
          * Change an incident
          * @description Title, impact, the components it touches and a maintenance window. States change with an update
          *     (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-         *     (`409 incident_closed`).
+         *     (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+         *     `notify` is `false`; other changes send none.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5874,8 +5917,10 @@ export interface paths {
         put?: never;
         /**
          * Publish a draft incident
-         * @description Shows it on the page and, while it is open, sets the components it touches. Publishing a
-         *     published incident changes nothing.
+         * @description Shows it on the page and, while it is open, sets the components it touches, and queues one
+         *     notice to the page's e-mail subscribers with the current state and the latest update unless
+         *     `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+         *     nothing.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5901,7 +5946,9 @@ export interface paths {
          *     states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
          *     `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
          *     incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-         *     completing puts its components back; see the tag.
+         *     completing puts its components back; see the tag. On a published incident, `notify` (default
+         *     `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+         *     subscribers or joins the one waiting.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5932,6 +5979,219 @@ export interface paths {
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
         patch: operations["editStatusIncidentUpdate"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/conversations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List an incident's conversations
+         * @description The conversations linked to the incident, the most recently linked first, each with its
+         *     state. Only conversations in inboxes the caller can see are listed.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+         *     and `conversations:read`.
+         */
+        get: operations["listStatusIncidentConversations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Link a conversation to an incident
+         * @description Links a conversation to the incident, so it is listed with it and reached by "Reply to
+         *     linked". A conversation may be linked to several incidents, also of other pages; linking it
+         *     twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+         *     (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+         *     takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
+         *
+         *     Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+         *     and `conversations:read`.
+         */
+        put: operations["linkStatusIncidentConversation"];
+        post?: never;
+        /**
+         * Unlink a conversation from an incident
+         * @description Unlinking a conversation that is not linked changes nothing. The caller must see both the
+         *     page's inbox and the conversation's inbox.
+         *
+         *     Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+         *     and `conversations:read`.
+         */
+        delete: operations["unlinkStatusIncidentConversation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/reply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reply to linked conversations
+         * @description Sends one reply, written once, to every linked conversation that is not closed and that the
+         *     caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+         *     which posts the reply through the normal reply path as the caller (a member, an API key's
+         *     bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+         *     (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+         *     events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+         *     or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+         *     conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+         *
+         *     The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+         *     conversation.
+         *
+         *     API keys and MCP clients need the workspace to let them deliver messages
+         *     (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+         *     keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+         */
+        post: operations["replyToStatusIncidentConversations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get what became of a reply to linked conversations
+         * @description The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+         *     ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+         *     conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+         *     caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+         *     problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+         *     or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+         *     and so do `items`, ordered by conversation id.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+         *     and `conversations:read`.
+         */
+        get: operations["getStatusIncidentReply"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's notices
+         * @description The notices to the page's e-mail subscribers, newest first, with their counts.
+         *     `incident_id` and `state` narrow the list.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusNotices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notices/{noticeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A notice
+         * @description Scope: `status:read`.
+         */
+        get: operations["getStatusNotice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notices/{noticeId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a waiting notice
+         * @description Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+         *     covered stay on the page. `409 not_pending` once it is sending or done.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["cancelStatusNotice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notice-reach": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How many subscribers a notice would reach
+         * @description The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+         *     several, none for an incident touching no component) would go to now: those who chose no
+         *     components and those who chose one of them. Suppressed addresses are left out. The panel
+         *     shows it beside "Notify subscribers".
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["getStatusNoticeReach"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/status-pages/{pageId}/monitors": {
@@ -6997,8 +7257,10 @@ export interface paths {
          *     whenever it changes) come only for `live` inboxes. `inbox.updated` carries the inbox's
          *     public settings, the same `ClientInbox` as `GET /client/v1/channels/{channel_key}`, whenever
          *     a member changes the inbox (mode, business hours, branding, greeting) or the session's
-         *     channel; replace the settings shown with it. After a reconnect, fetch the channel settings
-         *     again, since a change made while disconnected is not replayed.
+         *     channel, or the status of its published page changes; replace the settings shown with it.
+         *     A connection resumed with `last_event_id` gets one `inbox.updated` right after `ready`
+         *     with the current settings and status, since changes made while disconnected are not
+         *     replayed; one opened without it starts from the settings fetched just before.
          *
          *     The server pings every 30 seconds; the client sends nothing. Close codes as on
          *     `/v1/realtime`: 1008 when the session ends or the contact is deleted (start a new session),
@@ -11551,7 +11813,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -12123,6 +12385,7 @@ export interface components {
             locales: components["schemas"]["LanguageTag"][];
         };
         BroadcastAudienceInput: {
+            /** @description Lists of the broadcast's inbox; a status page's list (`kind` `status`) is refused with `400 validation_failed`. */
             list_ids: string[];
             conditions?: components["schemas"]["BroadcastCondition"][];
             locales?: components["schemas"]["LanguageTag"][];
@@ -12655,11 +12918,22 @@ export interface components {
             /** Format: int64 */
             unsubscribed: number;
         };
+        /**
+         * @description `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+         * @enum {string}
+         */
+        MailingListKind: "list" | "status";
         MailingList: {
             /** Format: uuid */
             id: string;
             /** Format: uuid */
             inbox_id: string;
+            kind: components["schemas"]["MailingListKind"];
+            /**
+             * Format: uuid
+             * @description The status page whose subscribers a `status` list holds.
+             */
+            status_page_id?: string;
             /**
              * Format: uuid
              * @description The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
@@ -12692,6 +12966,7 @@ export interface components {
             /** Format: uuid */
             inbox_id: string;
             name: string;
+            kind: components["schemas"]["MailingListKind"];
         };
         MailingListCreate: {
             /** Format: uuid */
@@ -12793,6 +13068,8 @@ export interface components {
             /** Format: date-time */
             unsubscribed_at?: string;
             unsubscribe_reason?: components["schemas"]["UnsubscribeReason"];
+            /** @description On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. */
+            components?: string[];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -13432,6 +13709,11 @@ export interface components {
              *     on a conversation.
              */
             ask_for_rating: boolean;
+            /**
+             * @description Absent unless the inbox has a published status page. Show a line while `open` is not
+             *     empty; an `inbox.updated` frame brings every change.
+             */
+            status?: components["schemas"]["ClientInboxStatus"];
         };
         ClientContact: {
             /** Format: uuid */
@@ -13722,7 +14004,10 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ClientPresence"];
         };
-        /** @description The inbox's or the session channel's public settings changed. No `id`; not replayed. */
+        /**
+         * @description The inbox's or the session channel's public settings, or its status page's `status`, changed.
+         *     No `id`; not replayed.
+         */
         ClientInboxUpdatedEvent: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -14863,10 +15148,42 @@ export interface components {
             show_uptime: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
+            email_subscribers: components["schemas"]["StatusEmailSubscribers"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+         *     are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+         *     subscribers are first turned on and kept when they are turned off; manage its subscribers
+         *     with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+         *     delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+         *     never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+         *     postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+         */
+        StatusEmailSubscribers: {
+            enabled: boolean;
+            /**
+             * Format: uuid
+             * @description The inbox's e-mail channel notices and confirmations go out through.
+             */
+            channel_id?: string;
+            /** Format: uuid */
+            list_id?: string;
+            counts: components["schemas"]["MailingListCounts"];
+            warnings: ("no_deliverability_check" | "no_postal_address" | "dkim_unaligned")[];
+            /** @description `channel_id` names a channel that can send. */
+            sender_ready?: boolean;
+        };
+        StatusEmailSubscribersUpdate: {
+            enabled?: boolean;
+            /**
+             * Format: uuid
+             * @description An e-mail channel of the page's inbox that can send (`409 sender_not_ready` otherwise).
+             */
+            channel_id?: string;
         };
         StatusPageList: {
             items: components["schemas"]["StatusPage"][];
@@ -14923,12 +15240,141 @@ export interface components {
             history_days?: number;
             show_uptime?: boolean;
             published?: boolean;
+            email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
         };
         StatusPageRef: {
             /** Format: uuid */
             id: string;
             name: string;
             slug: string;
+        };
+        /**
+         * @description The inbox's published status page: its overall state and what is open on it. Drafts,
+         *     scheduled maintenance that has not started and hidden components are left out.
+         */
+        ClientInboxStatus: {
+            /**
+             * Format: uri
+             * @description The public page.
+             */
+            url: string;
+            state: components["schemas"]["StatusComponentStateValue"];
+            /** @description Open published incidents and running maintenance, newest first. */
+            open: components["schemas"]["ClientStatusIncident"][];
+        };
+        ClientStatusIncident: {
+            /** Format: uuid */
+            id: string;
+            kind: components["schemas"]["StatusIncidentKind"];
+            title: string;
+            impact: components["schemas"]["StatusIncidentImpact"];
+            state: components["schemas"]["StatusIncidentState"];
+            /**
+             * Format: date-time
+             * @description When its latest update was posted.
+             */
+            updated_at: string;
+            /**
+             * Format: uri
+             * @description The incident's public page.
+             */
+            url: string;
+        };
+        /** @description A linked conversation with what a list row shows and when it was linked. */
+        StatusIncidentConversation: components["schemas"]["ConversationListItem"] & {
+            /** Format: date-time */
+            linked_at: string;
+        };
+        StatusIncidentConversationPage: {
+            items: components["schemas"]["StatusIncidentConversation"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        ConversationIncident: {
+            /** Format: uuid */
+            id: string;
+            page: components["schemas"]["StatusPageRef"];
+            kind: components["schemas"]["StatusIncidentKind"];
+            title: string;
+            impact: components["schemas"]["StatusIncidentImpact"];
+            state: components["schemas"]["StatusIncidentState"];
+            /** Format: uri */
+            url: string;
+            /**
+             * Format: date-time
+             * @description Absent while it is a draft.
+             */
+            published_at?: string;
+            /** Format: date-time */
+            resolved_at?: string;
+            /** Format: date-time */
+            linked_at: string;
+        };
+        ConversationIncidentList: {
+            items: components["schemas"]["ConversationIncident"][];
+        };
+        StatusIncidentReply: {
+            /** @description The reply's text, as for any message. */
+            body: string;
+            /**
+             * @description Close each conversation after the reply.
+             * @default false
+             */
+            close: boolean;
+        };
+        StatusIncidentReplyResult: {
+            /**
+             * Format: uuid
+             * @description The reply request; read its outcomes with `GET .../replies/{replyId}`.
+             */
+            id: string;
+            /**
+             * Format: int32
+             * @description The conversations a reply was queued for.
+             */
+            queued: number;
+        };
+        /** @enum {string} */
+        StatusIncidentReplyOutcome: "pending" | "sent" | "skipped" | "failed";
+        StatusIncidentReplyCounts: {
+            /** Format: int32 */
+            pending: number;
+            /** Format: int32 */
+            sent: number;
+            /** Format: int32 */
+            skipped: number;
+            /** Format: int32 */
+            failed: number;
+        };
+        StatusIncidentReplyTarget: {
+            /** Format: uuid */
+            conversation_id: string;
+            outcome: components["schemas"]["StatusIncidentReplyOutcome"];
+            /** @description Why the conversation was skipped or the reply failed; absent for `pending` and `sent`. */
+            reason?: string;
+            /**
+             * Format: date-time
+             * @description Absent while `pending`.
+             */
+            finished_at?: string;
+        };
+        StatusIncidentReplyReport: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            incident_id: string;
+            close: boolean;
+            /**
+             * Format: int32
+             * @description The conversations the request was queued for.
+             */
+            queued: number;
+            counts: components["schemas"]["StatusIncidentReplyCounts"];
+            /** Format: date-time */
+            created_at: string;
+            items: components["schemas"]["StatusIncidentReplyTarget"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
         };
         StatusComponentGroup: {
             /** Format: uuid */
@@ -15060,6 +15506,8 @@ export interface components {
              * @description When it was resolved or completed.
              */
             resolved_at?: string;
+            /** @description For a draft, whether publishing it mails the subscribers unless the publish request says otherwise. */
+            notify?: boolean;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -15082,6 +15530,103 @@ export interface components {
             /** Format: date-time */
             scheduled_end?: string;
             publish?: boolean;
+            /**
+             * @description Mail the page's e-mail subscribers about it (default `true`). For a draft it is kept and
+             *     applies when the draft is published without naming `notify`.
+             */
+            notify?: boolean;
+        };
+        /**
+         * @description `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+         *     `skip_reason`), `cancelled` (a member stopped it while it waited).
+         * @enum {string}
+         */
+        StatusNoticeState: "pending" | "sending" | "sent" | "skipped" | "cancelled";
+        /**
+         * @description `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+         *     bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+         *     notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+         *     channel cannot send. `no_recipients`: no subscriber matched.
+         * @enum {string}
+         */
+        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients";
+        /**
+         * @description Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+         *     `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+         *     since the notice started), `replied` and `auto_replied`.
+         */
+        StatusNoticeCounts: {
+            /** Format: int64 */
+            recipients: number;
+            /** Format: int64 */
+            queued: number;
+            /** Format: int64 */
+            sent: number;
+            /** Format: int64 */
+            failed: number;
+            /** Format: int64 */
+            bounced: number;
+            /** Format: int64 */
+            complained: number;
+            /** Format: int64 */
+            skipped: number;
+            /** Format: int64 */
+            replied: number;
+            /** Format: int64 */
+            auto_replied: number;
+        };
+        StatusNotice: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            /** Format: uuid */
+            incident_id: string;
+            state: components["schemas"]["StatusNoticeState"];
+            /** @description It reports the resolution or completion of the incident or the start of maintenance, so it skips the 15-minute gap and the hourly limit. */
+            final: boolean;
+            /** Format: date-time */
+            due_at: string;
+            skip_reason?: components["schemas"]["StatusNoticeSkipReason"];
+            /** @description The incident's updates it reports. */
+            update_ids: string[];
+            counts: components["schemas"]["StatusNoticeCounts"];
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusNoticeList: {
+            items: components["schemas"]["StatusNotice"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        StatusNoticeReach: {
+            /** Format: int64 */
+            subscribers: number;
+        };
+        /**
+         * @description `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved
+         *     its counts (at most every 5 seconds while sending). Not stored, no id, never replayed;
+         *     reload the notices after a reconnect. Reaches whoever may read the page with `status:read`.
+         */
+        StatusNoticeEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status_notice.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["StatusNotice"];
         };
         StatusIncidentComponentInput: {
             /** Format: uuid */
@@ -15097,10 +15642,18 @@ export interface components {
             scheduled_start?: string;
             /** Format: date-time */
             scheduled_end?: string;
+            /** @description Mail the subscribers about a changed maintenance window (default `true` when the window changes; other changes send nothing). */
+            notify?: boolean;
         };
         StatusIncidentUpdateCreate: {
             state?: components["schemas"]["StatusIncidentState"];
             body: string;
+            /** @description Mail the subscribers about it. Default `true` when the update changes the state, `false` when it only adds text. */
+            notify?: boolean;
+        };
+        StatusIncidentPublish: {
+            /** @description Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise). */
+            notify?: boolean;
         };
         StatusIncidentUpdateEdit: {
             body: string;
@@ -16802,6 +17355,8 @@ export interface components {
         StatusGroupId: string;
         StatusComponentId: string;
         StatusIncidentId: string;
+        StatusNoticeId: string;
+        StatusReplyId: string;
         StatusUpdateId: string;
         StatusSlug: string;
         StatusMonitorId: string;
@@ -19754,6 +20309,34 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listConversationIncidents: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                conversationId: components["parameters"]["ConversationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The linked incidents. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationIncidentList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     setMemberTyping: {
         parameters: {
             query?: never;
@@ -20818,6 +21401,7 @@ export interface operations {
             query?: {
                 inbox_id?: string;
                 archived?: boolean;
+                kind?: components["schemas"]["MailingListKind"];
                 /** @description The `next_cursor` of the previous page. */
                 cursor?: components["parameters"]["Cursor"];
                 /** @description Page size, 1 to 100; 25 by default. */
@@ -21075,6 +21659,15 @@ export interface operations {
                     "application/json": components["schemas"]["Subscription"];
                 };
             };
+            /** @description The new `pending` subscription of a status list; the confirmation mail is on its way. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Subscription"];
+                };
+            };
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
@@ -21238,6 +21831,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     listListImports: {
@@ -25902,7 +26496,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentPublish"];
+            };
+        };
         responses: {
             /** @description The incident. */
             200: {
@@ -25982,6 +26580,296 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusIncidentConversations: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The linked conversations. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncidentConversationPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    linkStatusIncidentConversation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+                conversationId: components["parameters"]["ConversationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The conversation is linked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    unlinkStatusIncidentConversation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+                conversationId: components["parameters"]["ConversationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The conversation is not linked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    replyToStatusIncidentConversations: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentReply"];
+            };
+        };
+        responses: {
+            /** @description The reply and how many conversations it was queued for. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncidentReplyResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusIncidentReply: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+                replyId: components["parameters"]["StatusReplyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The reply and its outcomes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncidentReplyReport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusNotices: {
+        parameters: {
+            query?: {
+                incident_id?: string;
+                state?: components["schemas"]["StatusNoticeState"];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of notices. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNoticeList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusNotice: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                noticeId: components["parameters"]["StatusNoticeId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The notice. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNotice"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    cancelStatusNotice: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                noticeId: components["parameters"]["StatusNoticeId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The cancelled notice. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNotice"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getStatusNoticeReach: {
+        parameters: {
+            query?: {
+                component_id?: string[];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNoticeReach"];
                 };
             };
             400: components["responses"]["Problem"];

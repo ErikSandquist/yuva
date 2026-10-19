@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "เชื่อมต่อ {clientName} แล้ว"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {ปิดแล้ว #}}"
 
@@ -510,6 +511,7 @@ msgstr "เว็บไซต์ {name}"
 msgid "{names} will be notified"
 msgstr "จะแจ้งเตือน {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {เปิดอยู่ #}}"
@@ -873,6 +875,10 @@ msgstr "รายชื่อติดต่อให้คะแนนการ
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "รายชื่อติดต่อถูกลบ"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "การสนทนาหนึ่งรายการ"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "มีอยู่ก่อนหน้านี้ในไฟล์แ
 msgid "Already in Yuva"
 msgstr "อยู่ใน Yuva แล้ว"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "เชื่อมโยงไว้แล้ว"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "อยู่ในรายชื่อแล้ว"
@@ -1621,6 +1631,10 @@ msgstr "เหตุการณ์หรือการบำรุงรัก
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "มีการเผยแพร่เหตุการณ์หรือการบำรุงรักษา"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "เหตุการณ์หนึ่งเชื่อมโยงการสนทนาได้สูงสุด 5,000 รายการ โปรดยกเลิกการเชื่อมโยงบางรายการก่อน"
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "ไม่อยู่"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "กลับ"
 
@@ -2306,6 +2321,7 @@ msgstr "ตั้งเวลาจดหมายข่าวแยกตาม
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "ตั้งเวลาจดหมายข่าวแยกตาม
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "ยกเลิก"
@@ -2601,6 +2618,14 @@ msgstr "ล้างคำตอบ"
 msgid "Clear the search"
 msgstr "ล้างการค้นหา"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "ล้างการเลือก"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "ล้างการเลือก (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI และส่วนขยาย IDE"
@@ -2666,6 +2691,10 @@ msgstr "ปิดทั้งหมด"
 msgid "Close conversations older than {daysShown} days"
 msgstr "ปิดการสนทนาที่เก่ากว่า {daysShown} วัน"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "ปิดทุกการสนทนาหลังตอบกลับ"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "ปิดทุกอย่าง"
@@ -2708,6 +2737,10 @@ msgstr "ปิดแล้ววันนี้"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "ปิดเมื่อ"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "กำลังปิดทุกการสนทนา"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "การสนทนา"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "การสนทนา"
 
@@ -3158,6 +3192,10 @@ msgstr "เชื่อมต่อเซิร์ฟเวอร์ไม่ไ
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "นับการคลิก"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "กำลังนับ…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "กระทู้บนหน้าเอกสาร"
 msgid "Discussions you started or replied to"
 msgstr "กระทู้ที่คุณเริ่มหรือตอบ"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "ปิด"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "ชื่อที่แสดง"
@@ -3797,6 +3839,7 @@ msgstr "ดาวน์โหลดแถวที่ข้ามไป"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "ฉบับร่าง"
 
@@ -3923,6 +3966,10 @@ msgstr "ส่วนประกอบแต่ละรายการจะอ
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "ส่วนประกอบแต่ละรายการจะอยู่ในสถานะนี้ตราบใดที่การบำรุงรักษายังดำเนินอยู่"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "ทุกการสนทนาจะถูกปิดหลังตอบกลับ ลูกค้าจะได้รับทันทีและเรียกคืนไม่ได้"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "รหัสภายนอก"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "ล้มเหลว"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "เสร็จสิ้นโดยไม่ตรวจสอบ"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "เสร็จสิ้นแล้ว"
 
@@ -5422,6 +5471,22 @@ msgstr "หยุดในอีกครู่ ผู้สมัครรั�
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "คือ {name} ({total}) เลือกอีกครั้งเพื่อส่งเฉพาะส่วนที่ขาด"
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "ถูกปิดไปก่อนถึงคิวของมัน"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "ถูกลบไปแล้ว"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "ถูกข้ามไป"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "ถูกยกเลิกการเชื่อมโยงจากเหตุการณ์แล้ว"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "จะทำงานในนามของคุณ <0>{email}</0> ด้วยสิทธิ์เข้าถึงที่คุณอนุญาตด้านล่างเท่านั้น"
@@ -5641,6 +5706,10 @@ msgstr "เวลาแฝง"
 msgid "Later"
 msgstr "ภายหลัง"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "การตอบกลับล่าสุด"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "สีปุ่มเปิดแชต"
@@ -5698,6 +5767,53 @@ msgstr "ลิงก์สำหรับผู้ดูแล Microsoft 365 ข
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "ลิงก์ในอีเมล"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "เชื่อมโยงการสนทนาที่เลือกกับเหตุการณ์"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "เชื่อมโยงการสนทนาที่เลือกกับ…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "เชื่อมโยงการสนทนานี้กับเหตุการณ์…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "เชื่อมโยงกับเหตุการณ์สถานะ"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "เชื่อมโยงกับเหตุการณ์"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "เชื่อมโยงกับเหตุการณ์ ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "เชื่อมโยงแล้ว"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "เชื่อมโยงแล้วจนถึงตอนนี้: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "เชื่อมโยงการสนทนาที่เลือกกับ {title} แล้ว"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "เชื่อมโยงกับ {title} แล้ว"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "กำลังเชื่อมโยง…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "ไม่มีผู้ติดต่อในมุมมองนี
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "ยังไม่มีผู้ติดต่อ จะปรากฏเมื่อมีคนเขียนเข้ามา"
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "ยังไม่มีการสนทนาที่เชื่อมโยง เปิดการสนทนาหนึ่งแล้วใช้ “เชื่อมโยงกับเหตุการณ์” หรือเลือกหลายรายการในรายการ"
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "ไม่มีการสนทนาจากหน้านี้"
@@ -6889,6 +7009,14 @@ msgstr "ยังไม่มีการนำเข้า"
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "ไม่มีกล่องจดหมายที่จะแสดงหน้าสถานะ"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "ไม่มีเหตุการณ์ที่ตรงกัน"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "ไม่มีเหตุการณ์หรือการบำรุงรักษาที่เปิดอยู่บนหน้าสถานะใดเลย"
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "ไม่มีบัญชี SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "ไม่มีบัญชี SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "ยังไม่มีหน้าสถานะ สร้างหนึ่งหน้าที่สถานะก่อน"
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "หนึ่งรายการต่อบรรทัด สูง�
 msgid "One per product or brand"
 msgstr "หนึ่งรายการต่อผลิตภัณฑ์หรือแบรนด์"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "การตอบกลับหนึ่งข้อความที่เขียนครั้งเดียวจะถูกส่งในนามของคุณไปยังทุกการสนทนาที่เปิดอยู่และเชื่อมโยงกับ {title} ผ่านช่องทางของแต่ละการสนทนา"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "หนึ่งแถวต่อเหตุการณ์ เก่าสุดก่อน: ใครยินยอมหรือออก เมื่อใด อย่างไร จากหน้าและที่อยู่ IP ใด และถ้อยคำที่พวกเขาเห็น เก็บไว้เป็นหลักฐานความยินยอม (GDPR มาตรา 7, KVKK) เพื่อตอบผู้ที่ถามว่าคุณเก็บอะไรไว้ หรือเพื่อลงทะเบียนความยินยอมกับ İYS ด้วยตนเอง สูตรสเปรดชีตใน CSV ถูกทำให้ไม่เป็นอันตรายแล้ว"
@@ -7727,6 +7863,10 @@ msgstr "การสนทนาที่เปิดอยู่"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "การสนทนาที่เปิดอยู่ที่มอบหมายแล้ว"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "การสนทนาที่เปิดอยู่ซึ่งจะได้รับการตอบกลับนี้: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "เลือกช่องทางอีเมลของกล่อ
 msgid "Pick an inbox"
 msgstr "เลือกกล่องข้อความ"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "เลือกเหตุการณ์หรือการบำรุงรักษาที่เปิดอยู่"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "เลือกอย่างน้อยหนึ่งขอบเข
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "เลือกอย่างน้อยหนึ่งรายการ"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "เลือกการสนทนา"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "โพสต์การตอบกลับแล้ว"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "ความคืบหน้าของการตอบกลับ"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "ข้อความตอบกลับ"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "เวลาตอบกลับ"
@@ -9152,6 +9308,19 @@ msgstr "ตอบกลับ <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "ตอบกลับบรอดคาสต์"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "ตอบกลับรายการที่เชื่อมโยง"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "ตอบกลับรายการที่เชื่อมโยง ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "ตอบกลับการสนทนาที่เชื่อมโยง"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "พาคุณกลับไปที่"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "ตรวจทาน"
 
@@ -9569,6 +9739,10 @@ msgstr "ค้นหาในการสนทนานี้"
 msgid "Search in this conversation ({0})"
 msgstr "ค้นหาในการสนทนานี้ ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "ค้นหาเหตุการณ์"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "ค้นหาผู้คน การดำเนินการ หรือการตั้งค่า"
@@ -9605,9 +9779,25 @@ msgstr "ส่วน"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "ดูว่าพวกเขาอยู่ที่ไหน เปิดอะไรค้างไว้ และทำอะไรไปแล้ววันนี้"
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "เลือกการสนทนา"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "เลือกการสนทนาใต้เคอร์เซอร์"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "เลือกบล็อกก่อนหน้าหรือถัดไป"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "เลือกแล้ว: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "การเลือก"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "ส่งอย่างเดียว"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "ส่งหรือเพิ่มบันทึก ในการสนทนาแชตหรือแอป (⇧↵ เพื่อขึ้นบรรทัดใหม่)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "ส่งการตอบกลับ"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "ส่งการยืนยัน"
@@ -9792,9 +9986,21 @@ msgstr "กำลังส่งทางอีเมล…"
 msgid "Sending channel"
 msgstr "ช่องทางที่ส่ง"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "ส่งไม่สำเร็จ: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "ส่งไม่สำเร็จ"
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "การส่งเริ่มแล้ว หยุดชั่วคราวหรือยกเลิกแทน"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "การส่งล้มเหลวซ้ำ ๆ Yuva จึงยอมแพ้"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "กำลังส่ง แล้วปิด…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "กำลังส่ง…"
 
@@ -9848,6 +10055,7 @@ msgstr "ส่งแล้ว"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "ส่งแล้ว"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "ข้ามเธรดที่มีเฉพาะอีเมลอัตโนมัติ"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "ข้ามไป"
 
@@ -10990,6 +11199,10 @@ msgstr "หน้าความยินยอมติ๊กสิ่งที
 msgid "The contact was deleted"
 msgstr "ลบผู้ติดต่อแล้ว"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "การสนทนายังคงเปิดอยู่ ลูกค้าจะได้รับการตอบกลับทันทีและเรียกคืนไม่ได้"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "ที่อยู่ปัจจุบันจะใช้ไม่ได้ทันที อัปเดตทุกอย่างที่เรียกใช้ที่อยู่นี้"
@@ -11238,6 +11451,10 @@ msgstr "การตรวจสอบความสามารถในกา
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "กฎหมายกำหนดให้อีเมลการตลาดทุกฉบับระบุว่าใครส่งและติดต่อได้อย่างไร (CAN-SPAM, CASL, ข้อบังคับการสื่อสารเชิงพาณิชย์ของตุรกี) Yuva ใส่ข้อมูลนี้ที่ส่วนท้ายของทุกบรอดคาสต์จากกล่องข้อความนี้ จึงควรกรอกก่อนฉบับแรก"
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "ถึงขีดจำกัด 5,000 แล้ว"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "เลิกติดตามแล้ว"
 msgid "Unknown device"
 msgstr "อุปกรณ์ที่ไม่รู้จัก"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "ยกเลิกการเชื่อมโยง {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "ยกเลิกการเชื่อมโยงจาก {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "ปลดล็อก"
@@ -12690,6 +12915,7 @@ msgstr "การเข้าชมไซต์ของคุณที่มี
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "รอ"
 
@@ -12841,6 +13067,10 @@ msgstr "พวกเขายินยอมอะไร"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "ลูกค้าต้องรู้อะไรบ้าง"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "ลูกค้าเหล่านี้ต้องรู้อะไรบ้าง"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "สิทธิ์เข้าถึงของคุณสิ้นสุดก่อนที่จะส่ง"
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

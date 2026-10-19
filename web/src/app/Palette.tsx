@@ -77,6 +77,7 @@ function useItems(open: boolean): Item[] {
       act("contact", t`Contact details`, SHORTCUTS.contact)
       act("more", t`Priority, inbox, spam and more`, SHORTCUTS.more)
       act("discussion", t`Turn into a discussion`, SHORTCUTS.discussion)
+      act("incident", t`Link to a status incident`, SHORTCUTS.incident)
     }
     if (inboxes.length > 1) {
       list.push({ group: t`Inbox`, label: t`All inboxes`, run: () => setFilter("") })

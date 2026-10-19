@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName}이(가) 연결되었습니다"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {종료 #건}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} 웹사이트"
 msgid "{names} will be notified"
 msgstr "{names}님에게 알림이 갑니다"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {열림 #건}}"
@@ -873,6 +875,10 @@ msgstr "연락처가 대화를 평가했을 때"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "연락처가 삭제되었을 때"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "대화"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "파일 앞쪽에 이미 있음"
 msgid "Already in Yuva"
 msgstr "이미 Yuva에 있음"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "이미 연결되어 있습니다"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "이미 리스트에 있음"
@@ -1621,6 +1631,10 @@ msgstr "인시던트 또는 점검이 변경되었거나 업데이트되었습�
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "인시던트 또는 점검이 게시되었습니다"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "인시던트 하나에는 대화를 최대 5,000개까지 연결할 수 있습니다. 먼저 일부의 연결을 해제하세요."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "자리 비움"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "뒤로"
 
@@ -2306,6 +2321,7 @@ msgstr "구독자마다 뉴스레터를 예약할 수 있나요?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "구독자마다 뉴스레터를 예약할 수 있나요?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "취소"
@@ -2601,6 +2618,14 @@ msgstr "답변 해제"
 msgid "Clear the search"
 msgstr "검색 지우기"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "선택 해제"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "선택 해제 (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI 및 IDE 확장 프로그램"
@@ -2666,6 +2691,10 @@ msgstr "모두 닫기"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown}일 지난 대화 종료"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "답장 후 각 대화 닫기"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "모두 종료"
@@ -2708,6 +2737,10 @@ msgstr "오늘 종료됨"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "종료 시각"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "각 대화를 닫는 중"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "대화"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "대화"
 
@@ -3158,6 +3192,10 @@ msgstr "서버에 연결할 수 없습니다. 연결을 확인하고 다시 시�
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "클릭 집계"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "세는 중…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "문서 페이지의 토론"
 msgid "Discussions you started or replied to"
 msgstr "내가 시작했거나 답글을 단 토론"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "닫기"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "표시 이름"
@@ -3797,6 +3839,7 @@ msgstr "제외된 행 다운로드"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "초안"
 
@@ -3923,6 +3966,10 @@ msgstr "인시던트가 열려 있는 동안 각 구성 요소는 이 상태가 
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "점검이 진행되는 동안 각 구성 요소는 이 상태가 됩니다."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "답장 후 각 대화가 닫힙니다. 고객은 답장을 바로 받으며 회수할 수 없습니다."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "외부 ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "실패"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "확인 없이 마치기"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "완료됨"
 
@@ -5422,6 +5471,22 @@ msgstr "곧 중지됩니다. 이미 추가된 구독자는 리스트에 남습�
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "{name}({total})였습니다. 다시 선택하면 빠진 것만 보냅니다."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "차례가 되기 전에 닫혔습니다."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "삭제되었습니다."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "건너뛰었습니다."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "인시던트에서 연결이 해제되었습니다."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "내 계정 <0>{email}</0>(으)로서, 아래에서 허용한 접근 범위 안에서만 동작합니다."
@@ -5641,6 +5706,10 @@ msgstr "지연 시간"
 msgid "Later"
 msgstr "나중에"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "최근 답장"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "런처 색상"
@@ -5698,6 +5767,53 @@ msgstr "Microsoft 365 관리자용 링크"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "메일 안의 링크"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "선택한 대화를 인시던트에 연결"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "선택한 대화를 연결할 곳…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "이 대화를 인시던트에 연결…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "상태 인시던트에 연결"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "인시던트에 연결"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "인시던트에 연결 ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "연결됨"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "지금까지 연결: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "선택한 대화를 {title}에 연결했습니다"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title}에 연결했습니다"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "연결하는 중…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "이 보기에는 연락처가 없습니다."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "아직 연락처가 없습니다. 누군가 메일을 보내면 나타납니다."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "연결된 대화가 아직 없습니다. 대화를 열어 ‘인시던트에 연결’을 사용하거나 목록에서 여러 개를 선택하세요."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "이 페이지에서 온 대화가 없습니다."
@@ -6889,6 +7009,14 @@ msgstr "아직 가져오기가 없습니다."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "상태 페이지를 표시할 받은편지함이 없습니다."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "일치하는 인시던트가 없습니다."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "어떤 상태 페이지에도 열려 있는 인시던트나 점검이 없습니다."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "SMTP 계정 없음"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "SMTP 계정 없음"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "아직 상태 페이지가 없습니다. 먼저 상태에서 만드세요."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "한 줄에 하나씩, 최대 20개."
 msgid "One per product or brand"
 msgstr "제품 또는 브랜드마다 하나"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "한 번 작성한 답장이 {title}에 연결된 모든 열린 대화에 내 이름으로, 각 대화의 채널을 통해 전송됩니다."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "이벤트마다 한 행, 오래된 순: 누가 동의하거나 탈퇴했는지, 언제, 어떻게, 어느 페이지와 IP 주소에서, 그리고 본 문구. 동의 증거(GDPR 제7조, KVKK)로 보관하거나, 보유 정보를 묻는 사람에게 답하거나, İYS에 직접 동의를 등록하는 데 쓰세요. CSV의 스프레드시트 수식은 무해하게 처리됩니다."
@@ -7727,6 +7863,10 @@ msgstr "열린 대화"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "배정된 열린 대화"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "이 답장을 받을 열린 대화: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "이 받은 편지함의 이메일 채널 중 SMTP 계정이 있는 것�
 msgid "Pick an inbox"
 msgstr "받은 편지함 선택"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "열려 있는 인시던트 또는 점검을 선택하세요"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "스코프를 하나 이상 선택하세요."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "하나 이상 선택하세요."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "대화를 선택하세요"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "답장하고 해결"
 msgid "Reply posted"
 msgstr "답글을 게시했습니다"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "답장 진행 상황"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "답장 내용"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "답장 시간"
@@ -9152,6 +9308,19 @@ msgstr "<0>{name}</0>님에게 답장"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "일괄 발송에 답장"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "연결된 대화에 답장"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "연결된 대화에 답장 ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "연결된 대화에 답장"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "돌아갈 곳"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "검토"
 
@@ -9569,6 +9739,10 @@ msgstr "이 대화에서 검색"
 msgid "Search in this conversation ({0})"
 msgstr "이 대화에서 검색({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "인시던트 검색"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "사람, 작업 또는 설정 검색"
@@ -9605,9 +9779,25 @@ msgstr "섹션"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "어디에 있는지, 무엇을 열어 두었는지, 오늘 무엇을 했는지 확인하세요."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "대화 선택"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "커서 위치의 대화 선택"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "이전 또는 다음 블록 선택"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "선택됨: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "선택"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "발송만"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "채팅 또는 앱 대화에서 메모 보내기 또는 추가(줄바꿈은 ⇧↵)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "답장 보내기"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "확인 메일 보내기"
@@ -9792,9 +9986,21 @@ msgstr "이메일로 보내는 중…"
 msgid "Sending channel"
 msgstr "발송 채널"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "전송 실패: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "전송에 실패했습니다."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "발송이 이미 시작되었습니다. 대신 일시 중지하거나 취소하세요."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "전송이 계속 실패하여 Yuva가 포기했습니다."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "보낸 다음 종료하는 중…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "보내는 중…"
 
@@ -9848,6 +10055,7 @@ msgstr "발송됨"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "보냄"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "자동 메일만 있는 스레드 건너뛰기"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "건너뜀"
 
@@ -10990,6 +11199,10 @@ msgstr "동의 페이지에는 클라이언트가 요청한 항목이 체크되�
 msgid "The contact was deleted"
 msgstr "연락처가 삭제되었습니다"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "대화는 열린 채로 유지됩니다. 고객은 답장을 바로 받으며 회수할 수 없습니다."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "현재 주소는 즉시 작동하지 않게 됩니다. 이 주소를 호출하는 모든 곳을 업데이트하세요."
@@ -11238,6 +11451,10 @@ msgstr "마지막 전달률 확인에서 고쳐야 할 점이 발견되었습니
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "법에 따라 모든 마케팅 메일에는 발신자와 연락 방법을 밝혀야 합니다(CAN-SPAM, CASL, 튀르키예 상업 커뮤니케이션 규정). Yuva는 이 받은 편지함의 모든 일괄 발송 바닥글에 이 정보를 넣으므로 첫 발송 전에 입력하세요."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5,000개 한도에 도달했습니다"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "팔로우를 취소했습니다"
 msgid "Unknown device"
 msgstr "알 수 없는 기기"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} 연결 해제"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "{title}에서 연결 해제"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "잠금 해제"
@@ -12690,6 +12915,7 @@ msgstr "발송 시작 이후 utm_campaign={campaign}이 붙은 내 사이트 방
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "대기 중"
 
@@ -12841,6 +13067,10 @@ msgstr "무엇에 동의했나요?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "고객이 알아야 할 내용은 무엇인가요?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "이 고객이 알아야 할 내용은 무엇인가요?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "전송되기 전에 접근 권한이 종료되었습니다."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

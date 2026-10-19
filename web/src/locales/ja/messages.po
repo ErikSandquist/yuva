@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} は接続されています"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {完了 # 件}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} のウェブサイト"
 msgid "{names} will be notified"
 msgstr "{names} に通知されます"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {未完了 # 件}}"
@@ -873,6 +875,10 @@ msgstr "連絡先が会話を評価したとき"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "連絡先が削除されたとき"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "会話"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "ファイル内で既に出現"
 msgid "Already in Yuva"
 msgstr "Yuva に登録済み"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "すでにリンク済みです"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "リストに登録済み"
@@ -1621,6 +1631,10 @@ msgstr "インシデントまたはメンテナンスが変更されたか、更
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "インシデントまたはメンテナンスが公開されました"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "1 件のインシデントにリンクできる会話は最大 5,000 件です。先にいくつかのリンクを解除してください。"
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "不在"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "戻る"
 
@@ -2306,6 +2321,7 @@ msgstr "登録者ごとにニュースレターを予約できますか?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "登録者ごとにニュースレターを予約できますか?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "キャンセル"
@@ -2601,6 +2618,14 @@ msgstr "回答を解除"
 msgid "Clear the search"
 msgstr "検索をクリア"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "選択を解除"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "選択を解除 (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI と IDE 拡張機能"
@@ -2666,6 +2691,10 @@ msgstr "すべて閉じる"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} 日より古い会話を完了にする"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "返信後に各会話を閉じる"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "すべて完了にする"
@@ -2708,6 +2737,10 @@ msgstr "本日完了"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "完了する日時"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "各会話を閉じています"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "会話"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "会話"
 
@@ -3158,6 +3192,10 @@ msgstr "サーバーに接続できませんでした。接続を確認して、
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "クリックを集計"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "集計中…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "ドキュメントページのディスカッション"
 msgid "Discussions you started or replied to"
 msgstr "自分が開始または返信したディスカッション"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "閉じる"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "表示名"
@@ -3797,6 +3839,7 @@ msgstr "除外した行をダウンロード"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "ドラフト"
 
@@ -3923,6 +3966,10 @@ msgstr "インシデントが開いている間、各コンポーネントはこ
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "メンテナンス中、各コンポーネントはこの状態になります。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "返信後、各会話は閉じられます。お客様にはすぐに届き、取り消すことはできません。"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "外部 ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "失敗"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "確認せずに完了"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "完了"
 
@@ -5422,6 +5471,22 @@ msgstr "まもなく停止します。すでに追加された登録者はリス
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "{name} ({total}) でした。もう一度選ぶと、足りない分だけ送信します。"
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "順番が来る前に閉じられていました。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "削除されていました。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "スキップされました。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "インシデントからリンク解除されていました。"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "あなた(<0>{email}</0>)として、下で許可したアクセスの範囲のみで動作します。"
@@ -5641,6 +5706,10 @@ msgstr "レイテンシ"
 msgid "Later"
 msgstr "後で"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "最新の返信"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "ランチャーの色"
@@ -5698,6 +5767,53 @@ msgstr "Microsoft 365 管理者向けリンク"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "メール内のリンク"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "選択した会話をインシデントにリンク"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "選択した会話のリンク先…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "この会話をインシデントにリンク…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "ステータスのインシデントにリンク"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "インシデントにリンク"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "インシデントにリンク ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "リンク済み"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "ここまでにリンク済み: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "選択した会話を {title} にリンクしました"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title} にリンクしました"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "リンク中…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "この表示に連絡先はありません。"
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "連絡先はまだありません。誰かが書き込むと表示されます。"
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "リンクされた会話はまだありません。会話を開いて「インシデントにリンク」を使うか、リストで複数選択してください。"
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "このページからの会話はありません。"
@@ -6889,6 +7009,14 @@ msgstr "インポートはまだありません。"
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "ステータスページを表示できる受信トレイがありません。"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "一致するインシデントはありません。"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "どのステータスページにも、開いているインシデントやメンテナンスはありません。"
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "SMTP アカウントなし"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "SMTP アカウントなし"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "ステータスページがまだありません。まず「ステータス」で作成してください。"
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "1 行に 1 件、最大 20 件。"
 msgid "One per product or brand"
 msgstr "製品またはブランドごとに 1 つ"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "一度書いた返信が、{title} にリンクされた開いているすべての会話へ、あなたの名前で、各会話のチャンネルから送られます。"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "イベントごとに 1 行、古い順: 誰が同意または退会したか、いつ、どのように、どのページと IP アドレスから、そして表示された文言。同意の証拠(GDPR 第 7 条、KVKK)として保管したり、保有情報を尋ねる人に答えたり、İYS に自分で同意を登録するために使えます。CSV 内のスプレッドシート数式は無害化されます。"
@@ -7727,6 +7863,10 @@ msgstr "未完了の会話"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "割り当て済みの未完了の会話"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "この返信を受け取る開いている会話: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "この受信トレイのメールチャネルから、SMTP アカウン�
 msgid "Pick an inbox"
 msgstr "受信トレイを選択"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "開いているインシデントまたはメンテナンスを選択"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "スコープを 1 つ以上選択してください。"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "1 つ以上選択してください。"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "会話を選択"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "返信して解決"
 msgid "Reply posted"
 msgstr "返信を投稿しました"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "返信の進行状況"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "返信の本文"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "返信時間"
@@ -9152,6 +9308,19 @@ msgstr "<0>{name}</0> に返信"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "一斉配信への返信"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "リンク済みに返信"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "リンク済みに返信 ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "リンクされた会話に返信"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "戻り先"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "確認"
 
@@ -9569,6 +9739,10 @@ msgstr "この会話内を検索"
 msgid "Search in this conversation ({0})"
 msgstr "この会話内を検索({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "インシデントを検索"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "人、操作、設定を検索"
@@ -9605,9 +9779,25 @@ msgstr "セクション"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "どこにいるか、何を開いているか、今日何をしたかを確認できます。"
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "会話を選択"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "カーソル位置の会話を選択"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "前または次のブロックを選択"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "選択中: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "選択"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "送信のみ"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "チャットまたはアプリの会話で、メモを送信または追加(改行は ⇧↵)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "返信を送信"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "確認メールを送信"
@@ -9792,9 +9986,21 @@ msgstr "メールで送信中…"
 msgid "Sending channel"
 msgstr "送信チャネル"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "送信に失敗しました: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "送信に失敗しました。"
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "送信はすでに開始されています。代わりに一時停止またはキャンセルしてください。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "送信が失敗し続けたため、Yuva は中止しました。"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "送信して完了中…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "送信中…"
 
@@ -9848,6 +10055,7 @@ msgstr "送信済み"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "送信済み"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "自動メールのみのスレッドをスキップ"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "スキップ"
 
@@ -10990,6 +11199,10 @@ msgstr "同意ページには、クライアントが求める権限にチェッ
 msgid "The contact was deleted"
 msgstr "連絡先が削除されました"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "会話は開いたままです。お客様にはすぐに届き、取り消すことはできません。"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "現在のアドレスはすぐに使えなくなります。呼び出している箇所をすべて更新してください。"
@@ -11238,6 +11451,10 @@ msgstr "前回の配信品質チェックで、修正が必要な点が見つか
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "法令により、すべてのマーケティングメールには、送信者と連絡方法の記載が求められます(CAN-SPAM、CASL、トルコの商業通信に関する規則)。Yuva はこの受信トレイからのすべての一斉配信のフッターにこれを記載するため、最初の配信前に入力してください。"
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5,000 件の上限に達しました"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "フォローを解除しました"
 msgid "Unknown device"
 msgstr "不明なデバイス"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} のリンクを解除"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "{title} からリンク解除"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "ロック解除"
@@ -12690,6 +12915,7 @@ msgstr "送信開始以降の、utm_campaign={campaign} が付いたサイトへ
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "待機中"
 
@@ -12841,6 +13067,10 @@ msgstr "何に同意しましたか?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "お客様が知っておくべきことは何ですか？"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "このお客様に伝えるべきことは何ですか？"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "送信される前にアクセス権が失効しました。"
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} on yhdistetty"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# suljettu} other {# suljettua}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} verkkosivusto"
 msgid "{names} will be notified"
 msgstr "{names} saavat ilmoituksen"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# avoin} other {# avointa}}"
@@ -873,6 +875,10 @@ msgstr "Kontakti arvioi keskustelun"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Kontakti poistettiin"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Keskustelu"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Jo aiemmin tiedostossa"
 msgid "Already in Yuva"
 msgstr "Jo Yuvassa"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "On jo liitetty"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Jo listalla"
@@ -1621,6 +1631,10 @@ msgstr "Häiriö tai huolto muuttui tai sai päivityksen"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Häiriö tai huolto julkaistiin"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Häiriöön voi liittää enintään 5 000 keskustelua. Poista ensin joidenkin liitos."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Poissa"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Takaisin"
 
@@ -2306,6 +2321,7 @@ msgstr "Voinko ajastaa uutiskirjeen jokaiselle tilaajalle erikseen?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Voinko ajastaa uutiskirjeen jokaiselle tilaajalle erikseen?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Peruuta"
@@ -2601,6 +2618,14 @@ msgstr "Tyhjennä vastaus"
 msgid "Clear the search"
 msgstr "Tyhjennä haku"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Tyhjennä valinta"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Tyhjennä valinta (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI ja IDE-laajennus"
@@ -2666,6 +2691,10 @@ msgstr "Sulje kaikki"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Sulje yli {daysShown} päivää vanhat keskustelut"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Sulje jokainen keskustelu vastauksen jälkeen"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Sulje kaikki"
@@ -2708,6 +2737,10 @@ msgstr "suljettu tänään"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Sulkee"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Suljetaan jokainen keskustelu"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "keskustelua"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Keskustelut"
 
@@ -3158,6 +3192,10 @@ msgstr "Palvelinta ei tavoitettu. Tarkista yhteytesi ja yritä uudelleen."
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Laske napsautukset"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Lasketaan…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Keskustelut dokumentaatiosivuilla"
 msgid "Discussions you started or replied to"
 msgstr "Keskustelut, jotka aloitit tai joihin vastasit"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Sulje"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Näyttönimi"
@@ -3797,6 +3839,7 @@ msgstr "Lataa pois jätetyt rivit"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Luonnos"
 
@@ -3923,6 +3966,10 @@ msgstr "Jokainen komponentti saa tämän tilan niin kauan kuin häiriö on avoin
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Jokainen komponentti saa tämän tilan niin kauan kuin huolto on käynnissä."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Jokainen keskustelu suljetaan vastauksen jälkeen. Asiakkaat saavat vastauksen heti, eikä sitä voi peruuttaa."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Ulkoiset tunnukset"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Epäonnistui"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Päätä tarkistamatta"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Päättynyt"
 
@@ -5422,6 +5471,22 @@ msgstr "Se pysähtyy hetkessä. Jo lisätyt tilaajat pysyvät listalla."
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Se oli {name} ({total}). Valitse se uudelleen lähettääksesi vain puuttuvan."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Se suljettiin ennen vuoroaan."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Se poistettiin."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Se ohitettiin."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Sen liitos häiriöön poistettiin."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Se toimii sinuna, <0>{email}</0>, vain alla sallimillasi oikeuksilla."
@@ -5641,6 +5706,10 @@ msgstr "Viive"
 msgid "Later"
 msgstr "Myöhemmin"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Viimeisin vastaus"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Käynnistimen väri"
@@ -5698,6 +5767,53 @@ msgstr "Linkki Microsoft 365 -ylläpitäjälle"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Linkki viestissä"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Liitä valitut keskustelut häiriöön"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Liitä valitut keskustelut kohteeseen…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Liitä tämä keskustelu häiriöön…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Liitä tilahäiriöön"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Liitä häiriöön"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Liitä häiriöön ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Liitetty"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Liitetty tähän mennessä: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Valitut keskustelut liitettiin kohteeseen {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Liitetty kohteeseen {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Liitetään…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Ei kontakteja tässä näkymässä."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Ei vielä kontakteja. Ne ilmestyvät, kun joku kirjoittaa."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Yhtään keskustelua ei ole vielä liitetty. Avaa yksi ja käytä toimintoa Liitä häiriöön tai valitse useita luettelosta."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Ei keskusteluja tältä sivulta."
@@ -6889,6 +7009,14 @@ msgstr "Ei vielä tuonteja."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Ei postilaatikkoa, jolle tilasivu näytettäisiin."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Mikään häiriö ei täsmää."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Millään tilasivulla ei ole avointa häiriötä tai huoltoa."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "ei SMTP-tiliä"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Ei SMTP-tiliä"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Tilasivua ei ole vielä. Luo ensin sellainen kohdassa Tila."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Yksi per rivi, enintään 20."
 msgid "One per product or brand"
 msgstr "Yksi per tuote tai brändi"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Yksi vastaus, kirjoitettuna kerran, lähtee jokaiseen kohteeseen {title} liitettyyn avoimeen keskusteluun sinun nimissäsi keskustelun omaa kanavaa pitkin."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Yksi rivi per tapahtuma, vanhin ensin: kuka suostui tai lähti, milloin, miten, miltä sivulta ja IP-osoitteesta, ja sanat, jotka he näkivät. Säilytä se suostumuksen todisteena (GDPR art. 7, KVKK), vastataksesi henkilölle, joka kysyy mitä sinulla on hänestä, tai rekisteröidäksesi suostumukset itse İYS:ään. CSV:n taulukkolaskentakaavat tehdään vaarattomiksi."
@@ -7727,6 +7863,10 @@ msgstr "Avoimet keskustelut"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Avoimet osoitetut keskustelut"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Avoimet keskustelut, jotka saavat tämän vastauksen: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Valitse tämän postilaatikon sähköpostikanava, jolla on SMTP-tili. Se
 msgid "Pick an inbox"
 msgstr "Valitse postilaatikko"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Valitse avoin häiriö tai huolto"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Valitse vähintään yksi scope."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Valitse vähintään yksi."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Valitse keskusteluja"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Vastaa ja ratkaise"
 msgid "Reply posted"
 msgstr "Vastaus julkaistu"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Vastauksen eteneminen"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Vastauksen teksti"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Vastausaika"
@@ -9152,6 +9308,19 @@ msgstr "Vastaa henkilölle <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Vastaa joukkolähetykseen"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Vastaa liitettyihin"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Vastaa liitettyihin ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Vastaa liitettyihin keskusteluihin"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Palauttaa sinut sivustolle"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Tarkistus"
 
@@ -9569,6 +9739,10 @@ msgstr "Hae tästä keskustelusta"
 msgid "Search in this conversation ({0})"
 msgstr "Hae tästä keskustelusta ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Hae häiriöitä"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Hae ihmisiä, toimintoja tai asetuksia"
@@ -9605,9 +9779,25 @@ msgstr "Osiot"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Katso, missä he ovat, mitä heillä on auki ja mitä he tekivät tänään."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Valitse keskusteluja"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Valitse osoittimen kohdalla oleva keskustelu"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Valitse edellinen tai seuraava lohko"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Valittu: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Valinta"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Vain lähetä"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Lähetä tai lisää muistiinpano chat- tai sovelluskeskusteluun (⇧↵ uuteen riviin)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Lähetä vastaus"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Lähetä vahvistus"
@@ -9792,9 +9986,21 @@ msgstr "Lähetetään sähköpostitse …"
 msgid "Sending channel"
 msgstr "Lähetyskanava"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Lähetys epäonnistui: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Lähetys epäonnistui."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Lähetys on jo alkanut. Keskeytä tai peruuta se sen sijaan."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Lähetys epäonnistui yhä uudelleen, joten Yuva luovutti."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Lähetetään, sitten suljetaan …"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Lähetetään …"
 
@@ -9848,6 +10055,7 @@ msgstr "lähetetty"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Lähetetty"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Ohita ketjut, joissa on vain automaattista postia"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Ohitettu"
 
@@ -10990,6 +11199,10 @@ msgstr "Suostumussivu rastittaa sen, mitä asiakas pyytää. Jätä pois, mitä 
 msgid "The contact was deleted"
 msgstr "Kontakti poistettiin"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Keskustelut pysyvät avoimina. Asiakkaat saavat vastauksen heti, eikä sitä voi peruuttaa."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Nykyinen osoite lakkaa toimimasta heti. Päivitä kaikki, mikä sitä kutsuu."
@@ -11238,6 +11451,10 @@ msgstr "Viimeisin toimitettavuustarkistus löysi korjattavaa."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Laki vaatii jokaisen markkinointiviestin kertovan, kuka sen lähettää ja miten häneen saa yhteyden (CAN-SPAM, CASL, Turkin kaupallisen viestinnän asetus). Yuva laittaa tämän jokaisen tämän postilaatikon joukkolähetyksen alatunnisteeseen, joten täytä se ennen ensimmäistä."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5 000 keskustelun raja on täynnä"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Seuraaminen lopetettu"
 msgid "Unknown device"
 msgstr "Tuntematon laite"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Poista liitos: {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Poista liitos kohteeseen {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Avaa lukitus"
@@ -12690,6 +12915,7 @@ msgstr "Käynnit sivustoillesi, joilla on utm_campaign={campaign}, lähetyksen a
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Odottaa"
 
@@ -12841,6 +13067,10 @@ msgstr "Mihin he suostuivat?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Mitä asiakkaiden tulee tietää?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Mitä näiden asiakkaiden täytyy tietää?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "sinä@yritys.fi"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "sinä@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Käyttöoikeutesi päättyi ennen lähetystä."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

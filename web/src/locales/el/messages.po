@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "Το {clientName} είναι συνδεδεμένο"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# κλειστή} other {# κλειστές}}"
 
@@ -510,6 +511,7 @@ msgstr "Ιστότοπος {name}"
 msgid "{names} will be notified"
 msgstr "Θα ειδοποιηθούν: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# ανοιχτή} other {# ανοιχτές}}"
@@ -873,6 +875,10 @@ msgstr "Μια επαφή βαθμολόγησε μια συνομιλία"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Μια επαφή διαγράφηκε"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Μια συνομιλία"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Ήδη νωρίτερα στο αρχείο"
 msgid "Already in Yuva"
 msgstr "Ήδη στο Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Είναι ήδη συνδεδεμένη"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Ήδη στη λίστα"
@@ -1621,6 +1631,10 @@ msgstr "Ένα περιστατικό ή μια συντήρηση άλλαξε 
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Ένα περιστατικό ή μια συντήρηση δημοσιεύτηκε"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Ένα περιστατικό δέχεται το πολύ 5.000 συνδεδεμένες συνομιλίες. Αποσυνδέστε πρώτα κάποιες."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Απών"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Πίσω"
 
@@ -2306,6 +2321,7 @@ msgstr "Μπορώ να προγραμματίσω ένα ενημερωτικό
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Μπορώ να προγραμματίσω ένα ενημερωτικό
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Ακύρωση"
@@ -2601,6 +2618,14 @@ msgstr "Διαγραφή της απάντησης"
 msgid "Clear the search"
 msgstr "Εκκαθάριση της αναζήτησης"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Εκκαθάριση επιλογής"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Εκκαθάριση επιλογής (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI και επέκταση IDE"
@@ -2666,6 +2691,10 @@ msgstr "Κλείσιμο όλων"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Κλείσιμο συνομιλιών παλαιότερων από {daysShown} ημέρες"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Κλείσιμο κάθε συνομιλίας μετά την απάντηση"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Κλείσιμο όλων"
@@ -2708,6 +2737,10 @@ msgstr "κλείστηκαν σήμερα"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Κλείνει"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Κλείσιμο κάθε συνομιλίας"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "συνομιλίες"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Συνομιλίες"
 
@@ -3158,6 +3192,10 @@ msgstr "Δεν ήταν δυνατή η επικοινωνία με τον δι�
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Καταμέτρηση κλικ"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Καταμέτρηση…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Συζητήσεις στις σελίδες τεκμηρίωσης"
 msgid "Discussions you started or replied to"
 msgstr "Συζητήσεις που ξεκινήσατε ή στις οποίες απαντήσατε"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Απόρριψη"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Εμφανιζόμενο όνομα"
@@ -3797,6 +3839,7 @@ msgstr "Λήψη των γραμμών που παραλείφθηκαν"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Πρόχειρο"
 
@@ -3923,6 +3966,10 @@ msgstr "Κάθε στοιχείο έχει αυτή την κατάσταση ό
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Κάθε στοιχείο έχει αυτή την κατάσταση όσο διαρκεί η συντήρηση."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Κάθε συνομιλία κλείνει μετά την απάντηση. Οι πελάτες τη λαμβάνουν αμέσως και δεν μπορεί να ανακληθεί."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Εξωτερικά αναγνωριστικά"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Απέτυχε"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Ολοκλήρωση χωρίς έλεγχο"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Ολοκληρώθηκε"
 
@@ -5422,6 +5471,22 @@ msgstr "Σταματά σε λίγο. Οι συνδρομητές που έχε�
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Ήταν {name} ({total}). Επιλέξτε το ξανά για να σταλεί μόνο ό,τι λείπει."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Είχε κλείσει πριν έρθει η σειρά της."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Είχε διαγραφεί."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Παραλείφθηκε."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Είχε αποσυνδεθεί από το περιστατικό."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Θα ενεργεί ως εσείς, <0>{email}</0>, μόνο με την πρόσβαση που επιτρέπετε παρακάτω."
@@ -5641,6 +5706,10 @@ msgstr "Καθυστέρηση"
 msgid "Later"
 msgstr "Αργότερα"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Τελευταία απάντηση"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Χρώμα κουμπιού συνομιλίας"
@@ -5698,6 +5767,53 @@ msgstr "Σύνδεσμος για τον διαχειριστή σας στο Mi
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Σύνδεσμος σε e-mail"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Σύνδεση των επιλεγμένων συνομιλιών με περιστατικό"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Σύνδεση των επιλεγμένων συνομιλιών με…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Σύνδεση αυτής της συνομιλίας με περιστατικό…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Σύνδεση με περιστατικό κατάστασης"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Σύνδεση με περιστατικό"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Σύνδεση με περιστατικό ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Συνδεδεμένη"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Συνδέθηκαν μέχρι τώρα: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Οι επιλεγμένες συνομιλίες συνδέθηκαν με το {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Συνδέθηκε με το {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Σύνδεση…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Δεν υπάρχουν επαφές σε αυτή την προβολή
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Καμία επαφή ακόμη. Εμφανίζονται όταν κάποιος γράψει."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Καμία συνομιλία δεν είναι συνδεδεμένη ακόμη. Ανοίξτε μία και επιλέξτε «Σύνδεση με περιστατικό» ή επιλέξτε πολλές στη λίστα."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Δεν υπάρχουν συνομιλίες από αυτή τη σελίδα."
@@ -6889,6 +7009,14 @@ msgstr "Καμία εισαγωγή ακόμη."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί σελίδα κατάστασης."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Κανένα περιστατικό δεν ταιριάζει."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Δεν υπάρχει ανοιχτό περιστατικό ή συντήρηση σε καμία σελίδα κατάστασης."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "χωρίς λογαριασμό SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Χωρίς λογαριασμό SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Δεν υπάρχει ακόμη σελίδα κατάστασης. Δημιουργήστε πρώτα μία στην ενότητα Κατάσταση."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Ένα ανά γραμμή, έως 20."
 msgid "One per product or brand"
 msgstr "Ένα ανά προϊόν ή επωνυμία"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Μία απάντηση, γραμμένη μία φορά, πηγαίνει σε κάθε ανοιχτή συνομιλία που είναι συνδεδεμένη με το {title}, εκ μέρους σας, από το δικό της κανάλι."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Μία γραμμή ανά συμβάν, τα παλαιότερα πρώτα: ποιος συναίνεσε ή αποχώρησε, πότε, πώς, από ποια σελίδα και διεύθυνση IP, και τα λόγια που είδε. Κρατήστε το ως απόδειξη συναίνεσης (GDPR άρθρο 7, KVKK), για να απαντήσετε σε άτομο που ρωτά τι κρατάτε ή για να καταχωρίσετε μόνοι σας συναινέσεις στο İYS. Οι τύποι υπολογιστικών φύλλων στο CSV εξουδετερώνονται."
@@ -7727,6 +7863,10 @@ msgstr "Ανοιχτές συνομιλίες"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Ανοιχτές συνομιλίες σε ανάθεση"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Ανοιχτές συνομιλίες που θα λάβουν αυτή την απάντηση: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Επιλέξτε ένα κανάλι e-mail αυτών των εισερ
 msgid "Pick an inbox"
 msgstr "Επιλέξτε εισερχόμενα"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Επιλέξτε ένα ανοιχτό περιστατικό ή μια συντήρηση"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Επιλέξτε τουλάχιστον ένα εύρος πρόσβασ
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Επιλέξτε τουλάχιστον ένα."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Επιλέξτε συνομιλίες"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Απάντηση και επίλυση"
 msgid "Reply posted"
 msgstr "Η απάντηση αναρτήθηκε"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Πρόοδος απάντησης"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Κείμενο απάντησης"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Χρόνος απάντησης"
@@ -9152,6 +9308,19 @@ msgstr "Απάντηση στον/στην <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Απάντηση σε μαζική αποστολή"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Απάντηση στις συνδεδεμένες"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Απάντηση στις συνδεδεμένες ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Απάντηση στις συνδεδεμένες συνομιλίες"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Σας επιστρέφει στο"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Αναθεώρηση"
 
@@ -9569,6 +9739,10 @@ msgstr "Αναζήτηση σε αυτή τη συνομιλία"
 msgid "Search in this conversation ({0})"
 msgstr "Αναζήτηση σε αυτή τη συνομιλία ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Αναζήτηση περιστατικών"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Αναζήτηση ατόμων, ενεργειών ή ρυθμίσεων"
@@ -9605,9 +9779,25 @@ msgstr "Ενότητες"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Δείτε πού βρίσκονται, τι κρατούν ανοιχτό και τι έκαναν σήμερα."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Επιλογή συνομιλιών"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Επιλογή της συνομιλίας κάτω από τον δρομέα"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Επιλογή του προηγούμενου ή επόμενου μπλοκ"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Επιλεγμένες: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Επιλογή"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Μόνο αποστολή"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Αποστολή ή προσθήκη της σημείωσης, σε συνομιλία chat ή εφαρμογής (⇧↵ για νέα γραμμή)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Αποστολή απάντησης"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Αποστολή της επιβεβαίωσης"
@@ -9792,9 +9986,21 @@ msgstr "Αποστολή με e-mail…"
 msgid "Sending channel"
 msgstr "Κανάλι αποστολής"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Η αποστολή απέτυχε: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Η αποστολή απέτυχε."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Η αποστολή έχει ήδη ξεκινήσει. Κάντε αντί γι' αυτό παύση ή ακύρωση."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Η αποστολή συνέχιζε να αποτυγχάνει, οπότε το Yuva τα παράτησε."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Αποστολή και μετά κλείσιμο…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Αποστολή…"
 
@@ -9848,6 +10055,7 @@ msgstr "στάλθηκε"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Στάλθηκε"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Παράλειψη νημάτων που περιέχουν μόνο αυτόματη αλληλογραφία"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Παραλείφθηκαν"
 
@@ -10990,6 +11199,10 @@ msgstr "Η σελίδα συγκατάθεσης τσεκάρει όσα ζητ�
 msgid "The contact was deleted"
 msgstr "Η επαφή διαγράφηκε"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Οι συνομιλίες μένουν ανοιχτές. Οι πελάτες λαμβάνουν την απάντηση αμέσως και δεν μπορεί να ανακληθεί."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Η τρέχουσα διεύθυνση σταματά να λειτουργεί αμέσως. Ενημερώστε ό,τι την καλεί."
@@ -11238,6 +11451,10 @@ msgstr "Ο τελευταίος έλεγχος παραδοσιμότητας β
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Ο νόμος απαιτεί κάθε διαφημιστικό e-mail να λέει ποιος το στέλνει και πώς να επικοινωνήσετε μαζί του (CAN-SPAM, CASL, ο τουρκικός Κανονισμός Εμπορικής Επικοινωνίας). Το Yuva το βάζει στο υποσέλιδο κάθε μαζικής αποστολής από αυτά τα εισερχόμενα, οπότε συμπληρώστε το πριν από την πρώτη."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Έχει συμπληρωθεί το όριο των 5.000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Η παρακολούθηση διακόπηκε"
 msgid "Unknown device"
 msgstr "Άγνωστη συσκευή"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Αποσύνδεση του {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Αποσύνδεση από το {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Ξεκλείδωμα"
@@ -12690,6 +12915,7 @@ msgstr "Επισκέψεις στους ιστότοπούς σας με utm_cam
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Αναμονή"
 
@@ -12841,6 +13067,10 @@ msgstr "Σε τι συμφώνησαν;"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Τι χρειάζεται να ξέρουν οι πελάτες;"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Τι πρέπει να ξέρουν αυτοί οι πελάτες;"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Η πρόσβασή σας έληξε πριν σταλεί."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

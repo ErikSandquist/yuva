@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} कनेक्ट है"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# बंद} other {# बंद}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} वेबसाइट"
 msgid "{names} will be notified"
 msgstr "{names} को सूचित किया जाएगा"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# खुली} other {# खुली}}"
@@ -873,6 +875,10 @@ msgstr "कॉन्टैक्ट ने एक बातचीत को र�
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "कॉन्टैक्ट हटाया गया"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "एक बातचीत"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "फ़ाइल में पहले ही आ चुका है"
 msgid "Already in Yuva"
 msgstr "पहले से Yuva में"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "पहले से जुड़ी हुई"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "पहले से लिस्ट में"
@@ -1621,6 +1631,10 @@ msgstr "कोई घटना या रखरखाव बदला या उ
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "कोई घटना या रखरखाव प्रकाशित हुआ"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "एक घटना से अधिकतम 5,000 बातचीत जोड़ी जा सकती हैं। पहले कुछ को अलग करें।"
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "दूर"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "वापस"
 
@@ -2306,6 +2321,7 @@ msgstr "क्या मैं हर सब्सक्राइबर के �
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "क्या मैं हर सब्सक्राइबर के �
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "रद्द करें"
@@ -2601,6 +2618,14 @@ msgstr "जवाब हटाएँ"
 msgid "Clear the search"
 msgstr "खोज साफ़ करें"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "चयन साफ़ करें"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "चयन साफ़ करें (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI और IDE एक्सटेंशन"
@@ -2666,6 +2691,10 @@ msgstr "सब बंद करें"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} दिन से पुरानी बातचीत बंद करें"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "जवाब देने के बाद हर बातचीत बंद करें"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "सब कुछ बंद करें"
@@ -2708,6 +2737,10 @@ msgstr "आज बंद हुईं"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "बंद होता है"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "हर बातचीत बंद की जा रही है"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "बातचीत"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "बातचीत"
 
@@ -3158,6 +3192,10 @@ msgstr "सर्वर तक नहीं पहुँचा जा सका�
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "क्लिक गिनें"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "गिनती हो रही है…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "डॉक्यूमेंटेशन पेजों पर चर्
 msgid "Discussions you started or replied to"
 msgstr "आपकी शुरू की या जवाब दी गई चर्चाएँ"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "हटाएँ"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "डिस्प्ले नाम"
@@ -3797,6 +3839,7 @@ msgstr "छोड़ी गई पंक्तियाँ डाउनलोड
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "ड्राफ़्ट"
 
@@ -3923,6 +3966,10 @@ msgstr "जब तक घटना खुली है, हर घटक इस�
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "जब तक रखरखाव चल रहा है, हर घटक इसी स्थिति में रहता है।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "जवाब के बाद हर बातचीत बंद हो जाती है। ग्राहकों को जवाब तुरंत मिलता है और उसे वापस नहीं लिया जा सकता।"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "बाहरी ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "विफल"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "बिना जाँचे पूरा करें"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "पूरा हुआ"
 
@@ -5422,6 +5471,22 @@ msgstr "यह कुछ ही क्षण में रुक जाता �
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "यह {name} ({total}) था। केवल जो छूटा है उसे भेजने के लिए इसे फिर चुनें।"
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "अपनी बारी से पहले ही यह बंद हो चुकी थी।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "इसे हटा दिया गया था।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "इसे छोड़ दिया गया।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "इसे घटना से अलग कर दिया गया था।"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "यह आपकी तरह, <0>{email}</0>, केवल उस एक्सेस के साथ काम करेगा जो आप नीचे देते हैं।"
@@ -5641,6 +5706,10 @@ msgstr "विलंब"
 msgid "Later"
 msgstr "बाद में"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "आख़िरी जवाब"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "लॉन्चर का रंग"
@@ -5698,6 +5767,53 @@ msgstr "आपके Microsoft 365 एडमिन के लिए लिंक
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "मेल में लिंक"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "चुनी हुई बातचीत को किसी घटना से जोड़ें"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "चुनी हुई बातचीत को जोड़ें…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "इस बातचीत को किसी घटना से जोड़ें…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "किसी स्टेटस घटना से जोड़ें"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "घटना से जोड़ें"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "घटना से जोड़ें ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "जुड़ी हुई"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "अब तक जुड़ी: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "चुनी हुई बातचीत {title} से जोड़ दी गईं"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title} से जोड़ी गई"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "जोड़ा जा रहा है…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "इस व्यू में कोई कॉन्टैक्ट न�
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "अभी कोई कॉन्टैक्ट नहीं। कोई लिखता है तो वे दिखते हैं।"
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "अभी कोई बातचीत जुड़ी नहीं है। कोई एक खोलकर “घटना से जोड़ें” चुनें, या सूची में कई बातचीत चुनें।"
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "इस पेज से कोई बातचीत नहीं।"
@@ -6889,6 +7009,14 @@ msgstr "अभी कोई इम्पोर्ट नहीं।"
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "कोई इनबॉक्स नहीं जिसके लिए स्टेटस पेज दिखाया जाए।"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "कोई घटना मेल नहीं खाती।"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "किसी भी स्टेटस पेज पर कोई घटना या रखरखाव खुला नहीं है।"
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "SMTP खाता नहीं"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "कोई SMTP खाता नहीं"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "अभी कोई स्टेटस पेज नहीं है। पहले स्टेटस में एक बनाएँ।"
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "हर पंक्ति में एक, अधिकतम 20।"
 msgid "One per product or brand"
 msgstr "हर उत्पाद या ब्रांड के लिए एक"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "एक बार लिखा गया एक जवाब {title} से जुड़ी हर खुली बातचीत को आपके नाम से, हर बातचीत के अपने चैनल से जाता है।"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "हर इवेंट के लिए एक पंक्ति, पुराना पहले: कौन सहमत हुआ या गया, कब, कैसे, किस पेज और IP पते से, और उन्होंने कौन से शब्द देखे। इसे सहमति के सबूत के रूप में रखें (GDPR Art. 7, KVKK), किसी पूछने वाले को बताने के लिए कि आपके पास क्या है, या खुद İYS में सहमतियाँ दर्ज करने के लिए। CSV में स्प्रेडशीट फ़ॉर्मूले हानिरहित बना दिए जाते हैं।"
@@ -7727,6 +7863,10 @@ msgstr "खुली बातचीत"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "खुली बातचीत असाइन"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "यह जवाब पाने वाली खुली बातचीत: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "इस इनबॉक्स का SMTP खाते वाला ई-�
 msgid "Pick an inbox"
 msgstr "इनबॉक्स चुनें"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "कोई खुली घटना या रखरखाव चुनें"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "कम से कम एक स्कोप चुनें।"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "कम से कम एक चुनें।"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "बातचीत चुनें"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "जवाब पोस्ट किया गया"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "जवाब की प्रगति"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "जवाब का पाठ"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "जवाब का समय"
@@ -9152,6 +9308,19 @@ msgstr "<0>{name}</0> को जवाब दें"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "ब्रॉडकास्ट का जवाब"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "जुड़ी हुई बातचीत को जवाब दें"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "जुड़ी हुई बातचीत को जवाब दें ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "जुड़ी हुई बातचीत को जवाब दें"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "आपको वापस ले जाता है"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "समीक्षा करें"
 
@@ -9569,6 +9739,10 @@ msgstr "इस बातचीत में खोजें"
 msgid "Search in this conversation ({0})"
 msgstr "इस बातचीत में खोजें ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "घटनाएँ खोजें"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "लोग, कार्रवाइयाँ या सेटिंग खोजें"
@@ -9605,9 +9779,25 @@ msgstr "सेक्शन"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "देखें कि वे कहाँ हैं, क्या खुला रखे हैं और आज उन्होंने क्या किया।"
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "बातचीत चुनें"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "कर्सर के नीचे की बातचीत चुनें"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "पिछला या अगला ब्लॉक चुनें"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "चुनी गई: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "चयन"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "केवल भेजें"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "चैट या ऐप बातचीत में नोट भेजें या जोड़ें (नई पंक्ति के लिए ⇧↵)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "जवाब भेजें"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "पुष्टि भेजें"
@@ -9792,9 +9986,21 @@ msgstr "ई-मेल से भेजा जा रहा है…"
 msgid "Sending channel"
 msgstr "भेजने वाला चैनल"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "भेजा नहीं जा सका: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "भेजा नहीं जा सका।"
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "भेजना पहले ही शुरू हो चुका है। इसके बजाय रोकें या रद्द करें।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "भेजना बार-बार विफल होता रहा, इसलिए Yuva ने हार मान ली।"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "भेजा जा रहा है, फिर बंद किया जाएगा…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "भेजा जा रहा है…"
 
@@ -9848,6 +10055,7 @@ msgstr "भेजा गया"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "भेजा गया"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "केवल स्वचालित मेल वाले थ्रेड छोड़ें"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "छोड़े गए"
 
@@ -10990,6 +11199,10 @@ msgstr "सहमति पेज वह टिक करता है जो �
 msgid "The contact was deleted"
 msgstr "कॉन्टैक्ट हटाया गया"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "बातचीत खुली रहती हैं। ग्राहकों को जवाब तुरंत मिलता है और उसे वापस नहीं लिया जा सकता।"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "मौजूदा पता तुरंत काम करना बंद कर देता है। जो भी इसे कॉल करता है, उसे अपडेट करें।"
@@ -11238,6 +11451,10 @@ msgstr "पिछली डिलीवरेबिलिटी जाँच म
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "कानून हर मार्केटिंग मेल से माँगता है कि वह बताए कि कौन भेजता है और उनसे कैसे संपर्क करें (CAN-SPAM, CASL, तुर्किये का वाणिज्यिक संचार विनियमन)। Yuva इसे इस इनबॉक्स के हर ब्रॉडकास्ट के फ़ुटर में रखता है, इसलिए पहले ब्रॉडकास्ट से पहले इसे भरें।"
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5,000 की सीमा पूरी हो गई है"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "फ़ॉलो बंद किया"
 msgid "Unknown device"
 msgstr "अज्ञात डिवाइस"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} को अलग करें"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "{title} से अलग करें"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "अनलॉक करें"
@@ -12690,6 +12915,7 @@ msgstr "भेजना शुरू होने के बाद से utm_ca
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "प्रतीक्षा में"
 
@@ -12841,6 +13067,10 @@ msgstr "वे किसके लिए सहमत हुए?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "ग्राहकों को क्या जानना चाहिए?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "इन ग्राहकों को क्या जानना ज़रूरी है?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "भेजे जाने से पहले आपकी पहुँच ख़त्म हो गई थी।"
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} este conectat"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# închisă} few {# închise} other {# de închise}}"
 
@@ -510,6 +511,7 @@ msgstr "Site-ul {name}"
 msgid "{names} will be notified"
 msgstr "Vor fi notificați: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# deschisă} few {# deschise} other {# de deschise}}"
@@ -873,6 +875,10 @@ msgstr "Un contact a evaluat o conversație"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Un contact a fost șters"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "O conversație"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Deja mai devreme în fișier"
 msgid "Already in Yuva"
 msgstr "Deja în Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Este deja legată"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Deja pe listă"
@@ -1621,6 +1631,10 @@ msgstr "Un incident sau o mentenanță s-a schimbat sau a primit o actualizare"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Un incident sau o mentenanță a fost publicat"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "La un incident se pot lega cel mult 5.000 de conversații. Dezleagă mai întâi câteva."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Plecat"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Înapoi"
 
@@ -2306,6 +2321,7 @@ msgstr "Pot programa un buletin pentru fiecare abonat separat?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Pot programa un buletin pentru fiecare abonat separat?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Anulează"
@@ -2601,6 +2618,14 @@ msgstr "Șterge răspunsul"
 msgid "Clear the search"
 msgstr "Șterge căutarea"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Șterge selecția"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Șterge selecția (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI și extensia IDE"
@@ -2666,6 +2691,10 @@ msgstr "Închide tot"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Închide conversațiile mai vechi de {daysShown} zile"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Închide fiecare conversație după răspuns"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Închide totul"
@@ -2708,6 +2737,10 @@ msgstr "închise azi"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Închide"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Se închide fiecare conversație"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "conversații"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Conversații"
 
@@ -3158,6 +3192,10 @@ msgstr "Serverul nu a putut fi contactat. Verifică conexiunea și încearcă di
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Numără clicurile"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Se numără…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Discuții pe paginile de documentație"
 msgid "Discussions you started or replied to"
 msgstr "Discuții pe care le-ai început sau în care ai răspuns"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Închide"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Nume afișat"
@@ -3797,6 +3839,7 @@ msgstr "Descarcă rândurile omise"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Ciornă"
 
@@ -3923,6 +3966,10 @@ msgstr "Fiecare componentă are această stare cât timp incidentul este deschis
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Fiecare componentă are această stare cât timp mentenanța este în desfășurare."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Fiecare conversație se închide după răspuns. Clienții îl primesc imediat și nu poate fi retras."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "ID-uri externe"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Eșuat"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Finalizează fără verificare"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Finalizat"
 
@@ -5422,6 +5471,22 @@ msgstr "Se oprește într-o clipă. Abonații pe care i-a adăugat deja rămân 
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Era {name} ({total}). Alege-l din nou ca să trimiți doar ce lipsește."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "A fost închisă înainte să-i vină rândul."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "A fost ștearsă."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "A fost omisă."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "A fost dezlegată de incident."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Va acționa ca tine, <0>{email}</0>, doar cu accesul pe care îl permiți mai jos."
@@ -5641,6 +5706,10 @@ msgstr "Latență"
 msgid "Later"
 msgstr "Mai târziu"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Ultimul răspuns"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Culoarea butonului de chat"
@@ -5698,6 +5767,53 @@ msgstr "Link pentru adminul tău Microsoft 365"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Link într-un mesaj"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Leagă conversațiile selectate de un incident"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Leagă conversațiile selectate de…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Leagă această conversație de un incident…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Leagă de un incident de stare"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Leagă de un incident"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Leagă de un incident ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Legată"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Legate până acum: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Conversațiile selectate au fost legate de {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Legată de {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Se leagă…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Niciun contact în această vizualizare."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Încă nu există contacte. Apar când cineva scrie."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Nicio conversație nu este încă legată. Deschide una și folosește Leagă de un incident, sau selectează mai multe în listă."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Nicio conversație de pe această pagină."
@@ -6889,6 +7009,14 @@ msgstr "Încă nu există importuri."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Nicio căsuță pentru care să se arate o pagină de stare."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Niciun incident nu se potrivește."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Pe nicio pagină de stare nu e deschis vreun incident sau vreo mentenanță."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "fără cont SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Fără cont SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Nu există încă nicio pagină de stare. Creează mai întâi una la Stare."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Unul pe linie, cel mult 20."
 msgid "One per product or brand"
 msgstr "Unul pe produs sau marcă"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Un singur răspuns, scris o dată, ajunge în numele tău la fiecare conversație deschisă legată de {title}, pe canalul propriu al fiecărei conversații."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Un rând pe eveniment, cel mai vechi primul: cine a fost de acord sau a plecat, când, cum, de pe ce pagină și adresă IP și cuvintele pe care le-a văzut. Păstrează-l ca dovadă a consimțământului (GDPR art. 7, KVKK), ca să răspunzi unei persoane care întreabă ce deții despre ea sau ca să înregistrezi tu însuți consimțămintele la İYS. Formulele de foaie de calcul din CSV sunt făcute inofensive."
@@ -7727,6 +7863,10 @@ msgstr "Conversații deschise"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Conversații deschise atribuite"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Conversații deschise care vor primi acest răspuns: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Alege un canal de e-mail al acestei căsuțe care are un cont SMTP. El t
 msgid "Pick an inbox"
 msgstr "Alege o căsuță"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Alege un incident sau o mentenanță deschise"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Alege cel puțin un domeniu de acces."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Alege cel puțin una."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Alege conversații"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Răspunde și rezolvă"
 msgid "Reply posted"
 msgstr "Răspuns publicat"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Progresul răspunsului"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Textul răspunsului"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Timp de răspuns"
@@ -9152,6 +9308,19 @@ msgstr "Răspunde lui <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Răspunde la un mesaj în masă"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Răspunde celor legate"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Răspunde celor legate ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Răspunde conversațiilor legate"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Te trimite înapoi la"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Revizuire"
 
@@ -9569,6 +9739,10 @@ msgstr "Caută în această conversație"
 msgid "Search in this conversation ({0})"
 msgstr "Caută în această conversație ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Caută incidente"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Caută persoane, acțiuni sau setări"
@@ -9605,9 +9779,25 @@ msgstr "Secțiuni"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Vezi unde sunt, ce au deschis și ce au făcut azi."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Selectează conversații"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Selectează conversația de sub cursor"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Selectează blocul anterior sau următor"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Selectate: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Selecție"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Doar trimite"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Trimite sau adaugă nota, într-un chat sau o conversație din aplicație (⇧↵ pentru rând nou)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Trimite răspunsul"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Trimite confirmarea"
@@ -9792,9 +9986,21 @@ msgstr "Se trimite prin e-mail…"
 msgid "Sending channel"
 msgstr "Canal de trimitere"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Trimiterea a eșuat: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Trimiterea a eșuat."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Trimiterea a început deja. Pune-o pe pauză sau anulează-o în schimb."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Trimiterea a continuat să eșueze, așa că Yuva a renunțat."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Se trimite, apoi se închide…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Se trimite…"
 
@@ -9848,6 +10055,7 @@ msgstr "trimis"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Trimis"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Omite firele care conțin doar e-mail automat"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Omis"
 
@@ -10990,6 +11199,10 @@ msgstr "Pagina de consimțământ bifează ce cere clientul. Lasă deoparte ce n
 msgid "The contact was deleted"
 msgstr "Contactul a fost șters"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Conversațiile rămân deschise. Clienții primesc răspunsul imediat și nu poate fi retras."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Adresa actuală nu mai funcționează imediat. Actualizați tot ce o apelează."
@@ -11238,6 +11451,10 @@ msgstr "Ultima verificare a livrabilității a găsit ceva de reparat."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Legea cere ca fiecare e-mail de marketing să spună cine îl trimite și cum poate fi contactat (CAN-SPAM, CASL, Regulamentul turc privind comunicarea comercială). Yuva pune asta în subsolul fiecărui mesaj în masă din această căsuță, deci completează-l înainte de primul."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "S-a atins limita de 5.000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Urmărire oprită"
 msgid "Unknown device"
 msgstr "Dispozitiv necunoscut"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Dezleagă {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Dezleagă de {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Deblochează"
@@ -12690,6 +12915,7 @@ msgstr "Vizite pe site-urile tale cu utm_campaign={campaign} de când a început
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Așteaptă"
 
@@ -12841,6 +13067,10 @@ msgstr "La ce au fost de acord?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Ce trebuie să știe clienții?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Ce trebuie să știe acești clienți?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "tu@companie.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "tu@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Accesul tău a luat sfârșit înainte de trimitere."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

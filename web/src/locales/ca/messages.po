@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} està connectat"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# tancada} other {# tancades}}"
 
@@ -510,6 +511,7 @@ msgstr "Lloc web de {name}"
 msgid "{names} will be notified"
 msgstr "Es notificarà {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# oberta} other {# obertes}}"
@@ -873,6 +875,10 @@ msgstr "Un contacte ha valorat una conversa"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "S'ha eliminat un contacte"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Una conversa"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Ja és abans al fitxer"
 msgid "Already in Yuva"
 msgstr "Ja és a Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Ja està vinculada"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Ja és a la llista"
@@ -1621,6 +1631,10 @@ msgstr "Un incident o manteniment ha canviat o ha rebut una actualització"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "S’ha publicat un incident o manteniment"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Un incident admet com a màxim 5.000 converses vinculades. Desvincula’n algunes abans."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Absent"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Enrere"
 
@@ -2306,6 +2321,7 @@ msgstr "Puc programar un butlletí per a cada subscriptor?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Puc programar un butlletí per a cada subscriptor?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -2601,6 +2618,14 @@ msgstr "Esborra la resposta"
 msgid "Clear the search"
 msgstr "Esborra la cerca"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Esborra la selecció"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Esborra la selecció (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI i extensió d'IDE"
@@ -2666,6 +2691,10 @@ msgstr "Tanca-ho tot"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Tanca les converses de més de {daysShown} dies"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Tanca cada conversa després de respondre"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Tanca-ho tot"
@@ -2708,6 +2737,10 @@ msgstr "tancades avui"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Tanca"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Tancant cada conversa"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "converses"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Converses"
 
@@ -3158,6 +3192,10 @@ msgstr "No s'ha pogut abastar el servidor. Comprova la connexió i torna-ho a pr
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Compta els clics"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Comptant…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Debats a les pàgines de documentació"
 msgid "Discussions you started or replied to"
 msgstr "Debats que has iniciat o als quals has respost"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Descarta"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Nom visible"
@@ -3797,6 +3839,7 @@ msgstr "Descarrega les files excloses"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Esborrany"
 
@@ -3923,6 +3966,10 @@ msgstr "Cada component té aquest estat mentre l’incident és obert."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Cada component té aquest estat mentre el manteniment està en curs."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Cada conversa es tanca després de la resposta. Els clients la reben a l’instant i no es pot retirar."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "ID externs"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Fallit"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Acaba sense comprovar"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Acabat"
 
@@ -5422,6 +5471,22 @@ msgstr "S'atura d'aquí a un moment. Els subscriptors que ja ha afegit es queden
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Era {name} ({total}). Tria'l de nou per enviar només el que falta."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Es va tancar abans del seu torn."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Es va eliminar."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "S’ha omès."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Es va desvincular de l’incident."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Actuarà com tu, <0>{email}</0>, només amb l'accés que permetis a sota."
@@ -5641,6 +5706,10 @@ msgstr "Latència"
 msgid "Later"
 msgstr "Més tard"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Última resposta"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Color del llançador"
@@ -5698,6 +5767,53 @@ msgstr "Enllaç per al teu administrador de Microsoft 365"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Enllaç en un correu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Vincula les converses seleccionades a un incident"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Vincula les converses seleccionades a…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Vincula aquesta conversa a un incident…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Vincula a un incident d’estat"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Vincula a un incident"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Vincula a un incident ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Vinculada"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Vinculades fins ara: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Converses seleccionades vinculades a {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Vinculada a {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Vinculant…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Cap contacte en aquesta vista."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Encara no hi ha contactes. Apareixen quan algú escriu."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Encara no hi ha cap conversa vinculada. Obre’n una i fes servir «Vincula a un incident», o selecciona’n diverses a la llista."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Cap conversa d'aquesta pàgina."
@@ -6889,6 +7009,14 @@ msgstr "Encara cap importació."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Cap safata per a la qual mostrar una pàgina d’estat."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Cap incident coincideix."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "No hi ha cap incident ni manteniment obert en cap pàgina d’estat."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "sense compte SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Sense compte SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Encara no hi ha cap pàgina d’estat. Crea’n una primer a Estat."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Un per línia, fins a 20."
 msgid "One per product or brand"
 msgstr "Una per producte o marca"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Una resposta, escrita una sola vegada, arriba a cada conversa oberta vinculada a {title}, com a tu, pel canal propi de cada conversa."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Una fila per esdeveniment, del més antic al més recent: qui ha acceptat o ha marxat, quan, com, des de quina pàgina i adreça IP, i les paraules que va veure. Conserva-ho com a prova de consentiment (RGPD art. 7, KVKK), per respondre una persona que demana què en tens o per registrar tu mateix els consentiments a İYS. Les fórmules de full de càlcul del CSV es fan inofensives."
@@ -7727,6 +7863,10 @@ msgstr "Converses obertes"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Converses obertes assignades"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Converses obertes que rebran aquesta resposta: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Tria un canal de correu d'aquesta safata que tingui un compte SMTP. Envi
 msgid "Pick an inbox"
 msgstr "Tria una safata"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Tria un incident o manteniment obert"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Tria almenys un abast."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Tria'n almenys un."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Tria converses"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Respon i resol"
 msgid "Reply posted"
 msgstr "Resposta publicada"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Progrés de la resposta"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Text de la resposta"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Temps de resposta"
@@ -9152,6 +9308,19 @@ msgstr "Respon a <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Respon a un enviament massiu"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Respon a les vinculades"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Respon a les vinculades ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Respon a les converses vinculades"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Et torna a"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Revisa"
 
@@ -9569,6 +9739,10 @@ msgstr "Cerca en aquesta conversa"
 msgid "Search in this conversation ({0})"
 msgstr "Cerca en aquesta conversa ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Cerca incidents"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Cerca persones, accions o configuració"
@@ -9605,9 +9779,25 @@ msgstr "Seccions"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Mira on són, què tenen obert i què han fet avui."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Selecciona converses"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Selecciona la conversa sota el cursor"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Selecciona el bloc anterior o el següent"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Seleccionades: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Selecció"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Només enviar"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Envia o afegeix la nota, en una conversa de xat o d'aplicació (⇧↵ per a una línia nova)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Envia la resposta"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Envia la confirmació"
@@ -9792,9 +9986,21 @@ msgstr "Enviant per correu…"
 msgid "Sending channel"
 msgstr "Canal d'enviament"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "No s’ha pogut enviar: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "No s’ha pogut enviar."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "L'enviament ja ha començat. Posa'l en pausa o cancel·la'l."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "L’enviament va fallar una vegada i una altra, així que Yuva s’ha rendit."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Enviant i després tancant…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Enviant…"
 
@@ -9848,6 +10055,7 @@ msgstr "enviat"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Enviat"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Omet els fils que només contenen correu automàtic"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Omès"
 
@@ -10990,6 +11199,10 @@ msgstr "La pàgina de consentiment marca el que demana el client. Deixa fora el 
 msgid "The contact was deleted"
 msgstr "S'ha eliminat el contacte"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Les converses continuen obertes. Els clients reben la resposta a l’instant i no es pot retirar."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "L'adreça actual deixa de funcionar a l'instant. Actualitzeu tot el que la crida."
@@ -11238,6 +11451,10 @@ msgstr "L'última comprovació de lliurabilitat ha trobat alguna cosa per arregl
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "La llei demana que cada correu de màrqueting digui qui l'envia i com contactar-lo (CAN-SPAM, CASL, el Reglament de Comunicació Comercial de Turquia). Yuva ho posa al peu de cada enviament massiu d'aquesta safata, de manera que omple-ho abans del primer."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "S’ha arribat al límit de 5.000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Deixat de seguir"
 msgid "Unknown device"
 msgstr "Dispositiu desconegut"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Desvincula {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Desvincula de {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Desbloqueja"
@@ -12690,6 +12915,7 @@ msgstr "Visites als teus llocs amb utm_campaign={campaign} des que va començar 
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Esperant"
 
@@ -12841,6 +13067,10 @@ msgstr "A què han accedit?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Què han de saber els clients?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Què necessiten saber aquests clients?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "tu@empresa.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "tu@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "El teu accés va acabar abans que s’enviés."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

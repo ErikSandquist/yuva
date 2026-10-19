@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} terhubung"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# ditutup}}"
 
@@ -510,6 +511,7 @@ msgstr "Situs web {name}"
 msgid "{names} will be notified"
 msgstr "{names} akan diberi tahu"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# terbuka}}"
@@ -873,6 +875,10 @@ msgstr "Kontak menilai percakapan"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Kontak dihapus"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Satu percakapan"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Sudah ada sebelumnya di file"
 msgid "Already in Yuva"
 msgstr "Sudah ada di Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Sudah terhubung"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Sudah ada di milis"
@@ -1621,6 +1631,10 @@ msgstr "Insiden atau pemeliharaan berubah atau mendapat pembaruan"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Insiden atau pemeliharaan diterbitkan"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Satu insiden dapat menghubungkan paling banyak 5.000 percakapan. Putuskan beberapa terlebih dahulu."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Pergi"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Kembali"
 
@@ -2306,6 +2321,7 @@ msgstr "Bisakah saya menjadwalkan buletin untuk setiap pelanggan?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Bisakah saya menjadwalkan buletin untuk setiap pelanggan?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Batal"
@@ -2601,6 +2618,14 @@ msgstr "Hapus jawaban"
 msgid "Clear the search"
 msgstr "Hapus pencarian"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Hapus pilihan"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Hapus pilihan (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI dan ekstensi IDE"
@@ -2666,6 +2691,10 @@ msgstr "Tutup semua"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Tutup percakapan yang lebih lama dari {daysShown} hari"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Tutup setiap percakapan setelah membalas"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Tutup semuanya"
@@ -2708,6 +2737,10 @@ msgstr "ditutup hari ini"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Menutup"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Menutup setiap percakapan"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "percakapan"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Percakapan"
 
@@ -3158,6 +3192,10 @@ msgstr "Tidak dapat menjangkau server. Periksa koneksi Anda dan coba lagi."
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Hitung klik"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Menghitung…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Diskusi di halaman dokumentasi"
 msgid "Discussions you started or replied to"
 msgstr "Diskusi yang Anda mulai atau balas"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Tutup"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Nama tampilan"
@@ -3797,6 +3839,7 @@ msgstr "Unduh baris yang dilewati"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Draf"
 
@@ -3923,6 +3966,10 @@ msgstr "Setiap komponen berstatus ini selama insiden terbuka."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Setiap komponen berstatus ini selama pemeliharaan berlangsung."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Setiap percakapan ditutup setelah balasan. Pelanggan menerimanya seketika dan balasan tidak dapat ditarik kembali."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "ID eksternal"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Gagal"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Selesaikan tanpa memeriksa"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Selesai"
 
@@ -5422,6 +5471,22 @@ msgstr "Berhenti sebentar lagi. Pelanggan yang sudah ditambahkan tetap ada di mi
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Sebelumnya {name} ({total}). Pilih lagi untuk hanya mengirim yang kurang."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Sudah ditutup sebelum gilirannya tiba."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Sudah dihapus."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Dilewati."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Sudah diputus dari insiden."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Ia akan bertindak sebagai Anda, <0>{email}</0>, hanya dengan akses yang Anda izinkan di bawah."
@@ -5641,6 +5706,10 @@ msgstr "Latensi"
 msgid "Later"
 msgstr "Nanti"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Balasan terakhir"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Warna peluncur"
@@ -5698,6 +5767,53 @@ msgstr "Tautan untuk admin Microsoft 365 Anda"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Tautan di email"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Hubungkan percakapan terpilih ke insiden"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Hubungkan percakapan terpilih ke…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Hubungkan percakapan ini ke insiden…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Hubungkan ke insiden status"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Hubungkan ke insiden"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Hubungkan ke insiden ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Terhubung"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Terhubung sejauh ini: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Percakapan terpilih dihubungkan ke {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Dihubungkan ke {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Menghubungkan…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Tidak ada kontak di tampilan ini."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Belum ada kontak. Mereka muncul saat seseorang menulis."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Belum ada percakapan yang terhubung. Buka satu dan gunakan Hubungkan ke insiden, atau pilih beberapa di daftar."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Tidak ada percakapan dari halaman ini."
@@ -6889,6 +7009,14 @@ msgstr "Belum ada impor."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Tidak ada kotak masuk yang bisa ditampilkan halaman statusnya."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Tidak ada insiden yang cocok."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Tidak ada insiden atau pemeliharaan yang terbuka di halaman status mana pun."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "tanpa akun SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Tanpa akun SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Belum ada halaman status. Buat satu dulu di Status."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Satu per baris, hingga 20."
 msgid "One per product or brand"
 msgstr "Satu per produk atau merek"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Satu balasan, ditulis sekali, dikirim ke setiap percakapan terbuka yang terhubung ke {title}, atas nama Anda, lewat saluran masing-masing percakapan."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Satu baris per peristiwa, terlama dulu: siapa yang setuju atau keluar, kapan, bagaimana, dari halaman dan alamat IP mana, dan kata-kata yang mereka lihat. Simpan sebagai bukti persetujuan (GDPR Pasal 7, KVKK), untuk menjawab orang yang menanyakan apa yang Anda simpan, atau untuk mendaftarkan persetujuan ke İYS sendiri. Rumus spreadsheet di CSV dibuat tidak berbahaya."
@@ -7727,6 +7863,10 @@ msgstr "Percakapan terbuka"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Percakapan terbuka yang ditugaskan"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Percakapan terbuka yang akan menerima balasan ini: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Pilih saluran email kotak masuk ini yang punya akun SMTP. Ia mengirim em
 msgid "Pick an inbox"
 msgstr "Pilih kotak masuk"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Pilih insiden atau pemeliharaan yang terbuka"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Pilih setidaknya satu cakupan."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Pilih setidaknya satu."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Pilih percakapan"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Balas dan selesaikan"
 msgid "Reply posted"
 msgstr "Balasan diposting"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Kemajuan balasan"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Teks balasan"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Waktu balasan"
@@ -9152,6 +9308,19 @@ msgstr "Balas <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Balasan untuk siaran massal"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Balas yang terhubung"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Balas yang terhubung ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Balas percakapan yang terhubung"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Mengembalikan Anda ke"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Tinjau"
 
@@ -9569,6 +9739,10 @@ msgstr "Cari di percakapan ini"
 msgid "Search in this conversation ({0})"
 msgstr "Cari di percakapan ini ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Cari insiden"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Cari orang, tindakan, atau pengaturan"
@@ -9605,9 +9779,25 @@ msgstr "Bagian"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Lihat di mana mereka, apa yang mereka pegang terbuka, dan apa yang mereka kerjakan hari ini."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Pilih percakapan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Pilih percakapan di bawah kursor"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Pilih blok sebelumnya atau berikutnya"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Terpilih: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Pilihan"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Hanya kirim"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Kirim atau tambahkan catatan, di percakapan obrolan atau aplikasi (⇧↵ untuk baris baru)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Kirim balasan"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Kirim konfirmasi"
@@ -9792,9 +9986,21 @@ msgstr "Mengirim lewat email…"
 msgid "Sending channel"
 msgstr "Saluran pengiriman"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Gagal mengirim: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Gagal mengirim."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Pengiriman sudah dimulai. Jeda atau batalkan saja."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Pengiriman terus gagal, jadi Yuva menyerah."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Mengirim, lalu menutup…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Mengirim…"
 
@@ -9848,6 +10055,7 @@ msgstr "terkirim"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Terkirim"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Lewati utas yang hanya berisi email otomatis"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Dilewati"
 
@@ -10990,6 +11199,10 @@ msgstr "Halaman persetujuan mencentang apa yang diminta klien. Hilangkan yang ti
 msgid "The contact was deleted"
 msgstr "Kontak dihapus"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Percakapan tetap terbuka. Pelanggan menerima balasan seketika dan balasan tidak dapat ditarik kembali."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Alamat saat ini langsung berhenti berfungsi. Perbarui semua yang memanggilnya."
@@ -11238,6 +11451,10 @@ msgstr "Pemeriksaan pengiriman terakhir menemukan sesuatu yang perlu diperbaiki.
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Hukum mengharuskan setiap email pemasaran menyebutkan siapa pengirimnya dan cara menghubunginya (CAN-SPAM, CASL, Peraturan Komunikasi Komersial Türkiye). Yuva menaruhnya di footer setiap siaran massal dari kotak masuk ini, jadi isi sebelum yang pertama."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Batas 5.000 telah tercapai"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Berhenti diikuti"
 msgid "Unknown device"
 msgstr "Perangkat tidak dikenal"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Putuskan {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Putuskan dari {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Buka kunci"
@@ -12690,6 +12915,7 @@ msgstr "Kunjungan ke situs Anda dengan utm_campaign={campaign} sejak pengiriman 
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Menunggu"
 
@@ -12841,6 +13067,10 @@ msgstr "Apa yang mereka setujui?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Apa yang perlu diketahui pelanggan?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Apa yang perlu diketahui para pelanggan ini?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Akses Anda berakhir sebelum balasan terkirim."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

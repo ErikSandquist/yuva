@@ -40,6 +40,9 @@ export const SHORTCUTS = {
   analytics: "g n",
   status: "g s",
   discussion: "P",
+  incident: "i",
+  select: "x",
+  linkSelected: "I",
 } as const
 
 export const DISCUSSION_KEYS = {
@@ -83,6 +86,7 @@ export const STATUS_KEYS = {
   resolve: "x",
   edit: "e",
   remove: "X",
+  replyLinked: "R",
 } as const
 
 export const DESIGNER_KEYS = {
@@ -152,6 +156,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.pin), t`Pin to the top of your list, or unpin`],
         [k(SHORTCUTS.unread), t`Mark as unread and go back to the list`],
         [k(SHORTCUTS.discussion), t`Turn into a public discussion`],
+        [k(SHORTCUTS.incident), t`Link to a status incident`],
       ],
     },
     {
@@ -161,6 +166,9 @@ export function ShortcutSheet({
         [["↵"], t`Open the conversation`],
         [[k(SHORTCUTS.next)[0], k(SHORTCUTS.previous)[0]], t`Open the next or previous conversation`],
         [[SHORTCUTS.search], t`Search conversations`],
+        [k(SHORTCUTS.select), t`Select the conversation under the cursor`],
+        [k(SHORTCUTS.linkSelected), t`Link the selected conversations to an incident`],
+        [["Esc"], t`Clear the selection`],
       ],
     },
     {
@@ -224,6 +232,7 @@ export function ShortcutSheet({
         [k(STATUS_KEYS.resolve), t`Resolve or complete`],
         [k(STATUS_KEYS.edit), t`Edit the incident`],
         [k(STATUS_KEYS.remove), t`Delete the draft`],
+        [k(STATUS_KEYS.replyLinked), t`Reply to linked conversations`],
       ],
     },
     {

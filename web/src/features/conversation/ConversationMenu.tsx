@@ -3,6 +3,7 @@ import {
   ClockIcon,
   EllipsisIcon,
   FlagIcon,
+  FlameIcon,
   InboxIcon,
   MessagesSquareIcon,
   MailIcon,
@@ -51,6 +52,7 @@ export function ConversationMenu({
   onPin,
   onUnread,
   onDiscussion,
+  onIncident,
   folded,
 }: {
   c: Conversation
@@ -63,6 +65,7 @@ export function ConversationMenu({
   onPin: () => void
   onUnread: () => void
   onDiscussion: () => void
+  onIncident: () => void
   folded?: { hand: () => void; snooze: () => void; find: () => void }
 }) {
   const { t } = useLingui()
@@ -153,6 +156,13 @@ export function ConversationMenu({
               <Kbd key={k}>{k}</Kbd>
             ))}
           </span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onIncident} data-testid="header-incident">
+          <FlameIcon />
+          <span className="flex-1">
+            <Trans>Link to an incident</Trans>
+          </span>
+          <Kbd>{SHORTCUTS.incident}</Kbd>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>

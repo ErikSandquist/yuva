@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} is verbonden"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# gesloten} other {# gesloten}}"
 
@@ -510,6 +511,7 @@ msgstr "Website van {name}"
 msgid "{names} will be notified"
 msgstr "{names} worden op de hoogte gebracht"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# open} other {# open}}"
@@ -873,6 +875,10 @@ msgstr "Een contact heeft een gesprek beoordeeld"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Een contact is verwijderd"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Een gesprek"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Al eerder in het bestand"
 msgid "Already in Yuva"
 msgstr "Al in Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Al gekoppeld"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Al op de lijst"
@@ -1621,6 +1631,10 @@ msgstr "Een incident of onderhoud is gewijzigd of heeft een update gekregen"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Een incident of onderhoud is gepubliceerd"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Aan een incident kunnen maximaal 5.000 gesprekken gekoppeld zijn. Ontkoppel eerst een paar."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Afwezig"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Terug"
 
@@ -2306,6 +2321,7 @@ msgstr "Kan ik een nieuwsbrief per abonnee inplannen?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Kan ik een nieuwsbrief per abonnee inplannen?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Annuleren"
@@ -2601,6 +2618,14 @@ msgstr "Het antwoord wissen"
 msgid "Clear the search"
 msgstr "De zoekopdracht wissen"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Selectie wissen"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Selectie wissen (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI en IDE-extensie"
@@ -2666,6 +2691,10 @@ msgstr "Alles sluiten"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Gesprekken ouder dan {daysShown} dagen sluiten"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Elk gesprek sluiten na het antwoord"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Alles sluiten"
@@ -2708,6 +2737,10 @@ msgstr "vandaag gesloten"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Sluit"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Elk gesprek wordt gesloten"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "gesprekken"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Gesprekken"
 
@@ -3158,6 +3192,10 @@ msgstr "Kon de server niet bereiken. Controleer je verbinding en probeer het opn
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Klikken tellen"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Tellen…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Discussies op documentatiepagina’s"
 msgid "Discussions you started or replied to"
 msgstr "Discussies die je hebt gestart of waarin je hebt geantwoord"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Sluiten"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Weergavenaam"
@@ -3797,6 +3839,7 @@ msgstr "De weggelaten rijen downloaden"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Concept"
 
@@ -3923,6 +3966,10 @@ msgstr "Elk component heeft deze status zolang het incident open is."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Elk component heeft deze status zolang het onderhoud loopt."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Elk gesprek wordt na het antwoord gesloten. Klanten krijgen het meteen en het kan niet worden teruggehaald."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Externe ID’s"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Mislukt"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Afronden zonder te controleren"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Afgerond"
 
@@ -5422,6 +5471,22 @@ msgstr "Hij stopt over een ogenblik. Abonnees die hij al heeft toegevoegd, blijv
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Het was {name} ({total}). Kies hem opnieuw om alleen te verzenden wat ontbreekt."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Het was gesloten voordat het aan de beurt was."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Het was verwijderd."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Het is overgeslagen."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Het was losgekoppeld van het incident."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Hij gaat handelen als jij, <0>{email}</0>, met alleen de toegang die je hieronder toestaat."
@@ -5641,6 +5706,10 @@ msgstr "Latentie"
 msgid "Later"
 msgstr "Later"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Laatste antwoord"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Launcherkleur"
@@ -5698,6 +5767,53 @@ msgstr "Link voor je Microsoft 365-beheerder"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Link in een mail"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Koppel de geselecteerde gesprekken aan een incident"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Koppel de geselecteerde gesprekken aan…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Koppel dit gesprek aan een incident…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Koppelen aan een statusincident"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Koppelen aan een incident"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Koppelen aan een incident ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Gekoppeld"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Tot nu toe gekoppeld: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Geselecteerde gesprekken gekoppeld aan {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Gekoppeld aan {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Koppelen…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Geen contacten in deze weergave."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Nog geen contacten. Ze verschijnen als iemand schrijft."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Er is nog geen gesprek gekoppeld. Open er een en kies Koppelen aan een incident, of selecteer er meerdere in de lijst."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Geen gesprekken vanaf deze pagina."
@@ -6889,6 +7009,14 @@ msgstr "Nog geen imports."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Geen inbox om een statuspagina voor te tonen."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Geen incident komt overeen."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Op geen enkele statuspagina is een incident of onderhoud open."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "geen SMTP-account"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Geen SMTP-account"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Er is nog geen statuspagina. Maak eerst een pagina aan onder Status."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Eén per regel, tot 20."
 msgid "One per product or brand"
 msgstr "Eén per product of merk"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Eén antwoord, één keer geschreven, gaat in jouw naam naar elk open gesprek dat aan {title} is gekoppeld, via het eigen kanaal van elk gesprek."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Eén rij per gebeurtenis, oudste eerst: wie instemde of vertrok, wanneer, hoe, vanaf welke pagina en welk IP-adres, en de woorden die ze zagen. Bewaar het als bewijs van toestemming (AVG art. 7, KVKK), om iemand te antwoorden die vraagt wat je van hem bewaart, of om toestemmingen zelf bij İYS te registreren. Spreadsheetformules in de CSV worden onschadelijk gemaakt."
@@ -7727,6 +7863,10 @@ msgstr "Open gesprekken"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Open toegewezen gesprekken"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Open gesprekken die dit antwoord krijgen: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Kies een e-mailkanaal van deze mailbox dat een SMTP-account heeft. Het v
 msgid "Pick an inbox"
 msgstr "Kies een mailbox"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Kies een open incident of onderhoud"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Kies minstens één scope."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Kies er minstens één."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Kies gesprekken"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Antwoorden en oplossen"
 msgid "Reply posted"
 msgstr "Antwoord geplaatst"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Voortgang van het antwoord"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Tekst van het antwoord"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Antwoordtijd"
@@ -9152,6 +9308,19 @@ msgstr "Antwoorden aan <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Antwoord op een mailing"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Antwoord aan gekoppelde"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Antwoord aan gekoppelde ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Antwoord aan gekoppelde gesprekken"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Brengt je terug naar"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Controle"
 
@@ -9569,6 +9739,10 @@ msgstr "In dit gesprek zoeken"
 msgid "Search in this conversation ({0})"
 msgstr "In dit gesprek zoeken ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Incidenten zoeken"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Mensen, acties of instellingen zoeken"
@@ -9605,9 +9779,25 @@ msgstr "Secties"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Zie waar ze zijn, wat ze open hebben staan en wat ze vandaag deden."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Gesprekken selecteren"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Het gesprek onder de cursor selecteren"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Het vorige of volgende blok selecteren"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Geselecteerd: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Selectie"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Alleen verzenden"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "De notitie verzenden of toevoegen, in een chat- of appgesprek (⇧↵ voor een nieuwe regel)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Antwoord versturen"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "De bevestiging verzenden"
@@ -9792,9 +9986,21 @@ msgstr "Per e-mail verzenden…"
 msgid "Sending channel"
 msgstr "Verzendkanaal"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Versturen mislukt: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Versturen mislukt."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Het verzenden is al begonnen. Pauzeer of annuleer het in plaats daarvan."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Versturen bleef mislukken, dus Yuva gaf het op."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Verzenden, daarna sluiten…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Verzenden…"
 
@@ -9848,6 +10055,7 @@ msgstr "verzonden"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Verzonden"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Threads overslaan die alleen automatische mail bevatten"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Overgeslagen"
 
@@ -10990,6 +11199,10 @@ msgstr "De toestemmingspagina vinkt aan wat de client vraagt. Laat uit wat je ni
 msgid "The contact was deleted"
 msgstr "Het contact is verwijderd"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "De gesprekken blijven open. Klanten krijgen het antwoord meteen en het kan niet worden teruggehaald."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Het huidige adres werkt meteen niet meer. Werk alles bij wat het aanroept."
@@ -11238,6 +11451,10 @@ msgstr "De laatste bezorgbaarheidscontrole vond iets om te herstellen."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "De wet vraagt dat elke marketingmail zegt wie hem verzendt en hoe die te bereiken is (CAN-SPAM, CASL, de Turkse verordening commerciële communicatie). Yuva zet dit in de voettekst van elke mailing van deze mailbox, dus vul het in vóór de eerste."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "De limiet van 5.000 is bereikt"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Niet meer gevolgd"
 msgid "Unknown device"
 msgstr "Onbekend apparaat"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} ontkoppelen"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Ontkoppelen van {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Ontgrendelen"
@@ -12690,6 +12915,7 @@ msgstr "Bezoeken aan je sites met utm_campaign={campaign} sinds het verzenden be
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Wachten"
 
@@ -12841,6 +13067,10 @@ msgstr "Waarmee stemden ze in?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Wat moeten klanten weten?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Wat moeten deze klanten weten?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "jij@bedrijf.nl"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "jij@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Je toegang eindigde voordat het werd verstuurd."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

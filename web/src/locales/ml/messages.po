@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} കണക്റ്റ് ചെയ്തിരിക്കുന്നു"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# അടച്ചു} other {# അടച്ചു}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} വെബ്സൈറ്റ്"
 msgid "{names} will be notified"
 msgstr "{names}-നെ അറിയിക്കും"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# തുറന്നിരിക്കുന്നു} other {# തുറന്നിരിക്കുന്നു}}"
@@ -873,6 +875,10 @@ msgstr "ഒരു കോൺടാക്റ്റ് ഒരു സംഭാഷണ
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "ഒരു കോൺടാക്റ്റ് ഇല്ലാതാക്കി"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "ഒരു സംഭാഷണം"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "ഫയലിൽ നേരത്തേ ഉണ്ട്"
 msgid "Already in Yuva"
 msgstr "ഇതിനകം Yuva-യിലുണ്ട്"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "ഇതിനകം ലിങ്ക് ചെയ്തിട്ടുണ്ട്"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "ഇതിനകം ലിസ്റ്റിലുണ്ട്"
@@ -1621,6 +1631,10 @@ msgstr "ഒരു സംഭവം അല്ലെങ്കിൽ അറ്റക
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "ഒരു സംഭവം അല്ലെങ്കിൽ അറ്റകുറ്റപ്പണി പ്രസിദ്ധീകരിച്ചു"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "ഒരു സംഭവത്തിൽ പരമാവധി 5,000 സംഭാഷണങ്ങൾ ലിങ്ക് ചെയ്യാം. ആദ്യം ചിലതിന്റെ ലിങ്ക് നീക്കുക."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "അകലെയാണ്"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "തിരികെ"
 
@@ -2306,6 +2321,7 @@ msgstr "ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു ന
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു ന
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
@@ -2601,6 +2618,14 @@ msgstr "ഉത്തരം മായ്ക്കുക"
 msgid "Clear the search"
 msgstr "തിരയൽ മായ്ക്കുക"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "തിരഞ്ഞെടുപ്പ് മായ്ക്കുക"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "തിരഞ്ഞെടുപ്പ് മായ്ക്കുക (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI, IDE എക്സ്റ്റൻഷൻ"
@@ -2666,6 +2691,10 @@ msgstr "എല്ലാം അടയ്ക്കുക"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} ദിവസത്തിലധികം പഴക്കമുള്ള സംഭാഷണങ്ങൾ അടയ്ക്കുക"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "മറുപടിക്ക് ശേഷം ഓരോ സംഭാഷണവും അടയ്ക്കുക"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "എല്ലാം അടയ്ക്കുക"
@@ -2708,6 +2737,10 @@ msgstr "ഇന്ന് അടച്ചു"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "അടയ്ക്കുന്നു"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "ഓരോ സംഭാഷണവും അടയ്ക്കുന്നു"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "സംഭാഷണങ്ങൾ"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "സംഭാഷണങ്ങൾ"
 
@@ -3158,6 +3192,10 @@ msgstr "സെർവറിൽ എത്താൻ കഴിഞ്ഞില്ല.
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "ക്ലിക്കുകൾ എണ്ണുക"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "എണ്ണുന്നു…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "ഡോക്യുമെന്റേഷൻ പേജുകളിലെ �
 msgid "Discussions you started or replied to"
 msgstr "നിങ്ങൾ ആരംഭിച്ചതോ മറുപടി നൽകിയതോ ആയ ചർച്ചകൾ"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "അടയ്ക്കുക"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "പ്രദർശന പേര്"
@@ -3797,6 +3839,7 @@ msgstr "ഒഴിവാക്കിയ വരികൾ ഡൗൺലോഡ് ച
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "ഡ്രാഫ്റ്റ്"
 
@@ -3923,6 +3966,10 @@ msgstr "സംഭവം തുറന്നിരിക്കുന്നിട�
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "അറ്റകുറ്റപ്പണി നടക്കുന്നിടത്തോളം ഓരോ ഘടകവും ഈ അവസ്ഥയിലായിരിക്കും."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "മറുപടിക്ക് ശേഷം ഓരോ സംഭാഷണവും അടയ്ക്കും. ഉപഭോക്താക്കൾക്ക് അത് ഉടൻ ലഭിക്കും, തിരിച്ചെടുക്കാനാകില്ല."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "ബാഹ്യ ഐഡികൾ"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "പരാജയപ്പെട്ടു"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "പരിശോധിക്കാതെ പൂർത്തിയാക്കുക"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "പൂർത്തിയായി"
 
@@ -5422,6 +5471,22 @@ msgstr "ഇത് ഒരു നിമിഷത്തിനുള്ളിൽ ന
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "അത് {name} ({total}) ആയിരുന്നു. കുറവുള്ളത് മാത്രം അയയ്ക്കാൻ അത് വീണ്ടും തിരഞ്ഞെടുക്കുക."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "അതിന്റെ ഊഴം വരുന്നതിനു മുമ്പ് അത് അടച്ചിരുന്നു."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "അത് ഇല്ലാതാക്കിയിരുന്നു."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "അത് ഒഴിവാക്കി."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "അത് സംഭവത്തിൽ നിന്ന് ലിങ്ക് നീക്കിയിരുന്നു."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "ഇത് നിങ്ങൾ താഴെ അനുവദിക്കുന്ന ആക്‌സസോടെ മാത്രം നിങ്ങളുടെ പേരിൽ, <0>{email}</0>, പ്രവർത്തിക്കും."
@@ -5641,6 +5706,10 @@ msgstr "ലേറ്റൻസി"
 msgid "Later"
 msgstr "പിന്നീട്"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "ഏറ്റവും പുതിയ മറുപടി"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "ലോഞ്ചർ നിറം"
@@ -5698,6 +5767,53 @@ msgstr "നിങ്ങളുടെ Microsoft 365 അഡ്മിനുള്ള
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "മെയിലിലെ ലിങ്ക്"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "തിരഞ്ഞെടുത്ത സംഭാഷണങ്ങൾ ഒരു സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "തിരഞ്ഞെടുത്ത സംഭാഷണങ്ങൾ ലിങ്ക് ചെയ്യുക…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "ഈ സംഭാഷണം ഒരു സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "ഒരു സ്റ്റാറ്റസ് സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "ലിങ്ക് ചെയ്തത്"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "ഇതുവരെ ലിങ്ക് ചെയ്തത്: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "തിരഞ്ഞെടുത്ത സംഭാഷണങ്ങൾ {title}-ലേക്ക് ലിങ്ക് ചെയ്തു"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title}-ലേക്ക് ലിങ്ക് ചെയ്തു"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "ലിങ്ക് ചെയ്യുന്നു…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "ഈ കാഴ്ചയിൽ കോൺടാക്റ്റുകളി�
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "ഇതുവരെ കോൺടാക്റ്റുകളില്ല. ആരെങ്കിലും എഴുതുമ്പോൾ അവ പ്രത്യക്ഷപ്പെടും."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "ഇതുവരെ ഒരു സംഭാഷണവും ലിങ്ക് ചെയ്തിട്ടില്ല. ഒന്ന് തുറന്ന് “സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക” ഉപയോഗിക്കുക, അല്ലെങ്കിൽ പട്ടികയിൽ പലതും തിരഞ്ഞെടുക്കുക."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "ഈ പേജിൽ നിന്ന് സംഭാഷണങ്ങളില്ല."
@@ -6889,6 +7009,14 @@ msgstr "ഇതുവരെ ഇറക്കുമതികളില്ല."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "സ്റ്റാറ്റസ് പേജ് കാണിക്കാൻ ഇൻബോക്സ് ഇല്ല."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "പൊരുത്തപ്പെടുന്ന സംഭവമില്ല."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "ഒരു സ്റ്റാറ്റസ് പേജിലും തുറന്ന സംഭവമോ അറ്റകുറ്റപ്പണിയോ ഇല്ല."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "SMTP അക്കൗണ്ട് ഇല്ല"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "SMTP അക്കൗണ്ട് ഇല്ല"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "ഇതുവരെ സ്റ്റാറ്റസ് പേജ് ഇല്ല. ആദ്യം സ്റ്റാറ്റസിൽ ഒരെണ്ണം സൃഷ്ടിക്കുക."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "ഒരു വരിക്ക് ഒന്ന്, പരമാവധി 2
 msgid "One per product or brand"
 msgstr "ഓരോ ഉൽപ്പന്നത്തിനും ബ്രാൻഡിനും ഒന്ന്"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "ഒരിക്കൽ എഴുതിയ ഒരു മറുപടി {title}-ലേക്ക് ലിങ്ക് ചെയ്ത എല്ലാ തുറന്ന സംഭാഷണങ്ങൾക്കും നിങ്ങളുടെ പേരിൽ, ഓരോ സംഭാഷണത്തിന്റെയും സ്വന്തം ചാനലിലൂടെ പോകുന്നു."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ഓരോ ഇവന്റിനും ഒരു വരി, പഴയത് ആദ്യം: ആര് സമ്മതിച്ചു അല്ലെങ്കിൽ ഒഴിഞ്ഞു, എപ്പോൾ, എങ്ങനെ, ഏത് പേജിൽ നിന്നും IP വിലാസത്തിൽ നിന്നും, അവർ കണ്ട വാക്കുകളും. ഇത് സമ്മതത്തിന്റെ തെളിവായി (GDPR വകുപ്പ് 7, KVKK) സൂക്ഷിക്കുക, നിങ്ങളുടെ പക്കൽ എന്താണുള്ളതെന്ന് ചോദിക്കുന്ന വ്യക്തിക്ക് ഉത്തരം നൽകാൻ, അല്ലെങ്കിൽ İYS-ൽ സമ്മതങ്ങൾ സ്വയം രജിസ്റ്റർ ചെയ്യാൻ. CSV-യിലെ സ്പ്രെഡ്ഷീറ്റ് ഫോർമുലകൾ നിരുപദ്രവകരമാക്കിയിട്ടുണ്ട്."
@@ -7727,6 +7863,10 @@ msgstr "തുറന്ന സംഭാഷണങ്ങൾ"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "നിയോഗിച്ച തുറന്ന സംഭാഷണങ്ങൾ"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "ഈ മറുപടി ലഭിക്കുന്ന തുറന്ന സംഭാഷണങ്ങൾ: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "SMTP അക്കൗണ്ടുള്ള ഈ ഇൻബോക്സി�
 msgid "Pick an inbox"
 msgstr "ഒരു ഇൻബോക്സ് തിരഞ്ഞെടുക്കുക"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "തുറന്ന ഒരു സംഭവമോ അറ്റകുറ്റപ്പണിയോ തിരഞ്ഞെടുക്കുക"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "കുറഞ്ഞത് ഒരു സ്കോപ്പ് തിരഞ
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "കുറഞ്ഞത് ഒന്ന് തിരഞ്ഞെടുക്കുക."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "സംഭാഷണങ്ങൾ തിരഞ്ഞെടുക്കുക"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "മറുപടി പോസ്റ്റ് ചെയ്തു"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "മറുപടിയുടെ പുരോഗതി"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "മറുപടിയുടെ വാചകം"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "മറുപടി സമയം"
@@ -9152,6 +9308,19 @@ msgstr "<0>{name}</0>-ന് മറുപടി നൽകുക"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "ഒരു ബ്രോഡ്കാസ്റ്റിന് മറുപടി നൽകുക"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "ലിങ്ക് ചെയ്തവയ്ക്ക് മറുപടി നൽകുക"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "ലിങ്ക് ചെയ്തവയ്ക്ക് മറുപടി നൽകുക ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "ലിങ്ക് ചെയ്ത സംഭാഷണങ്ങൾക്ക് മറുപടി നൽകുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "നിങ്ങളെ ഇവിടേക്ക് തിരികെ ക
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "അവലോകനം"
 
@@ -9569,6 +9739,10 @@ msgstr "ഈ സംഭാഷണത്തിൽ തിരയുക"
 msgid "Search in this conversation ({0})"
 msgstr "ഈ സംഭാഷണത്തിൽ തിരയുക ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "സംഭവങ്ങൾ തിരയുക"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "ആളുകളെയോ പ്രവർത്തനങ്ങളെയോ ക്രമീകരണങ്ങളെയോ തിരയുക"
@@ -9605,9 +9779,25 @@ msgstr "വിഭാഗങ്ങൾ"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "അവർ എവിടെയാണെന്നും എന്താണ് തുറന്നുവച്ചിരിക്കുന്നതെന്നും ഇന്ന് എന്ത് ചെയ്തുവെന്നും കാണുക."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "സംഭാഷണങ്ങൾ തിരഞ്ഞെടുക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "കഴ്സറിന് താഴെയുള്ള സംഭാഷണം തിരഞ്ഞെടുക്കുക"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "മുമ്പത്തെയോ അടുത്തതോ ആയ ബ്ലോക്ക് തിരഞ്ഞെടുക്കുക"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "തിരഞ്ഞെടുത്തത്: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "തിരഞ്ഞെടുപ്പ്"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "അയയ്ക്കുക മാത്രം"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "ഒരു ചാറ്റ് അല്ലെങ്കിൽ ആപ്പ് സംഭാഷണത്തിൽ കുറിപ്പ് അയയ്ക്കുക അല്ലെങ്കിൽ ചേർക്കുക (പുതിയ വരിക്ക് ⇧↵)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "മറുപടി അയയ്ക്കുക"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "സ്ഥിരീകരണം അയയ്ക്കുക"
@@ -9792,9 +9986,21 @@ msgstr "ഇമെയിൽ വഴി അയയ്ക്കുന്നു…"
 msgid "Sending channel"
 msgstr "അയയ്ക്കുന്ന ചാനൽ"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "അയയ്ക്കാനായില്ല: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "അയയ്ക്കാനായില്ല."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "അയയ്ക്കൽ ഇതിനകം ആരംഭിച്ചു. പകരം താൽക്കാലികമായി നിർത്തുക അല്ലെങ്കിൽ റദ്ദാക്കുക."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "അയയ്ക്കൽ വീണ്ടും വീണ്ടും പരാജയപ്പെട്ടതിനാൽ Yuva ശ്രമം ഉപേക്ഷിച്ചു."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "അയയ്ക്കുന്നു, പിന്നെ അടയ്ക്കുന്നു…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "അയയ്ക്കുന്നു…"
 
@@ -9848,6 +10055,7 @@ msgstr "അയച്ചു"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "അയച്ചു"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "ഓട്ടോമാറ്റിക് മെയിൽ മാത്രമുള്ള ത്രെഡുകൾ ഒഴിവാക്കുക"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "ഒഴിവാക്കി"
 
@@ -10990,6 +11199,10 @@ msgstr "ക്ലയന്റ് ആവശ്യപ്പെടുന്നത�
 msgid "The contact was deleted"
 msgstr "കോൺടാക്റ്റ് ഇല്ലാതാക്കി"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "സംഭാഷണങ്ങൾ തുറന്നുതന്നെ നിൽക്കും. ഉപഭോക്താക്കൾക്ക് മറുപടി ഉടൻ ലഭിക്കും, തിരിച്ചെടുക്കാനാകില്ല."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "നിലവിലെ വിലാസം ഉടൻ പ്രവർത്തനം നിർത്തും. അത് വിളിക്കുന്നതെല്ലാം അപ്ഡേറ്റ് ചെയ്യുക."
@@ -11238,6 +11451,10 @@ msgstr "അവസാന ഡെലിവറബിലിറ്റി പരിശ�
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "ഓരോ മാർക്കറ്റിംഗ് മെയിലും ആര് അയയ്ക്കുന്നുവെന്നും അവരെ എങ്ങനെ ബന്ധപ്പെടാമെന്നും പറയണമെന്ന് നിയമം ആവശ്യപ്പെടുന്നു (CAN-SPAM, CASL, തുർക്കിയുടെ വാണിജ്യ ആശയവിനിമയ ചട്ടം). ഈ ഇൻബോക്സിൽ നിന്നുള്ള ഓരോ ബ്രോഡ്കാസ്റ്റിന്റെയും ഫൂട്ടറിൽ Yuva ഇത് ചേർക്കുന്നു, അതിനാൽ ആദ്യത്തേതിന് മുമ്പ് ഇത് പൂരിപ്പിക്കുക."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5,000 പരിധി എത്തി"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "പിന്തുടരുന്നത് നിർത്തി"
 msgid "Unknown device"
 msgstr "അജ്ഞാത ഉപകരണം"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name}-ന്റെ ലിങ്ക് നീക്കുക"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "{title}-ൽ നിന്ന് ലിങ്ക് നീക്കുക"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "അൺലോക്ക്"
@@ -12690,6 +12915,7 @@ msgstr "അയയ്ക്കൽ ആരംഭിച്ചതുമുതൽ utm_
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "കാത്തിരിക്കുന്നു"
 
@@ -12841,6 +13067,10 @@ msgstr "അവർ എന്തിന് സമ്മതിച്ചു?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "ഉപഭോക്താക്കൾ എന്താണ് അറിയേണ്ടത്?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "ഈ ഉപഭോക്താക്കൾ എന്താണ് അറിയേണ്ടത്?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "അയയ്ക്കുന്നതിനു മുമ്പ് നിങ്ങളുടെ ആക്സസ് അവസാനിച്ചിരുന്നു."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

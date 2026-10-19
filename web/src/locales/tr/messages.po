@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} bağlandı"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# bitti} other {# bitti}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} web sitesi"
 msgid "{names} will be notified"
 msgstr "Haber verilecek: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# açık} other {# açık}}"
@@ -873,6 +875,10 @@ msgstr "Bir kişi bir konuşmayı değerlendirdi"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Bir kişi silindi"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Bir konuşma"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Dosyada daha önce geçiyor"
 msgid "Already in Yuva"
 msgstr "Zaten Yuva'da"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Zaten bağlı"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Zaten listede"
@@ -1621,6 +1631,10 @@ msgstr "Bir olay ya da bakım değişti ya da güncelleme aldı"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Bir olay ya da bakım yayınlandı"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Bir olaya en fazla 5.000 konuşma bağlanabilir. Önce bazılarının bağlantısını kaldırın."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Uzakta"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Geri"
 
@@ -2306,6 +2321,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
@@ -2601,6 +2618,14 @@ msgstr "Kabulü kaldır"
 msgid "Clear the search"
 msgstr "Aramayı temizle"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Seçimi temizle"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Seçimi temizle (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "Komut satırı ve IDE eklentisi"
@@ -2666,6 +2691,10 @@ msgstr "Hepsini bitir"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} günden eski konuşmaları kapat"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Yanıtladıktan sonra her konuşmayı kapat"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Hepsini kapat"
@@ -2708,6 +2737,10 @@ msgstr "bugün biten"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Kapanış"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Her konuşma kapatılıyor"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "konuşma"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Konuşmalar"
 
@@ -3158,6 +3192,10 @@ msgstr "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Tıklamaları say"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Sayılıyor…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Dokümantasyon sayfalarında tartışmalar"
 msgid "Discussions you started or replied to"
 msgstr "Başlattığınız ya da yanıt yazdığınız tartışmalar"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Kapat"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Görünen ad"
@@ -3797,6 +3839,7 @@ msgstr "Dışarıda kalan satırları indir"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Taslak"
 
@@ -3923,6 +3966,10 @@ msgstr "Olay açıkken her bileşen bu durumda olur."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Bakım sürerken her bileşen bu durumda olur."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Her konuşma yanıttan sonra kapatılır. Müşteriler yanıtı hemen alır ve geri çağrılamaz."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Harici kimlikler"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Başarısız"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Kontrol etmeden bitir"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Bitti"
 
@@ -5422,6 +5471,22 @@ msgstr "Birkaç saniye içinde durur. Şimdiye kadar eklenen aboneler listede ka
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Dosya {name} ({total}) idi. Yalnızca eksikleri göndermek için onu yeniden seçin."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Sırası gelmeden kapatılmıştı."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Silinmişti."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Atlandı."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Olayla bağlantısı kaldırılmıştı."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Sizin adınıza, <0>{email}</0> olarak, yalnızca aşağıda izin verdiğiniz kadarıyla çalışacak."
@@ -5641,6 +5706,10 @@ msgstr "Süre"
 msgid "Later"
 msgstr "Sonra"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Son yanıt"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Düğme rengi"
@@ -5698,6 +5767,53 @@ msgstr "Microsoft 365 yöneticiniz için bağlantı"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "E-postadaki bağlantı"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Seçili konuşmaları bir olaya bağla"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Seçili konuşmaları şuna bağla…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Bu konuşmayı bir olaya bağla…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Bir durum olayına bağla"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Olaya bağla"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Olaya bağla ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Bağlandı"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Şimdiye kadar bağlanan: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Seçili konuşmalar {title} olayına bağlandı"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title} olayına bağlandı"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Bağlanıyor…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Bu görünümde kişi yok."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Henüz kişi yok. Biri yazdığında burada görünür."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Henüz bağlı konuşma yok. Birini açıp “Olaya bağla”yı kullanın ya da listeden birkaçını seçin."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Bu sayfadan konuşma yok."
@@ -6889,6 +7009,14 @@ msgstr "Henüz içe aktarma yok."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Durum sayfası gösterilecek gelen kutusu yok."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Eşleşen olay yok."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Hiçbir durum sayfasında açık olay ya da bakım yok."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "SMTP hesabı yok"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "SMTP hesabı yok"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Henüz durum sayfası yok. Önce Durum bölümünde bir tane oluşturun."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Her satıra bir tane, en fazla 20."
 msgid "One per product or brand"
 msgstr "Her ürün ya da marka için bir tane"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Bir kez yazılan tek bir yanıt, {title} olayına bağlı her açık konuşmaya sizin adınıza, konuşmanın kendi kanalından gider."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Her olay için bir satır, en eskisi önce: kim izin verdi ya da ayrıldı, ne zaman, nasıl, hangi sayfadan ve IP adresinden, hangi metni gördü. İzin kanıtı olarak (GDPR md. 7, KVKK) saklayın, hakkında ne tuttuğunuzu soran birine yanıt verin ya da izinleri İYS'ye kendiniz kaydedin. CSV'deki tablo formülleri zararsız hâle getirilir."
@@ -7727,6 +7863,10 @@ msgstr "Açık konuşmalar"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Atanmış açık konuşmalar"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Bu yanıtı alacak açık konuşmalar: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Bu gelen kutusunun SMTP hesabı olan bir e-posta kanalını seçin. Onay
 msgid "Pick an inbox"
 msgstr "Bir gelen kutusu seçin"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Açık bir olay ya da bakım seçin"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "En az bir yetki seçin."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "En az birini seçin."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Konuşma seçin"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Yanıtla ve çözüldü say"
 msgid "Reply posted"
 msgstr "Yanıt gönderildi"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Yanıt ilerlemesi"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Yanıt metni"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Yanıt süresi"
@@ -9152,6 +9308,19 @@ msgstr "<0>{name}</0> bültenine yanıt"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Bir bültene yanıt"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Bağlılara yanıt ver"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Bağlılara yanıt ver ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Bağlı konuşmalara yanıt ver"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Dönüş adresi"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Gözden geçir"
 
@@ -9569,6 +9739,10 @@ msgstr "Bu konuşmada ara"
 msgid "Search in this conversation ({0})"
 msgstr "Bu konuşmada ara ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Olaylarda ara"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Kişi, işlem veya ayar ara"
@@ -9605,9 +9779,25 @@ msgstr "Bölümler"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Nerede olduğunu, üzerindeki açık konuşmaları ve bugün neler yaptığını görün."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Konuşmaları seç"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "İmlecin üzerindeki konuşmayı seç"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Önceki ya da sonraki bloğu seç"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Seçilen: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Seçim"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Sadece gönder"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Sohbet ya da uygulama konuşmasında gönder veya notu ekle (yeni satır için ⇧↵)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Yanıtı gönder"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Onay e-postasını gönder"
@@ -9792,9 +9986,21 @@ msgstr "E-postayla gönderiliyor…"
 msgid "Sending channel"
 msgstr "Gönderen kanal"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Gönderilemedi: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Gönderilemedi."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Gönderim çoktan başladı. Bunun yerine duraklatın ya da iptal edin."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Gönderim hep başarısız oldu, bu yüzden Yuva vazgeçti."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Gönderiliyor, ardından bitirilecek…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Gönderiliyor…"
 
@@ -9848,6 +10055,7 @@ msgstr "gönderildi"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Gönderildi"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Yalnızca otomatik e-posta içeren yazışmaları atla"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Atlandı"
 
@@ -10990,6 +11199,10 @@ msgstr "İzin sayfası istemcinin istediklerini işaretli getirir. Yapmasını i
 msgid "The contact was deleted"
 msgstr "Kişi silindi"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Konuşmalar açık kalır. Müşteriler yanıtı hemen alır ve geri çağrılamaz."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Mevcut adres hemen çalışmaz hale gelir. Onu çağıran her şeyi güncelleyin."
@@ -11238,6 +11451,10 @@ msgstr "Son teslim edilebilirlik denetimi düzeltilecek bir şey buldu."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Yasalar her pazarlama e-postasının kimin gönderdiğini ve ona nasıl ulaşılacağını belirtmesini ister (Ticari İletişim ve Ticari Elektronik İletiler Hakkında Yönetmelik, CAN-SPAM, CASL). Yuva bu bilgileri bu gelen kutusundan giden her bültenin altbilgisine koyar; ilk bültenden önce doldurun."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "5.000 sınırına ulaşıldı"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Takip bırakıldı"
 msgid "Unknown device"
 msgstr "Bilinmeyen cihaz"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} bağlantısını kaldır"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "{title} ile bağlantıyı kaldır"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Kilidi aç"
@@ -12690,6 +12915,7 @@ msgstr "Gönderim başladığından beri utm_campaign={campaign} ile siteleriniz
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Bekleyen"
 
@@ -12841,6 +13067,10 @@ msgstr "Neyi kabul ettiler?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Müşterilerin neyi bilmesi gerekiyor?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Bu müşterilerin neyi bilmesi gerekiyor?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "siz@sirket.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "siz@ornek.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Gönderilmeden önce erişiminiz sona erdi."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} csatlakoztatva"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# lezárt} other {# lezárt}}"
 
@@ -510,6 +511,7 @@ msgstr "{name} webhely"
 msgid "{names} will be notified"
 msgstr "Értesül: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# nyitott} other {# nyitott}}"
@@ -873,6 +875,10 @@ msgstr "Egy kontakt értékelt egy beszélgetést"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Egy kontaktot töröltek"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Egy beszélgetés"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Már korábban a fájlban"
 msgid "Already in Yuva"
 msgstr "Már a Yuvában"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Már össze van kapcsolva"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Már a listán"
@@ -1621,6 +1631,10 @@ msgstr "Egy incidens vagy karbantartás megváltozott vagy frissítést kapott"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Egy incidens vagy karbantartás közzé lett téve"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Egy incidenshez legfeljebb 5000 beszélgetés kapcsolható. Előbb szüntesd meg néhány kapcsolatát."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Távol"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Vissza"
 
@@ -2306,6 +2321,7 @@ msgstr "Ütemezhetek hírlevelet minden feliratkozónak külön?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Ütemezhetek hírlevelet minden feliratkozónak külön?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Mégse"
@@ -2601,6 +2618,14 @@ msgstr "Válasz törlése"
 msgid "Clear the search"
 msgstr "Keresés törlése"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Kijelölés törlése"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Kijelölés törlése (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI és IDE-bővítmény"
@@ -2666,6 +2691,10 @@ msgstr "Mind bezárása"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} napnál régebbi beszélgetések bezárása"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Minden beszélgetés lezárása a válasz után"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Minden bezárása"
@@ -2708,6 +2737,10 @@ msgstr "ma lezárva"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Lezárja"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Minden beszélgetés lezárása folyamatban"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "beszélgetés"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Beszélgetések"
 
@@ -3158,6 +3192,10 @@ msgstr "A szerver nem érhető el. Ellenőrizd a kapcsolatot, és próbáld újr
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Kattintások számlálása"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Számolás…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Viták a dokumentációs oldalakon"
 msgid "Discussions you started or replied to"
 msgstr "Viták, amelyeket elindítottál vagy amelyekben válaszoltál"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Elvetés"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Megjelenített név"
@@ -3797,6 +3839,7 @@ msgstr "Kihagyott sorok letöltése"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Piszkozat"
 
@@ -3923,6 +3966,10 @@ msgstr "Minden összetevő ezt az állapotot kapja, amíg az incidens nyitott."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Minden összetevő ezt az állapotot kapja, amíg a karbantartás tart."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Minden beszélgetés lezárul a válasz után. Az ügyfelek azonnal megkapják, és nem vonható vissza."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Külső azonosítók"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Sikertelen"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Befejezés ellenőrzés nélkül"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Befejezve"
 
@@ -5422,6 +5471,22 @@ msgstr "Egy pillanat alatt leáll. A már hozzáadott feliratkozók a listán ma
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Ez a(z) {name} ({total}) volt. Válaszd ki újra, hogy csak a hiányzó rész kerüljön elküldésre."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Lezárták, mielőtt sorra került volna."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Törölték."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Kihagyták."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Leválasztották az incidensről."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Úgy jár el, mint te, <0>{email}</0>, csak az alább engedélyezett hozzáféréssel."
@@ -5641,6 +5706,10 @@ msgstr "Késleltetés"
 msgid "Later"
 msgstr "Később"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Utolsó válasz"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "A csevegőgomb színe"
@@ -5698,6 +5767,53 @@ msgstr "Link a Microsoft 365-adminodnak"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Link egy levélben"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "A kijelölt beszélgetések összekapcsolása egy incidenssel"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "A kijelölt beszélgetések összekapcsolása ezzel…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Beszélgetés összekapcsolása egy incidenssel…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Összekapcsolás állapot-incidenssel"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Összekapcsolás incidenssel"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Összekapcsolás incidenssel ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Összekapcsolva"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Eddig összekapcsolva: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "A kijelölt beszélgetések összekapcsolva: {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Összekapcsolva: {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Összekapcsolás…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Ebben a nézetben nincsenek kontaktok."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Még nincsenek kontaktok. Akkor jelennek meg, amikor valaki ír."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Még nincs összekapcsolt beszélgetés. Nyiss meg egyet, és használd az Összekapcsolás incidenssel lehetőséget, vagy jelölj ki többet a listában."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Nincsenek beszélgetések erről az oldalról."
@@ -6889,6 +7009,14 @@ msgstr "Még nincsenek importok."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Nincs olyan postaláda, amelyhez állapotoldalt lehetne mutatni."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Nincs egyező incidens."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Egyetlen állapotoldalon sincs nyitott incidens vagy karbantartás."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "nincs SMTP-fiók"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Nincs SMTP-fiók"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Még nincs állapotoldal. Előbb hozz létre egyet az Állapot részben."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Soronként egy, legfeljebb 20."
 msgid "One per product or brand"
 msgstr "Termékenként vagy márkánként egy"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Egyszer megírt válaszod minden, a(z) {title} incidenshez kapcsolt nyitott beszélgetésbe megy, a nevedben, a beszélgetés saját csatornáján."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Eseményenként egy sor, a legrégebbivel kezdve: ki egyezett bele vagy lépett ki, mikor, hogyan, melyik oldalról és IP-címről, és milyen szavakat látott. Őrizd meg a hozzájárulás bizonyítékaként (GDPR 7. cikk, KVKK), hogy válaszolhass annak, aki megkérdezi, mit tárolsz róla, vagy hogy magad regisztráld a hozzájárulásokat az İYS-nél. A CSV-ben lévő táblázatkezelő-képletek ártalmatlanítva vannak."
@@ -7727,6 +7863,10 @@ msgstr "Nyitott beszélgetések"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Nyitott hozzárendelt beszélgetések"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Nyitott beszélgetések, amelyek megkapják ezt a választ: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Válaszd ki a postafiók egy SMTP-fiókkal rendelkező e-mail-csatornáj
 msgid "Pick an inbox"
 msgstr "Válassz postafiókot"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Válassz nyitott incidenst vagy karbantartást"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Válassz legalább egy hatókört."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Válassz legalább egyet."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Válassz beszélgetéseket"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Válasz és megoldás"
 msgid "Reply posted"
 msgstr "Válasz közzétéve"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "A válasz előrehaladása"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "A válasz szövege"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Válaszidő"
@@ -9152,6 +9308,19 @@ msgstr "Válasz neki: <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Válasz egy tömeges levélre"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Válasz a kapcsoltaknak"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Válasz a kapcsoltaknak ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Válasz a kapcsolt beszélgetéseknek"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Visszavisz ide"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Áttekintés"
 
@@ -9569,6 +9739,10 @@ msgstr "Keresés ebben a beszélgetésben"
 msgid "Search in this conversation ({0})"
 msgstr "Keresés ebben a beszélgetésben ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Incidensek keresése"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Emberek, műveletek vagy beállítások keresése"
@@ -9605,9 +9779,25 @@ msgstr "Szakaszok"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Nézd meg, hol vannak, mit tartanak nyitva, és mit tettek ma."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Beszélgetések kijelölése"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "A kurzor alatti beszélgetés kijelölése"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Előző vagy következő blokk kijelölése"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Kijelölve: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Kijelölés"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Csak küldés"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Megjegyzés küldése vagy hozzáadása, csevegésben vagy alkalmazásbeszélgetésben (⇧↵ új sorhoz)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Válasz elküldése"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Megerősítés küldése"
@@ -9792,9 +9986,21 @@ msgstr "Küldés e-mailben…"
 msgid "Sending channel"
 msgstr "Küldési csatorna"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "A küldés nem sikerült: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "A küldés nem sikerült."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "A küldés már elkezdődött. Inkább szüneteltesd vagy szakítsd meg."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "A küldés újra és újra meghiúsult, ezért a Yuva feladta."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Küldés, majd bezárás…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Küldés…"
 
@@ -9848,6 +10055,7 @@ msgstr "elküldve"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Csak automatikus levelet tartalmazó szálak kihagyása"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Kihagyva"
 
@@ -10990,6 +11199,10 @@ msgstr "A hozzájárulási oldal bejelöli, amit a kliens kér. Hagyd ki, amit n
 msgid "The contact was deleted"
 msgstr "A kontaktot törölték"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "A beszélgetések nyitva maradnak. Az ügyfelek azonnal megkapják a választ, és nem vonható vissza."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "A jelenlegi cím azonnal megszűnik működni. Frissítsen mindent, ami hívja."
@@ -11238,6 +11451,10 @@ msgstr "Az utolsó kézbesíthetőségi ellenőrzés javítandót talált."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "A törvény megköveteli, hogy minden marketinglevél megmondja, ki küldi és hogyan érhető el (CAN-SPAM, CASL, a török kereskedelmi kommunikációs rendelet). A Yuva ezt beleteszi az ebből a postafiókból küldött minden tömeges levél láblécébe, ezért az első előtt töltsd ki."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Elérted az 5000-es korlátot"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Követés megszüntetve"
 msgid "Unknown device"
 msgstr "Ismeretlen eszköz"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "{name} leválasztása"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Leválasztás innen: {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Feloldás"
@@ -12690,6 +12915,7 @@ msgstr "Látogatások a webhelyeiden utm_campaign={campaign} paraméterrel a kü
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Várakozik"
 
@@ -12841,6 +13067,10 @@ msgstr "Mibe egyeztek bele?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Mit kell tudniuk az ügyfeleknek?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Mit kell tudniuk ezeknek az ügyfeleknek?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "te@ceg.hu"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "te@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "A hozzáférésed megszűnt, mielőtt elküldték volna."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

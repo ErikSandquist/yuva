@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} je povezan"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# zaprt} two {# zaprta} few {# zaprti} other {# zaprtih}}"
 
@@ -510,6 +511,7 @@ msgstr "Spletno mesto {name}"
 msgid "{names} will be notified"
 msgstr "Obvestilo bodo dobili: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# odprt} two {# odprta} few {# odprti} other {# odprtih}}"
@@ -873,6 +875,10 @@ msgstr "Stik je ocenil pogovor"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Stik je bil izbrisan"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Pogovor"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Že prej v datoteki"
 msgid "Already in Yuva"
 msgstr "Že v Yuvi"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Že povezan"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Že na seznamu"
@@ -1621,6 +1631,10 @@ msgstr "Incident ali vzdrževanje se je spremenilo ali je dobilo posodobitev"
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Incident ali vzdrževanje je bilo objavljeno"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Z incidentom lahko povežete največ 5.000 pogovorov. Najprej nekaj pogovorov odklopite."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Odsoten"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Nazaj"
 
@@ -2306,6 +2321,7 @@ msgstr "Ali lahko načrtujem novice za vsakega naročnika posebej?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Ali lahko načrtujem novice za vsakega naročnika posebej?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Prekliči"
@@ -2601,6 +2618,14 @@ msgstr "Počisti odgovor"
 msgid "Clear the search"
 msgstr "Počisti iskanje"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Počisti izbiro"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Počisti izbiro (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI in razširitev IDE"
@@ -2666,6 +2691,10 @@ msgstr "Zapri vse"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Zapri pogovore, starejše od {daysShown} dni"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Po odgovoru zapri vsak pogovor"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Zapri vse"
@@ -2708,6 +2737,10 @@ msgstr "danes zaprto"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Zapre"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Zapiranje vsakega pogovora"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "pogovorov"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Pogovori"
 
@@ -3158,6 +3192,10 @@ msgstr "Strežnika ni bilo mogoče doseči. Preverite povezavo in poskusite znov
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Štej klike"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Štetje…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Razprave na straneh dokumentacije"
 msgid "Discussions you started or replied to"
 msgstr "Razprave, ki ste jih začeli ali v katerih ste odgovarjali"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Zavrni"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Prikazno ime"
@@ -3797,6 +3839,7 @@ msgstr "Prenesi izpuščene vrstice"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Osnutek"
 
@@ -3923,6 +3966,10 @@ msgstr "Vsaka komponenta ima to stanje, dokler je incident odprt."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Vsaka komponenta ima to stanje, dokler vzdrževanje poteka."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Vsak pogovor se po odgovoru zapre. Stranke ga prejmejo takoj in ga ni mogoče preklicati."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Zunanji ID-ji"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Neuspešno"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Dokončaj brez preverjanja"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Končano"
 
@@ -5422,6 +5471,22 @@ msgstr "Ustavi se v trenutku. Naročniki, ki jih je že dodal, ostanejo na sezna
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Bil je {name} ({total}). Izberite ga znova, da pošljete samo tisto, kar manjka."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Zaprt je bil, preden je prišel na vrsto."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Izbrisan je bil."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Preskočen je bil."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Odklopljen je bil od incidenta."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Deloval bo kot vi, <0>{email}</0>, samo z dostopom, ki ga dovolite spodaj."
@@ -5641,6 +5706,10 @@ msgstr "Zakasnitev"
 msgid "Later"
 msgstr "Pozneje"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Zadnji odgovor"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Barva gumba klepeta"
@@ -5698,6 +5767,53 @@ msgstr "Povezava za vašega skrbnika Microsoft 365"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Povezava v sporočilu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Poveži izbrane pogovore z incidentom"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Poveži izbrane pogovore z…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Poveži ta pogovor z incidentom…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Poveži z incidentom stanja"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Poveži z incidentom"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Poveži z incidentom ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Povezano"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Doslej povezano: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Izbrani pogovori so povezani z incidentom {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Povezano z incidentom {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Povezovanje…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "V tem pogledu ni stikov."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Še ni stikov. Prikažejo se, ko kdo piše."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Noben pogovor še ni povezan. Odprite enega in uporabite Poveži z incidentom ali na seznamu izberite več pogovorov."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Ni pogovorov s te strani."
@@ -6889,6 +7009,14 @@ msgstr "Še ni uvozov."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Ni nabiralnika, za katerega bi prikazali stran stanja."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Noben incident se ne ujema."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Na nobeni strani stanja ni odprtega incidenta ali vzdrževanja."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "brez računa SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Brez računa SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Strani stanja še ni. Najprej jo ustvarite v razdelku Stanje."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Eden na vrstico, največ 20."
 msgid "One per product or brand"
 msgstr "Eden na izdelek ali znamko"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "En odgovor, napisan enkrat, gre v vašem imenu v vsak odprt pogovor, povezan z incidentom {title}, po lastnem kanalu vsakega pogovora."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Ena vrstica na dogodek, od najstarejšega: kdo je privolil ali odšel, kdaj, kako, s katere strani in naslova IP ter besede, ki jih je videl. Hranite jo kot dokaz o soglasju (GDPR čl. 7, KVKK), da odgovorite osebi, ki sprašuje, kaj imate o njej, ali da soglasja sami registrirate pri İYS. Formule preglednic v CSV so narejene neškodljive."
@@ -7727,6 +7863,10 @@ msgstr "Odprti pogovori"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Odprti dodeljeni pogovori"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Odprti pogovori, ki bodo prejeli ta odgovor: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Izberite e-poštni kanal tega nabiralnika z računom SMTP. Pošilja potr
 msgid "Pick an inbox"
 msgstr "Izberite nabiralnik"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Izberite odprt incident ali vzdrževanje"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Izberite vsaj en doseg."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Izberite vsaj eno."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Izberite pogovore"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Odgovori in reši"
 msgid "Reply posted"
 msgstr "Odgovor objavljen"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Napredek odgovora"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Besedilo odgovora"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Čas odgovora"
@@ -9152,6 +9308,19 @@ msgstr "Odgovori uporabniku <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Odgovori na množično sporočilo"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Odgovori povezanim"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Odgovori povezanim ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Odgovori na povezane pogovore"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Vrne vas na"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Pregled"
 
@@ -9569,6 +9739,10 @@ msgstr "Išči v tem pogovoru"
 msgid "Search in this conversation ({0})"
 msgstr "Išči v tem pogovoru ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Išči incidente"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Išči ljudi, dejanja ali nastavitve"
@@ -9605,9 +9779,25 @@ msgstr "Razdelki"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Poglejte, kje so, kaj imajo odprto in kaj so danes naredili."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Izberi pogovore"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Izberi pogovor pod kazalcem"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Izberi prejšnji ali naslednji blok"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Izbrano: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Izbor"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Samo pošiljaj"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Pošlji ali dodaj opombo, v klepetu ali pogovoru v aplikaciji (⇧↵ za novo vrstico)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Pošlji odgovor"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Pošlji potrditev"
@@ -9792,9 +9986,21 @@ msgstr "Pošiljanje po e-pošti …"
 msgid "Sending channel"
 msgstr "Kanal za pošiljanje"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Pošiljanje ni uspelo: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Pošiljanje ni uspelo."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Pošiljanje se je že začelo. Namesto tega ga ustavite ali prekličite."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Pošiljanje je vedno znova spodletelo, zato je Yuva obupala."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Pošiljanje, nato zapiranje …"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Pošiljanje …"
 
@@ -9848,6 +10055,7 @@ msgstr "poslano"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Poslano"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Preskoči niti, ki vsebujejo samo samodejno pošto"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Preskočeno"
 
@@ -10990,6 +11199,10 @@ msgstr "Stran za soglasje označi, kar odjemalec zahteva. Izpustite, česar ne �
 msgid "The contact was deleted"
 msgstr "Stik je bil izbrisan"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Pogovori ostanejo odprti. Stranke odgovor prejmejo takoj in ga ni mogoče preklicati."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Trenutni naslov takoj preneha delovati. Posodobite vse, kar ga kliče."
@@ -11238,6 +11451,10 @@ msgstr "Zadnje preverjanje dostavljivosti je našlo nekaj za popravilo."
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Zakon zahteva, da vsako tržno sporočilo pove, kdo ga pošilja in kako ga doseči (CAN-SPAM, CASL, turška uredba o komercialnem komuniciranju). Yuva to doda v nogo vsakega množičnega sporočila iz tega nabiralnika, zato to izpolnite pred prvim."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Dosežena je omejitev 5.000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Sledenje prenehano"
 msgid "Unknown device"
 msgstr "Neznana naprava"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Odklopi {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Odklopi od {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Odkleni"
@@ -12690,6 +12915,7 @@ msgstr "Obiski vaših spletnih mest z utm_campaign={campaign} od začetka pošil
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Čaka"
 
@@ -12841,6 +13067,10 @@ msgstr "V kaj so privolili?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Kaj morajo stranke vedeti?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Kaj morajo te stranke vedeti?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "vi@podjetje.si"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "vi@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Vaš dostop se je končal, preden je bil poslan."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

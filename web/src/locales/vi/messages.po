@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} đã được kết nối"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# đã đóng}}"
 
@@ -510,6 +511,7 @@ msgstr "Trang web {name}"
 msgid "{names} will be notified"
 msgstr "{names} sẽ được thông báo"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# đang mở}}"
@@ -873,6 +875,10 @@ msgstr "Một liên hệ đã đánh giá một cuộc trò chuyện"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Một liên hệ đã bị xóa"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Một cuộc trò chuyện"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Đã có ở phía trước trong tệp"
 msgid "Already in Yuva"
 msgstr "Đã có trong Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Đã được liên kết"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Đã có trong danh sách"
@@ -1621,6 +1631,10 @@ msgstr "Một sự cố hoặc đợt bảo trì đã thay đổi hoặc có c�
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Một sự cố hoặc đợt bảo trì đã được xuất bản"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "Một sự cố chỉ liên kết được tối đa 5.000 cuộc trò chuyện. Hãy hủy liên kết một số trước."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Vắng mặt"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Quay lại"
 
@@ -2306,6 +2321,7 @@ msgstr "Tôi có thể lên lịch bản tin cho từng người đăng ký khô
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Tôi có thể lên lịch bản tin cho từng người đăng ký khô
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Hủy"
@@ -2601,6 +2618,14 @@ msgstr "Xóa câu trả lời"
 msgid "Clear the search"
 msgstr "Xóa tìm kiếm"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Bỏ chọn tất cả"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Bỏ chọn tất cả (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI và tiện ích IDE"
@@ -2666,6 +2691,10 @@ msgstr "Đóng tất cả"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Đóng các cuộc trò chuyện cũ hơn {daysShown} ngày"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Đóng từng cuộc trò chuyện sau khi trả lời"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Đóng tất cả"
@@ -2708,6 +2737,10 @@ msgstr "đã đóng hôm nay"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Đóng lúc"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Đang đóng từng cuộc trò chuyện"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "cuộc trò chuyện"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Cuộc trò chuyện"
 
@@ -3158,6 +3192,10 @@ msgstr "Không thể kết nối tới máy chủ. Hãy kiểm tra kết nối v
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Đếm lượt nhấp"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Đang đếm…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Thảo luận trên các trang tài liệu"
 msgid "Discussions you started or replied to"
 msgstr "Các cuộc thảo luận bạn đã bắt đầu hoặc trả lời"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Bỏ qua"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Tên hiển thị"
@@ -3797,6 +3839,7 @@ msgstr "Tải xuống các dòng bị bỏ qua"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Bản nháp"
 
@@ -3923,6 +3966,10 @@ msgstr "Mỗi thành phần ở trạng thái này khi sự cố còn mở."
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Mỗi thành phần ở trạng thái này khi đợt bảo trì còn diễn ra."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Mỗi cuộc trò chuyện được đóng sau khi trả lời. Khách hàng nhận được ngay và không thể thu hồi."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "ID bên ngoài"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Thất bại"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Hoàn tất mà không kiểm tra"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Đã hoàn tất"
 
@@ -5422,6 +5471,22 @@ msgstr "Nó dừng trong giây lát. Những người đăng ký nó đã thêm 
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Đó là {name} ({total}). Hãy chọn lại để chỉ gửi phần còn thiếu."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Nó đã được đóng trước khi đến lượt."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Nó đã bị xóa."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Nó đã bị bỏ qua."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Nó đã được hủy liên kết khỏi sự cố."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Nó sẽ hành động với danh nghĩa bạn, <0>{email}</0>, chỉ với quyền truy cập bạn cho phép bên dưới."
@@ -5641,6 +5706,10 @@ msgstr "Độ trễ"
 msgid "Later"
 msgstr "Sau"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Phản hồi gần nhất"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Màu nút mở chat"
@@ -5698,6 +5767,53 @@ msgstr "Liên kết cho quản trị viên Microsoft 365 của bạn"
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Liên kết trong thư"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Liên kết các cuộc trò chuyện đã chọn với một sự cố"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Liên kết các cuộc trò chuyện đã chọn với…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Liên kết cuộc trò chuyện này với một sự cố…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Liên kết với sự cố trạng thái"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Liên kết với sự cố"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Liên kết với sự cố ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Đã liên kết"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Đã liên kết cho đến nay: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Đã liên kết các cuộc trò chuyện đã chọn với {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Đã liên kết với {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Đang liên kết…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "Không có liên hệ nào trong chế độ xem này."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Chưa có liên hệ. Họ xuất hiện khi có người viết đến."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Chưa có cuộc trò chuyện nào được liên kết. Hãy mở một cuộc trò chuyện và dùng Liên kết với sự cố, hoặc chọn nhiều cuộc trong danh sách."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "Không có cuộc trò chuyện nào từ trang này."
@@ -6889,6 +7009,14 @@ msgstr "Chưa có lần nhập nào."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Không có hộp thư nào để hiển thị trang trạng thái."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Không có sự cố nào khớp."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "Không có sự cố hay đợt bảo trì nào đang mở trên bất kỳ trang trạng thái nào."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "không có tài khoản SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Không có tài khoản SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Chưa có trang trạng thái. Hãy tạo một trang trong Trạng thái trước."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "Mỗi dòng một cái, tối đa 20."
 msgid "One per product or brand"
 msgstr "Mỗi sản phẩm hoặc thương hiệu một cái"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Một câu trả lời, viết một lần, được gửi thay mặt bạn đến mọi cuộc trò chuyện đang mở liên kết với {title}, qua kênh riêng của từng cuộc trò chuyện."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Mỗi dòng một sự kiện, cũ nhất trước: ai đã đồng ý hoặc rời đi, khi nào, bằng cách nào, từ trang nào và địa chỉ IP nào, cùng nội dung họ đã thấy. Hãy giữ làm bằng chứng đồng ý (GDPR Điều 7, KVKK), để trả lời người hỏi bạn đang giữ gì, hoặc để tự đăng ký sự đồng ý với İYS. Công thức bảng tính trong CSV đã được vô hiệu hóa."
@@ -7727,6 +7863,10 @@ msgstr "Cuộc trò chuyện đang mở"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Cuộc trò chuyện đang mở được giao"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Các cuộc trò chuyện đang mở sẽ nhận câu trả lời này: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Chọn một kênh email của hộp thư này có tài khoản SMTP. N�
 msgid "Pick an inbox"
 msgstr "Chọn một hộp thư"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Chọn một sự cố hoặc đợt bảo trì đang mở"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Hãy chọn ít nhất một phạm vi."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Hãy chọn ít nhất một."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Chọn cuộc trò chuyện"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Trả lời và giải quyết"
 msgid "Reply posted"
 msgstr "Đã đăng phản hồi"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Tiến độ trả lời"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Nội dung trả lời"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Thời gian phản hồi"
@@ -9152,6 +9308,19 @@ msgstr "Phản hồi <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Phản hồi một thư hàng loạt"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Trả lời các cuộc đã liên kết"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Trả lời các cuộc đã liên kết ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Trả lời các cuộc trò chuyện đã liên kết"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Đưa bạn quay lại"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Xem lại"
 
@@ -9569,6 +9739,10 @@ msgstr "Tìm trong cuộc trò chuyện này"
 msgid "Search in this conversation ({0})"
 msgstr "Tìm trong cuộc trò chuyện này ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Tìm sự cố"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Tìm người, thao tác hoặc cài đặt"
@@ -9605,9 +9779,25 @@ msgstr "Các phần"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Xem họ đang ở đâu, đang giữ mở những gì và đã làm gì hôm nay."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Chọn cuộc trò chuyện"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Chọn cuộc trò chuyện dưới con trỏ"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Chọn khối trước hoặc sau"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Đã chọn: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Lựa chọn"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Chỉ gửi"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Gửi hoặc thêm ghi chú, trong cuộc trò chuyện chat hoặc ứng dụng (⇧↵ để xuống dòng)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Gửi câu trả lời"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Gửi xác nhận"
@@ -9792,9 +9986,21 @@ msgstr "Đang gửi qua email…"
 msgid "Sending channel"
 msgstr "Kênh gửi"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Gửi không thành công: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Gửi không thành công."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Việc gửi đã bắt đầu. Hãy tạm dừng hoặc hủy thay vào đó."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Việc gửi liên tục thất bại nên Yuva đã bỏ cuộc."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Đang gửi, rồi đóng…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Đang gửi…"
 
@@ -9848,6 +10055,7 @@ msgstr "đã gửi"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Đã gửi"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Bỏ qua các chuỗi chỉ chứa thư tự động"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Đã bỏ qua"
 
@@ -10990,6 +11199,10 @@ msgstr "Trang đồng ý đánh dấu những gì client yêu cầu. Hãy bỏ n
 msgid "The contact was deleted"
 msgstr "Liên hệ đã bị xóa"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Các cuộc trò chuyện vẫn mở. Khách hàng nhận câu trả lời ngay và không thể thu hồi."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Địa chỉ hiện tại ngừng hoạt động ngay. Hãy cập nhật mọi thứ đang gọi nó."
@@ -11238,6 +11451,10 @@ msgstr "Lần kiểm tra khả năng gửi thư gần nhất tìm thấy điều
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Pháp luật yêu cầu mọi thư tiếp thị phải nêu ai gửi và cách liên hệ họ (CAN-SPAM, CASL, Quy định về Truyền thông Thương mại của Thổ Nhĩ Kỳ). Yuva đặt thông tin này ở chân mọi thư hàng loạt từ hộp thư này, nên hãy điền trước thư đầu tiên."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Đã đạt giới hạn 5.000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Đã bỏ theo dõi"
 msgid "Unknown device"
 msgstr "Thiết bị không xác định"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Hủy liên kết {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Hủy liên kết khỏi {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Mở khóa"
@@ -12690,6 +12915,7 @@ msgstr "Lượt truy cập vào các trang của bạn với utm_campaign={campa
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Đang chờ"
 
@@ -12841,6 +13067,10 @@ msgstr "Họ đã đồng ý điều gì?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Khách hàng cần biết điều gì?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Những khách hàng này cần biết điều gì?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Quyền truy cập của bạn đã kết thúc trước khi gửi."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

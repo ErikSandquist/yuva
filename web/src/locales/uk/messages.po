@@ -199,6 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} підключено"
 
 #: src/app/TeamMenu.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# закрита} few {# закриті} many {# закритих} other {# закритої}}"
 
@@ -510,6 +511,7 @@ msgstr "Сайт {name}"
 msgid "{names} will be notified"
 msgstr "Сповіщення отримають: {names}"
 
+#: src/features/status/LinkedSection.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# відкрита} few {# відкриті} many {# відкритих} other {# відкритої}}"
@@ -873,6 +875,10 @@ msgstr "Контакт оцінив розмову"
 #: src/components/common/text.ts
 msgid "A contact was deleted"
 msgstr "Контакт видалено"
+
+#: src/features/status/LinkedSection.tsx
+msgid "A conversation"
+msgstr "Розмова"
 
 #: src/components/common/text.ts
 msgid "A conversation changed"
@@ -1477,6 +1483,10 @@ msgstr "Уже траплялося вище у файлі"
 msgid "Already in Yuva"
 msgstr "Уже в Yuva"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Already linked"
+msgstr "Уже пов’язана"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
 msgstr "Уже в списку"
@@ -1621,6 +1631,10 @@ msgstr "Інцидент або обслуговування змінилися 
 #: src/components/common/text.ts
 msgid "An incident or maintenance was published"
 msgstr "Інцидент або обслуговування опубліковано"
+
+#: src/components/common/text.ts
+msgid "An incident takes at most 5,000 linked conversations. Unlink some first."
+msgstr "До інциденту можна прив’язати не більше 5 000 розмов. Спершу відв’яжіть кілька."
 
 #: src/components/common/text.ts
 msgid "An incident was resolved or maintenance completed"
@@ -2058,6 +2072,7 @@ msgstr "Відійшов"
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Назад"
 
@@ -2306,6 +2321,7 @@ msgstr "Чи можна запланувати розсилку для кожн�
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -2313,6 +2329,7 @@ msgstr "Чи можна запланувати розсилку для кожн�
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Скасувати"
@@ -2601,6 +2618,14 @@ msgstr "Скинути відповідь"
 msgid "Clear the search"
 msgstr "Очистити пошук"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Clear the selection"
+msgstr "Скасувати вибір"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear the selection (Esc)"
+msgstr "Скасувати вибір (Esc)"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "CLI and IDE extension"
 msgstr "CLI і розширення для IDE"
@@ -2666,6 +2691,10 @@ msgstr "Закрити всі"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Закрити розмови старші за {daysShown} дн."
 
+#: src/features/status/LinkedSection.tsx
+msgid "Close each conversation after replying"
+msgstr "Закрити кожну розмову після відповіді"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Close everything"
 msgstr "Закрити все"
@@ -2708,6 +2737,10 @@ msgstr "закрито сьогодні"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Closes"
 msgstr "Закриває"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Closing each conversation"
+msgstr "Закриваємо кожну розмову"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3041,6 +3074,7 @@ msgstr "розмови"
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/events.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Conversations"
 msgstr "Розмови"
 
@@ -3158,6 +3192,10 @@ msgstr "Не вдалося зв'язатися із сервером. Пере�
 #: src/features/broadcasts/Composer.tsx
 msgid "Count clicks"
 msgstr "Рахувати кліки"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Counting…"
+msgstr "Підрахунок…"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create"
@@ -3653,6 +3691,10 @@ msgstr "Обговорення на сторінках документації"
 msgid "Discussions you started or replied to"
 msgstr "Обговорення, які ви розпочали або в яких відповідали"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Dismiss"
+msgstr "Сховати"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Відображуване ім'я"
@@ -3797,6 +3839,7 @@ msgstr "Завантажити пропущені рядки"
 
 #: src/components/common/text.ts
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkIncidentDialog.tsx
 msgid "Draft"
 msgstr "Чернетка"
 
@@ -3923,6 +3966,10 @@ msgstr "Доки інцидент відкритий, кожен компоне�
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Доки триває обслуговування, кожен компонент перебуває в цьому стані."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
+msgstr "Кожна розмова закривається після відповіді. Клієнти отримують її одразу, і її не можна відкликати."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
@@ -4275,6 +4322,7 @@ msgstr "Зовнішні ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Не вдалося"
@@ -4404,6 +4452,7 @@ msgid "Finish without checking"
 msgstr "Завершити без перевірки"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Завершено"
 
@@ -5422,6 +5471,22 @@ msgstr "Він зупиняється за мить. Підписники, як�
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Це був {name} ({total}). Виберіть його знову, щоб надіслати лише відсутнє."
 
+#: src/features/status/LinkedSection.tsx
+msgid "It was closed before its turn."
+msgstr "Її закрили до того, як дійшла черга."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was deleted."
+msgstr "Її видалили."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was skipped."
+msgstr "Її пропустили."
+
+#: src/features/status/LinkedSection.tsx
+msgid "It was unlinked from the incident."
+msgstr "Її відв’язали від інциденту."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Він діятиме від вашого імені, <0>{email}</0>, лише з тим доступом, який ви дозволите нижче."
@@ -5641,6 +5706,10 @@ msgstr "Затримка"
 msgid "Later"
 msgstr "Пізніше"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Latest reply"
+msgstr "Остання відповідь"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Launcher color"
 msgstr "Колір кнопки чату"
@@ -5698,6 +5767,53 @@ msgstr "Посилання для вашого адміністратора Micr
 #: src/components/common/text.ts
 msgid "Link in a mail"
 msgstr "Посилання в листі"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link the selected conversations to an incident"
+msgstr "Прив’язати вибрані розмови до інциденту"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link the selected conversations to…"
+msgstr "Прив’язати вибрані розмови до…"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link this conversation to an incident…"
+msgstr "Прив’язати цю розмову до інциденту…"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link to a status incident"
+msgstr "Прив’язати до інциденту статусу"
+
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Link to an incident"
+msgstr "Прив’язати до інциденту"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Link to an incident ({linkKey})"
+msgstr "Прив’язати до інциденту ({linkKey})"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Linked"
+msgstr "Прив’язана"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked so far: {done}"
+msgstr "Прив’язано поки що: {done}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked the selected conversations to {title}"
+msgstr "Вибрані розмови прив’язано до інциденту {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linked to {title}"
+msgstr "Прив’язано до інциденту {title}"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Linking…"
+msgstr "Прив’язуємо…"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
@@ -6809,6 +6925,10 @@ msgstr "У цьому поданні немає контактів."
 msgid "No contacts yet. They appear when someone writes in."
 msgstr "Контактів поки немає. Вони з'являться, коли хтось напише."
 
+#: src/features/status/LinkedSection.tsx
+msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
+msgstr "Жодна розмова ще не прив’язана. Відкрийте розмову й виберіть «Прив’язати до інциденту» або позначте кілька у списку."
+
 #: src/features/docs/DocsPages.tsx
 msgid "No conversations from this page."
 msgstr "З цієї сторінки немає розмов."
@@ -6889,6 +7009,14 @@ msgstr "Імпортів поки немає."
 #: src/features/status/StatusColumn.tsx
 msgid "No inbox to show a status page for."
 msgstr "Немає скриньки, для якої можна показати сторінку статусу."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident matches."
+msgstr "Жоден інцидент не збігається."
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No incident or maintenance is open on any status page."
+msgstr "На жодній сторінці статусу немає відкритого інциденту чи обслуговування."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -7011,6 +7139,10 @@ msgstr "немає облікового запису SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Немає облікового запису SMTP"
+
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "No status page yet. Create one under Status first."
+msgstr "Сторінок статусу ще немає. Спершу створіть її в розділі «Статус»."
 
 #: src/features/status/StatusColumn.tsx
 msgid "No status page yet. Owners and admins create it."
@@ -7508,6 +7640,10 @@ msgstr "По одному в рядку, до 20."
 msgid "One per product or brand"
 msgstr "По одній на продукт або бренд"
 
+#: src/features/status/LinkedSection.tsx
+msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
+msgstr "Одна відповідь, написана один раз, іде від вашого імені в кожну відкриту розмову, прив’язану до інциденту {title}, власним каналом кожної розмови."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Один рядок на подію, спершу старі: хто дав згоду чи відписався, коли, як, з якої сторінки та IP-адреси і які слова бачив. Зберігайте як доказ згоди (GDPR ст. 7, KVKK), щоб відповісти людині, яка питає, що у вас зберігається, або щоб самим зареєструвати згоди в İYS. Формули електронних таблиць у CSV знешкоджено."
@@ -7727,6 +7863,10 @@ msgstr "Відкриті розмови"
 #: src/features/team/TeamColumn.tsx
 msgid "Open conversations assigned"
 msgstr "Призначено відкритих розмов"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Open conversations that get this reply: {open}"
+msgstr "Відкриті розмови, які отримають цю відповідь: {open}"
 
 #: src/features/docs/DocsPages.tsx
 msgid "open discussions"
@@ -8281,6 +8421,10 @@ msgstr "Виберіть поштовий канал цієї скриньки �
 msgid "Pick an inbox"
 msgstr "Виберіть скриньку"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Pick an open incident or maintenance"
+msgstr "Виберіть відкритий інцидент або обслуговування"
+
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
@@ -8302,6 +8446,10 @@ msgstr "Виберіть хоча б одну область доступу."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Виберіть хоча б один."
+
+#: src/features/inbox/ChatList.tsx
+msgid "Pick conversations"
+msgstr "Виберіть розмови"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
@@ -9135,6 +9283,14 @@ msgstr "Відповісти й вирішити"
 msgid "Reply posted"
 msgstr "Відповідь опубліковано"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Reply progress"
+msgstr "Хід надсилання відповіді"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply text"
+msgstr "Текст відповіді"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Час відповіді"
@@ -9152,6 +9308,19 @@ msgstr "Відповісти <0>{name}</0>"
 #: src/features/inbox/ChatList.tsx
 msgid "Reply to a broadcast"
 msgstr "Відповідь на розсилку"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked"
+msgstr "Відповісти прив’язаним"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked ({key})"
+msgstr "Відповісти прив’язаним ({key})"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkedSection.tsx
+msgid "Reply to linked conversations"
+msgstr "Відповісти в прив’язані розмови"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9270,6 +9439,7 @@ msgstr "Повертає вас на"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Перевірка"
 
@@ -9569,6 +9739,10 @@ msgstr "Пошук у цій розмові"
 msgid "Search in this conversation ({0})"
 msgstr "Пошук у цій розмові ({0})"
 
+#: src/features/status/LinkIncidentDialog.tsx
+msgid "Search incidents"
+msgstr "Шукати інциденти"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Пошук людей, дій або налаштувань"
@@ -9605,9 +9779,25 @@ msgstr "Розділи"
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Дивіться, де вони, що в них відкрито і що вони зробили сьогодні."
 
+#: src/features/inbox/ChatList.tsx
+msgid "Select conversations"
+msgstr "Вибрати розмови"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the conversation under the cursor"
+msgstr "Вибрати розмову під курсором"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Вибрати попередній або наступний блок"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selected: {picked}"
+msgstr "Вибрано: {picked}"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Selection"
+msgstr "Вибір"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Selector"
@@ -9724,6 +9914,10 @@ msgstr "Лише надсилання"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Надіслати або додати нотатку в розмові чату чи застосунку (⇧↵ для нового рядка)"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Send reply"
+msgstr "Надіслати відповідь"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Надіслати підтвердження"
@@ -9792,9 +9986,21 @@ msgstr "Надсилання електронною поштою…"
 msgid "Sending channel"
 msgstr "Канал надсилання"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed: {reason}"
+msgstr "Не вдалося надіслати: {reason}"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending failed."
+msgstr "Не вдалося надіслати."
+
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Надсилання вже почалося. Натомість призупиніть або скасуйте його."
+
+#: src/features/status/LinkedSection.tsx
+msgid "Sending kept failing, so Yuva gave up."
+msgstr "Надсилання раз у раз не вдавалося, і Yuva здалася."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -9819,6 +10025,7 @@ msgid "Sending, then closing…"
 msgstr "Надсилання, потім закриття…"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Надсилання…"
 
@@ -9848,6 +10055,7 @@ msgstr "надіслано"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Sent"
 msgstr "Надіслано"
 
@@ -10351,6 +10559,7 @@ msgid "Skip threads that contain only automatic mail"
 msgstr "Пропускати ланцюжки, що містять лише автоматичну пошту"
 
 #: src/components/common/text.ts
+#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Пропущено"
 
@@ -10990,6 +11199,10 @@ msgstr "Сторінка згоди позначає те, що запитує �
 msgid "The contact was deleted"
 msgstr "Контакт було видалено"
 
+#: src/features/status/LinkedSection.tsx
+msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
+msgstr "Розмови залишаються відкритими. Клієнти отримують відповідь одразу, і її не можна відкликати."
+
 #: src/features/status/MonitorsTab.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Поточна адреса перестає працювати одразу. Оновіть усе, що її викликає."
@@ -11238,6 +11451,10 @@ msgstr "Остання перевірка доставлюваності зна�
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Закон вимагає, щоб кожен маркетинговий лист повідомляв, хто його надсилає і як із ним зв'язатися (CAN-SPAM, CASL, Положення Туреччини про комерційні комунікації). Yuva розміщує це в підвалі кожної розсилки з цієї скриньки, тож заповніть це до першої."
+
+#: src/features/status/LinkedSection.tsx
+msgid "The limit of 5,000 is reached"
+msgstr "Досягнуто ліміту в 5 000"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
@@ -12282,6 +12499,14 @@ msgstr "Стеження вимкнено"
 msgid "Unknown device"
 msgstr "Невідомий пристрій"
 
+#: src/features/status/LinkedSection.tsx
+msgid "Unlink {name}"
+msgstr "Відв’язати {name}"
+
+#: src/features/status/IncidentChips.tsx
+msgid "Unlink from {title}"
+msgstr "Відв’язати від {title}"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Unlock"
 msgstr "Розблокувати"
@@ -12690,6 +12915,7 @@ msgstr "Візити на ваші сайти з utm_campaign={campaign} від 
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Очікування"
 
@@ -12841,6 +13067,10 @@ msgstr "На що вони погодилися?"
 #: src/features/status/IncidentPane.tsx
 msgid "What do customers need to know?"
 msgstr "Що потрібно знати клієнтам?"
+
+#: src/features/status/LinkedSection.tsx
+msgid "What do these customers need to know?"
+msgstr "Що потрібно знати цим клієнтам?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -13317,6 +13547,10 @@ msgstr "you@company.com"
 #: src/features/auth/SignInForm.tsx
 msgid "you@example.com"
 msgstr "you@example.com"
+
+#: src/features/status/LinkedSection.tsx
+msgid "Your access ended before it was sent."
+msgstr "Ваш доступ скінчився до надсилання."
 
 #: src/features/account/AccountPage.tsx
 msgid "Your account"

@@ -433,6 +433,8 @@ export function useErrorText() {
     if (err.code === "incident_closed")
       return t`The incident is already resolved or completed, so it takes no more changes.`
     if (err.code === "incident_published") return t`Only a draft can be deleted. Post an update instead.`
+    if (err.code === "too_many_links")
+      return t`An incident takes at most 5,000 linked conversations. Unlink some first.`
     if (err.code === "annotation_read_only") return t`Yuva's own notes cannot be changed.`
     switch (err.status) {
       case 400:

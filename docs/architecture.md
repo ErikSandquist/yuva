@@ -2188,6 +2188,8 @@ incident before a customer writes, and the conversations an outage brings are an
   `GET /v1/status-pages/{id}/incidents/{id}/replies/{replyId}`; the `202` carries that id. A job
   checks its caller again when it runs: a revoked or expired key, a revoked OAuth grant, a removed
   member or a lost scope sends nothing.
+  The panel reads a reply's outcome every two seconds while any conversation is `pending`, since no realtime
+  event carries it, and lists the skipped and failed ones when it is done.
 - **API and access.** `/v1/status-pages`, `/v1/status-pages/{id}/components`, `/groups`,
   `/incidents`, `/incidents/{id}/updates`, `/incidents/{id}/conversations`, `/monitors`,
   `/monitors/{id}/checks`; `/v1/status-pages/{id}/preview` renders the public page for members.

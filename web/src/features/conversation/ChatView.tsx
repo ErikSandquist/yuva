@@ -40,6 +40,9 @@ import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
 import { ConversationMenu } from "@/features/conversation/ConversationMenu"
 import { CategoryChip } from "@/features/conversation/Feedback"
+import { IncidentChips } from "@/features/status/IncidentChips"
+import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
+import { useConversationIncidents } from "@/features/status/linked"
 import { FromConversationDialog } from "@/features/docs/discussions/FromConversation"
 import { conversationPage, PageLine } from "@/features/docs/PageContext"
 import {
@@ -252,6 +255,8 @@ function Loaded({
   }
   const pageLine = !!conversationPage(c)
   const [discussing, setDiscussing] = useState(false)
+  const [linking, setLinking] = useState(false)
+  const incidents = useConversationIncidents(c.id).data ?? []
   const chipLabels = labels.filter((l) => c.labels.includes(l.id))
   const assignee = c.assignee_id ? members.get(c.assignee_id) : undefined
 
@@ -342,6 +347,7 @@ function Loaded({
     more: () => setMoreOpen(true),
     history: () => setHistoryOpen((o) => !o),
     discussion: () => setDiscussing(true),
+    incident: () => setLinking(true),
   }
   useCommandHandlers(handlers)
   useHotkeys({
@@ -364,6 +370,7 @@ function Loaded({
     [SHORTCUTS.pin]: togglePin,
     [SHORTCUTS.unread]: markUnread,
     [SHORTCUTS.discussion]: handlers.discussion,
+    [SHORTCUTS.incident]: handlers.incident,
   })
 
   const sep = <span aria-hidden>·</span>
@@ -542,6 +549,7 @@ function Loaded({
             onPin={togglePin}
             onUnread={markUnread}
             onDiscussion={handlers.discussion}
+            onIncident={handlers.incident}
             folded={phone ? { hand: handlers.hand, snooze: handlers.snooze, find: openFind } : undefined}
           />
         </div>
@@ -552,6 +560,7 @@ function Loaded({
         c.related_conversation_id ||
         c.broadcast_id ||
         c.imported ||
+        incidents.length > 0 ||
         viewers.length > 0 ||
         typingMate) && (
         <div
@@ -580,6 +589,7 @@ function Loaded({
               <RelatedLine id={c.related_conversation_id} hrefFor={(id) => `/conversations/${id}`} />
             </>
           )}
+          <IncidentChips conversationId={c.id} items={incidents} />
           <Watchers conversationId={c.id} />
         </div>
       )}
@@ -706,6 +716,13 @@ function Loaded({
           autoFocus={fine && revision === 0}
         />
       </Composer>
+      {linking && (
+        <LinkIncidentDialog
+          conversationIds={[c.id]}
+          linked={new Set(incidents.map((i) => i.id))}
+          onClose={() => setLinking(false)}
+        />
+      )}
       {discussing && <FromConversationDialog c={c} messages={shown} onClose={() => setDiscussing(false)} />}
       {!inlinePanel && (
         <ContactSheet contactId={c.contact_id} conversationId={c.id} open={sheet} onOpenChange={setSheet} />

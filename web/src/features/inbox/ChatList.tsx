@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import {
   BookUserIcon,
   BotIcon,
+  CheckIcon,
   ClockIcon,
   MailIcon,
   MegaphoneIcon,
@@ -10,8 +11,10 @@ import {
   PinOffIcon,
   CommandIcon,
   EllipsisVerticalIcon,
+  FlameIcon,
   InboxIcon,
   KeyboardIcon,
+  ListChecksIcon,
   MessageSquarePlusIcon,
   ReplyIcon,
   SearchIcon,
@@ -62,6 +65,8 @@ import { Ticks } from "@/features/conversation/messages/MessageActions"
 import { currentRating, RatingMark } from "@/features/conversation/rating"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useListCursor } from "@/features/inbox/listCursor"
+import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
+import { useHotkeys } from "@/hooks/use-hotkeys"
 import { ImportBanner } from "@/features/migrations/ImportBanner"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListActions } from "@/features/inbox/memberState"
@@ -184,12 +189,16 @@ function Row({
   current,
   cursor,
   live,
+  selecting,
+  checked,
   onOpen,
 }: {
   c: ConversationListItem
   current: boolean
   cursor: boolean
   live: boolean
+  selecting: boolean
+  checked: boolean
   onOpen: () => void
 }) {
   const { t, i18n } = useLingui()
@@ -214,11 +223,25 @@ function Row({
           cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
         )}
         aria-current={current || undefined}
+        aria-pressed={selecting ? checked : undefined}
+        data-checked={checked || undefined}
         data-testid="list-row"
         data-conversation-id={c.id}
         data-unread={c.unread || undefined}
         data-pinned={c.pinned_at ? true : undefined}
       >
+        {selecting && (
+          <span
+            aria-hidden
+            className={cn(
+              "grid size-5 shrink-0 place-items-center rounded-[6px] border",
+              checked ? "border-brand bg-brand text-white" : "border-input bg-background"
+            )}
+            data-testid="row-check"
+          >
+            {checked && <CheckIcon className="size-3.5" strokeWidth={3} />}
+          </span>
+        )}
         <span className="relative shrink-0 py-2.5">
           {visitor ? (
             <VisitorAvatar className="size-12" />
@@ -411,7 +434,7 @@ function StartConversation({ open, onOpenChange }: { open: boolean; onOpenChange
   )
 }
 
-function ListHeader() {
+function ListHeader({ onSelect }: { onSelect: () => void }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { membership, canManage } = useSession()
@@ -474,6 +497,12 @@ function ListHeader() {
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={onSelect} data-testid="select-conversations">
+            <ListChecksIcon />
+            <Trans>Select conversations</Trans>
+            <DropdownMenuShortcut>{keyLabel(SHORTCUTS.select).join(" ")}</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={openPalette}>
             <CommandIcon />
             <Trans>Everything</Trans>
@@ -509,6 +538,9 @@ export function ChatList({
   const scroller = useRef<HTMLDivElement>(null)
   const sentinel = useRef<HTMLDivElement>(null)
   const [nearEnd, setNearEnd] = useState(false)
+  const [selecting, setSelecting] = useState(false)
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [linking, setLinking] = useState(false)
 
   const [source] = useSourceFilter()
   const narrowed = !!source.source || !!source.site
@@ -531,6 +563,38 @@ export function ChatList({
   const rows = [...pinnedRows, ...mainRows]
   const live = useLiveIds(rows.filter((c) => c.status !== "closed"))
   const { cursorId, setCursorId, moveCursor, openCursor } = useListCursor(rows, currentId, onOpen, active, scroller)
+
+  const toggle = (id: string) => {
+    setSelecting(true)
+    setSelected((s) => {
+      const next = new Set(s)
+      if (!next.delete(id)) next.add(id)
+      return next
+    })
+  }
+  const stopSelecting = () => {
+    setSelecting(false)
+    setSelected(new Set())
+  }
+  const linkKey = keyLabel(SHORTCUTS.linkSelected).join("")
+  const chosen = rows.filter((c) => selected.has(c.id)).map((c) => c.id)
+  const picked = chosen.length
+  useHotkeys(
+    {
+      [SHORTCUTS.select]: () => {
+        const id = cursorId ?? currentId
+        if (id) toggle(id)
+        else setSelecting(true)
+      },
+      ...(selecting
+        ? {
+            Escape: stopSelecting,
+            ...(chosen.length > 0 ? { [SHORTCUTS.linkSelected]: () => setLinking(true) } : {}),
+          }
+        : {}),
+    },
+    active
+  )
 
   useEffect(() => {
     if (focus <= focused) return
@@ -580,7 +644,7 @@ export function ChatList({
 
   return (
     <nav aria-label={t`Conversations`} className="flex h-full min-h-0 flex-col bg-background" data-testid="chat-list">
-      <ListHeader />
+      <ListHeader onSelect={() => setSelecting(true)} />
       <div className="flex shrink-0 items-center gap-1 px-3 pb-2">
         <InputGroup className="h-9 flex-1 rounded-xl border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
           <InputGroupAddon>
@@ -622,35 +686,61 @@ export function ChatList({
         </InputGroup>
         <InboxPicker className="max-w-44" />
       </div>
-      <div
-        className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"
-        role="toolbar"
-        aria-label={t`Filter`}
-        data-testid="chips"
-      >
-        {CHIPS.map((k) => (
-          <button
-            key={k}
-            type="button"
-            aria-pressed={chip === k}
-            onClick={() => setChip(k)}
-            className={cn(
-              "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-              chip === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
-            )}
-            data-testid={`chip-${k}`}
+      {selecting ? (
+        <div
+          className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pb-2.5"
+          role="toolbar"
+          aria-label={t`Selection`}
+          data-testid="selection-bar"
+        >
+          <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
+            {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
+          </span>
+          <Button
+            size="sm"
+            disabled={chosen.length === 0}
+            onClick={() => setLinking(true)}
+            title={t`Link to an incident (${linkKey})`}
+            data-testid="link-selected"
           >
-            {labels[k]}
-          </button>
-        ))}
-        <SourceFilter
-          inboxId={inboxId}
-          onChange={() => {
-            setCursorId(null)
-            scroller.current?.scrollTo({ top: 0 })
-          }}
-        />
-      </div>
+            <FlameIcon />
+            <Trans>Link to an incident</Trans>
+          </Button>
+          <Button variant="ghost" size="sm" onClick={stopSelecting} title={t`Clear the selection (Esc)`}>
+            <Trans>Cancel</Trans>
+          </Button>
+        </div>
+      ) : (
+        <div
+          className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"
+          role="toolbar"
+          aria-label={t`Filter`}
+          data-testid="chips"
+        >
+          {CHIPS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              aria-pressed={chip === k}
+              onClick={() => setChip(k)}
+              className={cn(
+                "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
+                chip === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
+              )}
+              data-testid={`chip-${k}`}
+            >
+              {labels[k]}
+            </button>
+          ))}
+          <SourceFilter
+            inboxId={inboxId}
+            onChange={() => {
+              setCursorId(null)
+              scroller.current?.scrollTo({ top: 0 })
+            }}
+          />
+        </div>
+      )}
       <AwayBanner />
       <CleanupBanner onReview={onOpen} />
       <ImportBanner />
@@ -695,7 +785,9 @@ export function ChatList({
                 current={c.id === currentId}
                 cursor={c.id === cursorId}
                 live={live.has(c.id)}
-                onOpen={() => onOpen(c.id)}
+                selecting={selecting}
+                checked={selected.has(c.id)}
+                onOpen={() => (selecting ? toggle(c.id) : onOpen(c.id))}
               />
             ))}
             {pinnedRows.length > 0 && mainRows.length > 0 && <div className="mt-1 border-t" role="separator" />}
@@ -706,7 +798,9 @@ export function ChatList({
                 current={c.id === currentId}
                 cursor={c.id === cursorId}
                 live={live.has(c.id)}
-                onOpen={() => onOpen(c.id)}
+                selecting={selecting}
+                checked={selected.has(c.id)}
+                onOpen={() => (selecting ? toggle(c.id) : onOpen(c.id))}
               />
             ))}
           </>
@@ -720,6 +814,9 @@ export function ChatList({
         )}
         <ErrorLine error={list.error} className="px-4 py-2" />
       </div>
+      {linking && (
+        <LinkIncidentDialog conversationIds={chosen} onClose={() => setLinking(false)} onDone={stopSelecting} />
+      )}
     </nav>
   )
 }

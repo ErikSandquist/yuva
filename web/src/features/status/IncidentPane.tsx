@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { CheckIcon, PencilIcon, SendIcon, Trash2Icon } from "lucide-react"
 import { useRef, useState } from "react"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate, useParams, useSearchParams } from "react-router"
 
 import { ErrorLine, toast, useConfirm } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, ChoiceSelect, Section } from "@/features/settings/ui"
 import { IncidentBadges } from "@/features/status/IncidentsTab"
 import { IncidentDialog } from "@/features/status/IncidentDialog"
+import { LinkedConversations } from "@/features/status/LinkedSection"
 import {
   statusLink,
   useIncidentMutations,
@@ -119,6 +120,8 @@ export function IncidentPane() {
   const text = useStatusText()
   const m = useIncidentMutations(pageId)
   const [confirm, confirmDialog] = useConfirm()
+  const [params, setParams] = useSearchParams()
+  const replyId = params.get("reply") ?? ""
   const [editing, setEditing] = useState(false)
   const [state, setState] = useState<StatusIncidentState | null>(null)
   const [body, setBody] = useState("")
@@ -325,6 +328,13 @@ export function IncidentPane() {
           </form>
         </Section>
       )}
+      <LinkedConversations
+        pageId={pageId}
+        incident={i}
+        replyId={replyId}
+        onReply={(id) => setParams({ reply: id }, { replace: true })}
+        onDismissReply={() => setParams({}, { replace: true })}
+      />
       <Section title={<Trans>Updates</Trans>}>
         <Card flush>
           <ul data-testid="status-updates">
