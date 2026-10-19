@@ -73,7 +73,8 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .uptime{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .by{min-inline-size:max-content;gap:6px;font-size:12px;color:var(--faint);white-space:nowrap}
 .by svg{flex:none;inline-size:14px;block-size:14px;display:block}
-.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block-start:1px solid var(--rule)}
+.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.part,.blank{border-block-start:1px solid var(--rule)}
 .part{justify-content:space-between;align-items:baseline;gap:8px;min-block-size:44px;padding-block:12px;font-size:13px}
 .part:not(:nth-child(4n+1)),.blank:not(:nth-child(4n+1)){border-inline-start:1px solid var(--rule)}
 .part .name,.part .state{display:flex;align-items:center;block-size:20px;line-height:20px}
