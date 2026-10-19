@@ -12338,6 +12338,10 @@ msgstr "האתר הזה אינו מורשה להשתמש בערוץ התיעוד
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "ההרשמה הזאת כבר לא ממתינה לאישור."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "זו הייתה הודעת סגירה ולא נשלחה הודעה קודמת, ולכן איש לא ידע על האירוע"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "החלון הזה איבד את הדף שפתח אותו. סגור אותו והיכנס שוב מ-{host}."

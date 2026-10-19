@@ -12338,6 +12338,10 @@ msgstr "Цьому сайту не дозволено використовува
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Ця підписка більше не чекає підтвердження."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Це було повідомлення про завершення, а попереднього повідомлення надіслано не було, тож ніхто не знав про інцидент"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Це вікно втратило сторінку, що його відкрила. Закрийте його й увійдіть знову з {host}."

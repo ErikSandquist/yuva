@@ -12338,6 +12338,10 @@ msgstr "Questo sito non è autorizzato a usare questo canale di documentazione."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Questa iscrizione non è più in attesa di conferma."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Questo era un avviso di chiusura e non era stato inviato alcun avviso precedente, quindi nessuno era a conoscenza dell'incidente"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Questa finestra ha perso la pagina che l’ha aperta. Chiudila e accedi di nuovo da {host}."

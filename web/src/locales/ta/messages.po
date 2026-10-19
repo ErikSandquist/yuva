@@ -12338,6 +12338,10 @@ msgstr "இந்தத் தளம் இந்த ஆவணச் சேன�
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "இந்தச் சந்தா இனி உறுதிப்படுத்தலுக்காகக் காத்திருக்கவில்லை."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "இது முடிவு அறிவிப்பு, இதற்கு முன் எந்த அறிவிப்பும் அனுப்பப்படவில்லை; எனவே இந்தச் சம்பவம் பற்றி யாருக்கும் தெரியாது"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "இந்தச் சாளரம் அதைத் திறந்த பக்கத்தை இழந்தது. அதை மூடி {host}-இலிருந்து மீண்டும் உள்நுழையுங்கள்."

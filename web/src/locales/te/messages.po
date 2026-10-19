@@ -12338,6 +12338,10 @@ msgstr "ఈ సైట్‌కు ఈ డాక్యుమెంటేషన్
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "ఈ సబ్‌స్క్రిప్షన్ ఇకపై నిర్ధారణ కోసం వేచి లేదు."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "ఇది ముగింపు నోటీసు, దీనికి ముందు ఎలాంటి నోటీసు పంపబడలేదు, కాబట్టి ఈ ఘటన గురించి ఎవరికీ తెలియలేదు"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "ఈ విండో దాన్ని తెరిచిన పేజీని కోల్పోయింది. దాన్ని మూసివేసి {host} నుండి మళ్లీ సైన్ ఇన్ చేయండి."

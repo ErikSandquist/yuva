@@ -13068,7 +13068,7 @@ export interface components {
             /** Format: date-time */
             unsubscribed_at?: string;
             unsubscribe_reason?: components["schemas"]["UnsubscribeReason"];
-            /** @description On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. */
+            /** @description On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component. */
             components?: string[];
             /** Format: date-time */
             created_at: string;
@@ -15546,10 +15546,11 @@ export interface components {
          * @description `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
          *     bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
          *     notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
-         *     channel cannot send. `no_recipients`: no subscriber matched.
+         *     channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
+         *     notice, and no earlier notice of the incident was sent, so nobody had heard of it.
          * @enum {string}
          */
-        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients";
+        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients" | "nothing_earlier";
         /**
          * @description Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
          *     `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late

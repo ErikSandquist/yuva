@@ -12338,6 +12338,10 @@ msgstr "此站點不允許使用此文件頻道。"
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "此訂閱不再等待確認。"
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "這是一則結案通知，且之前未傳送過任何通知，因此沒有人得知這起事件"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "此視窗丟失了開啟它的頁面。請關閉它,並從 {host} 重新登入。"

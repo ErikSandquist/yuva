@@ -12338,6 +12338,10 @@ msgstr "Tento web nesmie používať tento dokumentačný kanál."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Tento odber už nečaká na potvrdenie."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Toto bolo záverečné oznámenie a žiadne skoršie sa neodoslalo, takže o incidente nikto nevedel"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Toto okno stratilo stránku, ktorá ho otvorila. Zatvorte ho a prihláste sa znova z {host}."

@@ -12338,6 +12338,10 @@ msgstr "Den här webbplatsen får inte använda den här dokumentationskanalen."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Den här prenumerationen väntar inte längre på bekräftelse."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Detta var ett avslutande meddelande och inget tidigare meddelande skickades, så ingen hade hört talas om incidenten"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Det här fönstret förlorade sidan som öppnade det. Stäng det och logga in igen från {host}."

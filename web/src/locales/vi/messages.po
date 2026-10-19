@@ -12338,6 +12338,10 @@ msgstr "Trang web này không được phép dùng kênh tài liệu này."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Đăng ký này không còn chờ xác nhận."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Đây là thông báo kết thúc và trước đó chưa có thông báo nào được gửi, nên không ai biết về sự cố này"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Cửa sổ này mất trang đã mở nó. Hãy đóng và đăng nhập lại từ {host}."

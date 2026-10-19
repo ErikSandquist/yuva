@@ -12338,6 +12338,10 @@ msgstr "Ovo web-mjesto ne smije koristiti ovaj dokumentacijski kanal."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Ova pretplata više ne čeka potvrdu."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Ovo je bila završna obavijest, a nijedna prethodna nije poslana, pa nitko nije znao za incident"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Ovaj prozor izgubio je stranicu koja ga je otvorila. Zatvorite ga i prijavite se ponovno s {host}."

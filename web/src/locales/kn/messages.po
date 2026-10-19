@@ -12338,6 +12338,10 @@ msgstr "ಈ ಡಾಕ್ಯುಮೆಂಟೇಶನ್ ಚಾನೆಲ್ ಬಳ
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "ಈ ಚಂದಾದಾರಿಕೆ ಇನ್ನು ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯುತ್ತಿಲ್ಲ."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "ಇದು ಮುಕ್ತಾಯದ ಸೂಚನೆಯಾಗಿತ್ತು ಮತ್ತು ಇದಕ್ಕೂ ಮೊದಲು ಯಾವುದೇ ಸೂಚನೆಯನ್ನು ಕಳುಹಿಸಲಾಗಿರಲಿಲ್ಲ, ಆದ್ದರಿಂದ ಈ ಘಟನೆಯ ಬಗ್ಗೆ ಯಾರಿಗೂ ತಿಳಿದಿರಲಿಲ್ಲ"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "ಈ ವಿಂಡೋ ತನ್ನನ್ನು ತೆರೆದ ಪುಟವನ್ನು ಕಳೆದುಕೊಂಡಿತು. ಇದನ್ನು ಮುಚ್ಚಿ ಮತ್ತು {host} ನಿಂದ ಮತ್ತೆ ಸೈನ್ ಇನ್ ಮಾಡಿ."

@@ -18,6 +18,7 @@ function useReasons(): Record<StatusNoticeSkipReason, string> {
     unpublished: t`The page or the incident is not public`,
     sender_not_ready: t`The sending channel cannot send`,
     no_recipients: t`No subscriber matched`,
+    nothing_earlier: t`This was a closing notice and no earlier notice was sent, so nobody had heard of the incident`,
   }
 }
 

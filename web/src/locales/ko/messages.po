@@ -12338,6 +12338,10 @@ msgstr "이 사이트는 이 문서 채널을 사용할 수 없습니다."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "이 구독은 더 이상 확인을 기다리고 있지 않습니다."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "종료 알림이었고 이전에 발송된 알림이 없어 아무도 이 인시던트에 대해 알지 못했습니다"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "이 창이 자신을 연 페이지를 잃었습니다. 닫고 {host}에서 다시 로그인하세요."

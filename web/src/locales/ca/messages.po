@@ -12338,6 +12338,10 @@ msgstr "Aquest lloc no té permís per fer servir aquest canal de documentació.
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Aquesta subscripció ja no espera confirmació."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Era un avís de tancament i no s'havia enviat cap avís anterior, de manera que ningú coneixia l'incident"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Aquesta finestra ha perdut la pàgina que l'ha obert. Tanca-la i inicia la sessió de nou des de {host}."

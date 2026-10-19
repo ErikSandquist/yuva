@@ -12338,6 +12338,10 @@ msgstr "Tapak ini tidak dibenarkan menggunakan saluran dokumentasi ini."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Langganan ini tidak lagi menunggu pengesahan."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Ini ialah notis penutup dan tiada notis terdahulu dihantar, jadi tiada sesiapa yang tahu tentang insiden itu"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Tetingkap ini kehilangan halaman yang membukanya. Tutupnya dan log masuk semula daripada {host}."

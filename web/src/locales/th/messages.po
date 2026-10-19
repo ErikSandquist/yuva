@@ -12338,6 +12338,10 @@ msgstr "ไซต์นี้ไม่ได้รับอนุญาตให
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "การสมัครรับนี้ไม่ได้รอการยืนยันอีกต่อไป"
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "นี่เป็นการแจ้งปิดเหตุการณ์ และไม่ได้ส่งการแจ้งก่อนหน้านี้ จึงไม่มีใครทราบเรื่องเหตุการณ์นี้มาก่อน"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "หน้าต่างนี้สูญเสียหน้าที่เปิดมัน ปิดแล้วลงชื่อเข้าใช้อีกครั้งจาก {host}"

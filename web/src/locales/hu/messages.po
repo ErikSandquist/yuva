@@ -12338,6 +12338,10 @@ msgstr "Ez a webhely nem használhatja ezt a dokumentációs csatornát."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Ez a feliratkozás már nem vár megerősítésre."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Ez lezáró értesítés volt, korábbi értesítés pedig nem ment ki, így senki sem tudott az incidensről"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Ez az ablak elvesztette az őt megnyitó oldalt. Zárd be, és jelentkezz be újra innen: {host}."

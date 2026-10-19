@@ -12338,6 +12338,10 @@ msgstr "এই সাইটকে এই ডকুমেন্টেশন চ�
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "এই সাবস্ক্রিপশন আর নিশ্চিতকরণের অপেক্ষায় নেই।"
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "এটি একটি সমাপ্তির নোটিস ছিল এবং এর আগে কোনো নোটিস পাঠানো হয়নি, তাই ঘটনাটি সম্পর্কে কেউ জানতেই পারেননি"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "এই উইন্ডো যে পেজ এটি খুলেছিল তা হারিয়েছে। এটি বন্ধ করুন এবং {host} থেকে আবার সাইন ইন করুন।"

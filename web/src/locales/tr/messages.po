@@ -12338,6 +12338,10 @@ msgstr "Bu sitenin bu dokümantasyon kanalını kullanmasına izin verilmiyor."
 msgid "This subscription is no longer waiting for confirmation."
 msgstr "Bu abonelik artık onay beklemiyor."
 
+#: src/features/status/Notices.tsx
+msgid "This was a closing notice and no earlier notice was sent, so nobody had heard of the incident"
+msgstr "Bu bir kapanış bildirimiydi ve daha önce hiç bildirim gönderilmediği için kimse olaydan haberdar değildi"
+
 #: src/features/account/ConnectPage.tsx
 msgid "This window lost the page that opened it. Close it and sign in again from {host}."
 msgstr "Bu pencere, onu açan sayfayla bağlantısını kaybetti. Kapatın ve {host} üzerinden yeniden oturum açın."
