@@ -19,8 +19,22 @@ import phoneThreadEnDark from "@/assets/shots/panel-phone-thread-en-dark.webp"
 import phoneThreadEnLight from "@/assets/shots/panel-phone-thread-en-light.webp"
 import phoneThreadTrDark from "@/assets/shots/panel-phone-thread-tr-dark.webp"
 import phoneThreadTrLight from "@/assets/shots/panel-phone-thread-tr-light.webp"
-import iosEn from "@/assets/shots/ios-list-en.webp"
-import iosTr from "@/assets/shots/ios-list-tr.webp"
+import iosListEnDark from "@/assets/shots/ios-list-en-dark.webp"
+import iosListEnLight from "@/assets/shots/ios-list-en-light.webp"
+import iosListTrDark from "@/assets/shots/ios-list-tr-dark.webp"
+import iosListTrLight from "@/assets/shots/ios-list-tr-light.webp"
+import iosThreadEnDark from "@/assets/shots/ios-thread-en-dark.webp"
+import iosThreadEnLight from "@/assets/shots/ios-thread-en-light.webp"
+import iosThreadTrDark from "@/assets/shots/ios-thread-tr-dark.webp"
+import iosThreadTrLight from "@/assets/shots/ios-thread-tr-light.webp"
+import androidListEnDark from "@/assets/shots/android-list-en-dark.webp"
+import androidListEnLight from "@/assets/shots/android-list-en-light.webp"
+import androidListTrDark from "@/assets/shots/android-list-tr-dark.webp"
+import androidListTrLight from "@/assets/shots/android-list-tr-light.webp"
+import androidThreadEnDark from "@/assets/shots/android-thread-en-dark.webp"
+import androidThreadEnLight from "@/assets/shots/android-thread-en-light.webp"
+import androidThreadTrDark from "@/assets/shots/android-thread-tr-dark.webp"
+import androidThreadTrLight from "@/assets/shots/android-thread-tr-light.webp"
 import phoneEnDark from "@/assets/shots/panel-phone-list-en-dark.webp"
 import phoneEnLight from "@/assets/shots/panel-phone-list-en-light.webp"
 import phoneTrDark from "@/assets/shots/panel-phone-list-tr-dark.webp"
@@ -45,7 +59,8 @@ export type Shots = {
   feedback: Pair
   phone: Pair
   widget: Pair
-  ios: ImageMetadata
+  ios: { list: Pair; thread: Pair }
+  android: { list: Pair; thread: Pair }
 }
 
 const en: Shots = {
@@ -57,7 +72,14 @@ const en: Shots = {
   feedback: { light: feedbackEnLight, dark: feedbackEnDark },
   phone: { light: phoneEnLight, dark: phoneEnDark },
   widget: { light: widgetEnLight, dark: widgetEnDark },
-  ios: iosEn,
+  ios: {
+    list: { light: iosListEnLight, dark: iosListEnDark },
+    thread: { light: iosThreadEnLight, dark: iosThreadEnDark },
+  },
+  android: {
+    list: { light: androidListEnLight, dark: androidListEnDark },
+    thread: { light: androidThreadEnLight, dark: androidThreadEnDark },
+  },
 }
 
 const byLocale: Partial<Record<Locale, Shots>> = {
@@ -70,7 +92,14 @@ const byLocale: Partial<Record<Locale, Shots>> = {
     feedback: { light: feedbackTrLight, dark: feedbackTrDark },
     phone: { light: phoneTrLight, dark: phoneTrDark },
     widget: { light: widgetTrLight, dark: widgetTrDark },
-    ios: iosTr,
+    ios: {
+      list: { light: iosListTrLight, dark: iosListTrDark },
+      thread: { light: iosThreadTrLight, dark: iosThreadTrDark },
+    },
+    android: {
+      list: { light: androidListTrLight, dark: androidListTrDark },
+      thread: { light: androidThreadTrLight, dark: androidThreadTrDark },
+    },
   },
 }
 

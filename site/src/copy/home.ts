@@ -63,6 +63,16 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
     features: {
       guide: i18n._(msg`Read the guide`),
       templateAlt: (name: string) => i18n._(msg`Preview of the ${name} template`),
+      appAlts: {
+        list: (platform: string) =>
+          i18n._(
+            msg`The support screen of the ${platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message.`
+          ),
+        thread: (platform: string) =>
+          i18n._(
+            msg`A conversation in the ${platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back.`
+          ),
+      },
       alts: {
         phone: i18n._(
           msg`The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom.`

@@ -44,6 +44,10 @@ msgstr "{name}: {description} Yuva యొక్క ఉచిత ఇమెయి�
 msgid "a contact and their data"
 msgstr "ఒక కాంటాక్ట్ మరియు దాని డేటా"
 
+#: src/copy/home.ts
+msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
+msgstr "{platform} SDK లో ఒక సంభాషణ: ఒక ఆర్డర్ గురించి ప్రశ్న, ట్రాకింగ్ లింక్‌తో టీమ్ సమాధానాలు, సమాధానం రాయడానికి ఒక బాక్స్."
+
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
 msgstr "ఒక కస్టమర్ మీ సపోర్ట్ చిరునామాల్లో ఒకదానికి రాస్తారు, ఉదాహరణకు support@example.com."
@@ -1731,6 +1735,10 @@ msgstr "ప్యానెల్‌లో పంపిన న్యూస్‌�
 #: src/copy/contact.ts
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "సర్వర్, ప్యానెల్ AGPL-3.0, SDK లు, API ఒప్పందం MIT. కోర్ మెరుగుదలలు పబ్లిక్‌గానే ఉంటాయి."
+
+#: src/copy/home.ts
+msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
+msgstr "యాప్‌లోని {platform} SDK సపోర్ట్ స్క్రీన్: వ్యక్తి సంభాషణలు చివరి సమాధానంతో, కొత్త సందేశం రాయడానికి ఒక బటన్."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."

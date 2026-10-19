@@ -14,6 +14,10 @@ interface Props {
 const { t, shots: s, previews } = Astro.props
 const row = "grid items-center gap-10 lg:gap-16"
 const link = "mt-6 inline-flex text-sm font-medium text-brand hover:underline"
+const apps = [
+  { name: "iOS", shots: s.ios },
+  { name: "Android", shots: s.android },
+]
 ---
 
 {t.items.map((f, i) => {
@@ -81,6 +85,30 @@ const link = "mt-6 inline-flex text-sm font-medium text-brand hover:underline"
           </div>
         )}
       </div>
+      {f.id === "channels" && (
+        <div class="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-6 lg:gap-12">
+          {apps.map((app) => (
+            <figure class="min-w-0">
+              <figcaption class="mb-4 flex items-center gap-3 text-sm font-medium tracking-tight text-ink-soft after:h-px after:flex-1 after:bg-rule">
+                {app.name}
+              </figcaption>
+              <div class="grid grid-cols-2 items-start gap-3 sm:gap-4">
+                {(["list", "thread"] as const).map((view) => (
+                  <div class="overflow-hidden rounded-[1.25rem] border border-rule bg-paper lg:rounded-[1.75rem]">
+                    <Shot
+                      light={app.shots[view].light}
+                      dark={app.shots[view].dark}
+                      alt={t.appAlts[view](app.name)}
+                      widths={[240, 360, 480, 720]}
+                      sizes="(min-width: 1024px) 240px, (min-width: 640px) 22vw, calc(50vw - 22px)"
+                    />
+                  </div>
+                ))}
+              </div>
+            </figure>
+          ))}
+        </div>
+      )}
       {f.id === "designs" && (
         <ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
           {previews.map((p, n) => (

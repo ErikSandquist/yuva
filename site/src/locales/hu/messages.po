@@ -44,6 +44,10 @@ msgstr "{name}: {description} Ingyenes Yuva e-mail-sablon."
 msgid "a contact and their data"
 msgstr "egy kapcsolat és az adatai"
 
+#: src/copy/home.ts
+msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
+msgstr "Egy beszélgetés a(z) {platform} SDK-ban: kérdés egy rendelésről és a csapat válaszai nyomkövetési linkkel, valamint egy mező a válaszhoz."
+
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
 msgstr "Egy ügyfél ír az egyik támogatási címedre, például a support@example.com címre."
@@ -1731,6 +1735,10 @@ msgstr "Egy elküldött hírlevél jelentése a panelen: 240 elküldve, 5 leirat
 #: src/copy/contact.ts
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "A szerver és a panel AGPL-3.0, az SDK-k és az API-szerződés MIT. A mag fejlesztései nyilvánosak maradnak."
+
+#: src/copy/home.ts
+msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
+msgstr "A(z) {platform} SDK ügyfélszolgálati képernyője egy alkalmazásban: a személy beszélgetései a legutóbbi válasszal, és egy gomb új üzenet írásához."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
