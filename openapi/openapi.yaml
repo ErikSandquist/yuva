@@ -257,6 +257,35 @@ tags:
       `getAnalyticsRealtime`, and how collection is doing (accepted and dropped events, the GeoIP
       database) from `getAnalyticsHealth`. Locations come from the shortened address; children's
       properties keep only the country.
+  - name: status
+    description: |
+      Public status pages: one per inbox at most, with components (optionally in groups), incidents
+      and planned maintenance. The server renders a published page at its status URL
+      (`YUVA_STATUS_URL/{slug}`, or `<public URL>/status/{slug}` when that is unset) with its
+      history, incident pages, an Atom feed and a badge, and answers the same as JSON at
+      `GET /client/v1/status/{slug}`; an unpublished page answers `404` there and is seen only through
+      `previewStatusPage`.
+
+      A component's state is `operational`, `degraded`, `partial_outage`, `major_outage` or
+      `maintenance`; the page's state is the worst visible one, `maintenance` only when nothing is
+      worse. Every change is kept, so uptime per day is the share of the day not in `major_outage`,
+      counting `partial_outage` as half and leaving `maintenance` out.
+
+      An incident (`kind: incident`) moves `investigating`, `identified`, `monitoring`, `resolved`;
+      maintenance (`kind: maintenance`) `scheduled`, `in_progress`, `completed`, started and completed
+      at its window by the server unless a member does it first. A draft (`published_at` absent) is
+      seen only here; while a published incident is open, or published maintenance is in progress,
+      the components it names have the state it sets for them. Resolving or completing puts each of
+      them back to `operational`, unless another open incident holds it, which then sets its own
+      state. Updates are plain text with line breaks (links are shown as links), at most 5,000
+      characters; a published one cannot be removed, only edited with an "edited" mark. Only a draft
+      can be deleted.
+
+      Owners, admins and API keys manage pages, groups and components; agents with access to the
+      page's inbox read them, set component states and write incidents and updates. A key limited to
+      inboxes sees the pages of those inboxes. Pages the caller cannot see answer `404`. Keys and
+      OAuth tokens need `status:read` or `status:manage`; no `status:*` scope is added to keys made
+      before they existed.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -9320,6 +9349,713 @@ paths:
           $ref: "#/components/responses/Problem"
         "503":
           $ref: "#/components/responses/Problem"
+  /v1/status-pages:
+    get:
+      operationId: listStatusPages
+      summary: List status pages
+      description: |
+        The pages the caller can see, oldest first, each with its overall state.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          description: Only the page of this inbox.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The pages.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusPageList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createStatusPage
+      summary: Create a status page
+      description: |
+        A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
+        URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
+        (`400`). A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+        to the inbox's.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusPageCreate"
+      responses:
+        "201":
+          description: The page.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}:
+    get:
+      operationId: getStatusPage
+      summary: A status page
+      description: |
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "200":
+          description: The page.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusPage"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateStatusPage
+      summary: Update a status page
+      description: |
+        Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
+        takes the page off the web (`404`) at once.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusPageUpdate"
+      responses:
+        "200":
+          description: The updated page.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteStatusPage
+      summary: Delete a status page
+      description: |
+        The page with its groups, components, their history, incidents and updates.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/preview:
+    get:
+      operationId: previewStatusPage
+      summary: Preview a status page
+      description: |
+        The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
+        is sent with `Cache-Control: no-store` and its links point to the public URLs.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "200":
+          description: The rendered page.
+          content:
+            text/html:
+              schema:
+                type: string
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/groups:
+    get:
+      operationId: listStatusComponentGroups
+      summary: List a page's component groups
+      description: |
+        By `position`, then name.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "200":
+          description: The groups.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponentGroupList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createStatusComponentGroup
+      summary: Create a component group
+      description: |
+        A heading that components are shown under.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusComponentGroupCreate"
+      responses:
+        "201":
+          description: The group.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponentGroup"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/groups/{groupId}:
+    patch:
+      operationId: updateStatusComponentGroup
+      summary: Update a component group
+      description: |
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusGroupId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusComponentGroupUpdate"
+      responses:
+        "200":
+          description: The updated group.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponentGroup"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteStatusComponentGroup
+      summary: Delete a component group
+      description: |
+        Its components stay, without a group.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusGroupId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/components:
+    get:
+      operationId: listStatusComponents
+      summary: List a page's components
+      description: |
+        By group position, then `position`, then name; hidden ones included.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "200":
+          description: The components.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponentList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createStatusComponent
+      summary: Create a component
+      description: |
+        A part of the product that has a state, `operational` unless `state` says otherwise. A page has
+        at most 100 components (`400`).
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusComponentCreate"
+      responses:
+        "201":
+          description: The component.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponent"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/components/{componentId}:
+    patch:
+      operationId: updateStatusComponent
+      summary: Update a component
+      description: |
+        Name, description, group, position and whether it is hidden; the state changes with
+        `setStatusComponentState`.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusComponentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusComponentUpdate"
+      responses:
+        "200":
+          description: The updated component.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponent"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteStatusComponent
+      summary: Delete a component
+      description: |
+        With its history; incidents that named it no longer do.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusComponentId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/components/{componentId}/state:
+    post:
+      operationId: setStatusComponentState
+      summary: Set a component's state
+      description: |
+        Ends the component's current state and starts this one, with the caller as its source (`member`
+        or `api_key`), and sends `status.component.updated`. The same state again changes nothing.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusComponentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusComponentStateChange"
+      responses:
+        "200":
+          description: The component.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusComponent"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents:
+    get:
+      operationId: listStatusIncidents
+      summary: List a page's incidents and maintenance
+      description: |
+        Newest first (by creation), drafts included, each with its updates. `open: true` lists only
+        incidents that are not resolved and maintenance that is not completed.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - name: kind
+          in: query
+          schema:
+            $ref: "#/components/schemas/StatusIncidentKind"
+        - name: open
+          in: query
+          schema:
+            type: boolean
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+      responses:
+        "200":
+          description: The incidents.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncidentList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createStatusIncident
+      summary: Open an incident or plan maintenance
+      description: |
+        `message` is the first update. An incident starts `investigating` unless `state` names another
+        open state; maintenance needs `scheduled_start` and `scheduled_end` and starts `scheduled`, or
+        `in_progress` when its start has passed. `components` name the components it touches with the
+        state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
+        incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+
+        An incident created through MCP is always a draft.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentCreate"
+      responses:
+        "201":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}:
+    get:
+      operationId: getStatusIncident
+      summary: An incident
+      description: |
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateStatusIncident
+      summary: Change an incident
+      description: |
+        Title, impact, the components it touches and a maintenance window. States change with an update
+        (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
+        (`409 incident_closed`).
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentPatch"
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteStatusIncident
+      summary: Delete a draft incident
+      description: |
+        Only a draft can be deleted (`409 incident_published`).
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/publish:
+    post:
+      operationId: publishStatusIncident
+      summary: Publish a draft incident
+      description: |
+        Shows it on the page and, while it is open, sets the components it touches. Publishing a
+        published incident changes nothing.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/updates:
+    post:
+      operationId: createStatusIncidentUpdate
+      summary: Post an update
+      description: |
+        Adds an update and moves the incident to `state` (its current state when absent). An incident's
+        states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
+        `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
+        incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
+        completing puts its components back; see the tag.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentUpdateCreate"
+      responses:
+        "201":
+          description: The incident with the new update.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}:
+    patch:
+      operationId: editStatusIncidentUpdate
+      summary: Edit an update's text
+      description: |
+        A published incident's update shows "edited" afterwards (`edited_at`).
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+        - $ref: "#/components/parameters/StatusUpdateId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentUpdateEdit"
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /client/v1/session:
     post:
       operationId: createClientSession
@@ -10725,6 +11461,32 @@ paths:
           $ref: "#/components/responses/Problem"
         "429":
           $ref: "#/components/responses/Problem"
+  /client/v1/status/{slug}:
+    get:
+      operationId: getClientStatusPage
+      summary: A published status page
+      description: |
+        What the public status page shows, as JSON: the page, its overall state, the visible
+        components by group with their uptime, open incidents and running or planned maintenance, and
+        the incidents of the last 14 days. Needs no credentials and sends
+        `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
+        (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`. Limited
+        to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
+      tags: [client, status]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/StatusSlug"
+      responses:
+        "200":
+          description: The page.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicStatusPage"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /client/v1/realtime:
     get:
       operationId: clientRealtime
@@ -11504,6 +12266,92 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  status.component.updated:
+    post:
+      operationId: webhookStatusComponentUpdated
+      summary: A status component changed
+      description: |
+        Its state (with `previous_state`) or its settings changed. Endpoints of an inbox get the
+        components of that inbox's page.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusComponentPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  status.incident.created:
+    post:
+      operationId: webhookStatusIncidentCreated
+      summary: An incident or maintenance was published
+      description: |
+        Sent when an incident is created published, or a draft is published; drafts send nothing.
+        Endpoints of an inbox get the incidents of that inbox's page.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusIncidentPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  status.incident.updated:
+    post:
+      operationId: webhookStatusIncidentUpdated
+      summary: A published incident changed
+      description: |
+        A new update (`update`), an edited one, a new title, impact, components or window, or
+        maintenance starting on time. Drafts send nothing.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusIncidentPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  status.incident.resolved:
+    post:
+      operationId: webhookStatusIncidentResolved
+      summary: A published incident was resolved
+      description: An incident was resolved or maintenance completed, with the update that did it.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusIncidentPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -11930,6 +12778,48 @@ components:
         format: int32
         minimum: 1
         maximum: 100
+    StatusPageId:
+      name: pageId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusGroupId:
+      name: groupId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusComponentId:
+      name: componentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusIncidentId:
+      name: incidentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusUpdateId:
+      name: updateId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusSlug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+        maxLength: 48
   responses:
     Problem:
       description: An error.
@@ -12344,8 +13234,11 @@ components:
           OAuth clients.
         - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
           delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
+        - `status:read`: status pages, their groups, components and incidents.
+        - `status:manage`: set component states, open, change and resolve incidents and their
+          updates; create, change and delete pages, groups and components (owners and admins).
 
-        `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
+        `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -12370,6 +13263,8 @@ components:
         - analytics:read
         - analytics:write
         - analytics:manage
+        - status:read
+        - status:manage
     BotAvatarUrl:
       type: string
       format: uri
@@ -13728,7 +14623,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -17367,6 +18262,8 @@ components:
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
+        - $ref: "#/components/schemas/StatusComponentEvent"
+        - $ref: "#/components/schemas/StatusIncidentEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -17396,6 +18293,10 @@ components:
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
+          status.component.updated: "#/components/schemas/StatusComponentEvent"
+          status.incident.created: "#/components/schemas/StatusIncidentEvent"
+          status.incident.updated: "#/components/schemas/StatusIncidentEvent"
+          status.incident.resolved: "#/components/schemas/StatusIncidentEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -17441,6 +18342,8 @@ components:
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
+        - $ref: "#/components/schemas/StatusComponentEvent"
+        - $ref: "#/components/schemas/StatusIncidentEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
@@ -17481,6 +18384,10 @@ components:
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
+          status.component.updated: "#/components/schemas/StatusComponentEvent"
+          status.incident.created: "#/components/schemas/StatusIncidentEvent"
+          status.incident.updated: "#/components/schemas/StatusIncidentEvent"
+          status.incident.resolved: "#/components/schemas/StatusIncidentEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
@@ -22632,6 +23539,782 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/AnalyticsAlertEventData"
+    StatusComponentStateValue:
+      type: string
+      description: "Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`."
+      enum: [operational, degraded, partial_outage, major_outage, maintenance]
+      x-enum-varnames: [StatusOperational, StatusDegraded, StatusPartialOutage, StatusMajorOutage, StatusMaintenance]
+    StatusStateSource:
+      type: string
+      description: Who set a component's current state.
+      enum: [member, api_key, monitor, incident]
+      x-enum-varnames: [StatusSourceMember, StatusSourceApiKey, StatusSourceMonitor, StatusSourceIncident]
+    StatusIncidentKind:
+      type: string
+      enum: [incident, maintenance]
+      x-enum-varnames: [StatusKindIncident, StatusKindMaintenance]
+    StatusIncidentImpact:
+      type: string
+      enum: [none, minor, major, critical]
+      x-enum-varnames: [StatusImpactNone, StatusImpactMinor, StatusImpactMajor, StatusImpactCritical]
+    StatusIncidentState:
+      type: string
+      description: |
+        Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+        `scheduled`, `in_progress`, `completed`.
+      enum: [investigating, identified, monitoring, resolved, scheduled, in_progress, completed]
+      x-enum-varnames: [StatusInvestigating, StatusIdentified, StatusMonitoring, StatusResolved, StatusScheduled, StatusInProgress, StatusCompleted]
+    StatusPageSlug:
+      type: string
+      description: "`a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server."
+      pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+      minLength: 3
+      maxLength: 48
+      examples: [acme]
+    StatusColor:
+      type: string
+      pattern: "^#[0-9a-fA-F]{6}$"
+      examples: ["#2563eb"]
+    StatusPage:
+      type: object
+      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, published, state, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          $ref: "#/components/schemas/StatusPageSlug"
+        url:
+          type: string
+          description: The public page, at the server's status URL.
+        logo_url:
+          type: string
+        accent_color:
+          $ref: "#/components/schemas/StatusColor"
+        site_url:
+          type: string
+        support_url:
+          type: string
+        locale:
+          type: string
+          description: The language of the page's words (`en`, `tr`, `de`; others show English).
+        timezone:
+          type: string
+          description: The zone of the day bars, and of times for visitors whose browser runs no script.
+        history_days:
+          type: integer
+          format: int32
+          description: Days of day bars and history the page shows.
+        show_uptime:
+          type: boolean
+        published:
+          type: boolean
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusPageList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusPage"
+    StatusPageCreate:
+      type: object
+      required: [inbox_id, name, slug]
+      properties:
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/StatusPageSlug"
+        logo_url:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: An `https` image URL.
+        accent_color:
+          $ref: "#/components/schemas/StatusColor"
+        site_url:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: An `http(s)` URL of the product.
+        support_url:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: An `http(s)` or `mailto:` URL where customers get help.
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        timezone:
+          type: string
+          description: An IANA time zone.
+        history_days:
+          type: integer
+          format: int32
+          minimum: 7
+          maximum: 90
+          description: Default 90.
+        show_uptime:
+          type: boolean
+          description: Default `true`.
+        published:
+          type: boolean
+          description: Default `false`.
+    StatusPageUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/StatusPageSlug"
+        logo_url:
+          type: [string, "null"]
+          format: uri
+          maxLength: 2000
+        accent_color:
+          type: [string, "null"]
+          pattern: "^#[0-9a-fA-F]{6}$"
+        site_url:
+          type: [string, "null"]
+          format: uri
+          maxLength: 2000
+        support_url:
+          type: [string, "null"]
+          format: uri
+          maxLength: 2000
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        timezone:
+          type: string
+        history_days:
+          type: integer
+          format: int32
+          minimum: 7
+          maximum: 90
+        show_uptime:
+          type: boolean
+        published:
+          type: boolean
+    StatusPageRef:
+      type: object
+      required: [id, name, slug]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        slug:
+          type: string
+    StatusComponentGroup:
+      type: object
+      required: [id, page_id, name, position, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        position:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusComponentGroupList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusComponentGroup"
+    StatusComponentGroupCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+    StatusComponentGroupUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+    StatusComponent:
+      type: object
+      required: [id, page_id, name, description, position, hidden, state, state_source, state_since, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page_id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        position:
+          type: integer
+          format: int32
+        hidden:
+          type: boolean
+          description: Left off the public page and out of its overall state.
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+        state_source:
+          $ref: "#/components/schemas/StatusStateSource"
+        state_since:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusComponentList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusComponent"
+    StatusComponentCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        group_id:
+          type: string
+          format: uuid
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+        hidden:
+          type: boolean
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+    StatusComponentUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        group_id:
+          type: [string, "null"]
+          format: uuid
+          description: "`null` takes the component out of its group."
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+        hidden:
+          type: boolean
+    StatusComponentStateChange:
+      type: object
+      required: [state]
+      properties:
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+    StatusIncidentComponent:
+      type: object
+      required: [component_id, state]
+      properties:
+        component_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+          description: The state the component has while the incident is open.
+    StatusIncidentUpdate:
+      type: object
+      required: [id, state, body, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        body:
+          type: string
+          description: Plain text; empty for a state change the server made on time.
+        author_member_id:
+          type: string
+          format: uuid
+        author_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        edited_at:
+          type: string
+          format: date-time
+    StatusIncident:
+      type: object
+      required: [id, page_id, kind, title, impact, state, components, updates, url, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/StatusIncidentKind"
+        title:
+          type: string
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusIncidentComponent"
+        updates:
+          type: array
+          description: Newest first.
+          items:
+            $ref: "#/components/schemas/StatusIncidentUpdate"
+        url:
+          type: string
+          description: Its public page, which answers once it and its page are published.
+        published_at:
+          type: string
+          format: date-time
+          description: Absent for a draft.
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+          description: When maintenance went `in_progress`.
+        resolved_at:
+          type: string
+          format: date-time
+          description: When it was resolved or completed.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusIncidentList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusIncident"
+        next_cursor:
+          type: string
+    StatusIncidentCreate:
+      type: object
+      required: [title, message]
+      properties:
+        kind:
+          $ref: "#/components/schemas/StatusIncidentKind"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+          description: Default `minor` for an incident, `none` for maintenance.
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        message:
+          type: string
+          minLength: 1
+          maxLength: 5000
+        components:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/StatusIncidentComponentInput"
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        publish:
+          type: boolean
+    StatusIncidentComponentInput:
+      type: object
+      required: [component_id]
+      properties:
+        component_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+    StatusIncidentPatch:
+      type: object
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+        components:
+          type: array
+          maxItems: 100
+          description: Replaces the list.
+          items:
+            $ref: "#/components/schemas/StatusIncidentComponentInput"
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+    StatusIncidentUpdateCreate:
+      type: object
+      required: [body]
+      properties:
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        body:
+          type: string
+          minLength: 1
+          maxLength: 5000
+    StatusIncidentUpdateEdit:
+      type: object
+      required: [body]
+      properties:
+        body:
+          type: string
+          minLength: 1
+          maxLength: 5000
+    StatusComponentEventData:
+      type: object
+      required: [component, page]
+      properties:
+        component:
+          $ref: "#/components/schemas/StatusComponent"
+        page:
+          $ref: "#/components/schemas/StatusPageRef"
+        previous_state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+          description: Set when the state changed.
+    StatusComponentEvent:
+      type: object
+      description: |
+        `status.component.updated`: a component was created, changed or got a new state. Delivered
+        to callers who hold `status:read` and can see the page's inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [status.component.updated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/StatusComponentEventData"
+    StatusIncidentChange:
+      type: string
+      description: |
+        What happened: `created`, `published`, `update_posted`, `update_edited`, `changed` (title,
+        impact, components or window), `started` (maintenance on time), `resolved`.
+      enum: [created, published, update_posted, update_edited, changed, started, resolved]
+      x-enum-varnames: [StatusChangeCreated, StatusChangePublished, StatusChangeUpdatePosted, StatusChangeUpdateEdited, StatusChangeChanged, StatusChangeStarted, StatusChangeResolved]
+    StatusIncidentEventData:
+      type: object
+      required: [incident, page, change]
+      properties:
+        incident:
+          $ref: "#/components/schemas/StatusIncident"
+        page:
+          $ref: "#/components/schemas/StatusPageRef"
+        change:
+          $ref: "#/components/schemas/StatusIncidentChange"
+        update:
+          $ref: "#/components/schemas/StatusIncidentUpdate"
+          description: The update posted or edited.
+    StatusIncidentEvent:
+      type: object
+      description: |
+        `status.incident.created`, `status.incident.updated`, `status.incident.resolved`: an
+        incident or maintenance was created (drafts too), changed, or resolved or completed.
+        Delivered to callers who hold `status:read` and can see the page's inbox. Webhooks carry
+        only published incidents; publishing a draft is delivered to webhooks as
+        `status.incident.created`.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [status.incident.created, status.incident.updated, status.incident.resolved]
+          x-enum-varnames: [StatusIncidentCreatedEvent, StatusIncidentUpdatedEvent, StatusIncidentResolvedEvent]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/StatusIncidentEventData"
+    WebhookStatusComponentPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/StatusComponentEventData"
+    WebhookStatusIncidentPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/StatusIncidentEventData"
+    PublicStatusDay:
+      type: object
+      required: [date, state]
+      properties:
+        date:
+          type: string
+          format: date
+          description: A day in the page's time zone.
+        uptime:
+          type: number
+          format: double
+          description: Percent of the day not in `major_outage`, `partial_outage` counting half, `maintenance` left out; absent when nothing of the day counts.
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+          description: The worst state of the day.
+    PublicStatusComponent:
+      type: object
+      required: [id, name, description, state]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        group_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+        uptime:
+          type: number
+          format: double
+          description: Percent over the page's history days, when the page shows uptime and there is data.
+        days:
+          type: array
+          description: Oldest first, the page's `history_days` ending today; when the page shows uptime.
+          items:
+            $ref: "#/components/schemas/PublicStatusDay"
+    PublicStatusGroup:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    PublicStatusUpdate:
+      type: object
+      required: [state, body, created_at]
+      properties:
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        edited_at:
+          type: string
+          format: date-time
+    PublicStatusIncident:
+      type: object
+      required: [id, kind, title, impact, state, components, updates, url, published_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/StatusIncidentKind"
+        title:
+          type: string
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        components:
+          type: array
+          description: The visible components it touches.
+          items:
+            type: string
+            format: uuid
+        updates:
+          type: array
+          description: Newest first.
+          items:
+            $ref: "#/components/schemas/PublicStatusUpdate"
+        url:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        resolved_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PublicStatusPage:
+      type: object
+      required: [name, description, url, locale, timezone, state, groups, components, open, recent, updated_at]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        logo_url:
+          type: string
+        accent_color:
+          type: string
+        site_url:
+          type: string
+        support_url:
+          type: string
+        locale:
+          type: string
+        timezone:
+          type: string
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+        groups:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicStatusGroup"
+        components:
+          type: array
+          description: The visible components in page order.
+          items:
+            $ref: "#/components/schemas/PublicStatusComponent"
+        open:
+          type: array
+          description: Open incidents, maintenance in progress and planned maintenance.
+          items:
+            $ref: "#/components/schemas/PublicStatusIncident"
+        recent:
+          type: array
+          description: Incidents and maintenance of the last 14 days that are over, newest first.
+          items:
+            $ref: "#/components/schemas/PublicStatusIncident"
+        updated_at:
+          type: string
+          format: date-time
+          description: When anything on the page last changed.
     AnalyticsShareView:
       type: string
       description: |

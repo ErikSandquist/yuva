@@ -898,6 +898,8 @@ const (
 	MessagesWrite      ApiKeyScope = "messages:write"
 	MigrationsManage   ApiKeyScope = "migrations:manage"
 	NotesWrite         ApiKeyScope = "notes:write"
+	StatusManage       ApiKeyScope = "status:manage"
+	StatusRead         ApiKeyScope = "status:read"
 	WebhooksManage     ApiKeyScope = "webhooks:manage"
 	WorkspaceManage    ApiKeyScope = "workspace:manage"
 )
@@ -946,6 +948,10 @@ func (e ApiKeyScope) Valid() bool {
 	case MigrationsManage:
 		return true
 	case NotesWrite:
+		return true
+	case StatusManage:
+		return true
+	case StatusRead:
 		return true
 	case WebhooksManage:
 		return true
@@ -4418,6 +4424,201 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for StatusComponentEventType.
+const (
+	StatusComponentEventTypeStatusComponentUpdated StatusComponentEventType = "status.component.updated"
+)
+
+// Valid indicates whether the value is a known member of the StatusComponentEventType enum.
+func (e StatusComponentEventType) Valid() bool {
+	switch e {
+	case StatusComponentEventTypeStatusComponentUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusComponentStateValue.
+const (
+	StatusDegraded      StatusComponentStateValue = "degraded"
+	StatusMaintenance   StatusComponentStateValue = "maintenance"
+	StatusMajorOutage   StatusComponentStateValue = "major_outage"
+	StatusOperational   StatusComponentStateValue = "operational"
+	StatusPartialOutage StatusComponentStateValue = "partial_outage"
+)
+
+// Valid indicates whether the value is a known member of the StatusComponentStateValue enum.
+func (e StatusComponentStateValue) Valid() bool {
+	switch e {
+	case StatusDegraded:
+		return true
+	case StatusMaintenance:
+		return true
+	case StatusMajorOutage:
+		return true
+	case StatusOperational:
+		return true
+	case StatusPartialOutage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusIncidentChange.
+const (
+	StatusChangeChanged      StatusIncidentChange = "changed"
+	StatusChangeCreated      StatusIncidentChange = "created"
+	StatusChangePublished    StatusIncidentChange = "published"
+	StatusChangeResolved     StatusIncidentChange = "resolved"
+	StatusChangeStarted      StatusIncidentChange = "started"
+	StatusChangeUpdateEdited StatusIncidentChange = "update_edited"
+	StatusChangeUpdatePosted StatusIncidentChange = "update_posted"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentChange enum.
+func (e StatusIncidentChange) Valid() bool {
+	switch e {
+	case StatusChangeChanged:
+		return true
+	case StatusChangeCreated:
+		return true
+	case StatusChangePublished:
+		return true
+	case StatusChangeResolved:
+		return true
+	case StatusChangeStarted:
+		return true
+	case StatusChangeUpdateEdited:
+		return true
+	case StatusChangeUpdatePosted:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusIncidentEventType.
+const (
+	StatusIncidentCreatedEvent  StatusIncidentEventType = "status.incident.created"
+	StatusIncidentResolvedEvent StatusIncidentEventType = "status.incident.resolved"
+	StatusIncidentUpdatedEvent  StatusIncidentEventType = "status.incident.updated"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentEventType enum.
+func (e StatusIncidentEventType) Valid() bool {
+	switch e {
+	case StatusIncidentCreatedEvent:
+		return true
+	case StatusIncidentResolvedEvent:
+		return true
+	case StatusIncidentUpdatedEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusIncidentImpact.
+const (
+	StatusImpactCritical StatusIncidentImpact = "critical"
+	StatusImpactMajor    StatusIncidentImpact = "major"
+	StatusImpactMinor    StatusIncidentImpact = "minor"
+	StatusImpactNone     StatusIncidentImpact = "none"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentImpact enum.
+func (e StatusIncidentImpact) Valid() bool {
+	switch e {
+	case StatusImpactCritical:
+		return true
+	case StatusImpactMajor:
+		return true
+	case StatusImpactMinor:
+		return true
+	case StatusImpactNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusIncidentKind.
+const (
+	StatusKindIncident    StatusIncidentKind = "incident"
+	StatusKindMaintenance StatusIncidentKind = "maintenance"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentKind enum.
+func (e StatusIncidentKind) Valid() bool {
+	switch e {
+	case StatusKindIncident:
+		return true
+	case StatusKindMaintenance:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusIncidentState.
+const (
+	StatusCompleted     StatusIncidentState = "completed"
+	StatusIdentified    StatusIncidentState = "identified"
+	StatusInProgress    StatusIncidentState = "in_progress"
+	StatusInvestigating StatusIncidentState = "investigating"
+	StatusMonitoring    StatusIncidentState = "monitoring"
+	StatusResolved      StatusIncidentState = "resolved"
+	StatusScheduled     StatusIncidentState = "scheduled"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentState enum.
+func (e StatusIncidentState) Valid() bool {
+	switch e {
+	case StatusCompleted:
+		return true
+	case StatusIdentified:
+		return true
+	case StatusInProgress:
+		return true
+	case StatusInvestigating:
+		return true
+	case StatusMonitoring:
+		return true
+	case StatusResolved:
+		return true
+	case StatusScheduled:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusStateSource.
+const (
+	StatusSourceApiKey   StatusStateSource = "api_key"
+	StatusSourceIncident StatusStateSource = "incident"
+	StatusSourceMember   StatusStateSource = "member"
+	StatusSourceMonitor  StatusStateSource = "monitor"
+)
+
+// Valid indicates whether the value is a known member of the StatusStateSource enum.
+func (e StatusStateSource) Valid() bool {
+	switch e {
+	case StatusSourceApiKey:
+		return true
+	case StatusSourceIncident:
+		return true
+	case StatusSourceMember:
+		return true
+	case StatusSourceMonitor:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for SubscriptionEventType.
 const (
 	SubscriptionEventTypeSubscriptionCreated SubscriptionEventType = "subscription.created"
@@ -4630,24 +4831,28 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
-	WebhookEventTypeAnalyticsAlert        WebhookEventType = "analytics.alert"
-	WebhookEventTypeBroadcastUpdated      WebhookEventType = "broadcast.updated"
-	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
-	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
-	WebhookEventTypeConversationCreated   WebhookEventType = "conversation.created"
-	WebhookEventTypeConversationRated     WebhookEventType = "conversation.rated"
-	WebhookEventTypeConversationUpdated   WebhookEventType = "conversation.updated"
-	WebhookEventTypeDiscussionAnswered    WebhookEventType = "discussion.answered"
-	WebhookEventTypeDiscussionCreated     WebhookEventType = "discussion.created"
-	WebhookEventTypeDiscussionPostCreated WebhookEventType = "discussion.post_created"
-	WebhookEventTypeDiscussionUpdated     WebhookEventType = "discussion.updated"
-	WebhookEventTypeDraftCreated          WebhookEventType = "draft.created"
-	WebhookEventTypeDraftDeleted          WebhookEventType = "draft.deleted"
-	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
-	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
-	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
-	WebhookEventTypeSubscriptionCreated   WebhookEventType = "subscription.created"
-	WebhookEventTypeSubscriptionUpdated   WebhookEventType = "subscription.updated"
+	WebhookEventTypeAnalyticsAlert         WebhookEventType = "analytics.alert"
+	WebhookEventTypeBroadcastUpdated       WebhookEventType = "broadcast.updated"
+	WebhookEventTypeContactDeleted         WebhookEventType = "contact.deleted"
+	WebhookEventTypeContactUpdated         WebhookEventType = "contact.updated"
+	WebhookEventTypeConversationCreated    WebhookEventType = "conversation.created"
+	WebhookEventTypeConversationRated      WebhookEventType = "conversation.rated"
+	WebhookEventTypeConversationUpdated    WebhookEventType = "conversation.updated"
+	WebhookEventTypeDiscussionAnswered     WebhookEventType = "discussion.answered"
+	WebhookEventTypeDiscussionCreated      WebhookEventType = "discussion.created"
+	WebhookEventTypeDiscussionPostCreated  WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionUpdated      WebhookEventType = "discussion.updated"
+	WebhookEventTypeDraftCreated           WebhookEventType = "draft.created"
+	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
+	WebhookEventTypeDraftUpdated           WebhookEventType = "draft.updated"
+	WebhookEventTypeFeedbackCreated        WebhookEventType = "feedback.created"
+	WebhookEventTypeMessageCreated         WebhookEventType = "message.created"
+	WebhookEventTypeStatusComponentUpdated WebhookEventType = "status.component.updated"
+	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
+	WebhookEventTypeStatusIncidentResolved WebhookEventType = "status.incident.resolved"
+	WebhookEventTypeStatusIncidentUpdated  WebhookEventType = "status.incident.updated"
+	WebhookEventTypeSubscriptionCreated    WebhookEventType = "subscription.created"
+	WebhookEventTypeSubscriptionUpdated    WebhookEventType = "subscription.updated"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -4684,6 +4889,14 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeFeedbackCreated:
 		return true
 	case WebhookEventTypeMessageCreated:
+		return true
+	case WebhookEventTypeStatusComponentUpdated:
+		return true
+	case WebhookEventTypeStatusIncidentCreated:
+		return true
+	case WebhookEventTypeStatusIncidentResolved:
+		return true
+	case WebhookEventTypeStatusIncidentUpdated:
 		return true
 	case WebhookEventTypeSubscriptionCreated:
 		return true
@@ -6691,8 +6904,11 @@ type ApiKeyList struct {
 //	    OAuth clients.
 //	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
 //	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
+//	  - `status:read`: status pages, their groups, components and incidents.
+//	  - `status:manage`: set component states, open, change and resolve incidents and their
+//	    updates; create, change and delete pages, groups and components (owners and admins).
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -13234,6 +13450,103 @@ type Problem struct {
 	Type string `json:"type"`
 }
 
+// PublicStatusComponent defines model for PublicStatusComponent.
+type PublicStatusComponent struct {
+	// Days Oldest first, the page's `history_days` ending today; when the page shows uptime.
+	Days        *[]PublicStatusDay `json:"days,omitempty"`
+	Description string             `json:"description"`
+	GroupId     *uuid.UUID         `json:"group_id,omitempty"`
+	Id          uuid.UUID          `json:"id"`
+	Name        string             `json:"name"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State StatusComponentStateValue `json:"state"`
+
+	// Uptime Percent over the page's history days, when the page shows uptime and there is data.
+	Uptime *float64 `json:"uptime,omitempty"`
+}
+
+// PublicStatusDay defines model for PublicStatusDay.
+type PublicStatusDay struct {
+	// Date A day in the page's time zone.
+	Date openapi_types.Date `json:"date"`
+
+	// State The worst state of the day.
+	State StatusComponentStateValue `json:"state"`
+
+	// Uptime Percent of the day not in `major_outage`, `partial_outage` counting half, `maintenance` left out; absent when nothing of the day counts.
+	Uptime *float64 `json:"uptime,omitempty"`
+}
+
+// PublicStatusGroup defines model for PublicStatusGroup.
+type PublicStatusGroup struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// PublicStatusIncident defines model for PublicStatusIncident.
+type PublicStatusIncident struct {
+	// Components The visible components it touches.
+	Components     []uuid.UUID          `json:"components"`
+	Id             uuid.UUID            `json:"id"`
+	Impact         StatusIncidentImpact `json:"impact"`
+	Kind           StatusIncidentKind   `json:"kind"`
+	PublishedAt    time.Time            `json:"published_at"`
+	ResolvedAt     *time.Time           `json:"resolved_at,omitempty"`
+	ScheduledEnd   *time.Time           `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time           `json:"scheduled_start,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State     StatusIncidentState `json:"state"`
+	Title     string              `json:"title"`
+	UpdatedAt time.Time           `json:"updated_at"`
+
+	// Updates Newest first.
+	Updates []PublicStatusUpdate `json:"updates"`
+	Url     string               `json:"url"`
+}
+
+// PublicStatusPage defines model for PublicStatusPage.
+type PublicStatusPage struct {
+	AccentColor *string `json:"accent_color,omitempty"`
+
+	// Components The visible components in page order.
+	Components  []PublicStatusComponent `json:"components"`
+	Description string                  `json:"description"`
+	Groups      []PublicStatusGroup     `json:"groups"`
+	Locale      string                  `json:"locale"`
+	LogoUrl     *string                 `json:"logo_url,omitempty"`
+	Name        string                  `json:"name"`
+
+	// Open Open incidents, maintenance in progress and planned maintenance.
+	Open []PublicStatusIncident `json:"open"`
+
+	// Recent Incidents and maintenance of the last 14 days that are over, newest first.
+	Recent  []PublicStatusIncident `json:"recent"`
+	SiteUrl *string                `json:"site_url,omitempty"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State      StatusComponentStateValue `json:"state"`
+	SupportUrl *string                   `json:"support_url,omitempty"`
+	Timezone   string                    `json:"timezone"`
+
+	// UpdatedAt When anything on the page last changed.
+	UpdatedAt time.Time `json:"updated_at"`
+	Url       string    `json:"url"`
+}
+
+// PublicStatusUpdate defines model for PublicStatusUpdate.
+type PublicStatusUpdate struct {
+	Body      string     `json:"body"`
+	CreatedAt time.Time  `json:"created_at"`
+	EditedAt  *time.Time `json:"edited_at,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+}
+
 // PushNotification The JSON a push delivers to the service worker (`event.data.json()`), encrypted per
 // RFC 8291 (`aes128gcm`). Show it with `registration.showNotification(title, {body, tag,
 // data})` and open `url` on click. Pushes of one conversation share `tag` (and the push
@@ -13601,6 +13914,395 @@ type Stats struct {
 	// Until When it was counted.
 	Until time.Time `json:"until"`
 }
+
+// StatusColor Examples: #2563eb
+type StatusColor = string
+
+// StatusComponent defines model for StatusComponent.
+type StatusComponent struct {
+	CreatedAt   time.Time  `json:"created_at"`
+	Description string     `json:"description"`
+	GroupId     *uuid.UUID `json:"group_id,omitempty"`
+
+	// Hidden Left off the public page and out of its overall state.
+	Hidden   bool      `json:"hidden"`
+	Id       uuid.UUID `json:"id"`
+	Name     string    `json:"name"`
+	PageId   uuid.UUID `json:"page_id"`
+	Position int32     `json:"position"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State      StatusComponentStateValue `json:"state"`
+	StateSince time.Time                 `json:"state_since"`
+
+	// StateSource Who set a component's current state.
+	StateSource StatusStateSource `json:"state_source"`
+	UpdatedAt   time.Time         `json:"updated_at"`
+}
+
+// StatusComponentCreate defines model for StatusComponentCreate.
+type StatusComponentCreate struct {
+	Description *string    `json:"description,omitempty"`
+	GroupId     *uuid.UUID `json:"group_id,omitempty"`
+	Hidden      *bool      `json:"hidden,omitempty"`
+	Name        string     `json:"name"`
+	Position    *int32     `json:"position,omitempty"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State *StatusComponentStateValue `json:"state,omitempty"`
+}
+
+// StatusComponentEvent `status.component.updated`: a component was created, changed or got a new state. Delivered
+// to callers who hold `status:read` and can see the page's inbox.
+type StatusComponentEvent struct {
+	CreatedAt   time.Time                `json:"created_at"`
+	Data        StatusComponentEventData `json:"data"`
+	Id          int64                    `json:"id"`
+	InboxId     uuid.UUID                `json:"inbox_id"`
+	Type        StatusComponentEventType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// StatusComponentEventType defines model for StatusComponentEvent.Type.
+type StatusComponentEventType string
+
+// StatusComponentEventData defines model for StatusComponentEventData.
+type StatusComponentEventData struct {
+	Component StatusComponent `json:"component"`
+	Page      StatusPageRef   `json:"page"`
+
+	// PreviousState Set when the state changed.
+	PreviousState *StatusComponentStateValue `json:"previous_state,omitempty"`
+}
+
+// StatusComponentGroup defines model for StatusComponentGroup.
+type StatusComponentGroup struct {
+	CreatedAt time.Time `json:"created_at"`
+	Id        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	PageId    uuid.UUID `json:"page_id"`
+	Position  int32     `json:"position"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// StatusComponentGroupCreate defines model for StatusComponentGroupCreate.
+type StatusComponentGroupCreate struct {
+	Name     string `json:"name"`
+	Position *int32 `json:"position,omitempty"`
+}
+
+// StatusComponentGroupList defines model for StatusComponentGroupList.
+type StatusComponentGroupList struct {
+	Items []StatusComponentGroup `json:"items"`
+}
+
+// StatusComponentGroupUpdate defines model for StatusComponentGroupUpdate.
+type StatusComponentGroupUpdate struct {
+	Name     *string `json:"name,omitempty"`
+	Position *int32  `json:"position,omitempty"`
+}
+
+// StatusComponentList defines model for StatusComponentList.
+type StatusComponentList struct {
+	Items []StatusComponent `json:"items"`
+}
+
+// StatusComponentStateChange defines model for StatusComponentStateChange.
+type StatusComponentStateChange struct {
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State StatusComponentStateValue `json:"state"`
+}
+
+// StatusComponentStateValue Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+type StatusComponentStateValue string
+
+// StatusComponentUpdate defines model for StatusComponentUpdate.
+type StatusComponentUpdate struct {
+	Description *string `json:"description,omitempty"`
+
+	// GroupId `null` takes the component out of its group.
+	GroupId  nullable.Nullable[uuid.UUID] `json:"group_id,omitempty"`
+	Hidden   *bool                        `json:"hidden,omitempty"`
+	Name     *string                      `json:"name,omitempty"`
+	Position *int32                       `json:"position,omitempty"`
+}
+
+// StatusIncident defines model for StatusIncident.
+type StatusIncident struct {
+	Components []StatusIncidentComponent `json:"components"`
+	CreatedAt  time.Time                 `json:"created_at"`
+	Id         uuid.UUID                 `json:"id"`
+	Impact     StatusIncidentImpact      `json:"impact"`
+	Kind       StatusIncidentKind        `json:"kind"`
+	PageId     uuid.UUID                 `json:"page_id"`
+
+	// PublishedAt Absent for a draft.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+
+	// ResolvedAt When it was resolved or completed.
+	ResolvedAt     *time.Time `json:"resolved_at,omitempty"`
+	ScheduledEnd   *time.Time `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time `json:"scheduled_start,omitempty"`
+
+	// StartedAt When maintenance went `in_progress`.
+	StartedAt *time.Time `json:"started_at,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State     StatusIncidentState `json:"state"`
+	Title     string              `json:"title"`
+	UpdatedAt time.Time           `json:"updated_at"`
+
+	// Updates Newest first.
+	Updates []StatusIncidentUpdate `json:"updates"`
+
+	// Url Its public page, which answers once it and its page are published.
+	Url string `json:"url"`
+}
+
+// StatusIncidentChange What happened: `created`, `published`, `update_posted`, `update_edited`, `changed` (title,
+// impact, components or window), `started` (maintenance on time), `resolved`.
+type StatusIncidentChange string
+
+// StatusIncidentComponent defines model for StatusIncidentComponent.
+type StatusIncidentComponent struct {
+	ComponentId uuid.UUID `json:"component_id"`
+
+	// State The state the component has while the incident is open.
+	State StatusComponentStateValue `json:"state"`
+}
+
+// StatusIncidentComponentInput defines model for StatusIncidentComponentInput.
+type StatusIncidentComponentInput struct {
+	ComponentId uuid.UUID `json:"component_id"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State *StatusComponentStateValue `json:"state,omitempty"`
+}
+
+// StatusIncidentCreate defines model for StatusIncidentCreate.
+type StatusIncidentCreate struct {
+	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
+
+	// Impact Default `minor` for an incident, `none` for maintenance.
+	Impact         *StatusIncidentImpact `json:"impact,omitempty"`
+	Kind           *StatusIncidentKind   `json:"kind,omitempty"`
+	Message        string                `json:"message"`
+	Publish        *bool                 `json:"publish,omitempty"`
+	ScheduledEnd   *time.Time            `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time            `json:"scheduled_start,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State *StatusIncidentState `json:"state,omitempty"`
+	Title string               `json:"title"`
+}
+
+// StatusIncidentEvent `status.incident.created`, `status.incident.updated`, `status.incident.resolved`: an
+// incident or maintenance was created (drafts too), changed, or resolved or completed.
+// Delivered to callers who hold `status:read` and can see the page's inbox. Webhooks carry
+// only published incidents; publishing a draft is delivered to webhooks as
+// `status.incident.created`.
+type StatusIncidentEvent struct {
+	CreatedAt   time.Time               `json:"created_at"`
+	Data        StatusIncidentEventData `json:"data"`
+	Id          int64                   `json:"id"`
+	InboxId     uuid.UUID               `json:"inbox_id"`
+	Type        StatusIncidentEventType `json:"type"`
+	WorkspaceId uuid.UUID               `json:"workspace_id"`
+}
+
+// StatusIncidentEventType defines model for StatusIncidentEvent.Type.
+type StatusIncidentEventType string
+
+// StatusIncidentEventData defines model for StatusIncidentEventData.
+type StatusIncidentEventData struct {
+	// Change What happened: `created`, `published`, `update_posted`, `update_edited`, `changed` (title,
+	// impact, components or window), `started` (maintenance on time), `resolved`.
+	Change   StatusIncidentChange `json:"change"`
+	Incident StatusIncident       `json:"incident"`
+	Page     StatusPageRef        `json:"page"`
+
+	// Update The update posted or edited.
+	Update *StatusIncidentUpdate `json:"update,omitempty"`
+}
+
+// StatusIncidentImpact defines model for StatusIncidentImpact.
+type StatusIncidentImpact string
+
+// StatusIncidentKind defines model for StatusIncidentKind.
+type StatusIncidentKind string
+
+// StatusIncidentList defines model for StatusIncidentList.
+type StatusIncidentList struct {
+	Items      []StatusIncident `json:"items"`
+	NextCursor *string          `json:"next_cursor,omitempty"`
+}
+
+// StatusIncidentPatch defines model for StatusIncidentPatch.
+type StatusIncidentPatch struct {
+	// Components Replaces the list.
+	Components     *[]StatusIncidentComponentInput `json:"components,omitempty"`
+	Impact         *StatusIncidentImpact           `json:"impact,omitempty"`
+	ScheduledEnd   *time.Time                      `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time                      `json:"scheduled_start,omitempty"`
+	Title          *string                         `json:"title,omitempty"`
+}
+
+// StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+// `scheduled`, `in_progress`, `completed`.
+type StatusIncidentState string
+
+// StatusIncidentUpdate defines model for StatusIncidentUpdate.
+type StatusIncidentUpdate struct {
+	AuthorApiKeyId *uuid.UUID `json:"author_api_key_id,omitempty"`
+	AuthorMemberId *uuid.UUID `json:"author_member_id,omitempty"`
+
+	// Body Plain text; empty for a state change the server made on time.
+	Body      string     `json:"body"`
+	CreatedAt time.Time  `json:"created_at"`
+	EditedAt  *time.Time `json:"edited_at,omitempty"`
+	Id        uuid.UUID  `json:"id"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+}
+
+// StatusIncidentUpdateCreate defines model for StatusIncidentUpdateCreate.
+type StatusIncidentUpdateCreate struct {
+	Body string `json:"body"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State *StatusIncidentState `json:"state,omitempty"`
+}
+
+// StatusIncidentUpdateEdit defines model for StatusIncidentUpdateEdit.
+type StatusIncidentUpdateEdit struct {
+	Body string `json:"body"`
+}
+
+// StatusPage defines model for StatusPage.
+type StatusPage struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+	CreatedAt   time.Time    `json:"created_at"`
+	Description string       `json:"description"`
+
+	// HistoryDays Days of day bars and history the page shows.
+	HistoryDays int32     `json:"history_days"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locale The language of the page's words (`en`, `tr`, `de`; others show English).
+	Locale     string  `json:"locale"`
+	LogoUrl    *string `json:"logo_url,omitempty"`
+	Name       string  `json:"name"`
+	Published  bool    `json:"published"`
+	ShowUptime bool    `json:"show_uptime"`
+	SiteUrl    *string `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug StatusPageSlug `json:"slug"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State      StatusComponentStateValue `json:"state"`
+	SupportUrl *string                   `json:"support_url,omitempty"`
+
+	// Timezone The zone of the day bars, and of times for visitors whose browser runs no script.
+	Timezone  string    `json:"timezone"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The public page, at the server's status URL.
+	Url string `json:"url"`
+}
+
+// StatusPageCreate defines model for StatusPageCreate.
+type StatusPageCreate struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+	Description *string      `json:"description,omitempty"`
+
+	// HistoryDays Default 90.
+	HistoryDays *int32    `json:"history_days,omitempty"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+
+	// LogoUrl An `https` image URL.
+	LogoUrl *string `json:"logo_url,omitempty"`
+	Name    string  `json:"name"`
+
+	// Published Default `false`.
+	Published *bool `json:"published,omitempty"`
+
+	// ShowUptime Default `true`.
+	ShowUptime *bool `json:"show_uptime,omitempty"`
+
+	// SiteUrl An `http(s)` URL of the product.
+	SiteUrl *string `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug StatusPageSlug `json:"slug"`
+
+	// SupportUrl An `http(s)` or `mailto:` URL where customers get help.
+	SupportUrl *string `json:"support_url,omitempty"`
+
+	// Timezone An IANA time zone.
+	Timezone *string `json:"timezone,omitempty"`
+}
+
+// StatusPageList defines model for StatusPageList.
+type StatusPageList struct {
+	Items []StatusPage `json:"items"`
+}
+
+// StatusPageRef defines model for StatusPageRef.
+type StatusPageRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+	Slug string    `json:"slug"`
+}
+
+// StatusPageSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme
+type StatusPageSlug = string
+
+// StatusPageUpdate defines model for StatusPageUpdate.
+type StatusPageUpdate struct {
+	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
+	Description *string                   `json:"description,omitempty"`
+	HistoryDays *int32                    `json:"history_days,omitempty"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale     *LanguageTag              `json:"locale,omitempty"`
+	LogoUrl    nullable.Nullable[string] `json:"logo_url,omitempty"`
+	Name       *string                   `json:"name,omitempty"`
+	Published  *bool                     `json:"published,omitempty"`
+	ShowUptime *bool                     `json:"show_uptime,omitempty"`
+	SiteUrl    nullable.Nullable[string] `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug       *StatusPageSlug           `json:"slug,omitempty"`
+	SupportUrl nullable.Nullable[string] `json:"support_url,omitempty"`
+	Timezone   *string                   `json:"timezone,omitempty"`
+}
+
+// StatusStateSource Who set a component's current state.
+type StatusStateSource string
 
 // StoredEvent An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry.
 type StoredEvent struct {
@@ -14235,6 +14937,32 @@ type WebhookPayloadBase struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookStatusComponentPayload defines model for WebhookStatusComponentPayload.
+type WebhookStatusComponentPayload struct {
+	Data StatusComponentEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
+// WebhookStatusIncidentPayload defines model for WebhookStatusIncidentPayload.
+type WebhookStatusIncidentPayload struct {
+	Data StatusIncidentEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookSubscriptionData defines model for WebhookSubscriptionData.
 type WebhookSubscriptionData struct {
 	// Contact The contact as a host backend needs it.
@@ -14455,6 +15183,24 @@ type PushSubscriptionId = uuid.UUID
 
 // Search defines model for Search.
 type Search = string
+
+// StatusComponentId defines model for StatusComponentId.
+type StatusComponentId = uuid.UUID
+
+// StatusGroupId defines model for StatusGroupId.
+type StatusGroupId = uuid.UUID
+
+// StatusIncidentId defines model for StatusIncidentId.
+type StatusIncidentId = uuid.UUID
+
+// StatusPageId defines model for StatusPageId.
+type StatusPageId = uuid.UUID
+
+// StatusSlug defines model for StatusSlug.
+type StatusSlug = string
+
+// StatusUpdateId defines model for StatusUpdateId.
+type StatusUpdateId = uuid.UUID
 
 // SubscriptionId defines model for SubscriptionId.
 type SubscriptionId = uuid.UUID
@@ -16500,6 +17246,173 @@ type GetStatsParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListStatusPagesParams defines parameters for ListStatusPages.
+type ListStatusPagesParams struct {
+	// InboxId Only the page of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusPageParams defines parameters for CreateStatusPage.
+type CreateStatusPageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusPageParams defines parameters for DeleteStatusPage.
+type DeleteStatusPageParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusPageParams defines parameters for GetStatusPage.
+type GetStatusPageParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusPageParams defines parameters for UpdateStatusPage.
+type UpdateStatusPageParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusComponentsParams defines parameters for ListStatusComponents.
+type ListStatusComponentsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusComponentParams defines parameters for CreateStatusComponent.
+type CreateStatusComponentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusComponentParams defines parameters for DeleteStatusComponent.
+type DeleteStatusComponentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusComponentParams defines parameters for UpdateStatusComponent.
+type UpdateStatusComponentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SetStatusComponentStateParams defines parameters for SetStatusComponentState.
+type SetStatusComponentStateParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusComponentGroupsParams defines parameters for ListStatusComponentGroups.
+type ListStatusComponentGroupsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusComponentGroupParams defines parameters for CreateStatusComponentGroup.
+type CreateStatusComponentGroupParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusComponentGroupParams defines parameters for DeleteStatusComponentGroup.
+type DeleteStatusComponentGroupParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusComponentGroupParams defines parameters for UpdateStatusComponentGroup.
+type UpdateStatusComponentGroupParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusIncidentsParams defines parameters for ListStatusIncidents.
+type ListStatusIncidentsParams struct {
+	Kind   *StatusIncidentKind `form:"kind,omitempty" json:"kind,omitempty"`
+	Open   *bool               `form:"open,omitempty" json:"open,omitempty"`
+	Cursor *string             `form:"cursor,omitempty" json:"cursor,omitempty"`
+	Limit  *int32              `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusIncidentParams defines parameters for CreateStatusIncident.
+type CreateStatusIncidentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusIncidentParams defines parameters for DeleteStatusIncident.
+type DeleteStatusIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusIncidentParams defines parameters for GetStatusIncident.
+type GetStatusIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusIncidentParams defines parameters for UpdateStatusIncident.
+type UpdateStatusIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PublishStatusIncidentParams defines parameters for PublishStatusIncident.
+type PublishStatusIncidentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusIncidentUpdateParams defines parameters for CreateStatusIncidentUpdate.
+type CreateStatusIncidentUpdateParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// EditStatusIncidentUpdateParams defines parameters for EditStatusIncidentUpdate.
+type EditStatusIncidentUpdateParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewStatusPageParams defines parameters for PreviewStatusPage.
+type PreviewStatusPageParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetUsageParams defines parameters for GetUsage.
 type GetUsageParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -16827,6 +17740,62 @@ type WebhookFeedbackCreatedParams struct {
 
 // WebhookMessageCreatedParams defines parameters for WebhookMessageCreated.
 type WebhookMessageCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusComponentUpdatedParams defines parameters for WebhookStatusComponentUpdated.
+type WebhookStatusComponentUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusIncidentCreatedParams defines parameters for WebhookStatusIncidentCreated.
+type WebhookStatusIncidentCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusIncidentResolvedParams defines parameters for WebhookStatusIncidentResolved.
+type WebhookStatusIncidentResolvedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusIncidentUpdatedParams defines parameters for WebhookStatusIncidentUpdated.
+type WebhookStatusIncidentUpdatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
 	WebhookId WebhookIdHeader `json:"webhook-id"`
 
@@ -17194,6 +18163,39 @@ type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
+// CreateStatusPageJSONRequestBody defines body for CreateStatusPage for application/json ContentType.
+type CreateStatusPageJSONRequestBody = StatusPageCreate
+
+// UpdateStatusPageJSONRequestBody defines body for UpdateStatusPage for application/json ContentType.
+type UpdateStatusPageJSONRequestBody = StatusPageUpdate
+
+// CreateStatusComponentJSONRequestBody defines body for CreateStatusComponent for application/json ContentType.
+type CreateStatusComponentJSONRequestBody = StatusComponentCreate
+
+// UpdateStatusComponentJSONRequestBody defines body for UpdateStatusComponent for application/json ContentType.
+type UpdateStatusComponentJSONRequestBody = StatusComponentUpdate
+
+// SetStatusComponentStateJSONRequestBody defines body for SetStatusComponentState for application/json ContentType.
+type SetStatusComponentStateJSONRequestBody = StatusComponentStateChange
+
+// CreateStatusComponentGroupJSONRequestBody defines body for CreateStatusComponentGroup for application/json ContentType.
+type CreateStatusComponentGroupJSONRequestBody = StatusComponentGroupCreate
+
+// UpdateStatusComponentGroupJSONRequestBody defines body for UpdateStatusComponentGroup for application/json ContentType.
+type UpdateStatusComponentGroupJSONRequestBody = StatusComponentGroupUpdate
+
+// CreateStatusIncidentJSONRequestBody defines body for CreateStatusIncident for application/json ContentType.
+type CreateStatusIncidentJSONRequestBody = StatusIncidentCreate
+
+// UpdateStatusIncidentJSONRequestBody defines body for UpdateStatusIncident for application/json ContentType.
+type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
+
+// CreateStatusIncidentUpdateJSONRequestBody defines body for CreateStatusIncidentUpdate for application/json ContentType.
+type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
+
+// EditStatusIncidentUpdateJSONRequestBody defines body for EditStatusIncidentUpdate for application/json ContentType.
+type EditStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateEdit
+
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
 type CreateWebhookJSONRequestBody = WebhookEndpointCreate
 
@@ -17259,6 +18261,18 @@ type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
+
+// WebhookStatusComponentUpdatedJSONRequestBody defines body for WebhookStatusComponentUpdated for application/json ContentType.
+type WebhookStatusComponentUpdatedJSONRequestBody = WebhookStatusComponentPayload
+
+// WebhookStatusIncidentCreatedJSONRequestBody defines body for WebhookStatusIncidentCreated for application/json ContentType.
+type WebhookStatusIncidentCreatedJSONRequestBody = WebhookStatusIncidentPayload
+
+// WebhookStatusIncidentResolvedJSONRequestBody defines body for WebhookStatusIncidentResolved for application/json ContentType.
+type WebhookStatusIncidentResolvedJSONRequestBody = WebhookStatusIncidentPayload
+
+// WebhookStatusIncidentUpdatedJSONRequestBody defines body for WebhookStatusIncidentUpdated for application/json ContentType.
+type WebhookStatusIncidentUpdatedJSONRequestBody = WebhookStatusIncidentPayload
 
 // WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
 type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
@@ -19402,6 +20416,58 @@ func (t *RealtimeMessage) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error 
 	return err
 }
 
+// AsStatusComponentEvent returns the union data inside the RealtimeMessage as a StatusComponentEvent
+func (t RealtimeMessage) AsStatusComponentEvent() (StatusComponentEvent, error) {
+	var body StatusComponentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusComponentEvent overwrites any union data inside the RealtimeMessage as the provided StatusComponentEvent
+func (t *RealtimeMessage) FromStatusComponentEvent(v StatusComponentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusComponentEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusComponentEvent
+func (t *RealtimeMessage) MergeStatusComponentEvent(v StatusComponentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStatusIncidentEvent returns the union data inside the RealtimeMessage as a StatusIncidentEvent
+func (t RealtimeMessage) AsStatusIncidentEvent() (StatusIncidentEvent, error) {
+	var body StatusIncidentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusIncidentEvent overwrites any union data inside the RealtimeMessage as the provided StatusIncidentEvent
+func (t *RealtimeMessage) FromStatusIncidentEvent(v StatusIncidentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusIncidentEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusIncidentEvent
+func (t *RealtimeMessage) MergeStatusIncidentEvent(v StatusIncidentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -19768,6 +20834,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsRealtimeReady()
 	case "resync_required":
 		return t.AsRealtimeResyncRequired()
+	case "status.component.updated":
+		return t.AsStatusComponentEvent()
+	case "status.incident.created":
+		return t.AsStatusIncidentEvent()
+	case "status.incident.resolved":
+		return t.AsStatusIncidentEvent()
+	case "status.incident.updated":
+		return t.AsStatusIncidentEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -20285,6 +21359,58 @@ func (t *StoredEvent) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
 	return err
 }
 
+// AsStatusComponentEvent returns the union data inside the StoredEvent as a StatusComponentEvent
+func (t StoredEvent) AsStatusComponentEvent() (StatusComponentEvent, error) {
+	var body StatusComponentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusComponentEvent overwrites any union data inside the StoredEvent as the provided StatusComponentEvent
+func (t *StoredEvent) FromStatusComponentEvent(v StatusComponentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusComponentEvent performs a merge with any union data inside the StoredEvent, using the provided StatusComponentEvent
+func (t *StoredEvent) MergeStatusComponentEvent(v StatusComponentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStatusIncidentEvent returns the union data inside the StoredEvent as a StatusIncidentEvent
+func (t StoredEvent) AsStatusIncidentEvent() (StatusIncidentEvent, error) {
+	var body StatusIncidentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusIncidentEvent overwrites any union data inside the StoredEvent as the provided StatusIncidentEvent
+func (t *StoredEvent) FromStatusIncidentEvent(v StatusIncidentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusIncidentEvent performs a merge with any union data inside the StoredEvent, using the provided StatusIncidentEvent
+func (t *StoredEvent) MergeStatusIncidentEvent(v StatusIncidentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -20347,6 +21473,14 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageUpdatedEvent()
 	case "migration.updated":
 		return t.AsMigrationEvent()
+	case "status.component.updated":
+		return t.AsStatusComponentEvent()
+	case "status.incident.created":
+		return t.AsStatusIncidentEvent()
+	case "status.incident.resolved":
+		return t.AsStatusIncidentEvent()
+	case "status.incident.updated":
+		return t.AsStatusIncidentEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -20473,6 +21607,9 @@ type ServerInterface interface {
 	// CreateClientSession Start a contact session
 	// (POST /client/v1/session)
 	CreateClientSession(w http.ResponseWriter, r *http.Request)
+	// GetClientStatusPage A published status page
+	// (GET /client/v1/status/{slug})
+	GetClientStatusPage(w http.ResponseWriter, r *http.Request, slug StatusSlug)
 	// ListClientSubscriptions The session contact's subscriptions
 	// (GET /client/v1/subscriptions)
 	ListClientSubscriptions(w http.ResponseWriter, r *http.Request)
@@ -21247,6 +22384,75 @@ type ServerInterface interface {
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(w http.ResponseWriter, r *http.Request, params GetStatsParams)
+	// ListStatusPages List status pages
+	// (GET /v1/status-pages)
+	ListStatusPages(w http.ResponseWriter, r *http.Request, params ListStatusPagesParams)
+	// CreateStatusPage Create a status page
+	// (POST /v1/status-pages)
+	CreateStatusPage(w http.ResponseWriter, r *http.Request, params CreateStatusPageParams)
+	// DeleteStatusPage Delete a status page
+	// (DELETE /v1/status-pages/{pageId})
+	DeleteStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params DeleteStatusPageParams)
+	// GetStatusPage A status page
+	// (GET /v1/status-pages/{pageId})
+	GetStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params GetStatusPageParams)
+	// UpdateStatusPage Update a status page
+	// (PATCH /v1/status-pages/{pageId})
+	UpdateStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params UpdateStatusPageParams)
+	// ListStatusComponents List a page's components
+	// (GET /v1/status-pages/{pageId}/components)
+	ListStatusComponents(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusComponentsParams)
+	// CreateStatusComponent Create a component
+	// (POST /v1/status-pages/{pageId}/components)
+	CreateStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusComponentParams)
+	// DeleteStatusComponent Delete a component
+	// (DELETE /v1/status-pages/{pageId}/components/{componentId})
+	DeleteStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params DeleteStatusComponentParams)
+	// UpdateStatusComponent Update a component
+	// (PATCH /v1/status-pages/{pageId}/components/{componentId})
+	UpdateStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params UpdateStatusComponentParams)
+	// SetStatusComponentState Set a component's state
+	// (POST /v1/status-pages/{pageId}/components/{componentId}/state)
+	SetStatusComponentState(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params SetStatusComponentStateParams)
+	// ListStatusComponentGroups List a page's component groups
+	// (GET /v1/status-pages/{pageId}/groups)
+	ListStatusComponentGroups(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusComponentGroupsParams)
+	// CreateStatusComponentGroup Create a component group
+	// (POST /v1/status-pages/{pageId}/groups)
+	CreateStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusComponentGroupParams)
+	// DeleteStatusComponentGroup Delete a component group
+	// (DELETE /v1/status-pages/{pageId}/groups/{groupId})
+	DeleteStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, groupId StatusGroupId, params DeleteStatusComponentGroupParams)
+	// UpdateStatusComponentGroup Update a component group
+	// (PATCH /v1/status-pages/{pageId}/groups/{groupId})
+	UpdateStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, groupId StatusGroupId, params UpdateStatusComponentGroupParams)
+	// ListStatusIncidents List a page's incidents and maintenance
+	// (GET /v1/status-pages/{pageId}/incidents)
+	ListStatusIncidents(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusIncidentsParams)
+	// CreateStatusIncident Open an incident or plan maintenance
+	// (POST /v1/status-pages/{pageId}/incidents)
+	CreateStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusIncidentParams)
+	// DeleteStatusIncident Delete a draft incident
+	// (DELETE /v1/status-pages/{pageId}/incidents/{incidentId})
+	DeleteStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params DeleteStatusIncidentParams)
+	// GetStatusIncident An incident
+	// (GET /v1/status-pages/{pageId}/incidents/{incidentId})
+	GetStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params GetStatusIncidentParams)
+	// UpdateStatusIncident Change an incident
+	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId})
+	UpdateStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params UpdateStatusIncidentParams)
+	// PublishStatusIncident Publish a draft incident
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish)
+	PublishStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params PublishStatusIncidentParams)
+	// CreateStatusIncidentUpdate Post an update
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/updates)
+	CreateStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params CreateStatusIncidentUpdateParams)
+	// EditStatusIncidentUpdate Edit an update's text
+	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId})
+	EditStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, updateId StatusUpdateId, params EditStatusIncidentUpdateParams)
+	// PreviewStatusPage Preview a status page
+	// (GET /v1/status-pages/{pageId}/preview)
+	PreviewStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params PreviewStatusPageParams)
 	// GetUsage Usage per month
 	// (GET /v1/usage)
 	GetUsage(w http.ResponseWriter, r *http.Request, params GetUsageParams)
@@ -22430,6 +23636,32 @@ func (siw *ServerInterfaceWrapper) CreateClientSession(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateClientSession(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) GetClientStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "slug" -------------
+	var slug StatusSlug
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", r.PathValue("slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientStatusPage(w, r, slug)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -37015,6 +38247,1444 @@ func (siw *ServerInterfaceWrapper) GetStats(w http.ResponseWriter, r *http.Reque
 	handler.ServeHTTP(w, r)
 }
 
+// ListStatusPages operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusPages(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusPagesParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusPages(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusPageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusPage(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) DeleteStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteStatusPageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteStatusPage(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusPageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusPage(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) UpdateStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateStatusPageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateStatusPage(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListStatusComponents operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusComponents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusComponentsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusComponents(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusComponent operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusComponent(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusComponentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusComponent(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteStatusComponent operation middleware
+func (siw *ServerInterfaceWrapper) DeleteStatusComponent(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "componentId" -------------
+	var componentId StatusComponentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "componentId", r.PathValue("componentId"), &componentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "componentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteStatusComponentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteStatusComponent(w, r, pageId, componentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateStatusComponent operation middleware
+func (siw *ServerInterfaceWrapper) UpdateStatusComponent(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "componentId" -------------
+	var componentId StatusComponentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "componentId", r.PathValue("componentId"), &componentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "componentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateStatusComponentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateStatusComponent(w, r, pageId, componentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SetStatusComponentState operation middleware
+func (siw *ServerInterfaceWrapper) SetStatusComponentState(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "componentId" -------------
+	var componentId StatusComponentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "componentId", r.PathValue("componentId"), &componentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "componentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SetStatusComponentStateParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SetStatusComponentState(w, r, pageId, componentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListStatusComponentGroups operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusComponentGroups(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusComponentGroupsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusComponentGroups(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusComponentGroup operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusComponentGroup(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusComponentGroupParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusComponentGroup(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteStatusComponentGroup operation middleware
+func (siw *ServerInterfaceWrapper) DeleteStatusComponentGroup(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "groupId" -------------
+	var groupId StatusGroupId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "groupId", r.PathValue("groupId"), &groupId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "groupId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteStatusComponentGroupParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteStatusComponentGroup(w, r, pageId, groupId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateStatusComponentGroup operation middleware
+func (siw *ServerInterfaceWrapper) UpdateStatusComponentGroup(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "groupId" -------------
+	var groupId StatusGroupId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "groupId", r.PathValue("groupId"), &groupId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "groupId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateStatusComponentGroupParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateStatusComponentGroup(w, r, pageId, groupId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListStatusIncidents operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusIncidents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusIncidentsParams
+
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "open" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "open", r.URL.Query(), &params.Open, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "open"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "open", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusIncidents(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusIncident operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusIncident(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteStatusIncident operation middleware
+func (siw *ServerInterfaceWrapper) DeleteStatusIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteStatusIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteStatusIncident(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetStatusIncident operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusIncident(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateStatusIncident operation middleware
+func (siw *ServerInterfaceWrapper) UpdateStatusIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateStatusIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateStatusIncident(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PublishStatusIncident operation middleware
+func (siw *ServerInterfaceWrapper) PublishStatusIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PublishStatusIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PublishStatusIncident(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusIncidentUpdate operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusIncidentUpdate(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusIncidentUpdateParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusIncidentUpdate(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// EditStatusIncidentUpdate operation middleware
+func (siw *ServerInterfaceWrapper) EditStatusIncidentUpdate(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "updateId" -------------
+	var updateId StatusUpdateId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "updateId", r.PathValue("updateId"), &updateId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "updateId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params EditStatusIncidentUpdateParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.EditStatusIncidentUpdate(w, r, pageId, incidentId, updateId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PreviewStatusPage operation middleware
+func (siw *ServerInterfaceWrapper) PreviewStatusPage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PreviewStatusPageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewStatusPage(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetUsage operation middleware
 func (siw *ServerInterfaceWrapper) GetUsage(w http.ResponseWriter, r *http.Request) {
 
@@ -38281,6 +40951,29 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}", wrapper.DeleteAnalyticsExport)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}", wrapper.GetAnalyticsExport)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}/download", wrapper.DownloadAnalyticsExport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages", wrapper.ListStatusPages)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages", wrapper.CreateStatusPage)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}", wrapper.DeleteStatusPage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}", wrapper.GetStatusPage)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}", wrapper.UpdateStatusPage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/preview", wrapper.PreviewStatusPage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/groups", wrapper.ListStatusComponentGroups)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/groups", wrapper.CreateStatusComponentGroup)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/groups/{groupId}", wrapper.DeleteStatusComponentGroup)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/groups/{groupId}", wrapper.UpdateStatusComponentGroup)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/components", wrapper.ListStatusComponents)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/components", wrapper.CreateStatusComponent)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/components/{componentId}", wrapper.DeleteStatusComponent)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/components/{componentId}", wrapper.UpdateStatusComponent)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/components/{componentId}/state", wrapper.SetStatusComponentState)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents", wrapper.ListStatusIncidents)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents", wrapper.CreateStatusIncident)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}", wrapper.DeleteStatusIncident)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}", wrapper.GetStatusIncident)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}", wrapper.UpdateStatusIncident)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/publish", wrapper.PublishStatusIncident)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates", wrapper.CreateStatusIncidentUpdate)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}", wrapper.EditStatusIncidentUpdate)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -38319,6 +41012,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/access", wrapper.UnlockSharedAnalytics)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/query", wrapper.QuerySharedAnalytics)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/realtime", wrapper.GetSharedAnalyticsRealtime)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/status/{slug}", wrapper.GetClientStatusPage)
 
 	return m
 }
@@ -38377,6 +41071,18 @@ type WebhookReceiverInterface interface {
 	// A message was added
 	// HandleWebhookMessageCreatedWebhook handles the POST webhook for message.created.
 	HandleWebhookMessageCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookMessageCreatedParams)
+	// A status component changed
+	// HandleWebhookStatusComponentUpdatedWebhook handles the POST webhook for status.component.updated.
+	HandleWebhookStatusComponentUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusComponentUpdatedParams)
+	// An incident or maintenance was published
+	// HandleWebhookStatusIncidentCreatedWebhook handles the POST webhook for status.incident.created.
+	HandleWebhookStatusIncidentCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusIncidentCreatedParams)
+	// A published incident was resolved
+	// HandleWebhookStatusIncidentResolvedWebhook handles the POST webhook for status.incident.resolved.
+	HandleWebhookStatusIncidentResolvedWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusIncidentResolvedParams)
+	// A published incident changed
+	// HandleWebhookStatusIncidentUpdatedWebhook handles the POST webhook for status.incident.updated.
+	HandleWebhookStatusIncidentUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusIncidentUpdatedParams)
 	// A subscription was created
 	// HandleWebhookSubscriptionCreatedWebhook handles the POST webhook for subscription.created.
 	HandleWebhookSubscriptionCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookSubscriptionCreatedParams)
@@ -39854,6 +42560,374 @@ func WebhookMessageCreatedWebhookHandler(si WebhookReceiverInterface, errHandler
 		}
 
 		si.HandleWebhookMessageCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusComponentUpdatedWebhookHandler returns the http.Handler for the status.component.updated webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusComponentUpdatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusComponentUpdatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusComponentUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusIncidentCreatedWebhookHandler returns the http.Handler for the status.incident.created webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusIncidentCreatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusIncidentCreatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusIncidentCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusIncidentResolvedWebhookHandler returns the http.Handler for the status.incident.resolved webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusIncidentResolvedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusIncidentResolvedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusIncidentResolvedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusIncidentUpdatedWebhookHandler returns the http.Handler for the status.incident.updated webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusIncidentUpdatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusIncidentUpdatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusIncidentUpdatedWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -42853,6 +45927,58 @@ func (response CreateClientSession404ApplicationProblemPlusJSONResponse) VisitCr
 type CreateClientSession429ApplicationProblemPlusJSONResponse Problem
 
 func (response CreateClientSession429ApplicationProblemPlusJSONResponse) VisitCreateClientSessionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientStatusPageRequestObject struct {
+	Slug StatusSlug `json:"slug"`
+}
+
+type GetClientStatusPageResponseObject interface {
+	VisitGetClientStatusPageResponse(w http.ResponseWriter) error
+}
+
+type GetClientStatusPage200JSONResponse PublicStatusPage
+
+func (response GetClientStatusPage200JSONResponse) VisitGetClientStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientStatusPage404ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientStatusPage404ApplicationProblemPlusJSONResponse) VisitGetClientStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientStatusPage429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientStatusPage429ApplicationProblemPlusJSONResponse) VisitGetClientStatusPageResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -62769,6 +65895,1788 @@ func (response GetStats404ApplicationProblemPlusJSONResponse) VisitGetStatsRespo
 	return err
 }
 
+type ListStatusPagesRequestObject struct {
+	Params ListStatusPagesParams
+}
+
+type ListStatusPagesResponseObject interface {
+	VisitListStatusPagesResponse(w http.ResponseWriter) error
+}
+
+type ListStatusPages200JSONResponse StatusPageList
+
+func (response ListStatusPages200JSONResponse) VisitListStatusPagesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusPages401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusPages401ApplicationProblemPlusJSONResponse) VisitListStatusPagesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusPages403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusPages403ApplicationProblemPlusJSONResponse) VisitListStatusPagesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusPages404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusPages404ApplicationProblemPlusJSONResponse) VisitListStatusPagesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPageRequestObject struct {
+	Params CreateStatusPageParams
+	Body   *CreateStatusPageJSONRequestBody
+}
+
+type CreateStatusPageResponseObject interface {
+	VisitCreateStatusPageResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusPage201JSONResponse StatusPage
+
+func (response CreateStatusPage201JSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPage400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusPage400ApplicationProblemPlusJSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPage401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusPage401ApplicationProblemPlusJSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPage403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusPage403ApplicationProblemPlusJSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPage404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusPage404ApplicationProblemPlusJSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusPage409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusPage409ApplicationProblemPlusJSONResponse) VisitCreateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusPageRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params DeleteStatusPageParams
+}
+
+type DeleteStatusPageResponseObject interface {
+	VisitDeleteStatusPageResponse(w http.ResponseWriter) error
+}
+
+type DeleteStatusPage204Response struct {
+}
+
+func (response DeleteStatusPage204Response) VisitDeleteStatusPageResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteStatusPage401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteStatusPage401ApplicationProblemPlusJSONResponse) VisitDeleteStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusPage403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusPage403ApplicationProblemPlusJSONResponse) VisitDeleteStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusPage404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusPage404ApplicationProblemPlusJSONResponse) VisitDeleteStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusPageRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params GetStatusPageParams
+}
+
+type GetStatusPageResponseObject interface {
+	VisitGetStatusPageResponse(w http.ResponseWriter) error
+}
+
+type GetStatusPage200JSONResponse StatusPage
+
+func (response GetStatusPage200JSONResponse) VisitGetStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusPage401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusPage401ApplicationProblemPlusJSONResponse) VisitGetStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusPage403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusPage403ApplicationProblemPlusJSONResponse) VisitGetStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusPage404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusPage404ApplicationProblemPlusJSONResponse) VisitGetStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPageRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params UpdateStatusPageParams
+	Body   *UpdateStatusPageJSONRequestBody
+}
+
+type UpdateStatusPageResponseObject interface {
+	VisitUpdateStatusPageResponse(w http.ResponseWriter) error
+}
+
+type UpdateStatusPage200JSONResponse StatusPage
+
+func (response UpdateStatusPage200JSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPage400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateStatusPage400ApplicationProblemPlusJSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPage401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusPage401ApplicationProblemPlusJSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPage403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusPage403ApplicationProblemPlusJSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPage404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusPage404ApplicationProblemPlusJSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusPage409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusPage409ApplicationProblemPlusJSONResponse) VisitUpdateStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponentsRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params ListStatusComponentsParams
+}
+
+type ListStatusComponentsResponseObject interface {
+	VisitListStatusComponentsResponse(w http.ResponseWriter) error
+}
+
+type ListStatusComponents200JSONResponse StatusComponentList
+
+func (response ListStatusComponents200JSONResponse) VisitListStatusComponentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponents401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusComponents401ApplicationProblemPlusJSONResponse) VisitListStatusComponentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponents403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusComponents403ApplicationProblemPlusJSONResponse) VisitListStatusComponentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponents404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusComponents404ApplicationProblemPlusJSONResponse) VisitListStatusComponentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params CreateStatusComponentParams
+	Body   *CreateStatusComponentJSONRequestBody
+}
+
+type CreateStatusComponentResponseObject interface {
+	VisitCreateStatusComponentResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusComponent201JSONResponse StatusComponent
+
+func (response CreateStatusComponent201JSONResponse) VisitCreateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponent400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusComponent400ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponent401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponent401ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponent403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponent403ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponent404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponent404ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponentRequestObject struct {
+	PageId      StatusPageId      `json:"pageId"`
+	ComponentId StatusComponentId `json:"componentId"`
+	Params      DeleteStatusComponentParams
+}
+
+type DeleteStatusComponentResponseObject interface {
+	VisitDeleteStatusComponentResponse(w http.ResponseWriter) error
+}
+
+type DeleteStatusComponent204Response struct {
+}
+
+func (response DeleteStatusComponent204Response) VisitDeleteStatusComponentResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteStatusComponent401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteStatusComponent401ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponent403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusComponent403ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponent404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusComponent404ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentRequestObject struct {
+	PageId      StatusPageId      `json:"pageId"`
+	ComponentId StatusComponentId `json:"componentId"`
+	Params      UpdateStatusComponentParams
+	Body        *UpdateStatusComponentJSONRequestBody
+}
+
+type UpdateStatusComponentResponseObject interface {
+	VisitUpdateStatusComponentResponse(w http.ResponseWriter) error
+}
+
+type UpdateStatusComponent200JSONResponse StatusComponent
+
+func (response UpdateStatusComponent200JSONResponse) VisitUpdateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponent400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateStatusComponent400ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponent401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponent401ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponent403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponent403ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponent404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponent404ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SetStatusComponentStateRequestObject struct {
+	PageId      StatusPageId      `json:"pageId"`
+	ComponentId StatusComponentId `json:"componentId"`
+	Params      SetStatusComponentStateParams
+	Body        *SetStatusComponentStateJSONRequestBody
+}
+
+type SetStatusComponentStateResponseObject interface {
+	VisitSetStatusComponentStateResponse(w http.ResponseWriter) error
+}
+
+type SetStatusComponentState200JSONResponse StatusComponent
+
+func (response SetStatusComponentState200JSONResponse) VisitSetStatusComponentStateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SetStatusComponentState400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SetStatusComponentState400ApplicationProblemPlusJSONResponse) VisitSetStatusComponentStateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SetStatusComponentState401ApplicationProblemPlusJSONResponse Problem
+
+func (response SetStatusComponentState401ApplicationProblemPlusJSONResponse) VisitSetStatusComponentStateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SetStatusComponentState403ApplicationProblemPlusJSONResponse Problem
+
+func (response SetStatusComponentState403ApplicationProblemPlusJSONResponse) VisitSetStatusComponentStateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SetStatusComponentState404ApplicationProblemPlusJSONResponse Problem
+
+func (response SetStatusComponentState404ApplicationProblemPlusJSONResponse) VisitSetStatusComponentStateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponentGroupsRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params ListStatusComponentGroupsParams
+}
+
+type ListStatusComponentGroupsResponseObject interface {
+	VisitListStatusComponentGroupsResponse(w http.ResponseWriter) error
+}
+
+type ListStatusComponentGroups200JSONResponse StatusComponentGroupList
+
+func (response ListStatusComponentGroups200JSONResponse) VisitListStatusComponentGroupsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponentGroups401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusComponentGroups401ApplicationProblemPlusJSONResponse) VisitListStatusComponentGroupsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponentGroups403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusComponentGroups403ApplicationProblemPlusJSONResponse) VisitListStatusComponentGroupsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusComponentGroups404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusComponentGroups404ApplicationProblemPlusJSONResponse) VisitListStatusComponentGroupsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentGroupRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params CreateStatusComponentGroupParams
+	Body   *CreateStatusComponentGroupJSONRequestBody
+}
+
+type CreateStatusComponentGroupResponseObject interface {
+	VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusComponentGroup201JSONResponse StatusComponentGroup
+
+func (response CreateStatusComponentGroup201JSONResponse) VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentGroup400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusComponentGroup400ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentGroup401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponentGroup401ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentGroup403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponentGroup403ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusComponentGroup404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusComponentGroup404ApplicationProblemPlusJSONResponse) VisitCreateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponentGroupRequestObject struct {
+	PageId  StatusPageId  `json:"pageId"`
+	GroupId StatusGroupId `json:"groupId"`
+	Params  DeleteStatusComponentGroupParams
+}
+
+type DeleteStatusComponentGroupResponseObject interface {
+	VisitDeleteStatusComponentGroupResponse(w http.ResponseWriter) error
+}
+
+type DeleteStatusComponentGroup204Response struct {
+}
+
+func (response DeleteStatusComponentGroup204Response) VisitDeleteStatusComponentGroupResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteStatusComponentGroup401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteStatusComponentGroup401ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponentGroup403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusComponentGroup403ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusComponentGroup404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusComponentGroup404ApplicationProblemPlusJSONResponse) VisitDeleteStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentGroupRequestObject struct {
+	PageId  StatusPageId  `json:"pageId"`
+	GroupId StatusGroupId `json:"groupId"`
+	Params  UpdateStatusComponentGroupParams
+	Body    *UpdateStatusComponentGroupJSONRequestBody
+}
+
+type UpdateStatusComponentGroupResponseObject interface {
+	VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error
+}
+
+type UpdateStatusComponentGroup200JSONResponse StatusComponentGroup
+
+func (response UpdateStatusComponentGroup200JSONResponse) VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentGroup400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateStatusComponentGroup400ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentGroup401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponentGroup401ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentGroup403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponentGroup403ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusComponentGroup404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusComponentGroup404ApplicationProblemPlusJSONResponse) VisitUpdateStatusComponentGroupResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidentsRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params ListStatusIncidentsParams
+}
+
+type ListStatusIncidentsResponseObject interface {
+	VisitListStatusIncidentsResponse(w http.ResponseWriter) error
+}
+
+type ListStatusIncidents200JSONResponse StatusIncidentList
+
+func (response ListStatusIncidents200JSONResponse) VisitListStatusIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidents400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusIncidents400ApplicationProblemPlusJSONResponse) VisitListStatusIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidents401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidents401ApplicationProblemPlusJSONResponse) VisitListStatusIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidents403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidents403ApplicationProblemPlusJSONResponse) VisitListStatusIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidents404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidents404ApplicationProblemPlusJSONResponse) VisitListStatusIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params CreateStatusIncidentParams
+	Body   *CreateStatusIncidentJSONRequestBody
+}
+
+type CreateStatusIncidentResponseObject interface {
+	VisitCreateStatusIncidentResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusIncident201JSONResponse StatusIncident
+
+func (response CreateStatusIncident201JSONResponse) VisitCreateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncident400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusIncident400ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncident401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncident401ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncident403ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncident404ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusIncidentRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     DeleteStatusIncidentParams
+}
+
+type DeleteStatusIncidentResponseObject interface {
+	VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error
+}
+
+type DeleteStatusIncident204Response struct {
+}
+
+func (response DeleteStatusIncident204Response) VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteStatusIncident401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteStatusIncident401ApplicationProblemPlusJSONResponse) VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusIncident403ApplicationProblemPlusJSONResponse) VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusIncident404ApplicationProblemPlusJSONResponse) VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusIncident409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusIncident409ApplicationProblemPlusJSONResponse) VisitDeleteStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusIncidentRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     GetStatusIncidentParams
+}
+
+type GetStatusIncidentResponseObject interface {
+	VisitGetStatusIncidentResponse(w http.ResponseWriter) error
+}
+
+type GetStatusIncident200JSONResponse StatusIncident
+
+func (response GetStatusIncident200JSONResponse) VisitGetStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusIncident401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusIncident401ApplicationProblemPlusJSONResponse) VisitGetStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusIncident403ApplicationProblemPlusJSONResponse) VisitGetStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusIncident404ApplicationProblemPlusJSONResponse) VisitGetStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncidentRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     UpdateStatusIncidentParams
+	Body       *UpdateStatusIncidentJSONRequestBody
+}
+
+type UpdateStatusIncidentResponseObject interface {
+	VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error
+}
+
+type UpdateStatusIncident200JSONResponse StatusIncident
+
+func (response UpdateStatusIncident200JSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncident400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateStatusIncident400ApplicationProblemPlusJSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncident401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusIncident401ApplicationProblemPlusJSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusIncident403ApplicationProblemPlusJSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusIncident404ApplicationProblemPlusJSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusIncident409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusIncident409ApplicationProblemPlusJSONResponse) VisitUpdateStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishStatusIncidentRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     PublishStatusIncidentParams
+}
+
+type PublishStatusIncidentResponseObject interface {
+	VisitPublishStatusIncidentResponse(w http.ResponseWriter) error
+}
+
+type PublishStatusIncident200JSONResponse StatusIncident
+
+func (response PublishStatusIncident200JSONResponse) VisitPublishStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishStatusIncident401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PublishStatusIncident401ApplicationProblemPlusJSONResponse) VisitPublishStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishStatusIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishStatusIncident403ApplicationProblemPlusJSONResponse) VisitPublishStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishStatusIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishStatusIncident404ApplicationProblemPlusJSONResponse) VisitPublishStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdateRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     CreateStatusIncidentUpdateParams
+	Body       *CreateStatusIncidentUpdateJSONRequestBody
+}
+
+type CreateStatusIncidentUpdateResponseObject interface {
+	VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusIncidentUpdate201JSONResponse StatusIncident
+
+func (response CreateStatusIncidentUpdate201JSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdate400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusIncidentUpdate400ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdate401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncidentUpdate401ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdate403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncidentUpdate403ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdate404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncidentUpdate404ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusIncidentUpdate409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusIncidentUpdate409ApplicationProblemPlusJSONResponse) VisitCreateStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type EditStatusIncidentUpdateRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	UpdateId   StatusUpdateId   `json:"updateId"`
+	Params     EditStatusIncidentUpdateParams
+	Body       *EditStatusIncidentUpdateJSONRequestBody
+}
+
+type EditStatusIncidentUpdateResponseObject interface {
+	VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error
+}
+
+type EditStatusIncidentUpdate200JSONResponse StatusIncident
+
+func (response EditStatusIncidentUpdate200JSONResponse) VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type EditStatusIncidentUpdate400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response EditStatusIncidentUpdate400ApplicationProblemPlusJSONResponse) VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type EditStatusIncidentUpdate401ApplicationProblemPlusJSONResponse Problem
+
+func (response EditStatusIncidentUpdate401ApplicationProblemPlusJSONResponse) VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type EditStatusIncidentUpdate403ApplicationProblemPlusJSONResponse Problem
+
+func (response EditStatusIncidentUpdate403ApplicationProblemPlusJSONResponse) VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type EditStatusIncidentUpdate404ApplicationProblemPlusJSONResponse Problem
+
+func (response EditStatusIncidentUpdate404ApplicationProblemPlusJSONResponse) VisitEditStatusIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewStatusPageRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params PreviewStatusPageParams
+}
+
+type PreviewStatusPageResponseObject interface {
+	VisitPreviewStatusPageResponse(w http.ResponseWriter) error
+}
+
+type PreviewStatusPage200TexthtmlResponse struct {
+	Body          io.Reader
+	ContentLength int64
+}
+
+func (response PreviewStatusPage200TexthtmlResponse) VisitPreviewStatusPageResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/html")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type PreviewStatusPage401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PreviewStatusPage401ApplicationProblemPlusJSONResponse) VisitPreviewStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewStatusPage403ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewStatusPage403ApplicationProblemPlusJSONResponse) VisitPreviewStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewStatusPage404ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewStatusPage404ApplicationProblemPlusJSONResponse) VisitPreviewStatusPageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetUsageRequestObject struct {
 	Params GetUsageParams
 }
@@ -64026,6 +68934,9 @@ type StrictServerInterface interface {
 	// CreateClientSession Start a contact session
 	// (POST /client/v1/session)
 	CreateClientSession(ctx context.Context, request CreateClientSessionRequestObject) (CreateClientSessionResponseObject, error)
+	// GetClientStatusPage A published status page
+	// (GET /client/v1/status/{slug})
+	GetClientStatusPage(ctx context.Context, request GetClientStatusPageRequestObject) (GetClientStatusPageResponseObject, error)
 	// ListClientSubscriptions The session contact's subscriptions
 	// (GET /client/v1/subscriptions)
 	ListClientSubscriptions(ctx context.Context, request ListClientSubscriptionsRequestObject) (ListClientSubscriptionsResponseObject, error)
@@ -64800,6 +69711,75 @@ type StrictServerInterface interface {
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(ctx context.Context, request GetStatsRequestObject) (GetStatsResponseObject, error)
+	// ListStatusPages List status pages
+	// (GET /v1/status-pages)
+	ListStatusPages(ctx context.Context, request ListStatusPagesRequestObject) (ListStatusPagesResponseObject, error)
+	// CreateStatusPage Create a status page
+	// (POST /v1/status-pages)
+	CreateStatusPage(ctx context.Context, request CreateStatusPageRequestObject) (CreateStatusPageResponseObject, error)
+	// DeleteStatusPage Delete a status page
+	// (DELETE /v1/status-pages/{pageId})
+	DeleteStatusPage(ctx context.Context, request DeleteStatusPageRequestObject) (DeleteStatusPageResponseObject, error)
+	// GetStatusPage A status page
+	// (GET /v1/status-pages/{pageId})
+	GetStatusPage(ctx context.Context, request GetStatusPageRequestObject) (GetStatusPageResponseObject, error)
+	// UpdateStatusPage Update a status page
+	// (PATCH /v1/status-pages/{pageId})
+	UpdateStatusPage(ctx context.Context, request UpdateStatusPageRequestObject) (UpdateStatusPageResponseObject, error)
+	// ListStatusComponents List a page's components
+	// (GET /v1/status-pages/{pageId}/components)
+	ListStatusComponents(ctx context.Context, request ListStatusComponentsRequestObject) (ListStatusComponentsResponseObject, error)
+	// CreateStatusComponent Create a component
+	// (POST /v1/status-pages/{pageId}/components)
+	CreateStatusComponent(ctx context.Context, request CreateStatusComponentRequestObject) (CreateStatusComponentResponseObject, error)
+	// DeleteStatusComponent Delete a component
+	// (DELETE /v1/status-pages/{pageId}/components/{componentId})
+	DeleteStatusComponent(ctx context.Context, request DeleteStatusComponentRequestObject) (DeleteStatusComponentResponseObject, error)
+	// UpdateStatusComponent Update a component
+	// (PATCH /v1/status-pages/{pageId}/components/{componentId})
+	UpdateStatusComponent(ctx context.Context, request UpdateStatusComponentRequestObject) (UpdateStatusComponentResponseObject, error)
+	// SetStatusComponentState Set a component's state
+	// (POST /v1/status-pages/{pageId}/components/{componentId}/state)
+	SetStatusComponentState(ctx context.Context, request SetStatusComponentStateRequestObject) (SetStatusComponentStateResponseObject, error)
+	// ListStatusComponentGroups List a page's component groups
+	// (GET /v1/status-pages/{pageId}/groups)
+	ListStatusComponentGroups(ctx context.Context, request ListStatusComponentGroupsRequestObject) (ListStatusComponentGroupsResponseObject, error)
+	// CreateStatusComponentGroup Create a component group
+	// (POST /v1/status-pages/{pageId}/groups)
+	CreateStatusComponentGroup(ctx context.Context, request CreateStatusComponentGroupRequestObject) (CreateStatusComponentGroupResponseObject, error)
+	// DeleteStatusComponentGroup Delete a component group
+	// (DELETE /v1/status-pages/{pageId}/groups/{groupId})
+	DeleteStatusComponentGroup(ctx context.Context, request DeleteStatusComponentGroupRequestObject) (DeleteStatusComponentGroupResponseObject, error)
+	// UpdateStatusComponentGroup Update a component group
+	// (PATCH /v1/status-pages/{pageId}/groups/{groupId})
+	UpdateStatusComponentGroup(ctx context.Context, request UpdateStatusComponentGroupRequestObject) (UpdateStatusComponentGroupResponseObject, error)
+	// ListStatusIncidents List a page's incidents and maintenance
+	// (GET /v1/status-pages/{pageId}/incidents)
+	ListStatusIncidents(ctx context.Context, request ListStatusIncidentsRequestObject) (ListStatusIncidentsResponseObject, error)
+	// CreateStatusIncident Open an incident or plan maintenance
+	// (POST /v1/status-pages/{pageId}/incidents)
+	CreateStatusIncident(ctx context.Context, request CreateStatusIncidentRequestObject) (CreateStatusIncidentResponseObject, error)
+	// DeleteStatusIncident Delete a draft incident
+	// (DELETE /v1/status-pages/{pageId}/incidents/{incidentId})
+	DeleteStatusIncident(ctx context.Context, request DeleteStatusIncidentRequestObject) (DeleteStatusIncidentResponseObject, error)
+	// GetStatusIncident An incident
+	// (GET /v1/status-pages/{pageId}/incidents/{incidentId})
+	GetStatusIncident(ctx context.Context, request GetStatusIncidentRequestObject) (GetStatusIncidentResponseObject, error)
+	// UpdateStatusIncident Change an incident
+	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId})
+	UpdateStatusIncident(ctx context.Context, request UpdateStatusIncidentRequestObject) (UpdateStatusIncidentResponseObject, error)
+	// PublishStatusIncident Publish a draft incident
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish)
+	PublishStatusIncident(ctx context.Context, request PublishStatusIncidentRequestObject) (PublishStatusIncidentResponseObject, error)
+	// CreateStatusIncidentUpdate Post an update
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/updates)
+	CreateStatusIncidentUpdate(ctx context.Context, request CreateStatusIncidentUpdateRequestObject) (CreateStatusIncidentUpdateResponseObject, error)
+	// EditStatusIncidentUpdate Edit an update's text
+	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId})
+	EditStatusIncidentUpdate(ctx context.Context, request EditStatusIncidentUpdateRequestObject) (EditStatusIncidentUpdateResponseObject, error)
+	// PreviewStatusPage Preview a status page
+	// (GET /v1/status-pages/{pageId}/preview)
+	PreviewStatusPage(ctx context.Context, request PreviewStatusPageRequestObject) (PreviewStatusPageResponseObject, error)
 	// GetUsage Usage per month
 	// (GET /v1/usage)
 	GetUsage(ctx context.Context, request GetUsageRequestObject) (GetUsageResponseObject, error)
@@ -65943,6 +70923,32 @@ func (sh *strictHandler) CreateClientSession(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateClientSessionResponseObject); ok {
 		if err := validResponse.VisitCreateClientSessionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientStatusPage operation middleware
+func (sh *strictHandler) GetClientStatusPage(w http.ResponseWriter, r *http.Request, slug StatusSlug) {
+	var request GetClientStatusPageRequestObject
+
+	request.Slug = slug
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientStatusPage(ctx, request.(GetClientStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientStatusPageResponseObject); ok {
+		if err := validResponse.VisitGetClientStatusPageResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -73468,6 +78474,714 @@ func (sh *strictHandler) GetStats(w http.ResponseWriter, r *http.Request, params
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetStatsResponseObject); ok {
 		if err := validResponse.VisitGetStatsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusPages operation middleware
+func (sh *strictHandler) ListStatusPages(w http.ResponseWriter, r *http.Request, params ListStatusPagesParams) {
+	var request ListStatusPagesRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusPages(ctx, request.(ListStatusPagesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusPages")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusPagesResponseObject); ok {
+		if err := validResponse.VisitListStatusPagesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusPage operation middleware
+func (sh *strictHandler) CreateStatusPage(w http.ResponseWriter, r *http.Request, params CreateStatusPageParams) {
+	var request CreateStatusPageRequestObject
+
+	request.Params = params
+
+	var body CreateStatusPageJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusPage(ctx, request.(CreateStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusPageResponseObject); ok {
+		if err := validResponse.VisitCreateStatusPageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteStatusPage operation middleware
+func (sh *strictHandler) DeleteStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params DeleteStatusPageParams) {
+	var request DeleteStatusPageRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteStatusPage(ctx, request.(DeleteStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteStatusPageResponseObject); ok {
+		if err := validResponse.VisitDeleteStatusPageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusPage operation middleware
+func (sh *strictHandler) GetStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params GetStatusPageParams) {
+	var request GetStatusPageRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusPage(ctx, request.(GetStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusPageResponseObject); ok {
+		if err := validResponse.VisitGetStatusPageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateStatusPage operation middleware
+func (sh *strictHandler) UpdateStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params UpdateStatusPageParams) {
+	var request UpdateStatusPageRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	var body UpdateStatusPageJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateStatusPage(ctx, request.(UpdateStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateStatusPageResponseObject); ok {
+		if err := validResponse.VisitUpdateStatusPageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusComponents operation middleware
+func (sh *strictHandler) ListStatusComponents(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusComponentsParams) {
+	var request ListStatusComponentsRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusComponents(ctx, request.(ListStatusComponentsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusComponents")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusComponentsResponseObject); ok {
+		if err := validResponse.VisitListStatusComponentsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusComponent operation middleware
+func (sh *strictHandler) CreateStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusComponentParams) {
+	var request CreateStatusComponentRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	var body CreateStatusComponentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusComponent(ctx, request.(CreateStatusComponentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusComponent")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusComponentResponseObject); ok {
+		if err := validResponse.VisitCreateStatusComponentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteStatusComponent operation middleware
+func (sh *strictHandler) DeleteStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params DeleteStatusComponentParams) {
+	var request DeleteStatusComponentRequestObject
+
+	request.PageId = pageId
+	request.ComponentId = componentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteStatusComponent(ctx, request.(DeleteStatusComponentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteStatusComponent")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteStatusComponentResponseObject); ok {
+		if err := validResponse.VisitDeleteStatusComponentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateStatusComponent operation middleware
+func (sh *strictHandler) UpdateStatusComponent(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params UpdateStatusComponentParams) {
+	var request UpdateStatusComponentRequestObject
+
+	request.PageId = pageId
+	request.ComponentId = componentId
+	request.Params = params
+
+	var body UpdateStatusComponentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateStatusComponent(ctx, request.(UpdateStatusComponentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateStatusComponent")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateStatusComponentResponseObject); ok {
+		if err := validResponse.VisitUpdateStatusComponentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SetStatusComponentState operation middleware
+func (sh *strictHandler) SetStatusComponentState(w http.ResponseWriter, r *http.Request, pageId StatusPageId, componentId StatusComponentId, params SetStatusComponentStateParams) {
+	var request SetStatusComponentStateRequestObject
+
+	request.PageId = pageId
+	request.ComponentId = componentId
+	request.Params = params
+
+	var body SetStatusComponentStateJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SetStatusComponentState(ctx, request.(SetStatusComponentStateRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SetStatusComponentState")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SetStatusComponentStateResponseObject); ok {
+		if err := validResponse.VisitSetStatusComponentStateResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusComponentGroups operation middleware
+func (sh *strictHandler) ListStatusComponentGroups(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusComponentGroupsParams) {
+	var request ListStatusComponentGroupsRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusComponentGroups(ctx, request.(ListStatusComponentGroupsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusComponentGroups")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusComponentGroupsResponseObject); ok {
+		if err := validResponse.VisitListStatusComponentGroupsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusComponentGroup operation middleware
+func (sh *strictHandler) CreateStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusComponentGroupParams) {
+	var request CreateStatusComponentGroupRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	var body CreateStatusComponentGroupJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusComponentGroup(ctx, request.(CreateStatusComponentGroupRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusComponentGroup")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusComponentGroupResponseObject); ok {
+		if err := validResponse.VisitCreateStatusComponentGroupResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteStatusComponentGroup operation middleware
+func (sh *strictHandler) DeleteStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, groupId StatusGroupId, params DeleteStatusComponentGroupParams) {
+	var request DeleteStatusComponentGroupRequestObject
+
+	request.PageId = pageId
+	request.GroupId = groupId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteStatusComponentGroup(ctx, request.(DeleteStatusComponentGroupRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteStatusComponentGroup")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteStatusComponentGroupResponseObject); ok {
+		if err := validResponse.VisitDeleteStatusComponentGroupResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateStatusComponentGroup operation middleware
+func (sh *strictHandler) UpdateStatusComponentGroup(w http.ResponseWriter, r *http.Request, pageId StatusPageId, groupId StatusGroupId, params UpdateStatusComponentGroupParams) {
+	var request UpdateStatusComponentGroupRequestObject
+
+	request.PageId = pageId
+	request.GroupId = groupId
+	request.Params = params
+
+	var body UpdateStatusComponentGroupJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateStatusComponentGroup(ctx, request.(UpdateStatusComponentGroupRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateStatusComponentGroup")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateStatusComponentGroupResponseObject); ok {
+		if err := validResponse.VisitUpdateStatusComponentGroupResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusIncidents operation middleware
+func (sh *strictHandler) ListStatusIncidents(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusIncidentsParams) {
+	var request ListStatusIncidentsRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusIncidents(ctx, request.(ListStatusIncidentsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusIncidents")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusIncidentsResponseObject); ok {
+		if err := validResponse.VisitListStatusIncidentsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusIncident operation middleware
+func (sh *strictHandler) CreateStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusIncidentParams) {
+	var request CreateStatusIncidentRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	var body CreateStatusIncidentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusIncident(ctx, request.(CreateStatusIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusIncidentResponseObject); ok {
+		if err := validResponse.VisitCreateStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteStatusIncident operation middleware
+func (sh *strictHandler) DeleteStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params DeleteStatusIncidentParams) {
+	var request DeleteStatusIncidentRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteStatusIncident(ctx, request.(DeleteStatusIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteStatusIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteStatusIncidentResponseObject); ok {
+		if err := validResponse.VisitDeleteStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusIncident operation middleware
+func (sh *strictHandler) GetStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params GetStatusIncidentParams) {
+	var request GetStatusIncidentRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusIncident(ctx, request.(GetStatusIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusIncidentResponseObject); ok {
+		if err := validResponse.VisitGetStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateStatusIncident operation middleware
+func (sh *strictHandler) UpdateStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params UpdateStatusIncidentParams) {
+	var request UpdateStatusIncidentRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	var body UpdateStatusIncidentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateStatusIncident(ctx, request.(UpdateStatusIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateStatusIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateStatusIncidentResponseObject); ok {
+		if err := validResponse.VisitUpdateStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PublishStatusIncident operation middleware
+func (sh *strictHandler) PublishStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params PublishStatusIncidentParams) {
+	var request PublishStatusIncidentRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PublishStatusIncident(ctx, request.(PublishStatusIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PublishStatusIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PublishStatusIncidentResponseObject); ok {
+		if err := validResponse.VisitPublishStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusIncidentUpdate operation middleware
+func (sh *strictHandler) CreateStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params CreateStatusIncidentUpdateParams) {
+	var request CreateStatusIncidentUpdateRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	var body CreateStatusIncidentUpdateJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusIncidentUpdate(ctx, request.(CreateStatusIncidentUpdateRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusIncidentUpdate")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusIncidentUpdateResponseObject); ok {
+		if err := validResponse.VisitCreateStatusIncidentUpdateResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// EditStatusIncidentUpdate operation middleware
+func (sh *strictHandler) EditStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, updateId StatusUpdateId, params EditStatusIncidentUpdateParams) {
+	var request EditStatusIncidentUpdateRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.UpdateId = updateId
+	request.Params = params
+
+	var body EditStatusIncidentUpdateJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.EditStatusIncidentUpdate(ctx, request.(EditStatusIncidentUpdateRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "EditStatusIncidentUpdate")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(EditStatusIncidentUpdateResponseObject); ok {
+		if err := validResponse.VisitEditStatusIncidentUpdateResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PreviewStatusPage operation middleware
+func (sh *strictHandler) PreviewStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params PreviewStatusPageParams) {
+	var request PreviewStatusPageRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PreviewStatusPage(ctx, request.(PreviewStatusPageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PreviewStatusPage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PreviewStatusPageResponseObject); ok {
+		if err := validResponse.VisitPreviewStatusPageResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

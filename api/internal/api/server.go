@@ -37,7 +37,7 @@ import (
 
 const maxBodyBytes = 8 << 20
 
-var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix}
+var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix, statusPathPrefix}
 
 var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp", signInCallbackPath}
 
@@ -68,13 +68,15 @@ type Server struct {
 	hooks    *webhook.Client
 	push     *push.Sender
 
-	imagesMax  int64
-	analytics  *analyticsState
-	broadcasts BroadcastSettings
-	imports    ImportSettings
-	migrations MigrationSettings
-	ses        SESSettings
-	sesCaller  atomic.Pointer[string]
+	imagesMax   int64
+	analytics   *analyticsState
+	broadcasts  BroadcastSettings
+	imports     ImportSettings
+	migrations  MigrationSettings
+	ses         SESSettings
+	status      StatusSettings
+	statusCache *statusCache
+	sesCaller   atomic.Pointer[string]
 
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
@@ -129,6 +131,7 @@ type Deps struct {
 	Migrations          MigrationSettings
 	Analytics           AnalyticsSettings
 	SES                 SESSettings
+	Status              StatusSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -242,6 +245,7 @@ func New(d Deps) *Server {
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
+		status: d.Status, statusCache: newStatusCache(),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -337,6 +341,7 @@ func (s *Server) Handler() http.Handler {
 	if s.analytics != nil {
 		mux.HandleFunc("POST "+analyticsPrefix+"{key}", s.serveAnalyticsCollect)
 	}
+	s.routeStatus(mux)
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)
 	mux.HandleFunc("GET "+emailConfirmPath, s.serveEmailConfirm)
@@ -385,7 +390,7 @@ func (s *Server) Handler() http.Handler {
 		}
 		panel.ServeHTTP(w, r)
 	})
-	return s.recoverer(s.logRequests(noSniff(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux)))))))))
+	return s.recoverer(s.logRequests(noSniff(s.statusHost(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux))))))))))
 }
 
 var mailLinkPrefixes = []string{managePathPrefix, confirmPathPrefix, clickPathPrefix, emailImagePathPrefix}

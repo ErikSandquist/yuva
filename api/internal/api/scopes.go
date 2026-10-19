@@ -12,7 +12,7 @@ var allScopes = []oas.ApiKeyScope{
 	oas.ContactsRead, oas.ContactsWrite, oas.InboxesRead, oas.InboxesManage, oas.LabelsWrite,
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
 	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage,
-	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage,
+	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage, oas.StatusRead, oas.StatusManage,
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
@@ -247,6 +247,30 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteAnalyticsExport":     {oas.AnalyticsRead},
 	"DownloadAnalyticsExport":   {oas.AnalyticsRead},
 	"ListAnalyticsAlerts":       {oas.AnalyticsRead},
+
+	"ListStatusPages":            {oas.StatusRead},
+	"GetStatusPage":              {oas.StatusRead},
+	"PreviewStatusPage":          {oas.StatusRead},
+	"ListStatusComponentGroups":  {oas.StatusRead},
+	"ListStatusComponents":       {oas.StatusRead},
+	"ListStatusIncidents":        {oas.StatusRead},
+	"GetStatusIncident":          {oas.StatusRead},
+	"CreateStatusPage":           {oas.StatusManage},
+	"UpdateStatusPage":           {oas.StatusManage},
+	"DeleteStatusPage":           {oas.StatusManage},
+	"CreateStatusComponentGroup": {oas.StatusManage},
+	"UpdateStatusComponentGroup": {oas.StatusManage},
+	"DeleteStatusComponentGroup": {oas.StatusManage},
+	"CreateStatusComponent":      {oas.StatusManage},
+	"UpdateStatusComponent":      {oas.StatusManage},
+	"DeleteStatusComponent":      {oas.StatusManage},
+	"SetStatusComponentState":    {oas.StatusManage},
+	"CreateStatusIncident":       {oas.StatusManage},
+	"UpdateStatusIncident":       {oas.StatusManage},
+	"DeleteStatusIncident":       {oas.StatusManage},
+	"PublishStatusIncident":      {oas.StatusManage},
+	"CreateStatusIncidentUpdate": {oas.StatusManage},
+	"EditStatusIncidentUpdate":   {oas.StatusManage},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

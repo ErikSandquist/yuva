@@ -69,6 +69,17 @@ func (s *Server) clientCORS(next http.Handler) http.Handler {
 			s.analyticsCORS(w, r, next)
 			return
 		}
+		if strings.HasPrefix(r.URL.Path, clientStatusPrefix) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			if r.Method == http.MethodOptions {
+				w.Header().Set("Access-Control-Allow-Methods", "GET")
+				w.Header().Set("Access-Control-Max-Age", "600")
+				w.WriteHeader(http.StatusNoContent)
+				return
+			}
+			next.ServeHTTP(w, r)
+			return
+		}
 		raw := r.Header.Get("Origin")
 		if raw == "" {
 			if r.Header.Get("Sec-Fetch-Site") == "same-origin" {

@@ -1559,6 +1559,99 @@ type Session struct {
 	LastSeenAt time.Time
 }
 
+type StatusComponent struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+	GroupID     *uuid.UUID
+	Name        string
+	Description string
+	Position    int32
+	Hidden      bool
+	State       string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type StatusComponentGroup struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+	Name        string
+	Position    int32
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type StatusComponentState struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	ComponentID uuid.UUID
+	State       string
+	Source      string
+	SourceID    *uuid.UUID
+	StartedAt   time.Time
+	EndedAt     *time.Time
+}
+
+type StatusIncident struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	PageID         uuid.UUID
+	Kind           string
+	Title          string
+	Impact         string
+	State          string
+	ScheduledStart *time.Time
+	ScheduledEnd   *time.Time
+	PublishedAt    *time.Time
+	StartedAt      *time.Time
+	ResolvedAt     *time.Time
+	CreatedBy      *uuid.UUID
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+}
+
+type StatusIncidentComponent struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	ComponentID uuid.UUID
+	State       string
+}
+
+type StatusIncidentUpdate struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	IncidentID     uuid.UUID
+	State          string
+	Body           string
+	AuthorMemberID *uuid.UUID
+	AuthorKeyID    *uuid.UUID
+	CreatedAt      time.Time
+	EditedAt       *time.Time
+}
+
+type StatusPage struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	InboxID     uuid.UUID
+	Name        string
+	Description string
+	Slug        string
+	LogoUrl     *string
+	AccentColor *string
+	SiteUrl     *string
+	SupportUrl  *string
+	Locale      string
+	Timezone    string
+	HistoryDays int32
+	ShowUptime  bool
+	Published   bool
+	ChangedAt   time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
 type UsageCounter struct {
 	WorkspaceID             uuid.UUID
 	Month                   time.Time

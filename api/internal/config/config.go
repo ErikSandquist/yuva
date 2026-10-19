@@ -80,6 +80,9 @@ type Config struct {
 	BroadcastDailyRecipients int64
 	// MailLinkURL is the base of /m/, /s/, /c/ and /i/ links in mail; PublicURL when unset.
 	MailLinkURL string
+	// StatusURL is the origin public status pages are named from (YUVA_STATUS_URL); empty means
+	// <PublicURL>/status.
+	StatusURL string
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -223,6 +226,15 @@ func Load(version string) (Config, error) {
 	public, err := url.Parse(c.PublicURL)
 	if err != nil || (public.Scheme != "http" && public.Scheme != "https") || public.Host == "" {
 		return c, fmt.Errorf("YUVA_PUBLIC_URL must be an absolute http(s) URL, got %q", c.PublicURL)
+	}
+	if c.StatusURL = strings.TrimRight(env("YUVA_STATUS_URL", ""), "/"); c.StatusURL != "" {
+		u, err := url.Parse(c.StatusURL)
+		if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" || u.Path != "" || u.RawQuery != "" {
+			return c, fmt.Errorf("YUVA_STATUS_URL must be an origin such as https://status.example.com, got %q", c.StatusURL)
+		}
+		if strings.EqualFold(u.Host, public.Host) {
+			return c, errors.New("YUVA_STATUS_URL must name another host than YUVA_PUBLIC_URL; leave it unset for <YUVA_PUBLIC_URL>/status")
+		}
 	}
 	if c.LocaleCookieDomain, err = localeCookieDomain(env("YUVA_LOCALE_COOKIE_DOMAIN", ""), public.Hostname()); err != nil {
 		return c, err

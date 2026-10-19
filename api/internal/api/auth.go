@@ -89,6 +89,7 @@ var operationAccess = map[string]access{
 	"UnlockSharedAnalytics":      accessPublic,
 	"QuerySharedAnalytics":       accessPublic,
 	"GetSharedAnalyticsRealtime": accessPublic,
+	"GetClientStatusPage":        accessPublic,
 
 	"CreateClientDiscussion":       accessDiscussant,
 	"CreateClientDiscussionPost":   accessDiscussant,
