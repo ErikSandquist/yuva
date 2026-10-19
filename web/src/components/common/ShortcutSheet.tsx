@@ -38,6 +38,7 @@ export const SHORTCUTS = {
   docs: "g d",
   broadcasts: "g b",
   analytics: "g n",
+  status: "g s",
   discussion: "P",
 } as const
 
@@ -65,6 +66,21 @@ export const BROADCAST_KEYS = {
   cancel: "X",
   report: "r",
   deliveries: "d",
+} as const
+
+export const STATUS_KEYS = {
+  incidents: "1",
+  components: "2",
+  settings: "3",
+  incident: "c",
+  maintenance: "m",
+  preview: "v",
+  publishPage: "P",
+  update: "r",
+  publish: "p",
+  resolve: "x",
+  edit: "e",
+  remove: "X",
 } as const
 
 export const DESIGNER_KEYS = {
@@ -188,6 +204,25 @@ export function ShortcutSheet({
       ],
     },
     {
+      title: t`Status`,
+      items: [
+        [["↑", "↓"], t`Move through the status pages`],
+        [["↵"], t`Open the status page`],
+        [k(STATUS_KEYS.incidents), t`Incidents`],
+        [k(STATUS_KEYS.components), t`Components`],
+        [k(STATUS_KEYS.settings), t`Page settings`],
+        [k(STATUS_KEYS.incident), t`New incident or status page`],
+        [k(STATUS_KEYS.maintenance), t`Plan maintenance`],
+        [k(STATUS_KEYS.preview), t`Preview the page`],
+        [k(STATUS_KEYS.publishPage), t`Publish or unpublish the page`],
+        [k(STATUS_KEYS.update), t`Post an update`],
+        [k(STATUS_KEYS.publish), t`Publish the draft`],
+        [k(STATUS_KEYS.resolve), t`Resolve or complete`],
+        [k(STATUS_KEYS.edit), t`Edit the incident`],
+        [k(STATUS_KEYS.remove), t`Delete the draft`],
+      ],
+    },
+    {
       title: t`E-mail designer`,
       items: [
         [[mod, "Z"], t`Undo`],
@@ -220,6 +255,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.reports), t`Reports`],
         [k(SHORTCUTS.docs), t`Docs`],
         [k(SHORTCUTS.broadcasts), t`Broadcasts`],
+        [k(SHORTCUTS.status), t`Status`],
         [k(SHORTCUTS.analytics), t`Analytics`],
         [k(SHORTCUTS.assistants), t`Assistants`],
         [[mod, "K"], t`Everything`],

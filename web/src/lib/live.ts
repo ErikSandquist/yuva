@@ -644,6 +644,12 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       void qc.invalidateQueries({ queryKey: keys.discussions(ctx.ws) })
       refreshCounts(qc, ctx.ws)
       return
+    case "status.component.updated":
+    case "status.incident.created":
+    case "status.incident.updated":
+    case "status.incident.resolved":
+      void qc.invalidateQueries({ queryKey: keys.status(ctx.ws) })
+      return
     case "analytics.alert": {
       const data = keys.analyticsData(ctx.ws, event.data.property.id)
       void qc.invalidateQueries({ queryKey: [...data, "alerts"] })

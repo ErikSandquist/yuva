@@ -794,9 +794,17 @@ msgstr "24 μήνες"
 msgid "3 months"
 msgstr "3 μήνες"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 έως 48 γράμματα, αριθμοί και παύλες. Μοναδικό σε αυτόν τον διακομιστή."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Ολοκλήρωση"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "7 έως 90."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "Μια συζήτηση πήρε αποδεκτή απάντηση"
 msgid "A discussion started"
 msgstr "Μια συζήτηση ξεκίνησε"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Ένα πρόχειρο το βλέπει μόνο η ομάδα σας και δεν αλλάζει κανένα στοιχείο μέχρι να το δημοσιεύσετε."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Ένα πρόχειρο απορρίφθηκε"
@@ -978,6 +990,10 @@ msgstr "Μια νέα έκδοση του Yuva είναι έτοιμη."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Μια σημείωση για την ομάδα… πληκτρολογήστε @ για να αναφέρετε έναν συνάδελφο"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Μια σελίδα ή ένας σύνδεσμος mailto: όπου οι πελάτες βρίσκουν βοήθεια."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Ένα μέρος του αρχείου έφτασε κατεστραμμένο πολλές φορές. Ελέγξτε τη σύνδεσή σας και επιλέξτε ξανά το αρχείο για να συνεχίσετε."
@@ -985,6 +1001,10 @@ msgstr "Ένα μέρος του αρχείου έφτασε κατεστραμ�
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Ένα μέρος του αρχείου ήταν μεγαλύτερο από όσο δέχεται ο διακομιστής. Φορτώστε ξανά τη σελίδα και επιλέξτε ξανά το αρχείο."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Ένα ποσοστό δίπλα σε κάθε στοιχείο."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "Μια ιδιότητα μπορεί να έχει το πολύ 100 τ�
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "Μια ιδιότητα μπορεί να έχει το πολύ 20 χοάνες. Διαγράψτε πρώτα μία."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Μια δημόσια σελίδα που λέει στους πελάτες σας αν λειτουργεί το {inboxName}. Μένει αδημοσίευτη μέχρι να τη δημοσιεύσετε."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Μια σύνδεση πρέπει να επιστρέψει εντός 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Ένας ιστότοπος εμφανίζει τις συζητήσεις που στάλθηκαν από τις σελίδες του."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Ένα στοιχείο κατάστασης άλλαξε ή απέκτησε νέα κατάσταση"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Ένας παρακολουθητής κατάστασης ανέκαμψε"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Ένας παρακολουθητής κατάστασης έπεσε"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Σχετικά με {from} έως {to}"
 msgid "about done by {end}"
 msgstr "ολοκλήρωση περίπου έως {end}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Χρώμα έμφασης"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Αποδεκτή απάντηση"
@@ -1102,6 +1142,10 @@ msgstr "Λογαριασμός"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Τεκμηρίωση Acme"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Κατάσταση Acme"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "Προσθέστε τουλάχιστον μία προέλευση."
 msgid "Add channel"
 msgstr "Προσθήκη καναλιού"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Προσθήκη στοιχείου"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Προσθήκη endpoint"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Προσθήκη ομάδας"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Προστέθηκε από την ομάδα"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Διεύθυνση"
 
@@ -1519,9 +1575,25 @@ msgstr "Μια εγγραφή στο zip αποσυμπιέζεται σε πε�
 msgid "An https image URL."
 msgstr "Μια διεύθυνση URL εικόνας https."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Μια εικόνα https."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Τα εισερχόμενα συγκεντρώνουν τις συνομιλίες ενός προϊόντος ή μιας επωνυμίας. Ονομάστε τα με το προϊόν που γνωρίζουν οι πελάτες σας."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Ένα περιστατικό ή μια συντήρηση άλλαξε ή έλαβε ενημέρωση"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Ένα περιστατικό ή μια συντήρηση δημοσιεύτηκε"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Ένα περιστατικό επιλύθηκε ή μια συντήρηση ολοκληρώθηκε"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "άλλα εισερχόμενα"
 msgid "Another SMTP server"
 msgstr "Άλλος διακομιστής SMTP"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Μια άλλη σελίδα κατάστασης χρησιμοποιεί ήδη αυτή τη διεύθυνση."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Άλλη διεύθυνση ομάδας"
@@ -1645,12 +1721,17 @@ msgstr "Ό,τι χρησιμοποιεί αυτό το κλειδί σταματ
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "Κανάλι API"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "Κλειδί API"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "Μπορώ να προγραμματίσω ένα ενημερωτικό
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "Σύγκριση της συνθήκης {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Ολοκληρώθηκε"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Ολοκληρώθηκε"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Το στοιχείο διαγράφηκε"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Στοιχεία"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Στοιχεία που αφορά"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Τα στοιχεία, το ιστορικό, τα περιστατικά και οι ενημερώσεις διαγράφονται μαζί της."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Δημιουργία κλειδιού"
 msgid "Create list"
 msgstr "Δημιουργία λίστας"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Δημιουργία σελίδας κατάστασης"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Δημιουργία σελίδας κατάστασης ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Δημιουργία καναλιού e-mail"
@@ -3083,6 +3197,10 @@ msgstr "Τα διαπιστευτήρια διαγράφηκαν {deletedAt}. Τ
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Τα διαπιστευτήρια διαγράφηκαν. Το Yuva δεν μπορεί πλέον να διαβάσει το {address}."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Κρίσιμο"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Διατήρηση δεδομένων"
 msgid "Data retention and deleting the workspace"
 msgstr "Διατήρηση δεδομένων και διαγραφή του χώρου εργασίας"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Αναβάθμιση βάσης δεδομένων"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Ημερομηνίες"
@@ -3147,6 +3269,10 @@ msgstr "Ημερομηνίες"
 msgid "Days"
 msgstr "Ημέρες"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Ημέρες ιστορικού"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Αποφασίστε ποιος μπορεί να γράφει στις συζητήσεις"
@@ -3154,6 +3280,10 @@ msgstr "Αποφασίστε ποιος μπορεί να γράφει στις 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Προεπιλογή: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Μειωμένη απόδοση"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "Προεπιλογή: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -3170,8 +3302,13 @@ msgstr "Διαγραφή"
 msgid "Delete “{name}”?"
 msgstr "Διαγραφή του «{name}»;"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Διαγραφή του {0};"
 
@@ -3184,9 +3321,22 @@ msgstr "Διαγραφή του {name};"
 msgid "Delete after (days)"
 msgstr "Διαγραφή μετά από (ημέρες)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Διαγραφή στοιχείου"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Διαγραφή πρόχειρου"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Διαγραφή πρόχειρου ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Διαγραφή ομάδας"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Διαγραφή λίστας"
 msgid "Delete my account"
 msgstr "Διαγραφή του λογαριασμού μου"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Διαγραφή σελίδας"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Διαγραφή συνδρομής"
@@ -3212,6 +3366,10 @@ msgstr "Διαγραφή συνδρομής"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Διαγράψτε την εφαρμογή που δημιουργήσατε για το Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Διαγραφή του πρόχειρου"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "Διαγραφή του λογαριασμού σας;"
 msgid "Deleted by its author."
 msgstr "Διαγράφηκε από τον συντάκτη του."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Διαγραμμένο στοιχείο"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Διαγράφει τα κανάλια, τις συνομιλίες, τ�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Διαγράφει τη λίστα, τις συνδρομές της και τις καταγραφές συναίνεσής τους. Κατεβάστε πρώτα την εξαγωγή συναινέσεων αν μπορεί να χρειαστεί να την δείξετε αργότερα."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Διαγράφει τη σελίδα με τα στοιχεία της, το ιστορικό τους, τα περιστατικά και τις ενημερώσεις. Η δημόσια διεύθυνση σταματά να λειτουργεί."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Λεπτομέρειες παράδοσης"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Άρνηση"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Περιγραφή"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Οι ειδοποιήσεις επιφάνειας εργασίας εί
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Λεπτομέρειες"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Λήψη των γραμμών που παραλείφθηκαν"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Πρόχειρο"
 
@@ -3570,6 +3746,10 @@ msgstr "Συντάκτης πρόχειρου"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Πρόχειρο από {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Το πρόχειρο διαγράφηκε"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "E-mail, συνομιλία ιστότοπου και μηνύματα ε
 msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Κάθε στοιχείο έχει αυτή την κατάσταση όσο το περιστατικό είναι ανοιχτό."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Κάθε στοιχείο έχει αυτή την κατάσταση όσο διαρκεί η συντήρηση."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Κάθε συνομιλία κρατά την κατάσταση που αναφέρει το {provider}: ανοιχτή, σε εκκρεμότητα ή κλειστή."
@@ -3703,6 +3891,7 @@ msgstr "Καθεμία με όλα της τα μηνύματα και τις σ
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -3714,9 +3903,22 @@ msgstr "Επεξεργασία κλειδιού API"
 msgid "Edit canned reply"
 msgstr "Επεξεργασία έτοιμης απάντησης"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Επεξεργασία στοιχείου"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Επεξεργασία σχεδίου"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Επεξεργασία λεπτομερειών"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Επεξεργασία λεπτομερειών ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Επεξεργασία του σχεδίου ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Επεξεργασία του περιστατικού"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Επεξεργασία του τίτλου"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Επεξεργασία αυτής της ενημέρωσης"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Επεξεργασία ή προεπισκόπηση σε υπολογιστή, κινητό ή σκούρα λειτουργία"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "επεξεργάστηκε"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "Αυξημένα σφάλματα API"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Endpoint"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Endpoints"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Λήξη"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "πρώτη απάντηση σε {first}"
 msgid "First rows of the file"
 msgstr "Πρώτες γραμμές του αρχείου"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "Πρώτη ενημέρωση"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Πρώτα, μια διεύθυνση e-mail"
@@ -4428,6 +4655,10 @@ msgstr "Χαιρετισμός"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Χαιρετά τις νέες συνομιλίες με e-mail, μία φορά ανά επαφή εντός του διαστήματος. Δεν στέλνεται ποτέ σε αυτόματη αλληλογραφία ή spam."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Ομάδα"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Παραδόθηκε στον/στην {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Έχει ανοιχτή συνομιλία"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Το κρατά ένα περιστατικό, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "Γεια σας! Πώς μπορούμε να βοηθήσουμε;"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Κρυφό"
 
@@ -4503,6 +4740,10 @@ msgstr "Κρύφτηκε από την ομάδα"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Απόκρυψη"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Απόκρυψη από τη σελίδα"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Επέστρεψα"
 msgid "Idea"
 msgstr "Ιδέα"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Εντοπίστηκε"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Η ταυτότητα δεν έχει επαληθευτεί"
@@ -4693,6 +4938,10 @@ msgstr "Το IMAP είναι απενεργοποιημένο για αυτό τ
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "Διακομιστής IMAP"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Επίπτωση"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "Στο Microsoft 365 αυτό είναι προώθηση γραμματοκιβωτίου ή κανόνας ροής αλληλογραφίας· ίσως χρειαστεί πρώτα ένας διαχειριστής να επιτρέψει την εξωτερική προώθηση."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "Σε εξέλιξη"
 
@@ -4888,6 +5138,16 @@ msgstr "Εισερχόμενα"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Τα εισερχόμενα κόβουν θέματα μεγαλύτερα από 80 χαρακτήρες."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Περιστατικό"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Περιστατικά"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Συμπερίληψη σημειώσεων"
@@ -4922,6 +5182,10 @@ msgstr "Εγκαταστήστε τον διακομιστή στο VS Code· α
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Εγκατάσταση"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "Σε διερεύνηση"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Δεν θα λαμβάνει πλέον ειδοποιήσεις."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Η πρόσβασή του τερματίζεται αμέσως. Για να το χρησιμοποιήσετε ξανά, συνδέστε το ξανά."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Τα στοιχεία της μένουν, χωρίς ομάδα."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "Η καταγραφή συναίνεσής του διαγράφεται μαζί του, οπότε δεν θα μπορείτε πια να δείξετε πώς συναίνεσε. Για να σταματήσετε να του στέλνετε, διαγράψτε τη συνδρομή του."
@@ -5060,6 +5328,10 @@ msgstr "Η καταγραφή συναίνεσής του διαγράφεται
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "Η καταγραφή συναίνεσής του διαγράφεται μαζί του. Επειδή διαγράφηκε από τη λίστα, η διεύθυνση απομνημονεύεται ως αποχωρήσασα, οπότε κανείς στην ομάδα δεν μπορεί να την προσθέσει ξανά."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Το ιστορικό του διαγράφεται. Τα περιστατικά που το ανέφεραν δεν το αναφέρουν πια."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Ετικέτες (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Γλώσσα"
 
@@ -5254,6 +5527,10 @@ msgstr "Αφήστε το στον συνάδελφο που πληκτρολο�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Κρατήστε το κείμενο, μετά το μπλοκ"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Μένει εκτός της δημόσιας σελίδας και της συνολικής της κατάστασης."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Φόρτωση εικόνων"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Φόρτωση περισσότερων"
@@ -5406,6 +5684,10 @@ msgstr "Κλειδωμένο"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Κλειδωμένο: οι αναγνώστες δεν μπορούν πια να γράφουν εδώ. Εσείς μπορείτε."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL λογοτύπου"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Maildir σε zip"
 msgid "Mailing lists"
 msgstr "Λίστες αλληλογραφίας"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Συντήρηση"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Μεγάλη"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Μεγάλη διακοπή"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Να γίνει δημόσιο"
@@ -5551,6 +5845,10 @@ msgstr "Διαχείριση ετικετών"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "Διαχείριση λιστών αλληλογραφίας και συνδρομητών"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Διαχείριση σελίδων κατάστασης, ορισμός καταστάσεων στοιχείων και χειρισμός περιστατικών"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Βήματα μεταφοράς"
 msgid "Mine"
 msgstr "Δικές μου"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Μικρή"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "Με εποπτεία"
 msgid "Monday"
 msgstr "Δευτέρα"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "Παρακολούθηση"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Περισσότερες ενέργειες"
@@ -5812,6 +6118,12 @@ msgstr "Περισσότερες ενέργειες"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "Περισσότερες ενέργειες για το {address}"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "Περισσότερα για {0}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "Πρώτα οι περισσότερες βαθμολογίες, ανο�
 msgid "Most votes"
 msgstr "Περισσότερες ψήφοι"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Μετακίνηση κάτω"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Μεταφέρετε γραμματοκιβώτια στο Yuva: βρείτε τον πάροχο, συνδέστε, σαρώστε, αντιγράψτε και αλλάξτε"
@@ -5873,6 +6189,10 @@ msgstr "Μετακίνηση στη λίστα"
 msgid "Move through the posts"
 msgstr "Μετακίνηση στις αναρτήσεις"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Μετακίνηση στις σελίδες κατάστασης"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Μετακίνηση στα εισερχόμενα"
@@ -5881,6 +6201,10 @@ msgstr "Μετακίνηση στα εισερχόμενα"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Μετακίνηση στο Yuva"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Μετακίνηση πάνω"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Το προφίλ μου"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Όνομα"
 
@@ -6078,6 +6405,18 @@ msgstr "νέα τις τελευταίες {days} ημέρες"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Νέα εισερχόμενα…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Νέο περιστατικό"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Νέο περιστατικό ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Νέο περιστατικό ή σελίδα κατάστασης"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Κανένα κανάλι ακόμη. Προσθέστε ένα για �
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Κανένα κανάλι συνομιλίας αυτών των εισερχομένων δεν επιτρέπει τον ιστότοπο της σελίδας με ενεργές τις συζητήσεις. Ενεργοποιήστε τις συζητήσεις στις ρυθμίσεις των εισερχομένων."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "Δεν υπάρχουν στοιχεία σε αυτή την ομάδα."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Δεν υπάρχουν ακόμη στοιχεία. Προσθέστε τα μέρη του προϊόντος σας από τα οποία εξαρτώνται οι πελάτες."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Χωρίς επιβεβαίωση"
@@ -6350,13 +6697,26 @@ msgstr "Δεν καταγράφηκαν συμβάντα."
 msgid "No feedback from this page."
 msgstr "Δεν υπάρχουν σχόλια από αυτή τη σελίδα."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Χωρίς ομάδα"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Δεν υπάρχουν κρυφές συζητήσεις."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Καμία επίπτωση"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Καμία εισαγωγή ακόμη."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί σελίδα κατάστασης."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "Δεν υπάρχουν ανοιχτές συνομιλίες. Οι νέ
 msgid "No open feedback."
 msgstr "Δεν υπάρχουν ανοιχτά σχόλια."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "Δεν υπάρχουν ανοιχτά περιστατικά ή συντηρήσεις."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Καμία άλλη επαφή δεν ταιριάζει."
@@ -6467,6 +6831,10 @@ msgstr "χωρίς λογαριασμό SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Χωρίς λογαριασμό SMTP"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Δεν υπάρχει ακόμη σελίδα κατάστασης. Τη δημιουργούν οι ιδιοκτήτες και οι διαχειριστές."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Δεν χάνεται τίποτα: όταν συνεχιστεί, η αντιγραφή ξαναρχίζει από εκεί που σταμάτησε."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Τίποτα δεν έχει επιλυθεί ακόμη."
 
@@ -6982,6 +7351,14 @@ msgstr "Κατάσταση σύνδεσης"
 msgid "Only {0}"
 msgstr "Μόνο {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Μόνο ένα πρόχειρο μπορεί να διαγραφεί. Δεν εμφανίστηκε ποτέ στη σελίδα."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Μόνο ένα πρόχειρο μπορεί να διαγραφεί. Δημοσιεύστε αντί γι’ αυτό μια ενημέρωση."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Προσθέστε μόνο άτομα που συμφώνησαν να λαμβάνουν αυτή τη λίστα. Ό,τι εισαγάγετε εδώ κρατιέται ως καταγραφή της συναίνεσής τους."
@@ -7083,6 +7460,7 @@ msgstr "ανοιχτές"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Ανοιχτό"
 
@@ -7110,6 +7488,10 @@ msgstr "Άνοιγμα Ασφάλειας λογαριασμού"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Ανοίξτε την Ασφάλεια λογαριασμού στον λογαριασμό σας Yahoo."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Άνοιγμα περιστατικού"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Άνοιγμα της επόμενης ή προηγούμενης συ�
 msgid "Open the reply"
 msgstr "Άνοιγμα της απάντησης"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Άνοιγμα της σελίδας κατάστασης"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Άνοιγμα των ρυθμίσεων του χώρου εργασίας"
@@ -7291,6 +7677,14 @@ msgstr "ανοιχτές, χωρίς ανάθεση"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Ανοίγματα"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "Λειτουργεί"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "Προαιρετικό. Εμφανίζεται στη δημόσια σελίδα."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Ρυθμός (e-mail το δευτερόλεπτο)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Σελίδα"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Ρυθμίσεις σελίδας"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Γλώσσα πίνακα"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Μέρος {part} από {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Μερική διακοπή"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Κωδικός πρόσβασης"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Ο κωδικός ορίστηκε"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Παλαιότερα"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Επιλέξτε χρώμα"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Επιλέξτε χρώμα."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Επιλογή χρώματος"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Καρφιτσωμένο"
 msgid "Pinned to the top of your list"
 msgstr "Καρφιτσωμένο στην κορυφή της λίστας σας"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Απλό κείμενο με συνδέσμους και αλλαγές γραμμής, έως 5.000 χαρακτήρες."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Προγραμματισμός συντήρησης"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Προγραμματισμός συντήρησης ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Προγραμματισμένο"
@@ -7805,9 +8230,22 @@ msgstr "Δείξτε τις εγγραφές MX στο Yuva όπως περιγ�
 msgid "Port"
 msgstr "Θύρα"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Δημοσίευση ενημέρωσης"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Δημοσίευση ενημέρωσης ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Σχόλια για τους χρήστες της εφαρμογής σας"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Αποστολή ενημέρωσης"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Προετοιμασία"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Προεπισκόπηση"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Προεπισκόπηση ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "Προεπισκόπηση του {0}"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Προεπισκόπηση του σχεδίου"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Κείμενο προεπισκόπησης"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Προεπισκόπηση της σελίδας"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Το Proton Mail είναι προσβάσιμο μέσω IMAP μόνο 
 msgid "Public"
 msgstr "Δημόσιο"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Δημόσια διεύθυνση"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Δημόσιο κλειδί"
@@ -7909,9 +8366,36 @@ msgstr "Δημόσιο κλειδί"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Δημόσια νήματα κάτω από τις σελίδες τεκμηρίωσής σας, σε κάθε κατάσταση."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Δημοσίευση"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Δημοσίευση ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Δημοσίευση τώρα"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Δημοσίευση ή απόσυρση της σελίδας"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Δημοσίευση του πρόχειρου"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Δημοσιεύστε αυτή την εγγραφή TXT στο DNS του τομέα σας:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Δημοσιευμένη"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "Ανάγνωση λιστών αλληλογραφίας, συνδρομ
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Μόνο ανάγνωση"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Ανάγνωση σελίδων κατάστασης, στοιχείων και περιστατικών"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Αφαίρεση εισαγμένου ιστορικού"
 msgid "Removing imported history…"
 msgstr "Αφαίρεση εισαγμένου ιστορικού…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Μετονομασία"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Μετονομασία ομάδας"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Άνοιγμα ξανά"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Επαναφορά στις προεπιλογές"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Επίλυση"
 
@@ -8490,9 +8987,14 @@ msgstr "Επίλυση"
 msgid "Resolve (E)"
 msgstr "Επίλυση (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Επίλυση ή ολοκλήρωση"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Επιλύθηκε"
 
@@ -8655,8 +9157,15 @@ msgstr "Σάββατο"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Αποθήκευση"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Αποθήκευση ως πρόχειρο"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Αποθήκευση τώρα και διατήρηση έκδοσης"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Αποθηκεύτηκε"
 
@@ -8731,6 +9241,7 @@ msgstr "Προγραμματισμός και αποστολή μαζικών α
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Προγραμματισμένη"
 
@@ -9173,6 +9684,10 @@ msgstr "Διεύθυνση URL διακομιστή"
 msgid "SES tenant"
 msgstr "Μισθωτής SES"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Ορίστηκε από παρακολούθηση, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Ορισμός προόδου"
@@ -9217,6 +9732,7 @@ msgstr "Ρύθμιση…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
@@ -9273,6 +9789,10 @@ msgstr "Εμφάνιση ως απεσταλμένο"
 msgid "Show more"
 msgstr "Εμφάνιση περισσότερων"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Εμφάνιση στη σελίδα"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Εμφάνιση ή απόκρυψη παρατιθέμενου κειμένου"
@@ -9304,6 +9824,10 @@ msgstr "Εμφάνιση της προεπισκόπησης"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Εμφάνιση του χρόνου απάντησης"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Εμφάνιση διαθεσιμότητας"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Εμφανίζεται στην ομάδα σας και στις επα
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Εμφανίζεται στην ομάδα σας και στους πελάτες στους οποίους απαντάτε"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Εμφανίζεται κάτω από το όνομα στη δημόσια σελίδα."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "Από"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "Από {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "Διεύθυνση ιστότοπου"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Γεννήτρια ιστότοπου"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Σύνδεσμος ιστότοπου"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Ξεκίνησε από {starter} · {started}"
 msgid "Starting"
 msgstr "Εκκίνηση"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Έναρξη"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Ξεκινά ένα δημόσιο νήμα με το κείμενο παρακάτω. Η συνομιλία παραμένει ιδιωτική και αμετάβλητη· τίποτα άλλο από αυτήν δεν εμφανίζεται."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (θύρα 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Κατάσταση"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "Κατάσταση του {0}"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "Κατάσταση του {0} όσο είναι ανοιχτό"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Κατάσταση"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Σελίδα κατάστασης"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Η σελίδα κατάστασης διαγράφηκε"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Σελίδες κατάστασης"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Διεύθυνση υποστήριξης"
 msgid "Support bot"
 msgstr "Bot υποστήριξης"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Σύνδεσμος υποστήριξης"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "Η ομάδα αυτή τη στιγμή"
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Πείτε στους πελάτες σας αν το προϊόν σας λειτουργεί. Επιλέξτε τη σελίδα ενός εισερχομένου για να ανοίγετε περιστατικά, να προγραμματίζετε συντηρήσεις και να ορίζετε την κατάσταση κάθε στοιχείου."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Το αρχείο .mbox από το Takeout › Mail, αποσυμπιε
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "Ο χρήστης {provider} με τον οποίο συνδεθήκατε δεν είναι διαχειριστής, και μόνο οι διαχειριστές μπορούν να διαβάσουν όλα τα tickets. Συνδεθείτε ξανά ως διαχειριστής."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "Η διεύθυνση απαντά «δεν βρέθηκε» μέχρι να δημοσιεύσετε τη σελίδα."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "Το κανάλι e-mail που στέλνει τα e-mail επιβεβ�
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Τα στοιχεία λειτουργούν σε αυτές τις διευθύνσεις· προσθέστε τον διακομιστή ανάπτυξής σας στις ρυθμίσεις εισερχομένων:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "Η λήξη πρέπει να είναι μετά την έναρξη."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "Ο μισθωτής Amazon SES των εισερχομένων ρυθμ�
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Ο μισθωτής Amazon SES των εισερχομένων δεν υπάρχει πια. Ο διακομιστής τον δημιουργεί ξανά· μέχρι τότε η μαζική αποστολή δεν μπορεί να φύγει."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "Το περιστατικό έχει ήδη επιλυθεί ή ολοκληρωθεί, οπότε δεν δέχεται άλλες αλλαγές."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Το αρχείο İYS έχει μία γραμμή ανά συνδρομητή στις στήλες του İYS, ONAY για εγγεγραμμένους και RET για όσους διαγράφηκαν, ώστε οι Τούρκοι αποστολείς να το ανεβάσουν μόνοι τους στο İYS. Οι εκκρεμείς συνδρομές εξαιρούνται."
@@ -10350,6 +10940,10 @@ msgstr "Το κλειδί σταματά να λειτουργεί στο τέλ
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Το είδος δεν αλλάζει αργότερα."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "Η γλώσσα των κειμένων της σελίδας."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "Το παλιό γραμματοκιβώτιο σταματά να λα�
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Τα άλλα εισερχόμενα δεν έχουν κανάλι e-mail, οπότε αυτή η συνομιλία e-mail δεν μπορεί να μετακινηθεί εκεί. Προσθέστε πρώτα ένα κανάλι e-mail."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "Η σελίδα όπως τη βλέπουν τώρα οι επισκέπτες. Τα πρόχειρα εξαιρούνται."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "Η σελίδα βρίσκεται στο {address}. Η παλιά διεύθυνση συνεχίζει να ανακατευθύνει αν την αλλάξετε."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "Η σελίδα δεν βρίσκεται σε ιστότοπο που επιτρέπει το κανάλι συνομιλίας."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "Η σελίδα δεν είναι δημοσιευμένη. Αυτό το βλέπει μόνο η ομάδα σας."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Τα μέρη του προϊόντος σας. Ορίστε μια κατάσταση με το χέρι ή αφήστε ένα περιστατικό να το κάνει."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "Το zip προστατεύεται με κωδικό. Φτιάξτε τ
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "Το zip χρησιμοποιεί μέθοδο συμπίεσης που το Yuva δεν μπορεί να διαβάσει. Φτιάξτε το ξανά ως κανονικό zip."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "Η ζώνη ώρας των ράβδων ημέρας."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Οι καταγραφές συναίνεσής τους, για αίτημα σχετικά με το τι κρατάτε γι' αυτούς:"
@@ -10892,6 +11506,10 @@ msgstr "Αυτός ο στόχος είναι βήμα χοάνης. Αφαιρ�
 msgid "This inbox already has a list with this name."
 msgstr "Αυτά τα εισερχόμενα έχουν ήδη λίστα με αυτό το όνομα."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "Αυτό το εισερχόμενο έχει ήδη σελίδα κατάστασης."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Αυτά τα εισερχόμενα δεν έχουν ακόμη κανάλι e-mail που να μπορεί να στείλει. Μπορείτε να δημιουργήσετε τη λίστα τώρα· στέλνει μόλις επιλεγεί στις ρυθμίσεις της ένα κανάλι e-mail με λογαριασμό απαντήσεων."
@@ -10911,6 +11529,10 @@ msgstr "Αυτά τα εισερχόμενα δεν έχουν ακόμη λίσ
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Αυτό είναι συμπιεσμένο αρχείο. Αποσυμπιέστε το αρχείο Takeout και ανεβάστε το αρχείο .mbox."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Αυτό είναι πρόχειρο. Το βλέπει μόνο η ομάδα σας και δεν αλλάζει κανένα στοιχείο μέχρι να το δημοσιεύσετε."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Ώρα"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Ζώνη ώρας"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Τίτλος"
 
@@ -11251,6 +11875,10 @@ msgstr "Νέα προσπάθεια"
 msgid "Tuesday"
 msgstr "Τρίτη"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "Αδύνατη παράδοση: σημάνθηκε ως spam από τ�
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Κάτω από κάθε σελίδα: «Σας φάνηκε χρήσιμη αυτή η σελίδα;», μετά σχόλια και οι συζητήσεις της σελίδας."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "Σε συντήρηση"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "Στο Redirect URI, επιλέξτε Web και εισαγάγετε παρακάτω τη διεύθυνση ανακατεύθυνσης."
@@ -11401,6 +12033,22 @@ msgstr "Ξεκαρφίτσωμα"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Ξεκαρφιτσώθηκε"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Απόσυρση"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Απόσυρση ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Αδημοσίευτη"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Αδημοσίευτη, μόνο η ομάδα σας μπορεί να τη δει σε προεπισκόπηση"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Μη επαληθευμένος αποστολέας"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Έως {max} και 100.000 γραμμές, με γραμμή κεφαλίδας. Τα αρχεία Excel σε τουρκική ή δυτική κωδικοποίηση και οι στήλες που χωρίζονται με κόμματα, ερωτηματικά ή tab διαβάζονται ως έχουν."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Κείμενο ενημέρωσης"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Ενημερώσεις"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Ενημέρωση"
@@ -11525,6 +12181,14 @@ msgstr "Χρησιμοποιήστε από 1 έως 100 e-mail το δευτε�
 msgid "Use 1 to 8760 hours."
 msgstr "Χρησιμοποιήστε από 1 έως 8760 ώρες."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Χρησιμοποιήστε 3 έως 48 γράμματα, αριθμούς και εσωτερικές παύλες."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Χρησιμοποιήστε ένα χρώμα όπως #2563eb."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Χρήση των τιμών μιας επαφής"
@@ -11540,6 +12204,10 @@ msgstr "Χρησιμοποιήστε θύρα από 1 έως 65535."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Χρήση ξεχωριστού λογαριασμού για μαζικές αποστολές"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "Χρησιμοποιήστε έναν ακέραιο από 7 έως 90."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Εκδόσεις"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Πολύ μεγάλο γραμματοκιβώτιο; Ξεκινήστε με ένα αρχείο Google Takeout"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Προβολή σελίδας"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Τι έρχεται"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "Σε τι συμφώνησαν;"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "Τι χρειάζεται να ξέρουν οι πελάτες;"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Οι αναρτήσεις σας μένουν, εμφανιζόμενε�
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Το προϊόν σας"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Το προϊόν σας."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

@@ -794,9 +794,17 @@ msgstr "24 個月"
 msgid "3 months"
 msgstr "3 個月"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 到 48 個字母、數字和連字號，在此伺服器上不可重複。"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. 完成"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "7 到 90。"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "討論有了被採納的回答時"
 msgid "A discussion started"
 msgstr "討論開始時"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "草稿只有你的團隊看得到，發布之前不會變更任何元件。"
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "草稿被丟棄時"
@@ -978,6 +990,10 @@ msgstr "Yuva 有新版本了。"
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "給團隊的備註……輸入 @ 提及團隊成員"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "客戶取得協助的頁面或 mailto: 連結。"
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "檔案的某一部分多次損壞送達。請檢查網路連線,然後重新選擇檔案以繼續。"
@@ -985,6 +1001,10 @@ msgstr "檔案的某一部分多次損壞送達。請檢查網路連線,然後�
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "檔案的某一部分超過了伺服器接受的大小。請重新整理頁面並重新選擇檔案。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "每個元件旁的百分比。"
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "每個屬性最多可有 100 個區隔。請先刪除一個。"
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "每個屬性最多可有 20 個漏斗。請先刪除一個。"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "一個公開頁面，告訴客戶 {inboxName} 是否正常運作。發布前不會公開。"
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "登入必須在 10 分鐘內返回,且只能使用一次。請重新登�
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "網站會顯示從其頁面傳送的對話。"
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "某個狀態元件已變更或有了新狀態"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "某個狀態監控已恢復"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "某個狀態監控已中斷"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "關於 {from} 到 {to}"
 msgid "about done by {end}"
 msgstr "預計在 {end} 前完成"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "強調色"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "被採納的回答"
@@ -1102,6 +1142,10 @@ msgstr "帳號"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme 文件"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Acme 狀態"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "請至少新增一個來源。"
 msgid "Add channel"
 msgstr "新增頻道"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "新增元件"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "新增端點"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "新增群組"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "由團隊新增"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "地址"
 
@@ -1519,9 +1575,25 @@ msgstr "zip 中的某個條目解壓後超過其大小的 100 倍,因此該檔�
 msgid "An https image URL."
 msgstr "一個 https 圖片 URL。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "一張 https 圖片。"
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "收件匣收納一個產品或品牌的對話。請用客戶熟悉的產品名稱來命名。"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "某個事件或維護已變更或有了更新"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "某個事件或維護已發布"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "某個事件已解決或某次維護已完成"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "另一個收件匣"
 msgid "Another SMTP server"
 msgstr "另一個 SMTP 伺服器"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "另一個狀態頁已在使用此網址。"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "另一個團隊地址"
@@ -1645,12 +1721,17 @@ msgstr "所有使用此金鑰的內容會立即失效。"
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API 頻道"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "API 金鑰"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "能為每位訂閱者單獨安排傳送新聞簡報嗎?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "取消"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "條件 {n} 的比較"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "完成"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "已完成"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "元件已刪除"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "元件"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "涉及的元件"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "元件、歷史記錄、事件和更新會一併刪除。"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "建立金鑰"
 msgid "Create list"
 msgstr "建立列表"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "建立狀態頁"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "建立狀態頁（{newKey}）"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "建立郵件頻道"
@@ -3083,6 +3197,10 @@ msgstr "憑證已於 {deletedAt} 刪除。Yuva 無法再讀取 {address}。"
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "憑證已刪除。Yuva 無法再讀取 {address}。"
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "嚴重"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "資料保留"
 msgid "Data retention and deleting the workspace"
 msgstr "資料保留與刪除工作區"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "資料庫升級"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "日期"
@@ -3147,6 +3269,10 @@ msgstr "日期"
 msgid "Days"
 msgstr "天數"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "歷史記錄天數"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "決定誰可以在討論中發言"
@@ -3154,6 +3280,10 @@ msgstr "決定誰可以在討論中發言"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "預設:{fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "效能降低"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "預設:{fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "刪除"
 
@@ -3170,8 +3302,13 @@ msgstr "刪除"
 msgid "Delete “{name}”?"
 msgstr "刪除「{name}」?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "刪除 {0}?"
 
@@ -3184,9 +3321,22 @@ msgstr "刪除 {name}?"
 msgid "Delete after (days)"
 msgstr "多少天后刪除"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "刪除元件"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "刪除草稿"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "刪除草稿（{removeKey}）"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "刪除群組"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "刪除列表"
 msgid "Delete my account"
 msgstr "刪除我的帳號"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "刪除頁面"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "刪除訂閱"
@@ -3212,6 +3366,10 @@ msgstr "刪除訂閱"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "刪除你為 Yuva 建立的應用程式"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "刪除草稿"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "刪除你的帳號?"
 msgid "Deleted by its author."
 msgstr "已被作者刪除。"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "已刪除的元件"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "會刪除它的頻道、對話、訊息和附件。此操作無法撤銷
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "會刪除該列表、其訂閱及同意記錄。如果以後可能需要出示,請先下載同意記錄匯出。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "刪除頁面及其元件、歷史記錄、事件和更新。公開網址將停止運作。"
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "投遞詳情"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "拒絕"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "說明"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "瀏覽器設定中已遮蔽此站點的桌面通知,因此只會播放�
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "詳情"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "下載被排除的行"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "草稿"
 
@@ -3570,6 +3746,10 @@ msgstr "草稿作者"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author} 的草稿"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "草稿已刪除"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "電子郵件、線上聊天和應用程式內訊息"
 msgid "E-mail: {label}"
 msgstr "郵件:{label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "事件開啟期間，每個元件都處於此狀態。"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "維護進行期間，每個元件都處於此狀態。"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "每個對話都保留 {provider} 為其報告的狀態:開啟、待處理或已關閉。"
@@ -3703,6 +3891,7 @@ msgstr "每個都包含其所有訊息和備註"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "編輯"
 
@@ -3714,9 +3903,22 @@ msgstr "編輯 API 金鑰"
 msgid "Edit canned reply"
 msgstr "編輯快捷回覆"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "編輯元件"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "編輯設計"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "編輯詳細資料"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "編輯詳細資料（{editKey}）"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "編輯設計({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "編輯事件"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "編輯標題"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "編輯此更新"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "編輯,或在桌面、手機和深色模式下預覽"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "已編輯"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "API 錯誤增加"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "端點"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "端點"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "結束"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "{first} 內的首次回覆"
 msgid "First rows of the file"
 msgstr "檔案的前幾行"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "第一則更新"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "首先,輸入電子郵件地址"
@@ -4428,6 +4655,10 @@ msgstr "問候語"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "在間隔時間內,對每位聯絡人透過郵件問候新對話一次。不會發給自動郵件或垃圾郵件。"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "群組"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "已交給 {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "有未關閉的對話"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "由事件佔用，{since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "你好!有什麼可以幫你?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "已隱藏"
 
@@ -4503,6 +4740,10 @@ msgstr "被團隊隱藏"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "隱藏"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "在頁面上隱藏"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "我回來了"
 msgid "Idea"
 msgstr "想法"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "已確認"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "身份未驗證"
@@ -4693,6 +4938,10 @@ msgstr "此信箱已關閉 IMAP。請在 {provider} 的設定中開啟,然後再
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "IMAP 伺服器"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "影響"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "在 Microsoft 365 中,這指的是信箱轉發或郵件流規則;可能需要管理員先允許外部轉發。"
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "進行中"
 
@@ -4888,6 +5138,16 @@ msgstr "收件匣"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "收件匣會截斷超過 80 個字元的主題。"
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "事件"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "事件"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "包含備註"
@@ -4922,6 +5182,10 @@ msgstr "在 VS Code 中安裝該伺服器;它會開啟伺服器頁面,在那裡�
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "安裝"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "調查中"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "它將不再收到通知。"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "它的存取許可權會立即結束。如需再次使用,請重新連線。"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "其元件會保留，但不屬於任何群組。"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "其同意記錄會一併刪除,因此你無法再說明他們是如何同意的。若要停止向他們發郵件,請改為將其退訂。"
@@ -5060,6 +5328,10 @@ msgstr "其同意記錄會一併刪除,因此你無法再說明他們是如何�
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "其同意記錄會一併刪除。由於對方已退訂,該地址會被記為已拒絕接收,團隊中任何人都無法再次新增。"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "其歷史記錄將被刪除。曾提到它的事件不再提到它。"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "標籤(L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "語言"
 
@@ -5254,6 +5527,10 @@ msgstr "交給正在輸入的團隊成員"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "保留文字,刪除區塊"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "不顯示在公開頁面及其整體狀態中。"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "載入圖片"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "載入更多"
@@ -5406,6 +5684,10 @@ msgstr "已鎖定"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "已鎖定:讀者無法再在這裡發言。你仍然可以。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "Logo 網址"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "zip 中的 Maildir"
 msgid "Mailing lists"
 msgstr "郵件列表"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "維護"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "重大"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "嚴重中斷"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "設為公開"
@@ -5551,6 +5845,10 @@ msgstr "管理標籤"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "管理郵件列表和訂閱者"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "管理狀態頁、設定元件狀態並處理事件"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "遷移步驟"
 msgid "Mine"
 msgstr "我的"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "輕微"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "需稽覈"
 msgid "Monday"
 msgstr "星期一"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "觀察中"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "更多操作"
@@ -5812,6 +6118,12 @@ msgstr "更多操作"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "{address} 的更多操作"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "{0} 的更多操作"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "評分最多、待處理反饋、未關閉討論和等待稽覈的帖子
 msgid "Most votes"
 msgstr "票數最多"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "下移"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "把信箱遷移到 Yuva:查詢供應商、連線、掃描、複製和切換"
@@ -5873,6 +6189,10 @@ msgstr "在列表中移動"
 msgid "Move through the posts"
 msgstr "在帖子之間移動"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "在狀態頁之間移動"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "移到收件匣"
@@ -5881,6 +6201,10 @@ msgstr "移到收件匣"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "遷移到 Yuva"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "上移"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "我的個人資料"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "名稱"
 
@@ -6078,6 +6405,18 @@ msgstr "最近 {days} 天新增"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "新建收件匣…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "新增事件"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "新增事件（{incidentKey}）"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "新增事件或狀態頁"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "還沒有頻道。新增一個,客戶就可以寫信到 {0}。"
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "此收件匣沒有任何聊天頻道在開啟討論的情況下允許該頁面的站點。請在收件匣設定中開啟討論。"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "此群組中沒有元件。"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "尚無元件。新增客戶所依賴的產品部分。"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "無需確認"
@@ -6350,13 +6697,26 @@ msgstr "沒有記錄到事件。"
 msgid "No feedback from this page."
 msgstr "此頁面沒有反饋。"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "無群組"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "沒有已隱藏的討論。"
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "無影響"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "還沒有匯入。"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "沒有可顯示狀態頁的收件匣。"
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "沒有未關閉的對話。新對話到達時會顯示在這裡和收件
 msgid "No open feedback."
 msgstr "沒有未解決的意見回饋。"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "沒有未結事件或維護。"
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "沒有其他匹配的聯絡人。"
@@ -6467,6 +6831,10 @@ msgstr "無 SMTP 帳號"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "無 SMTP 帳號"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "尚無狀態頁。由擁有者和管理員建立。"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "不會丟失任何內容:繼續後,複製會從中斷處接著進行。"
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "尚無已解決的項目。"
 
@@ -6982,6 +7351,14 @@ msgstr "線上狀態"
 msgid "Only {0}"
 msgstr "僅 {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "只能刪除草稿。它從未顯示在頁面上。"
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "只能刪除草稿。請改為發布一則更新。"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "只新增同意接收此列表的人。你在這裡輸入的內容會作為他們的同意記錄儲存。"
@@ -7083,6 +7460,7 @@ msgstr "未關閉"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "未關閉"
 
@@ -7110,6 +7488,10 @@ msgstr "開啟帳號安全"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "在你的 Yahoo 帳號中開啟「帳號安全」。"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "開啟事件"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "開啟下一個或上一個對話"
 msgid "Open the reply"
 msgstr "開啟回覆"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "開啟狀態頁"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "開啟工作區設定"
@@ -7291,6 +7677,14 @@ msgstr "未關閉,未指派"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "開啟數"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "運作正常"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "選填。顯示在公開頁面上。"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "速度(每秒郵件數)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "頁面"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "頁面設定"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "面板語言"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "第 {part} 部分,共 {totalParts} 部分"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "部分中斷"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "密碼"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "已設定密碼"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "過往"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "選擇顏色"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "請選擇顏色。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "選擇顏色"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "已置頂"
 msgid "Pinned to the top of your list"
 msgstr "已置頂到你的列表頂部"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "純文字，可包含連結和換行，最多 5,000 個字元。"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "規劃維護"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "規劃維護（{maintenanceKey}）"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "已規劃"
@@ -7805,9 +8230,22 @@ msgstr "按郵件指南所述,把 MX 記錄指向 Yuva。同步會補上這期�
 msgid "Port"
 msgstr "埠"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "發布更新"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "發布更新（{updateKey}）"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "為你的應用程式使用者釋出反饋"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "發布更新"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "準備中"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "預覽"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "預覽（{previewKey}）"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "{0} 的預覽"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "設計預覽"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "預覽文字"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "預覽頁面"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mail 只能透過你自己電腦上的 Proton Mail Bridge 經由 
 msgid "Public"
 msgstr "公開"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "公開網址"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "公鑰"
@@ -7909,9 +8366,36 @@ msgstr "公鑰"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "你的文件頁面下的公開討論串,所有狀態。"
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "發布"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "發布（{publishKey}）"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "立即發布"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "發布或取消發布頁面"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "發布草稿"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "在你域名的 DNS 中釋出此 TXT 記錄:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "已發布"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "讀取郵件列表、訂閱者和同意記錄"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "只讀"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "讀取狀態頁、元件和事件"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "正在移除匯入的歷史記錄"
 msgid "Removing imported history…"
 msgstr "正在移除匯入的歷史記錄…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "重新命名"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "重新命名群組"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "重新開啟"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "恢復預設設定"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "標示為已解決"
 
@@ -8490,9 +8987,14 @@ msgstr "標示為已解決"
 msgid "Resolve (E)"
 msgstr "標示為已解決 (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "解決或完成"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "已解決"
 
@@ -8655,8 +9157,15 @@ msgstr "星期六"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "儲存"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "儲存為草稿"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "立即儲存並保留一個版本"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "已儲存"
 
@@ -8731,6 +9241,7 @@ msgstr "在工作區允許金鑰和助手傳送時,安排併傳送群發"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "已安排"
 
@@ -9173,6 +9684,10 @@ msgstr "伺服器 URL"
 msgid "SES tenant"
 msgstr "SES 租戶"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "由監控設定，{since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "設定進度"
@@ -9217,6 +9732,7 @@ msgstr "正在設定…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "設定"
 
@@ -9273,6 +9789,10 @@ msgstr "顯示為已傳送"
 msgid "Show more"
 msgstr "顯示更多"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "在頁面上顯示"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "顯示或隱藏引用文字"
@@ -9304,6 +9824,10 @@ msgstr "顯示預覽"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "顯示回覆時間"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "顯示可用率"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "向你的團隊和聯絡人顯示"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "向你的團隊和你回覆的客戶顯示"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "顯示在公開頁面的名稱下方。"
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "自"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "自 {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "站點地址"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "站點生成器"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "網站連結"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "由 {starter} 發起 · {started}"
 msgid "Starting"
 msgstr "正在開始"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "開始"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "用下面的文字發起一個公開討論串。該對話保持私密且不變;其他內容都不會顯示。"
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS(埠 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "狀態"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "{0} 的狀態"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "{0} 開啟期間的狀態"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "狀態"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "狀態頁"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "狀態頁已刪除"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "狀態頁"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "支援地址"
 msgid "Support bot"
 msgstr "客服機器人"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "支援連結"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "當前團隊"
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "告訴客戶你的產品是否正常。選擇某個收件匣的頁面，即可開啟事件、規劃維護並設定每個元件的狀態。"
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Takeout › Mail 中的 .mbox 檔案,已解壓。"
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "你登入的 {provider} 使用者不是管理員,只有管理員才能讀取所有工單。請以管理員身份重新登入。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "在你發布頁面之前，該網址會回應「找不到」。"
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "傳送確認郵件和歡迎郵件的郵件頻道。它需要一個 SMTP 
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "這些元素在以下地址上有效;請在收件匣設定中新增你的開發伺服器:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "結束時間必須晚於開始時間。"
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "收件匣的 Amazon SES 租戶仍在設定中。群發可以發出,但�
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "收件匣的 Amazon SES 租戶已不存在。伺服器會重新建立它;在此之前群發無法發出。"
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "該事件已解決或已完成，不再接受變更。"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS 檔案按 İYS 的列格式,每位訂閱者一行,訂閱為 ONAY,退訂為 RET,供土耳其的發件人自行上傳到 İYS。待確認的訂閱不包含在內。"
@@ -10350,6 +10940,10 @@ msgstr "該金鑰會在這一天結束時失效。"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "類型之後無法更改。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "頁面文字所用的語言。"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "舊信箱不再接收該域名的郵件。"
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "另一個收件匣沒有郵件頻道,因此此郵件對話無法移到那裡。請先為它新增郵件頻道。"
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "訪客現在看到的頁面。不含草稿。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "頁面網址為 {address}。若你變更它，舊網址會繼續重新導向。"
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "該頁面不在聊天頻道允許的站點上。"
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "頁面尚未發布，只有你的團隊看得到。"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "你產品的各個部分。手動設定狀態，或讓事件來設定。"
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "該 zip 受密碼保護。請不設密碼重新制作。"
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "該 zip 使用了 Yuva 無法讀取的壓縮方式。請重新制作為普通 zip。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "日長條圖使用的時區。"
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "他們的同意記錄,用於回應關於你持有其哪些資料的請求:"
@@ -10892,6 +11506,10 @@ msgstr "此目標是漏斗的一個步驟。請先把它從漏斗中移除,或�
 msgid "This inbox already has a list with this name."
 msgstr "此收件匣中已有同名列表。"
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "此收件匣已有狀態頁。"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "此收件匣還沒有可傳送的郵件頻道。你現在可以建立列表；在列表設定中選擇帶回覆帳號的郵件頻道後才會傳送。"
@@ -10911,6 +11529,10 @@ msgstr "此收件匣還沒有郵件列表。群發只會發給訂閱了某個列
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "這是壓縮歸檔。請解壓 Takeout 壓縮包並上傳 .mbox 檔案。"
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "這是草稿。只有你的團隊看得到，發布之前不會變更任何元件。"
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "時間"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "時區"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "標題"
 
@@ -11251,6 +11875,10 @@ msgstr "正在重試"
 msgid "Tuesday"
 msgstr "星期二"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "無法投遞:被收件人標為垃圾郵件,{since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "每個頁面下方:「此頁面對您有幫助嗎?」,然後是反饋和該頁面的討論。"
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "維護中"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "在「重定向 URI」下選擇「Web」,並輸入下面的重定向 URL。"
@@ -11401,6 +12033,22 @@ msgstr "取消置頂"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "已取消置頂"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "取消發布"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "取消發布（{publishKey}）"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "未發布"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "未發布，只有你的團隊可以預覽"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "未驗證的發件人"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "最多 {max} 和 100,000 行,帶標題行。土耳其語或西歐編碼的 Excel 檔案,以及用逗號、分號或製表符分隔的列,會按原樣讀取。"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "更新文字"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "更新"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "更新中"
@@ -11525,6 +12181,14 @@ msgstr "請使用每秒 1 到 100 封郵件。"
 msgid "Use 1 to 8760 hours."
 msgstr "請使用 1 到 8760 小時。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "使用 3 到 48 個字母、數字和中間的連字號。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "使用類似 #2563eb 的顏色。"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "使用某位聯絡人的值"
@@ -11540,6 +12204,10 @@ msgstr "請使用 1 到 65535 的埠。"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "為群發使用單獨的帳號"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "使用 7 到 90 之間的整數。"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "版本"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "信箱非常大?從 Google Takeout 檔案開始"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "查看頁面"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "匯入的內容"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "他們同意了什麼?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "客戶需要知道什麼？"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "你的帖子會保留,顯示為已刪除讀者釋出。你的關注、�
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "你的產品"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "你的產品。"
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

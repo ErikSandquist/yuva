@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro"
 import {
+  ActivityIcon,
   AtSignIcon,
   BarChart3Icon,
   BookOpenTextIcon,
@@ -78,6 +79,7 @@ function useEntries(): Entry[] {
     { key: "reports", label: t`Reports`, icon: BarChart3Icon, shortcut: SHORTCUTS.reports },
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
     { key: "broadcasts", label: t`Broadcasts`, icon: MegaphoneIcon, shortcut: SHORTCUTS.broadcasts },
+    { key: "status", label: t`Status`, icon: ActivityIcon, shortcut: SHORTCUTS.status },
     { key: "analytics", label: t`Analytics`, icon: ChartLineIcon, shortcut: SHORTCUTS.analytics },
     {
       key: "assistants",

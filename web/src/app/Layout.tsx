@@ -12,6 +12,7 @@ import { setRailView, useRailView } from "@/features/inbox/railView"
 import { AssistantsPanel, MentionsPanel } from "@/features/inbox/SidePanels"
 import { ReportsColumn } from "@/features/reports/ReportsColumn"
 import { SettingsColumn } from "@/features/settings/SettingsColumn"
+import { StatusColumn } from "@/features/status/StatusColumn"
 import { TeamColumn } from "@/features/team/TeamColumn"
 import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
@@ -42,6 +43,7 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
       {section === "reports" && <ReportsColumn />}
       {section === "docs" && <DocsColumn />}
       {section === "broadcasts" && <BroadcastsColumn />}
+      {section === "status" && <StatusColumn />}
       {section === "analytics" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <AnalyticsColumn />

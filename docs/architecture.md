@@ -1941,6 +1941,14 @@ incident before a customer writes, and the conversations an outage brings are an
   `<YUVA_PUBLIC_URL>/status`); every link, the feed, the badge and the JSON name pages from it, and with
   it set `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. When the page names an analytics property of the workspace, the page sends a
   cookieless page view to it with the analytics script.
+- **Panel.** A Status entry in the rail (`/status`, shortcut `g s`) follows the inbox filter: the page of each
+  visible inbox, or "Create status page" for owners and admins on an inbox without one. A page opens at
+  `/status-pages/{id}` (not under `/status/`, which the server answers with the public page) with Incidents,
+  Components and, for owners and admins, Settings; an incident opens at
+  `/status-pages/{id}/incidents/{incidentId}`. Agents with access to the inbox set component states and
+  open, update, publish and resolve incidents; owners and admins also manage components, groups and the page
+  and publish or unpublish it. The preview shows the `/preview` HTML in a sandboxed frame. Lists and incidents
+  refresh on the `status.*` realtime events.
 - **Own domain.** A page may name `custom_domain` (`status.example.com`). The owner adds a CNAME to
   `YUVA_STATUS_CNAME` (unset: the host of `YUVA_PUBLIC_URL`) and a TXT record `_yuva-status.<domain>`
   with the page's verification value, so nobody claims a domain they do not hold; a River job checks

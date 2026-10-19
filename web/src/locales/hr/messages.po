@@ -794,9 +794,17 @@ msgstr "24 mjeseca"
 msgid "3 months"
 msgstr "3 mjeseca"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Od 3 do 48 slova, znamenki i crtica. Jedinstveno na ovom poslužitelju."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Dovrši"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "Od 7 do 90."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "Rasprava je dobila prihvaćen odgovor"
 msgid "A discussion started"
 msgstr "Rasprava je započela"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Skicu vidi samo vaš tim i ne mijenja nijednu komponentu dok je ne objavite."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Skica je odbačena"
@@ -978,6 +990,10 @@ msgstr "Nova verzija Yuve je spremna."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Bilješka za tim… upišite @ da spomenete kolegu"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Stranica ili poveznica mailto: gdje klijenti dobivaju pomoć."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Dio datoteke stigao je oštećen više puta. Provjerite vezu pa ponovno odaberite datoteku da nastavite."
@@ -985,6 +1001,10 @@ msgstr "Dio datoteke stigao je oštećen više puta. Provjerite vezu pa ponovno 
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Dio datoteke bio je veći nego što poslužitelj prihvaća. Ponovno učitajte stranicu i ponovno odaberite datoteku."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Postotak pored svake komponente."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "Svojstvo može imati najviše 100 segmenata. Prvo izbrišite jedan."
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "Svojstvo može imati najviše 20 lijevaka. Prvo izbrišite jedan."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Javna stranica koja klijentima govori radi li {inboxName}. Ostaje neobjavljena dok je ne objavite."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Prijava se mora vratiti unutar 10 minuta i vrijedi jednom. Prijavite se 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Web-mjesto prikazuje razgovore poslane s njegovih stranica."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Komponenta statusa promijenila se ili je dobila novo stanje"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Monitor statusa se oporavio"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Monitor statusa prestao je raditi"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Oko {from} do {to}"
 msgid "about done by {end}"
 msgstr "gotovo otprilike do {end}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Naglasna boja"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Prihvaćen odgovor"
@@ -1102,6 +1142,10 @@ msgstr "Račun"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme docs"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Status Acmea"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "Dodajte barem jedan origin."
 msgid "Add channel"
 msgstr "Dodaj kanal"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Dodaj komponentu"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Dodaj krajnju točku"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Dodaj grupu"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Dodao tim"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adresa"
 
@@ -1519,9 +1575,25 @@ msgstr "Unos u zip arhivi raspakira se na više od 100 puta svoje veličine pa j
 msgid "An https image URL."
 msgstr "URL slike https."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Slika https."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Pretinac skuplja razgovore jednog proizvoda ili marke. Nazovite ga po proizvodu koji vaši klijenti poznaju."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Incident ili održavanje promijenili su se ili su dobili ažuriranje"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Incident ili održavanje objavljeni su"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Incident je riješen ili je održavanje dovršeno"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "drugi pretinac"
 msgid "Another SMTP server"
 msgstr "Drugi SMTP poslužitelj"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Druga stranica statusa već koristi ovu adresu."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Druga adresa tima"
@@ -1645,12 +1721,17 @@ msgstr "Sve što koristi ovaj ključ odmah prestaje raditi."
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API kanal"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "API ključ"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "Mogu li zakazati bilten za svakog pretplatnika posebno?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "Usporedba uvjeta {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Dovršeno"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Dovršeno"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Komponenta je izbrisana"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Komponente"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Zahvaćene komponente"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Komponente, povijest, incidenti i ažuriranja brišu se s njom."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Izradi ključ"
 msgid "Create list"
 msgstr "Izradi popis"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Izradi stranicu statusa"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Izradi stranicu statusa ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Izradi e-poštni kanal"
@@ -3083,6 +3197,10 @@ msgstr "Vjerodajnice izbrisane {deletedAt}. Yuva više ne može čitati {address
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Vjerodajnice izbrisane. Yuva više ne može čitati {address}."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Kritičan"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Zadržavanje podataka"
 msgid "Data retention and deleting the workspace"
 msgstr "Zadržavanje podataka i brisanje radnog prostora"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Nadogradnja baze podataka"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Datumi"
@@ -3147,6 +3269,10 @@ msgstr "Datumi"
 msgid "Days"
 msgstr "Dani"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Dana povijesti"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Odlučite tko smije pisati u raspravama"
@@ -3154,6 +3280,10 @@ msgstr "Odlučite tko smije pisati u raspravama"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Zadano: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Smanjena učinkovitost"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "Zadano: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -3170,8 +3302,13 @@ msgstr "Izbriši"
 msgid "Delete “{name}”?"
 msgstr "Izbrisati „{name}”?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Izbrisati {0}?"
 
@@ -3184,9 +3321,22 @@ msgstr "Izbrisati {name}?"
 msgid "Delete after (days)"
 msgstr "Izbriši nakon (dana)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Izbriši komponentu"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Izbriši skicu"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Izbriši skicu ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Izbriši grupu"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Izbriši popis"
 msgid "Delete my account"
 msgstr "Izbriši moj račun"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Izbriši stranicu"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Izbriši pretplatu"
@@ -3212,6 +3366,10 @@ msgstr "Izbriši pretplatu"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Izbrišite aplikaciju koju ste izradili za Yuvu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Izbriši skicu"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "Izbrisati vaš račun?"
 msgid "Deleted by its author."
 msgstr "Izbrisao autor."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Izbrisana komponenta"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Briše njegove kanale, razgovore, poruke i privitke. Ovo se ne može pon
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Briše popis, njegove pretplate i zapise o privoli. Prvo preuzmite izvoz privola ako ćete ih možda trebati dokazati kasnije."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Briše stranicu s njezinim komponentama, njihovom poviješću, incidentima i ažuriranjima. Javna adresa prestaje raditi."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Pojedinosti isporuke"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Odbij"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Opis"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Obavijesti na radnoj površini blokirane su za ovo web-mjesto u postavka
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Pojedinosti"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Preuzmi izostavljene retke"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Skica"
 
@@ -3570,6 +3746,10 @@ msgstr "Autor skice"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Skica od {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Skica je izbrisana"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "E-pošta, chat uživo i poruke u aplikaciji"
 msgid "E-mail: {label}"
 msgstr "E-pošta: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Svaka komponenta ima ovo stanje dok je incident otvoren."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Svaka komponenta ima ovo stanje dok održavanje traje."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Svaki razgovor zadržava status koji {provider} javlja za njega: otvoren, na čekanju ili zatvoren."
@@ -3703,6 +3891,7 @@ msgstr "Svaki sa svim svojim porukama i bilješkama"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Uredi"
 
@@ -3714,9 +3903,22 @@ msgstr "Uredi API ključ"
 msgid "Edit canned reply"
 msgstr "Uredi pripremljeni odgovor"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Uredi komponentu"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Uredi dizajn"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Uredi pojedinosti"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Uredi pojedinosti ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Uredi dizajn ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Uredi incident"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Uredi naslov"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Uredi ovo ažuriranje"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Uredite ili pogledajte pregled na računalu, telefonu ili u tamnom načinu"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "uređeno"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "Povećan broj API pogrešaka"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Krajnja točka"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Krajnje točke"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Završetak"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "prvi odgovor u {first}"
 msgid "First rows of the file"
 msgstr "Prvi reci datoteke"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "Prvo ažuriranje"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Prvo e-adresa"
@@ -4428,6 +4655,10 @@ msgstr "Pozdrav"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Pozdravlja nove razgovore e-poštom, jednom po kontaktu unutar intervala. Nikad se ne šalje automatskoj pošti ni neželjenoj pošti."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Grupa"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Predano korisniku {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Ima otvoren razgovor"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Drži ga incident, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "Bok! Kako vam možemo pomoći?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Skriveno"
 
@@ -4503,6 +4740,10 @@ msgstr "Sakrio tim"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Sakrij"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Sakrij na stranici"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Vratio/la sam se"
 msgid "Idea"
 msgstr "Ideja"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Utvrđeno"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Identitet nije potvrđen"
@@ -4693,6 +4938,10 @@ msgstr "IMAP je za ovaj pretinac isključen. Uključite ga u postavkama {provide
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "IMAP poslužitelj"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Utjecaj"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "U Microsoft 365 to je preusmjeravanje pretinca ili pravilo toka pošte; administrator će možda prvo morati dopustiti vanjsko preusmjeravanje."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "U tijeku"
 
@@ -4888,6 +5138,16 @@ msgstr "Pretinci"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Pretinci skraćuju predmete dulje od 80 znakova."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Incident"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Incidenti"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Uključi bilješke"
@@ -4922,6 +5182,10 @@ msgstr "Instalirajte poslužitelj u VS Code; otvara stranicu poslužitelja na ko
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Instalacija"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "Istražuje se"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Više neće primati obavijesti."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Njegov pristup odmah završava. Da ga ponovno koristite, povežite ga ponovno."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Njezine komponente ostaju, bez grupe."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "Njegov zapis o privoli briše se s njim pa više nećete moći pokazati kako su pristali. Da im prestanete slati poštu, radije ih odjavite."
@@ -5060,6 +5328,10 @@ msgstr "Njegov zapis o privoli briše se s njim pa više nećete moći pokazati 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "Njegov zapis o privoli briše se s njim. Budući da su se odjavili, adresa se pamti kao odjavljena pa je nitko u timu ne može ponovno dodati."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Njegova povijest se briše. Incidenti koji su ga spominjali više ga ne spominju."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Oznake (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Jezik"
 
@@ -5254,6 +5527,10 @@ msgstr "Prepustite kolegi koji piše"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Ostavi tekst, zatim blok"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Izostavljeno s javne stranice i iz njezina ukupnog stanja."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Učitaj slike"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Učitaj više"
@@ -5406,6 +5684,10 @@ msgstr "Zaključano"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Zaključano: čitatelji ovdje više ne mogu pisati. Vi još uvijek možete."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL logotipa"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Maildir u zipu"
 msgid "Mailing lists"
 msgstr "Popisi e-pošte"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Održavanje"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Velik"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Veliki ispad"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Učini javnim"
@@ -5551,6 +5845,10 @@ msgstr "Upravljaj oznakama"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "Upravljaj popisima e-pošte i pretplatnicima"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Upravljajte stranicama statusa, postavljajte stanja komponenti i vodite incidente"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Koraci migracije"
 msgid "Mine"
 msgstr "Moji"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Malen"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "Moderirano"
 msgid "Monday"
 msgstr "Ponedjeljak"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "Prati se"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Više radnji"
@@ -5812,6 +6118,12 @@ msgstr "Više radnji"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "Više radnji za {address}"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "Više za {0}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "Prvo najviše ocjena, otvorene povratne informacije, otvorene rasprave i
 msgid "Most votes"
 msgstr "Najviše glasova"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Pomakni dolje"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Prenesite pretince u Yuvu: pronađite pružatelja, povežite, skenirajte, kopirajte i prebacite"
@@ -5873,6 +6189,10 @@ msgstr "Kreći se kroz popis"
 msgid "Move through the posts"
 msgstr "Kreći se kroz objave"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Kretanje po stranicama statusa"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Premjesti u pretinac"
@@ -5881,6 +6201,10 @@ msgstr "Premjesti u pretinac"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Prijeđite na Yuvu"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Pomakni gore"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Moj profil"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Naziv"
 
@@ -6078,6 +6405,18 @@ msgstr "novih u zadnjih {days} dana"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Novi pretinac…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Novi incident"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Novi incident ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Novi incident ili stranica statusa"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Još nema kanala. Dodajte jedan kako bi klijenti mogli pisati na {0}."
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Nijedan chat kanal ovog pretinca ne dopušta web-mjesto stranice s uključenim raspravama. Uključite rasprave u postavkama pretinca."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "U ovoj grupi nema komponenti."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Još nema komponenti. Dodajte dijelove proizvoda o kojima klijenti ovise."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Bez potvrde"
@@ -6350,13 +6697,26 @@ msgstr "Nema zabilježenih događaja."
 msgid "No feedback from this page."
 msgstr "Nema povratnih informacija s ove stranice."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Bez grupe"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Nema skrivenih rasprava."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Bez utjecaja"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Još nema uvoza."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "Nema pretinca za koji bi se prikazala stranica statusa."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "Nema otvorenih razgovora. Novi se pojavljuju ovdje i u pretincu kad stig
 msgid "No open feedback."
 msgstr "Nema otvorenih povratnih informacija."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "Nema otvorenih incidenata ni održavanja."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Nijedan drugi kontakt ne odgovara."
@@ -6467,6 +6831,10 @@ msgstr "nema SMTP računa"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Nema SMTP računa"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Stranice statusa još nema. Izrađuju je vlasnici i administratori."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Ništa se ne gubi: kad nastavi, kopiranje preuzima gdje je stalo."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Još ništa nije riješeno."
 
@@ -6982,6 +7351,14 @@ msgstr "Status na mreži"
 msgid "Only {0}"
 msgstr "Samo {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Može se izbrisati samo skica. Nikad nije bila prikazana na stranici."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Može se izbrisati samo skica. Umjesto toga objavite ažuriranje."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Dodajte samo ljude koji su pristali primati ovaj popis. Ono što ovdje unesete čuva se kao njihov zapis o privoli."
@@ -7083,6 +7460,7 @@ msgstr "otvoreno"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Otvoreno"
 
@@ -7110,6 +7488,10 @@ msgstr "Otvori Sigurnost računa"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Otvorite Sigurnost računa u svom Yahoo računu."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Otvori incident"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Otvori sljedeći ili prethodni razgovor"
 msgid "Open the reply"
 msgstr "Otvori odgovor"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Otvori stranicu statusa"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Otvori postavke radnog prostora"
@@ -7291,6 +7677,14 @@ msgstr "otvoreno, nedodijeljeno"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Otvaranja"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "Radi"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "Neobavezno. Prikazuje se na javnoj stranici."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Tempo (poruka u sekundi)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Stranica"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Postavke stranice"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Jezik ploče"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Dio {part} od {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Djelomičan ispad"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Lozinka"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Lozinka postavljena"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Prošli"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Odaberite boju"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Odaberite boju."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Odaberi boju"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Prikvačeno"
 msgid "Pinned to the top of your list"
 msgstr "Prikvačeno na vrh vašeg popisa"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Običan tekst s poveznicama i prijelomima redaka, najviše 5000 znakova."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Planiraj održavanje"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Planiraj održavanje ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Planirano"
@@ -7805,9 +8230,22 @@ msgstr "Usmjerite MX zapise na Yuvu kako opisuje vodič za e-poštu. Sinkronizac
 msgid "Port"
 msgstr "Port"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Objavi ažuriranje"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Objavi ažuriranje ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Prikupljajte povratne informacije korisnika svoje aplikacije"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Pošalji ažuriranje"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Priprema"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Pregled"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Pregled ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "Pregled: {0}"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Pregled dizajna"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Tekst pregleda"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Pregledaj stranicu"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mailu se preko IMAP-a može pristupiti samo preko Proton Mail Bri
 msgid "Public"
 msgstr "Javno"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Javna adresa"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Javni ključ"
@@ -7909,9 +8366,36 @@ msgstr "Javni ključ"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Javne niti ispod stranica vaše dokumentacije, u svim stanjima."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Objavi"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Objavi ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Objavi sada"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Objavi stranicu ili je povuci"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Objavi skicu"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Objavite ovaj TXT zapis u DNS-u svoje domene:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Objavljena"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "Čitaj popise e-pošte, pretplatnike i zapise o privoli"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Samo za čitanje"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Čitaj stranice statusa, komponente i incidente"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Uklanjanje uvezene povijesti"
 msgid "Removing imported history…"
 msgstr "Uklanjanje uvezene povijesti…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Preimenuj"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Preimenuj grupu"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Ponovno otvori"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Vrati na zadano"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Riješi"
 
@@ -8490,9 +8987,14 @@ msgstr "Riješi"
 msgid "Resolve (E)"
 msgstr "Riješi (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Riješi ili dovrši"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Riješeno"
 
@@ -8655,8 +9157,15 @@ msgstr "Subota"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Spremi"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Spremi kao skicu"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Spremi sada i zadrži verziju"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Spremljeno"
 
@@ -8731,6 +9241,7 @@ msgstr "Zakaži i šalji masovne poruke kad radni prostor dopusti ključevima i 
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Zakazano"
 
@@ -9173,6 +9684,10 @@ msgstr "URL poslužitelja"
 msgid "SES tenant"
 msgstr "SES zakupac"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Postavio monitor, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Postavi napredak"
@@ -9217,6 +9732,7 @@ msgstr "Postavljanje…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Postavke"
 
@@ -9273,6 +9789,10 @@ msgstr "Prikaži kao poslano"
 msgid "Show more"
 msgstr "Prikaži više"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Prikaži na stranici"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Prikaži ili sakrij citirani tekst"
@@ -9304,6 +9824,10 @@ msgstr "Prikaži pregled"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Prikaži vrijeme odgovora"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Prikaži dostupnost"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Prikazuje se vašem timu i kontaktima"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Prikazuje se vašem timu i klijentima kojima odgovarate"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Prikazuje se ispod naziva na javnoj stranici."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "Od"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "Od {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "Adresa web-mjesta"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Generator web-mjesta"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Poveznica na web-mjesto"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Započeo/la {starter} · {started}"
 msgid "Starting"
 msgstr "Pokretanje"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Početak"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Započinje javnu nit s donjim tekstom. Razgovor ostaje privatan i nepromijenjen; ništa drugo iz njega se ne prikazuje."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Stanje"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "Stanje: {0}"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "Stanje: {0}, dok je otvoren"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Status"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Stranica statusa"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Stranica statusa je izbrisana"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Stranice statusa"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Adresa podrške"
 msgid "Support bot"
 msgstr "Bot podrške"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Poveznica na podršku"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "Tim upravo sada"
 msgid "teammate@company.com"
 msgstr "kolega@tvrtka.hr"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Recite klijentima radi li vaš proizvod. Odaberite stranicu pretinca kako biste otvarali incidente, planirali održavanja i postavljali stanje svake komponente."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr ".mbox datoteka iz Takeout › Mail, raspakirana."
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "Korisnik {provider} kojim ste se prijavili nije administrator, a samo administratori mogu čitati svaki tiket. Prijavite se ponovno kao administrator."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "Adresa odgovara „nije pronađeno” dok stranicu ne objavite."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "E-poštni kanal koji šalje poruke potvrde i dobrodošlice. Treba mu SMT
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Elementi rade na ovim adresama; svoj razvojni poslužitelj dodajte u postavkama pretinca:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "Završetak mora biti nakon početka."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "Amazon SES zakupac pretinca još se postavlja. Masovna poruka može oti�
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Amazon SES zakupac pretinca više ne postoji. Poslužitelj ga ponovno izrađuje; do tada masovna poruka ne može otići."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "Incident je već riješen ili dovršen pa ne prima daljnje izmjene."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS datoteka ima jedan redak po pretplatniku u İYS-ovim stupcima, ONAY za pretplaćene i RET za odjavljene, da je turski pošiljatelji mogu sami učitati u İYS. Pretplate na čekanju izostavljaju se."
@@ -10350,6 +10940,10 @@ msgstr "Ključ prestaje raditi na kraju ovog dana."
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Vrsta se poslije ne može promijeniti."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "Jezik tekstova na stranici."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "Stari pretinac prestaje primati poštu za tu domenu."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Drugi pretinac nema e-poštni kanal pa se ovaj e-poštni razgovor ne može premjestiti tamo. Prvo mu dodajte e-poštni kanal."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "Stranica kakvu posjetitelji vide sada. Skice su izostavljene."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "Stranica je na adresi {address}. Stara adresa i dalje preusmjerava ako je promijenite."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "Stranica nije na web-mjestu koje chat kanal dopušta."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "Stranica nije objavljena. Ovo vidi samo vaš tim."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Dijelovi vašeg proizvoda. Postavite stanje ručno ili pustite da to učini incident."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "Zip je zaštićen lozinkom. Ponovno ga izradite bez nje."
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "Zip koristi metodu kompresije koju Yuva ne može pročitati. Ponovno ga izradite kao običan zip."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "Vremenska zona dnevnih stupaca."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Njihovi zapisi o privoli, za zahtjev o tome što imate o njima:"
@@ -10892,6 +11506,10 @@ msgstr "Ovaj cilj je korak lijevka. Prvo ga uklonite iz lijevka ili izbrišite l
 msgid "This inbox already has a list with this name."
 msgstr "Ovaj pretinac već ima popis s ovim nazivom."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "Ovaj pretinac već ima stranicu statusa."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Ovaj pretinac još nema e-poštni kanal koji može slati. Popis možete izraditi sada; šalje kad se u njegovim postavkama odabere e-poštni kanal s računom za odgovore."
@@ -10911,6 +11529,10 @@ msgstr "Ovaj pretinac još nema popis e-pošte. Masovna poruka ide samo ljudima 
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Ovo je komprimirana arhiva. Raspakirajte Takeout arhivu i učitajte .mbox datoteku."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Ovo je skica. Vidi je samo vaš tim i ne mijenja nijednu komponentu dok je ne objavite."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Vrijeme"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Vremenska zona"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Naslov"
 
@@ -11251,6 +11875,10 @@ msgstr "Ponovni pokušaj"
 msgid "Tuesday"
 msgstr "Utorak"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "Ne može se isporučiti: primatelj označio kao neželjenu poštu, {sinc
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Ispod svake stranice: „Je li ova stranica bila korisna?”, zatim povratne informacije i rasprave stranice."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "U održavanju"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "Pod Redirect URI odaberite Web i unesite donji URL za preusmjeravanje."
@@ -11401,6 +12033,22 @@ msgstr "Otkvači"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Otkvačeno"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Povuci"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Povuci ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Neobjavljena"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Neobjavljena, pregled vidi samo vaš tim"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Nepotvrđen pošiljatelj"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Do {max} i 100.000 redaka, s retkom zaglavlja. Excel datoteke u turskom ili zapadnom kodiranju i stupci odvojeni zarezima, točkama sa zarezom ili tabulatorima čitaju se kakvi jesu."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Tekst ažuriranja"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Ažuriranja"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Ažuriranje"
@@ -11525,6 +12181,14 @@ msgstr "Koristite 1 do 100 poruka u sekundi."
 msgid "Use 1 to 8760 hours."
 msgstr "Koristite 1 do 8760 sati."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Upotrijebite 3 do 48 slova, znamenki i unutarnjih crtica."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Upotrijebite boju poput #2563eb."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Koristi vrijednosti kontakta"
@@ -11540,6 +12204,10 @@ msgstr "Koristite port od 1 do 65535."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Koristi zaseban račun za masovne poruke"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "Upotrijebite cijeli broj od 7 do 90."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Verzije"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Vrlo velik pretinac? Počnite s Google Takeout datotekom"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Pogledaj stranicu"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Što se prenosi"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "Na što su pristali?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "Što klijenti trebaju znati?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Vaše objave ostaju, prikazane kao od izbrisanog čitatelja. Vaša prać
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Vaš proizvod"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Vaš proizvod."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

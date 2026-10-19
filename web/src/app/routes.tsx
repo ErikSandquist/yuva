@@ -48,6 +48,8 @@ import { WorkspacePage } from "@/features/settings/workspace/WorkspacePage"
 import { SetupPage } from "@/features/setup/SetupPage"
 import { MemberPage } from "@/features/team/MemberPage"
 import { TeamHome } from "@/features/team/TeamColumn"
+import { IncidentPane } from "@/features/status/IncidentPane"
+import { StatusHome, StatusPagePane } from "@/features/status/StatusPagePane"
 import { useSession } from "@/lib/session"
 
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
@@ -168,6 +170,9 @@ export function AppRoutes() {
             />
           ))}
           <Route path="broadcasts/:broadcastId" element={<BroadcastPage />} />
+          <Route path="status" element={<StatusHome />} />
+          <Route path="status-pages/:pageId" element={<StatusPagePane />} />
+          <Route path="status-pages/:pageId/incidents/:incidentId" element={<IncidentPane />} />
           <Route
             path="analytics/*"
             element={

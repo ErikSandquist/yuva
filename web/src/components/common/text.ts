@@ -52,6 +52,12 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "subscription.updated",
   "broadcast.updated",
   "analytics.alert",
+  "status.component.updated",
+  "status.incident.created",
+  "status.incident.updated",
+  "status.incident.resolved",
+  "status.monitor.down",
+  "status.monitor.up",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -77,11 +83,21 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "analytics:read",
   "analytics:write",
   "analytics:manage",
+  "status:read",
+  "status:manage",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export type ApiKeyPreset = "read" | "support" | "everything" | "custom"
 export const API_KEY_PRESET_SCOPES: Record<Exclude<ApiKeyPreset, "custom">, ApiKeyScope[]> = {
-  read: ["conversations:read", "contacts:read", "inboxes:read", "lists:read", "broadcasts:read", "analytics:read"],
+  read: [
+    "conversations:read",
+    "contacts:read",
+    "inboxes:read",
+    "lists:read",
+    "broadcasts:read",
+    "analytics:read",
+    "status:read",
+  ],
   support: [
     "conversations:read",
     "conversations:write",
@@ -163,6 +179,12 @@ export function useEnumText() {
       "subscription.updated": t`A subscription changed`,
       "broadcast.updated": t`A broadcast was scheduled, started, paused or finished`,
       "analytics.alert": t`An analytics property of the inbox raised an alert`,
+      "status.component.updated": t`A status component changed or got a new state`,
+      "status.incident.created": t`An incident or maintenance was published`,
+      "status.incident.updated": t`An incident or maintenance changed or got an update`,
+      "status.incident.resolved": t`An incident was resolved or maintenance completed`,
+      "status.monitor.down": t`A status monitor went down`,
+      "status.monitor.up": t`A status monitor recovered`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -188,6 +210,8 @@ export function useEnumText() {
       "analytics:read": t`Read analytics properties and their numbers`,
       "analytics:write": t`Send analytics events from your servers`,
       "analytics:manage": t`Manage analytics properties, their keys and their data`,
+      "status:read": t`Read status pages, components and incidents`,
+      "status:manage": t`Manage status pages, set component states and run incidents`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,
@@ -404,6 +428,11 @@ export function useErrorText() {
     if (err.code === "segment_taken") return t`This property already has a segment with this name.`
     if (err.code === "segment_limit") return t`A property can have at most 100 segments. Delete one first.`
     if (err.code === "annotation_limit") return t`A property can have at most 1,000 notes. Delete old ones first.`
+    if (err.code === "slug_taken") return t`Another status page already uses this address.`
+    if (err.code === "status_page_exists") return t`This inbox already has a status page.`
+    if (err.code === "incident_closed")
+      return t`The incident is already resolved or completed, so it takes no more changes.`
+    if (err.code === "incident_published") return t`Only a draft can be deleted. Post an update instead.`
     if (err.code === "annotation_read_only") return t`Yuva's own notes cannot be changed.`
     switch (err.status) {
       case 400:

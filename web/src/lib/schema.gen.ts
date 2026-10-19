@@ -5570,6 +5570,493 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/status-pages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List status pages
+         * @description The pages the caller can see, oldest first, each with its overall state.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusPages"];
+        put?: never;
+        /**
+         * Create a status page
+         * @description A page for an inbox, which has at most one (`409 status_page_exists`). `slug` names it in its
+         *     URL, is unique across the server (`409 slug_taken`) and cannot be one of the reserved words
+         *     (`400`). A slug a page gave up when it was renamed stays reserved for that page until the page
+         *     is deleted, and its public addresses answer `301` to the page's current slug. A new page is unpublished unless `published` is `true`; `locale` and `timezone` default
+         *     to the inbox's.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusPage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A status page
+         * @description Scope: `status:read`.
+         */
+        get: operations["getStatusPage"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a status page
+         * @description The page with its groups, components, their history, incidents and updates.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        delete: operations["deleteStatusPage"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a status page
+         * @description Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
+         *     takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
+         *     redirect to the new one, until the page is deleted.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["updateStatusPage"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview a status page
+         * @description The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
+         *     is sent with `Cache-Control: no-store` and its links point to the public URLs.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["previewStatusPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's component groups
+         * @description By `position`, then name.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusComponentGroups"];
+        put?: never;
+        /**
+         * Create a component group
+         * @description A heading that components are shown under.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusComponentGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/groups/{groupId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a component group
+         * @description Its components stay, without a group.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        delete: operations["deleteStatusComponentGroup"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a component group
+         * @description Owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["updateStatusComponentGroup"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/components": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's components
+         * @description By group position, then `position`, then name; hidden ones included.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusComponents"];
+        put?: never;
+        /**
+         * Create a component
+         * @description A part of the product that has a state, `operational` unless `state` says otherwise. A page has
+         *     at most 100 components (`400`).
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusComponent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/components/{componentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a component
+         * @description With its history; incidents that named it no longer do.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        delete: operations["deleteStatusComponent"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a component
+         * @description Name, description, group, position and whether it is hidden; the state changes with
+         *     `setStatusComponentState`.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["updateStatusComponent"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/components/{componentId}/state": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set a component's state
+         * @description Ends the component's current state and starts this one, with the caller as its source (`member`
+         *     or `api_key`), and sends `status.component.updated`. The same state again changes nothing.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["setStatusComponentState"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's incidents and maintenance
+         * @description Newest first (by creation), drafts included, each with its updates. `open: true` lists only
+         *     incidents that are not resolved and maintenance that is not completed.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusIncidents"];
+        put?: never;
+        /**
+         * Open an incident or plan maintenance
+         * @description `message` is the first update. An incident starts `investigating` unless `state` names another
+         *     open state; maintenance needs `scheduled_start` and `scheduled_end` and starts `scheduled`, or
+         *     `in_progress` when its start has passed. `components` name the components it touches with the
+         *     state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
+         *     incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+         *
+         *     An incident created through MCP is always a draft.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusIncident"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An incident
+         * @description Scope: `status:read`.
+         */
+        get: operations["getStatusIncident"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a draft incident
+         * @description Only a draft can be deleted (`409 incident_published`).
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        delete: operations["deleteStatusIncident"];
+        options?: never;
+        head?: never;
+        /**
+         * Change an incident
+         * @description Title, impact, the components it touches and a maintenance window. States change with an update
+         *     (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
+         *     (`409 incident_closed`).
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["updateStatusIncident"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish a draft incident
+         * @description Shows it on the page and, while it is open, sets the components it touches. Publishing a
+         *     published incident changes nothing.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["publishStatusIncident"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/updates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post an update
+         * @description Adds an update and moves the incident to `state` (its current state when absent). An incident's
+         *     states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
+         *     `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
+         *     incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
+         *     completing puts its components back; see the tag.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusIncidentUpdate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Edit an update's text
+         * @description A published incident's update shows "edited" afterwards (`edited_at`).
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["editStatusIncidentUpdate"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's monitors
+         * @description Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusMonitors"];
+        put?: never;
+        /**
+         * Create a monitor
+         * @description A monitor that sets `component_id`'s state from outside a member's hand:
+         *
+         *     - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+         *       `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+         *       `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+         *     - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+         *       `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+         *
+         *     The monitor fails after `failure_threshold` failures in a row and recovers after
+         *     `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+         *     `failure_state`, never over a state a member set later than the monitor's last change, and
+         *     opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+         *     it opened and puts the component back. The answer carries `token` and `url` once; only a
+         *     hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+         *     unset, `403 status_monitor_limit`).
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["createStatusMonitor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors/{monitorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A monitor
+         * @description Scope: `status:read`.
+         */
+        get: operations["getStatusMonitor"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a monitor
+         * @description With its checks. A component it set goes back to `operational` unless something else holds
+         *     it; an incident it opened stays.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        delete: operations["deleteStatusMonitor"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a monitor
+         * @description Changes the given fields. Pausing stops results from counting and lets go of the component
+         *     (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+         *     starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+         *     later. A new `interval` or `grace` moves the next beat's due time.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        patch: operations["updateStatusMonitor"];
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors/{monitorId}/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rotate a monitor's token
+         * @description Makes a new token and drops the old one at once: calls with the old token answer `404`.
+         *
+         *     Owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["rotateStatusMonitorToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors/{monitorId}/checks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a monitor's checks
+         * @description Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+         *     while the monitor is paused are not kept.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusMonitorChecks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/client/v1/session": {
         parameters: {
             query?: never;
@@ -6457,6 +6944,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/client/v1/status/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A published status page
+         * @description What the public status page shows, as JSON: the page, its overall state, the visible
+         *     components by group with their uptime, open incidents and running or planned maintenance, and
+         *     the incidents of the last 14 days. Needs no credentials and sends
+         *     `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
+         *     (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
+         *     slug the page was renamed from answers `301` with the current address in `Location`. Limited
+         *     to 120 requests a minute per IP address together with the HTML pages (`429 rate_limited`).
+         */
+        get: operations["getClientStatusPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/client/v1/realtime": {
         parameters: {
             query?: never;
@@ -6567,6 +7080,103 @@ export interface paths {
          *     message `failed`.
          */
         post: operations["ingestSes"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingress/heartbeat/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Send a heartbeat
+         * @description A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+         *     `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+         *     `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+         *
+         *     The token is the credential: it is left out of the server's request logs, and at most 60
+         *     calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+         *     answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+         *     and counts nothing.
+         */
+        get: operations["statusHeartbeat"];
+        put?: never;
+        /**
+         * Send a heartbeat
+         * @description The same as `GET`.
+         */
+        post: operations["statusHeartbeatPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingress/heartbeat/{token}/fail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Report a failed run
+         * @description The same as `/ingress/heartbeat/{token}?fail=1`.
+         */
+        get: operations["statusHeartbeatFail"];
+        put?: never;
+        /**
+         * Report a failed run
+         * @description The same as `GET`.
+         */
+        post: operations["statusHeartbeatFailPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingress/status/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Push a state
+         * @description The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+         *
+         *     - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+         *       `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+         *       `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+         *     - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+         *       `resolved` a success. The message is the common `summary` or `description` annotation.
+         *     - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+         *       legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+         *       change nothing).
+         *
+         *     At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+         *     (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+         *     body that is none of these `400`.
+         */
+        post: operations["statusPush"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7111,6 +7721,131 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "status.component.updated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A status component changed
+         * @description Its state (with `previous_state`) or its settings changed. Endpoints of an inbox get the
+         *     components of that inbox's page.
+         */
+        post: operations["webhookStatusComponentUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "status.incident.created": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * An incident or maintenance was published
+         * @description Sent when an incident is created published, or a draft is published; drafts send nothing.
+         *     Endpoints of an inbox get the incidents of that inbox's page.
+         */
+        post: operations["webhookStatusIncidentCreated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "status.incident.updated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A published incident changed
+         * @description A new update (`update`), an edited one, a new title, impact, components or window, or
+         *     maintenance starting on time. Drafts send nothing.
+         */
+        post: operations["webhookStatusIncidentUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "status.incident.resolved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A published incident was resolved
+         * @description An incident was resolved or maintenance completed, with the update that did it.
+         */
+        post: operations["webhookStatusIncidentResolved"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "status.monitor.down": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A monitor failed
+         * @description A heartbeat or push monitor reached its failure threshold. `incident_id` names the incident it
+         *     opened, when `on_failure` opened one. Endpoints of an inbox get the monitors of that inbox's
+         *     page.
+         */
+        post: operations["webhookStatusMonitorDown"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "status.monitor.up": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A monitor recovered
+         * @description A failed monitor reached its recovery threshold. `incident_id` names the incident it resolved.
+         */
+        post: operations["webhookStatusMonitorUp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -7374,11 +8109,15 @@ export interface components {
          *       OAuth clients.
          *     - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
          *       delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
+         *     - `status:read`: status pages, their groups, components and incidents.
+         *     - `status:manage`: set component states, open, change and resolve incidents and their
+         *       updates; create, change and delete pages, groups and components (owners and admins).
+         *       Never implied: a key made without naming its scopes does not hold it.
          *
-         *     `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
+         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -8240,7 +8979,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -10793,7 +11532,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -10812,7 +11551,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -14072,6 +14811,728 @@ export interface components {
             data: components["schemas"]["AnalyticsAlertEventData"];
         };
         /**
+         * @description Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+         * @enum {string}
+         */
+        StatusComponentStateValue: "operational" | "degraded" | "partial_outage" | "major_outage" | "maintenance";
+        /**
+         * @description Who set a component's current state.
+         * @enum {string}
+         */
+        StatusStateSource: "member" | "api_key" | "monitor" | "incident";
+        /** @enum {string} */
+        StatusIncidentKind: "incident" | "maintenance";
+        /** @enum {string} */
+        StatusIncidentImpact: "none" | "minor" | "major" | "critical";
+        /**
+         * @description Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+         *     `scheduled`, `in_progress`, `completed`.
+         * @enum {string}
+         */
+        StatusIncidentState: "investigating" | "identified" | "monitoring" | "resolved" | "scheduled" | "in_progress" | "completed";
+        /**
+         * @description `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+         * @example acme
+         */
+        StatusPageSlug: string;
+        /** @example #2563eb */
+        StatusColor: string;
+        StatusPage: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            description: string;
+            slug: components["schemas"]["StatusPageSlug"];
+            /** @description The public page, at the server's status URL. */
+            url: string;
+            logo_url?: string;
+            accent_color?: components["schemas"]["StatusColor"];
+            site_url?: string;
+            support_url?: string;
+            /** @description The language of the page's words (`en`, `tr`, `de`; others show English). */
+            locale: string;
+            /** @description The zone of the day bars, and of times for visitors whose browser runs no script. */
+            timezone: string;
+            /**
+             * Format: int32
+             * @description Days of day bars and history the page shows.
+             */
+            history_days: number;
+            show_uptime: boolean;
+            published: boolean;
+            state: components["schemas"]["StatusComponentStateValue"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusPageList: {
+            items: components["schemas"]["StatusPage"][];
+        };
+        StatusPageCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            description?: string;
+            slug: components["schemas"]["StatusPageSlug"];
+            /**
+             * Format: uri
+             * @description An `https` image URL.
+             */
+            logo_url?: string;
+            accent_color?: components["schemas"]["StatusColor"];
+            /**
+             * Format: uri
+             * @description An `http(s)` URL of the product.
+             */
+            site_url?: string;
+            /**
+             * Format: uri
+             * @description An `http(s)` or `mailto:` URL where customers get help.
+             */
+            support_url?: string;
+            locale?: components["schemas"]["LanguageTag"];
+            /** @description An IANA time zone. */
+            timezone?: string;
+            /**
+             * Format: int32
+             * @description Default 90.
+             */
+            history_days?: number;
+            /** @description Default `true`. */
+            show_uptime?: boolean;
+            /** @description Default `false`. */
+            published?: boolean;
+        };
+        StatusPageUpdate: {
+            name?: string;
+            description?: string;
+            slug?: components["schemas"]["StatusPageSlug"];
+            /** Format: uri */
+            logo_url?: string | null;
+            accent_color?: string | null;
+            /** Format: uri */
+            site_url?: string | null;
+            /** Format: uri */
+            support_url?: string | null;
+            locale?: components["schemas"]["LanguageTag"];
+            timezone?: string;
+            /** Format: int32 */
+            history_days?: number;
+            show_uptime?: boolean;
+            published?: boolean;
+        };
+        StatusPageRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            slug: string;
+        };
+        StatusComponentGroup: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            name: string;
+            /** Format: int32 */
+            position: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusComponentGroupList: {
+            items: components["schemas"]["StatusComponentGroup"][];
+        };
+        StatusComponentGroupCreate: {
+            name: string;
+            /** Format: int32 */
+            position?: number;
+        };
+        StatusComponentGroupUpdate: {
+            name?: string;
+            /** Format: int32 */
+            position?: number;
+        };
+        StatusComponent: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            /** Format: uuid */
+            group_id?: string;
+            name: string;
+            description: string;
+            /** Format: int32 */
+            position: number;
+            /** @description Left off the public page and out of its overall state. */
+            hidden: boolean;
+            state: components["schemas"]["StatusComponentStateValue"];
+            state_source: components["schemas"]["StatusStateSource"];
+            /** Format: date-time */
+            state_since: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusComponentList: {
+            items: components["schemas"]["StatusComponent"][];
+        };
+        StatusComponentCreate: {
+            name: string;
+            description?: string;
+            /** Format: uuid */
+            group_id?: string;
+            /** Format: int32 */
+            position?: number;
+            hidden?: boolean;
+            state?: components["schemas"]["StatusComponentStateValue"];
+        };
+        StatusComponentUpdate: {
+            name?: string;
+            description?: string;
+            /**
+             * Format: uuid
+             * @description `null` takes the component out of its group.
+             */
+            group_id?: string | null;
+            /** Format: int32 */
+            position?: number;
+            hidden?: boolean;
+        };
+        StatusComponentStateChange: {
+            state: components["schemas"]["StatusComponentStateValue"];
+        };
+        StatusIncidentComponent: {
+            /** Format: uuid */
+            component_id: string;
+            /** @description The state the component has while the incident is open. */
+            state: components["schemas"]["StatusComponentStateValue"];
+        };
+        StatusIncidentUpdate: {
+            /** Format: uuid */
+            id: string;
+            state: components["schemas"]["StatusIncidentState"];
+            /** @description Plain text; empty for a state change the server made on time. */
+            body: string;
+            /** Format: uuid */
+            author_member_id?: string;
+            /** Format: uuid */
+            author_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            edited_at?: string;
+        };
+        StatusIncident: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            kind: components["schemas"]["StatusIncidentKind"];
+            title: string;
+            impact: components["schemas"]["StatusIncidentImpact"];
+            state: components["schemas"]["StatusIncidentState"];
+            components: components["schemas"]["StatusIncidentComponent"][];
+            /** @description Newest first. */
+            updates: components["schemas"]["StatusIncidentUpdate"][];
+            /** @description Its public page, which answers once it and its page are published. */
+            url: string;
+            /**
+             * Format: date-time
+             * @description Absent for a draft.
+             */
+            published_at?: string;
+            /** Format: date-time */
+            scheduled_start?: string;
+            /** Format: date-time */
+            scheduled_end?: string;
+            /**
+             * Format: date-time
+             * @description When maintenance went `in_progress`.
+             */
+            started_at?: string;
+            /**
+             * Format: date-time
+             * @description When it was resolved or completed.
+             */
+            resolved_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusIncidentList: {
+            items: components["schemas"]["StatusIncident"][];
+            next_cursor?: string;
+        };
+        StatusIncidentCreate: {
+            kind?: components["schemas"]["StatusIncidentKind"];
+            title: string;
+            /** @description Default `minor` for an incident, `none` for maintenance. */
+            impact?: components["schemas"]["StatusIncidentImpact"];
+            state?: components["schemas"]["StatusIncidentState"];
+            message: string;
+            components?: components["schemas"]["StatusIncidentComponentInput"][];
+            /** Format: date-time */
+            scheduled_start?: string;
+            /** Format: date-time */
+            scheduled_end?: string;
+            publish?: boolean;
+        };
+        StatusIncidentComponentInput: {
+            /** Format: uuid */
+            component_id: string;
+            state?: components["schemas"]["StatusComponentStateValue"];
+        };
+        StatusIncidentPatch: {
+            title?: string;
+            impact?: components["schemas"]["StatusIncidentImpact"];
+            /** @description Replaces the list. */
+            components?: components["schemas"]["StatusIncidentComponentInput"][];
+            /** Format: date-time */
+            scheduled_start?: string;
+            /** Format: date-time */
+            scheduled_end?: string;
+        };
+        StatusIncidentUpdateCreate: {
+            state?: components["schemas"]["StatusIncidentState"];
+            body: string;
+        };
+        StatusIncidentUpdateEdit: {
+            body: string;
+        };
+        StatusComponentEventData: {
+            component: components["schemas"]["StatusComponent"];
+            page: components["schemas"]["StatusPageRef"];
+            /** @description Set when the state changed. */
+            previous_state?: components["schemas"]["StatusComponentStateValue"];
+        };
+        /**
+         * @description `status.component.updated`: a component was created, changed or got a new state. Delivered
+         *     to callers who hold `status:read` and can see the page's inbox.
+         */
+        StatusComponentEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status.component.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["StatusComponentEventData"];
+        };
+        /**
+         * @description What happened: `created`, `published`, `update_posted`, `update_edited`, `changed` (title,
+         *     impact, components or window), `started` (maintenance on time), `resolved`.
+         * @enum {string}
+         */
+        StatusIncidentChange: "created" | "published" | "update_posted" | "update_edited" | "changed" | "started" | "resolved";
+        StatusIncidentEventData: {
+            incident: components["schemas"]["StatusIncident"];
+            page: components["schemas"]["StatusPageRef"];
+            change: components["schemas"]["StatusIncidentChange"];
+            /** @description The update posted or edited. */
+            update?: components["schemas"]["StatusIncidentUpdate"];
+        };
+        /**
+         * @description `status.incident.created`, `status.incident.updated`, `status.incident.resolved`: an
+         *     incident or maintenance was created (drafts too), changed, or resolved or completed.
+         *     Delivered to callers who hold `status:read` and can see the page's inbox. Webhooks carry
+         *     only published incidents; publishing a draft is delivered to webhooks as
+         *     `status.incident.created`.
+         */
+        StatusIncidentEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status.incident.created" | "status.incident.updated" | "status.incident.resolved";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["StatusIncidentEventData"];
+        };
+        WebhookStatusComponentPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["StatusComponentEventData"];
+        };
+        WebhookStatusIncidentPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["StatusIncidentEventData"];
+        };
+        /**
+         * @description `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+         * @enum {string}
+         */
+        StatusMonitorKind: "heartbeat" | "push";
+        /**
+         * @description `pending` until the first result decides, then `up` or `down`.
+         * @enum {string}
+         */
+        StatusMonitorState: "pending" | "up" | "down";
+        /**
+         * @description What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+         * @enum {string}
+         */
+        StatusMonitorOnFailure: "none" | "draft" | "publish";
+        /** @enum {string} */
+        StatusMonitorFailureState: "degraded" | "partial_outage" | "major_outage";
+        StatusMonitor: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            /**
+             * Format: uuid
+             * @description The component whose state the monitor sets.
+             */
+            component_id: string;
+            kind: components["schemas"]["StatusMonitorKind"];
+            name: string;
+            state: components["schemas"]["StatusMonitorState"];
+            /**
+             * Format: date-time
+             * @description The monitor's last change between `up` and `down` (its creation or resumption before that).
+             */
+            state_since: string;
+            /** @description While `down`, the state it sets: `failure_state`, or the state a push named. */
+            down_state?: components["schemas"]["StatusComponentStateValue"];
+            paused: boolean;
+            failure_state: components["schemas"]["StatusMonitorFailureState"];
+            on_failure: components["schemas"]["StatusMonitorOnFailure"];
+            /**
+             * Format: int32
+             * @description Failures in a row that fail the monitor.
+             */
+            failure_threshold: number;
+            /**
+             * Format: int32
+             * @description Successes in a row that bring a failed monitor back.
+             */
+            recovery_threshold: number;
+            /**
+             * Format: int32
+             * @description `heartbeat`: seconds between beats.
+             */
+            interval?: number;
+            /**
+             * Format: int32
+             * @description `heartbeat`: seconds a beat may be late.
+             */
+            grace?: number;
+            /** @description The first characters of the token, to tell tokens apart. */
+            token_prefix?: string;
+            /** Format: int32 */
+            consecutive_failures: number;
+            /** Format: int32 */
+            consecutive_successes: number;
+            /**
+             * Format: date-time
+             * @description The last beat, missed beat or pushed state.
+             */
+            last_result_at?: string;
+            /** @description The message of the last pushed state, or of the last failure. */
+            last_message?: string;
+            /**
+             * Format: date-time
+             * @description `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
+             */
+            next_beat_due?: string;
+            /**
+             * Format: uuid
+             * @description The open incident this monitor opened.
+             */
+            incident_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusMonitorList: {
+            items: components["schemas"]["StatusMonitor"][];
+        };
+        StatusMonitorWithToken: components["schemas"]["StatusMonitor"] & {
+            /** @description Shown only now; only its hash is kept. */
+            token: string;
+            /**
+             * @description Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
+             *     run) or `<public URL>/ingress/status/{token}`.
+             */
+            url: string;
+        };
+        StatusMonitorCreate: {
+            kind: components["schemas"]["StatusMonitorKind"];
+            name: string;
+            /** Format: uuid */
+            component_id: string;
+            /** @description Default `major_outage`. */
+            failure_state?: components["schemas"]["StatusMonitorFailureState"];
+            /** @description Default `draft`. */
+            on_failure?: components["schemas"]["StatusMonitorOnFailure"];
+            /**
+             * Format: int32
+             * @description Default 1.
+             */
+            failure_threshold?: number;
+            /**
+             * Format: int32
+             * @description Default 1.
+             */
+            recovery_threshold?: number;
+            /**
+             * Format: int32
+             * @description `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+             */
+            interval?: number;
+            /**
+             * Format: int32
+             * @description `heartbeat` only: seconds a beat may be late, up to a day; default 60.
+             */
+            grace?: number;
+            paused?: boolean;
+        };
+        StatusMonitorUpdate: {
+            name?: string;
+            /** Format: uuid */
+            component_id?: string;
+            failure_state?: components["schemas"]["StatusMonitorFailureState"];
+            on_failure?: components["schemas"]["StatusMonitorOnFailure"];
+            /** Format: int32 */
+            failure_threshold?: number;
+            /** Format: int32 */
+            recovery_threshold?: number;
+            /** Format: int32 */
+            interval?: number;
+            /** Format: int32 */
+            grace?: number;
+            paused?: boolean;
+        };
+        /**
+         * @description `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+         *     `grafana` (pushed states).
+         * @enum {string}
+         */
+        StatusCheckSource: "beat" | "fail" | "missed" | "push" | "alertmanager" | "grafana";
+        StatusCheck: {
+            /** Format: uuid */
+            id: string;
+            /** Format: date-time */
+            at: string;
+            ok: boolean;
+            source: components["schemas"]["StatusCheckSource"];
+            /** @description The state a failure named. */
+            state?: components["schemas"]["StatusComponentStateValue"];
+            message?: string;
+            /** @description Why it failed, when the server knows. */
+            error?: string;
+            /**
+             * Format: int32
+             * @description For outside checks, which come later.
+             */
+            duration_ms?: number;
+            /**
+             * Format: int32
+             * @description For outside checks, which come later.
+             */
+            status_code?: number;
+        };
+        StatusCheckList: {
+            items: components["schemas"]["StatusCheck"][];
+            next_cursor?: string;
+        };
+        StatusIngressResult: {
+            state: components["schemas"]["StatusMonitorState"];
+            paused: boolean;
+        };
+        StatusPushBody: {
+            /** @enum {string} */
+            state: "operational" | "degraded" | "partial_outage" | "major_outage";
+            message?: string;
+        };
+        AlertmanagerAlert: {
+            /** @enum {string} */
+            status?: "firing" | "resolved";
+            labels?: {
+                [key: string]: string;
+            };
+            annotations?: {
+                [key: string]: string;
+            };
+            startsAt?: string;
+            endsAt?: string;
+            generatorURL?: string;
+            fingerprint?: string;
+        };
+        /**
+         * @description The body Alertmanager's `webhook_config` posts
+         *     (https://prometheus.io/docs/alerting/latest/configuration/#webhook_config). Grafana Alerting's
+         *     webhook contact point sends the same shape with `title`, `message`, `state` and `orgId` added.
+         */
+        AlertmanagerWebhookBody: {
+            version?: string;
+            groupKey?: string;
+            truncatedAlerts?: number;
+            /** @enum {string} */
+            status: "firing" | "resolved";
+            receiver?: string;
+            groupLabels?: {
+                [key: string]: string;
+            };
+            commonLabels?: {
+                [key: string]: string;
+            };
+            commonAnnotations?: {
+                [key: string]: string;
+            };
+            externalURL?: string;
+            alerts: components["schemas"]["AlertmanagerAlert"][];
+        };
+        /** @description The body of Grafana's legacy alerting webhook notifier. */
+        GrafanaWebhookBody: {
+            title?: string;
+            ruleId?: number;
+            ruleName?: string;
+            ruleUrl?: string;
+            /** @enum {string} */
+            state: "alerting" | "ok" | "no_data" | "paused" | "pending";
+            message?: string;
+        };
+        StatusMonitorEventData: {
+            monitor: components["schemas"]["StatusMonitor"];
+            page: components["schemas"]["StatusPageRef"];
+            /**
+             * Format: uuid
+             * @description The incident the monitor opened (`down`) or resolved (`up`).
+             */
+            incident_id?: string;
+        };
+        /**
+         * @description `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
+         *     who hold `status:read` and can see the page's inbox.
+         */
+        StatusMonitorEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status.monitor.down" | "status.monitor.up";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["StatusMonitorEventData"];
+        };
+        WebhookStatusMonitorPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["StatusMonitorEventData"];
+        };
+        PublicStatusDay: {
+            /**
+             * Format: date
+             * @description A day in the page's time zone.
+             */
+            date: string;
+            /**
+             * Format: double
+             * @description Percent of the day not in `major_outage`, `partial_outage` counting half, `maintenance` left out; absent when nothing of the day counts.
+             */
+            uptime?: number;
+            /** @description The worst state of the day. */
+            state: components["schemas"]["StatusComponentStateValue"];
+        };
+        PublicStatusComponent: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            description: string;
+            /** Format: uuid */
+            group_id?: string;
+            state: components["schemas"]["StatusComponentStateValue"];
+            /**
+             * Format: double
+             * @description Percent over the page's history days, when the page shows uptime and there is data.
+             */
+            uptime?: number;
+            /** @description Oldest first, the page's `history_days` ending today; when the page shows uptime. */
+            days?: components["schemas"]["PublicStatusDay"][];
+        };
+        PublicStatusGroup: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        PublicStatusUpdate: {
+            state: components["schemas"]["StatusIncidentState"];
+            body: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            edited_at?: string;
+        };
+        PublicStatusIncident: {
+            /** Format: uuid */
+            id: string;
+            kind: components["schemas"]["StatusIncidentKind"];
+            title: string;
+            impact: components["schemas"]["StatusIncidentImpact"];
+            state: components["schemas"]["StatusIncidentState"];
+            /** @description The visible components it touches. */
+            components: string[];
+            /** @description Newest first. */
+            updates: components["schemas"]["PublicStatusUpdate"][];
+            url: string;
+            /** Format: date-time */
+            published_at: string;
+            /** Format: date-time */
+            scheduled_start?: string;
+            /** Format: date-time */
+            scheduled_end?: string;
+            /** Format: date-time */
+            resolved_at?: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        PublicStatusPage: {
+            name: string;
+            description: string;
+            url: string;
+            logo_url?: string;
+            accent_color?: string;
+            site_url?: string;
+            support_url?: string;
+            locale: string;
+            timezone: string;
+            state: components["schemas"]["StatusComponentStateValue"];
+            groups: components["schemas"]["PublicStatusGroup"][];
+            /** @description The visible components in page order. */
+            components: components["schemas"]["PublicStatusComponent"][];
+            /** @description Open incidents, maintenance in progress and planned maintenance. */
+            open: components["schemas"]["PublicStatusIncident"][];
+            /** @description Incidents and maintenance of the last 14 days that are over, newest first. */
+            recent: components["schemas"]["PublicStatusIncident"][];
+            /**
+             * Format: date-time
+             * @description When anything on the page last changed.
+             */
+            updated_at: string;
+        };
+        /**
          * @description A part of the property's report a share link shows: `overview` (totals and the chart),
          *     `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
          * @enum {string}
@@ -15337,6 +16798,17 @@ export interface components {
         ConversationKinds: components["schemas"]["ConversationKind"][];
         /** @description Page size, 1 to 100; 25 by default. */
         Limit: number;
+        StatusPageId: string;
+        StatusGroupId: string;
+        StatusComponentId: string;
+        StatusIncidentId: string;
+        StatusUpdateId: string;
+        StatusSlug: string;
+        StatusMonitorId: string;
+        /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+        StatusMonitorToken: string;
+        /** @description `1` or `true` reports a failure. */
+        StatusHeartbeatFail: "1" | "true" | "0" | "false";
     };
     requestBodies: never;
     headers: never;
@@ -23791,6 +25263,950 @@ export interface operations {
             503: components["responses"]["Problem"];
         };
     };
+    listStatusPages: {
+        parameters: {
+            query?: {
+                /** @description Only the page of this inbox. */
+                inbox_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The pages. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusPageList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusPage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusPageCreate"];
+            };
+        };
+        responses: {
+            /** @description The page. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getStatusPage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusPage"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteStatusPage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateStatusPage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusPageUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    previewStatusPage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rendered page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusComponentGroups: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The groups. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponentGroupList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusComponentGroup: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusComponentGroupCreate"];
+            };
+        };
+        responses: {
+            /** @description The group. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponentGroup"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteStatusComponentGroup: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                groupId: components["parameters"]["StatusGroupId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateStatusComponentGroup: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                groupId: components["parameters"]["StatusGroupId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusComponentGroupUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated group. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponentGroup"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusComponents: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The components. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponentList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusComponent: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusComponentCreate"];
+            };
+        };
+        responses: {
+            /** @description The component. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponent"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteStatusComponent: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                componentId: components["parameters"]["StatusComponentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateStatusComponent: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                componentId: components["parameters"]["StatusComponentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusComponentUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated component. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponent"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    setStatusComponentState: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                componentId: components["parameters"]["StatusComponentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusComponentStateChange"];
+            };
+        };
+        responses: {
+            /** @description The component. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusComponent"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusIncidents: {
+        parameters: {
+            query?: {
+                kind?: components["schemas"]["StatusIncidentKind"];
+                open?: boolean;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The incidents. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncidentList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusIncident: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentCreate"];
+            };
+        };
+        responses: {
+            /** @description The incident. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusIncident: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The incident. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteStatusIncident: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    updateStatusIncident: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentPatch"];
+            };
+        };
+        responses: {
+            /** @description The incident. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    publishStatusIncident: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The incident. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusIncidentUpdate: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentUpdateCreate"];
+            };
+        };
+        responses: {
+            /** @description The incident with the new update. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    editStatusIncidentUpdate: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                incidentId: components["parameters"]["StatusIncidentId"];
+                updateId: components["parameters"]["StatusUpdateId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentUpdateEdit"];
+            };
+        };
+        responses: {
+            /** @description The incident. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIncident"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusMonitors: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The monitors. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusMonitorList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createStatusMonitor: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusMonitorCreate"];
+            };
+        };
+        responses: {
+            /** @description The monitor with its token, shown this once. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusMonitorWithToken"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusMonitor: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The monitor. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusMonitor"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteStatusMonitor: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateStatusMonitor: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusMonitorUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated monitor. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusMonitor"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    rotateStatusMonitorToken: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The monitor with its new token, shown this once. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusMonitorWithToken"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listStatusMonitorChecks: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The checks. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusCheckList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     getClientSession: {
         parameters: {
             query?: never;
@@ -24925,6 +27341,38 @@ export interface operations {
             429: components["responses"]["Problem"];
         };
     };
+    getClientStatusPage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: components["parameters"]["StatusSlug"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicStatusPage"];
+                };
+            };
+            /** @description The page's slug changed; the current address is in `Location`. */
+            301: {
+                headers: {
+                    Location?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
     clientRealtime: {
         parameters: {
             query?: {
@@ -25028,6 +27476,148 @@ export interface operations {
             400: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             503: components["responses"]["Problem"];
+        };
+    };
+    statusHeartbeat: {
+        parameters: {
+            query?: {
+                /** @description `1` or `true` reports a failure. */
+                fail?: components["parameters"]["StatusHeartbeatFail"];
+            };
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Taken. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIngressResult"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    statusHeartbeatPost: {
+        parameters: {
+            query?: {
+                /** @description `1` or `true` reports a failure. */
+                fail?: components["parameters"]["StatusHeartbeatFail"];
+            };
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Taken. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIngressResult"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    statusHeartbeatFail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Taken. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIngressResult"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    statusHeartbeatFailPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Taken. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIngressResult"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    statusPush: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The monitor's token, as `token` showed it when the monitor was made or its token rotated. */
+                token: components["parameters"]["StatusMonitorToken"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusPushBody"] | components["schemas"]["AlertmanagerWebhookBody"] | components["schemas"]["GrafanaWebhookBody"];
+            };
+        };
+        responses: {
+            /** @description Taken. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusIngressResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     oauthAuthorizationServerMetadata: {
@@ -25822,6 +28412,204 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookAnalyticsAlertPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusComponentUpdated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusComponentPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusIncidentCreated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusIncidentPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusIncidentUpdated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusIncidentPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusIncidentResolved: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusIncidentPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusMonitorDown: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusMonitorPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookStatusMonitorUp: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookStatusMonitorPayload"];
             };
         };
         responses: {

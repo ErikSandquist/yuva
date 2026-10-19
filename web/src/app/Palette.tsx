@@ -100,6 +100,7 @@ function useItems(open: boolean): Item[] {
     go(t`Discussions`, "/docs/discussions")
     go(t`Discussion posts waiting for approval`, "/docs/discussions/queue")
     go(t`Broadcasts`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
+    go(t`Status`, "/status", keyLabel(SHORTCUTS.status))
     if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")

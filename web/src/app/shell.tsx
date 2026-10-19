@@ -34,6 +34,7 @@ export type Section =
   | "reports"
   | "docs"
   | "broadcasts"
+  | "status"
   | "analytics"
   | "settings"
 
@@ -45,12 +46,15 @@ const routed = [
   "reports",
   "docs",
   "broadcasts",
+  "status",
   "analytics",
   "settings",
 ] as const
 
 export function sectionOf(pathname: string, view: Section, manager: boolean): Section {
   if (manager && pathname === "/") return "home"
+  // The server answers /status/{slug} with the public page, so the panel keeps a status page under /status-pages.
+  if (pathname.startsWith("/status-pages/")) return "status"
   const routedSection = routed.find((s) => pathname === `/${s}` || pathname.startsWith(`/${s}/`))
   if (routedSection) return routedSection
   return isInboxRoot(pathname, manager) && view === "mentions" ? "conversations" : view

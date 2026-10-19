@@ -794,9 +794,17 @@ msgstr "24 měsíců"
 msgid "3 months"
 msgstr "3 měsíce"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 až 48 písmen, číslic a spojovníků. Jedinečné na tomto serveru."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Dokončit"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "7 až 90."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "Diskuse dostala přijatou odpověď"
 msgid "A discussion started"
 msgstr "Diskuse začala"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Koncept vidí jen váš tým a nezmění žádnou komponentu, dokud ho nezveřejníte."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Koncept byl zahozen"
@@ -978,6 +990,10 @@ msgstr "Je připravena nová verze Yuvy."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Poznámka pro tým… napište @ pro zmínku o kolegovi"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Stránka nebo odkaz mailto:, kde zákazníci dostanou pomoc."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Část souboru dorazila několikrát poškozená. Zkontrolujte připojení a pak soubor vyberte znovu, abyste pokračovali."
@@ -985,6 +1001,10 @@ msgstr "Část souboru dorazila několikrát poškozená. Zkontrolujte připojen
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Část souboru byla větší, než server přijímá. Načtěte stránku znovu a soubor vyberte znovu."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Procento vedle každé komponenty."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "Vlastnost může mít nejvýše 100 segmentů. Nejprve jeden smažte."
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "Vlastnost může mít nejvýše 20 trychtýřů. Nejprve jeden smažte."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Veřejná stránka, která zákazníkům říká, zda {inboxName} funguje. Zůstává nezveřejněná, dokud ji nezveřejníte."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Přihlášení se musí vrátit do 10 minut a funguje jednou. Přihlaste
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Web zobrazuje konverzace odeslané z jeho stránek."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Komponenta stavu se změnila nebo dostala nový stav"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Monitor stavu se zotavil"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Monitor stavu přestal fungovat"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Asi {from} až {to}"
 msgid "about done by {end}"
 msgstr "hotovo asi do {end}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Zvýrazňovací barva"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Přijatá odpověď"
@@ -1102,6 +1142,10 @@ msgstr "Účet"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme docs"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Stav Acme"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "Přidejte alespoň jeden origin."
 msgid "Add channel"
 msgstr "Přidat kanál"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Přidat komponentu"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Přidat koncový bod"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Přidat skupinu"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Přidáno týmem"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adresa"
 
@@ -1519,9 +1575,25 @@ msgstr "Položka v archivu zip se rozbalí na více než 100násobek své veliko
 msgid "An https image URL."
 msgstr "URL obrázku https."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Obrázek https."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Schránka shromažďuje konverzace jednoho produktu nebo značky. Pojmenujte ji podle produktu, který vaši zákazníci znají."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Incident nebo údržba se změnily nebo dostaly aktualizaci"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Incident nebo údržba byly zveřejněny"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Incident byl vyřešen nebo údržba dokončena"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "jiná schránka"
 msgid "Another SMTP server"
 msgstr "Jiný server SMTP"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Jiná stránka stavu už tuto adresu používá."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Jiná adresa týmu"
@@ -1645,12 +1721,17 @@ msgstr "Cokoli, co tento klíč používá, okamžitě přestane fungovat."
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "Kanál API"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "Klíč API"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "Mohu naplánovat newsletter pro každého odběratele zvlášť?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "Porovnání podmínky {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Dokončeno"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Dokončeno"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Komponenta smazána"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Komponenty"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Dotčené komponenty"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Komponenty, historie, incidenty a aktualizace se smažou spolu s ní."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Vytvořit klíč"
 msgid "Create list"
 msgstr "Vytvořit skupinu"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Vytvořit stránku stavu"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Vytvořit stránku stavu ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Vytvořit e-mailový kanál"
@@ -3083,6 +3197,10 @@ msgstr "Přihlašovací údaje smazány {deletedAt}. Yuva už nemůže číst {a
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Přihlašovací údaje smazány. Yuva už nemůže číst {address}."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Kritický"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Uchovávání dat"
 msgid "Data retention and deleting the workspace"
 msgstr "Uchovávání dat a smazání pracovního prostoru"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Upgrade databáze"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Data"
@@ -3147,6 +3269,10 @@ msgstr "Data"
 msgid "Days"
 msgstr "Dny"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Dnů historie"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Rozhodněte, kdo smí psát do diskusí"
@@ -3154,6 +3280,10 @@ msgstr "Rozhodněte, kdo smí psát do diskusí"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Výchozí: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Snížený výkon"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "Výchozí: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Smazat"
 
@@ -3170,8 +3302,13 @@ msgstr "Smazat"
 msgid "Delete “{name}”?"
 msgstr "Smazat „{name}“?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Smazat {0}?"
 
@@ -3184,9 +3321,22 @@ msgstr "Smazat {name}?"
 msgid "Delete after (days)"
 msgstr "Smazat po (dnech)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Smazat komponentu"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Smazat koncept"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Smazat koncept ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Smazat skupinu"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Smazat skupinu"
 msgid "Delete my account"
 msgstr "Smazat můj účet"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Smazat stránku"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Smazat odběr"
@@ -3212,6 +3366,10 @@ msgstr "Smazat odběr"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Smažte aplikaci, kterou jste pro Yuvu vytvořili"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Smazat koncept"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "Smazat váš účet?"
 msgid "Deleted by its author."
 msgstr "Smazáno autorem."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Smazaná komponenta"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Smaže její kanály, konverzace, zprávy a přílohy. Nelze vrátit zp�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Smaže skupinu, její odběry a záznamy o souhlasu. Pokud je budete možná později potřebovat doložit, nejprve stáhněte export souhlasů."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Smaže stránku i s jejími komponentami, jejich historií, incidenty a aktualizacemi. Veřejná adresa přestane fungovat."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Podrobnosti doručení"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Odepřít"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Popis"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Oznámení na ploše jsou pro tento web zablokována v nastavení prohl�
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Podrobnosti"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Stáhnout vynechané řádky"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Koncept"
 
@@ -3570,6 +3746,10 @@ msgstr "Autor konceptu"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Koncept od {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Koncept smazán"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "E-mail, živý chat a zprávy v aplikaci"
 msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Každá komponenta má tento stav, dokud je incident otevřený."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Každá komponenta má tento stav, dokud údržba probíhá."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Každá konverzace si ponechá stav, který o ní {provider} hlásí: otevřená, čekající nebo uzavřená."
@@ -3703,6 +3891,7 @@ msgstr "Každá se všemi svými zprávami a poznámkami"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Upravit"
 
@@ -3714,9 +3903,22 @@ msgstr "Upravit klíč API"
 msgid "Edit canned reply"
 msgstr "Upravit předpřipravenou odpověď"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Upravit komponentu"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Upravit návrh"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Upravit podrobnosti"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Upravit podrobnosti ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Upravit návrh ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Upravit incident"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Upravit název"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Upravit tuto aktualizaci"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Upravit, nebo zobrazit náhled na počítači, telefonu či v tmavém režimu"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "upraveno"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "Zvýšený počet chyb API"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Koncový bod"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Koncové body"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Konec"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "první odpověď za {first}"
 msgid "First rows of the file"
 msgstr "První řádky souboru"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "První aktualizace"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Nejprve e-mailová adresa"
@@ -4428,6 +4655,10 @@ msgstr "Pozdrav"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Zdraví nové konverzace e-mailem, jednou na kontakt v rámci intervalu. Nikdy se neposílá na automatickou poštu ani spam."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Skupina"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Předáno uživateli {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Má otevřenou konverzaci"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Drží ji incident, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "Dobrý den! Jak vám můžeme pomoci?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Skryto"
 
@@ -4503,6 +4740,10 @@ msgstr "Skryto týmem"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Skrýt"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Skrýt na stránce"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Jsem zpět"
 msgid "Idea"
 msgstr "Nápad"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Identifikováno"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Identita neověřena"
@@ -4693,6 +4938,10 @@ msgstr "IMAP je pro tuto schránku vypnutý. Zapněte ho v nastavení {provider}
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "Server IMAP"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Dopad"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "V Microsoft 365 je to přeposílání schránky nebo pravidlo toku pošty; správce možná nejprve musí povolit externí přeposílání."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "Rozpracováno"
 
@@ -4888,6 +5138,16 @@ msgstr "Schránky"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Schránky ořezávají předměty delší než 80 znaků."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Incident"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Incidenty"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Zahrnout poznámky"
@@ -4922,6 +5182,10 @@ msgstr "Nainstalujte server do VS Code; otevře stránku serveru, kde vyberete I
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Instalace"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "Zkoumá se"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Už nebude dostávat oznámení."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Jeho přístup okamžitě skončí. Chcete-li ho použít znovu, připojte ho znovu."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Její komponenty zůstanou, bez skupiny."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "Její záznam o souhlasu se s ní smaže, takže už nebudete moci doložit, jak souhlasili. Chcete-li jim přestat posílat poštu, odhlaste je raději."
@@ -5060,6 +5328,10 @@ msgstr "Její záznam o souhlasu se s ní smaže, takže už nebudete moci dolo�
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "Její záznam o souhlasu se s ní smaže. Protože se odhlásili, adresa se zapamatuje jako odhlášená, takže ji nikdo z týmu nemůže přidat znovu."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Jeho historie se smaže. Incidenty, které ji zmiňovaly, ji už nezmiňují."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Štítky (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Jazyk"
 
@@ -5254,6 +5527,10 @@ msgstr "Nechat to na kolegovi, který píše"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Ponechat text, pak blok"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Vynecháno na veřejné stránce i v jejím celkovém stavu."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Načíst obrázky"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Načíst další"
@@ -5406,6 +5684,10 @@ msgstr "Zamčeno"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Zamčeno: čtenáři sem už nemohou psát. Vy stále můžete."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL loga"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Maildir v archivu zip"
 msgid "Mailing lists"
 msgstr "E-mailové skupiny"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Údržba"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Velký"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Velký výpadek"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Zveřejnit"
@@ -5551,6 +5845,10 @@ msgstr "Spravovat štítky"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "Spravovat e-mailové skupiny a odběratele"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Spravujte stránky stavu, nastavujte stavy komponent a vedte incidenty"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Kroky migrace"
 msgid "Mine"
 msgstr "Moje"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Malý"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "Moderováno"
 msgid "Monday"
 msgstr "Pondělí"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "Sleduje se"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Další akce"
@@ -5812,6 +6118,12 @@ msgstr "Další akce"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "Další akce pro {address}"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "Více pro {0}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "Nejprve nejvíce hodnocení, otevřená zpětná vazba, otevřené disku
 msgid "Most votes"
 msgstr "Nejvíce hlasů"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Posunout dolů"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Přeneste schránky do Yuvy: najděte poskytovatele, připojte, prohledejte, zkopírujte a přepněte"
@@ -5873,6 +6189,10 @@ msgstr "Procházet seznam"
 msgid "Move through the posts"
 msgstr "Procházet příspěvky"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Procházet stránky stavu"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Přesunout do schránky"
@@ -5881,6 +6201,10 @@ msgstr "Přesunout do schránky"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Přejít na Yuvu"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Posunout nahoru"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Můj profil"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Název"
 
@@ -6078,6 +6405,18 @@ msgstr "nové za posledních {days} dní"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Nová schránka…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Nový incident"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Nový incident ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Nový incident nebo stránka stavu"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Zatím žádné kanály. Přidejte jeden, aby zákazníci mohli psát na
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Žádný chatovací kanál této schránky nepovoluje web stránky se zapnutými diskusemi. Zapněte diskuse v nastavení schránky."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "V této skupině nejsou žádné komponenty."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Zatím žádné komponenty. Přidejte části produktu, na kterých zákazníci závisejí."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Bez potvrzení"
@@ -6350,13 +6697,26 @@ msgstr "Nezaznamenány žádné události."
 msgid "No feedback from this page."
 msgstr "Žádná zpětná vazba z této stránky."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Bez skupiny"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Žádné skryté diskuse."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Bez dopadu"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Zatím žádné importy."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "Žádná schránka, pro kterou by se zobrazila stránka stavu."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "Žádné otevřené konverzace. Nové se zobrazí zde i ve schránce, ja
 msgid "No open feedback."
 msgstr "Žádná otevřená zpětná vazba."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "Žádné otevřené incidenty ani údržby."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Žádný jiný kontakt neodpovídá."
@@ -6467,6 +6831,10 @@ msgstr "žádný účet SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Žádný účet SMTP"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Zatím žádná stránka stavu. Vytvářejí ji vlastníci a správci."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Nic se neztratí: až bude pokračovat, kopírování naváže tam, kde přestalo."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Zatím nic není vyřešeno."
 
@@ -6982,6 +7351,14 @@ msgstr "Stav online"
 msgid "Only {0}"
 msgstr "Jen {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Smazat lze jen koncept. Nikdy nebyl na stránce zobrazen."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Smazat lze jen koncept. Místo toho zveřejněte aktualizaci."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Přidávejte jen lidi, kteří souhlasili s přijímáním této skupiny. Co sem zadáte, uchová se jako jejich záznam o souhlasu."
@@ -7083,6 +7460,7 @@ msgstr "otevřené"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Otevřené"
 
@@ -7110,6 +7488,10 @@ msgstr "Otevřít Zabezpečení účtu"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Otevřete Zabezpečení účtu ve svém účtu Yahoo."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Otevřít incident"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Otevřít další nebo předchozí konverzaci"
 msgid "Open the reply"
 msgstr "Otevřít odpověď"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Otevřít stránku stavu"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Otevřít nastavení pracovního prostoru"
@@ -7291,6 +7677,14 @@ msgstr "otevřené, nepřiřazené"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Otevření"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "V provozu"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "Volitelné. Zobrazí se na veřejné stránce."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Tempo (zpráv za sekundu)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Stránka"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Nastavení stránky"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Jazyk panelu"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Část {part} z {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Částečný výpadek"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Heslo"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Heslo nastaveno"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Minulé"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Vyberte barvu"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Vyberte barvu."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Vybrat barvu"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Připnuto"
 msgid "Pinned to the top of your list"
 msgstr "Připnuto nahoře ve vašem seznamu"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Prostý text s odkazy a zalomením řádků, nejvýše 5 000 znaků."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Naplánovat údržbu"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Naplánovat údržbu ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Plánováno"
@@ -7805,9 +8230,22 @@ msgstr "Nasměrujte záznamy MX na Yuvu, jak popisuje průvodce e-mailem. Synchr
 msgid "Port"
 msgstr "Port"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Zveřejnit aktualizaci"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Zveřejnit aktualizaci ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Sbírejte zpětnou vazbu od uživatelů své aplikace"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Odeslat aktualizaci"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Připravuje se"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Náhled"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Náhled ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "Náhled: {0}"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Náhled návrhu"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Text náhledu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Zobrazit náhled stránky"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "K Proton Mail se přes IMAP dostanete jen přes Proton Mail Bridge na va
 msgid "Public"
 msgstr "Veřejná"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Veřejná adresa"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Veřejný klíč"
@@ -7909,9 +8366,36 @@ msgstr "Veřejný klíč"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Veřejná vlákna pod stránkami vaší dokumentace, ve všech stavech."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Zveřejnit"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Zveřejnit ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Zveřejnit hned"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Zveřejnit stránku nebo ji stáhnout"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Zveřejnit koncept"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Zveřejněte tento záznam TXT v DNS své domény:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Zveřejněná"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "Číst e-mailové skupiny, odběratele a záznamy o souhlasu"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Jen pro čtení"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Číst stránky stavu, komponenty a incidenty"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Odebírá se importovaná historie"
 msgid "Removing imported history…"
 msgstr "Odebírá se importovaná historie…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Přejmenovat"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Přejmenovat skupinu"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Znovu otevřít"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Obnovit výchozí"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Vyřešit"
 
@@ -8490,9 +8987,14 @@ msgstr "Vyřešit"
 msgid "Resolve (E)"
 msgstr "Vyřešit (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Vyřešit nebo dokončit"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Vyřešeno"
 
@@ -8655,8 +9157,15 @@ msgstr "Sobota"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Uložit"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Uložit jako koncept"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Uložit hned a ponechat verzi"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Uloženo"
 
@@ -8731,6 +9241,7 @@ msgstr "Plánovat a odesílat hromadné zprávy, když pracovní prostor dovolí
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Naplánováno"
 
@@ -9173,6 +9684,10 @@ msgstr "URL serveru"
 msgid "SES tenant"
 msgstr "Tenant SES"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Nastavil monitor, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Nastavit stav zpracování"
@@ -9217,6 +9732,7 @@ msgstr "Nastavuje se…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -9273,6 +9789,10 @@ msgstr "Zobrazit jako odeslané"
 msgid "Show more"
 msgstr "Zobrazit více"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Zobrazit na stránce"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Zobrazit nebo skrýt citovaný text"
@@ -9304,6 +9824,10 @@ msgstr "Zobrazit náhled"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Zobrazovat dobu odpovědi"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Zobrazit dostupnost"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Zobrazuje se vašemu týmu a kontaktům"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Zobrazuje se vašemu týmu a zákazníkům, kterým odpovídáte"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Zobrazí se pod názvem na veřejné stránce."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "Od"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "Od {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "Adresa webu"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Generátor webu"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Odkaz na web"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Zahájil(a) {starter} · {started}"
 msgid "Starting"
 msgstr "Spouští se"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Začátek"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Zahájí veřejné vlákno s textem níže. Konverzace zůstane soukromá a beze změny; nic dalšího z ní se nezobrazí."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Stav"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "Stav: {0}"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "Stav: {0}, dokud je otevřený"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Stav"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Stránka stavu"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Stránka stavu smazána"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Stránky stavu"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Adresa podpory"
 msgid "Support bot"
 msgstr "Bot podpory"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Odkaz na podporu"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "Tým právě teď"
 msgid "teammate@company.com"
 msgstr "kolega@firma.cz"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Řekněte zákazníkům, zda váš produkt funguje. Vyberte stránku schránky, abyste mohli otevírat incidenty, plánovat údržby a nastavovat stav každé komponenty."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Soubor .mbox z Takeout › Mail, rozbalený."
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "Uživatel {provider}, kterým jste se přihlásili, není správce a jen správci mohou číst každý tiket. Přihlaste se znovu jako správce."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "Adresa odpovídá „nenalezeno“, dokud stránku nezveřejníte."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "E-mailový kanál, který odesílá potvrzovací a uvítací zprávy. Po
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Prvky fungují na těchto adresách; svůj vývojový server přidejte v nastavení schránky:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "Konec musí být po začátku."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "Tenant Amazon SES schránky se stále nastavuje. Hromadná zpráva můž
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Tenant Amazon SES schránky už neexistuje. Server ho vytvoří znovu; do té doby hromadná zpráva odejít nemůže."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "Incident je už vyřešený nebo dokončený, takže nepřijímá další změny."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "Soubor İYS má jeden řádek na odběratele ve sloupcích İYS, ONAY pro přihlášené a RET pro odhlášené, aby ho turečtí odesílatelé mohli sami nahrát do İYS. Čekající odběry se vynechávají."
@@ -10350,6 +10940,10 @@ msgstr "Klíč přestane fungovat na konci tohoto dne."
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Druh nelze později změnit."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "Jazyk textů na stránce."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "Stará schránka přestane pro tuto doménu přijímat poštu."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Druhá schránka nemá e-mailový kanál, takže tuto e-mailovou konverzaci nelze přesunout tam. Nejprve do ní přidejte e-mailový kanál."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "Stránka tak, jak ji teď vidí návštěvníci. Koncepty jsou vynechány."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "Stránka je na adrese {address}. Stará adresa dál přesměrovává, pokud ji změníte."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "Stránka není na webu, který chatovací kanál povoluje."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "Stránka není zveřejněná. Vidí to jen váš tým."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Části vašeho produktu. Nastavte stav ručně, nebo to nechte udělat incident."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "Archiv zip je chráněn heslem. Vytvořte ho znovu bez něj."
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "Archiv zip používá metodu komprese, kterou Yuva neumí přečíst. Vytvořte ho znovu jako obyčejný zip."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "Časové pásmo denních sloupců."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Jejich záznamy o souhlasu, pro žádost o to, co o nich máte:"
@@ -10892,6 +11506,10 @@ msgstr "Tento cíl je krokem trychtýře. Nejprve ho z trychtýře vyjměte, neb
 msgid "This inbox already has a list with this name."
 msgstr "Tato schránka už má skupinu s tímto názvem."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "Tato schránka už stránku stavu má."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Tato schránka zatím nemá e-mailový kanál, který může odesílat. Skupinu můžete vytvořit hned; odesílá, jakmile je v jejím nastavení vybrán e-mailový kanál s účtem pro odpovědi."
@@ -10911,6 +11529,10 @@ msgstr "Tato schránka zatím nemá e-mailovou skupinu. Hromadná zpráva jde je
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Toto je komprimovaný archiv. Rozbalte archiv Takeout a nahrajte soubor .mbox."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Toto je koncept. Vidí ho jen váš tým a nezmění žádnou komponentu, dokud ho nezveřejníte."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Čas"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Časové pásmo"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Název"
 
@@ -11251,6 +11875,10 @@ msgstr "Zkouší se znovu"
 msgid "Tuesday"
 msgstr "Úterý"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "Nedoručitelné: příjemce označil jako spam, {since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Pod každou stránkou: „Byla tato stránka užitečná?“, pak zpětná vazba a diskuse stránky."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "V údržbě"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "V části Redirect URI zvolte Web a zadejte níže uvedenou přesměrovací URL."
@@ -11401,6 +12033,22 @@ msgstr "Odepnout"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Odepnuto"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Stáhnout"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Stáhnout ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Nezveřejněná"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Nezveřejněná, náhled vidí jen váš tým"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Neověřený odesílatel"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Až {max} a 100 000 řádků, s řádkem záhlaví. Soubory Excelu v tureckém nebo západním kódování a sloupce oddělené čárkami, středníky nebo tabulátory se čtou tak, jak jsou."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Text aktualizace"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Aktualizace"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Aktualizuje se"
@@ -11525,6 +12181,14 @@ msgstr "Použijte 1 až 100 zpráv za sekundu."
 msgid "Use 1 to 8760 hours."
 msgstr "Použijte 1 až 8760 hodin."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Použijte 3 až 48 písmen, číslic a vnitřních spojovníků."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Použijte barvu jako #2563eb."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Použít hodnoty kontaktu"
@@ -11540,6 +12204,10 @@ msgstr "Použijte port od 1 do 65535."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Použít samostatný účet pro hromadné zprávy"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "Použijte celé číslo od 7 do 90."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Verze"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Velmi velká schránka? Začněte souborem Google Takeout"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Zobrazit stránku"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Co se přenese"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "S čím souhlasili?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "Co mají zákazníci vědět?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Vaše příspěvky zůstanou, zobrazené jako od smazaného čtenáře. 
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Váš produkt"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Váš produkt."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

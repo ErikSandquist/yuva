@@ -794,9 +794,17 @@ msgstr "24 meses"
 msgid "3 months"
 msgstr "3 meses"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De 3 a 48 letras, números y guiones. Es único en este servidor."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Terminar"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "De 7 a 90."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "Un debate recibió una respuesta aceptada"
 msgid "A discussion started"
 msgstr "Empezó un debate"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Un borrador solo lo ve tu equipo y no cambia ningún componente hasta que lo publiques."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Se descartó un borrador"
@@ -978,6 +990,10 @@ msgstr "Hay una versión nueva de Yuva lista."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Una nota para el equipo… escribe @ para mencionar a un compañero"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Una página o un enlace mailto: donde los clientes reciben ayuda."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Una parte del archivo llegó dañada varias veces. Revisa tu conexión y vuelve a elegir el archivo para continuar."
@@ -985,6 +1001,10 @@ msgstr "Una parte del archivo llegó dañada varias veces. Revisa tu conexión y
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Una parte del archivo era más grande de lo que acepta el servidor. Recarga la página y vuelve a elegir el archivo."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Un porcentaje junto a cada componente."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "Una propiedad puede tener como máximo 100 segmentos. Elimina uno primer
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "Una propiedad puede tener como máximo 20 embudos. Elimina uno primero."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Una página pública que dice a tus clientes si {inboxName} funciona. Sigue sin publicar hasta que la publiques."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Un inicio de sesión debe volver en 10 minutos y funciona una sola vez. 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Un sitio muestra las conversaciones enviadas desde sus páginas."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Un componente de estado cambió o tiene un estado nuevo"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Un monitor de estado se recuperó"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Un monitor de estado cayó"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Aproximadamente {from} a {to}"
 msgid "about done by {end}"
 msgstr "listo hacia las {end}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Color de acento"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Respuesta aceptada"
@@ -1102,6 +1142,10 @@ msgstr "Cuenta"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Documentación de Acme"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Estado de Acme"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "Añade al menos un origen."
 msgid "Add channel"
 msgstr "Añadir canal"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Añadir componente"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Añadir endpoint"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Añadir grupo"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Añadido por el equipo"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Dirección"
 
@@ -1519,9 +1575,25 @@ msgstr "Una entrada del zip se descomprime a más de 100 veces su tamaño, así 
 msgid "An https image URL."
 msgstr "Una URL de imagen https."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Una imagen https."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Un buzón reúne las conversaciones de un producto o marca. Ponle el nombre del producto que conocen tus clientes."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Un incidente o mantenimiento cambió o recibió una actualización"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Se publicó un incidente o mantenimiento"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Se resolvió un incidente o se completó un mantenimiento"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "otro buzón"
 msgid "Another SMTP server"
 msgstr "Otro servidor SMTP"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Otra página de estado ya usa esta dirección."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Otra dirección del equipo"
@@ -1645,12 +1721,17 @@ msgstr "Todo lo que use esta clave deja de funcionar al instante."
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "Canal de API"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "Clave de API"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "¿Puedo programar un boletín para cada suscriptor?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "Comparación de la condición {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Completo"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Completado"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Componente eliminado"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Componentes"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Componentes afectados"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Los componentes, el historial, los incidentes y las actualizaciones se eliminan con ella."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Crear clave"
 msgid "Create list"
 msgstr "Crear lista"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Crear página de estado"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Crear página de estado ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Crear el canal de correo"
@@ -3083,6 +3197,10 @@ msgstr "Credenciales eliminadas {deletedAt}. Yuva ya no puede leer {address}."
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Credenciales eliminadas. Yuva ya no puede leer {address}."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Crítico"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Retención de datos"
 msgid "Data retention and deleting the workspace"
 msgstr "Retención de datos y eliminación del espacio de trabajo"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Actualización de la base de datos"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Fechas"
@@ -3147,6 +3269,10 @@ msgstr "Fechas"
 msgid "Days"
 msgstr "Días"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Días de historial"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Decide quién puede escribir en los debates"
@@ -3154,6 +3280,10 @@ msgstr "Decide quién puede escribir en los debates"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Por defecto: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Rendimiento degradado"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "Por defecto: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -3170,8 +3302,13 @@ msgstr "Eliminar"
 msgid "Delete “{name}”?"
 msgstr "¿Eliminar «{name}»?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "¿Eliminar {0}?"
 
@@ -3184,9 +3321,22 @@ msgstr "¿Eliminar {name}?"
 msgid "Delete after (days)"
 msgstr "Eliminar después de (días)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Eliminar componente"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Eliminar borrador"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Eliminar borrador ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Eliminar grupo"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Eliminar lista"
 msgid "Delete my account"
 msgstr "Eliminar mi cuenta"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Eliminar página"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Eliminar suscripción"
@@ -3212,6 +3366,10 @@ msgstr "Eliminar suscripción"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Elimina la app que creaste para Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Eliminar el borrador"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "¿Eliminar tu cuenta?"
 msgid "Deleted by its author."
 msgstr "Eliminado por su autor."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Componente eliminado"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Elimina sus canales, conversaciones, mensajes y adjuntos. No se puede de
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Elimina la lista, sus suscripciones y sus registros de consentimiento. Descarga primero la exportación de consentimientos por si necesitas mostrarla más tarde."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Elimina la página con sus componentes, su historial, incidentes y actualizaciones. La dirección pública deja de funcionar."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Detalles de la entrega"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Denegar"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Descripción"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Las notificaciones de escritorio están bloqueadas para este sitio en la
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Detalles"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Descargar las filas excluidas"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Borrador"
 
@@ -3570,6 +3746,10 @@ msgstr "Autor del borrador"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Borrador de {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Borrador eliminado"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "Correo, chat en vivo y mensajes dentro de la app"
 msgid "E-mail: {label}"
 msgstr "Correo: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Cada componente tiene este estado mientras el incidente está abierto."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Cada componente tiene este estado mientras el mantenimiento está en curso."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Cada conversación conserva el estado que {provider} informa para ella: abierta, pendiente o cerrada."
@@ -3703,6 +3891,7 @@ msgstr "Cada una con todos sus mensajes y notas"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Editar"
 
@@ -3714,9 +3903,22 @@ msgstr "Editar clave de API"
 msgid "Edit canned reply"
 msgstr "Editar respuesta predefinida"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Editar componente"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Editar diseño"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Editar detalles"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Editar detalles ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Editar el diseño ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Editar el incidente"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Editar el título"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Editar esta actualización"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Edita, o previsualiza en escritorio, en celular o en modo oscuro"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "editado"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "Errores de API elevados"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Endpoint"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Endpoints"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Fin"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "primera respuesta en {first}"
 msgid "First rows of the file"
 msgstr "Primeras filas del archivo"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "Primera actualización"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Primero, una dirección de correo"
@@ -4428,6 +4655,10 @@ msgstr "Saludo"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Saluda a las conversaciones nuevas por correo, una vez por contacto dentro del intervalo. Nunca se envía al correo automático ni al spam."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Grupo"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Pasado a {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Tiene una conversación abierta"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Retenido por un incidente, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "¡Hola! ¿En qué podemos ayudarte?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Oculto"
 
@@ -4503,6 +4740,10 @@ msgstr "Oculto por el equipo"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Ocultar"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Ocultar de la página"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Ya volví"
 msgid "Idea"
 msgstr "Idea"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Identificado"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Identidad no verificada"
@@ -4693,6 +4938,10 @@ msgstr "IMAP está desactivado para este buzón. Actívalo en la configuración 
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "Servidor IMAP"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Impacto"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "En Microsoft 365 eso es el reenvío del buzón o una regla de flujo de correo; puede que un administrador tenga que permitir antes el reenvío externo."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "En curso"
 
@@ -4888,6 +5138,16 @@ msgstr "Buzones"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Las bandejas de entrada cortan los asuntos de más de 80 caracteres."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Incidente"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Incidentes"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Incluir notas"
@@ -4922,6 +5182,10 @@ msgstr "Instala el servidor en VS Code; abre la página del servidor, donde sele
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Instalación"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "Investigando"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Ya no recibirá notificaciones."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Su acceso termina al instante. Para volver a usarlo, conéctalo de nuevo."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Sus componentes se quedan, sin grupo."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "Su registro de consentimiento se elimina con él, así que ya no podrás demostrar cómo aceptó. Para dejar de enviarle correo, mejor dalo de baja."
@@ -5060,6 +5328,10 @@ msgstr "Su registro de consentimiento se elimina con él, así que ya no podrás
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "Su registro de consentimiento se elimina con él. Como se dio de baja, la dirección queda recordada como excluida, así que nadie del equipo puede volver a añadirla."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Se elimina su historial. Los incidentes que lo nombraban ya no lo hacen."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Etiquetas (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Idioma"
 
@@ -5254,6 +5527,10 @@ msgstr "Dejárselo al compañero que está escribiendo"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Dejar el texto y luego el bloque"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Queda fuera de la página pública y de su estado general."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Cargar imágenes"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Cargar más"
@@ -5406,6 +5684,10 @@ msgstr "Bloqueado"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Bloqueado: los lectores ya no pueden escribir aquí. Tú sí."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL del logotipo"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Maildir en un zip"
 msgid "Mailing lists"
 msgstr "Listas de correo"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Grave"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Caída total"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Hacerlo público"
@@ -5551,6 +5845,10 @@ msgstr "Gestionar etiquetas"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "Gestionar listas de correo y suscriptores"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Gestionar páginas de estado, fijar el estado de los componentes y llevar incidentes"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Pasos de la migración"
 msgid "Mine"
 msgstr "Mías"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Leve"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "Moderado"
 msgid "Monday"
 msgstr "Lunes"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "En observación"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Más acciones"
@@ -5812,6 +6118,12 @@ msgstr "Más acciones"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "Más acciones para {address}"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "Más para {0}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "Más valoraciones, comentarios abiertos, debates abiertos y publicacione
 msgid "Most votes"
 msgstr "Más votos"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Bajar"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Traslada buzones a Yuva: encuentra el proveedor, conecta, analiza, copia y cambia"
@@ -5873,6 +6189,10 @@ msgstr "Moverse por la lista"
 msgid "Move through the posts"
 msgstr "Moverse por las publicaciones"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Moverse por las páginas de estado"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Mover al buzón"
@@ -5881,6 +6201,10 @@ msgstr "Mover al buzón"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Pasar a Yuva"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Subir"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Mi perfil"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Nombre"
 
@@ -6078,6 +6405,18 @@ msgstr "nuevos en los últimos {days} días"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Nuevo buzón…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Nuevo incidente"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Nuevo incidente ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Nuevo incidente o página de estado"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Aún no hay canales. Añade uno para que los clientes puedan escribir a 
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Ningún canal de chat de este buzón permite el sitio de la página con los debates activados. Activa los debates en la configuración del buzón."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "No hay componentes en este grupo."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Aún no hay componentes. Añade las partes de tu producto de las que dependen los clientes."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Sin confirmación"
@@ -6350,13 +6697,26 @@ msgstr "No hay eventos registrados."
 msgid "No feedback from this page."
 msgstr "No hay comentarios de esta página."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Sin grupo"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "No hay debates ocultos."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Sin impacto"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Aún no hay importaciones."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "No hay ninguna bandeja para la que mostrar una página de estado."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "No hay conversaciones abiertas. Las nuevas aparecen aquí y en el buzón
 msgid "No open feedback."
 msgstr "No hay comentarios abiertos."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "No hay incidentes ni mantenimientos abiertos."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Ningún otro contacto coincide."
@@ -6467,6 +6831,10 @@ msgstr "sin cuenta SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Sin cuenta SMTP"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Aún no hay página de estado. La crean los propietarios y administradores."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "No se pierde nada: cuando continúe, la copia retoma donde se detuvo."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Todavía no hay nada resuelto."
 
@@ -6982,6 +7351,14 @@ msgstr "Estado en línea"
 msgid "Only {0}"
 msgstr "Solo {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Solo se puede eliminar un borrador. Nunca se mostró en la página."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Solo se puede eliminar un borrador. Publica una actualización en su lugar."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Añade solo a personas que aceptaron recibir esta lista. Lo que escribas aquí se guarda como su registro de consentimiento."
@@ -7083,6 +7460,7 @@ msgstr "abiertas"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Abiertas"
 
@@ -7110,6 +7488,10 @@ msgstr "Abrir Seguridad de la cuenta"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Abre Seguridad de la cuenta en tu cuenta de Yahoo."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Abrir un incidente"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Abrir la conversación siguiente o anterior"
 msgid "Open the reply"
 msgstr "Abrir la respuesta"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Abrir la página de estado"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Abrir la configuración del espacio de trabajo"
@@ -7291,6 +7677,14 @@ msgstr "abiertas, sin asignar"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Aperturas"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "Operativo"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "Opcional. Se muestra en la página pública."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Ritmo (correos por segundo)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Página"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Ajustes de la página"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Idioma del panel"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Parte {part} de {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Caída parcial"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Contraseña"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Contraseña establecida"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Pasados"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Elige un color"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Elige un color."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Elegir un color"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Fijada"
 msgid "Pinned to the top of your list"
 msgstr "Fijada arriba en tu lista"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Texto sin formato con enlaces y saltos de línea, como máximo 5000 caracteres."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Planificar mantenimiento"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Planificar mantenimiento ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Planeado"
@@ -7805,9 +8230,22 @@ msgstr "Apunta los registros MX a Yuva como describe la guía de correo. La sinc
 msgid "Port"
 msgstr "Puerto"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Publicar una actualización"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Publicar una actualización ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Comentarios para los usuarios de tu app"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Publicar actualización"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Preparando"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Vista previa"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Vista previa ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "Vista previa de {0}"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Vista previa del diseño"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Texto de vista previa"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Previsualizar la página"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mail solo es accesible por IMAP mediante Proton Mail Bridge en tu
 msgid "Public"
 msgstr "Pública"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Dirección pública"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Clave pública"
@@ -7909,9 +8366,36 @@ msgstr "Clave pública"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Hilos públicos bajo tus páginas de documentación, en todos los estados."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Publicar"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publicar ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Publicar ahora"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Publicar o despublicar la página"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Publicar el borrador"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Publica este registro TXT en el DNS de tu dominio:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Publicada"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "Leer listas de correo, suscriptores y registros de consentimiento"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Solo lectura"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Leer páginas de estado, componentes e incidentes"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Eliminando el historial importado"
 msgid "Removing imported history…"
 msgstr "Eliminando el historial importado…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Renombrar"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Renombrar grupo"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Reabrir"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Restablecer valores por defecto"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Resolver"
 
@@ -8490,9 +8987,14 @@ msgstr "Resolver"
 msgid "Resolve (E)"
 msgstr "Resolver (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Resolver o completar"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resuelto"
 
@@ -8655,8 +9157,15 @@ msgstr "Sábado"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Guardar"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Guardar como borrador"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Guardar ahora y conservar una versión"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Guardado"
 
@@ -8731,6 +9241,7 @@ msgstr "Programar y enviar envíos, cuando el espacio de trabajo deja que las cl
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Programado"
 
@@ -9173,6 +9684,10 @@ msgstr "URL del servidor"
 msgid "SES tenant"
 msgstr "Tenant de SES"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Fijado por un monitor, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Establecer progreso"
@@ -9217,6 +9732,7 @@ msgstr "Configurando…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Configuración"
 
@@ -9273,6 +9789,10 @@ msgstr "Mostrar como enviado"
 msgid "Show more"
 msgstr "Mostrar más"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Mostrar en la página"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Mostrar u ocultar el texto citado"
@@ -9304,6 +9824,10 @@ msgstr "Mostrar la vista previa"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Mostrar el tiempo de respuesta"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Mostrar disponibilidad"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Se muestra a tu equipo y a los contactos"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Se muestra a tu equipo y a los clientes a quienes respondes"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Se muestra bajo el nombre en la página pública."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "Desde"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "Desde {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "Dirección del sitio"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Generador de sitios"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Enlace del sitio"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Iniciado por {starter} · {started}"
 msgid "Starting"
 msgstr "Iniciando"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Inicio"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Inicia un hilo público con el texto de abajo. La conversación sigue privada y sin cambios; no se muestra nada más de ella."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (puerto 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Estado"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "Estado de {0}"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "Estado de {0} mientras está abierto"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Estado"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Página de estado"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Página de estado eliminada"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Páginas de estado"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Dirección de soporte"
 msgid "Support bot"
 msgstr "Bot de soporte"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Enlace de soporte"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "Equipo ahora mismo"
 msgid "teammate@company.com"
 msgstr "companero@empresa.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Cuenta a tus clientes si tu producto funciona. Elige la página de una bandeja para abrir incidentes, planificar mantenimientos y fijar el estado de cada componente."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "El archivo .mbox de Takeout › Mail, descomprimido."
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "El usuario de {provider} con el que iniciaste sesión no es administrador, y solo los administradores pueden leer todos los tickets. Inicia sesión de nuevo como administrador."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "La dirección responde «no encontrado» hasta que publiques la página."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "El canal de correo que envía los correos de confirmación y bienvenida.
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Los elementos funcionan en estas direcciones; añade tu servidor de desarrollo en la configuración del buzón:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "El fin debe ser posterior al inicio."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "El tenant de Amazon SES del buzón aún se está configurando. El envío
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "El tenant de Amazon SES del buzón ya no existe. El servidor lo crea de nuevo; hasta entonces el envío no puede salir."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "El incidente ya está resuelto o completado, así que no admite más cambios."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "El archivo de İYS tiene una fila por suscriptor en las columnas de İYS, ONAY para suscrito y RET para dado de baja, para que los remitentes turcos lo suban ellos mismos a İYS. Se excluyen las suscripciones pendientes."
@@ -10350,6 +10940,10 @@ msgstr "La clave deja de funcionar al final de este día."
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "El tipo no se puede cambiar después."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "El idioma de los textos de la página."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "El buzón antiguo deja de recibir correo de ese dominio."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "El otro buzón no tiene canal de correo, así que esta conversación de correo no puede moverse allí. Añádele primero un canal de correo."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "La página tal como la ven ahora los visitantes. Los borradores no se incluyen."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "La página está en {address}. La dirección anterior sigue redirigiendo si la cambias."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "La página no está en un sitio que permita el canal de chat."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "La página no está publicada. Solo tu equipo ve esto."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Las partes de tu producto. Fija un estado a mano o deja que lo haga un incidente."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "El zip está protegido con contraseña. Vuelve a crearlo sin ella."
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "El zip usa un método de compresión que Yuva no puede leer. Vuelve a crearlo como zip normal."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "La zona horaria de las barras de días."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Sus registros de consentimiento, para una solicitud sobre lo que guardas de ellos:"
@@ -10892,6 +11506,10 @@ msgstr "Este objetivo es un paso de un embudo. Quítalo primero del embudo o eli
 msgid "This inbox already has a list with this name."
 msgstr "Este buzón ya tiene una lista con este nombre."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "Esta bandeja ya tiene una página de estado."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Este buzón aún no tiene un canal de correo que pueda enviar. Puedes crear la lista ahora; enviará cuando se elija en sus ajustes un canal de correo con cuenta de respuestas."
@@ -10911,6 +11529,10 @@ msgstr "Este buzón aún no tiene lista de correo. Un envío solo va a las perso
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Es un archivo comprimido. Descomprime el archivo de Takeout y sube el archivo .mbox."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Esto es un borrador. Solo lo ve tu equipo y no cambia ningún componente hasta que lo publiques."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Hora"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Zona horaria"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Título"
 
@@ -11251,6 +11875,10 @@ msgstr "Reintentando"
 msgid "Tuesday"
 msgstr "Martes"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "No entregable: marcado como spam por el destinatario, {since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Bajo cada página: «¿Te resultó útil esta página?», luego comentarios y los debates de la página."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "En mantenimiento"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "En URI de redirección, elige Web e introduce la URL de redirección de abajo."
@@ -11401,6 +12033,22 @@ msgstr "Desfijar"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Desfijada"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Despublicar"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Despublicar ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Sin publicar"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Sin publicar, solo tu equipo puede previsualizarla"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Remitente sin verificar"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Hasta {max} y 100 000 filas, con fila de encabezado. Los archivos de Excel en codificación turca u occidental y las columnas separadas por comas, punto y coma o tabuladores se leen tal cual."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Texto de la actualización"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Actualizaciones"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Actualizando"
@@ -11525,6 +12181,14 @@ msgstr "Usa de 1 a 100 correos por segundo."
 msgid "Use 1 to 8760 hours."
 msgstr "Usa de 1 a 8760 horas."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Usa de 3 a 48 letras, números y guiones interiores."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Usa un color como #2563eb."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Usar los valores de un contacto"
@@ -11540,6 +12204,10 @@ msgstr "Usa un puerto de 1 a 65535."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Usar una cuenta aparte para los envíos"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "Usa un número entero de 7 a 90."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Versiones"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "¿Buzón muy grande? Empieza con un archivo de Google Takeout"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Ver página"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Qué se trae"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "¿A qué aceptaron?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "¿Qué necesitan saber los clientes?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Tus publicaciones se quedan, mostradas como de un lector eliminado. Se v
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Tu producto"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Tu producto."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

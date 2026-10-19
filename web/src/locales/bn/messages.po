@@ -794,9 +794,17 @@ msgstr "24 মাস"
 msgid "3 months"
 msgstr "3 মাস"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "৩ থেকে ৪৮টি অক্ষর, সংখ্যা ও হাইফেন। এই সার্ভারে অনন্য।"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. শেষ করুন"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "৭ থেকে ৯০।"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "একটি আলোচনা গৃহীত উত্তর পে�
 msgid "A discussion started"
 msgstr "একটি আলোচনা শুরু হয়েছে"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "খসড়া শুধু আপনার টিম দেখতে পায় এবং আপনি প্রকাশ না করা পর্যন্ত কোনো উপাদান বদলায় না।"
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "একটি ড্রাফট বাতিল করা হয়েছে"
@@ -978,6 +990,10 @@ msgstr "Yuva-র একটি নতুন সংস্করণ প্রস্
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "টিমের জন্য একটি নোট… টিমমেটকে উল্লেখ করতে @ লিখুন"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "একটি পেজ বা mailto: লিংক যেখানে গ্রাহকরা সাহায্য পান।"
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "ফাইলের একটি অংশ কয়েকবার ক্ষতিগ্রস্ত অবস্থায় পৌঁছেছে। আপনার সংযোগ পরীক্ষা করুন, তারপর চালিয়ে যেতে ফাইলটি আবার বেছে নিন।"
@@ -985,6 +1001,10 @@ msgstr "ফাইলের একটি অংশ কয়েকবার ক�
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "ফাইলের একটি অংশ সার্ভার যতটা নেয় তার চেয়ে বড় ছিল। পেজ রিলোড করুন এবং ফাইলটি আবার বেছে নিন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "প্রতিটি উপাদানের পাশে একটি শতাংশ।"
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "একটি প্রপার্টিতে সর্বোচ্চ 
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "একটি প্রপার্টিতে সর্বোচ্চ 20টি ফানেল থাকতে পারে। আগে একটি মুছুন।"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "একটি পাবলিক পেজ যা আপনার গ্রাহকদের জানায় {inboxName} চলছে কি না। আপনি প্রকাশ না করা পর্যন্ত এটি অপ্রকাশিত থাকে।"
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "সাইন-ইন 10 মিনিটের মধ্যে ফির�
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "A site shows the conversations sent from its pages."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "একটি স্ট্যাটাস উপাদান বদলেছে বা নতুন অবস্থা পেয়েছে"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "একটি স্ট্যাটাস মনিটর ফিরে এসেছে"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "একটি স্ট্যাটাস মনিটর বন্ধ হয়েছে"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "{from} থেকে {to} সম্পর্কে"
 msgid "about done by {end}"
 msgstr "{end}-এর মধ্যে প্রায় শেষ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "হাইলাইট রং"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "গৃহীত উত্তর"
@@ -1102,6 +1142,10 @@ msgstr "অ্যাকাউন্ট"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme ডক্স"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Acme-এর অবস্থা"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "অন্তত একটি অরিজিন যোগ করুন�
 msgid "Add channel"
 msgstr "চ্যানেল যোগ করুন"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "উপাদান যোগ করুন"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "এন্ডপয়েন্ট যোগ করুন"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "গ্রুপ যোগ করুন"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "টিম যোগ করেছে"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "ঠিকানা"
 
@@ -1519,9 +1575,25 @@ msgstr "zip-এর একটি এন্ট্রি আনপ্যাক ক�
 msgid "An https image URL."
 msgstr "একটি https ছবির URL।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "একটি https ছবি।"
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "একটি ইনবক্স একটি পণ্য বা ব্র্যান্ডের কথোপকথন জমা করে। আপনার গ্রাহকরা যে পণ্য চেনেন তার নামে নাম দিন।"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "একটি ঘটনা বা রক্ষণাবেক্ষণ বদলেছে বা আপডেট পেয়েছে"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "একটি ঘটনা বা রক্ষণাবেক্ষণ প্রকাশিত হয়েছে"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "একটি ঘটনা সমাধান হয়েছে বা রক্ষণাবেক্ষণ সম্পন্ন হয়েছে"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "আরেকটি ইনবক্স"
 msgid "Another SMTP server"
 msgstr "আরেকটি SMTP সার্ভার"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "অন্য একটি স্ট্যাটাস পেজ ইতিমধ্যে এই ঠিকানা ব্যবহার করছে।"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "আরেকটি টিম ঠিকানা"
@@ -1645,12 +1721,17 @@ msgstr "এই কী ব্যবহার করা সবকিছু সঙ�
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API চ্যানেল"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "API কী"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "আমি কি প্রতিটি সাবস্ক্রাইব
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "শর্ত {n}-এর তুলনা"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "সম্পূর্ণ"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "সম্পন্ন"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "উপাদান মুছে ফেলা হয়েছে"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "উপাদান"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "প্রভাবিত উপাদান"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "উপাদান, ইতিহাস, ঘটনা ও আপডেট এর সাথে মুছে যায়।"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "কী তৈরি করুন"
 msgid "Create list"
 msgstr "লিস্ট তৈরি করুন"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "স্ট্যাটাস পেজ তৈরি করুন"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "স্ট্যাটাস পেজ তৈরি করুন ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "ই-মেইল চ্যানেল তৈরি করুন"
@@ -3083,6 +3197,10 @@ msgstr "ক্রেডেনশিয়াল {deletedAt} মুছে ফে�
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "ক্রেডেনশিয়াল মুছে ফেলা হয়েছে। Yuva আর {address} পড়তে পারে না।"
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "গুরুতর"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "ডেটা রিটেনশন"
 msgid "Data retention and deleting the workspace"
 msgstr "ডেটা রিটেনশন ও ওয়ার্কস্পেস মুছে ফেলা"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "ডেটাবেস আপগ্রেড"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "তারিখ"
@@ -3147,6 +3269,10 @@ msgstr "তারিখ"
 msgid "Days"
 msgstr "দিন"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "ইতিহাসের দিন"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "ঠিক করুন আলোচনায় কে লিখতে পারবে"
@@ -3154,6 +3280,10 @@ msgstr "ঠিক করুন আলোচনায় কে লিখতে �
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "ডিফল্ট: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "কর্মক্ষমতা কমেছে"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "ডিফল্ট: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "মুছুন"
 
@@ -3170,8 +3302,13 @@ msgstr "মুছুন"
 msgid "Delete “{name}”?"
 msgstr "“{name}” মুছবেন?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "{0} মুছবেন?"
 
@@ -3184,9 +3321,22 @@ msgstr "{name} মুছবেন?"
 msgid "Delete after (days)"
 msgstr "এত দিন পরে মুছুন (দিন)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "উপাদান মুছুন"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "ড্রাফট মুছুন"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "খসড়া মুছুন ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "গ্রুপ মুছুন"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "লিস্ট মুছুন"
 msgid "Delete my account"
 msgstr "আমার অ্যাকাউন্ট মুছুন"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "পেজ মুছুন"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "সাবস্ক্রিপশন মুছুন"
@@ -3212,6 +3366,10 @@ msgstr "সাবস্ক্রিপশন মুছুন"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Yuva-র জন্য তৈরি করা অ্যাপ মুছুন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "খসড়া মুছুন"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "আপনার অ্যাকাউন্ট মুছবেন?"
 msgid "Deleted by its author."
 msgstr "লেখক এটি মুছে দিয়েছেন।"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "মুছে ফেলা উপাদান"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "এর চ্যানেল, কথোপকথন, বার্তা 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "লিস্ট, তার সাবস্ক্রিপশন ও তাদের সম্মতির রেকর্ড মুছে ফেলে। পরে দেখানোর দরকার হতে পারলে আগে সম্মতি এক্সপোর্ট ডাউনলোড করুন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "পেজটি তার উপাদান, সেগুলোর ইতিহাস, ঘটনা ও আপডেটসহ মুছে ফেলে। পাবলিক ঠিকানা কাজ করা বন্ধ করে।"
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "ডেলিভারির বিবরণ"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "প্রত্যাখ্যান করুন"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "বিবরণ"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "ব্রাউজারের সেটিংসে এই সাইট
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "বিবরণ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "বাদ পড়া সারি ডাউনলোড করুন"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "ড্রাফট"
 
@@ -3570,6 +3746,10 @@ msgstr "ড্রাফটের লেখক"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author}-এর ড্রাফট"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "খসড়া মুছে ফেলা হয়েছে"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "ই-মেইল, লাইভ চ্যাট ও ইন-অ্যা�
 msgid "E-mail: {label}"
 msgstr "ই-মেইল: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "ঘটনা খোলা থাকা পর্যন্ত প্রতিটি উপাদান এই অবস্থায় থাকে।"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "রক্ষণাবেক্ষণ চলা পর্যন্ত প্রতিটি উপাদান এই অবস্থায় থাকে।"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "প্রতিটি কথোপকথন তার জন্য {provider} যে স্ট্যাটাস জানায় তা রাখে: খোলা, মুলতুবি বা বন্ধ।"
@@ -3703,6 +3891,7 @@ msgstr "প্রতিটি তার সব বার্তা ও নোট�
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "সম্পাদনা করুন"
 
@@ -3714,9 +3903,22 @@ msgstr "API কী সম্পাদনা করুন"
 msgid "Edit canned reply"
 msgstr "ক্যানড রিপ্লাই সম্পাদনা করুন"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "উপাদান সম্পাদনা করুন"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "ডিজাইন সম্পাদনা করুন"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "বিবরণ সম্পাদনা করুন"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "বিবরণ সম্পাদনা করুন ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "ডিজাইন সম্পাদনা করুন ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "ঘটনা সম্পাদনা করুন"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "শিরোনাম সম্পাদনা করুন"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "এই আপডেট সম্পাদনা করুন"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "সম্পাদনা করুন, বা ডেস্কটপ, ফোন বা ডার্ক মোডে প্রিভিউ দেখুন"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "সম্পাদিত"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "API ত্রুটি বেড়েছে"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "এন্ডপয়েন্ট"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "এন্ডপয়েন্ট"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "শেষ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "{first}-এ প্রথম উত্তর"
 msgid "First rows of the file"
 msgstr "ফাইলের প্রথম সারি"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "প্রথম আপডেট"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "প্রথমে, একটি ই-মেইল ঠিকানা"
@@ -4428,6 +4655,10 @@ msgstr "অভিবাদন"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "নতুন কথোপকথনকে ই-মেইলে অভিবাদন জানায়, ব্যবধানের মধ্যে প্রতি কনট্যাক্টে একবার। স্বয়ংক্রিয় মেইল বা স্প্যামে কখনও পাঠানো হয় না।"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "গ্রুপ"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "{name}-কে হস্তান্তর করা হয়েছে"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "একটি খোলা কথোপকথন আছে"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "একটি ঘটনা ধরে রেখেছে, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "নমস্কার! আমরা কীভাবে সাহায�
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "লুকানো"
 
@@ -4503,6 +4740,10 @@ msgstr "টিম লুকিয়েছে"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "লুকান"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "পেজ থেকে লুকান"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "আমি ফিরে এসেছি"
 msgid "Idea"
 msgstr "আইডিয়া"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "কারণ চিহ্নিত হয়েছে"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "আইডেন্টিটি যাচাই হয়নি"
@@ -4693,6 +4938,10 @@ msgstr "এই মেলবক্সের জন্য IMAP বন্ধ। {pr
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "IMAP সার্ভার"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "প্রভাব"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "Microsoft 365-এ এটি মেলবক্স ফরওয়ার্ডিং বা মেইল ফ্লো নিয়ম; আগে একজন অ্যাডমিনকে বাহ্যিক ফরওয়ার্ডিং অনুমোদন করতে হতে পারে।"
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "In progress"
 
@@ -4888,6 +5138,16 @@ msgstr "ইনবক্স"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "ইনবক্স 80 অক্ষরের চেয়ে লম্বা বিষয় কেটে দেয়।"
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "ঘটনা"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "ঘটনা"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "নোট অন্তর্ভুক্ত করুন"
@@ -4922,6 +5182,10 @@ msgstr "সার্ভারটি VS Code-এ ইনস্টল করুন;
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "ইনস্টলেশন"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "তদন্ত চলছে"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "এটি আর নোটিফিকেশন পাবে না।"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "এর অ্যাক্সেস সঙ্গে সঙ্গে শেষ হয়। আবার ব্যবহার করতে আবার সংযুক্ত করুন।"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "এর উপাদানগুলো গ্রুপ ছাড়াই থেকে যায়।"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "এর সঙ্গে এর সম্মতির রেকর্ড মুছে যায়, তাই আপনি আর দেখাতে পারবেন না তারা কীভাবে রাজি হয়েছিল। তাদের মেইল করা বন্ধ করতে এর বদলে তাদের আনসাবস্ক্রাইব করুন।"
@@ -5060,6 +5328,10 @@ msgstr "এর সঙ্গে এর সম্মতির রেকর্ড �
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "এর সঙ্গে এর সম্মতির রেকর্ড মুছে যায়। তারা আনসাবস্ক্রাইব করেছে বলে ঠিকানাটি অপ্ট-আউট হিসেবে মনে রাখা হয়, তাই টিমে কেউ এটি আবার যোগ করতে পারে না।"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "এর ইতিহাস মুছে যায়। যে ঘটনাগুলো এর উল্লেখ করেছিল সেগুলো আর করে না।"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "লেবেল (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "ভাষা"
 
@@ -5254,6 +5527,10 @@ msgstr "যে টিমমেট টাইপ করছেন তার হা�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "লেখা রাখুন, তারপর ব্লক"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "পাবলিক পেজ ও তার সামগ্রিক অবস্থা থেকে বাদ থাকে।"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "ছবি লোড করুন"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "আরও লোড করুন"
@@ -5406,6 +5684,10 @@ msgstr "লক করা"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "লক করা: পাঠকরা আর এখানে লিখতে পারে না। আপনি এখনও পারেন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "লোগোর URL"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "zip-এ Maildir"
 msgid "Mailing lists"
 msgstr "মেইলিং লিস্ট"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "রক্ষণাবেক্ষণ"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "বড়"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "বড় বিভ্রাট"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "পাবলিক করুন"
@@ -5551,6 +5845,10 @@ msgstr "লেবেল পরিচালনা করুন"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "মেইলিং লিস্ট ও সাবস্ক্রাইবার পরিচালনা করুন"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "স্ট্যাটাস পেজ পরিচালনা করুন, উপাদানের অবস্থা ঠিক করুন ও ঘটনা সামলান"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "মাইগ্রেশনের ধাপ"
 msgid "Mine"
 msgstr "আমার"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "ছোট"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "মডারেটেড"
 msgid "Monday"
 msgstr "সোমবার"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "নজরদারিতে"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "আরও কাজ"
@@ -5812,6 +6118,12 @@ msgstr "আরও কাজ"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "{address}-এর জন্য আরও কাজ"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "{0}-এর জন্য আরও"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "সবচেয়ে বেশি রেটিং, খোলা ফি�
 msgid "Most votes"
 msgstr "সবচেয়ে বেশি ভোট"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "নিচে সরান"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "মেলবক্স Yuva-তে আনুন: প্রদানকারী খুঁজুন, সংযোগ করুন, স্ক্যান করুন, কপি করুন ও পাল্টান"
@@ -5873,6 +6189,10 @@ msgstr "তালিকার মধ্যে চলুন"
 msgid "Move through the posts"
 msgstr "পোস্টের মধ্যে চলুন"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "স্ট্যাটাস পেজগুলোর মধ্যে চলুন"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "ইনবক্সে সরান"
@@ -5881,6 +6201,10 @@ msgstr "ইনবক্সে সরান"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Yuva-তে আসুন"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "উপরে সরান"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "আমার প্রোফাইল"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "নাম"
 
@@ -6078,6 +6405,18 @@ msgstr "গত {days} দিনে নতুন"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "নতুন ইনবক্স…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "নতুন ঘটনা"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "নতুন ঘটনা ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "নতুন ঘটনা বা স্ট্যাটাস পেজ"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "এখনও কোনো চ্যানেল নেই। একট�
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "এই ইনবক্সের কোনো চ্যাট চ্যানেল আলোচনা চালু রেখে পেজের সাইটকে অনুমতি দেয় না। ইনবক্স সেটিংসে আলোচনা চালু করুন।"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "এই গ্রুপে কোনো উপাদান নেই।"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "এখনও কোনো উপাদান নেই। আপনার পণ্যের যেসব অংশের উপর গ্রাহকরা নির্ভর করেন সেগুলো যোগ করুন।"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "কোনো নিশ্চিতকরণ নেই"
@@ -6350,13 +6697,26 @@ msgstr "কোনো ইভেন্ট রেকর্ড হয়নি।"
 msgid "No feedback from this page."
 msgstr "এই পেজ থেকে কোনো ফিডব্যাক নেই।"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "কোনো গ্রুপ নেই"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "কোনো লুকানো আলোচনা নেই।"
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "কোনো প্রভাব নেই"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "এখনও কোনো ইমপোর্ট নেই।"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "যে ইনবক্সের জন্য স্ট্যাটাস পেজ দেখানো যায় এমন কোনো ইনবক্স নেই।"
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "কোনো খোলা কথোপকথন নেই। নতু�
 msgid "No open feedback."
 msgstr "No open feedback."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "কোনো খোলা ঘটনা বা রক্ষণাবেক্ষণ নেই।"
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "আর কোনো কনট্যাক্ট মেলে না।"
@@ -6467,6 +6831,10 @@ msgstr "SMTP অ্যাকাউন্ট নেই"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "কোনো SMTP অ্যাকাউন্ট নেই"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "এখনও স্ট্যাটাস পেজ নেই। মালিক ও অ্যাডমিনরা এটি তৈরি করেন।"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "কিছু হারায় না: চালু হলে কপি যেখানে থেমেছিল সেখান থেকে এগোবে।"
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Nothing is resolved yet."
 
@@ -6982,6 +7351,14 @@ msgstr "অনলাইন অবস্থা"
 msgid "Only {0}"
 msgstr "শুধু {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "শুধু খসড়া মুছে ফেলা যায়। এটি পেজে কখনও দেখানো হয়নি।"
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "শুধু খসড়া মুছে ফেলা যায়। এর বদলে একটি আপডেট প্রকাশ করুন।"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "শুধু তাদেরই যোগ করুন যারা এই লিস্ট পেতে রাজি হয়েছে। এখানে আপনি যা দেন তা তাদের সম্মতির রেকর্ড হিসেবে রাখা হয়।"
@@ -7083,6 +7460,7 @@ msgstr "খোলা"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "খুলুন"
 
@@ -7110,6 +7488,10 @@ msgstr "Account security খুলুন"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "আপনার Yahoo অ্যাকাউন্টে Account security খুলুন।"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "ঘটনা খুলুন"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "পরের বা আগের কথোপকথন খুলুন"
 msgid "Open the reply"
 msgstr "উত্তর খুলুন"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "স্ট্যাটাস পেজ খুলুন"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "ওয়ার্কস্পেস সেটিংস খুলুন"
@@ -7291,6 +7677,14 @@ msgstr "খোলা, অ্যাসাইন না করা"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "ওপেন"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "চালু আছে"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "ঐচ্ছিক। পাবলিক পেজে দেখানো হয়।"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "গতি (সেকেন্ডে মেইল)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "পেজ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "পেজের সেটিংস"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "প্যানেলের ভাষা"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "{totalParts}-এর মধ্যে অংশ {part}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "আংশিক বিভ্রাট"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "পাসওয়ার্ড"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "পাসওয়ার্ড সেট হয়েছে"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "অতীত"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "একটি রং বেছে নিন"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "একটি রং বেছে নিন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "রং বেছে নিন"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "পিন করা"
 msgid "Pinned to the top of your list"
 msgstr "আপনার তালিকার উপরে পিন করা"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "লিংক ও লাইন ব্রেকসহ সাধারণ লেখা, সর্বোচ্চ ৫,০০০ অক্ষর।"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "রক্ষণাবেক্ষণের পরিকল্পনা করুন"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "রক্ষণাবেক্ষণের পরিকল্পনা করুন ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Planned"
@@ -7805,9 +8230,22 @@ msgstr "ই-মেইল গাইডে বর্ণিত মতো MX রে�
 msgid "Port"
 msgstr "পোর্ট"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "আপডেট প্রকাশ করুন"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "আপডেট প্রকাশ করুন ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "আপনার অ্যাপের ব্যবহারকারীদের জন্য ফিডব্যাক পোস্ট করুন"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "আপডেট পাঠান"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "প্রস্তুত হচ্ছে"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "প্রিভিউ"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "প্রিভিউ ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "{0}-এর প্রিভিউ"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "ডিজাইনের প্রিভিউ"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "প্রিভিউ লেখা"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "পেজের প্রিভিউ দেখুন"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mail শুধু আপনার নিজের কম্পি
 msgid "Public"
 msgstr "পাবলিক"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "পাবলিক ঠিকানা"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "পাবলিক কী"
@@ -7909,9 +8366,36 @@ msgstr "পাবলিক কী"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "আপনার ডকুমেন্টেশন পেজের নিচে পাবলিক থ্রেড, প্রতিটি অবস্থায়।"
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "প্রকাশ করুন"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "প্রকাশ করুন ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "এখনই প্রকাশ করুন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "পেজ প্রকাশ করুন বা প্রত্যাহার করুন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "খসড়া প্রকাশ করুন"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "এই TXT রেকর্ড আপনার ডোমেনের DNS-এ প্রকাশ করুন:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "প্রকাশিত"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "মেইলিং লিস্ট, সাবস্ক্রাইবা
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "শুধু পঠন"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "স্ট্যাটাস পেজ, উপাদান ও ঘটনা পড়ুন"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "ইমপোর্ট করা ইতিহাস সরানো হ�
 msgid "Removing imported history…"
 msgstr "ইমপোর্ট করা ইতিহাস সরানো হচ্ছে…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "নাম বদলান"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "গ্রুপের নাম বদলান"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "আবার খুলুন"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "ডিফল্টে ফিরিয়ে দিন"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Resolve"
 
@@ -8490,9 +8987,14 @@ msgstr "Resolve"
 msgid "Resolve (E)"
 msgstr "Resolve (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "সমাধান করুন বা সম্পন্ন করুন"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Resolved"
 
@@ -8655,8 +9157,15 @@ msgstr "শনিবার"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "সংরক্ষণ করুন"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "খসড়া হিসেবে সংরক্ষণ করুন"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "এখনই সংরক্ষণ করে একটি সংস্�
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "সংরক্ষিত"
 
@@ -8731,6 +9241,7 @@ msgstr "ব্রডকাস্ট শিডিউল ও পাঠান, য�
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "শিডিউল করা হয়েছে"
 
@@ -9173,6 +9684,10 @@ msgstr "সার্ভার URL"
 msgid "SES tenant"
 msgstr "SES টেন্যান্ট"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "একটি মনিটর ঠিক করেছে, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Set progress"
@@ -9217,6 +9732,7 @@ msgstr "সেট আপ হচ্ছে…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "সেটিংস"
 
@@ -9273,6 +9789,10 @@ msgstr "পাঠানো হিসেবে দেখান"
 msgid "Show more"
 msgstr "আরও দেখান"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "পেজে দেখান"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "উদ্ধৃত লেখা দেখান বা লুকান"
@@ -9304,6 +9824,10 @@ msgstr "প্রিভিউ দেখান"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "উত্তরের সময় দেখান"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "আপটাইম দেখান"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "আপনার টিম ও কনট্যাক্টদের দ�
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "আপনার টিম ও আপনি যে গ্রাহকদের উত্তর দেন তাদের দেখানো হয়"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "পাবলিক পেজে নামের নিচে দেখানো হয়।"
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "থেকে"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "{since} থেকে"
 
@@ -9536,6 +10065,10 @@ msgstr "সাইটের ঠিকানা"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "সাইট জেনারেটর"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "সাইটের লিংক"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "{starter} শুরু করেছেন · {started}"
 msgid "Starting"
 msgstr "শুরু হচ্ছে"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "শুরু"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "নিচের লেখা দিয়ে একটি পাবলিক থ্রেড শুরু করে। কথোপকথন ব্যক্তিগত ও অপরিবর্তিত থাকে; এর আর কিছু দেখানো হয় না।"
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (পোর্ট 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "অবস্থা"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "{0}-এর অবস্থা"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "{0}-এর অবস্থা, খোলা থাকা পর্যন্ত"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "স্ট্যাটাস"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "স্ট্যাটাস পেজ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "স্ট্যাটাস পেজ মুছে ফেলা হয়েছে"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "স্ট্যাটাস পেজ"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "সাপোর্ট ঠিকানা"
 msgid "Support bot"
 msgstr "সাপোর্ট বট"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "সহায়তার লিংক"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "এখন টিম"
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "আপনার গ্রাহকদের জানান আপনার পণ্য চলছে কি না। ঘটনা খুলতে, রক্ষণাবেক্ষণের পরিকল্পনা করতে ও প্রতিটি উপাদানের অবস্থা ঠিক করতে একটি ইনবক্সের পেজ বেছে নিন।"
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Takeout › Mail-এর .mbox ফাইল, আনজিপ করা।
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "আপনি যে {provider} ব্যবহারকারী দিয়ে সাইন ইন করেছেন তিনি অ্যাডমিন নন, এবং শুধু অ্যাডমিনরা প্রতিটি টিকিট পড়তে পারেন। অ্যাডমিন হিসেবে আবার সাইন ইন করুন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "আপনি পেজ প্রকাশ না করা পর্যন্ত ঠিকানাটি “পাওয়া যায়নি” উত্তর দেয়।"
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "যে ই-মেইল চ্যানেল নিশ্চিতক�
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "এলিমেন্ট এই ঠিকানাগুলোতে কাজ করে; ইনবক্স সেটিংসে আপনার ডেভ সার্ভার যোগ করুন:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "শেষ অবশ্যই শুরুর পরে হতে হবে।"
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "ইনবক্সের Amazon SES টেন্যান্ট এখ�
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "ইনবক্সের Amazon SES টেন্যান্ট আর নেই। সার্ভার এটি আবার তৈরি করে; ততক্ষণ ব্রডকাস্ট যেতে পারে না।"
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "ঘটনাটি ইতিমধ্যে সমাধান বা সম্পন্ন হয়েছে, তাই আর পরিবর্তন নেয় না।"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS ফাইলে প্রতিটি সাবস্ক্রাইবারের জন্য İYS-এর কলামে একটি সারি আছে, সাবস্ক্রাইবের জন্য ONAY ও আনসাবস্ক্রাইবের জন্য RET, যাতে তুর্কি প্রেরকরা নিজেই İYS-এ আপলোড করতে পারে। মুলতুবি সাবস্ক্রিপশন বাদ যায়।"
@@ -10350,6 +10940,10 @@ msgstr "কী এই দিনের শেষে কাজ করা বন্
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "ধরন পরে বদলানো যায় না।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "পেজের লেখার ভাষা।"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "পুরোনো মেলবক্স ওই ডোমেনের �
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "অন্য ইনবক্সের কোনো ই-মেইল চ্যানেল নেই, তাই এই ই-মেইল কথোপকথন সেখানে যেতে পারে না। আগে সেটিতে একটি ই-মেইল চ্যানেল যোগ করুন।"
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "দর্শনার্থীরা এখন পেজটি যেমন দেখেন। খসড়া বাদ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "পেজটি {address}-এ আছে। ঠিকানা বদলালে পুরোনো ঠিকানা রিডাইরেক্ট করতে থাকে।"
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "পেজটি এমন সাইটে নেই যা চ্যাট চ্যানেল অনুমতি দেয়।"
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "পেজ প্রকাশিত নয়। এটি শুধু আপনার টিম দেখতে পায়।"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "আপনার পণ্যের অংশগুলো। অবস্থা নিজে ঠিক করুন বা কোনো ঘটনাকে করতে দিন।"
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "zip পাসওয়ার্ড দিয়ে সুরক্ষি
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "zip এমন কম্প্রেশন পদ্ধতি ব্যবহার করে যা Yuva পড়তে পারে না। সাধারণ zip হিসেবে আবার তৈরি করুন।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "দৈনিক বারগুলোর টাইম জোন।"
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "তাদের সম্মতির রেকর্ড, আপনার কাছে তাদের সম্পর্কে কী আছে সেই অনুরোধের জন্য:"
@@ -10892,6 +11506,10 @@ msgstr "এই গোল একটি ফানেলের ধাপ। আগ�
 msgid "This inbox already has a list with this name."
 msgstr "এই ইনবক্সে এই নামে একটি লিস্ট আগে থেকেই আছে।"
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "এই ইনবক্সের ইতিমধ্যে একটি স্ট্যাটাস পেজ আছে।"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "এই ইনবক্সে এখনও পাঠাতে পারে এমন কোনো ই-মেইল চ্যানেল নেই। আপনি এখন লিস্ট তৈরি করতে পারেন; এর সেটিংসে উত্তরের অ্যাকাউন্টসহ ই-মেইল চ্যানেল বাছা হলে এটি পাঠায়।"
@@ -10911,6 +11529,10 @@ msgstr "এই ইনবক্সে এখনও কোনো মেইলি�
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "এটি একটি সংকুচিত আর্কাইভ। Takeout আর্কাইভ আনজিপ করুন এবং .mbox ফাইল আপলোড করুন।"
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "এটি একটি খসড়া। শুধু আপনার টিম দেখতে পায় এবং আপনি প্রকাশ না করা পর্যন্ত কোনো উপাদান বদলায় না।"
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "সময়"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "সময় অঞ্চল"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "শিরোনাম"
 
@@ -11251,6 +11875,10 @@ msgstr "আবার চেষ্টা হচ্ছে"
 msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "ডেলিভারি অসম্ভব: প্রাপক স্�
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "প্রতিটি পেজের নিচে: “এই পেজটি কি সহায়ক ছিল?”, তারপর ফিডব্যাক ও পেজের আলোচনা।"
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "রক্ষণাবেক্ষণে"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "Redirect URI-এর অধীনে Web বেছে নিন এবং নিচের রিডাইরেক্ট URL দিন।"
@@ -11401,6 +12033,22 @@ msgstr "আনপিন করুন"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "আনপিন করা হয়েছে"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "প্রকাশ প্রত্যাহার করুন"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "প্রকাশ প্রত্যাহার করুন ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "অপ্রকাশিত"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "অপ্রকাশিত, শুধু আপনার টিম প্রিভিউ দেখতে পারে"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "অযাচাইকৃত প্রেরক"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "{max} ও 100,000 সারি পর্যন্ত, হেডার সারিসহ। তুর্কি বা পশ্চিমা এনকোডিংয়ে Excel ফাইল এবং কমা, সেমিকোলন বা ট্যাব দিয়ে আলাদা কলাম যেমন আছে তেমন পড়া হয়।"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "আপডেটের লেখা"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "আপডেট"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "আপডেট হচ্ছে"
@@ -11525,6 +12181,14 @@ msgstr "সেকেন্ডে 1 থেকে 100টি মেইল ব্য
 msgid "Use 1 to 8760 hours."
 msgstr "1 থেকে 8760 ঘণ্টা ব্যবহার করুন।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "৩ থেকে ৪৮টি অক্ষর, সংখ্যা ও ভেতরের হাইফেন ব্যবহার করুন।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb-এর মতো একটি রং ব্যবহার করুন।"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "একটি কনট্যাক্টের মান ব্যবহার করুন"
@@ -11540,6 +12204,10 @@ msgstr "1 থেকে 65535 পর্যন্ত একটি পোর্ট 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "ব্রডকাস্টের জন্য আলাদা অ্যাকাউন্ট ব্যবহার করুন"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "৭ থেকে ৯০-এর মধ্যে একটি পূর্ণসংখ্যা ব্যবহার করুন।"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "সংস্করণ"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "অনেক বড় মেলবক্স? Google Takeout ফাইল দিয়ে শুরু করুন"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "পেজ দেখুন"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "কী আসে"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "তারা কীসে রাজি হয়েছে?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "গ্রাহকদের কী জানা দরকার?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "আপনার পোস্ট থাকে, মুছে ফেলা 
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "আপনার পণ্য"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "আপনার পণ্য।"
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

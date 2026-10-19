@@ -22,6 +22,7 @@ type GroupId =
   | "lists"
   | "broadcasts"
   | "analytics"
+  | "status"
 
 const GROUPS: [GroupId, WebhookEventType[]][] = [
   ["conversations", ["conversation.created", "conversation.updated", "conversation.rated"]],
@@ -33,6 +34,17 @@ const GROUPS: [GroupId, WebhookEventType[]][] = [
   ["lists", ["subscription.created", "subscription.updated"]],
   ["broadcasts", ["broadcast.updated"]],
   ["analytics", ["analytics.alert"]],
+  [
+    "status",
+    [
+      "status.component.updated",
+      "status.incident.created",
+      "status.incident.updated",
+      "status.incident.resolved",
+      "status.monitor.down",
+      "status.monitor.up",
+    ],
+  ],
 ]
 
 export function sortedEvents(events: Iterable<WebhookEventType>) {
@@ -90,6 +102,7 @@ export function EventPicker({
     lists: t`Lists`,
     broadcasts: t`Broadcasts`,
     analytics: t`Analytics`,
+    status: t`Status`,
   }
   const [open, setOpen] = useState<Set<GroupId>>(
     () => new Set(GROUPS.filter(([, evs]) => evs.some((e) => chosen.has(e))).map(([id]) => id))

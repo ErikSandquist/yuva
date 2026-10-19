@@ -794,9 +794,17 @@ msgstr "24 ay"
 msgid "3 months"
 msgstr "3 ay"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 ile 48 arası harf, rakam ve tire. Bu sunucuda benzersiz olmalı."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Bitirin"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "7 ile 90 arası."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "Bir tartışmada yanıt kabul edildi"
 msgid "A discussion started"
 msgstr "Bir tartışma başladı"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Taslağı yalnızca ekibiniz görür; yayınlayana kadar hiçbir bileşeni değiştirmez."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Bir taslak silindi"
@@ -978,6 +990,10 @@ msgstr "Yuva'nın yeni sürümü hazır."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Ekip için bir not… birini çağırmak için @ yaz"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Müşterilerin yardım alabileceği bir sayfa ya da mailto: bağlantısı."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Dosyanın bir parçası birkaç kez bozuk ulaştı. Bağlantınızı denetleyin, sonra devam etmek için dosyayı yeniden seçin."
@@ -985,6 +1001,10 @@ msgstr "Dosyanın bir parçası birkaç kez bozuk ulaştı. Bağlantınızı den
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Dosyanın bir parçası sunucunun kabul ettiğinden büyüktü. Sayfayı yenileyip dosyayı yeniden seçin."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Her bileşenin yanında bir yüzde."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "Bir mülkte en fazla 100 segment olabilir. Önce birini silin."
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "Bir mülkte en fazla 20 huni olabilir. Önce birini silin."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Müşterilerinize {inboxName} ürününün çalışıp çalışmadığını söyleyen herkese açık bir sayfa. Siz yayınlayana kadar yayında olmaz."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Oturum açma işlemi 10 dakika içinde geri dönmeli ve yalnızca bir ke
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Bir site, sayfalarından gönderilen konuşmaları gösterir."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Bir durum bileşeni değişti ya da yeni bir durum aldı"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Bir durum izleyicisi düzeldi"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Bir durum izleyicisi çöktü"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Yaklaşık {from}–{to}"
 msgid "about done by {end}"
 msgstr "tahminen {end} itibarıyla biter"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Vurgu rengi"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Kabul edilen yanıt"
@@ -1102,6 +1142,10 @@ msgstr "Hesap"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme dokümanları"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Acme durumu"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "En az bir kaynak ekleyin."
 msgid "Add channel"
 msgstr "Kanal ekle"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Bileşen ekle"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Uç nokta ekle"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Grup ekle"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Ekip ekledi"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adres"
 
@@ -1519,9 +1575,25 @@ msgstr "Zip'teki bir öğe açıldığında boyutunun 100 katından fazlasına �
 msgid "An https image URL."
 msgstr "https ile başlayan bir görsel adresi."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Bir https görseli."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Bir gelen kutusu, bir ürünün ya da markanın konuşmalarını toplar. Müşterilerinizin bildiği ürünün adını verin."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Bir olay ya da bakım değişti ya da güncelleme aldı"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Bir olay ya da bakım yayınlandı"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Bir olay çözüldü ya da bakım tamamlandı"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "başka bir gelen kutusu"
 msgid "Another SMTP server"
 msgstr "Başka bir SMTP sunucusu"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Başka bir durum sayfası bu adresi kullanıyor."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Başka bir ekip adresi"
@@ -1645,12 +1721,17 @@ msgstr "Bu anahtarı kullanan her şey hemen çalışmayı durdurur."
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API kanalı"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "API anahtarı"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "{n}. koşulun karşılaştırması"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Tamam"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Tamamlandı"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Bileşen silindi"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Bileşenler"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Etkilediği bileşenler"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Bileşenler, geçmiş, olaylar ve güncellemeler de birlikte silinir."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Anahtar oluştur"
 msgid "Create list"
 msgstr "Listeyi oluştur"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Durum sayfası oluştur"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Durum sayfası oluştur ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "E-posta kanalını oluştur"
@@ -3083,6 +3197,10 @@ msgstr "Erişim bilgileri silindi ({deletedAt}). Yuva artık {address} adresini 
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Erişim bilgileri silindi. Yuva artık {address} adresini okuyamaz."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Kritik"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Veri saklama"
 msgid "Data retention and deleting the workspace"
 msgstr "Veri saklama ve çalışma alanını silme"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Veritabanı yükseltmesi"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Tarihler"
@@ -3147,6 +3269,10 @@ msgstr "Tarihler"
 msgid "Days"
 msgstr "Günler"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Geçmiş günü"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Tartışmalara kimin yazabileceğine karar verin"
@@ -3154,6 +3280,10 @@ msgstr "Tartışmalara kimin yazabileceğine karar verin"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Varsayılan: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Düşük performans"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "Varsayılan: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Sil"
 
@@ -3170,8 +3302,13 @@ msgstr "Sil"
 msgid "Delete “{name}”?"
 msgstr "“{name}” silinsin mi?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "{0} silinsin mi?"
 
@@ -3184,9 +3321,22 @@ msgstr "{name} silinsin mi?"
 msgid "Delete after (days)"
 msgstr "Silme süresi (gün)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Bileşeni sil"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Taslağı sil"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Taslağı sil ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Grubu sil"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Listeyi sil"
 msgid "Delete my account"
 msgstr "Hesabımı sil"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Sayfayı sil"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Aboneliği sil"
@@ -3212,6 +3366,10 @@ msgstr "Aboneliği sil"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Yuva için oluşturduğunuz uygulamayı silin"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Taslağı sil"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "Hesabınız silinsin mi?"
 msgid "Deleted by its author."
 msgstr "Yazarı tarafından silindi."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Silinmiş bileşen"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Kanalları, konuşmaları, mesajları ve ekleriyle birlikte silinir. Bu 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Listeyi, aboneliklerini ve izin kayıtlarını siler. İleride göstermeniz gerekebilecekse önce izin kayıtlarını indirin."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Sayfayı bileşenleri, geçmişleri, olayları ve güncellemeleriyle birlikte siler. Herkese açık adres çalışmaz olur."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Gönderim ayrıntıları"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Reddet"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Açıklama"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Masaüstü bildirimleri bu site için tarayıcı ayarlarında engelli, b
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Bilgiler"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Dışarıda kalan satırları indir"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Taslak"
 
@@ -3570,6 +3746,10 @@ msgstr "Taslağı yazan"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Taslak: {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Taslak silindi"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "E-posta, canlı sohbet ve uygulama içi mesajlar"
 msgid "E-mail: {label}"
 msgstr "E-posta: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Olay açıkken her bileşen bu durumda olur."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Bakım sürerken her bileşen bu durumda olur."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Her konuşma, {provider} tarafından bildirilen durumunu korur: açık, beklemede ya da kapalı."
@@ -3703,6 +3891,7 @@ msgstr "Her biri tüm mesajları ve notlarıyla"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -3714,9 +3903,22 @@ msgstr "API anahtarını düzenle"
 msgid "Edit canned reply"
 msgstr "Hazır yanıtı düzenle"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Bileşeni düzenle"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Tasarımı düzenle"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Ayrıntıları düzenle"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Ayrıntıları düzenle ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Tasarımı düzenle ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Olayı düzenle"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Başlığı düzenle"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Bu güncellemeyi düzenle"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Düzenle ya da masaüstünde, telefonda veya koyu modda önizle"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "düzenlendi"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "API hataları arttı"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Uç nokta"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Uç noktalar"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Biter"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "ilk yanıt {first}"
 msgid "First rows of the file"
 msgstr "Dosyanın ilk satırları"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "İlk güncelleme"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Önce bir e-posta adresi"
@@ -4428,6 +4655,10 @@ msgstr "Karşılama mesajı"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Yeni konuşmaları e-postayla karşılar; bu süre içinde her kişiye bir kez. Otomatik postalara ve spama hiç gönderilmez."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Grup"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Verildi: {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Açık konuşması olan"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Bir olay tarafından tutuluyor, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "Merhaba! Size nasıl yardımcı olabiliriz?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Gizli"
 
@@ -4503,6 +4740,10 @@ msgstr "Ekip tarafından gizlendi"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Gizle"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Sayfadan gizle"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Geri döndüm"
 msgid "Idea"
 msgstr "Fikir"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Belirlendi"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Kimlik doğrulanmadı"
@@ -4693,6 +4938,10 @@ msgstr "Bu posta kutusunda IMAP kapalı. {provider} ayarlarından açıp yeniden
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "IMAP sunucusu"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Etki"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "Microsoft 365'te bu, posta kutusu yönlendirmesi ya da bir posta akışı kuralıdır; bir yöneticinin önce dışa yönlendirmeye izin vermesi gerekebilir."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "Üzerinde çalışılıyor"
 
@@ -4888,6 +5138,16 @@ msgstr "Gelen kutuları"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Gelen kutuları 80 karakterden uzun konuları keser."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Olay"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Olaylar"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Notları dahil et"
@@ -4922,6 +5182,10 @@ msgstr "Sunucuyu VS Code'a kurun; VS Code sunucunun sayfasını açar, orada Ins
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Kurulum kimliği"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "İnceleniyor"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Bu cihaz artık bildirim almayacak."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Erişimi hemen sona erer. Yeniden kullanmak için tekrar bağlamanız gerekir."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Bileşenleri grupsuz olarak kalır."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "İzin kaydı da birlikte silinir, böylece nasıl izin verdiğini artık gösteremezsiniz. Yalnızca e-posta göndermeyi durdurmak istiyorsanız aboneliğini sonlandırın."
@@ -5060,6 +5328,10 @@ msgstr "İzin kaydı da birlikte silinir, böylece nasıl izin verdiğini artık
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "İzin kaydı da birlikte silinir. Abonelikten çıktığı için adres reddetmiş olarak hatırlanır; ekipten kimse onu yeniden ekleyemez."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Geçmişi silinir. Onu anan olaylar artık anmaz."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Etiketler (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Dil"
 
@@ -5254,6 +5527,10 @@ msgstr "Yazan ekip arkadaşına bırak"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Önce metinden, sonra bloktan çık"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Herkese açık sayfada ve genel durumda yer almaz."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Görselleri yükle"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
@@ -5406,6 +5684,10 @@ msgstr "Kilitli"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Kilitli: okuyucular artık buraya yazamaz. Siz hâlâ yazabilirsiniz."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "Logo adresi"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Zip içinde Maildir"
 msgid "Mailing lists"
 msgstr "E-posta listeleri"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Bakım"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Büyük"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Büyük kesinti"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Herkese aç"
@@ -5551,6 +5845,10 @@ msgstr "Etiketleri yönetme"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "E-posta listelerini ve aboneleri yönetme"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Durum sayfalarını yönet, bileşen durumlarını ayarla ve olayları yürüt"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Taşıma adımları"
 msgid "Mine"
 msgstr "Bana atanan"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Küçük"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "Denetimli"
 msgid "Monday"
 msgstr "Pazartesi"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "İzleniyor"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Diğer işlemler"
@@ -5812,6 +6118,12 @@ msgstr "Diğer işlemler"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "{address} için diğer işlemler"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "{0} için daha fazlası"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "En çok puan, açık geri bildirim, açık tartışma ve bekleyen gönde
 msgid "Most votes"
 msgstr "En çok oy"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Aşağı taşı"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Posta kutularını Yuva'ya taşıma: sağlayıcıyı bulma, bağlanma, tarama, kopyalama ve yönlendirme"
@@ -5873,6 +6189,10 @@ msgstr "Listede gezin"
 msgid "Move through the posts"
 msgstr "Gönderiler arasında gezin"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Durum sayfalarında gezin"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Gelen kutusuna taşı"
@@ -5881,6 +6201,10 @@ msgstr "Gelen kutusuna taşı"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Yuva'ya taşı"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Yukarı taşı"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Profilim"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Ad"
 
@@ -6078,6 +6405,18 @@ msgstr "son {days} günde yeni"
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Yeni gelen kutusu…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Yeni olay"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Yeni olay ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Yeni olay ya da durum sayfası"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Henüz kanal yok. Müşteriler {0} için yazabilsin diye bir tane ekle."
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Bu gelen kutusunun, sayfanın sitesine izin veren ve tartışmaları açık bir sohbet kanalı yok. Tartışmaları gelen kutusu ayarlarından açın."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "Bu grupta bileşen yok."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Henüz bileşen yok. Müşterilerin güvendiği ürün parçalarını ekleyin."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Onay istenmiyor"
@@ -6350,13 +6697,26 @@ msgstr "Kayıtlı olay yok."
 msgid "No feedback from this page."
 msgstr "Bu sayfadan geri bildirim yok."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Grup yok"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Gizli tartışma yok."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Etki yok"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Henüz içe aktarma yok."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "Durum sayfası gösterilecek gelen kutusu yok."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "Açık konuşma yok. Yenileri geldikçe burada ve gelen kutusunda görü
 msgid "No open feedback."
 msgstr "Açık geri bildirim yok."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "Açık olay ya da bakım yok."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Eşleşen başka kişi yok."
@@ -6467,6 +6831,10 @@ msgstr "SMTP hesabı yok"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "SMTP hesabı yok"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Henüz durum sayfası yok. Sahipler ve yöneticiler oluşturur."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Hiçbir şey kaybolmaz: kopyalama sürdüğünde kaldığı yerden devam eder."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Henüz çözülen yok."
 
@@ -6982,6 +7351,14 @@ msgstr "Çevrimiçi durum"
 msgid "Only {0}"
 msgstr "Sadece {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Yalnızca taslak silinebilir. Sayfada hiç gösterilmedi."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Yalnızca taslak silinebilir. Bunun yerine bir güncelleme yazın."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Yalnızca bu listeyi almayı kabul etmiş kişileri ekleyin. Buraya girdikleriniz izin kaydı olarak saklanır."
@@ -7083,6 +7460,7 @@ msgstr "açık"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Açık"
 
@@ -7110,6 +7488,10 @@ msgstr "Hesap güvenliğini aç"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Yahoo hesabınızda Hesap güvenliği'ni açın."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Olay aç"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Sonraki ya da önceki konuşmayı aç"
 msgid "Open the reply"
 msgstr "Yanıtı aç"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Durum sayfasını aç"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Çalışma alanı ayarlarını aç"
@@ -7291,6 +7677,14 @@ msgstr "açık, atanmamış"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Açılış"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "Çalışıyor"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "İsteğe bağlı. Herkese açık sayfada gösterilir."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Hız (saniyede e-posta)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Sayfa"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Sayfa ayarları"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Panel dili"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Parça {part} / {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Kısmi kesinti"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Parola"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Kayıtlı"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Geçmiş"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Renk seç"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Bir renk seçin."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Renk seç"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Sabitlenenler"
 msgid "Pinned to the top of your list"
 msgstr "Listenizin en üstüne sabitlendi"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Bağlantılı ve satır sonlu düz metin, en fazla 5.000 karakter."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Bakım planla"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Bakım planla ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Planlandı"
@@ -7805,9 +8230,22 @@ msgstr "MX kayıtlarını e-posta rehberinde anlatıldığı gibi Yuva'ya yönel
 msgid "Port"
 msgstr "Port"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Güncelleme yaz"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Güncelleme yaz ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Uygulamanızın kullanıcıları adına geri bildirim gönderme"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Güncellemeyi gönder"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Hazırlanıyor"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Önizleme"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Önizle ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "{0} önizlemesi"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Tasarımın önizlemesi"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Önizleme metni"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Sayfayı önizle"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mail'e IMAP ile yalnızca kendi bilgisayarınızdaki Proton Mail 
 msgid "Public"
 msgstr "Herkese açık"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Herkese açık adres"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Genel anahtar"
@@ -7909,9 +8366,36 @@ msgstr "Genel anahtar"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Dokümantasyon sayfalarınızın altındaki herkese açık tartışmalar, her durumda."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Yayınla"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Yayınla ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Şimdi yayınla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Sayfayı yayınla ya da yayından kaldır"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Taslağı yayınla"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Alan adınızın DNS'ine bu TXT kaydını ekleyin:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Yayında"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "E-posta listelerini, aboneleri ve izin kayıtlarını okuma"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Salt okunur"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Durum sayfalarını, bileşenleri ve olayları oku"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Aktarılan geçmiş kaldırılıyor"
 msgid "Removing imported history…"
 msgstr "Aktarılan geçmiş kaldırılıyor…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Yeniden adlandır"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Grubu yeniden adlandır"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Yeniden aç"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Varsayılanlara dön"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Çözüldü say"
 
@@ -8490,9 +8987,14 @@ msgstr "Çözüldü say"
 msgid "Resolve (E)"
 msgstr "Çözüldü say (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Çöz ya da tamamla"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Çözüldü"
 
@@ -8655,8 +9157,15 @@ msgstr "Cumartesi"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Kaydet"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Taslak olarak kaydet"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Şimdi kaydet ve sürüm sakla"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Kaydedildi"
 
@@ -8731,6 +9241,7 @@ msgstr "Çalışma alanı anahtarların ve asistanların göndermesine izin veri
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Zamanlandı"
 
@@ -9173,6 +9684,10 @@ msgstr "Sunucu adresi"
 msgid "SES tenant"
 msgstr "SES kiracısı"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Bir izleyici ayarladı, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "İlerleme belirle"
@@ -9217,6 +9732,7 @@ msgstr "Kuruluyor…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Ayarlar"
 
@@ -9273,6 +9789,10 @@ msgstr "Gönderildiği gibi göster"
 msgid "Show more"
 msgstr "Daha fazla göster"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Sayfada göster"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Alıntıyı göster ya da gizle"
@@ -9304,6 +9824,10 @@ msgstr "Önizlemeyi göster"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Yanıt süresini göster"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Çalışma süresini göster"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Ekibin ve müşteriler görür"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Ekibiniz ve yanıt verdiğiniz müşteriler görür"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Herkese açık sayfada adın altında gösterilir."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "Başlangıç"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "{since} tarihinden beri"
 
@@ -9536,6 +10065,10 @@ msgstr "Site adresi"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Site oluşturucu"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Site bağlantısı"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Başlatan: {starter} · {started}"
 msgid "Starting"
 msgstr "Başlıyor"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Başlar"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Aşağıdaki metinle herkese açık bir tartışma başlatır. Konuşma gizli ve olduğu gibi kalır; başka hiçbir kısmı gösterilmez."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Durum"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "{0} durumu"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "{0} durumu, açıkken"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Durum"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Durum sayfası"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Durum sayfası silindi"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Durum sayfaları"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Destek adresi"
 msgid "Support bot"
 msgstr "Destek botu"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Destek bağlantısı"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "destek@ornek.com"
@@ -9995,6 +10569,10 @@ msgstr "Ekip şu an"
 msgid "teammate@company.com"
 msgstr "ekiparkadasi@sirket.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Müşterilerinize ürününüzün çalışıp çalışmadığını söyleyin. Olay açmak, bakım planlamak ve her bileşenin durumunu ayarlamak için bir gelen kutusunun sayfasını seçin."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Takeout › Mail klasöründeki, zip'ten çıkarılmış .mbox dosyası.
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "Oturum açtığınız {provider} kullanıcısı yönetici değil ve tüm talepleri yalnızca yöneticiler okuyabilir. Yönetici olarak yeniden oturum açın."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "Sayfayı yayınlayana kadar adres “bulunamadı” yanıtı verir."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "Onay ve hoş geldin e-postalarını gönderen e-posta kanalı. SMTP hesa
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Öğeler şu adreslerde çalışır; geliştirme sunucunuzu gelen kutusu ayarlarından ekleyin:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "Bitiş, başlangıçtan sonra olmalı."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "Gelen kutusunun Amazon SES kiracısı hâlâ kuruluyor. Bülten gönderi
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Gelen kutusunun Amazon SES kiracısı artık yok. Sunucu onu yeniden oluşturur; o zamana kadar bülten gönderilemez."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "Olay zaten çözüldü ya da tamamlandı; artık değişiklik kabul etmez."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS dosyası, İYS'nin sütunlarıyla abone başına bir satır içerir: abone olanlar için ONAY, ayrılanlar için RET. İzinleri İYS'ye kendiniz yüklemeniz içindir. Onay bekleyen abonelikler dosyaya alınmaz."
@@ -10350,6 +10940,10 @@ msgstr "Anahtar bu günün sonunda çalışmayı bırakır."
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Tür daha sonra değiştirilemez."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "Sayfadaki sözcüklerin dili."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "Eski posta kutusu o alan adına gelen e-postaları artık almaz."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Diğer gelen kutusunun e-posta kanalı yok, bu yüzden bu e-posta konuşması oraya taşınamaz. Önce ona bir e-posta kanalı ekleyin."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "Sayfa, ziyaretçilerin şu an gördüğü haliyle. Taslaklar dahil değil."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "Sayfa şu adreste: {address}. Değiştirirseniz eski adres yönlendirmeye devam eder."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "Sayfa, sohbet kanalının izin verdiği bir sitede değil."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "Sayfa yayında değil. Bunu yalnızca ekibiniz görür."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Ürününüzün parçaları. Durumu elle ayarlayın ya da bir olayın ayarlamasına izin verin."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "Zip parolayla korunuyor. Parolasız olarak yeniden oluşturun."
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "Zip, Yuva'nın okuyamadığı bir sıkıştırma yöntemi kullanıyor. Sıradan bir zip olarak yeniden oluşturun."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "Gün çubuklarının saat dilimi."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Hakkında ne tuttuğunuzu sorarsa, izin kayıtları:"
@@ -10892,6 +11506,10 @@ msgstr "Bu hedef bir huninin adımı. Önce onu huniden çıkarın ya da huniyi 
 msgid "This inbox already has a list with this name."
 msgstr "Bu gelen kutusunda bu adla bir liste zaten var."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "Bu gelen kutusunun zaten bir durum sayfası var."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Bu gelen kutusunda henüz gönderebilen bir e-posta kanalı yok. Listeyi şimdi oluşturabilirsiniz; ayarlarından yanıt hesabı olan bir e-posta kanalı seçildiğinde göndermeye başlar."
@@ -10911,6 +11529,10 @@ msgstr "Bu gelen kutusunun henüz e-posta listesi yok. Bülten yalnızca bir lis
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Bu sıkıştırılmış bir arşiv. Takeout arşivini açın ve .mbox dosyasını yükleyin."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Bu bir taslak. Yalnızca ekibiniz görür ve yayınlayana kadar hiçbir bileşeni değiştirmez."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Zaman"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Saat dilimi"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Başlık"
 
@@ -11251,6 +11875,10 @@ msgstr "Yeniden deneniyor"
 msgid "Tuesday"
 msgstr "Salı"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "Ulaşmıyor: alıcı spam olarak işaretledi, {since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Her sayfanın altında: “Bu sayfa yararlı oldu mu?”, ardından geri bildirim ve sayfanın tartışmaları."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "Bakımda"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "Redirect URI altında Web'i seçin ve aşağıdaki yönlendirme URL'sini girin."
@@ -11401,6 +12033,22 @@ msgstr "Sabitlemeyi kaldır"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Sabitleme kaldırıldı"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Yayından kaldır"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Yayından kaldır ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Yayında değil"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Yayında değil, yalnızca ekibiniz önizleyebilir"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Doğrulanmamış gönderen"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "En fazla {max} ve 100.000 satır, bir başlık satırıyla. Türkçe ya da Batı dilleri kodlamasındaki Excel dosyaları ve virgül, noktalı virgül ya da sekmeyle ayrılmış sütunlar olduğu gibi okunur."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Güncelleme metni"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Güncellemeler"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Güncelleniyor"
@@ -11525,6 +12181,14 @@ msgstr "Saniyede 1 ile 100 arası e-posta kullanın."
 msgid "Use 1 to 8760 hours."
 msgstr "1 ile 8760 saat arası girin."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 ile 48 arası harf, rakam ve iç tire kullanın."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb gibi bir renk kullanın."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Bir kişinin bilgilerini kullan"
@@ -11540,6 +12204,10 @@ msgstr "1 ile 65535 arası bir port girin."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Bültenler için ayrı bir hesap kullan"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "7 ile 90 arasında bir tam sayı kullanın."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Sürümler"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Posta kutunuz çok mu büyük? Bir Google Takeout dosyasıyla başlayın"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Sayfayı görüntüle"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Neler aktarılacak"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "Neyi kabul ettiler?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "Müşterilerin neyi bilmesi gerekiyor?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Gönderileriniz kalır ve silinmiş bir okuyucudan gelmiş gibi görün�
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Ürününüz"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Ürününüz."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

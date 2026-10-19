@@ -794,9 +794,17 @@ msgstr "24 місяці"
 msgid "3 months"
 msgstr "3 місяці"
 
+#: src/features/status/CreatePageDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Від 3 до 48 літер, цифр і дефісів. Унікальний на цьому сервері."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Завершіть"
+
+#: src/features/status/SettingsTab.tsx
+msgid "7 to 90."
+msgstr "Від 7 до 90."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -914,6 +922,10 @@ msgstr "В обговоренні з'явилася прийнята відпо�
 msgid "A discussion started"
 msgstr "Обговорення розпочалося"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "A draft is seen only by your team and changes no component until you publish it."
+msgstr "Чернетку бачить лише ваша команда, і вона не змінює жодного компонента, доки ви її не опублікуєте."
+
 #: src/components/common/text.ts
 msgid "A draft was discarded"
 msgstr "Чернетку відхилено"
@@ -978,6 +990,10 @@ msgstr "Готова нова версія Yuva."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Нотатка для команди… введіть @, щоб згадати колегу"
 
+#: src/features/status/SettingsTab.tsx
+msgid "A page or a mailto: link where customers get help."
+msgstr "Сторінка або посилання mailto:, де клієнти отримують допомогу."
+
 #: src/components/common/text.ts
 msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
 msgstr "Частина файлу кілька разів надійшла пошкодженою. Перевірте з'єднання й виберіть файл знову, щоб продовжити."
@@ -985,6 +1001,10 @@ msgstr "Частина файлу кілька разів надійшла по�
 #: src/components/common/text.ts
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Частина файлу виявилася більшою, ніж приймає сервер. Перезавантажте сторінку й виберіть файл знову."
+
+#: src/features/status/SettingsTab.tsx
+msgid "A percentage next to each component."
+msgstr "Відсоток поруч із кожним компонентом."
 
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
@@ -1001,6 +1021,10 @@ msgstr "У ресурсу може бути щонайбільше 100 сегм�
 #: src/components/common/text.ts
 msgid "A property can have at most 20 funnels. Delete one first."
 msgstr "У ресурсу може бути щонайбільше 20 воронок. Спершу видаліть одну."
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
+msgstr "Публічна сторінка, яка повідомляє клієнтам, чи працює {inboxName}. Доки ви її не опублікуєте, вона лишається прихованою."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1029,6 +1053,18 @@ msgstr "Вхід має повернутися протягом 10 хвилин 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations sent from its pages."
 msgstr "Сайт показує розмови, надіслані з його сторінок."
+
+#: src/components/common/text.ts
+msgid "A status component changed or got a new state"
+msgstr "Компонент статусу змінився або отримав новий стан"
+
+#: src/components/common/text.ts
+msgid "A status monitor recovered"
+msgstr "Монітор статусу відновився"
+
+#: src/components/common/text.ts
+msgid "A status monitor went down"
+msgstr "Монітор статусу перестав працювати"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1071,6 +1107,10 @@ msgstr "Про {from} до {to}"
 msgid "about done by {end}"
 msgstr "готово приблизно до {end}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Акцентний колір"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Прийняте рішення"
@@ -1102,6 +1142,10 @@ msgstr "Обліковий запис"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Документація Acme"
+
+#: src/features/status/CreatePageDialog.tsx
+msgid "Acme status"
+msgstr "Статус Acme"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
@@ -1185,10 +1229,20 @@ msgstr "Додайте принаймні одне джерело."
 msgid "Add channel"
 msgstr "Додати канал"
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add component"
+msgstr "Додати компонент"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Додати ендпоїнт"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "Add group"
+msgstr "Додати групу"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1260,6 +1314,8 @@ msgstr "Додано командою"
 
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Адреса"
 
@@ -1519,9 +1575,25 @@ msgstr "Файл у zip розпаковується в обсяг, що біл�
 msgid "An https image URL."
 msgstr "URL зображення через https."
 
+#: src/features/status/SettingsTab.tsx
+msgid "An https image."
+msgstr "Зображення за https."
+
 #: src/features/setup/NameStep.tsx
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Скринька збирає розмови одного продукту або бренду. Назвіть її так, як продукт знають ваші клієнти."
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance changed or got an update"
+msgstr "Інцидент або обслуговування змінилися або отримали оновлення"
+
+#: src/components/common/text.ts
+msgid "An incident or maintenance was published"
+msgstr "Інцидент або обслуговування опубліковано"
+
+#: src/components/common/text.ts
+msgid "An incident was resolved or maintenance completed"
+msgstr "Інцидент розв’язано або обслуговування завершено"
 
 #: src/features/settings/members/Invites.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
@@ -1593,6 +1665,10 @@ msgstr "інша скринька"
 msgid "Another SMTP server"
 msgstr "Інший SMTP-сервер"
 
+#: src/components/common/text.ts
+msgid "Another status page already uses this address."
+msgstr "Інша сторінка статусу вже використовує цю адресу."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
 msgstr "Ще одна адреса команди"
@@ -1645,12 +1721,17 @@ msgstr "Усе, що використовує цей ключ, одразу пе
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/status/ComponentDialogs.tsx
 msgid "API"
 msgstr "API"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "Канал API"
+
+#: src/features/status/IncidentPane.tsx
+msgid "API key"
+msgstr "Ключ API"
 
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -2189,6 +2270,10 @@ msgstr "Чи можна запланувати розсилку для кожн�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -2617,12 +2702,32 @@ msgid "Comparison of condition {n}"
 msgstr "Порівняння умови {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Complete"
 msgstr "Завершено"
 
 #: src/features/migrations/text.ts
+#: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Завершено"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Component deleted"
+msgstr "Компонент видалено"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Components"
+msgstr "Компоненти"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Components it touches"
+msgstr "Зачеплені компоненти"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Components, history, incidents and updates are deleted with it."
+msgstr "Компоненти, історія, інциденти й оновлення видаляються разом із нею."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -3047,6 +3152,15 @@ msgstr "Створити ключ"
 msgid "Create list"
 msgstr "Створити список"
 
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page"
+msgstr "Створити сторінку статусу"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Create status page ({newKey})"
+msgstr "Створити сторінку статусу ({newKey})"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Створити поштовий канал"
@@ -3083,6 +3197,10 @@ msgstr "Облікові дані видалено {deletedAt}. Yuva більш�
 #: src/features/migrations/DoneStep.tsx
 msgid "Credentials deleted. Yuva can no longer read {address}."
 msgstr "Облікові дані видалено. Yuva більше не може читати {address}."
+
+#: src/features/status/text.tsx
+msgid "Critical"
+msgstr "Критичний"
 
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
@@ -3138,6 +3256,10 @@ msgstr "Зберігання даних"
 msgid "Data retention and deleting the workspace"
 msgstr "Зберігання даних і видалення робочого простору"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Database upgrade"
+msgstr "Оновлення бази даних"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
 msgstr "Дати"
@@ -3147,6 +3269,10 @@ msgstr "Дати"
 msgid "Days"
 msgstr "Дні"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Days of history"
+msgstr "Днів історії"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Вирішіть, хто може писати в обговореннях"
@@ -3154,6 +3280,10 @@ msgstr "Вирішіть, хто може писати в обговорення
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "За замовчуванням: {fallback}"
+
+#: src/features/status/text.tsx
+msgid "Degraded performance"
+msgstr "Знижена продуктивність"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -3163,6 +3293,8 @@ msgstr "За замовчуванням: {fallback}"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Видалити"
 
@@ -3170,8 +3302,13 @@ msgstr "Видалити"
 msgid "Delete “{name}”?"
 msgstr "Видалити «{name}»?"
 
+#. placeholder {0}: c.name
+#. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/ComponentsTab.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Видалити {0}?"
 
@@ -3184,9 +3321,22 @@ msgstr "Видалити {name}?"
 msgid "Delete after (days)"
 msgstr "Видаляти через (днів)"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete component"
+msgstr "Видалити компонент"
+
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Delete draft"
 msgstr "Видалити чернетку"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Delete draft ({removeKey})"
+msgstr "Видалити чернетку ({removeKey})"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Delete group"
+msgstr "Видалити групу"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Delete inbox"
@@ -3205,6 +3355,10 @@ msgstr "Видалити список"
 msgid "Delete my account"
 msgstr "Видалити мій обліковий запис"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Delete page"
+msgstr "Видалити сторінку"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Видалити підписку"
@@ -3212,6 +3366,10 @@ msgstr "Видалити підписку"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Видаліть застосунок, створений для Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the draft"
+msgstr "Видалити чернетку"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -3265,6 +3423,10 @@ msgstr "Видалити ваш обліковий запис?"
 msgid "Deleted by its author."
 msgstr "Видалено автором."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Deleted component"
+msgstr "Видалений компонент"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
@@ -3288,6 +3450,10 @@ msgstr "Видаляє її канали, розмови, повідомленн
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Deletes the list, its subscriptions and their consent records. Download the consent export first if you may need to show it later."
 msgstr "Видаляє список, його підписки та записи про згоду. Спершу завантажте експорт згод, якщо його може знадобитися показати пізніше."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deletes the page with its components, their history, incidents and updates. The public address stops working."
+msgstr "Видаляє сторінку разом із компонентами, їхньою історією, інцидентами та оновленнями. Публічна адреса перестане працювати."
 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
@@ -3315,6 +3481,11 @@ msgstr "Відомості про доставку"
 #: src/features/oauth/ConsentPage.tsx
 msgid "Deny"
 msgstr "Відхилити"
+
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/SettingsTab.tsx
+msgid "Description"
+msgstr "Опис"
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -3345,6 +3516,10 @@ msgstr "Сповіщення на робочому столі заблокова
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Подробиці"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Deutsch"
+msgstr "Deutsch"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Developer"
@@ -3554,6 +3729,7 @@ msgid "Download the rows left out"
 msgstr "Завантажити пропущені рядки"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentsTab.tsx
 msgid "Draft"
 msgstr "Чернетка"
 
@@ -3570,6 +3746,10 @@ msgstr "Автор чернетки"
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Чернетка від {author}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Draft deleted"
+msgstr "Чернетку видалено"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Draft saved"
@@ -3669,6 +3849,14 @@ msgstr "E-mail, чат на сайті й повідомлення в засто
 msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the incident is open."
+msgstr "Доки інцидент відкритий, кожен компонент перебуває в цьому стані."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Each component gets this state while the maintenance is open."
+msgstr "Доки триває обслуговування, кожен компонент перебуває в цьому стані."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Кожна розмова зберігає статус, який указує {provider}: відкрита, в очікуванні або закрита."
@@ -3703,6 +3891,7 @@ msgstr "Кожна з усіма повідомленнями й нотатка�
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Edit"
 msgstr "Змінити"
 
@@ -3714,9 +3903,22 @@ msgstr "Змінити ключ API"
 msgid "Edit canned reply"
 msgstr "Змінити готову відповідь"
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Edit component"
+msgstr "Змінити компонент"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Змінити дизайн"
+
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details"
+msgstr "Змінити подробиці"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit details ({editKey})"
+msgstr "Змінити подробиці ({editKey})"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3731,17 +3933,30 @@ msgid "Edit the design ({edit})"
 msgstr "Змінити дизайн ({edit})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the incident"
+msgstr "Змінити інцидент"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Змінити заголовок"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Edit this update"
+msgstr "Змінити це оновлення"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Редагувати або переглянути на комп'ютері, телефоні чи в темній темі"
 
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "edited"
 msgstr "змінено"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Elevated API errors"
+msgstr "Підвищена кількість помилок API"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
@@ -3774,6 +3989,14 @@ msgstr "Ендпоїнт"
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Ендпоїнти"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Ends"
+msgstr "Кінець"
+
+#: src/features/status/SettingsTab.tsx
+msgid "English"
+msgstr "English"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Enter a host name or IP address."
@@ -4119,6 +4342,10 @@ msgstr "перша відповідь у {first}"
 msgid "First rows of the file"
 msgstr "Перші рядки файлу"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "First update"
+msgstr "Перше оновлення"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Спершу адреса електронної пошти"
@@ -4428,6 +4655,10 @@ msgstr "Привітання"
 msgid "Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam."
 msgstr "Вітає нові розмови електронною поштою один раз на контакт протягом інтервалу. Ніколи не надсилається на автоматичну пошту й спам."
 
+#: src/features/status/ComponentDialogs.tsx
+msgid "Group"
+msgstr "Група"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -4440,6 +4671,10 @@ msgstr "Передано: {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Є відкрита розмова"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Held by an incident, {since}"
+msgstr "Утримується інцидентом, {since}"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4726,8 @@ msgstr "Привіт! Чим ми можемо допомогти?"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Hidden"
 msgstr "Приховано"
 
@@ -4503,6 +4740,10 @@ msgstr "Приховано командою"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Приховати"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Hide from the page"
+msgstr "Приховати на сторінці"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
@@ -4633,6 +4874,10 @@ msgstr "Я повернувся"
 msgid "Idea"
 msgstr "Ідея"
 
+#: src/features/status/text.tsx
+msgid "Identified"
+msgstr "Причину виявлено"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Identity not verified"
 msgstr "Особу не підтверджено"
@@ -4693,6 +4938,10 @@ msgstr "IMAP для цієї скриньки вимкнено. Увімкніт
 #: src/features/migrations/ConnectStep.tsx
 msgid "IMAP server"
 msgstr "Сервер IMAP"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Impact"
+msgstr "Вплив"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -4814,6 +5063,7 @@ msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin
 msgstr "У Microsoft 365 це переспрямування скриньки або правило потоку пошти; адміністратору спершу може знадобитися дозволити зовнішнє переспрямування."
 
 #: src/components/common/text.ts
+#: src/features/status/text.tsx
 msgid "In progress"
 msgstr "У роботі"
 
@@ -4888,6 +5138,16 @@ msgstr "Скриньки"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Вхідні обрізають теми довші за 80 символів."
 
+#: src/features/status/text.tsx
+msgid "Incident"
+msgstr "Інцидент"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Incidents"
+msgstr "Інциденти"
+
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Включити нотатки"
@@ -4922,6 +5182,10 @@ msgstr "Установіть сервер у VS Code; він відкриє ст
 #: src/features/conversation/Feedback.tsx
 msgid "Installation"
 msgstr "Установлення"
+
+#: src/features/status/text.tsx
+msgid "Investigating"
+msgstr "Розслідується"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invite"
@@ -5053,6 +5317,10 @@ msgstr "Він більше не отримуватиме сповіщень."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Його доступ припиняється одразу. Щоб використовувати його знову, підключіть його заново."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Its components stay, without a group."
+msgstr "Її компоненти залишаються без групи."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
 msgstr "Запис про згоду видаляється разом з ним, тож показати, як вони погодилися, стане неможливо. Щоб припинити писати їм, краще відпишіть їх."
@@ -5060,6 +5328,10 @@ msgstr "Запис про згоду видаляється разом з ним
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it. Because they unsubscribed, the address is remembered as opted out, so nobody on the team can add it again."
 msgstr "Запис про згоду видаляється разом з ним. Оскільки вони відписалися, адресу запам'ятовують як ту, що відмовилася, і ніхто в команді не зможе додати її знову."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Its history is deleted. Incidents that named it no longer do."
+msgstr "Його історія видаляється. Інциденти, що його згадували, більше не згадують."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
@@ -5158,6 +5430,7 @@ msgstr "Мітки (L)"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Мова"
 
@@ -5254,6 +5527,10 @@ msgstr "Залишити тому, хто друкує"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Leave the text, then the block"
 msgstr "Залишити текст, потім блок"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Left off the public page and its overall state."
+msgstr "Не показується на публічній сторінці й не враховується в її загальному стані."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
@@ -5372,6 +5649,7 @@ msgstr "Завантажити зображення"
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Завантажити ще"
@@ -5406,6 +5684,10 @@ msgstr "Заблоковано"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Заблоковано: читачі більше не можуть тут писати. Ви можете."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL логотипа"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
@@ -5523,6 +5805,18 @@ msgstr "Maildir у zip"
 msgid "Mailing lists"
 msgstr "Списки розсилки"
 
+#: src/features/status/text.tsx
+msgid "Maintenance"
+msgstr "Обслуговування"
+
+#: src/features/status/text.tsx
+msgid "Major"
+msgstr "Значний"
+
+#: src/features/status/text.tsx
+msgid "Major outage"
+msgstr "Масштабний збій"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Зробити публічним"
@@ -5551,6 +5845,10 @@ msgstr "Керувати мітками"
 #: src/components/common/text.ts
 msgid "Manage mailing lists and subscribers"
 msgstr "Керувати списками розсилки й підписниками"
+
+#: src/components/common/text.ts
+msgid "Manage status pages, set component states and run incidents"
+msgstr "Керувати сторінками статусу, задавати стани компонентів і вести інциденти"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -5790,6 +6088,10 @@ msgstr "Кроки міграції"
 msgid "Mine"
 msgstr "Мої"
 
+#: src/features/status/text.tsx
+msgid "Minor"
+msgstr "Незначний"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -5805,6 +6107,10 @@ msgstr "З модерацією"
 msgid "Monday"
 msgstr "Понеділок"
 
+#: src/features/status/text.tsx
+msgid "Monitoring"
+msgstr "Спостереження"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
 msgstr "Інші дії"
@@ -5812,6 +6118,12 @@ msgstr "Інші дії"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "More actions for {address}"
 msgstr "Інші дії для {address}"
+
+#. placeholder {0}: c.name
+#. placeholder {0}: s.group.name
+#: src/features/status/ComponentsTab.tsx
+msgid "More for {0}"
+msgstr "Більше для {0}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -5853,6 +6165,10 @@ msgstr "Спершу найбільше оцінок, відкритих від�
 msgid "Most votes"
 msgstr "Найбільше голосів"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Move down"
+msgstr "Перемістити вниз"
+
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
 msgstr "Перенесення скриньок до Yuva: знайти провайдера, підключити, просканувати, скопіювати й перемкнути"
@@ -5873,6 +6189,10 @@ msgstr "Переміщуватися по списку"
 msgid "Move through the posts"
 msgstr "Переміщуватися по повідомленнях"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the status pages"
+msgstr "Переходити між сторінками статусу"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Перемістити у вхідні"
@@ -5881,6 +6201,10 @@ msgstr "Перемістити у вхідні"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Move to Yuva"
 msgstr "Перейти до Yuva"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Move up"
+msgstr "Перемістити вгору"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "Moved from {from}"
@@ -5917,6 +6241,9 @@ msgstr "Мій профіль"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Ім'я"
 
@@ -6078,6 +6405,18 @@ msgstr "нові за останні {days} дн."
 #: src/features/migrations/MapStep.tsx
 msgid "New inbox…"
 msgstr "Нова скринька…"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident"
+msgstr "Новий інцидент"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "New incident ({incidentKey})"
+msgstr "Новий інцидент ({incidentKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New incident or status page"
+msgstr "Новий інцидент або сторінка статусу"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -6270,6 +6609,14 @@ msgstr "Каналів поки немає. Додайте один, щоб кл
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Жоден чат-канал цієї скриньки не дозволяє сайт сторінки з увімкненими обговореннями. Увімкніть обговорення в налаштуваннях скриньки."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "No components in this group."
+msgstr "У цій групі немає компонентів."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "No components yet. Add the parts of your product that customers depend on."
+msgstr "Компонентів поки немає. Додайте частини продукту, від яких залежать клієнти."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "No confirmation"
 msgstr "Без підтвердження"
@@ -6350,13 +6697,26 @@ msgstr "Подій не записано."
 msgid "No feedback from this page."
 msgstr "З цієї сторінки немає відгуків."
 
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/ComponentsTab.tsx
+msgid "No group"
+msgstr "Без групи"
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Прихованих обговорень немає."
 
+#: src/features/status/text.tsx
+msgid "No impact"
+msgstr "Без впливу"
+
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Імпортів поки немає."
+
+#: src/features/status/StatusColumn.tsx
+msgid "No inbox to show a status page for."
+msgstr "Немає скриньки, для якої можна показати сторінку статусу."
 
 #: src/features/migrations/MapStep.tsx
 msgid "No label"
@@ -6419,6 +6779,10 @@ msgstr "Відкритих розмов немає. Нові з'являться
 msgid "No open feedback."
 msgstr "Немає відкритих відгуків."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "No open incidents or maintenance."
+msgstr "Немає відкритих інцидентів чи обслуговувань."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Інших відповідних контактів немає."
@@ -6467,6 +6831,10 @@ msgstr "немає облікового запису SMTP"
 #: src/features/broadcasts/Composer.tsx
 msgid "No SMTP account"
 msgstr "Немає облікового запису SMTP"
+
+#: src/features/status/StatusColumn.tsx
+msgid "No status page yet. Owners and admins create it."
+msgstr "Сторінки статусу ще немає. Її створюють власники й адміністратори."
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
@@ -6774,6 +7142,7 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Нічого не губиться: коли воно продовжиться, копіювання почнеться з того місця, де зупинилося."
 
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Поки що нічого не вирішено."
 
@@ -6982,6 +7351,14 @@ msgstr "Статус у мережі"
 msgid "Only {0}"
 msgstr "Лише {0}"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Only a draft can be deleted. It was never shown on the page."
+msgstr "Видалити можна лише чернетку. Її ніколи не показували на сторінці."
+
+#: src/components/common/text.ts
+msgid "Only a draft can be deleted. Post an update instead."
+msgstr "Видалити можна лише чернетку. Краще опублікуйте оновлення."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Додавайте лише тих, хто погодився отримувати цей список. Те, що ви введете тут, зберігається як запис про їхню згоду."
@@ -7083,6 +7460,7 @@ msgstr "відкриті"
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Відкрито"
 
@@ -7110,6 +7488,10 @@ msgstr "Відкрити «Безпеку облікового запису»"
 #: src/features/migrations/text.ts
 msgid "Open Account security in your Yahoo account."
 msgstr "Відкрийте «Безпеку облікового запису» у своєму обліковому записі Yahoo."
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Open an incident"
+msgstr "Відкрити інцидент"
 
 #: src/features/home/HomePage.tsx
 msgid "Open analytics"
@@ -7255,6 +7637,10 @@ msgstr "Відкрити наступну або попередню розмов
 msgid "Open the reply"
 msgstr "Відкрити відповідь"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the status page"
+msgstr "Відкрити сторінку статусу"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Відкрити налаштування робочого простору"
@@ -7291,6 +7677,14 @@ msgstr "відкриті, непризначені"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Opens"
 msgstr "Відкриття"
+
+#: src/features/status/text.tsx
+msgid "Operational"
+msgstr "Працює"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Optional. Shown on the public page."
+msgstr "Необов’язково. Показується на публічній сторінці."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
@@ -7414,8 +7808,13 @@ msgstr "Темп (листів на секунду)"
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Сторінка"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Page settings"
+msgstr "Налаштування сторінки"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Page where they agreed (optional)"
@@ -7436,6 +7835,10 @@ msgstr "Мова панелі"
 #: src/features/migrations/UploadStep.tsx
 msgid "Part {part} of {totalParts}"
 msgstr "Частина {part} із {totalParts}"
+
+#: src/features/status/text.tsx
+msgid "Partial outage"
+msgstr "Частковий збій"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Parts in progress"
@@ -7461,6 +7864,10 @@ msgstr "Пароль"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password set"
 msgstr "Пароль задано"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Past"
+msgstr "Минулі"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
@@ -7605,6 +8012,10 @@ msgstr "Виберіть колір"
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Pick a color."
 msgstr "Виберіть колір."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Вибрати колір"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Pick a contact"
@@ -7774,6 +8185,20 @@ msgstr "Закріплено"
 msgid "Pinned to the top of your list"
 msgstr "Закріплено вгорі вашого списку"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Plain text with links and line breaks, at most 5,000 characters."
+msgstr "Звичайний текст із посиланнями та розривами рядків, не більше 5000 символів."
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance"
+msgstr "Запланувати обслуговування"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "Plan maintenance ({maintenanceKey})"
+msgstr "Запланувати обслуговування ({maintenanceKey})"
+
 #: src/components/common/text.ts
 msgid "Planned"
 msgstr "Заплановано"
@@ -7805,9 +8230,22 @@ msgstr "Спрямуйте записи MX на Yuva, як описано в п�
 msgid "Port"
 msgstr "Порт"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update"
+msgstr "Опублікувати оновлення"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post an update ({updateKey})"
+msgstr "Опублікувати оновлення ({updateKey})"
+
 #: src/components/common/text.ts
 msgid "Post feedback for your app's users"
 msgstr "Відгуки для користувачів вашого застосунку"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Post update"
+msgstr "Надіслати оновлення"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Postal address"
@@ -7832,8 +8270,19 @@ msgstr "Підготовка"
 
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
+#: src/features/status/PreviewDialog.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Preview"
 msgstr "Попередній перегляд"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Preview ({previewKey})"
+msgstr "Попередній перегляд ({previewKey})"
+
+#. placeholder {0}: page.name
+#: src/features/status/PreviewDialog.tsx
+msgid "Preview of {0}"
+msgstr "Попередній перегляд: {0}"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Preview of the design"
@@ -7843,6 +8292,10 @@ msgstr "Попередній перегляд дизайну"
 #: src/features/broadcasts/Composer.tsx
 msgid "Preview text"
 msgstr "Текст попереднього перегляду"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Preview the page"
+msgstr "Попередній перегляд сторінки"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -7901,6 +8354,10 @@ msgstr "Proton Mail доступний через IMAP лише через Proto
 msgid "Public"
 msgstr "Публічний"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Public address"
+msgstr "Публічна адреса"
+
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Публічний ключ"
@@ -7909,9 +8366,36 @@ msgstr "Публічний ключ"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Публічні гілки під сторінками вашої документації в усіх станах."
 
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Опублікувати"
+
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Publish ({publishKey})"
+msgstr "Опублікувати ({publishKey})"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Publish now"
+msgstr "Опублікувати зараз"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the page"
+msgstr "Опублікувати сторінку або зняти з публікації"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish the draft"
+msgstr "Опублікувати чернетку"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Опублікуйте цей запис TXT у DNS вашого домену:"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Published"
+msgstr "Опублікована"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
@@ -8042,6 +8526,10 @@ msgstr "Читати списки розсилки, підписників і з
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Лише читання"
+
+#: src/components/common/text.ts
+msgid "Read status pages, components and incidents"
+msgstr "Читати сторінки статусу, компоненти та інциденти"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8305,6 +8793,14 @@ msgstr "Видалення імпортованої історії"
 msgid "Removing imported history…"
 msgstr "Видалення імпортованої історії…"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Rename"
+msgstr "Перейменувати"
+
+#: src/features/status/ComponentDialogs.tsx
+msgid "Rename group"
+msgstr "Перейменувати групу"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
 msgstr "Відкрити знову"
@@ -8483,6 +8979,7 @@ msgid "Reset to defaults"
 msgstr "Скинути до значень за замовчуванням"
 
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Resolve"
 msgstr "Вирішити"
 
@@ -8490,9 +8987,14 @@ msgstr "Вирішити"
 msgid "Resolve (E)"
 msgstr "Вирішити (E)"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Resolve or complete"
+msgstr "Розв’язати або завершити"
+
 #: src/components/common/text.ts
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/status/text.tsx
 msgid "Resolved"
 msgstr "Вирішено"
 
@@ -8655,8 +9157,15 @@ msgstr "Субота"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "Save"
 msgstr "Зберегти"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "Save as draft"
+msgstr "Зберегти як чернетку"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
@@ -8679,6 +9188,7 @@ msgstr "Зберегти зараз і залишити версію"
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Saved"
 msgstr "Збережено"
 
@@ -8731,6 +9241,7 @@ msgstr "Планувати й надсилати розсилки, якщо ро
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Заплановано"
 
@@ -9173,6 +9684,10 @@ msgstr "URL сервера"
 msgid "SES tenant"
 msgstr "Орендар SES"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Set by a monitor, {since}"
+msgstr "Задано монітором, {since}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Задати статус виконання"
@@ -9217,6 +9732,7 @@ msgstr "Налаштування…"
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -9273,6 +9789,10 @@ msgstr "Показувати як надіслане"
 msgid "Show more"
 msgstr "Показати ще"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Show on the page"
+msgstr "Показувати на сторінці"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Показати або приховати цитований текст"
@@ -9304,6 +9824,10 @@ msgstr "Показати попередній перегляд"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show the reply time"
 msgstr "Показувати час відповіді"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show uptime"
+msgstr "Показувати доступність"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Show who is online"
@@ -9357,6 +9881,10 @@ msgstr "Показується вашій команді та контактам
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Shown to your team and to customers you reply to"
 msgstr "Показується вашій команді та клієнтам, яким ви відповідаєте"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Shown under the name on the public page."
+msgstr "Показується під назвою на публічній сторінці."
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/migrations/text.ts
@@ -9515,6 +10043,7 @@ msgid "Since"
 msgstr "З"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/status/ComponentsTab.tsx
 msgid "Since {since}"
 msgstr "З {since}"
 
@@ -9536,6 +10065,10 @@ msgstr "Адреса сайту"
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Генератор сайтів"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Site link"
+msgstr "Посилання на сайт"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
@@ -9745,6 +10278,10 @@ msgstr "Розпочав(ла) {starter} · {started}"
 msgid "Starting"
 msgstr "Запуск"
 
+#: src/features/status/IncidentDialog.tsx
+msgid "Starts"
+msgstr "Початок"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
 msgstr "Починає публічну гілку з текстом нижче. Розмова залишається закритою та незмінною; більше нічого з неї не показується."
@@ -9754,14 +10291,47 @@ msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (порт 587)"
 
 #: src/features/migrations/Wizard.tsx
+#: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDialog.tsx
+#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Стан"
 
+#. placeholder {0}: c.name
+#: src/features/status/ComponentsTab.tsx
+msgid "State of {0}"
+msgstr "Стан: {0}"
+
+#. placeholder {0}: c.name
+#: src/features/status/IncidentDialog.tsx
+msgid "State of {0} while it is open"
+msgstr "Стан: {0}, доки відкритий"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
+#: src/features/settings/webhooks/events.tsx
+#: src/features/status/IncidentPane.tsx
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Статус"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Status page"
+msgstr "Сторінка статусу"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Status page deleted"
+msgstr "Сторінку статусу видалено"
+
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Status pages"
+msgstr "Сторінки статусу"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9897,6 +10467,10 @@ msgstr "Адреса підтримки"
 msgid "Support bot"
 msgstr "Бот підтримки"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Support link"
+msgstr "Посилання на підтримку"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9995,6 +10569,10 @@ msgstr "Команда зараз"
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
+msgstr "Розкажіть клієнтам, чи працює ваш продукт. Виберіть сторінку скриньки, щоб відкривати інциденти, планувати обслуговування та задавати стан кожного компонента."
+
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
@@ -10053,6 +10631,10 @@ msgstr "Файл .mbox із Takeout › Пошта, розпакований."
 #: src/features/migrations/text.ts
 msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
 msgstr "Користувач {provider}, під яким ви ввійшли, не адміністратор, а читати всі тікети можуть лише адміністратори. Увійдіть знову як адміністратор."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the page."
+msgstr "Доки ви не опублікуєте сторінку, адреса відповідає «не знайдено»."
 
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
@@ -10189,6 +10771,10 @@ msgstr "Поштовий канал, що надсилає листи з під�
 #: src/features/setup/InstallStep.tsx
 msgid "The elements work on these addresses; add your dev server in the inbox settings:"
 msgstr "Елементи працюють за цими адресами; додайте свій dev-сервер у налаштуваннях скриньки:"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "The end must be after the start."
+msgstr "Кінець має бути пізніше за початок."
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -10331,6 +10917,10 @@ msgstr "Орендар Amazon SES для скриньки ще налаштов�
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Орендаря Amazon SES для скриньки більше немає. Сервер створить його знову; доти розсилка піти не може."
 
+#: src/components/common/text.ts
+msgid "The incident is already resolved or completed, so it takes no more changes."
+msgstr "Інцидент уже розв’язано або завершено, тому зміни більше не приймаються."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "У файлі İYS один рядок на підписника в стовпцях İYS, ONAY для підписаних і RET для відписаних, щоб турецькі відправники самі завантажили його в İYS. Підписки в очікуванні виключено."
@@ -10350,6 +10940,10 @@ msgstr "Ключ перестане працювати наприкінці ць
 #: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Вид не можна змінити пізніше."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The language of the page’s words."
+msgstr "Мова текстів сторінки."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -10467,9 +11061,25 @@ msgstr "Стара скринька перестає отримувати пош
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "У іншої скриньки немає поштового каналу, тож цю розмову за e-mail не можна туди перемістити. Спершу додайте їй поштовий канал."
 
+#: src/features/status/PreviewDialog.tsx
+msgid "The page as visitors see it now. Drafts are left out."
+msgstr "Сторінка в тому вигляді, в якому її зараз бачать відвідувачі. Чернетки не включено."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The page is at {address}. The old address keeps redirecting if you change it."
+msgstr "Сторінка за адресою {address}. Стара адреса й надалі перенаправлятиме, якщо ви її зміните."
+
 #: src/components/common/text.ts
 msgid "The page is not on a site the chat channel allows."
 msgstr "Сторінка не на сайті, дозволеному чат-каналом."
+
+#: src/features/status/PreviewDialog.tsx
+msgid "The page is not published. Only your team sees this."
+msgstr "Сторінку не опубліковано. Це бачить лише ваша команда."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The parts of your product. Set a state by hand, or let an incident do it."
+msgstr "Частини вашого продукту. Задайте стан вручну або доручіть це інциденту."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -10726,6 +11336,10 @@ msgstr "Zip захищений паролем. Створіть його зно�
 msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
 msgstr "Zip використовує метод стиснення, який Yuva не вміє читати. Створіть його знову як звичайний zip."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The zone of the day bars."
+msgstr "Часовий пояс стовпців за днями."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Їхні записи про згоду для запиту про те, що у вас зберігається про них:"
@@ -10892,6 +11506,10 @@ msgstr "Ця ціль — крок воронки. Спершу приберіт
 msgid "This inbox already has a list with this name."
 msgstr "У цій скриньці вже є список з такою назвою."
 
+#: src/components/common/text.ts
+msgid "This inbox already has a status page."
+msgstr "У цієї скриньки вже є сторінка статусу."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "У цій скриньці поки немає поштового каналу, який міг би надсилати. Список можна створити зараз; він почне надсилати, коли в його налаштуваннях буде вибрано поштовий канал з обліковим записом для відповідей."
@@ -10911,6 +11529,10 @@ msgstr "У цій скриньці поки немає списку розсил
 #: src/features/migrations/UploadStep.tsx
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Це стиснутий архів. Розпакуйте архів Takeout і завантажте файл .mbox."
+
+#: src/features/status/IncidentPane.tsx
+msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
+msgstr "Це чернетка. Її бачить лише ваша команда, і вона не змінює жодного компонента, доки ви її не опублікуєте."
 
 #: src/components/common/text.ts
 msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
@@ -11138,12 +11760,14 @@ msgstr "Час"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Time zone"
 msgstr "Часовий пояс"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Title"
 msgstr "Назва"
 
@@ -11251,6 +11875,10 @@ msgstr "Повторна спроба"
 msgid "Tuesday"
 msgstr "Вівторок"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Türkçe"
+msgstr "Türkçe"
+
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -11339,6 +11967,10 @@ msgstr "Недоставлювано: отримувач позначив як �
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Під кожною сторінкою: «Чи була ця сторінка корисною?», потім відгуки й обговорення сторінки."
 
+#: src/features/status/text.tsx
+msgid "Under maintenance"
+msgstr "На обслуговуванні"
+
 #: src/features/migrations/text.ts
 msgid "Under Redirect URI, choose Web and enter the redirect URL below."
 msgstr "У розділі «URI переспрямування» виберіть Web і введіть URL переспрямування нижче."
@@ -11401,6 +12033,22 @@ msgstr "Відкріпити"
 #: src/features/inbox/memberState.ts
 msgid "Unpinned"
 msgstr "Відкріплено"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish"
+msgstr "Зняти з публікації"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Зняти з публікації ({publishKey})"
+
+#: src/features/status/StatusColumn.tsx
+msgid "Unpublished"
+msgstr "Не опублікована"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Не опублікована, попередній перегляд бачить лише ваша команда"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -11468,6 +12116,14 @@ msgstr "Неперевірений відправник"
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "До {max} і 100 000 рядків, із рядком заголовка. Файли Excel у турецькому чи західному кодуванні та стовпці, розділені комами, крапками з комою чи табуляцією, читаються як є."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Update text"
+msgstr "Текст оновлення"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Updates"
+msgstr "Оновлення"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Оновлення"
@@ -11525,6 +12181,14 @@ msgstr "Вкажіть від 1 до 100 листів на секунду."
 msgid "Use 1 to 8760 hours."
 msgstr "Вкажіть від 1 до 8760 годин."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Використовуйте від 3 до 48 літер, цифр і внутрішніх дефісів."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Використовуйте колір на кшталт #2563eb."
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Use a contact’s values"
 msgstr "Використати значення контакта"
@@ -11540,6 +12204,10 @@ msgstr "Вкажіть порт від 1 до 65535."
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Use a separate account for broadcasts"
 msgstr "Використовувати окремий обліковий запис для розсилок"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Use a whole number from 7 to 90."
+msgstr "Використовуйте ціле число від 7 до 90."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Use an app password"
@@ -11670,6 +12338,10 @@ msgstr "Версії"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Дуже велика скринька? Почніть із файлу Google Takeout"
+
+#: src/features/status/StatusPagePane.tsx
+msgid "View page"
+msgstr "Переглянути сторінку"
 
 #: src/features/docs/DocsPages.tsx
 msgid "views"
@@ -11879,6 +12551,10 @@ msgstr "Що переноситься"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "На що вони погодилися?"
+
+#: src/features/status/IncidentPane.tsx
+msgid "What do customers need to know?"
+msgstr "Що потрібно знати клієнтам?"
 
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
@@ -12445,6 +13121,10 @@ msgstr "Ваші повідомлення залишаються, як від в
 #: src/features/setup/previews.tsx
 msgid "Your product"
 msgstr "Ваш продукт"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Your product."
+msgstr "Ваш продукт."
 
 #: src/features/setup/previews.tsx
 msgid "Your replies go out from this address"

@@ -94,6 +94,13 @@ export const keys = {
   broadcastAudience: (ws: string, id: string, audience: string) =>
     ["ws", ws, "broadcasts", "audience", id, audience] as const,
   broadcastReport: (ws: string, id: string) => ["ws", ws, "broadcasts", "report", id] as const,
+  status: (ws: string) => ["ws", ws, "status"] as const,
+  statusPages: (ws: string, inbox: string) => ["ws", ws, "status", "pages", inbox] as const,
+  statusPage: (ws: string, id: string) => ["ws", ws, "status", "page", id] as const,
+  statusGroups: (ws: string, id: string) => ["ws", ws, "status", "groups", id] as const,
+  statusComponents: (ws: string, id: string) => ["ws", ws, "status", "components", id] as const,
+  statusIncidents: (ws: string, id: string, open: boolean) => ["ws", ws, "status", "incidents", id, open] as const,
+  statusIncident: (ws: string, page: string, id: string) => ["ws", ws, "status", "incident", page, id] as const,
   migrations: (ws: string) => ["ws", ws, "migrations"] as const,
   migrationPages: (ws: string) => ["ws", ws, "migrations", "pages"] as const,
   migration: (ws: string, id: string) => ["ws", ws, "migrations", "one", id] as const,
