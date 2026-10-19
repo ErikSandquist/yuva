@@ -1004,6 +1004,10 @@ msgstr "Поле злиття без запасного значення в де
 msgid "A message was added"
 msgstr "Повідомлення додано"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "Ім'я, яким ви керуєте, наприклад status.example.com. Yuva покаже два DNS-записи для додавання, і сторінка відповідатиме на домені, щойно побачить їх."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "Новий продукт"
@@ -1181,6 +1185,10 @@ msgstr "Статус Acme"
 msgid "Acme Support"
 msgstr "Підтримка Acme"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "Активно"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "Додати канал"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "Додати компонент"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "Додати домен"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "Інший імпорт цього робочого простору в�
 msgid "another inbox"
 msgstr "інша скринька"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "Інша сторінка підтвердила цей домен раніше, а ім'я утримує лише підтверджена заявка. Видаліть домен або почніть заново, коли та сторінка його звільнить."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Інший SMTP-сервер"
@@ -1741,6 +1757,10 @@ msgstr "Інший SMTP-сервер"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "Інша сторінка статусу вже використовує цю адресу."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "Інша сторінка статусу вже підтвердила цей домен. Ім'я може утримувати лише одна сторінка."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "Події оплати"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "Заблоковані"
 
@@ -2209,6 +2230,10 @@ msgstr "Ім'я бота"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "Ім'я бота (необов'язково)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "Обидва записи знайдено. Yuva перевіряє їх раз на день; залиште їх на місці."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "Категорія"
 msgid "Cc: {cc}"
 msgstr "Копія: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "Сертифікат"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "Сертифікат закінчився {expires}"
@@ -2549,6 +2578,10 @@ msgstr "Перевірити DNS і почати підпис"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "Перевіряти кожні"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "Перевірити зараз"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "Закриває"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "Закриваємо кожну розмову"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "CNAME-запис"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "Документи"
 msgid "Does it work with server-side rendering?"
 msgstr "Чи працює це із серверним рендерингом?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "Домен"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "Домен не підтверджено"
@@ -4202,6 +4243,10 @@ msgstr "Кінець"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "Введіть домен, наприклад status.example.com."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "Головна"
 msgid "Host"
 msgstr "Хост"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "Ім'я хоста"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "Ім'я хоста і сертифікат"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Як вони дали згоду?"
@@ -5816,6 +5869,10 @@ msgstr "Остання перевірка {last}"
 msgid "Last checked"
 msgstr "Востаннє перевірено"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "Остання перевірка: {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Прізвище"
@@ -5979,6 +6036,10 @@ msgstr "Посилання"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "Посилання вестимуть на домен посилань цього сервера, а не на ваш. Спам-фільтри дивляться на домени посилань."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "Посилання, стрічка і значок залишаються на адресі цього сервера, доки ім'я хоста і його сертифікат не стануть активними."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "Мій профіль"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "Потрібен відправник"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "Потребує уваги"
 
@@ -6974,6 +7037,10 @@ msgstr "наступна спроба {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "Наступна перевірка {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "Наступна перевірка: {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "З часом"
 msgid "Overview"
 msgstr "Огляд"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "Власний домен"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "Власний орендар"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "Корисне навантаження"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "В очікуванні"
 
@@ -8804,6 +8876,10 @@ msgstr "Відтворити звук"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "Спрямуйте записи MX на Yuva, як описано в посібнику з пошти. Синхронізація підхоплює пошту, яка тим часом ще надходить на старий сервер."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "Вказує на"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "Віддалені зображення можуть повідомит�
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Видалити"
@@ -9321,6 +9398,11 @@ msgstr "Видалити"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "Видалити {0}"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "Видалити {0}?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "Видалити канал"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "Видалити умову {n}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "Видалити домен"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "Показати попередній перегляд"
 msgid "Show the reply time"
 msgstr "Показувати час відповіді"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "Показуйте цю сторінку на власній адресі замість адреси цього сервера."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "Показувати доступність"
@@ -10986,6 +11076,10 @@ msgstr "Почати розмову"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "Почати міграцію"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "Почати заново"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "Історія з файлу експорту копіюється до 
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "Історію скопійовано, і пошта тепер надходить до Yuva."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "Ім'я хоста налаштовується. Це займе трохи часу після того, як записи буде знайдено."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "Години відрізняються за днями; зміна їх тут задає однакові години для кожного вибраного дня."
@@ -11744,6 +11842,11 @@ msgstr "Остання перевірка не змогла надіслати �
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "Остання перевірка не знайшла жодного підпису DKIM, що проходить. Налаштуйте DKIM у SMTP-провайдера або ввімкніть DKIM Yuva для каналу."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "Остання перевірка побачила: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "У іншої скриньки немає поштового канал�
 msgid "The page already sent 10 notices in the last hour"
 msgstr "Сторінка вже надіслала 10 сповіщень за останню годину"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "Сторінка відповідає за адресою"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Сторінка в тому вигляді, в якому її зараз бачать відвідувачі. Чернетки не включено."
@@ -11884,6 +11991,10 @@ msgstr "Сторінку не опубліковано. Це бачить лиш
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "Сторінка або інцидент не є публічними"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "Сторінка перестане відповідати на цьому домені. Її адреса на цьому сервері й надалі працює."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "Отримувачі визначаються в момент почат
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "Запис за адресою {name} опубліковано."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "Записи є, але вказують не туди, куди потрібно Yuva. Змініть їх відповідно до наведених нижче. Yuva перевіряє знову кожні 10 хвилин."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "Записів не видно з {missing}. Якщо вони не повернуться, домен буде вимкнено через 3 дні."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "Записів не було 3 дні, тому домен більше не показує цю сторінку й не перевіряється. Поверніть записи й почніть заново."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "Записи не знайдено протягом 7 днів, тому заявка втратила чинність. Додайте записи нижче й почніть заново ще на 7 днів."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "Це не файл mbox і не zip. Завантажте сам фай�
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Це не файл CSV. Збережіть таблицю як CSV і завантажте її."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "Ця сторінка не може використати цей домен. Використайте ім'я на кшталт status.example.com, що не збігається з власними адресами цього сервера."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "Цей запит завершено"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "Цей сервер не пропонує імпорт з такого типу скриньок."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "Цей сервер не надає власних доменів. Попросіть оператора їх увімкнути."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "У цього сервера немає адреси переспрямування, тож пошта потрапляє до Yuva через зміну MX."
@@ -12541,6 +12676,10 @@ msgstr "Це вікно втратило сторінку, що його від�
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "У цьому робочому просторі стільки розсилок, скільки дозволено. Спершу видаліть старі."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "У цьому робочому просторі стільки власних доменів, скільки дозволяє сервер. Спочатку видаліть один."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "Увімкніть підписників на e-mail у налашту�
 msgid "Turn on for this device"
 msgstr "Увімкнути для цього пристрою"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "Вимкнено"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Вимкнено Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "TXT-запис"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "значення"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "Значення"
 
@@ -13212,6 +13360,10 @@ msgstr "Значення зберігаються зашифрованими й 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "Значення умови {n}, через кому"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "Підтверджено"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "чекають підтвердження"
 msgid "Waiting for confirmation"
 msgstr "Чекають підтвердження"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "Очікування DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Очікування коду підтвердження від Google…"
@@ -13359,6 +13515,14 @@ msgstr "Очікування оператора"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Очікування ліміту провайдера; триватиме о {time}."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "Очікування двох DNS-записів нижче. Додайте їх там, де керуєте доменом; зміни DNS можуть поширюватися не одразу. Yuva перевіряє кожні 10 хвилин, а заявка втрачає чинність, якщо записів не знайдено за 7 днів."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "Очікування перевірки"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

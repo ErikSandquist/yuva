@@ -1004,6 +1004,10 @@ msgstr "Ett sammanfogningsfält utan reservvärde skulle vara tomt för vissa mo
 msgid "A message was added"
 msgstr "Ett meddelande lades till"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "Ett namn du styr, till exempel status.example.com. Yuva visar två DNS-poster att lägga till, och sidan svarar på domänen så snart de setts."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "En ny produkt"
@@ -1181,6 +1185,10 @@ msgstr "Acme-status"
 msgid "Acme Support"
 msgstr "Acme Support"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "Aktiv"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "Lägg till kanal"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "Lägg till komponent"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "Lägg till domän"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "En annan import i den här arbetsytan pågår. Importer körs en i taget
 msgid "another inbox"
 msgstr "en annan brevlåda"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "En annan sida har verifierat den här domänen först, och bara ett verifierat anspråk håller ett namn. Ta bort domänen eller börja om när den andra sidan släpper den."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "En annan SMTP-server"
@@ -1741,6 +1757,10 @@ msgstr "En annan SMTP-server"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "En annan statussida använder redan den här adressen."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "En annan statussida har redan verifierat den här domänen. Bara en sida kan hålla ett namn."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "Faktureringshändelser"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "Blockerad"
 
@@ -2209,6 +2230,10 @@ msgstr "Botnamn"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "Botnamn (valfritt)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "Båda posterna hittades. Yuva kontrollerar dem en gång om dagen; låt dem vara kvar."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "Kategori"
 msgid "Cc: {cc}"
 msgstr "Kopia: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "Certifikat"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "Certifikatet gick ut {expires}"
@@ -2549,6 +2578,10 @@ msgstr "Kontrollera DNS och börja signera"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "Kontrollera var"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "Kontrollera nu"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "Stänger"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "Stänger varje konversation"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "CNAME-post"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "Dokument"
 msgid "Does it work with server-side rendering?"
 msgstr "Fungerar det med server-side rendering?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "Domän"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "Domänen är inte verifierad"
@@ -4202,6 +4243,10 @@ msgstr "Slut"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "Ange en domän som status.example.com."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "Hem"
 msgid "Host"
 msgstr "Värd"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "Värdnamn"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "Värdnamn och certifikat"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Hur gick de med på det?"
@@ -5816,6 +5869,10 @@ msgstr "Senaste kontroll {last}"
 msgid "Last checked"
 msgstr "Senast kontrollerad"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "Senast kontrollerad {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Efternamn"
@@ -5979,6 +6036,10 @@ msgstr "Länkar"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "Länkar pekar på den här serverns länkdomän i stället för din egen. Spamfilter tittar på länkdomäner."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "Länkar, flöde och märke använder fortsatt adressen på den här servern tills värdnamnet och dess certifikat båda är aktiva."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "Min profil"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "Behöver en avsändare"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "Behöver uppmärksamhet"
 
@@ -6974,6 +7037,10 @@ msgstr "nästa försök {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "Nästa kontroll {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "Nästa kontroll {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "Över tid"
 msgid "Overview"
 msgstr "Översikt"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "Egen domän"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "Egen tenant"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "Payload"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "Väntande"
 
@@ -8804,6 +8876,10 @@ msgstr "Spela upp ljudet"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "Peka MX-posterna mot Yuva som e-postguiden beskriver. Synkroniseringen fångar e-posten som under tiden fortfarande når den gamla servern."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "Pekar på"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "Fjärrbilder kan tala om för avsändaren att du öppnade mejlet."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Ta bort"
@@ -9321,6 +9398,11 @@ msgstr "Ta bort"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "Ta bort {0}"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "Ta bort {0}?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "Ta bort kanal"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "Ta bort villkor {n}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "Ta bort domän"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "Visa förhandsvisningen"
 msgid "Show the reply time"
 msgstr "Visa svarstiden"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "Visa den här sidan på din egen adress i stället för serverns."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "Visa drifttid"
@@ -10986,6 +11076,10 @@ msgstr "Starta konversation"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "Starta migrering"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "Börja om"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "Historiken från exportfilen kopieras till Yuva."
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "Historiken är kopierad och dess e-post når nu Yuva."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "Värdnamnet ställs in. Det tar ett ögonblick när posterna har hittats."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "Tiderna skiljer sig per dag; att ändra dem här anger samma tider för varje vald dag."
@@ -11744,6 +11842,11 @@ msgstr "Den senaste kontrollen kunde inte skicka sitt testmejl. Titta på kanale
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "Den senaste kontrollen hittade ingen godkänd DKIM-signatur. Ställ in DKIM hos din SMTP-leverantör, eller slå på Yuva DKIM för kanalen."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "Senaste kontrollen såg: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "Den andra brevlådan har ingen e-postkanal, så den här e-postkonversat
 msgid "The page already sent 10 notices in the last hour"
 msgstr "Sidan har redan skickat 10 notiser den senaste timmen"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "Sidan svarar på"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Sidan så som besökare ser den nu. Utkast är undantagna."
@@ -11884,6 +11991,10 @@ msgstr "Sidan är inte publicerad. Bara ditt team ser det här."
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "Sidan eller incidenten är inte offentlig"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "Sidan svarar inte längre på den här domänen. Dess adress på den här servern fungerar fortfarande."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "Mottagarna fastställs när utskicket startar: personer som prenumererar
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "Posten på {name} är publicerad."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "Posterna finns, men pekar inte dit Yuva behöver. Ändra dem så att de stämmer med dem nedan. Yuva tittar igen var 10:e minut."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "Posterna har inte varit synliga sedan {missing}. Domänen stängs av efter 3 dagar om de inte kommer tillbaka."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "Posterna saknades i 3 dagar, så domänen visar inte längre den här sidan och kontrolleras inte mer. Sätt tillbaka posterna och börja om."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "Posterna hittades inte inom 7 dagar, så anspråket upphörde. Lägg till posterna nedan och börja om i 7 dagar till."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "Det här är varken en mbox-fil eller en zip. Ladda upp själva .mbox-fi
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Det här är inte en CSV-fil. Spara kalkylbladet som CSV och ladda upp den."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "Den här sidan kan inte använda den här domänen. Använd ett namn som status.example.com som inte är en av serverns egna adresser."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "Den här begäran har avslutats"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "Den här servern erbjuder inte importer från den här typen av brevlåda."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "Den här servern erbjuder inga egna domäner. Be operatören slå på dem."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "Den här servern har ingen vidarebefordringsadress, så e-posten når Yuva via en MX-ändring."
@@ -12541,6 +12676,10 @@ msgstr "Det här fönstret förlorade sidan som öppnade det. Stäng det och log
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "Den här arbetsytan har så många utskick som tillåts. Radera gamla först."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "Den här arbetsytan har lika många egna domäner som servern tillåter. Ta bort en först."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "Aktivera e-postprenumeranter i sidans inställningar så att besökare k
 msgid "Turn on for this device"
 msgstr "Slå på för den här enheten"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "Avstängd"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Avstängd av Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "TXT-post"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "värde"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "Värde"
 
@@ -13212,6 +13360,10 @@ msgstr "Värden lagras krypterade och visas aldrig igen. Byt ut ett värde för 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "Värden för villkor {n}, åtskilda av kommatecken"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "Verifierad"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "väntar på bekräftelse"
 msgid "Waiting for confirmation"
 msgstr "Väntar på bekräftelse"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "Väntar på DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Väntar på Googles bekräftelsekod…"
@@ -13359,6 +13515,14 @@ msgstr "Väntar på operatören"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Väntar på leverantörens gräns; fortsätter {time}."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "Väntar på de två DNS-posterna nedan. Lägg till dem där du styr domänen; DNS-ändringar kan ta tid att spridas. Yuva tittar var 10:e minut, och anspråket upphör om de inte hittas inom 7 dagar."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "Väntar på validering"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

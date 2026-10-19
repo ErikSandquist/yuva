@@ -1004,6 +1004,10 @@ msgstr "A merge field without a fallback would be empty for some recipients. Giv
 msgid "A message was added"
 msgstr "A message was added"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "A new product"
@@ -1181,6 +1185,10 @@ msgstr "Acme status"
 msgid "Acme Support"
 msgstr "Acme Support"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "Active"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "Add channel"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "Add component"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "Add domain"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "Another import of this workspace is running. Imports run one at a time; 
 msgid "another inbox"
 msgstr "another inbox"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Another SMTP server"
@@ -1741,6 +1757,10 @@ msgstr "Another SMTP server"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "Another status page already uses this address."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "Another status page already verified this domain. Only one page can hold a name."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "Billing events"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "Blocked"
 
@@ -2209,6 +2230,10 @@ msgstr "Bot name"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "Bot name (optional)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "Both records were found. Yuva checks them once a day; keep them in place."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "Category"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "Certificate"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "Certificate expired {expires}"
@@ -2549,6 +2578,10 @@ msgstr "Check DNS and start signing"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "Check every"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "Check now"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "Closes"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "Closing each conversation"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "CNAME record"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "Documents"
 msgid "Does it work with server-side rendering?"
 msgstr "Does it work with server-side rendering?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "Domain"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "Domain not verified"
@@ -4202,6 +4243,10 @@ msgstr "Ends"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "Enter a domain like status.example.com."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "Home"
 msgid "Host"
 msgstr "Host"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "Hostname"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "Hostname and certificate"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "How did they agree?"
@@ -5816,6 +5869,10 @@ msgstr "Last check {last}"
 msgid "Last checked"
 msgstr "Last checked"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "Last checked {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Last name"
@@ -5979,6 +6036,10 @@ msgstr "Links"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "My profile"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "Needs a sender"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "Needs attention"
 
@@ -6974,6 +7037,10 @@ msgstr "next attempt {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "Next check {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "Next check {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "Over time"
 msgid "Overview"
 msgstr "Overview"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "Own domain"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "Own tenant"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "Payload"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "Pending"
 
@@ -8804,6 +8876,10 @@ msgstr "Play the sound"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "Points to"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "Remote images can tell the sender that you opened the mail."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Remove"
@@ -9321,6 +9398,11 @@ msgstr "Remove"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "Remove {0}"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "Remove {0}?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "Remove channel"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "Remove condition {n}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "Remove domain"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "Show the preview"
 msgid "Show the reply time"
 msgstr "Show the reply time"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "Show this page on your own address instead of this server’s."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "Show uptime"
@@ -10986,6 +11076,10 @@ msgstr "Start conversation"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "Start migration"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "Start over"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "The history from the export file is copied into Yuva."
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "The history is copied and its mail now reaches Yuva."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "The hostname is being set up. This takes a moment once the records are found."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "The hours differ by day; changing them here sets the same hours for every chosen day."
@@ -11744,6 +11842,11 @@ msgstr "The last check could not send its test mail. Look at the channel’s SMT
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "The last check saw: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "The other inbox has no e-mail channel, so this e-mail conversation canno
 msgid "The page already sent 10 notices in the last hour"
 msgstr "The page already sent 10 notices in the last hour"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "The page answers at"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "The page as visitors see it now. Drafts are left out."
@@ -11884,6 +11991,10 @@ msgstr "The page is not published. Only your team sees this."
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "The page or the incident is not public"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "The page stops answering on this domain. Its address on this server keeps working."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "The recipients are taken when sending starts: people who subscribe later
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "The record at {name} is published."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "This is neither an mbox file nor a zip. Upload the .mbox file itself, or
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "This request has ended"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "This server does not offer imports from this kind of mailbox."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "This server does not offer own domains. Ask its operator to turn them on."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "This server has no forwarding address, so the mail reaches Yuva through an MX change."
@@ -12541,6 +12676,10 @@ msgstr "This window lost the page that opened it. Close it and sign in again fro
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "This workspace has as many broadcasts as allowed. Delete old ones first."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "This workspace has as many own domains as the server allows. Remove one first."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "Turn on e-mail subscribers in the page settings to let visitors subscrib
 msgid "Turn on for this device"
 msgstr "Turn on for this device"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "Turned off"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Turned off by Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "TXT record"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "value"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "Value"
 
@@ -13212,6 +13360,10 @@ msgstr "Values are stored encrypted and never shown again. To change one, replac
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "Values of condition {n}, separated by commas"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "Verified"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "waiting for confirmation"
 msgid "Waiting for confirmation"
 msgstr "Waiting for confirmation"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "Waiting for DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Waiting for Google's confirmation code…"
@@ -13359,6 +13515,14 @@ msgstr "Waiting for the operator"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Waiting for the provider's limit; continues at {time}."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "Waiting for validation"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

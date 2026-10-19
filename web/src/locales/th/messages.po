@@ -1004,6 +1004,10 @@ msgstr "ฟิลด์รวมที่ไม่มีค่าสำรอง
 msgid "A message was added"
 msgstr "มีข้อความถูกเพิ่ม"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "ชื่อที่คุณควบคุม เช่น status.example.com Yuva จะแสดงเรคคอร์ด DNS สองรายการให้เพิ่ม และหน้านี้จะตอบบนโดเมนทันทีที่เห็นเรคคอร์ดเหล่านั้น"
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "ผลิตภัณฑ์ใหม่"
@@ -1181,6 +1185,10 @@ msgstr "สถานะของ Acme"
 msgid "Acme Support"
 msgstr "Acme Support"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "ใช้งานอยู่"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "เพิ่มช่องทาง"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "เพิ่มส่วนประกอบ"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "เพิ่มโดเมน"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "การนำเข้าอีกรายการของพื้
 msgid "another inbox"
 msgstr "กล่องข้อความอื่น"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "หน้าอื่นยืนยันโดเมนนี้ก่อน และมีเพียงคำขอที่ยืนยันแล้วเท่านั้นที่ถือครองชื่อได้ ลบโดเมนออก หรือเริ่มใหม่เมื่อหน้านั้นปล่อยโดเมน"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "เซิร์ฟเวอร์ SMTP อื่น"
@@ -1741,6 +1757,10 @@ msgstr "เซิร์ฟเวอร์ SMTP อื่น"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "หน้าสถานะอื่นใช้ที่อยู่นี้อยู่แล้ว"
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "หน้าสถานะอื่นยืนยันโดเมนนี้แล้ว หนึ่งชื่อถือครองได้เพียงหนึ่งหน้า"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "เหตุการณ์การเรียกเก็บเงิ
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "ถูกบล็อก"
 
@@ -2209,6 +2230,10 @@ msgstr "ชื่อบอท"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "ชื่อบอท (ไม่บังคับ)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "พบเรคคอร์ดทั้งสองรายการ Yuva ตรวจสอบวันละครั้ง โปรดคงไว้"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "หมวดหมู่"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "ใบรับรอง"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "ใบรับรองหมดอายุเมื่อ {expires}"
@@ -2549,6 +2578,10 @@ msgstr "ตรวจสอบ DNS และเริ่มลงนาม"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "ตรวจสอบทุก"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "ตรวจสอบตอนนี้"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "ปิดเมื่อ"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "กำลังปิดทุกการสนทนา"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "เรคคอร์ด CNAME"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "เอกสาร"
 msgid "Does it work with server-side rendering?"
 msgstr "ใช้กับการเรนเดอร์ฝั่งเซิร์ฟเวอร์ได้ไหม"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "โดเมน"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "ยังไม่ได้ยืนยันโดเมน"
@@ -4202,6 +4243,10 @@ msgstr "สิ้นสุด"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "ป้อนโดเมน เช่น status.example.com"
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "หน้าแรก"
 msgid "Host"
 msgstr "โฮสต์"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "ชื่อโฮสต์"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "ชื่อโฮสต์และใบรับรอง"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "พวกเขายินยอมอย่างไร"
@@ -5816,6 +5869,10 @@ msgstr "ตรวจสอบล่าสุด {last}"
 msgid "Last checked"
 msgstr "ตรวจสอบล่าสุด"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "ตรวจสอบล่าสุด {last}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "นามสกุล"
@@ -5979,6 +6036,10 @@ msgstr "ลิงก์"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "ลิงก์จะชี้ไปที่โดเมนลิงก์ของเซิร์ฟเวอร์นี้แทนของคุณเอง ตัวกรองสแปมดูโดเมนของลิงก์"
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "ลิงก์ ฟีด และป้ายจะยังใช้ที่อยู่บนเซิร์ฟเวอร์นี้ จนกว่าชื่อโฮสต์และใบรับรองจะใช้งานได้ทั้งคู่"
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "โปรไฟล์ของฉัน"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "ต้องมีผู้ส่ง"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "ต้องดูแล"
 
@@ -6973,6 +7036,10 @@ msgstr "ความพยายามครั้งถัดไป {when}"
 
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
+msgstr "ตรวจสอบครั้งถัดไป {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
 msgstr "ตรวจสอบครั้งถัดไป {next}"
 
 #: src/features/broadcasts/BroadcastParts.tsx
@@ -8345,6 +8412,10 @@ msgstr "ตามช่วงเวลา"
 msgid "Overview"
 msgstr "ภาพรวม"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "โดเมนของคุณเอง"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "tenant ของตัวเอง"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "เพย์โหลด"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "รออยู่"
 
@@ -8804,6 +8876,10 @@ msgstr "เล่นเสียง"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "ชี้ระเบียน MX ไปที่ Yuva ตามที่คู่มืออีเมลอธิบาย การซิงก์จะรับอีเมลที่ยังไปเซิร์ฟเวอร์เก่าในระหว่างนั้น"
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "ชี้ไปที่"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "รูปภาพระยะไกลอาจบอกผู้ส่
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "นำออก"
@@ -9321,6 +9398,11 @@ msgstr "นำออก"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "นำ {0} ออก"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "ลบ {0} หรือไม่"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "นำช่องทางออก"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "นำเงื่อนไข {n} ออก"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "ลบโดเมน"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "แสดงตัวอย่าง"
 msgid "Show the reply time"
 msgstr "แสดงเวลาตอบกลับ"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "แสดงหน้านี้บนที่อยู่ของคุณเองแทนที่อยู่ของเซิร์ฟเวอร์นี้"
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "แสดงเวลาทำงาน"
@@ -10986,6 +11076,10 @@ msgstr "เริ่มการสนทนา"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "เริ่มการย้าย"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "เริ่มใหม่"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "ประวัติจากไฟล์ส่งออกถูกค
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "คัดลอกประวัติแล้วและอีเมลของกล่องนั้นมาถึง Yuva แล้ว"
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "กำลังตั้งค่าชื่อโฮสต์ ใช้เวลาครู่หนึ่งหลังพบเรคคอร์ด"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "เวลาแตกต่างกันตามวัน การเปลี่ยนที่นี่จะตั้งเวลาเดียวกันสำหรับทุกวันที่เลือก"
@@ -11744,6 +11842,11 @@ msgstr "การตรวจสอบล่าสุดส่งอีเมล
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "การตรวจสอบล่าสุดไม่พบลายเซ็น DKIM ที่ผ่าน ตั้งค่า DKIM กับผู้ให้บริการ SMTP ของคุณ หรือเปิด Yuva DKIM สำหรับช่องทาง"
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "การตรวจสอบล่าสุดพบ: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "กล่องข้อความอีกกล่องไม่ม
 msgid "The page already sent 10 notices in the last hour"
 msgstr "หน้านี้ส่งการแจ้งเตือนไปแล้ว 10 ฉบับในชั่วโมงที่ผ่านมา"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "หน้านี้ตอบที่"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "หน้าตามที่ผู้เข้าชมเห็นตอนนี้ ไม่รวมฉบับร่าง"
@@ -11884,6 +11991,10 @@ msgstr "หน้ายังไม่ได้เผยแพร่ เฉพ�
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "หน้านี้หรือเหตุการณ์นี้ไม่เป็นสาธารณะ"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "หน้านี้จะไม่ตอบบนโดเมนนี้อีก ที่อยู่บนเซิร์ฟเวอร์นี้ยังใช้งานได้"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "ผู้รับถูกเลือกเมื่อเริ่ม
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "เผยแพร่ระเบียนที่ {name} แล้ว"
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "มีเรคคอร์ดอยู่ แต่ไม่ได้ชี้ไปที่ที่ Yuva ต้องการ แก้ไขให้ตรงกับด้านล่าง Yuva จะตรวจสอบอีกทุก 10 นาที"
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "ไม่พบเรคคอร์ดตั้งแต่ {missing} โดเมนจะถูกปิดหลังจาก 3 วัน หากเรคคอร์ดไม่กลับมา"
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "เรคคอร์ดหายไป 3 วัน โดเมนจึงไม่แสดงหน้านี้อีกและไม่ถูกตรวจสอบอีก ใส่เรคคอร์ดกลับและเริ่มใหม่"
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "ไม่พบเรคคอร์ดภายใน 7 วัน คำขอจึงสิ้นสุด เพิ่มเรคคอร์ดด้านล่าง แล้วเริ่มใหม่อีก 7 วัน"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "นี่ไม่ใช่ไฟล์ mbox หรือ zip อัป�
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "นี่ไม่ใช่ไฟล์ CSV บันทึกสเปรดชีตเป็น CSV แล้วอัปโหลด"
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "หน้านี้ใช้โดเมนนี้ไม่ได้ ใช้ชื่อเช่น status.example.com ที่ไม่ใช่ที่อยู่ของเซิร์ฟเวอร์นี้เอง"
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "คำขอนี้สิ้นสุดแล้ว"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "เซิร์ฟเวอร์นี้ไม่มีการนำเข้าจากกล่องจดหมายประเภทนี้"
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "เซิร์ฟเวอร์นี้ไม่มีโดเมนของคุณเอง ขอให้ผู้ดูแลเปิดใช้"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "เซิร์ฟเวอร์นี้ไม่มีที่อยู่ส่งต่อ อีเมลจึงมาถึง Yuva ผ่านการเปลี่ยน MX"
@@ -12541,6 +12676,10 @@ msgstr "หน้าต่างนี้สูญเสียหน้าที
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "พื้นที่ทำงานนี้มีบรอดคาสต์ครบตามที่อนุญาต ลบอันเก่าก่อน"
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "พื้นที่ทำงานนี้มีโดเมนของตัวเองครบตามที่เซิร์ฟเวอร์อนุญาตแล้ว ลบออกหนึ่งรายการก่อน"
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "เปิดผู้สมัครรับอีเมลในกา
 msgid "Turn on for this device"
 msgstr "เปิดสำหรับอุปกรณ์นี้"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "ปิดอยู่"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "ปิดโดย Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "เรคคอร์ด TXT"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "ค่า"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "ค่า"
 
@@ -13212,6 +13360,10 @@ msgstr "ค่าถูกเก็บแบบเข้ารหัสและ
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "ค่าของเงื่อนไข {n} คั่นด้วยจุลภาค"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "ยืนยันแล้ว"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "รอการยืนยัน"
 msgid "Waiting for confirmation"
 msgstr "รอการยืนยัน"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "กำลังรอ DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "กำลังรอรหัสยืนยันของ Google…"
@@ -13359,6 +13515,14 @@ msgstr "รอผู้ดูแลระบบ"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "รอขีดจำกัดของผู้ให้บริการ ดำเนินต่อเมื่อ {time}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "กำลังรอเรคคอร์ด DNS สองรายการด้านล่าง เพิ่มในที่ที่คุณจัดการโดเมน การเปลี่ยนแปลง DNS อาจใช้เวลาแพร่กระจาย Yuva ตรวจสอบทุก 10 นาที และคำขอจะสิ้นสุดหากไม่พบภายใน 7 วัน"
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "กำลังรอการตรวจสอบ"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

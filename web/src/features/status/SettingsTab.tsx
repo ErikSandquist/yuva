@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { canSend } from "@/features/broadcasts/ListForm"
 import { useInboxChannels } from "@/features/broadcasts/queries"
+import { DomainCard } from "@/features/status/DomainCard"
 import { validSlug } from "@/features/status/CreatePageDialog"
 import { useDeleteStatusPage, usePatchStatusPage } from "@/features/status/queries"
 import { Card, ChoiceSelect, Field, FormActions, FormCard, Section, ToggleRow } from "@/features/settings/ui"
@@ -409,6 +410,7 @@ export function SettingsTab({ page }: { page: StatusPage }) {
     <div className="flex flex-col gap-8" data-testid="status-settings">
       <Address page={page} />
       <General page={page} />
+      <DomainCard page={page} />
       <EmailSubscribers page={page} />
       <Danger page={page} />
     </div>

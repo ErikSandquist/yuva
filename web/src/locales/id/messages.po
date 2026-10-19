@@ -1004,6 +1004,10 @@ msgstr "Bidang gabungan tanpa nilai cadangan akan kosong untuk sebagian penerima
 msgid "A message was added"
 msgstr "Pesan ditambahkan"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "Nama yang Anda kendalikan, misalnya status.example.com. Yuva menampilkan dua rekaman DNS untuk ditambahkan, dan halaman menjawab di domain begitu rekaman itu terlihat."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "Produk baru"
@@ -1181,6 +1185,10 @@ msgstr "Status Acme"
 msgid "Acme Support"
 msgstr "Dukungan Acme"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "Aktif"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "Tambah saluran"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "Tambah komponen"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "Tambah domain"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "Impor lain di ruang kerja ini sedang berjalan. Impor berjalan satu per s
 msgid "another inbox"
 msgstr "kotak masuk lain"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "Halaman lain memverifikasi domain ini lebih dulu, dan hanya klaim terverifikasi yang memegang sebuah nama. Hapus domain, atau mulai ulang setelah halaman lain melepasnya."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Server SMTP lain"
@@ -1741,6 +1757,10 @@ msgstr "Server SMTP lain"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "Halaman status lain sudah memakai alamat ini."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "Halaman status lain sudah memverifikasi domain ini. Hanya satu halaman yang dapat memegang sebuah nama."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "Peristiwa penagihan"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "Diblokir"
 
@@ -2209,6 +2230,10 @@ msgstr "Nama bot"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "Nama bot (opsional)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "Kedua rekaman ditemukan. Yuva memeriksanya sekali sehari; biarkan tetap di tempatnya."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "Kategori"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "Sertifikat"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "Sertifikat kedaluwarsa pada {expires}"
@@ -2549,6 +2578,10 @@ msgstr "Periksa DNS dan mulai menandatangani"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "Periksa setiap"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "Periksa sekarang"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "Menutup"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "Menutup setiap percakapan"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "Rekaman CNAME"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "Dokumen"
 msgid "Does it work with server-side rendering?"
 msgstr "Apakah berfungsi dengan server-side rendering?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "Domain"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "Domain belum terverifikasi"
@@ -4202,6 +4243,10 @@ msgstr "Selesai"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "Masukkan domain seperti status.example.com."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "Beranda"
 msgid "Host"
 msgstr "Host"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "Nama host"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "Nama host dan sertifikat"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Bagaimana mereka setuju?"
@@ -5816,6 +5869,10 @@ msgstr "Pemeriksaan terakhir {last}"
 msgid "Last checked"
 msgstr "Terakhir diperiksa"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "Terakhir diperiksa {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Nama belakang"
@@ -5979,6 +6036,10 @@ msgstr "Tautan"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "Tautan akan mengarah ke domain tautan server ini, bukan milik Anda. Filter spam memperhatikan domain tautan."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "Tautan, feed, dan lencana tetap memakai alamat di server ini sampai nama host dan sertifikatnya sama-sama aktif."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "Profil saya"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "Butuh pengirim"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "Perlu perhatian"
 
@@ -6974,6 +7037,10 @@ msgstr "percobaan berikutnya {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "Pemeriksaan berikutnya {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "Pemeriksaan berikutnya {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "Dari waktu ke waktu"
 msgid "Overview"
 msgstr "Ringkasan"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "Domain sendiri"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "Tenant sendiri"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "Payload"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "Tertunda"
 
@@ -8804,6 +8876,10 @@ msgstr "Putar bunyi"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "Arahkan rekaman MX ke Yuva seperti dijelaskan panduan email. Sinkronisasi menangkap email yang sementara itu masih sampai ke server lama."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "Mengarah ke"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "Gambar jarak jauh dapat memberi tahu pengirim bahwa Anda membuka email."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Hapus"
@@ -9321,6 +9398,11 @@ msgstr "Hapus"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "Hapus {0}"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "Hapus {0}?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "Hapus saluran"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "Hapus kondisi {n}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "Hapus domain"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "Tampilkan pratinjau"
 msgid "Show the reply time"
 msgstr "Tampilkan waktu balasan"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "Tampilkan halaman ini di alamat Anda sendiri, bukan di alamat server ini."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "Tampilkan uptime"
@@ -10986,6 +11076,10 @@ msgstr "Mulai percakapan"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "Mulai migrasi"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "Mulai ulang"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "Riwayat dari file ekspor disalin ke Yuva."
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "Riwayat disalin dan emailnya kini sampai ke Yuva."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "Nama host sedang disiapkan. Ini butuh waktu sebentar setelah rekaman ditemukan."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "Jamnya berbeda per hari; mengubahnya di sini menetapkan jam yang sama untuk setiap hari yang dipilih."
@@ -11744,6 +11842,11 @@ msgstr "Pemeriksaan terakhir tidak dapat mengirim email ujinya. Lihat pengaturan
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "Pemeriksaan terakhir tidak menemukan tanda tangan DKIM yang lulus. Siapkan DKIM bersama penyedia SMTP Anda, atau aktifkan DKIM Yuva untuk saluran."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "Pemeriksaan terakhir melihat: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "Kotak masuk lain tidak punya saluran email, sehingga percakapan email in
 msgid "The page already sent 10 notices in the last hour"
 msgstr "Halaman sudah mengirim 10 pemberitahuan dalam satu jam terakhir"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "Halaman menjawab di"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Halaman seperti yang dilihat pengunjung sekarang. Draf tidak disertakan."
@@ -11884,6 +11991,10 @@ msgstr "Halaman belum diterbitkan. Hanya tim Anda yang melihat ini."
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "Halaman atau insiden ini tidak publik"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "Halaman tidak lagi menjawab di domain ini. Alamatnya di server ini tetap berfungsi."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "Penerima diambil saat pengiriman dimulai: orang yang berlangganan kemudi
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "Rekaman di {name} dipublikasikan."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "Rekaman ada, tetapi tidak mengarah ke tempat yang Yuva butuhkan. Ubah agar sesuai dengan yang di bawah. Yuva memeriksa lagi setiap 10 menit."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "Rekaman tidak terlihat sejak {missing}. Domain dimatikan setelah 3 hari kecuali rekaman kembali."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "Rekaman hilang selama 3 hari, sehingga domain tidak lagi menampilkan halaman ini dan tidak diperiksa lagi. Pasang kembali rekaman dan mulai ulang."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "Rekaman tidak ditemukan dalam 7 hari, sehingga klaim berakhir. Tambahkan rekaman di bawah, lalu mulai ulang untuk 7 hari lagi."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "Ini bukan file mbox maupun zip. Unggah file .mbox itu sendiri, atau .zip
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Ini bukan file CSV. Simpan spreadsheet sebagai CSV dan unggah itu."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "Halaman ini tidak dapat memakai domain ini. Gunakan nama seperti status.example.com yang bukan salah satu alamat milik server ini."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "Permintaan ini telah berakhir"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "Server ini tidak menawarkan impor dari jenis kotak surat ini."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "Server ini tidak menawarkan domain sendiri. Minta operatornya untuk mengaktifkannya."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "Server ini tidak punya alamat penerusan, jadi email sampai ke Yuva lewat perubahan MX."
@@ -12541,6 +12676,10 @@ msgstr "Jendela ini kehilangan halaman yang membukanya. Tutup dan masuk lagi dar
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "Ruang kerja ini memiliki siaran massal sebanyak yang diizinkan. Hapus yang lama dulu."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "Ruang kerja ini memiliki domain sendiri sebanyak yang diizinkan server. Hapus satu terlebih dahulu."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "Aktifkan pelanggan email di pengaturan halaman agar pengunjung bisa berl
 msgid "Turn on for this device"
 msgstr "Aktifkan untuk perangkat ini"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "Dimatikan"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Dinonaktifkan oleh Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "Rekaman TXT"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "nilai"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "Nilai"
 
@@ -13212,6 +13360,10 @@ msgstr "Nilai disimpan terenkripsi dan tidak pernah ditampilkan lagi. Untuk meng
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "Nilai kondisi {n}, dipisahkan koma"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "Terverifikasi"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "menunggu konfirmasi"
 msgid "Waiting for confirmation"
 msgstr "Menunggu konfirmasi"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "Menunggu DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Menunggu kode konfirmasi Google…"
@@ -13359,6 +13515,14 @@ msgstr "Menunggu operator"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Menunggu batas penyedia; berlanjut pukul {time}."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "Menunggu dua rekaman DNS di bawah. Tambahkan di tempat Anda mengelola domain; perubahan DNS dapat butuh waktu untuk menyebar. Yuva memeriksa setiap 10 menit, dan klaim berakhir jika rekaman tidak ditemukan dalam 7 hari."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "Menunggu validasi"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

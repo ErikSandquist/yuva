@@ -428,6 +428,10 @@ export function useErrorText() {
     if (err.code === "segment_taken") return t`This property already has a segment with this name.`
     if (err.code === "segment_limit") return t`A property can have at most 100 segments. Delete one first.`
     if (err.code === "annotation_limit") return t`A property can have at most 1,000 notes. Delete old ones first.`
+    if (err.code === "domain_taken")
+      return t`Another status page already verified this domain. Only one page can hold a name.`
+    if (err.code === "status_domain_limit")
+      return t`This workspace has as many own domains as the server allows. Remove one first.`
     if (err.code === "slug_taken") return t`Another status page already uses this address.`
     if (err.code === "status_page_exists") return t`This inbox already has a status page.`
     if (err.code === "incident_closed")

@@ -24,6 +24,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/status-domains/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ask whether a status page domain is verified
+         * @description For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+         *     `200` when `domain` is the verified own domain of a published status page in a live workspace,
+         *     `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+         *     reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+         *     address (`429 rate_limited`).
+         */
+        get: operations["checkStatusDomain"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/readyz": {
         parameters: {
             query?: never;
@@ -15175,7 +15199,11 @@ export interface components {
             name: string;
             description: string;
             slug: components["schemas"]["StatusPageSlug"];
-            /** @description The public page, at the server's status URL. */
+            /**
+             * @description The public page: on its own domain once that is verified (with `YUVA_STATUS_DOMAINS=cloudflare`,
+             *     once its Cloudflare custom hostname and certificate are both `active`), else at the server's
+             *     status URL.
+             */
             url: string;
             logo_url?: string;
             accent_color?: components["schemas"]["StatusColor"];
@@ -15194,10 +15222,81 @@ export interface components {
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
+            custom_domain?: components["schemas"]["StatusCustomDomain"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
+         *     `failed`: the last check found them but they name another target or value (checked every 10
+         *     minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+         *     domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+         *     `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+         *     a verified domain holds its name: any number of pages may claim a domain while it is pending
+         *     or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+         *     the page and is not checked again until `custom_domain` is set again.
+         * @enum {string}
+         */
+        StatusDomainState: "pending" | "verified" | "failed" | "off";
+        /**
+         * @description The page's own domain, absent when it has none or the server's `YUVA_STATUS_DOMAINS` is
+         *     `off`. The owner adds a CNAME from `domain` to `cname_target` and a TXT record `txt_name` with
+         *     `txt_value`. `cloudflare` is present when the server registers verified domains as Cloudflare
+         *     for SaaS custom hostnames.
+         */
+        StatusCustomDomain: {
+            /** @example status.example.com */
+            domain: string;
+            state: components["schemas"]["StatusDomainState"];
+            /** @description `YUVA_STATUS_CNAME`, or the host of the server's public URL. */
+            cname_target: string;
+            /** @example _yuva-status.status.example.com */
+            txt_name: string;
+            txt_value: string;
+            /**
+             * @description Who issues the domain's certificate, the server's `YUVA_STATUS_DOMAINS`.
+             * @enum {string}
+             */
+            certificates: "ask" | "cloudflare";
+            /**
+             * @description `taken` or `expired` for a `failed` claim that is no longer checked (see
+             *     `StatusDomainState`), else what the last check that did not verify the domain saw, in
+             *     English.
+             */
+            problem?: string;
+            /** Format: date-time */
+            checked_at?: string;
+            /** Format: date-time */
+            next_check_at?: string;
+            /** Format: date-time */
+            verified_at?: string;
+            /**
+             * Format: date-time
+             * @description A verified domain whose records the checks no longer see; it is turned off 3 days after this.
+             */
+            missing_since?: string;
+            cloudflare?: components["schemas"]["StatusCloudflareHostname"];
+        };
+        /**
+         * @description The domain's Cloudflare for SaaS custom hostname, as Cloudflare last reported it. Absent
+         *     fields mean it is not created yet (the domain is not verified, or creating it failed and is
+         *     tried again).
+         */
+        StatusCloudflareHostname: {
+            id?: string;
+            /** @description Cloudflare's hostname status (`pending`, `active`, `moved`, `blocked`, …). */
+            status?: string;
+            /** @description Cloudflare's certificate status (`initializing`, `pending_validation`, `active`, …). */
+            ssl_status?: string;
+            /** @description Cloudflare's verification and validation errors, or why creating the hostname failed. */
+            errors?: string[];
+            /** Format: date-time */
+            checked_at?: string;
+        };
+        StatusDomainCheck: {
+            domain: string;
         };
         /**
          * @description Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
@@ -15286,6 +15385,18 @@ export interface components {
             show_uptime?: boolean;
             published?: boolean;
             email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
+            /**
+             * @description A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
+             *     one of the server's own hosts, and must not be another page's verified domain
+             *     (`409 domain_taken`). A new domain starts `pending` with a new verification value and is
+             *     checked at once; setting the same domain again checks a verified one at once and starts
+             *     any other over (same value, 7 more days). At most `YUVA_STATUS_DOMAIN_LIMIT` pages of a
+             *     workspace have a domain that is not `off` (`403 status_domain_limit`). When the server's
+             *     `YUVA_STATUS_DOMAINS` is `off`, only `null`, an empty string or the page's current domain
+             *     are accepted.
+             * @example status.example.com
+             */
+            custom_domain?: string | null;
         };
         StatusPageRef: {
             /** Format: uuid */
@@ -17579,6 +17690,30 @@ export interface operations {
                     "application/json": components["schemas"]["Health"];
                 };
             };
+        };
+    };
+    checkStatusDomain: {
+        parameters: {
+            query: {
+                domain: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The domain is verified. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusDomainCheck"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     getReadyz: {

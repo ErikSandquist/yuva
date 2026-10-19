@@ -1004,6 +1004,10 @@ msgstr "الحقل الدمجي بلا قيمة بديلة سيكون فارغً
 msgid "A message was added"
 msgstr "أُضيفت رسالة"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "اسم تتحكم فيه، مثل status.example.com. يعرض لك Yuva سجلَّي DNS لإضافتهما، وتستجيب الصفحة على النطاق فور رؤيتهما."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "منتج جديد"
@@ -1181,6 +1185,10 @@ msgstr "حالة Acme"
 msgid "Acme Support"
 msgstr "دعم Acme"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "نشط"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "إضافة قناة"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "إضافة مكوّن"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "إضافة نطاق"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "عملية استيراد أخرى لمساحة العمل هذه قيد
 msgid "another inbox"
 msgstr "صندوق وارد آخر"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "تحققت صفحة أخرى من هذا النطاق أولاً، والمطالبة المتحقق منها وحدها تحتفظ بالاسم. أزل النطاق أو ابدأ من جديد عندما تتخلى عنه الصفحة الأخرى."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "خادم SMTP آخر"
@@ -1741,6 +1757,10 @@ msgstr "خادم SMTP آخر"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "صفحة حالة أخرى تستخدم هذا العنوان بالفعل."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "تحققت صفحة حالة أخرى من هذا النطاق بالفعل. لا يمكن لأكثر من صفحة واحدة الاحتفاظ باسم."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "أحداث الفوترة"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "محظور"
 
@@ -2209,6 +2230,10 @@ msgstr "اسم الروبوت"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "اسم الروبوت (اختياري)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "تم العثور على السجلين. يفحصهما Yuva مرة في اليوم؛ أبقهما في مكانهما."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "الفئة"
 msgid "Cc: {cc}"
 msgstr "نسخة: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "الشهادة"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "انتهت صلاحية الشهادة في {expires}"
@@ -2549,6 +2578,10 @@ msgstr "فحص DNS وبدء التوقيع"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "الفحص كل"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "افحص الآن"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "تُغلق"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "يجري إغلاق كل محادثة"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "سجل CNAME"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "المستندات"
 msgid "Does it work with server-side rendering?"
 msgstr "هل يعمل مع العرض من جهة الخادم؟"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "النطاق"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "النطاق غير موثَّق"
@@ -4202,6 +4243,10 @@ msgstr "النهاية"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "أدخل نطاقاً مثل status.example.com."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "الرئيسية"
 msgid "Host"
 msgstr "المضيف"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "اسم المضيف"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "اسم المضيف والشهادة"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "كيف وافقوا؟"
@@ -5816,6 +5869,10 @@ msgstr "آخر فحص {last}"
 msgid "Last checked"
 msgstr "آخر فحص"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "آخر فحص {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "اسم العائلة"
@@ -5979,6 +6036,10 @@ msgstr "الروابط"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "ستشير الروابط إلى نطاق الروابط الخاص بهذا الخادم بدلًا من نطاقك. تنظر مرشحات البريد المزعج إلى نطاقات الروابط."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "تظل الروابط والخلاصة والشارة تستخدم العنوان على هذا الخادم حتى يصبح اسم المضيف وشهادته نشطين معاً."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "ملفي الشخصي"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "يحتاج إلى مرسِل"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "يحتاج إلى اهتمام"
 
@@ -6974,6 +7037,10 @@ msgstr "المحاولة التالية {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "الفحص التالي {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "الفحص التالي {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "مع الوقت"
 msgid "Overview"
 msgstr "نظرة عامة"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "نطاق خاص"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "مستأجر خاص"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "الحمولة"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "قيد الانتظار"
 
@@ -8804,6 +8876,10 @@ msgstr "تشغيل الصوت"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "وجّه سجلات MX إلى Yuva كما يصف دليل البريد الإلكتروني. تلتقط المزامنة البريد الذي لا يزال يصل إلى الخادم القديم في الأثناء."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "يشير إلى"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "يمكن للصور البعيدة إخبار المرسِل بأنك ف
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "إزالة"
@@ -9321,6 +9398,11 @@ msgstr "إزالة"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "إزالة {0}"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "إزالة {0}؟"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "إزالة القناة"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "إزالة الشرط {n}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "إزالة النطاق"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "إظهار المعاينة"
 msgid "Show the reply time"
 msgstr "إظهار وقت الرد"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "اعرض هذه الصفحة على عنوانك الخاص بدلاً من عنوان هذا الخادم."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "إظهار مدة التشغيل"
@@ -10986,6 +11076,10 @@ msgstr "بدء المحادثة"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "بدء النقل"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "ابدأ من جديد"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "يُنسخ السجل من ملف التصدير إلى Yuva."
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "نُسخ السجل ويصل بريده الآن إلى Yuva."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "يجري إعداد اسم المضيف. يستغرق ذلك لحظة بعد العثور على السجلات."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "تختلف الساعات حسب اليوم؛ وتغييرها هنا يضبط الساعات نفسها لكل يوم مختار."
@@ -11744,6 +11842,11 @@ msgstr "تعذّر على آخر فحص إرسال رسالة اختباره. ا
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "لم يجد آخر فحص توقيع DKIM ناجحًا. أعدّ DKIM لدى مزوّد SMTP، أو فعّل DKIM الخاص بـ Yuva للقناة."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "ما رآه آخر فحص: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "ليس للصندوق الآخر قناة بريد إلكتروني، ل
 msgid "The page already sent 10 notices in the last hour"
 msgstr "أرسلت الصفحة 10 إشعارات خلال الساعة الأخيرة"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "تستجيب الصفحة على"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "الصفحة كما يراها الزوار الآن. المسودات مستثناة."
@@ -11884,6 +11991,10 @@ msgstr "الصفحة غير منشورة. لا يرى هذا إلا فريقك."
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "الصفحة أو الحادثة غير عامة"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "ستتوقف الصفحة عن الاستجابة على هذا النطاق. يظل عنوانها على هذا الخادم يعمل."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "يُحدَّد المستلمون عند بدء الإرسال: من ي�
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "نُشر السجل عند {name}."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "السجلات موجودة لكنها لا تشير إلى المكان الذي يحتاجه Yuva. غيّرها لتطابق السجلات أدناه. يفحص Yuva مجدداً كل 10 دقائق."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "السجلات غير ظاهرة منذ {missing}. سيتم إيقاف النطاق بعد 3 أيام ما لم تعد."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "غابت السجلات 3 أيام، لذا لم يعد النطاق يعرض هذه الصفحة ولا يُفحص. أعد السجلات وابدأ من جديد."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "لم يتم العثور على السجلات خلال 7 أيام، لذا انتهت المطالبة. أضف السجلات أدناه ثم ابدأ من جديد لمدة 7 أيام أخرى."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "هذا ليس ملف mbox ولا ملف zip. ارفع ملف .mbox نف�
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "هذا ليس ملف CSV. احفظ جدول البيانات بصيغة CSV وارفعه."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "لا يمكن لهذه الصفحة استخدام هذا النطاق. استخدم اسماً مثل status.example.com ليس من عناوين هذا الخادم نفسه."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "انتهى هذا الطلب"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "لا يتيح هذا الخادم الاستيراد من هذا النوع من صناديق البريد."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "لا يقدم هذا الخادم نطاقات خاصة. اطلب من المشغّل تشغيلها."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "ليس لهذا الخادم عنوان تحويل، لذا يصل البريد إلى Yuva عبر تغيير MX."
@@ -12541,6 +12676,10 @@ msgstr "فقدت هذه النافذة الصفحة التي فتحتها. أغ�
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "لدى مساحة العمل هذه أقصى عدد مسموح من الرسائل الجماعية. احذف القديمة أولًا."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "تملك مساحة العمل هذه العدد الأقصى من النطاقات الخاصة الذي يسمح به الخادم. أزل واحداً أولاً."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "فعّل مشتركي البريد الإلكتروني في إعداد�
 msgid "Turn on for this device"
 msgstr "تفعيل لهذا الجهاز"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "متوقف"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "أوقفته Yuva"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "سجل TXT"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "القيمة"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "القيمة"
 
@@ -13212,6 +13360,10 @@ msgstr "تُخزَّن القيم مشفّرة ولا تُعرض مرة أخرى
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "قيم الشرط {n}، مفصولة بفواصل"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "تم التحقق"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "بانتظار التأكيد"
 msgid "Waiting for confirmation"
 msgstr "بانتظار التأكيد"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "بانتظار DNS"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "في انتظار رمز التأكيد من Google…"
@@ -13359,6 +13515,14 @@ msgstr "بانتظار المشغّل"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "في انتظار حد المزوّد؛ يتابع في {time}."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "بانتظار سجلي DNS أدناه. أضفهما حيث تدير النطاق؛ قد يستغرق انتشار تغييرات DNS بعض الوقت. يفحص Yuva كل 10 دقائق، وتنتهي المطالبة إذا لم يعثر عليهما خلال 7 أيام."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "بانتظار التحقق"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

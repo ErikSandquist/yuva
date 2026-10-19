@@ -1004,6 +1004,10 @@ msgstr "Yedek metni olmayan bir birleştirme alanı bazı alıcılarda boş kala
 msgid "A message was added"
 msgstr "Bir mesaj eklendi"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "Sahibi olduğunuz bir ad, örneğin status.example.com. Yuva size eklemeniz gereken iki DNS kaydını gösterir; kayıtları görünce sayfa bu alan adında yayın yapar."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "Yeni bir ürün"
@@ -1181,6 +1185,10 @@ msgstr "Acme durumu"
 msgid "Acme Support"
 msgstr "Acme Destek"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "Etkin"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "Kanal ekle"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "Bileşen ekle"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "Alan adı ekle"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "Bu çalışma alanında başka bir içe aktarma sürüyor. İçe aktarma
 msgid "another inbox"
 msgstr "başka bir gelen kutusu"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "Bu alan adını önce başka bir sayfa doğruladı ve bir adı yalnızca doğrulanmış talep tutar. Alan adını kaldırın ya da diğer sayfa bırakınca baştan başlayın."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Başka bir SMTP sunucusu"
@@ -1741,6 +1757,10 @@ msgstr "Başka bir SMTP sunucusu"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "Başka bir durum sayfası bu adresi kullanıyor."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "Bu alan adını başka bir durum sayfası zaten doğruladı. Bir adı yalnızca tek sayfa tutabilir."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "Faturalama olayları"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "Engelli"
 
@@ -2209,6 +2230,10 @@ msgstr "Bot adı"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "Bot adı (isteğe bağlı)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "İki kayıt da bulundu. Yuva bunları günde bir kez kontrol eder; yerinde bırakın."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "Kategori"
 msgid "Cc: {cc}"
 msgstr "Bilgi: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "Sertifika"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "Sertifikanın süresi {expires} tarihinde doldu"
@@ -2549,6 +2578,10 @@ msgstr "DNS'i denetle ve imzalamaya başla"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "Kontrol sıklığı"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "Şimdi kontrol et"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "Kapanış"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "Her konuşma kapatılıyor"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "CNAME kaydı"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "Belgeler"
 msgid "Does it work with server-side rendering?"
 msgstr "Sunucu tarafında oluşturmayla çalışıyor mu?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "Alan adı"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "Alan adı doğrulanmadı"
@@ -4202,6 +4243,10 @@ msgstr "Biter"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "status.example.com gibi bir alan adı girin."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "Ana sayfa"
 msgid "Host"
 msgstr "Ana makine"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "Ana makine adı"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "Ana makine adı ve sertifika"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Nasıl izin verdiler?"
@@ -5816,6 +5869,10 @@ msgstr "Son kontrol {last}"
 msgid "Last checked"
 msgstr "Son kontrol"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "Son kontrol: {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Soyad"
@@ -5979,6 +6036,10 @@ msgstr "Bağlantılar"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "Bağlantılar sizin alan adınız yerine bu sunucunun bağlantı alan adına gider. Spam filtreleri bağlantı alan adlarına bakar."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "Ana makine adı ve sertifikası etkin olana kadar bağlantılar, akış ve rozet bu sunucudaki adresi kullanmaya devam eder."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "Profilim"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "Gönderen gerekli"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "İlgilenmeniz gerekiyor"
 
@@ -6974,6 +7037,10 @@ msgstr "sonraki deneme {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "Sonraki kontrol {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "Sonraki kontrol: {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "Zaman içinde"
 msgid "Overview"
 msgstr "Genel bakış"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "Kendi alan adı"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "Kendi kiracısı"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "Gövde"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "Beklemede"
 
@@ -8804,6 +8876,10 @@ msgstr "Sesi çal"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "MX kayıtlarını e-posta rehberinde anlatıldığı gibi Yuva'ya yöneltin. Bu sırada hâlâ eski sunucuya ulaşan e-postaları eşitleme yakalar."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "Hedef"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "Uzak görseller, postayı açtığınızı gönderene bildirebilir."
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "Kaldır"
@@ -9321,6 +9398,11 @@ msgstr "Kaldır"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "{0} öğesini kaldır"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "{0} kaldırılsın mı?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "Kanalı kaldır"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "{n}. koşulu kaldır"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "Alan adını kaldır"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "Önizlemeyi göster"
 msgid "Show the reply time"
 msgstr "Yanıt süresini göster"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "Bu sayfayı bu sunucunun adresi yerine kendi adresinizde gösterin."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "Çalışma süresini göster"
@@ -10986,6 +11076,10 @@ msgstr "Konuşmayı başlat"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "Taşımayı başlat"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "Baştan başla"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "Dışa aktarım dosyasındaki geçmiş Yuva'ya kopyalandı."
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "Geçmiş kopyalandı ve e-postalar artık Yuva'ya ulaşıyor."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "Ana makine adı kuruluyor. Kayıtlar bulunduktan sonra bu kısa sürer."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "Saatler günden güne farklı; burada değiştirirsen seçili her gün için aynı saatler kaydedilir."
@@ -11744,6 +11842,11 @@ msgstr "Son denetim deneme e-postasını gönderemedi. Kanalın SMTP ayarlarına
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "Son denetim geçen bir DKIM imzası bulamadı. SMTP sağlayıcınızda DKIM kurun ya da kanal için Yuva DKIM'i açın."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "Son kontrolde görülen: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "Diğer gelen kutusunun e-posta kanalı yok, bu yüzden bu e-posta konuş
 msgid "The page already sent 10 notices in the last hour"
 msgstr "Sayfa son bir saatte zaten 10 bildirim gönderdi"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "Sayfa şu adreste yanıt veriyor"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Sayfa, ziyaretçilerin şu an gördüğü haliyle. Taslaklar dahil değil."
@@ -11884,6 +11991,10 @@ msgstr "Sayfa yayında değil. Bunu yalnızca ekibiniz görür."
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "Sayfa ya da olay herkese açık değil"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "Sayfa artık bu alan adında yanıt vermez. Bu sunucudaki adresi çalışmaya devam eder."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "Alıcılar gönderim başladığında belirlenir: sonradan abone olanlar
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "{name} adındaki kayıt yayımlanmış."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "Kayıtlar var ama Yuva'nın gerek duyduğu yeri göstermiyor. Aşağıdakilerle eşleşecek şekilde değiştirin. Yuva her 10 dakikada bir yeniden bakar."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "Kayıtlar {missing} tarihinden beri görünmüyor. Geri gelmezlerse alan adı 3 gün sonra kapatılır."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "Kayıtlar 3 gün boyunca yoktu; bu yüzden alan adı artık bu sayfayı göstermiyor ve kontrol edilmiyor. Kayıtları geri koyun ve baştan başlayın."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "Kayıtlar 7 gün içinde bulunamadı, bu yüzden talep sona erdi. Aşağıdaki kayıtları ekleyin, sonra 7 gün daha için baştan başlayın."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "Bu ne bir mbox dosyası ne de bir zip. .mbox dosyasının kendisini ya d
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Bu bir CSV dosyası değil. Tabloyu CSV olarak kaydedip onu yükleyin."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "Bu sayfa bu alan adını kullanamaz. Bu sunucunun kendi adreslerinden biri olmayan, status.example.com gibi bir ad kullanın."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "Bu istek artık geçerli değil"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "Bu sunucu bu tür bir posta kutusundan içe aktarma sunmuyor."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "Bu sunucu kendi alan adı sunmuyor. İşletmecisinden açmasını isteyin."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "Bu sunucuda yönlendirme adresi yok; e-postalar Yuva'ya bir MX değişikliğiyle ulaşır."
@@ -12541,6 +12676,10 @@ msgstr "Bu pencere, onu açan sayfayla bağlantısını kaybetti. Kapatın ve {h
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "Bu çalışma alanında izin verilen sayıda bülten var. Önce eskileri silin."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "Bu çalışma alanı, sunucunun izin verdiği kadar kendi alan adına sahip. Önce birini kaldırın."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "Ziyaretçilerin bildirimlere abone olabilmesi için sayfa ayarlarında e
 msgid "Turn on for this device"
 msgstr "Bu cihazda aç"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "Kapalı"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Yuva kapattı"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "TXT kaydı"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "değer"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "Değer"
 
@@ -13212,6 +13360,10 @@ msgstr "Değerler şifreli saklanır ve bir daha gösterilmez. Birini değiştir
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "{n}. koşulun değerleri, virgülle ayrılmış"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "Doğrulandı"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "onay bekliyor"
 msgid "Waiting for confirmation"
 msgstr "Onay bekliyor"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "DNS bekleniyor"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Google'ın onay kodu bekleniyor…"
@@ -13359,6 +13515,14 @@ msgstr "Sunucu yöneticisi bekleniyor"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Sağlayıcının sınırı bekleniyor; {time} itibarıyla devam edecek."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "Aşağıdaki iki DNS kaydı bekleniyor. Alan adınızı yönettiğiniz yerde ekleyin; DNS değişikliklerinin yayılması biraz sürebilir. Yuva her 10 dakikada bir bakar; kayıtlar 7 gün içinde bulunmazsa talep sona erer."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "Doğrulama bekleniyor"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"

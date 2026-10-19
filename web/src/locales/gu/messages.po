@@ -1004,6 +1004,10 @@ msgstr "ફૉલબૅક વિનાનું મર્જ ફીલ્ડ �
 msgid "A message was added"
 msgstr "સંદેશ ઉમેરાયો"
 
+#: src/features/status/DomainCard.tsx
+msgid "A name you control, like status.example.com. Yuva then shows you two DNS records to add, and the page answers on the domain once it has seen them."
+msgstr "તમે નિયંત્રિત કરો છો તેવું નામ, જેમ કે status.example.com. Yuva તમને ઉમેરવા માટે બે DNS રેકોર્ડ બતાવે છે, અને તે દેખાતાં જ પેજ ડોમેન પર જવાબ આપે છે."
+
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "નવું ઉત્પાદન"
@@ -1181,6 +1185,10 @@ msgstr "Acmeની સ્થિતિ"
 msgid "Acme Support"
 msgstr "Acme સપોર્ટ"
 
+#: src/features/status/DomainCard.tsx
+msgid "Active"
+msgstr "સક્રિય"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1273,6 +1281,10 @@ msgstr "ચૅનલ ઉમેરો"
 #: src/features/status/ComponentsTab.tsx
 msgid "Add component"
 msgstr "ઘટક ઉમેરો"
+
+#: src/features/status/DomainCard.tsx
+msgid "Add domain"
+msgstr "ડોમેન ઉમેરો"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -1734,6 +1746,10 @@ msgstr "આ વર્કસ્પેસની બીજી આયાત ચા�
 msgid "another inbox"
 msgstr "બીજું ઇનબૉક્સ"
 
+#: src/features/status/DomainCard.tsx
+msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
+msgstr "બીજા પેજે આ ડોમેન પહેલાં ચકાસ્યું છે, અને નામ ફક્ત ચકાસાયેલો દાવો જ રાખે છે. ડોમેન દૂર કરો, અથવા બીજું પેજ છોડે ત્યારે ફરીથી શરૂ કરો."
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "બીજો SMTP સર્વર"
@@ -1741,6 +1757,10 @@ msgstr "બીજો SMTP સર્વર"
 #: src/components/common/text.ts
 msgid "Another status page already uses this address."
 msgstr "બીજું સ્ટેટસ પેજ પહેલેથી આ સરનામું વાપરે છે."
+
+#: src/components/common/text.ts
+msgid "Another status page already verified this domain. Only one page can hold a name."
+msgstr "બીજા સ્ટેટસ પેજે આ ડોમેન પહેલેથી ચકાસ્યું છે. એક નામ ફક્ત એક જ પેજ રાખી શકે છે."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -2173,6 +2193,7 @@ msgstr "બિલિંગ ઇવેન્ટ"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Blocked"
 msgstr "અવરોધિત"
 
@@ -2209,6 +2230,10 @@ msgstr "બૉટનું નામ"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot name (optional)"
 msgstr "બૉટનું નામ (વૈકલ્પિક)"
+
+#: src/features/status/DomainCard.tsx
+msgid "Both records were found. Yuva checks them once a day; keep them in place."
+msgstr "બંને રેકોર્ડ મળ્યા. Yuva તેમને દિવસમાં એક વાર તપાસે છે; તેમને જેમ છે તેમ રહેવા દો."
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
@@ -2463,6 +2488,10 @@ msgstr "શ્રેણી"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/status/DomainCard.tsx
+msgid "Certificate"
+msgstr "પ્રમાણપત્ર"
+
 #: src/features/status/MonitorsTab.tsx
 msgid "Certificate expired {expires}"
 msgstr "પ્રમાણપત્રની મુદત {expires} ના રોજ પૂરી થઈ"
@@ -2549,6 +2578,10 @@ msgstr "DNS તપાસો અને સાઇનિંગ શરૂ કરો"
 #: src/features/status/MonitorDialog.tsx
 msgid "Check every"
 msgstr "તપાસ દર"
+
+#: src/features/status/DomainCard.tsx
+msgid "Check now"
+msgstr "હવે તપાસો"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2808,6 +2841,10 @@ msgstr "બંધ થાય છે"
 #: src/features/status/LinkedSection.tsx
 msgid "Closing each conversation"
 msgstr "દરેક વાતચીત બંધ થઈ રહી છે"
+
+#: src/features/status/DomainCard.tsx
+msgid "CNAME record"
+msgstr "CNAME રેકોર્ડ"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
@@ -3853,6 +3890,10 @@ msgstr "દસ્તાવેજો"
 msgid "Does it work with server-side rendering?"
 msgstr "શું તે સર્વર-સાઇડ રેન્ડરિંગ સાથે કામ કરે છે?"
 
+#: src/features/status/DomainCard.tsx
+msgid "Domain"
+msgstr "ડોમેન"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Domain not verified"
 msgstr "ડોમેન ચકાસાયું નથી"
@@ -4202,6 +4243,10 @@ msgstr "સમાપ્તિ"
 #: src/features/status/SettingsTab.tsx
 msgid "English"
 msgstr "English"
+
+#: src/features/status/DomainCard.tsx
+msgid "Enter a domain like status.example.com."
+msgstr "status.example.com જેવું ડોમેન દાખલ કરો."
 
 #: src/features/status/monitorErrors.ts
 msgid "Enter a host name or an IP address."
@@ -5086,6 +5131,14 @@ msgstr "હોમ"
 msgid "Host"
 msgstr "હોસ્ટ"
 
+#: src/features/status/DomainCard.tsx
+msgid "Hostname"
+msgstr "હોસ્ટનેમ"
+
+#: src/features/status/DomainCard.tsx
+msgid "Hostname and certificate"
+msgstr "હોસ્ટનેમ અને પ્રમાણપત્ર"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "તેઓ કેવી રીતે સંમત થયા?"
@@ -5816,6 +5869,10 @@ msgstr "છેલ્લી તપાસ {last}"
 msgid "Last checked"
 msgstr "છેલ્લે તપાસ્યું"
 
+#: src/features/status/DomainCard.tsx
+msgid "Last checked {last}."
+msgstr "છેલ્લી તપાસ {last}."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "અટક"
@@ -5979,6 +6036,10 @@ msgstr "લિંક"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 msgstr "લિંક તમારા પોતાના બદલે આ સર્વરના લિંક ડોમેન તરફ નિર્દેશ કરશે. સ્પામ ફિલ્ટર લિંક ડોમેન જુએ છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "Links, the feed and the badge keep using the address on this server until the hostname and its certificate are both active."
+msgstr "જ્યાં સુધી હોસ્ટનેમ અને તેનું પ્રમાણપત્ર બંને સક્રિય ન થાય ત્યાં સુધી લિંક, ફીડ અને બેજ આ સર્વરના સરનામાંનો ઉપયોગ કરતા રહે છે."
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -6685,6 +6746,7 @@ msgstr "મારી પ્રોફાઇલ"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
@@ -6736,6 +6798,7 @@ msgstr "મોકલનાર જોઈએ"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "ધ્યાન જોઈએ"
 
@@ -6974,6 +7037,10 @@ msgstr "આગલો પ્રયાસ {when}"
 #: src/features/status/MonitorsTab.tsx
 msgid "Next check {next}"
 msgstr "આગામી તપાસ {next}"
+
+#: src/features/status/DomainCard.tsx
+msgid "Next check {next}."
+msgstr "આગામી તપાસ {next}."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
@@ -8345,6 +8412,10 @@ msgstr "સમય સાથે"
 msgid "Overview"
 msgstr "ઝાંખી"
 
+#: src/features/status/DomainCard.tsx
+msgid "Own domain"
+msgstr "પોતાનું ડોમેન"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Own tenant"
 msgstr "પોતાનું ટેનન્ટ"
@@ -8516,6 +8587,7 @@ msgid "Payload"
 msgstr "પેલોડ"
 
 #: src/components/common/text.ts
+#: src/features/status/DomainCard.tsx
 msgid "Pending"
 msgstr "બાકી"
 
@@ -8804,6 +8876,10 @@ msgstr "અવાજ વગાડો"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
 msgstr "ઇમેઇલ માર્ગદર્શિકામાં વર્ણવ્યા મુજબ MX રેકોર્ડ Yuva તરફ કરો. સિંક તે દરમિયાન જૂના સર્વર સુધી પહોંચતો મેઇલ પકડે છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "Points to"
+msgstr "આની તરફ નિર્દેશ કરે છે"
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -9311,6 +9387,7 @@ msgstr "રિમોટ ઇમેજ મોકલનારને જણાવી
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove"
 msgstr "દૂર કરો"
@@ -9321,6 +9398,11 @@ msgstr "દૂર કરો"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "{0} દૂર કરો"
+
+#. placeholder {0}: d.domain
+#: src/features/status/DomainCard.tsx
+msgid "Remove {0}?"
+msgstr "{0} દૂર કરવું?"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove {lang}"
@@ -9346,6 +9428,10 @@ msgstr "ચૅનલ દૂર કરો"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
 msgstr "શરત {n} દૂર કરો"
+
+#: src/features/status/DomainCard.tsx
+msgid "Remove domain"
+msgstr "ડોમેન દૂર કરો"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
@@ -10560,6 +10646,10 @@ msgstr "પૂર્વાવલોકન બતાવો"
 msgid "Show the reply time"
 msgstr "જવાબ સમય બતાવો"
 
+#: src/features/status/DomainCard.tsx
+msgid "Show this page on your own address instead of this server’s."
+msgstr "આ પેજને આ સર્વરના સરનામાંને બદલે તમારા પોતાના સરનામાં પર બતાવો."
+
 #: src/features/status/SettingsTab.tsx
 msgid "Show uptime"
 msgstr "અપટાઇમ બતાવો"
@@ -10986,6 +11076,10 @@ msgstr "વાતચીત શરૂ કરો"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Start migration"
 msgstr "માઇગ્રેશન શરૂ કરો"
+
+#: src/features/status/DomainCard.tsx
+msgid "Start over"
+msgstr "ફરીથી શરૂ કરો"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -11664,6 +11758,10 @@ msgstr "એક્સપોર્ટ ફાઇલનો ઇતિહાસ Yuva �
 msgid "The history is copied and its mail now reaches Yuva."
 msgstr "ઇતિહાસ કૉપિ થયો અને તેનો મેઇલ હવે Yuva સુધી પહોંચે છે."
 
+#: src/features/status/DomainCard.tsx
+msgid "The hostname is being set up. This takes a moment once the records are found."
+msgstr "હોસ્ટનેમ સેટ થઈ રહ્યું છે. રેકોર્ડ મળ્યા પછી થોડો સમય લાગે છે."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "કલાકો દિવસ પ્રમાણે અલગ છે; અહીં બદલવાથી દરેક પસંદ કરેલા દિવસ માટે સમાન કલાકો સેટ થાય છે."
@@ -11744,6 +11842,11 @@ msgstr "છેલ્લી તપાસ તેનો ટેસ્ટ મેઇ�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
 msgstr "છેલ્લી તપાસમાં કોઈ પાસ થતી DKIM સહી મળી નહીં. તમારા SMTP પ્રદાતા સાથે DKIM સેટ કરો, અથવા ચૅનલ માટે Yuva DKIM ચાલુ કરો."
+
+#. placeholder {0}: d.problem
+#: src/features/status/DomainCard.tsx
+msgid "The last check saw: {0}"
+msgstr "છેલ્લી તપાસમાં દેખાયું: {0}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check’s test mail did not come back within 10 minutes. Check again."
@@ -11865,6 +11968,10 @@ msgstr "બીજા ઇનબૉક્સમાં ઇમેઇલ ચૅનલ
 msgid "The page already sent 10 notices in the last hour"
 msgstr "પેજે છેલ્લા કલાકમાં પહેલેથી 10 સૂચનાઓ મોકલી દીધી છે"
 
+#: src/features/status/DomainCard.tsx
+msgid "The page answers at"
+msgstr "પેજ આ સરનામે જવાબ આપે છે"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "મુલાકાતીઓ હમણાં જેવું જુએ છે તેવું પેજ. ડ્રાફ્ટ બાકાત છે."
@@ -11884,6 +11991,10 @@ msgstr "પેજ પ્રકાશિત નથી. આ ફક્ત તમા
 #: src/features/status/Notices.tsx
 msgid "The page or the incident is not public"
 msgstr "પેજ અથવા ઘટના જાહેર નથી"
+
+#: src/features/status/DomainCard.tsx
+msgid "The page stops answering on this domain. Its address on this server keeps working."
+msgstr "પેજ હવે આ ડોમેન પર જવાબ આપશે નહીં. આ સર્વર પર તેનું સરનામું કામ કરતું રહેશે."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11948,6 +12059,22 @@ msgstr "મોકલવાનું શરૂ થાય ત્યારે પ�
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "{name} પરનો રેકોર્ડ પ્રકાશિત છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records exist, but they do not point where Yuva needs them. Change them to match the ones below. Yuva looks again every 10 minutes."
+msgstr "રેકોર્ડ છે, પણ Yuvaને જ્યાં જોઈએ ત્યાં નિર્દેશ કરતા નથી. તેમને નીચેનાની સાથે મેળ ખાય તેમ બદલો. Yuva દર 10 મિનિટે ફરી જુએ છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records have not been visible since {missing}. The domain is turned off after 3 days unless they come back."
+msgstr "રેકોર્ડ {missing}થી દેખાતા નથી. તે પાછા ન આવે તો ડોમેન 3 દિવસ પછી બંધ થઈ જશે."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were gone for 3 days, so the domain no longer shows this page and is not checked any more. Put the records back and start over."
+msgstr "રેકોર્ડ 3 દિવસ ગેરહાજર રહ્યા, તેથી ડોમેન હવે આ પેજ બતાવતું નથી અને તપાસાતું નથી. રેકોર્ડ પાછા મૂકો અને ફરીથી શરૂ કરો."
+
+#: src/features/status/DomainCard.tsx
+msgid "The records were not found within 7 days, so the claim ended. Add the records below, then start over for 7 more days."
+msgstr "7 દિવસમાં રેકોર્ડ મળ્યા નહીં, તેથી દાવો પૂરો થયો. નીચેના રેકોર્ડ ઉમેરો, પછી બીજા 7 દિવસ માટે ફરીથી શરૂ કરો."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "The region of your SES account."
@@ -12382,6 +12509,10 @@ msgstr "આ mbox ફાઇલ પણ નથી અને ઝિપ પણ નથ
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "આ CSV ફાઇલ નથી. સ્પ્રેડશીટને CSV તરીકે સાચવો અને તે અપલોડ કરો."
 
+#: src/features/status/DomainCard.tsx
+msgid "This is not a domain this page can use. Use a name like status.example.com that is not one of this server’s own addresses."
+msgstr "આ પેજ આ ડોમેનનો ઉપયોગ કરી શકતું નથી. status.example.com જેવું નામ વાપરો જે આ સર્વરના પોતાના સરનામાંમાંનું ન હોય."
+
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
@@ -12486,6 +12617,10 @@ msgstr "આ વિનંતી સમાપ્ત થઈ છે"
 msgid "This server does not offer imports from this kind of mailbox."
 msgstr "આ સર્વર આ પ્રકારના મેઇલબૉક્સમાંથી આયાત ઑફર કરતો નથી."
 
+#: src/features/status/DomainCard.tsx
+msgid "This server does not offer own domains. Ask its operator to turn them on."
+msgstr "આ સર્વર પોતાના ડોમેન આપતું નથી. તેના ઓપરેટરને ચાલુ કરવા કહો."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "આ સર્વર પાસે ફૉરવર્ડિંગ સરનામું નથી, તેથી મેઇલ MX ફેરફારથી Yuva સુધી પહોંચે છે."
@@ -12541,6 +12676,10 @@ msgstr "આ વિન્ડોએ તેને ખોલનારું પે�
 #: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "આ વર્કસ્પેસમાં માન્ય હોય તેટલાં બ્રૉડકાસ્ટ છે. પહેલાં જૂનાં કાઢી નાખો."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many own domains as the server allows. Remove one first."
+msgstr "આ વર્કસ્પેસ પાસે સર્વર જેટલા મંજૂર કરે તેટલા પોતાના ડોમેન છે. પહેલા એક દૂર કરો."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -12762,9 +12901,17 @@ msgstr "મુલાકાતીઓ સૂચનાઓ માટે સબ્સ
 msgid "Turn on for this device"
 msgstr "આ ઉપકરણ માટે ચાલુ કરો"
 
+#: src/features/status/DomainCard.tsx
+msgid "Turned off"
+msgstr "બંધ"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Turned off by Yuva"
 msgstr "Yuva એ બંધ કર્યું"
+
+#: src/features/status/DomainCard.tsx
+msgid "TXT record"
+msgstr "TXT રેકોર્ડ"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
@@ -13194,6 +13341,7 @@ msgid "value"
 msgstr "મૂલ્ય"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/status/DomainCard.tsx
 msgid "Value"
 msgstr "મૂલ્ય"
 
@@ -13212,6 +13360,10 @@ msgstr "કિંમતો એન્ક્રિપ્ટ કરીને સં
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Values of condition {n}, separated by commas"
 msgstr "શરત {n} નાં મૂલ્યો, અલ્પવિરામથી અલગ"
+
+#: src/features/status/DomainCard.tsx
+msgid "Verified"
+msgstr "ચકાસાયેલ"
 
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -13332,6 +13484,10 @@ msgstr "પુષ્ટિની રાહ જોવાય છે"
 msgid "Waiting for confirmation"
 msgstr "પુષ્ટિની રાહ જોવાય છે"
 
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for DNS"
+msgstr "DNS ની રાહ"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Waiting for Google's confirmation code…"
 msgstr "Google ના પુષ્ટિ કોડની રાહ જોવાય છે…"
@@ -13359,6 +13515,14 @@ msgstr "ઑપરેટરની રાહ જોવાય છે"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "પ્રદાતાની મર્યાદાની રાહ જોવાય છે; {time} એ ચાલુ રહે છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for the two DNS records below. Add them where you manage the domain; DNS changes can take a while to spread. Yuva looks every 10 minutes, and the claim ends if they are not found within 7 days."
+msgstr "નીચેના બે DNS રેકોર્ડની રાહ જોવાય છે. તમે જ્યાં ડોમેન સંભાળો છો ત્યાં તેમને ઉમેરો; DNS ફેરફાર ફેલાવામાં સમય લાગી શકે. Yuva દર 10 મિનિટે જુએ છે, અને 7 દિવસમાં ન મળે તો દાવો પૂરો થાય છે."
+
+#: src/features/status/DomainCard.tsx
+msgid "Waiting for validation"
+msgstr "ચકાસણીની રાહ"
 
 #: src/features/home/HomePage.tsx
 msgid "Waiting longest: <0>{name}</0>"
