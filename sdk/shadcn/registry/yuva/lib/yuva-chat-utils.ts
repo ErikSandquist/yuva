@@ -5,6 +5,9 @@ export interface YuvaChatLabels {
   online: string
   away: string
   repliesWithin: (minutes: number) => string
+  onlineReplies: string
+  repliesHours: string
+  repliesDays: string
   reconnecting: string
   loading: string
   loadError: string
@@ -33,6 +36,7 @@ export interface YuvaChatLabels {
   typing: (name: string) => string
   typingSomeone: string
   jumpToLatest: (unread: number) => string
+  newCount: (unread: number) => string
   closed: string
   rateQuestion: string
   rateGood: string
@@ -40,19 +44,36 @@ export interface YuvaChatLabels {
   rated: string
   placeholder: string
   attach: string
+  screenshot: string
   send: string
   enterKey: string
   toSend: string
   generic: string
   offline: string
   rateLimited: string
+  emailLabel: string
+  emailPlaceholder: string
+  emailSave: string
+  emailAskTitle: string
+  emailAskHint: string
+  emailSentTitle: string
+  emailSent: string
+  emailChange: string
+  emailResend: string
+  emailResent: string
+  emailUndeliverableTitle: string
+  emailUndeliverableHint: string
+  emailConfirmed: string
 }
 
 export const defaultYuvaChatLabels: YuvaChatLabels = {
   title: "Chat with us",
   online: "Online",
   away: "Away",
-  repliesWithin: (minutes) => `We usually reply within ${minutes} min`,
+  repliesWithin: (minutes) => `Usually replies in ${minutes} min`,
+  onlineReplies: "Online · replies in minutes",
+  repliesHours: "Usually replies in a few hours",
+  repliesDays: "Usually replies in a day or two",
   reconnecting: "Reconnecting…",
   loading: "Loading",
   loadError: "Could not load the chat.",
@@ -81,6 +102,7 @@ export const defaultYuvaChatLabels: YuvaChatLabels = {
   typing: (name) => `${name} is typing`,
   typingSomeone: "Typing",
   jumpToLatest: (unread) => (unread > 0 ? `${unread} new, jump to latest` : "Jump to latest"),
+  newCount: (unread) => `${unread} new`,
   closed: "Conversation closed",
   rateQuestion: "How was this conversation?",
   rateGood: "Good",
@@ -88,12 +110,26 @@ export const defaultYuvaChatLabels: YuvaChatLabels = {
   rated: "Thanks for your feedback.",
   placeholder: "Write a message",
   attach: "Attach a file",
+  screenshot: "Take a screenshot",
   send: "Send",
   enterKey: "Enter",
   toSend: "to send",
   generic: "Something went wrong. Try again.",
   offline: "You seem to be offline.",
   rateLimited: "Too many messages. Wait a moment.",
+  emailLabel: "E-mail address",
+  emailPlaceholder: "you@example.com",
+  emailSave: "Save",
+  emailAskTitle: "Where can we reach you?",
+  emailAskHint: "Leave your e-mail so replies reach you when you are away.",
+  emailSentTitle: "Check your inbox",
+  emailSent: "We sent a link to {address}. Open it so replies reach you by e-mail.",
+  emailChange: "Change address",
+  emailResend: "Send again",
+  emailResent: "Sent again.",
+  emailUndeliverableTitle: "We couldn't reach {address}",
+  emailUndeliverableHint: "That address doesn't accept mail. Check it for a typo.",
+  emailConfirmed: "Replies will also reach {address}",
 }
 
 export function chatErrorText(error: unknown, labels: YuvaChatLabels): string {
@@ -164,5 +200,29 @@ export function linkParts(body: string): { text: string; href?: string }[] {
     last = match.index + match[0].length
   }
   if (last < body.length) parts.push({ text: body.slice(last) })
+  return parts
+}
+
+export function statusLine(
+  inbox: { presence?: { available: boolean }; expected_reply_minutes?: number } | null,
+  labels: YuvaChatLabels
+): string | null {
+  if (!inbox) return null
+  if (inbox.presence?.available) return labels.onlineReplies
+  const minutes = inbox.expected_reply_minutes
+  if (minutes) {
+    if (minutes < 60) return labels.repliesWithin(minutes)
+    return minutes < 24 * 60 ? labels.repliesHours : labels.repliesDays
+  }
+  return inbox.presence ? labels.away : null
+}
+
+export function withAddress(template: string, address: string): (string | { address: string })[] {
+  const [before = "", ...rest] = template.split("{address}")
+  const parts: (string | { address: string })[] = before ? [before] : []
+  for (const part of rest) {
+    parts.push({ address })
+    if (part) parts.push(part)
+  }
   return parts
 }

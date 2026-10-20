@@ -34,7 +34,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <main className="frame">
       <Section index="01" title="Chat">
-        <YuvaChat server={server} channel={channel} />
+        <YuvaChat server={server} channel={channel} variant="lined" />
       </Section>
       <Section index="02" title="Discussions">
         <YuvaDiscussions server={server} channel={channel} />

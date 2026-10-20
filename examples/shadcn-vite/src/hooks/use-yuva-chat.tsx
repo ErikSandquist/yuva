@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import {
   ApiError,
@@ -77,6 +79,7 @@ export interface YuvaChatState {
   markRead(): Promise<void>
   rate(rating: Rating, comment?: string): Promise<void>
   openAttachment(attachment: ClientAttachment): Promise<void>
+  saveEmail(email: string): Promise<void>
 }
 
 function newId(): string {
@@ -214,6 +217,9 @@ export function useYuvaChat({ server, channel, client: given, identityToken }: U
     let live = true
     const apply = (event: ClientRealtimeMessage) => {
       if (event.type === "inbox.updated") setInbox(event.data)
+      else if (event.type === "contact.updated") setContact(event.data)
+      else if (event.type === "presence")
+        setInbox((current) => (current ? { ...current, presence: event.data } : current))
       else if (event.type === "conversation.created") setConversations((list) => upsertConversation(list, event.data))
       else if (event.type === "conversation.updated") {
         const { id, status, can_rate, rating } = event.data
@@ -449,6 +455,14 @@ export function useYuvaChat({ server, channel, client: given, identityToken }: U
     [client]
   )
 
+  const saveEmail = React.useCallback(
+    async (email: string) => {
+      if (!client) return
+      setContact(await client.setEmail(email))
+    },
+    [client]
+  )
+
   const conversation = conversations.find((item) => item.id === activeId) ?? null
   const lastIncoming = [...messages].reverse().find((item) => item.direction === "out" && item.status === "sent")?.id
   const unread = conversation?.unread ?? false
@@ -482,5 +496,6 @@ export function useYuvaChat({ server, channel, client: given, identityToken }: U
     markRead,
     rate,
     openAttachment,
+    saveEmail,
   }
 }

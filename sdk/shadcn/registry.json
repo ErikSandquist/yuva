@@ -198,7 +198,7 @@
       "name": "yuva-chat-thread",
       "type": "registry:component",
       "title": "Yuva chat thread",
-      "description": "One conversation: grouped messages, day separators, system events, attachments, link bubbles, typing, seen state and a scroller that sticks to the bottom with a jump-to-latest button.",
+      "description": "One conversation: grouped messages, day separators, system events, attachments, link bubbles, typing, seen state, a top fade and a scroller that sticks to the bottom with a jump-to-latest pill showing the unread count.",
       "dependencies": [
         "lucide-react"
       ],
@@ -225,7 +225,7 @@
       "name": "yuva-chat-composer",
       "type": "registry:component",
       "title": "Yuva chat composer",
-      "description": "A message box with an attach button, file chips, an Enter to send hint and a send button.",
+      "description": "A message box with chips for attached files, an attach button, an optional screenshot button, an Enter to send hint and a send button.",
       "dependencies": [
         "lucide-react"
       ],
@@ -267,13 +267,15 @@
       "name": "yuva-chat",
       "type": "registry:block",
       "title": "Yuva chat",
-      "description": "Live chat for a page or an app: conversation list, thread and composer in one panel, with a slot for the e-mail confirmation card.",
+      "description": "Live chat for a page or an app: header with the agent's avatar and reply time, conversation list, thread, composer and the e-mail confirmation card, in a plain card or a lined variant.",
       "dependencies": [
         "lucide-react",
         "useyuva"
       ],
       "registryDependencies": [
+        "avatar",
         "button",
+        "input",
         "spinner",
         "https://useyuva.com/r/use-yuva-chat.json",
         "https://useyuva.com/r/yuva-chat-thread.json",
@@ -283,6 +285,10 @@
       "files": [
         {
           "path": "registry/yuva/components/yuva-chat.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/yuva/components/yuva-chat-email.tsx",
           "type": "registry:component"
         }
       ]

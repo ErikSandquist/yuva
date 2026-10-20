@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ArrowUpIcon, FileIcon, ImageIcon, PaperclipIcon, XIcon } from "lucide-react"
+import { ArrowUpIcon, FileIcon, ImageIcon, PaperclipIcon, ScanIcon, XIcon } from "lucide-react"
 import {
   Attachment,
   AttachmentAction,
@@ -29,16 +29,25 @@ export interface YuvaChatComposerProps {
   labels?: Partial<YuvaChatLabels>
   locale?: string
   disabled?: boolean
+  onCapture?: () => File | null | undefined | Promise<File | null | undefined>
   className?: string
 }
 
-export function YuvaChatComposer({ chat, labels: custom, locale, disabled, className }: YuvaChatComposerProps) {
+export function YuvaChatComposer({
+  chat,
+  labels: custom,
+  locale,
+  disabled,
+  onCapture,
+  className,
+}: YuvaChatComposerProps) {
   const labels = React.useMemo(() => ({ ...defaultYuvaChatLabels, ...custom }), [custom])
   const [body, setBody] = React.useState("")
   const [files, setFiles] = React.useState<File[]>([])
   const [error, setError] = React.useState<unknown>(null)
   const picker = React.useRef<HTMLInputElement>(null)
   const field = React.useRef<HTMLTextAreaElement>(null)
+  const [capturing, setCapturing] = React.useState(false)
   const empty = body.trim() === "" && files.length === 0
 
   const submit = async () => {
@@ -58,6 +67,19 @@ export function YuvaChatComposer({ chat, labels: custom, locale, disabled, class
     }
   }
 
+  const capture = async () => {
+    if (!onCapture) return
+    setCapturing(true)
+    try {
+      const shot = await onCapture()
+      if (shot) setFiles((list) => [...list, shot])
+    } catch (failure) {
+      setError(failure)
+    } finally {
+      setCapturing(false)
+    }
+  }
+
   return (
     <form
       className={cn("flex flex-col gap-2", className)}
@@ -69,12 +91,12 @@ export function YuvaChatComposer({ chat, labels: custom, locale, disabled, class
       <InputGroup>
         <InputGroupTextarea
           ref={field}
-          rows={1}
+          rows={2}
           value={body}
           disabled={disabled}
           placeholder={labels.placeholder}
           aria-label={labels.placeholder}
-          className="max-h-40 min-h-10 [field-sizing:content]"
+          className="max-h-40 min-h-14 [field-sizing:content]"
           onChange={(event) => {
             setBody(event.target.value)
             chat.setTyping(event.target.value.trim() !== "")
@@ -123,13 +145,23 @@ export function YuvaChatComposer({ chat, labels: custom, locale, disabled, class
             }}
           />
           <InputGroupButton
-            size="icon-xs"
+            size="icon-sm"
             aria-label={labels.attach}
             disabled={disabled}
             onClick={() => picker.current?.click()}
           >
             <PaperclipIcon />
           </InputGroupButton>
+          {onCapture && (
+            <InputGroupButton
+              size="icon-sm"
+              aria-label={labels.screenshot}
+              disabled={disabled || capturing}
+              onClick={() => void capture()}
+            >
+              <ScanIcon />
+            </InputGroupButton>
+          )}
           <InputGroupText className="ms-auto hidden text-xs sm:flex">
             <Kbd>{labels.enterKey}</Kbd>
             {labels.toSend}
@@ -137,8 +169,8 @@ export function YuvaChatComposer({ chat, labels: custom, locale, disabled, class
           <InputGroupButton
             type="submit"
             variant="default"
-            size="icon-xs"
-            className="rounded-full max-sm:ms-auto"
+            size="icon-sm"
+            className="max-sm:ms-auto"
             aria-label={labels.send}
             disabled={disabled || empty}
           >

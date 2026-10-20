@@ -1,8 +1,10 @@
+"use client"
+
 import * as React from "react"
 import type { ClientAttachment } from "useyuva"
 import {
   ArrowDownIcon,
-  CheckIcon,
+  CheckCheckIcon,
   CircleAlertIcon,
   FileIcon,
   ImageIcon,
@@ -134,10 +136,10 @@ function BubbleText({ message, mine }: { message: YuvaChatMessage; mine: boolean
       </Bubble>
     )
   }
-  const variant = failed ? "destructive" : mine ? "default" : message.author.type === "bot" ? "muted" : "outline"
+  const variant = failed ? "destructive" : mine ? "default" : "muted"
   return (
     <Bubble variant={variant}>
-      <BubbleContent className="whitespace-pre-wrap">
+      <BubbleContent className={cn("whitespace-pre-wrap", !mine && !failed && "border-border")}>
         <Linked body={message.body} />
       </BubbleContent>
     </Bubble>
@@ -228,16 +230,14 @@ function Footer({
             {labels.remove}
           </Button>
         </>
-      ) : (
+      ) : seen ? (
         <>
-          <time dateTime={last.createdAt}>{timeLabel(last.createdAt, locale)}</time>
-          {seen && (
-            <>
-              <CheckIcon className="size-3.5" />
-              <span>{labels.seen}</span>
-            </>
-          )}
+          <span>{labels.seen}</span>
+          <time dateTime={chat.memberReadAt!}>{timeLabel(chat.memberReadAt!, locale)}</time>
+          <CheckCheckIcon className="size-3.5 text-primary" aria-hidden />
         </>
+      ) : (
+        <time dateTime={last.createdAt}>{timeLabel(last.createdAt, locale)}</time>
       )}
     </MessageFooter>
   )
@@ -263,7 +263,9 @@ function Group({
         <MessageAvatar>
           <Avatar size="sm">
             {group.author.avatar_url && <AvatarImage src={group.author.avatar_url} alt="" />}
-            <AvatarFallback>{group.author.initials || initials(name)}</AvatarFallback>
+            <AvatarFallback className="bg-accent font-semibold text-primary">
+              {group.author.initials || initials(name)}
+            </AvatarFallback>
           </Avatar>
         </MessageAvatar>
       )}
@@ -292,14 +294,22 @@ function Typing({ chat, labels }: { chat: YuvaChatState; labels: YuvaChatLabels 
       <MessageAvatar>
         <Avatar size="sm">
           {author.avatar_url && <AvatarImage src={author.avatar_url} alt="" />}
-          <AvatarFallback>{author.initials || initials(name)}</AvatarFallback>
+          <AvatarFallback className="bg-accent font-semibold text-primary">
+            {author.initials || initials(name)}
+          </AvatarFallback>
         </Avatar>
       </MessageAvatar>
       <MessageContent>
-        <Bubble variant="outline">
-          <BubbleContent className="flex items-center gap-2 text-muted-foreground">
-            <Spinner aria-hidden className="size-3.5" />
-            <span>{author.name ? labels.typing(name) : labels.typingSomeone}</span>
+        <Bubble variant="muted">
+          <BubbleContent className="flex items-center gap-1 border-border px-3.5 py-3">
+            {[0, 150, 300].map((delay) => (
+              <span
+                key={delay}
+                aria-hidden
+                className="size-1.5 rounded-full bg-muted-foreground motion-safe:animate-[pulse_1.2s_ease-in-out_infinite]"
+                style={{ animationDelay: `${delay}ms` }}
+              />
+            ))}
           </BubbleContent>
         </Bubble>
       </MessageContent>
@@ -320,9 +330,13 @@ function JumpToLatest({ entries, labels }: { entries: Entry[]; labels: YuvaChatL
   })
   const text = labels.jumpToLatest(unread)
   return (
-    <MessageScrollerButton size={unread > 0 ? "sm" : "icon-sm"} aria-label={text}>
+    <MessageScrollerButton
+      size={unread > 0 ? "lg" : "icon-lg"}
+      aria-label={text}
+      className="rounded-full border border-input text-xs font-medium shadow-md"
+    >
       <ArrowDownIcon />
-      {unread > 0 && <span className="tabular-nums">{unread}</span>}
+      {unread > 0 && <span className="tabular-nums">{labels.newCount(unread)}</span>}
     </MessageScrollerButton>
   )
 }
@@ -332,10 +346,11 @@ export interface YuvaChatThreadProps {
   labels?: Partial<YuvaChatLabels>
   locale?: string
   greeting?: string
+  lined?: boolean
   className?: string
 }
 
-export function YuvaChatThread({ chat, labels: custom, locale, greeting, className }: YuvaChatThreadProps) {
+export function YuvaChatThread({ chat, labels: custom, locale, greeting, lined, className }: YuvaChatThreadProps) {
   const labels = React.useMemo(() => ({ ...defaultYuvaChatLabels, ...custom }), [custom])
   const closed = chat.conversation?.status === "closed"
   const entries = React.useMemo(() => buildEntries(chat.messages, closed), [chat.messages, closed])
@@ -364,8 +379,15 @@ export function YuvaChatThread({ chat, labels: custom, locale, greeting, classNa
   return (
     <MessageScrollerProvider defaultScrollPosition="end">
       <MessageScroller className={cn("flex-1", className)}>
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute top-0 z-10 h-9 bg-gradient-to-b from-background to-transparent",
+            lined ? "inset-x-[calc(1.25rem+1px)]" : "inset-x-0"
+          )}
+        />
         <MessageScrollerViewport preserveScrollOnPrepend aria-label={labels.messages}>
-          <MessageScrollerContent className="gap-3 p-4">
+          <MessageScrollerContent className={cn("gap-4 py-4", lined ? "px-8" : "px-4")}>
             {chat.hasEarlier && (
               <Button variant="ghost" size="sm" className="self-center" onClick={() => void chat.loadEarlier()}>
                 {labels.loadEarlier}
@@ -375,7 +397,9 @@ export function YuvaChatThread({ chat, labels: custom, locale, greeting, classNa
               <MessageScrollerItem key={entry.key} messageId={entry.key}>
                 {entry.kind === "day" ? (
                   <Marker variant="separator">
-                    <MarkerContent>{dayLabel(entry.at, labels, locale)}</MarkerContent>
+                    <MarkerContent className={cn(lined && "font-mono text-[0.6875rem] tracking-[0.08em] uppercase")}>
+                      {dayLabel(entry.at, labels, locale)}
+                    </MarkerContent>
                   </Marker>
                 ) : entry.kind === "event" ? (
                   <Marker className="justify-center">
