@@ -83,8 +83,8 @@ export const styles = `
 .rm-head { display: flex; align-items: center; gap: 12px; }
 .rm-head .hint { flex: 1; min-inline-size: 0; font-size: 13px; }
 .pill.suggest { flex: none; margin-inline-start: auto; gap: 6px; min-block-size: 36px; font-size: 13px; font-weight: 500; }
-.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-block-end: 1px solid var(--yuva-border); margin-inline: -8px; }
-.tabs button { min-block-size: 44px; padding: 0 2px; border: 0; border-block-end: 2px solid transparent; margin-block-end: -1px; background: transparent; color: var(--yuva-faint); font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); overflow-x: auto; scrollbar-width: none; border-block-end: 1px solid var(--yuva-border); margin-inline: -8px; }
+.tabs button { min-block-size: 44px; padding: 0 8px; white-space: nowrap; border: 0; border-block-end: 2px solid transparent; margin-block-end: -1px; background: transparent; color: var(--yuva-faint); font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
 .tabs button[aria-selected="true"] { color: var(--yuva-fg); border-block-end-color: var(--yuva-brand); }
 .rm-list { padding-block-start: 4px; }
 .ideas { display: flex; flex-direction: column; }
