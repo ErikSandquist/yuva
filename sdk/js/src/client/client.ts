@@ -22,6 +22,8 @@ import {
   type ClientHelpSearchClick,
   type ClientHelpSearchResults,
   type ClientInbox,
+  type ClientRoadmap,
+  type IdeaStage,
   type ClientMessage,
   type ClientMessagePage,
   type ClientDiscussionCreate,
@@ -121,6 +123,17 @@ export interface Page {
 
 export interface DiscussionListOptions extends Page {
   sort?: DiscussionSort
+}
+
+export interface IdeaListOptions extends Page {
+  stage?: IdeaStage
+  sort?: "top" | "new"
+  q?: string
+}
+
+export interface IdeaInput {
+  title: string
+  body: string
 }
 
 export function storageKey(channel: string): string {
@@ -491,6 +504,22 @@ export class YuvaClient {
       {},
       false
     )
+  }
+
+  roadmap(): Promise<ClientRoadmap> {
+    return this.#call(`/client/v1/channels/${encodeURIComponent(this.channel)}/roadmap`)
+  }
+
+  listIdeas(options: IdeaListOptions = {}): Promise<DiscussionPage> {
+    return this.#discussionCall(
+      `/client/v1/channels/${encodeURIComponent(this.channel)}/discussions${query({ kind: "idea", ...options })}`,
+      {},
+      false
+    )
+  }
+
+  suggestIdea(input: IdeaInput): Promise<Discussion> {
+    return this.startDiscussion({ kind: "idea", ...input })
   }
 
   getDiscussion(id: string): Promise<DiscussionDetail> {

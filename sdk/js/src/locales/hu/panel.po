@@ -251,6 +251,10 @@ msgstr "Megoldva"
 msgid "Retry"
 msgstr "Újra"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Útiterv"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Mentés"
@@ -358,6 +362,10 @@ msgstr "Feltöltés…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Általában {duration} alatt válaszol"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Szavazzon arra, mi jöjjön legközelebb"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

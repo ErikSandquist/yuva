@@ -62,6 +62,7 @@ Session:
 - `start()` opens a session, or resumes the stored one for the same identity. Every other call starts one when needed; a session that ended (`401`) is renewed once and the call retried.
 - `session` (contact, inbox settings, expiry), `token`, `refresh()`, `channelSettings()` (the inbox's public settings without a session).
 - `setIdentityToken(source)` switches identity; `reset()` forgets the session in memory; `signOut()` ends it on the server and in storage.
+- `openApp(kind, params)` opens the panel on an app: `"help"` (`{ article }`, `{ query }`), `"feedback"`, `"status"`, `"subscribe"` or `"roadmap"` (`{ idea }` opens that idea). The Roadmap tile and app appear only when the inbox has a public roadmap board; voting and suggesting open the reader sign-in popup unless `identity-token` is set.
 
 Conversations and messages:
 

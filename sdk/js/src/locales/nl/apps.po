@@ -15,6 +15,10 @@ msgstr "{n} van 5"
 msgid "All systems operational"
 msgstr "Alle systemen werken"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Sta pop-ups voor deze site toe om in te loggen."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Bijna klaar. Controleer je inbox en bevestig je abonnement."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Bestanden bijvoegen"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Terug"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Onderdelen"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Laden mislukt. Probeer het opnieuw."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Verzenden is niet gelukt. Probeer het opnieuw."
 
@@ -71,7 +78,12 @@ msgstr "Aanmelden is niet gelukt. Probeer het opnieuw."
 msgid "Degraded performance"
 msgstr "Verminderde prestaties"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Beschrijf je idee"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Klaar"
 
@@ -111,10 +123,19 @@ msgstr "Ik wil e-mails ontvangen over {list} van {inbox}. Ik kan me op elk momen
 msgid "Idea"
 msgstr "Idee"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Je idee in een paar woorden"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ideeën"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Oorzaak gevonden"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Bezig"
@@ -131,7 +152,12 @@ msgstr "In onderzoek"
 msgid "Lists"
 msgstr "Lijsten"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Meer laden"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Laden…"
@@ -164,9 +190,17 @@ msgstr "Geen artikelen gevonden."
 msgid "No open incidents."
 msgstr "Geen openstaande incidenten."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Nog geen reacties."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Niet goed"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Hier is nog niets."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Gedeeltelijk"
 msgid "Partial outage"
 msgstr "Gedeeltelijke storing"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Gepland"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Populaire artikelen"
@@ -205,6 +243,24 @@ msgstr "Gerelateerde artikelen"
 msgid "Remove {0}"
 msgstr "{0} verwijderen"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Je stem op {0} intrekken"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Reacties"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Reacties: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Reageren"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Opgelost"
@@ -221,9 +277,22 @@ msgstr "Zoek hulp"
 msgid "Send feedback"
 msgstr "Feedback versturen"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Idee versturen"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Verzenden…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Uitgebracht"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Vergelijkbare ideeën"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Abonneren"
 msgid "Subscribing…"
 msgstr "Abonneren…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Voorstellen"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Een idee voorstellen"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Schermafbeelding maken"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Team"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Vertel ons meer"
 msgid "Thanks for your feedback"
 msgstr "Bedankt voor je feedback"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Bedankt! Het team bekijkt je idee voordat het wordt getoond."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Bedankt! Je bent geabonneerd."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Bedankt! Je idee staat op het bord."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Vink het vakje aan om akkoord te gaan."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Te veel pogingen. Wacht even en probeer het opnieuw."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Opnieuw proberen"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Feedback bekijken"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Idee bekijken"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Stem op {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Om te stemmen en voor te stellen moet je even inloggen."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Wacht op goedkeuring"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Wat zou het voor jou beter maken?"
 msgid "What's on your mind?"
 msgstr "Waar denk je aan?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Schrijf een reactie"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Ja"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Je lijkt offline te zijn."

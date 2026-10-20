@@ -25,6 +25,10 @@ npx shadcn@latest add https://useyuva.com/r/yuva-discussions.json
 | `yuva-help-search` | component | Search field with live results, highlighted words and counted clicks. |
 | `yuva-help-article` | component | One article with the rating, related articles and Message us. |
 | `use-yuva-help` | hook | `useYuvaHelp`, `useYuvaHelpSearch` and `useYuvaHelpArticle`, plus labels and helpers in `lib/yuva-help-utils.tsx`. |
+| `yuva-roadmap` | block | A public roadmap board: stage tabs with counts, ideas by top votes with vote buttons, the idea view and Suggest an idea. |
+| `yuva-idea` | component | One idea with its stage, vote and replies, built on `yuva-discussion-thread`. |
+| `yuva-idea-suggest` | component | The suggest form with similar ideas while the title is typed, built on `yuva-discussion-composer`. |
+| `use-yuva-roadmap` | hook | `useRoadmap` and `useIdeas` on the discussion hooks, plus labels in `lib/yuva-roadmap-utils.ts`. |
 | `use-yuva-chat` | hook | `useYuvaChat`: session, conversations, one thread over realtime, typing, read state, sending text and files. |
 | `use-yuva-subscribe` | hook | `useYuvaSubscribe`: public lists, form subscribing and the signed-in user's subscriptions. |
 | `use-yuva-discussions` | hook | `YuvaDiscussionsProvider` and the hooks, plus labels and helpers in `lib/yuva-utils.ts`. |

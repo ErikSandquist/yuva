@@ -15,6 +15,10 @@ msgstr "{n} az 5-ből"
 msgid "All systems operational"
 msgstr "Minden rendszer működik"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "A bejelentkezéshez engedélyezze a felugró ablakokat ezen az oldalon."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Mindjárt kész. Nézze meg a postaládáját, és erősítse meg a feliratkozást."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Fájlok csatolása"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Vissza"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Komponensek"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Nem sikerült betölteni. Próbálja újra."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Nem sikerült elküldeni. Próbálja újra."
 
@@ -71,7 +78,12 @@ msgstr "A feliratkozás nem sikerült. Próbálja újra."
 msgid "Degraded performance"
 msgstr "Csökkent teljesítmény"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Írja le az ötletét"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Kész"
 
@@ -111,10 +123,19 @@ msgstr "E-maileket szeretnék kapni a(z) {list} témában a(z) {inbox} részér�
 msgid "Idea"
 msgstr "Ötlet"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Az ötlete néhány szóban"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ötletek"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Az ok azonosítva"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Folyamatban"
@@ -131,7 +152,12 @@ msgstr "Vizsgálat alatt"
 msgid "Lists"
 msgstr "Listák"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Továbbiak betöltése"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Betöltés…"
@@ -164,9 +190,17 @@ msgstr "Nem található cikk."
 msgid "No open incidents."
 msgstr "Nincs nyitott incidens."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Még nincs válasz."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Nem jó"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Itt még nincs semmi."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Részleges"
 msgid "Partial outage"
 msgstr "Részleges kiesés"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Tervezett"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Népszerű cikkek"
@@ -205,6 +243,24 @@ msgstr "Kapcsolódó cikkek"
 msgid "Remove {0}"
 msgstr "{0} eltávolítása"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "{0} szavazatának visszavonása"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Válaszok"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Válaszok: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Válasz"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Megoldva"
@@ -221,9 +277,22 @@ msgstr "Súgó keresése"
 msgid "Send feedback"
 msgstr "Visszajelzés küldése"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Ötlet elküldése"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Küldés…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Kiadva"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Hasonló ötletek"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Feliratkozás"
 msgid "Subscribing…"
 msgstr "Feliratkozás…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Javaslat"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Ötlet javaslata"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Képernyőkép készítése"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Csapat"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Mesélj többet"
 msgid "Thanks for your feedback"
 msgstr "Köszönjük a visszajelzését"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Köszönjük! A csapat átnézi az ötletét, mielőtt megjelenik."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Köszönjük! Feliratkozott."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Köszönjük! Az ötlete felkerült a táblára."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "A beleegyezéshez jelölje be a négyzetet."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Túl sok próbálkozás. Várjon egy pillanatot, és próbálja újra."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Próbálja újra"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Visszajelzés megtekintése"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Ötlet megtekintése"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Szavazás: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "A szavazáshoz és a javaslattételhez gyors bejelentkezés kell."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Jóváhagyásra vár"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Mitől lenne jobb Önnek?"
 msgid "What's on your mind?"
 msgstr "Mi jár a fejében?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Írjon választ"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Igen"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Úgy tűnik, offline van."

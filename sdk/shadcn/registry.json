@@ -372,6 +372,88 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "use-yuva-roadmap",
+      "type": "registry:hook",
+      "title": "Yuva roadmap hooks",
+      "description": "React hooks over the useyuva headless client for a public roadmap board: the board and its stage counts, the ideas of a stage by top votes or newest with a title search, voting and suggesting an idea. Built on the discussion hooks. Labels with English defaults.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "registryDependencies": [
+        "https://useyuva.com/r/use-yuva-discussions.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/hooks/use-yuva-roadmap.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/yuva/lib/yuva-roadmap-utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "yuva-idea",
+      "type": "registry:component",
+      "title": "Yuva idea",
+      "description": "One roadmap idea: its stage, the opening post with a vote button (closed for shipped and closed ideas), replies and the reply composer, built on the discussion thread.",
+      "registryDependencies": [
+        "badge",
+        "https://useyuva.com/r/use-yuva-roadmap.json",
+        "https://useyuva.com/r/yuva-discussion-thread.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-idea.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-idea-suggest",
+      "type": "registry:component",
+      "title": "Yuva idea suggest form",
+      "description": "A form to suggest an idea to the roadmap, with similar ideas shown while the title is typed and the reader sign-in prompt.",
+      "registryDependencies": [
+        "button",
+        "https://useyuva.com/r/use-yuva-roadmap.json",
+        "https://useyuva.com/r/yuva-discussion-composer.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-idea-suggest.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-roadmap",
+      "type": "registry:block",
+      "title": "Yuva roadmap",
+      "description": "A public roadmap board: stage tabs with counts, ideas by top votes with vote buttons, the idea view with replies, and Suggest an idea with similar ideas.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "card",
+        "skeleton",
+        "tabs",
+        "https://useyuva.com/r/use-yuva-discussions.json",
+        "https://useyuva.com/r/use-yuva-roadmap.json",
+        "https://useyuva.com/r/yuva-idea.json",
+        "https://useyuva.com/r/yuva-idea-suggest.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-roadmap.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

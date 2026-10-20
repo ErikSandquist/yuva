@@ -15,6 +15,10 @@ msgstr "{n} av 5"
 msgid "All systems operational"
 msgstr "Alla system fungerar"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Tillåt popup-fönster för den här webbplatsen för att logga in."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Nästan klart. Kolla din inkorg och bekräfta din prenumeration."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Bifoga filer"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Komponenter"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Det gick inte att ladda. Försök igen."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Det gick inte att skicka. Försök igen."
 
@@ -71,7 +78,12 @@ msgstr "Det gick inte att prenumerera. Försök igen."
 msgid "Degraded performance"
 msgstr "Försämrad prestanda"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Beskriv din idé"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Klart"
 
@@ -111,10 +123,19 @@ msgstr "Jag vill ta emot e-post om {list} från {inbox}. Jag kan avsluta prenume
 msgid "Idea"
 msgstr "Idé"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Din idé med några ord"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Idéer"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Orsak funnen"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Pågår"
@@ -131,7 +152,12 @@ msgstr "Undersöker"
 msgid "Lists"
 msgstr "Listor"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Ladda fler"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Laddar…"
@@ -164,9 +190,17 @@ msgstr "Inga artiklar hittades."
 msgid "No open incidents."
 msgstr "Inga öppna incidenter."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Inga svar ännu."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Inte bra"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Inget här ännu."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Delvis"
 msgid "Partial outage"
 msgstr "Delvis avbrott"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Planerad"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Populära artiklar"
@@ -205,6 +243,24 @@ msgstr "Relaterade artiklar"
 msgid "Remove {0}"
 msgstr "Ta bort {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Ta bort din röst på {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Svar"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Svar: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Svara"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Löst"
@@ -221,9 +277,22 @@ msgstr "Sök hjälp"
 msgid "Send feedback"
 msgstr "Skicka feedback"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Skicka idé"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Skickar…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Släppt"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Liknande idéer"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Prenumerera"
 msgid "Subscribing…"
 msgstr "Prenumererar…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Föreslå"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Föreslå en idé"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Ta en skärmbild"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Teamet"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Berätta mer"
 msgid "Thanks for your feedback"
 msgstr "Tack för din feedback"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Tack! Teamet granskar din idé innan den visas."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Tack! Du prenumererar nu."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Tack! Din idé finns på tavlan."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Bocka i rutan för att godkänna."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "För många försök. Vänta en stund och försök igen."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Försök igen"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Visa feedback"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Visa idé"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Rösta på {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "För att rösta och föreslå krävs en snabb inloggning."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Väntar på godkännande"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Vad skulle göra det bättre för dig?"
 msgid "What's on your mind?"
 msgstr "Vad har du på hjärtat?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Skriv ett svar"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Ja"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Du verkar vara offline."

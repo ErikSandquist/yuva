@@ -15,6 +15,10 @@ msgstr "{n} з 5"
 msgid "All systems operational"
 msgstr "Усі системи працюють"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Щоб увійти, дозвольте спливні вікна для цього сайту."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Майже готово. Перевірте пошту й підтвердьте підписку."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Прикріпити файли"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Назад"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Компоненти"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Не вдалося завантажити. Спробуйте ще раз."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Не вдалося надіслати. Спробуйте ще раз."
 
@@ -71,7 +78,12 @@ msgstr "Не вдалося підписатися. Спробуйте ще ра
 msgid "Degraded performance"
 msgstr "Знижена продуктивність"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Опишіть свою ідею"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Готово"
 
@@ -111,10 +123,19 @@ msgstr "Я хочу отримувати листи про {list} від {inbox}
 msgid "Idea"
 msgstr "Ідея"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Ваша ідея кількома словами"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ідеї"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Причину виявлено"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Триває"
@@ -131,7 +152,12 @@ msgstr "Досліджуємо"
 msgid "Lists"
 msgstr "Списки"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Завантажити ще"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Завантаження…"
@@ -164,9 +190,17 @@ msgstr "Статей не знайдено."
 msgid "No open incidents."
 msgstr "Відкритих інцидентів немає."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Відповідей поки немає."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Погано"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Тут поки нічого немає."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Частково"
 msgid "Partial outage"
 msgstr "Частковий збій"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Заплановано"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Популярні статті"
@@ -205,6 +243,24 @@ msgstr "Схожі статті"
 msgid "Remove {0}"
 msgstr "Видалити {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Скасувати ваш голос за «{0}»"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Відповіді"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Відповіді: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Відповісти"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Вирішено"
@@ -221,9 +277,22 @@ msgstr "Пошук у довідці"
 msgid "Send feedback"
 msgstr "Надіслати відгук"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Надіслати ідею"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Надсилання…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Випущено"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Схожі ідеї"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Підписатися"
 msgid "Subscribing…"
 msgstr "Підписка…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Запропонувати"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Запропонувати ідею"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Зробити знімок екрана"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Команда"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Розкажіть більше"
 msgid "Thanks for your feedback"
 msgstr "Дякуємо за відгук"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Дякуємо! Команда перевірить вашу ідею, перш ніж вона з’явиться."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Дякуємо! Ви підписані."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Дякуємо! Вашу ідею додано на дошку."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Поставте позначку, щоб погодитися."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Забагато спроб. Зачекайте трохи й спробуйте ще раз."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Повторити"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Переглянути відгук"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Переглянути ідею"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Проголосувати за «{0}»"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Щоб голосувати й пропонувати ідеї, потрібно швидко увійти."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Очікує схвалення"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Що зробило б це кращим для вас?"
 msgid "What's on your mind?"
 msgstr "Що у вас на думці?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Напишіть відповідь"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Так"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Схоже, ви офлайн."

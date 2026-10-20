@@ -251,6 +251,10 @@ msgstr "Çözüldü"
 msgid "Retry"
 msgstr "Tekrar dene"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Yol haritası"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Kaydet"
@@ -358,6 +362,10 @@ msgstr "Yükleniyor…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Genellikle {duration} içinde yanıt verir"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Sıradakine oy verin"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

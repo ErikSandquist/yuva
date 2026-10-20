@@ -251,6 +251,10 @@ msgstr "Løst"
 msgid "Retry"
 msgstr "Prøv igjen"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Veikart"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Lagre"
@@ -358,6 +362,10 @@ msgstr "Laster opp…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Svarer vanligvis innen {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Stem på hva som kommer neste gang"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

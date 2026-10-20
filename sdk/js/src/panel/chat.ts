@@ -285,6 +285,12 @@ export class Chat implements PanelController {
       this.#textarea.focus({ preventScroll: true })
   }
 
+  async openApp(kind: AppKind, params: AppParams = {}): Promise<void> {
+    await this.ready
+    await this.#start()
+    if (this.#phase === "ready") await this.#openApp(kind, params)
+  }
+
   closed(): void {
     this.#stopTyping()
   }

@@ -251,6 +251,10 @@ msgstr "Vyřešeno"
 msgid "Retry"
 msgstr "Zkusit znovu"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Plán vývoje"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Uložit"
@@ -358,6 +362,10 @@ msgstr "Nahrávání…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Obvykle odpovídá do {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Hlasujte, co přijde dál"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

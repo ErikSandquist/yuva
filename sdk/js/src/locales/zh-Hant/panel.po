@@ -251,6 +251,10 @@ msgstr "已解決"
 msgid "Retry"
 msgstr "重試"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "路線圖"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "儲存"
@@ -358,6 +362,10 @@ msgstr "上傳中…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "通常會在 {duration} 內回覆"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "為接下來要做的事投票"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

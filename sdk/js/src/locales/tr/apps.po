@@ -15,6 +15,10 @@ msgstr "5 üzerinden {n}"
 msgid "All systems operational"
 msgstr "Tüm sistemler çalışıyor"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Giriş yapmak için bu site için açılır pencerelere izin verin."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Neredeyse bitti. Gelen kutunuza bakın ve aboneliğinizi onaylayın."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Dosya ekle"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Geri"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Bileşenler"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Yüklenemedi. Tekrar deneyin."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Gönderilemedi. Yeniden deneyin."
 
@@ -71,7 +78,12 @@ msgstr "Abone olunamadı. Yeniden deneyin."
 msgid "Degraded performance"
 msgstr "Performans düştü"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Fikrinizi anlatın"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Bitti"
 
@@ -111,10 +123,19 @@ msgstr "{list} hakkında {inbox} tarafından gönderilen e-postaları almak isti
 msgid "Idea"
 msgstr "Fikir"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Fikriniz birkaç kelimeyle"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Fikirler"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Neden belirlendi"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Devam ediyor"
@@ -131,7 +152,12 @@ msgstr "İnceleniyor"
 msgid "Lists"
 msgstr "Listeler"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Daha fazla yükle"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Yükleniyor…"
@@ -164,9 +190,17 @@ msgstr "Makale bulunamadı."
 msgid "No open incidents."
 msgstr "Açık olay yok."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Henüz yanıt yok."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Kötü"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Burada henüz bir şey yok."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Kısmi"
 msgid "Partial outage"
 msgstr "Kısmi kesinti"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Planlandı"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Popüler makaleler"
@@ -205,6 +243,24 @@ msgstr "İlgili makaleler"
 msgid "Remove {0}"
 msgstr "{0} kaldır"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "{0} için oyunuzu geri alın"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Yanıtlar"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Yanıtlar: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Yanıtla"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Çözüldü"
@@ -221,9 +277,22 @@ msgstr "Yardım ara"
 msgid "Send feedback"
 msgstr "Geri bildirim gönder"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Fikri gönder"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Gönderiliyor…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Yayında"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Benzer fikirler"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Abone ol"
 msgid "Subscribing…"
 msgstr "Abone olunuyor…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Öner"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Fikir öner"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Ekran görüntüsü al"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Ekip"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Daha fazlasını anlatın"
 msgid "Thanks for your feedback"
 msgstr "Geri bildiriminiz için teşekkürler"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Teşekkürler! Ekip, fikrinizi gösterilmeden önce inceleyecek."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Teşekkürler! Abone oldunuz."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Teşekkürler! Fikriniz panoda."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Onaylamak için kutuyu işaretleyin."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Çok fazla deneme. Biraz bekleyip tekrar deneyin."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Tekrar dene"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Geri bildirimi görüntüle"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Fikri gör"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "{0} için oy verin"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Oy vermek ve fikir önermek için kısa bir giriş gerekir."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Onay bekliyor"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Sizin için neyi daha iyi yapabiliriz?"
 msgid "What's on your mind?"
 msgstr "Aklınızda ne var?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Yanıt yazın"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Evet"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Çevrimdışı görünüyorsunuz."

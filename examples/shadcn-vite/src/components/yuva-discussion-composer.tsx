@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { LogIn } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -18,6 +20,7 @@ export interface YuvaDiscussionComposerProps {
   autoFocus?: boolean
   labels?: Partial<YuvaDiscussionsLabels>
   className?: string
+  onTitleChange?(title: string): void
   onSubmit(input: { title: string; body: string }): Promise<unknown>
   onCancel?(): void
 }
@@ -31,6 +34,7 @@ export function YuvaDiscussionComposer({
   autoFocus,
   labels: overrides,
   className,
+  onTitleChange,
   onSubmit,
   onCancel,
 }: YuvaDiscussionComposerProps) {
@@ -52,6 +56,7 @@ export function YuvaDiscussionComposer({
     try {
       await onSubmit({ title: title.trim(), body: body.trim() })
       setTitle("")
+      onTitleChange?.("")
       setBody("")
       setTab("write")
     } catch (failure) {
@@ -71,7 +76,10 @@ export function YuvaDiscussionComposer({
           <Input
             id={`${id}-title`}
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value)
+              onTitleChange?.(event.target.value)
+            }}
             placeholder={labels.titlePlaceholder}
             maxLength={200}
             minLength={3}

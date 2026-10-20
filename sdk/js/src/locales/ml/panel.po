@@ -251,6 +251,10 @@ msgstr "പരിഹരിച്ചു"
 msgid "Retry"
 msgstr "വീണ്ടും ശ്രമിക്കൂ"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "റോഡ്‌മാപ്പ്"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "സേവ് ചെയ്യുക"
@@ -358,6 +362,10 @@ msgstr "അപ്‌ലോഡ് ചെയ്യുന്നു…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "സാധാരണയായി {duration}-നുള്ളിൽ മറുപടി നൽകും"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "അടുത്തതായി എന്ത് വരണമെന്ന് വോട്ട് ചെയ്യുക"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

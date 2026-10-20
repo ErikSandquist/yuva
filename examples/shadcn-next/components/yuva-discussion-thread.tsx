@@ -66,6 +66,7 @@ interface PostProps {
   canWrite: boolean
   accepted?: boolean
   onReply?(): void
+  votingClosed?: boolean
   onNeedSignIn(): void
   onError(message: string | null): void
   children?: React.ReactNode
@@ -79,6 +80,7 @@ function Post({
   locale,
   canWrite,
   accepted,
+  votingClosed,
   onReply,
   onNeedSignIn,
   onError,
@@ -154,7 +156,7 @@ function Post({
             votes={post.votes}
             voted={post.voted}
             labels={labels}
-            disabled={locked || post.state !== "published"}
+            disabled={locked || post.state !== "published" || (post.opening && !!votingClosed)}
             onVote={() => (canWrite ? void run(() => thread.vote(post)) : onNeedSignIn())}
           />
           {onReply && !locked && (
@@ -208,9 +210,19 @@ export interface YuvaDiscussionThreadProps {
   className?: string
   onBack?(): void
   onGone?(): void
+  badges?(discussion: Discussion): React.ReactNode
+  votingClosed?(discussion: Discussion): boolean
 }
 
-export function YuvaDiscussionThread({ id, labels: overrides, className, onBack, onGone }: YuvaDiscussionThreadProps) {
+export function YuvaDiscussionThread({
+  id,
+  labels: overrides,
+  className,
+  onBack,
+  onGone,
+  badges,
+  votingClosed,
+}: YuvaDiscussionThreadProps) {
   const labels = useYuvaLabels(overrides)
   const { locale } = useYuvaDiscussionsContext()
   const thread = useDiscussion(id)
@@ -272,6 +284,7 @@ export function YuvaDiscussionThread({ id, labels: overrides, className, onBack,
       labels={labels}
       locale={locale}
       canWrite={canWrite}
+      votingClosed={votingClosed?.(discussion)}
       onNeedSignIn={needSignIn}
       onError={setError}
       {...extra}
@@ -300,6 +313,7 @@ export function YuvaDiscussionThread({ id, labels: overrides, className, onBack,
               </Badge>
             )}
             {discussion.state === "pending" && <Badge variant="outline">{labels.pending}</Badge>}
+            {badges?.(discussion)}
             <span>{labels.replies(discussion.reply_count)}</span>
           </div>
         </div>

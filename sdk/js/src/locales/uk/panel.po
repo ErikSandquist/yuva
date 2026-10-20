@@ -251,6 +251,10 @@ msgstr "Вирішено"
 msgid "Retry"
 msgstr "Повторити"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Дорожня карта"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Зберегти"
@@ -358,6 +362,10 @@ msgstr "Завантаження…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Зазвичай відповідає за {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Голосуйте за те, що буде далі"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

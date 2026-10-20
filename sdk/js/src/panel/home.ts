@@ -41,7 +41,9 @@ export function appTitle(kind: AppKind): MessageDescriptor {
       ? msg`Status`
       : kind === "help"
         ? msg`Help center`
-        : msg`Get updates`
+        : kind === "roadmap"
+          ? msg`Roadmap`
+          : msg`Get updates`
 }
 
 function section(label: string): HTMLElement {
@@ -120,6 +122,8 @@ export function buildHome(data: HomeData): HTMLElement {
       title: t(msg`Feedback`),
       text: t(msg`A bug, an idea, a thank-you`),
     })
+  if (inbox.roadmap)
+    tiles.push({ app: "roadmap", icon: icons.vote, title: t(msg`Roadmap`), text: t(msg`Vote on what comes next`) })
   if (data.mailingLists)
     tiles.push({ app: "subscribe", icon: icons.bell, title: t(msg`Get updates`), text: t(msg`News by e-mail`) })
   const status = inbox.status

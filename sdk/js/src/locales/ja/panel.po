@@ -251,6 +251,10 @@ msgstr "解決済み"
 msgid "Retry"
 msgstr "再試行"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "ロードマップ"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "保存"
@@ -358,6 +362,10 @@ msgstr "アップロード中…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "通常は{duration}以内に返信します"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "次に何が来るか投票しよう"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

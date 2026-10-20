@@ -251,6 +251,10 @@ msgstr "सोडवले"
 msgid "Retry"
 msgstr "पुन्हा प्रयत्न करा"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "रोडमॅप"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "सेव्ह करा"
@@ -358,6 +362,10 @@ msgstr "अपलोड होत आहे…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "सहसा {duration} मध्ये उत्तर देतात"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "पुढे काय येणार यावर मत द्या"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

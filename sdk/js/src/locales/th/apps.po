@@ -15,6 +15,10 @@ msgstr "{n} จาก 5"
 msgid "All systems operational"
 msgstr "ทุกระบบทำงานปกติ"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "อนุญาตป๊อปอัปของเว็บไซต์นี้เพื่อลงชื่อเข้าใช้"
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "เกือบเสร็จแล้ว ตรวจสอบกล่องจดหมายและยืนยันการสมัครรับ"
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "แนบไฟล์"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "กลับ"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "ส่วนประกอบ"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "โหลดไม่สำเร็จ ลองอีกครั้ง"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "ไม่สามารถส่งได้ โปรดลองอีกครั้ง"
 
@@ -71,7 +78,12 @@ msgstr "ไม่สามารถสมัครรับได้ โปร�
 msgid "Degraded performance"
 msgstr "ประสิทธิภาพลดลง"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "อธิบายไอเดียของคุณ"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "เสร็จสิ้น"
 
@@ -111,10 +123,19 @@ msgstr "ฉันต้องการรับอีเมลเกี่ยว
 msgid "Idea"
 msgstr "ไอเดีย"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "ไอเดียของคุณในไม่กี่คำ"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "ไอเดีย"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "พบสาเหตุแล้ว"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "กำลังดำเนินการ"
@@ -131,7 +152,12 @@ msgstr "กำลังตรวจสอบ"
 msgid "Lists"
 msgstr "รายการ"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "โหลดเพิ่มเติม"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "กำลังโหลด…"
@@ -164,9 +190,17 @@ msgstr "ไม่พบบทความ"
 msgid "No open incidents."
 msgstr "ไม่มีเหตุขัดข้องที่เปิดอยู่"
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "ยังไม่มีการตอบกลับ"
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "ไม่ดี"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "ยังไม่มีอะไรที่นี่"
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "บางส่วน"
 msgid "Partial outage"
 msgstr "ขัดข้องบางส่วน"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "วางแผนไว้"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "บทความยอดนิยม"
@@ -205,6 +243,24 @@ msgstr "บทความที่เกี่ยวข้อง"
 msgid "Remove {0}"
 msgstr "ลบ {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "ยกเลิกการโหวตของคุณให้ {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "การตอบกลับ"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "การตอบกลับ: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "ตอบกลับ"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "แก้ไขแล้ว"
@@ -221,9 +277,22 @@ msgstr "ค้นหาความช่วยเหลือ"
 msgid "Send feedback"
 msgstr "ส่งความคิดเห็น"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "ส่งไอเดีย"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "กำลังส่ง…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "เปิดตัวแล้ว"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "ไอเดียที่คล้ายกัน"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "สมัครรับ"
 msgid "Subscribing…"
 msgstr "กำลังสมัครรับ…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "เสนอ"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "เสนอไอเดีย"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "จับภาพหน้าจอ"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "ทีม"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "บอกเราเพิ่มเติม"
 msgid "Thanks for your feedback"
 msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "ขอบคุณ! ทีมจะตรวจสอบไอเดียของคุณก่อนแสดงผล"
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "ขอบคุณ! คุณสมัครรับเรียบร้อยแล้ว"
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "ขอบคุณ! ไอเดียของคุณอยู่บนบอร์ดแล้ว"
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "ทำเครื่องหมายในช่องเพื่อยอมรับ"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "ลองหลายครั้งเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "ลองอีกครั้ง"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "ดูความคิดเห็น"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "ดูไอเดีย"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "โหวตให้ {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "การโหวตและการเสนอต้องลงชื่อเข้าใช้อย่างรวดเร็ว"
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "รอการอนุมัติ"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "อะไรจะทำให้ดีขึ้นสำหรับค
 msgid "What's on your mind?"
 msgstr "คุณกำลังคิดอะไรอยู่"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "เขียนการตอบกลับ"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "ใช่"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "ดูเหมือนว่าคุณออฟไลน์อยู่"

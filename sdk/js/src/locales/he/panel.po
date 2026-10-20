@@ -251,6 +251,10 @@ msgstr "נפתר"
 msgid "Retry"
 msgstr "נסו שוב"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "מפת דרכים"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "שמירה"
@@ -358,6 +362,10 @@ msgstr "מעלה…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "בדרך כלל עונה תוך {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "הצביעו על מה שיגיע הלאה"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

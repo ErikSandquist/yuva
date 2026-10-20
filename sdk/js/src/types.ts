@@ -50,6 +50,7 @@ export interface PanelController {
   closed(): void
   identityChanged(): void
   signOut(): Promise<void>
+  openApp(kind: AppKind, params?: AppParams): Promise<void>
   rate(conversationId: string, rating: Rating, comment?: string): Promise<ClientConversation>
   destroy(): void
 }
@@ -58,11 +59,12 @@ export interface PanelModule {
   mount(host: PanelHost): PanelController
 }
 
-export type AppKind = "feedback" | "status" | "subscribe" | "help"
+export type AppKind = "feedback" | "status" | "subscribe" | "help" | "roadmap"
 
 export interface AppParams {
   article?: string
   query?: string
+  idea?: string
 }
 
 export interface AppContext {

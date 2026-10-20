@@ -6,13 +6,20 @@ import type { AppContext, AppHandle, AppKind } from "../types"
 import { el } from "../panel/helpers"
 import { feedbackApp } from "./feedback"
 import { helpApp } from "./help"
+import { roadmapApp } from "./roadmap"
 import { statusApp } from "./status"
 import { styles } from "./styles"
 import { subscribeApp } from "./subscribe"
 
 export type Translate = (descriptor: MessageDescriptor) => string
 
-const apps = { feedback: feedbackApp, help: helpApp, status: statusApp, subscribe: subscribeApp }
+const apps = {
+  feedback: feedbackApp,
+  help: helpApp,
+  roadmap: roadmapApp,
+  status: statusApp,
+  subscribe: subscribeApp,
+}
 
 declare const YUVA_APPS_LOCALES: string | undefined
 

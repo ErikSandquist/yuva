@@ -251,6 +251,10 @@ msgstr "தீர்க்கப்பட்டது"
 msgid "Retry"
 msgstr "மீண்டும் முயல்க"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "வழித்தடம்"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "சேமி"
@@ -358,6 +362,10 @@ msgstr "பதிவேற்றப்படுகிறது…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "பொதுவாக {duration} இல் பதிலளிப்பார்"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "அடுத்து என்ன வரவேண்டும் என்று வாக்களியுங்கள்"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

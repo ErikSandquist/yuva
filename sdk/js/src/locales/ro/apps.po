@@ -15,6 +15,10 @@ msgstr "{n} din 5"
 msgid "All systems operational"
 msgstr "Toate sistemele funcționează"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Permite ferestrele pop-up pentru acest site ca să te conectezi."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Aproape gata. Verifică-ți inboxul și confirmă abonarea."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Atașează fișiere"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Înapoi"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Componente"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Nu s-a putut încărca. Încearcă din nou."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Nu s-a putut trimite. Încearcă din nou."
 
@@ -71,7 +78,12 @@ msgstr "Abonarea nu a reușit. Încearcă din nou."
 msgid "Degraded performance"
 msgstr "Performanță redusă"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Descrie ideea ta"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Gata"
 
@@ -111,10 +123,19 @@ msgstr "Vreau să primesc e-mailuri despre {list} de la {inbox}. Mă pot dezabon
 msgid "Idea"
 msgstr "Idee"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Ideea ta în câteva cuvinte"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Idei"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Cauză identificată"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "În desfășurare"
@@ -131,7 +152,12 @@ msgstr "În investigare"
 msgid "Lists"
 msgstr "Liste"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Încarcă mai multe"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Se încarcă…"
@@ -164,9 +190,17 @@ msgstr "Nu s-a găsit niciun articol."
 msgid "No open incidents."
 msgstr "Niciun incident deschis."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Încă nu există răspunsuri."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Nu e bine"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Nu este nimic aici încă."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Parțial"
 msgid "Partial outage"
 msgstr "Întrerupere parțială"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Planificat"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Articole populare"
@@ -205,6 +243,24 @@ msgstr "Articole conexe"
 msgid "Remove {0}"
 msgstr "Elimină {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Retrage votul tău pentru {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Răspunsuri"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Răspunsuri: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Răspunde"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Rezolvat"
@@ -221,9 +277,22 @@ msgstr "Caută ajutor"
 msgid "Send feedback"
 msgstr "Trimite feedback"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Trimite ideea"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Se trimite…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Lansat"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Idei similare"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Abonează-te"
 msgid "Subscribing…"
 msgstr "Se abonează…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Sugerează"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Sugerează o idee"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Fă o captură de ecran"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Echipa"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Spune-ne mai multe"
 msgid "Thanks for your feedback"
 msgstr "Mulțumim pentru feedback"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Mulțumim! Echipa îți va verifica ideea înainte să fie afișată."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Mulțumim! Ești abonat."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Mulțumim! Ideea ta este pe tablă."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Bifează căsuța pentru a fi de acord."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Prea multe încercări. Așteaptă puțin și încearcă din nou."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Încearcă din nou"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Vezi feedbackul"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Vezi ideea"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Votează pentru {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Pentru a vota și a sugera este nevoie de o conectare rapidă."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Așteaptă aprobarea"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Ce ar îmbunătăți pentru tine?"
 msgid "What's on your mind?"
 msgstr "Ce ai în minte?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Scrie un răspuns"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Da"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Pari să fii offline."

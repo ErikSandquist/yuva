@@ -251,6 +251,10 @@ msgstr "Resuelto"
 msgid "Retry"
 msgstr "Reintentar"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Hoja de ruta"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Guardar"
@@ -358,6 +362,10 @@ msgstr "Subiendo…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Suele responder en {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Vota qué viene después"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

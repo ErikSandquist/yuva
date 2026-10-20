@@ -10,6 +10,8 @@ import {
   writeStored,
   type ChatConfig,
   type IdentityTokenSource,
+  type AppKind,
+  type AppParams,
   type ClientConversation,
   type Layout,
   type LauncherStyle,
@@ -216,6 +218,12 @@ export class YuvaChatElement extends HTMLElement {
 
   async rate(conversationId: string, rating: Rating, comment?: string): Promise<ClientConversation> {
     return (await this.#ensureController()).rate(conversationId, rating, comment)
+  }
+
+  async openApp(kind: AppKind, params?: AppParams): Promise<void> {
+    await this.open()
+    if (!this.#open) return
+    await (await this.#ensureController()).openApp(kind, params)
   }
 
   connectedCallback(): void {

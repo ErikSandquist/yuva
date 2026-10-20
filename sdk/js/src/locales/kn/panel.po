@@ -251,6 +251,10 @@ msgstr "ಪರಿಹರಿಸಲಾಗಿದೆ"
 msgid "Retry"
 msgstr "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "ರೋಡ್‌ಮ್ಯಾಪ್"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "ಉಳಿಸಿ"
@@ -358,6 +362,10 @@ msgstr "ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿದೆ…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "ಸಾಮಾನ್ಯವಾಗಿ {duration} ಒಳಗೆ ಉತ್ತರಿಸುತ್ತಾರೆ"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "ಮುಂದೆ ಏನು ಬರಬೇಕೆಂದು ಮತ ಹಾಕಿ"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

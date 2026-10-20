@@ -15,6 +15,10 @@ msgstr "5 میں سے {n}"
 msgid "All systems operational"
 msgstr "تمام سسٹم کام کر رہے ہیں"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "سائن ان کرنے کے لیے اس سائٹ کے پاپ اپ کی اجازت دیں۔"
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "تقریباً مکمل۔ اپنا ان باکس چیک کریں اور سبسکرپشن کی تصدیق کریں۔"
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "فائلیں منسلک کریں"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "واپس"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "اجزاء"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "لوڈ نہیں ہو سکا۔ دوبارہ کوشش کریں۔"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "بھیجا نہیں جا سکا۔ دوبارہ کوشش کریں۔"
 
@@ -71,7 +78,12 @@ msgstr "سبسکرائب نہیں ہو سکا۔ دوبارہ کوشش کریں۔
 msgid "Degraded performance"
 msgstr "کارکردگی متاثر ہے"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "اپنا خیال بیان کریں"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "ہو گیا"
 
@@ -111,10 +123,19 @@ msgstr "میں {inbox} کی طرف سے {list} کے بارے میں ای میل�
 msgid "Idea"
 msgstr "خیال"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "چند الفاظ میں آپ کا خیال"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "خیالات"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "وجہ کی نشاندہی ہو گئی"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "جاری ہے"
@@ -131,7 +152,12 @@ msgstr "جانچ جاری ہے"
 msgid "Lists"
 msgstr "فہرستیں"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "مزید لوڈ کریں"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "لوڈ ہو رہا ہے…"
@@ -164,9 +190,17 @@ msgstr "کوئی مضمون نہیں ملا۔"
 msgid "No open incidents."
 msgstr "کوئی کھلا واقعہ نہیں۔"
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "ابھی تک کوئی جواب نہیں۔"
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "اچھا نہیں"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "یہاں ابھی کچھ نہیں ہے۔"
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "جزوی"
 msgid "Partial outage"
 msgstr "جزوی رکاوٹ"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "منصوبہ بند"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "مقبول مضامین"
@@ -205,6 +243,24 @@ msgstr "متعلقہ مضامین"
 msgid "Remove {0}"
 msgstr "{0} ہٹائیں"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "{0} کے لیے اپنا ووٹ ہٹائیں"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "جوابات"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "جوابات: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "جواب دیں"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "حل ہو گیا"
@@ -221,9 +277,22 @@ msgstr "مدد تلاش کریں"
 msgid "Send feedback"
 msgstr "رائے بھیجیں"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "خیال بھیجیں"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "بھیجا جا رہا ہے…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "جاری ہو گیا"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "ملتے جلتے خیالات"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "سبسکرائب کریں"
 msgid "Subscribing…"
 msgstr "سبسکرائب ہو رہا ہے…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "تجویز دیں"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "کوئی خیال تجویز کریں"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "اسکرین شاٹ لیں"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "ٹیم"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "ہمیں مزید بتائیں"
 msgid "Thanks for your feedback"
 msgstr "آپ کی رائے کا شکریہ"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "شکریہ! دکھانے سے پہلے ٹیم آپ کے خیال کا جائزہ لے گی۔"
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "شکریہ! آپ سبسکرائب ہو گئے ہیں۔"
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "شکریہ! آپ کا خیال بورڈ پر ہے۔"
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "اتفاق کرنے کے لیے خانے پر نشان لگائیں۔"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "بہت زیادہ کوششیں ہو گئیں۔ ذرا انتظار کریں اور دوبارہ کوشش کریں۔"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "دوبارہ کوشش کریں"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "رائے دیکھیں"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "خیال دیکھیں"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "{0} کے لیے ووٹ دیں"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "ووٹ دینے اور تجویز دینے کے لیے فوری سائن ان درکار ہے۔"
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "منظوری کا انتظار"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "آپ کے لیے اسے کیا بہتر بنائے گا؟"
 msgid "What's on your mind?"
 msgstr "آپ کے ذہن میں کیا ہے؟"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "جواب لکھیں"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "ہاں"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "لگتا ہے آپ آف لائن ہیں۔"

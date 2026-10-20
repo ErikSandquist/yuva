@@ -251,6 +251,10 @@ msgstr "समाधान हो गया"
 msgid "Retry"
 msgstr "फिर कोशिश करें"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "रोडमैप"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "सहेजें"
@@ -358,6 +362,10 @@ msgstr "अपलोड हो रहा है…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "आमतौर पर {duration} में जवाब देते हैं"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "वोट करें कि आगे क्या आएगा"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

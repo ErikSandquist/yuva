@@ -251,6 +251,10 @@ msgstr "ସମାଧାନ ହୋଇଛି"
 msgid "Retry"
 msgstr "ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "ରୋଡମ୍ୟାପ୍"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "ସଞ୍ଚୟ କରନ୍ତୁ"
@@ -358,6 +362,10 @@ msgstr "ଅପଲୋଡ୍ ହେଉଛି…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "ସାଧାରଣତଃ {duration} ମଧ୍ୟରେ ଉତ୍ତର ଦିଅନ୍ତି"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "ପରବର୍ତ୍ତୀ କ'ଣ ଆସିବ ସେଥିପାଇଁ ଭୋଟ୍ ଦିଅନ୍ତୁ"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

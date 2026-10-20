@@ -51,6 +51,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 Help center
               </Link>
               <Link
+                href="/roadmap"
+                className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                Roadmap
+              </Link>
+              <Link
                 href="/chat"
                 className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
               >

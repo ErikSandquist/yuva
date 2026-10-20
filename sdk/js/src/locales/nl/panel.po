@@ -251,6 +251,10 @@ msgstr "Opgelost"
 msgid "Retry"
 msgstr "Opnieuw proberen"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Roadmap"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Opslaan"
@@ -358,6 +362,10 @@ msgstr "Uploaden…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Antwoordt meestal binnen {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Stem op wat er hierna komt"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

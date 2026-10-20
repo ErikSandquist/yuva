@@ -251,6 +251,10 @@ msgstr "Rešeno"
 msgid "Retry"
 msgstr "Poskusi znova"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Načrt razvoja"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Shrani"
@@ -358,6 +362,10 @@ msgstr "Nalaganje…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Običajno odgovori v {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Glasujte, kaj pride naslednje"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

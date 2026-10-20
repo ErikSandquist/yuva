@@ -15,6 +15,10 @@ msgstr "5段階中{n}"
 msgid "All systems operational"
 msgstr "すべてのシステムが稼働中"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "ログインするには、このサイトのポップアップを許可してください。"
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "もう少しです。受信トレイを確認して、登録を確定してください。"
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "ファイルを添付"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "戻る"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "コンポーネント"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "読み込めませんでした。もう一度お試しください。"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "送信できませんでした。もう一度お試しください。"
 
@@ -71,7 +78,12 @@ msgstr "登録できませんでした。もう一度お試しください。"
 msgid "Degraded performance"
 msgstr "パフォーマンス低下"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "アイデアを説明してください"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "完了"
 
@@ -111,10 +123,19 @@ msgstr "{inbox}から{list}に関するメールを受け取ることに同意�
 msgid "Idea"
 msgstr "アイデア"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "アイデアを数語で"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "アイデア"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "原因を特定"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "進行中"
@@ -131,7 +152,12 @@ msgstr "調査中"
 msgid "Lists"
 msgstr "リスト"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "さらに読み込む"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "読み込み中…"
@@ -164,9 +190,17 @@ msgstr "記事が見つかりませんでした。"
 msgid "No open incidents."
 msgstr "対応中の障害はありません。"
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "まだ返信はありません。"
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "良くない"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "まだ何もありません。"
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "一部"
 msgid "Partial outage"
 msgstr "部分的な障害"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "計画中"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "人気の記事"
@@ -205,6 +243,24 @@ msgstr "関連記事"
 msgid "Remove {0}"
 msgstr "{0}を削除"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "「{0}」への投票を取り消す"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "返信"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "返信:{0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "返信"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "解決済み"
@@ -221,9 +277,22 @@ msgstr "ヘルプを検索"
 msgid "Send feedback"
 msgstr "フィードバックを送信"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "アイデアを送信"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "送信中…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "リリース済み"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "似たアイデア"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "登録"
 msgid "Subscribing…"
 msgstr "登録中…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "提案"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "アイデアを提案"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "スクリーンショットを撮る"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "チーム"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "詳しく教えてください"
 msgid "Thanks for your feedback"
 msgstr "フィードバックありがとうございます"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "ありがとうございます!チームが確認してから、アイデアが表示されます。"
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "ありがとうございます。登録しました。"
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "ありがとうございます!アイデアがボードに載りました。"
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "同意するにはチェックボックスをオンにしてください。"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "再試行"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "フィードバックを見る"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "アイデアを見る"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "「{0}」に投票"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "投票や提案には、簡単なログインが必要です。"
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "承認待ち"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "どうなればより良くなりますか?"
 msgid "What's on your mind?"
 msgstr "どのようなことでしょうか?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "返信を書く"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "はい"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "オフラインのようです。"

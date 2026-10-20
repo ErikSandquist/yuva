@@ -15,6 +15,10 @@ msgstr "{n} od 5"
 msgid "All systems operational"
 msgstr "Svi sustavi rade"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Dopustite skočne prozore za ovu stranicu kako biste se prijavili."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Još malo. Provjerite pristiglu poštu i potvrdite pretplatu."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Priloži datoteke"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Natrag"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Komponente"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Učitavanje nije uspjelo. Pokušajte ponovno."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Slanje nije uspjelo. Pokušajte ponovno."
 
@@ -71,7 +78,12 @@ msgstr "Pretplata nije uspjela. Pokušajte ponovno."
 msgid "Degraded performance"
 msgstr "Smanjene performanse"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Opišite svoju ideju"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Gotovo"
 
@@ -111,10 +123,19 @@ msgstr "Želim primati e-poruke o temi {list} od {inbox}. Pretplatu mogu otkazat
 msgid "Idea"
 msgstr "Ideja"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Vaša ideja u nekoliko riječi"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ideje"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Uzrok utvrđen"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "U tijeku"
@@ -131,7 +152,12 @@ msgstr "Istražujemo"
 msgid "Lists"
 msgstr "Popisi"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Učitaj više"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Učitavanje…"
@@ -164,9 +190,17 @@ msgstr "Nema pronađenih članaka."
 msgid "No open incidents."
 msgstr "Nema otvorenih incidenata."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Još nema odgovora."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Nije dobro"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Ovdje još nema ničega."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Djelomično"
 msgid "Partial outage"
 msgstr "Djelomični ispad"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Planirano"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Popularni članci"
@@ -205,6 +243,24 @@ msgstr "Povezani članci"
 msgid "Remove {0}"
 msgstr "Ukloni {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Ukloni svoj glas za {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Odgovori"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Odgovori: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Odgovori"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Riješeno"
@@ -221,9 +277,22 @@ msgstr "Traži pomoć"
 msgid "Send feedback"
 msgstr "Pošalji povratnu informaciju"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Pošalji ideju"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Slanje…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Isporučeno"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Slične ideje"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Pretplati se"
 msgid "Subscribing…"
 msgstr "Pretplata…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Predloži"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Predloži ideju"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Snimi zaslon"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Tim"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Recite nam više"
 msgid "Thanks for your feedback"
 msgstr "Hvala na povratnim informacijama"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Hvala! Tim će pregledati vašu ideju prije nego što se prikaže."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Hvala! Pretplaćeni ste."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Hvala! Vaša je ideja na ploči."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Označite okvir kako biste se složili."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Previše pokušaja. Pričekajte trenutak i pokušajte ponovno."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Pokušaj ponovno"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Pogledaj povratnu informaciju"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Prikaži ideju"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Glasaj za {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Za glasanje i predlaganje potrebna je brza prijava."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Čeka odobrenje"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Što bi to učinilo boljim za vas?"
 msgid "What's on your mind?"
 msgstr "Što vam je na umu?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Napišite odgovor"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Da"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Čini se da ste offline."

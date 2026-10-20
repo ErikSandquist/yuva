@@ -15,6 +15,10 @@ msgstr "৫-এর মধ্যে {n}"
 msgid "All systems operational"
 msgstr "সব সিস্টেম চালু আছে"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "সাইন ইন করতে এই সাইটের জন্য পপ-আপ অনুমতি দিন।"
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "প্রায় শেষ। আপনার ইনবক্স দেখুন এবং সাবস্ক্রিপশন নিশ্চিত করুন।"
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "ফাইল সংযুক্ত করুন"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "পিছনে"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "উপাদান"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "লোড করা যায়নি। আবার চেষ্টা করুন।"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "পাঠানো যায়নি। আবার চেষ্টা করুন।"
 
@@ -71,7 +78,12 @@ msgstr "সাবস্ক্রাইব করা যায়নি। আব
 msgid "Degraded performance"
 msgstr "কার্যক্ষমতা কমেছে"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "আপনার ধারণাটি বর্ণনা করুন"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "সম্পন্ন"
 
@@ -111,10 +123,19 @@ msgstr "আমি {inbox}-এর কাছ থেকে {list} সম্পর�
 msgid "Idea"
 msgstr "ধারণা"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "কয়েকটি শব্দে আপনার ধারণা"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "ধারণা"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "কারণ শনাক্ত হয়েছে"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "চলছে"
@@ -131,7 +152,12 @@ msgstr "তদন্ত চলছে"
 msgid "Lists"
 msgstr "তালিকা"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "আরও লোড করুন"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "লোড হচ্ছে…"
@@ -164,9 +190,17 @@ msgstr "কোনো নিবন্ধ পাওয়া যায়নি।
 msgid "No open incidents."
 msgstr "কোনো খোলা ঘটনা নেই।"
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "এখনও কোনো উত্তর নেই।"
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "ভালো না"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "এখানে এখনও কিছু নেই।"
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "আংশিক"
 msgid "Partial outage"
 msgstr "আংশিক বিভ্রাট"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "পরিকল্পিত"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "জনপ্রিয় নিবন্ধ"
@@ -205,6 +243,24 @@ msgstr "সম্পর্কিত নিবন্ধ"
 msgid "Remove {0}"
 msgstr "{0} সরান"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "{0}-এর জন্য আপনার ভোট সরান"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "উত্তর"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "উত্তর: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "উত্তর দিন"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "সমাধান হয়েছে"
@@ -221,9 +277,22 @@ msgstr "সহায়তা খুঁজুন"
 msgid "Send feedback"
 msgstr "মতামত পাঠান"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "ধারণা পাঠান"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "পাঠানো হচ্ছে…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "প্রকাশিত"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "অনুরূপ ধারণা"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "সাবস্ক্রাইব করুন"
 msgid "Subscribing…"
 msgstr "সাবস্ক্রাইব হচ্ছে…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "প্রস্তাব"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "একটি ধারণা প্রস্তাব করুন"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "স্ক্রিনশট নিন"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "টিম"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "আরও জানান"
 msgid "Thanks for your feedback"
 msgstr "আপনার মতামতের জন্য ধন্যবাদ"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "ধন্যবাদ! দেখানোর আগে টিম আপনার ধারণাটি পর্যালোচনা করবে।"
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "ধন্যবাদ! আপনি সাবস্ক্রাইব করেছেন।"
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "ধন্যবাদ! আপনার ধারণা বোর্ডে আছে।"
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "সম্মত হতে বাক্সে টিক দিন।"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "অনেকবার চেষ্টা করা হয়েছে। একটু অপেক্ষা করে আবার চেষ্টা করুন।"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "আবার চেষ্টা করুন"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "মতামত দেখুন"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "ধারণা দেখুন"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "{0}-এর জন্য ভোট দিন"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "ভোট ও প্রস্তাব দিতে দ্রুত সাইন ইন করতে হয়।"
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "অনুমোদনের অপেক্ষায়"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "কী হলে এটি আপনার জন্য আরও ভা
 msgid "What's on your mind?"
 msgstr "আপনার মনে কী আছে?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "উত্তর লিখুন"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "হ্যাঁ"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "মনে হচ্ছে আপনি অফলাইনে আছেন।"

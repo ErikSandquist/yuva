@@ -251,6 +251,10 @@ msgstr "Ratkaistu"
 msgid "Retry"
 msgstr "Yritä uudelleen"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Tiekartta"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Tallenna"
@@ -358,6 +362,10 @@ msgstr "Ladataan…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Vastaa yleensä {duration} kuluessa"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Äänestä, mitä tulee seuraavaksi"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

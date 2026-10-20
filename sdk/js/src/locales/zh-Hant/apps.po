@@ -15,6 +15,10 @@ msgstr "{n} 分（滿分 5 分）"
 msgid "All systems operational"
 msgstr "所有系統運作正常"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "請允許此網站的彈出視窗以登入。"
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "快完成了。請查看收件匣並確認訂閱。"
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "新增附件"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "返回"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "元件"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "無法載入，請再試一次。"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "無法傳送。請再試一次。"
 
@@ -71,7 +78,12 @@ msgstr "無法訂閱。請再試一次。"
 msgid "Degraded performance"
 msgstr "效能下降"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "描述你的想法"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "完成"
 
@@ -111,10 +123,19 @@ msgstr "我願意接收來自 {inbox} 的有關 {list} 的電子郵件。我可�
 msgid "Idea"
 msgstr "想法"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "用幾句話說出你的想法"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "想法"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "已確定原因"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "進行中"
@@ -131,7 +152,12 @@ msgstr "調查中"
 msgid "Lists"
 msgstr "清單"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "載入更多"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "載入中…"
@@ -164,9 +190,17 @@ msgstr "找不到文章。"
 msgid "No open incidents."
 msgstr "目前沒有進行中的事件。"
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "還沒有回覆。"
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "不好"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "這裡還沒有內容。"
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "部分"
 msgid "Partial outage"
 msgstr "部分故障"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "已規劃"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "熱門文章"
@@ -205,6 +243,24 @@ msgstr "相關文章"
 msgid "Remove {0}"
 msgstr "移除 {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "取消對「{0}」的投票"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "回覆"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "回覆:{0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "回覆"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "已解決"
@@ -221,9 +277,22 @@ msgstr "搜尋說明"
 msgid "Send feedback"
 msgstr "傳送意見回饋"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "傳送想法"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "傳送中…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "已發布"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "相似的想法"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "訂閱"
 msgid "Subscribing…"
 msgstr "正在訂閱…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "建議"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "提出想法"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "擷取螢幕畫面"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "團隊"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "告訴我們更多"
 msgid "Thanks for your feedback"
 msgstr "感謝您的意見回饋"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "謝謝!團隊會先審核你的想法,再顯示。"
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "謝謝!您已訂閱。"
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "謝謝!你的想法已上板。"
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "請勾選核取方塊表示同意。"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "嘗試次數過多。請稍候片刻後再試一次。"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "重試"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "查看意見回饋"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "查看想法"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "為「{0}」投票"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "投票和提出想法需要快速登入。"
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "等待核准"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "怎樣會對你更好？"
 msgid "What's on your mind?"
 msgstr "你在想什麼？"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "寫下回覆"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "是"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "您似乎已離線。"

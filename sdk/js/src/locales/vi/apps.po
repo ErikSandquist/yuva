@@ -15,6 +15,10 @@ msgstr "{n} trên 5"
 msgid "All systems operational"
 msgstr "Mọi hệ thống đang hoạt động"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Hãy cho phép cửa sổ bật lên của trang này để đăng nhập."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Sắp xong rồi. Hãy kiểm tra hộp thư đến và xác nhận đăng ký."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Đính kèm tệp"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Quay lại"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Thành phần"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Không thể tải. Hãy thử lại."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Không thể gửi. Hãy thử lại."
 
@@ -71,7 +78,12 @@ msgstr "Không thể đăng ký. Hãy thử lại."
 msgid "Degraded performance"
 msgstr "Hiệu suất suy giảm"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Mô tả ý tưởng của bạn"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Xong"
 
@@ -111,10 +123,19 @@ msgstr "Tôi muốn nhận email về {list} từ {inbox}. Tôi có thể hủy 
 msgid "Idea"
 msgstr "Ý tưởng"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Ý tưởng của bạn trong vài từ"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ý tưởng"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Đã xác định nguyên nhân"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Đang diễn ra"
@@ -131,7 +152,12 @@ msgstr "Đang điều tra"
 msgid "Lists"
 msgstr "Danh sách"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Tải thêm"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Đang tải…"
@@ -164,9 +190,17 @@ msgstr "Không tìm thấy bài viết nào."
 msgid "No open incidents."
 msgstr "Không có sự cố đang mở."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Chưa có phản hồi nào."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Chưa tốt"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Chưa có gì ở đây."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Một phần"
 msgid "Partial outage"
 msgstr "Sự cố một phần"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Đã lên kế hoạch"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Bài viết phổ biến"
@@ -205,6 +243,24 @@ msgstr "Bài viết liên quan"
 msgid "Remove {0}"
 msgstr "Xóa {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Bỏ bình chọn của bạn cho {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Phản hồi"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Phản hồi: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Trả lời"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Đã giải quyết"
@@ -221,9 +277,22 @@ msgstr "Tìm trợ giúp"
 msgid "Send feedback"
 msgstr "Gửi phản hồi"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Gửi ý tưởng"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Đang gửi…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Đã phát hành"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Ý tưởng tương tự"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Đăng ký"
 msgid "Subscribing…"
 msgstr "Đang đăng ký…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Đề xuất"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Đề xuất một ý tưởng"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Chụp ảnh màn hình"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Nhóm"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Cho chúng tôi biết thêm"
 msgid "Thanks for your feedback"
 msgstr "Cảm ơn phản hồi của bạn"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Cảm ơn! Nhóm sẽ xem xét ý tưởng của bạn trước khi hiển thị."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Cảm ơn bạn! Bạn đã đăng ký."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Cảm ơn! Ý tưởng của bạn đã có trên bảng."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Đánh dấu vào ô để đồng ý."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Quá nhiều lần thử. Hãy chờ một lát rồi thử lại."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Thử lại"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Xem phản hồi"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Xem ý tưởng"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Bình chọn cho {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Bình chọn và đề xuất cần đăng nhập nhanh."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Đang chờ duyệt"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Điều gì sẽ giúp nó tốt hơn cho bạn?"
 msgid "What's on your mind?"
 msgstr "Bạn đang nghĩ gì?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Viết phản hồi"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Có"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Có vẻ bạn đang ngoại tuyến."

@@ -15,6 +15,10 @@ msgstr "{n} / 5"
 msgid "All systems operational"
 msgstr "Kaikki järjestelmät toimivat"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "Salli tämän sivuston ponnahdusikkunat kirjautuaksesi sisään."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Melkein valmista. Tarkista saapuneet ja vahvista tilauksesi."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "Liitä tiedostoja"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "Takaisin"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "Osat"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "Lataus epäonnistui. Yritä uudelleen."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "Lähetys epäonnistui. Yritä uudelleen."
 
@@ -71,7 +78,12 @@ msgstr "Tilaus epäonnistui. Yritä uudelleen."
 msgid "Degraded performance"
 msgstr "Heikentynyt suorituskyky"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "Kuvaile ideasi"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "Valmis"
 
@@ -111,10 +123,19 @@ msgstr "Haluan saada sähköpostia aiheesta {list} lähettäjältä {inbox}. Voi
 msgid "Idea"
 msgstr "Idea"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "Ideasi muutamalla sanalla"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "Ideat"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "Syy löydetty"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "Käynnissä"
@@ -131,7 +152,12 @@ msgstr "Selvitetään"
 msgid "Lists"
 msgstr "Listat"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "Lataa lisää"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Ladataan…"
@@ -164,9 +190,17 @@ msgstr "Artikkeleita ei löytynyt."
 msgid "No open incidents."
 msgstr "Ei avoimia häiriöitä."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "Ei vielä vastauksia."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "Ei hyvä"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "Täällä ei ole vielä mitään."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "Osittain"
 msgid "Partial outage"
 msgstr "Osittainen katkos"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "Suunniteltu"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "Suositut artikkelit"
@@ -205,6 +243,24 @@ msgstr "Aiheeseen liittyvät artikkelit"
 msgid "Remove {0}"
 msgstr "Poista {0}"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "Poista äänesi: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "Vastaukset"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "Vastauksia: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "Vastaa"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "Ratkaistu"
@@ -221,9 +277,22 @@ msgstr "Hae ohjeita"
 msgid "Send feedback"
 msgstr "Lähetä palaute"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "Lähetä idea"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "Lähetetään…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "Julkaistu"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "Samankaltaiset ideat"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "Tilaa"
 msgid "Subscribing…"
 msgstr "Tilataan…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "Ehdota"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "Ehdota ideaa"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "Tiimi"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "Kerro lisää"
 msgid "Thanks for your feedback"
 msgstr "Kiitos palautteestasi"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "Kiitos! Tiimi tarkistaa ideasi ennen kuin se näytetään."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "Kiitos! Olet tilaaja."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "Kiitos! Ideasi on taulussa."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "Hyväksy valitsemalla ruutu."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Liian monta yritystä. Odota hetki ja yritä uudelleen."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Näytä palaute"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "Näytä idea"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "Äänestä: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "Äänestäminen ja ehdottaminen vaativat nopean kirjautumisen."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "Odottaa hyväksyntää"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "Mikä tekisi tästä paremman?"
 msgid "What's on your mind?"
 msgstr "Mitä mielessäsi on?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "Kirjoita vastaus"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "Kyllä"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "Näytät olevan offline-tilassa."

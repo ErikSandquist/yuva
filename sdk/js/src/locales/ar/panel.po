@@ -251,6 +251,10 @@ msgstr "تم الحل"
 msgid "Retry"
 msgstr "إعادة المحاولة"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "خارطة الطريق"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "حفظ"
@@ -358,6 +362,10 @@ msgstr "جارٍ الرفع…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "يرد عادةً خلال {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "صوّت على ما سيأتي بعد ذلك"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

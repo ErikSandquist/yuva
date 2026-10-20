@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import { YuvaChat } from "@/components/yuva-chat"
 import { YuvaDiscussions } from "@/components/yuva-discussions"
 import { YuvaHelp } from "@/components/yuva-help"
+import { YuvaRoadmap } from "@/components/yuva-roadmap"
 import "./index.css"
 
 const server = import.meta.env.VITE_YUVA_SERVER
@@ -53,6 +54,9 @@ function App() {
       </Section>
       <Section index="03" title="Discussions">
         <YuvaDiscussions server={server} channel={channel} />
+      </Section>
+      <Section index="04" title="Roadmap">
+        <YuvaRoadmap server={server} channel={channel} />
       </Section>
     </main>
   )

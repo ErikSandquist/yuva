@@ -43,7 +43,7 @@ function marked(text: string, highlights: HelpHighlight[], field: HelpHighlight[
   return nodes
 }
 
-function article(html: string): HTMLElement {
+export function article(html: string): HTMLElement {
   const prose = el("div", "prose")
   const template = document.createElement("template")
   template.innerHTML = html

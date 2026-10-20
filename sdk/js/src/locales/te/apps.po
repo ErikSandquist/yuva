@@ -15,6 +15,10 @@ msgstr "5 లో {n}"
 msgid "All systems operational"
 msgstr "అన్ని సిస్టమ్‌లు పనిచేస్తున్నాయి"
 
+#: src/apps/roadmap.ts
+msgid "Allow pop-ups for this site to sign in."
+msgstr "సైన్ ఇన్ చేయడానికి ఈ సైట్‌కు పాప్-అప్‌లను అనుమతించండి."
+
 #: src/apps/subscribe.ts
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "దాదాపు పూర్తయింది. మీ ఇన్‌బాక్స్ చూసి సబ్‌స్క్రిప్షన్‌ను నిర్ధారించండి."
@@ -28,6 +32,7 @@ msgid "Attach files"
 msgstr "ఫైళ్లను జోడించండి"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Back"
 msgstr "వెనుకకు"
 
@@ -56,10 +61,12 @@ msgid "Components"
 msgstr "భాగాలు"
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Could not load this. Try again."
 msgstr "లోడ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Could not send. Try again."
 msgstr "పంపలేకపోయాము. మళ్లీ ప్రయత్నించండి."
 
@@ -71,7 +78,12 @@ msgstr "సబ్‌స్క్రైబ్ చేయలేకపోయామ�
 msgid "Degraded performance"
 msgstr "పనితీరు తగ్గింది"
 
+#: src/apps/roadmap.ts
+msgid "Describe your idea"
+msgstr "మీ ఆలోచనను వివరించండి"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Done"
 msgstr "పూర్తయింది"
 
@@ -111,10 +123,19 @@ msgstr "నేను {inbox} నుండి {list} గురించి ఇమ
 msgid "Idea"
 msgstr "ఆలోచన"
 
+#: src/apps/roadmap.ts
+msgid "Idea in a few words"
+msgstr "కొన్ని పదాలలో మీ ఆలోచన"
+
+#: src/apps/roadmap.ts
+msgid "Ideas"
+msgstr "ఆలోచనలు"
+
 #: src/apps/status.ts
 msgid "Identified"
 msgstr "కారణం గుర్తించబడింది"
 
+#: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
 msgstr "కొనసాగుతోంది"
@@ -131,7 +152,12 @@ msgstr "పరిశీలిస్తున్నాము"
 msgid "Lists"
 msgstr "జాబితాలు"
 
+#: src/apps/roadmap.ts
+msgid "Load more"
+msgstr "మరిన్ని లోడ్ చేయండి"
+
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "లోడ్ అవుతోంది…"
@@ -164,9 +190,17 @@ msgstr "కథనాలు ఏవీ దొరకలేదు."
 msgid "No open incidents."
 msgstr "తెరిచిన సంఘటనలు లేవు."
 
+#: src/apps/roadmap.ts
+msgid "No replies yet."
+msgstr "ఇంకా సమాధానాలు లేవు."
+
 #: src/apps/feedback.ts
 msgid "Not good"
 msgstr "బాగోలేదు"
+
+#: src/apps/roadmap.ts
+msgid "Nothing here yet."
+msgstr "ఇక్కడ ఇంకా ఏమీ లేదు."
 
 #: src/apps/status.ts
 msgid "OK"
@@ -188,6 +222,10 @@ msgstr "పాక్షికం"
 msgid "Partial outage"
 msgstr "పాక్షిక అంతరాయం"
 
+#: src/apps/roadmap.ts
+msgid "Planned"
+msgstr "ప్రణాళికలో ఉంది"
+
 #: src/apps/help.ts
 msgid "Popular articles"
 msgstr "ప్రసిద్ధ కథనాలు"
@@ -205,6 +243,24 @@ msgstr "సంబంధిత కథనాలు"
 msgid "Remove {0}"
 msgstr "{0} తొలగించండి"
 
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Remove your vote for {0}"
+msgstr "{0}కి మీ ఓటును తొలగించండి"
+
+#: src/apps/roadmap.ts
+msgid "Replies"
+msgstr "సమాధానాలు"
+
+#. placeholder {0}: idea.reply_count
+#: src/apps/roadmap.ts
+msgid "Replies: {0}"
+msgstr "సమాధానాలు: {0}"
+
+#: src/apps/roadmap.ts
+msgid "Reply"
+msgstr "సమాధానం ఇవ్వండి"
+
 #: src/apps/status.ts
 msgid "Resolved"
 msgstr "పరిష్కరించబడింది"
@@ -221,9 +277,22 @@ msgstr "సహాయం కోసం వెతకండి"
 msgid "Send feedback"
 msgstr "అభిప్రాయం పంపండి"
 
+#: src/apps/roadmap.ts
+msgid "Send idea"
+msgstr "ఆలోచనను పంపండి"
+
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 msgid "Sending…"
 msgstr "పంపుతోంది…"
+
+#: src/apps/roadmap.ts
+msgid "Shipped"
+msgstr "విడుదలైంది"
+
+#: src/apps/roadmap.ts
+msgid "Similar ideas"
+msgstr "ఇలాంటి ఆలోచనలు"
 
 #: src/apps/status.ts
 msgid "Slow"
@@ -241,9 +310,21 @@ msgstr "సబ్‌స్క్రైబ్ చేయండి"
 msgid "Subscribing…"
 msgstr "సబ్‌స్క్రైబ్ అవుతోంది…"
 
+#: src/apps/roadmap.ts
+msgid "Suggest"
+msgstr "సూచించండి"
+
+#: src/apps/roadmap.ts
+msgid "Suggest an idea"
+msgstr "ఒక ఆలోచనను సూచించండి"
+
 #: src/apps/feedback.ts
 msgid "Take a screenshot"
 msgstr "స్క్రీన్‌షాట్ తీయండి"
+
+#: src/apps/roadmap.ts
+msgid "Team"
+msgstr "బృందం"
 
 #: src/apps/feedback.ts
 msgid "Tell us more"
@@ -254,9 +335,17 @@ msgstr "మాకు మరింత చెప్పండి"
 msgid "Thanks for your feedback"
 msgstr "మీ అభిప్రాయానికి ధన్యవాదాలు"
 
+#: src/apps/roadmap.ts
+msgid "Thanks! The team will review your idea before it is shown."
+msgstr "ధన్యవాదాలు! చూపించే ముందు బృందం మీ ఆలోచనను సమీక్షిస్తుంది."
+
 #: src/apps/subscribe.ts
 msgid "Thanks! You are subscribed."
 msgstr "ధన్యవాదాలు! మీరు సబ్‌స్క్రైబ్ అయ్యారు."
+
+#: src/apps/roadmap.ts
+msgid "Thanks! Your idea is on the board."
+msgstr "ధన్యవాదాలు! మీ ఆలోచన బోర్డులో ఉంది."
 
 #: src/apps/feedback.ts
 msgid "The file is too large."
@@ -275,17 +364,36 @@ msgid "Tick the box to agree."
 msgstr "అంగీకరించడానికి బాక్స్‌ను టిక్ చేయండి."
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "చాలా ప్రయత్నాలు. కాసేపు ఆగి మళ్లీ ప్రయత్నించండి."
 
 #: src/apps/help.ts
+#: src/apps/roadmap.ts
 msgid "Try again"
 msgstr "మళ్లీ ప్రయత్నించండి"
 
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "అభిప్రాయం చూడండి"
+
+#: src/apps/roadmap.ts
+msgid "View idea"
+msgstr "ఆలోచనను చూడండి"
+
+#. placeholder {0}: idea.title
+#: src/apps/roadmap.ts
+msgid "Vote for {0}"
+msgstr "{0}కి ఓటు వేయండి"
+
+#: src/apps/roadmap.ts
+msgid "Voting and suggesting need a quick sign-in."
+msgstr "ఓటు వేయడానికి, సూచించడానికి త్వరిత సైన్ ఇన్ అవసరం."
+
+#: src/apps/roadmap.ts
+msgid "Waiting for approval"
+msgstr "ఆమోదం కోసం వేచి ఉంది"
 
 #: src/apps/help.ts
 msgid "Was this helpful?"
@@ -311,11 +419,16 @@ msgstr "మీకు ఇది ఏది మెరుగ్గా చేస్�
 msgid "What's on your mind?"
 msgstr "మీ మనసులో ఏముంది?"
 
+#: src/apps/roadmap.ts
+msgid "Write a reply"
+msgstr "సమాధానం రాయండి"
+
 #: src/apps/help.ts
 msgid "Yes"
 msgstr "అవును"
 
 #: src/apps/feedback.ts
+#: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
 msgid "You seem to be offline."
 msgstr "మీరు ఆఫ్‌లైన్‌లో ఉన్నట్లు కనిపిస్తోంది."

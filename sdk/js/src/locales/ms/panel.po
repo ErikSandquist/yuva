@@ -251,6 +251,10 @@ msgstr "Selesai"
 msgid "Retry"
 msgstr "Cuba lagi"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Peta hala tuju"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Simpan"
@@ -358,6 +362,10 @@ msgstr "Memuat naik…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Biasanya membalas dalam masa {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Undi apa yang akan datang seterusnya"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

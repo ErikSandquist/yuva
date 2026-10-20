@@ -251,6 +251,10 @@ msgstr "Επιλύθηκε"
 msgid "Retry"
 msgstr "Επανάληψη"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Οδικός χάρτης"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Αποθήκευση"
@@ -358,6 +362,10 @@ msgstr "Μεταφόρτωση…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Συνήθως απαντά σε {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Ψηφίστε τι έρχεται μετά"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"

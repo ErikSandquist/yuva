@@ -251,6 +251,10 @@ msgstr "Rezolvat"
 msgid "Retry"
 msgstr "Încearcă din nou"
 
+#: src/panel/home.ts
+msgid "Roadmap"
+msgstr "Foaie de parcurs"
+
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Salvează"
@@ -358,6 +362,10 @@ msgstr "Se încarcă…"
 #: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "De obicei răspunde în {duration}"
+
+#: src/panel/home.ts
+msgid "Vote on what comes next"
+msgstr "Votează ce urmează"
 
 #: src/panel/chat.ts
 msgid "We couldn't reach {address}"
