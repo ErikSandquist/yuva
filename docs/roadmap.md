@@ -127,7 +127,7 @@ Status: done in `v0.0.4`; plan in issue #17, decisions in `architecture.md` › 
 Accept: Claude Code and claude.ai triage an inbox and draft replies a member sends from the panel;
 a prompt-injection e-mail sends nothing; a headless chat works with the panel turned off.
 
-## M10 — Native apps for members (0.0.27)
+## M10 — Native apps for members (0.0.28)
 
 Status: planned; iOS in issue #18, Android in issue #19.
 
@@ -397,7 +397,7 @@ Status: done, issue #100; verified on 2026-10-19 at `9290284`: behind Caddy on d
 
 ## M20 — Help center
 
-Status: planned; decisions in `architecture.md` › Help center (M20).
+Status: done in `v0.0.27`; decisions in `architecture.md` › Help center (M20).
 
 - Help centers per inbox with collections and articles written in Markdown in the panel, drafts,
   revisions, publishing and translations per locale; scopes `help:read`, `help:write`,
@@ -430,7 +430,7 @@ panel, the API or MCP; 31 searches in a minute from one address get `429`.
 
 ## M21 — Roadmap board
 
-Status: planned; issue #104, decisions in `architecture.md` › Roadmap board (M21).
+Status: done in `v0.0.27`; issue #104, decisions in `architecture.md` › Roadmap board (M21).
 
 - One board per inbox, private or public. Ideas are discussions of kind `idea` in five stages (Ideas,
   Planned, In progress, Shipped, Closed), with votes, replies and follows from reader accounts or
@@ -463,7 +463,7 @@ pending suggestion on one board gets `429`.
 
 ## M22 — What's new
 
-Status: planned; issue #105, decisions in `architecture.md` › What's new (M22).
+Status: done in `v0.0.27`; issue #105, decisions in `architecture.md` › What's new (M22).
 
 - A What's new feed per inbox. Entries in its own table, written in Markdown in the panel, with labels
   (New, Improved, Fixed), an optional image, drafts, scheduled publishing and translations per locale.
