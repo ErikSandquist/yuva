@@ -1,8 +1,8 @@
 import type { MessageDescriptor } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import type { ClientConversation, ClientInbox } from "../client/api"
-import type { AppKind } from "../types"
-import { el, textButton } from "./helpers"
+import type { AppKind, AppParams } from "../types"
+import { el, searchField, textButton } from "./helpers"
 import { icons } from "./icons"
 
 export interface HomeData {
@@ -15,7 +15,7 @@ export interface HomeData {
   openConversation(id: string): void
   allConversations(): void
   newConversation(): void
-  openApp(kind: AppKind): void
+  openApp(kind: AppKind, params?: AppParams): void
 }
 
 const stateText = {
@@ -35,7 +35,13 @@ const tone = {
 }
 
 export function appTitle(kind: AppKind): MessageDescriptor {
-  return kind === "feedback" ? msg`Feedback` : kind === "status" ? msg`Status` : msg`Get updates`
+  return kind === "feedback"
+    ? msg`Feedback`
+    : kind === "status"
+      ? msg`Status`
+      : kind === "help"
+        ? msg`Help center`
+        : msg`Get updates`
 }
 
 function section(label: string): HTMLElement {
@@ -60,6 +66,7 @@ export function buildHome(data: HomeData): HTMLElement {
     hero.append(avatars)
   }
   hero.append(el("h1", "", t(msg`How can we help?`)))
+  if (inbox.help) hero.append(searchField(t(msg`Search for help`), "", (query) => data.openApp("help", { query })))
   page.append(data.notice, hero)
 
   const latest = data.conversations[0]
@@ -104,6 +111,8 @@ export function buildHome(data: HomeData): HTMLElement {
   page.append(talk)
 
   const tiles: { app: AppKind; icon: string; title: string; text: string }[] = []
+  if (inbox.help)
+    tiles.push({ app: "help", icon: icons.book, title: t(msg`Help center`), text: t(msg`Guides and answers`) })
   if (inbox.feedback_categories.length > 0)
     tiles.push({
       app: "feedback",

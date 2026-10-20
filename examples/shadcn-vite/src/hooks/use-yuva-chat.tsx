@@ -27,6 +27,7 @@ export interface UseYuvaChatOptions {
   channel?: string
   client?: YuvaClient
   identityToken?: IdentityTokenSource | null
+  helpArticleId?: string
 }
 
 export type YuvaChatMessageStatus = "sent" | "sending" | "error"
@@ -127,10 +128,18 @@ function upsertConversation(list: ClientConversation[], next: ClientConversation
   )
 }
 
-export function useYuvaChat({ server, channel, client: given, identityToken }: UseYuvaChatOptions): YuvaChatState {
+export function useYuvaChat({
+  server,
+  channel,
+  client: given,
+  identityToken,
+  helpArticleId,
+}: UseYuvaChatOptions): YuvaChatState {
   const identity = React.useRef(identityToken)
+  const helpArticle = React.useRef(helpArticleId)
   React.useEffect(() => {
     identity.current = identityToken
+    helpArticle.current = helpArticleId
   })
   const [own, setOwn] = React.useState<YuvaClient | null>(null)
   React.useEffect(() => {
@@ -344,7 +353,7 @@ export function useYuvaChat({ server, channel, client: given, identityToken }: U
         if (id) {
           sent = await client.sendMessage(id, input)
         } else {
-          const created = await client.startConversation(input)
+          const created = await client.startConversation({ ...input, help_article_id: helpArticle.current })
           sent = created.message
           active.current = created.conversation.id
           setActiveId(created.conversation.id)

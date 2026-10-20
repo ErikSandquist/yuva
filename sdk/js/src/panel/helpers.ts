@@ -1,4 +1,5 @@
 import type { ClientAttachment, ClientMessage, ClientConversation } from "../client/api"
+import { icons } from "./icons"
 
 export function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -26,6 +27,31 @@ export function textButton(label: string, className: string, onClick: () => void
   button.type = "button"
   button.addEventListener("click", onClick)
   return button
+}
+
+export function searchField(
+  label: string,
+  value: string,
+  submit: (query: string) => void,
+  input?: (query: string) => void
+): HTMLFormElement {
+  const form = el("form", "search")
+  form.noValidate = true
+  const field = el("input")
+  field.type = "search"
+  field.value = value
+  field.placeholder = label
+  field.enterKeyHint = "search"
+  field.setAttribute("aria-label", label)
+  field.maxLength = 200
+  form.insertAdjacentHTML("beforeend", icons.search)
+  form.append(field)
+  form.addEventListener("submit", (event) => {
+    event.preventDefault()
+    submit(field.value.trim())
+  })
+  if (input) field.addEventListener("input", () => input(field.value))
+  return form
 }
 
 export const time = (value: string) => Date.parse(value)

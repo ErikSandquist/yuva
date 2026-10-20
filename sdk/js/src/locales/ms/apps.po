@@ -19,9 +19,25 @@ msgstr "Semua sistem berfungsi"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Hampir siap. Semak peti masuk anda dan sahkan langganan anda."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Tanya pasukan kami, kami membaca setiap mesej."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Lampirkan fail"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Kembali"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Padanan terbaik"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Layari"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Selesai"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Komponen"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Tidak dapat dimuatkan. Cuba lagi."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Sedang disiasat"
 msgid "Lists"
 msgstr "Senarai"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Memuatkan…"
@@ -123,9 +144,21 @@ msgstr "Penyelenggaraan"
 msgid "Major outage"
 msgstr "Gangguan besar"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Hantar mesej kepada kami"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Sedang dipantau"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Tidak"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Tiada artikel ditemui."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Separa"
 msgid "Partial outage"
 msgstr "Gangguan separa"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Artikel popular"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Pujian"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Artikel berkaitan"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Selesai"
 msgid "Scheduled"
 msgstr "Dijadualkan"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Cari bantuan"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Hantar maklum balas"
@@ -183,6 +228,10 @@ msgstr "Menghantar…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Perlahan"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Masih tersekat?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Ceritakan lebih lanjut"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Terima kasih atas maklum balas anda"
 
@@ -229,9 +279,17 @@ msgstr "Tandakan kotak untuk bersetuju."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Terlalu banyak percubaan. Tunggu sebentar dan cuba lagi."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Cuba lagi"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Lihat maklum balas"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Adakah ini membantu?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Apa yang akan menjadikannya lebih baik untuk anda?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Apa yang ada di fikiran anda?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Ya"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

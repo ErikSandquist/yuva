@@ -58,7 +58,12 @@ export interface PanelModule {
   mount(host: PanelHost): PanelController
 }
 
-export type AppKind = "feedback" | "status" | "subscribe"
+export type AppKind = "feedback" | "status" | "subscribe" | "help"
+
+export interface AppParams {
+  article?: string
+  query?: string
+}
 
 export interface AppContext {
   root: Node
@@ -66,8 +71,10 @@ export interface AppContext {
   inbox: components["schemas"]["ClientInbox"]
   locale: string
   mailingLists: boolean
+  params: AppParams
   back(): void
-  open(kind: AppKind): void
+  open(kind: AppKind, params?: AppParams): void
+  ask(articleId?: string): void
   created(result: components["schemas"]["ClientConversationCreated"]): void
   viewConversation(id: string): void
 }

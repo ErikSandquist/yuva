@@ -19,9 +19,25 @@ msgstr "Svi sustavi rade"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Još malo. Provjerite pristiglu poštu i potvrdite pretplatu."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Pitajte tim, čitamo svaku poruku."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Priloži datoteke"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Natrag"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Najbolji rezultati"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Pregledaj"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Završeno"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Komponente"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Učitavanje nije uspjelo. Pokušajte ponovno."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Istražujemo"
 msgid "Lists"
 msgstr "Popisi"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Učitavanje…"
@@ -123,9 +144,21 @@ msgstr "Održavanje"
 msgid "Major outage"
 msgstr "Veliki ispad"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Pošaljite nam poruku"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Pratimo"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Ne"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Nema pronađenih članaka."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Djelomično"
 msgid "Partial outage"
 msgstr "Djelomični ispad"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Popularni članci"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Pohvala"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Povezani članci"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Riješeno"
 msgid "Scheduled"
 msgstr "Planirano"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Traži pomoć"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Pošalji povratnu informaciju"
@@ -183,6 +228,10 @@ msgstr "Slanje…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Sporo"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Još uvijek ne ide?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Recite nam više"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Hvala na povratnim informacijama"
 
@@ -229,9 +279,17 @@ msgstr "Označite okvir kako biste se složili."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Previše pokušaja. Pričekajte trenutak i pokušajte ponovno."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Pokušaj ponovno"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Pogledaj povratnu informaciju"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Je li ovo bilo korisno?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Što bi to učinilo boljim za vas?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Što vam je na umu?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Da"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

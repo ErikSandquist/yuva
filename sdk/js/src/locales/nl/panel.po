@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Goed"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Handleidingen en antwoorden"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Helpcentrum"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Waarmee kunnen we helpen?"
 
@@ -250,6 +258,10 @@ msgstr "Opslaan"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Gepland"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Zoek hulp"
 
 #: src/panel/chat.ts
 msgid "Seen"

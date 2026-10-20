@@ -19,9 +19,25 @@ msgstr "Tots els sistemes funcionen"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Gairebé a punt. Mira la safata d'entrada i confirma la subscripció."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Pregunta a l'equip, llegim tots els missatges."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Adjunta fitxers"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Enrere"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Millors coincidències"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Explora"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Completat"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Components"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "No s'ha pogut carregar. Torna-ho a provar."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Investigant"
 msgid "Lists"
 msgstr "Llistes"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Carregant…"
@@ -123,9 +144,21 @@ msgstr "Manteniment"
 msgid "Major outage"
 msgstr "Interrupció greu"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Escriu-nos"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "En seguiment"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "No"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "No s'ha trobat cap article."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Parcial"
 msgid "Partial outage"
 msgstr "Interrupció parcial"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Articles populars"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Elogi"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Articles relacionats"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Resolt"
 msgid "Scheduled"
 msgstr "Programat"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Cerca ajuda"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Envia comentaris"
@@ -183,6 +228,10 @@ msgstr "Enviant…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Lent"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Encara no ho tens resolt?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Explica'ns més"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Gràcies pels teus comentaris"
 
@@ -229,9 +279,17 @@ msgstr "Marca la casella per acceptar."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Massa intents. Espera un moment i torna-ho a provar."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Torna-ho a provar"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Mostra els comentaris"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Ha estat útil?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Què ho milloraria per a tu?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Què tens al cap?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Sí"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

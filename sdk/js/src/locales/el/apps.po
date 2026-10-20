@@ -19,9 +19,25 @@ msgstr "Όλα τα συστήματα λειτουργούν"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Σχεδόν έτοιμο. Ελέγξτε τα εισερχόμενά σας και επιβεβαιώστε τη συνδρομή σας."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Ρωτήστε την ομάδα, διαβάζουμε κάθε μήνυμα."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Επισύναψη αρχείων"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Πίσω"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Καλύτερα αποτελέσματα"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Περιήγηση"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Ολοκληρώθηκε"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Στοιχεία"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Δεν ήταν δυνατή η φόρτωση. Δοκιμάστε ξανά."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Διερεύνηση"
 msgid "Lists"
 msgstr "Λίστες"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Φόρτωση…"
@@ -123,9 +144,21 @@ msgstr "Συντήρηση"
 msgid "Major outage"
 msgstr "Μεγάλη διακοπή"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Στείλτε μας μήνυμα"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Παρακολούθηση"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Όχι"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Δεν βρέθηκαν άρθρα."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Μερική"
 msgid "Partial outage"
 msgstr "Μερική διακοπή"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Δημοφιλή άρθρα"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Επαίνος"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Σχετικά άρθρα"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Επιλύθηκε"
 msgid "Scheduled"
 msgstr "Προγραμματισμένο"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Αναζήτηση βοήθειας"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Αποστολή σχολίων"
@@ -183,6 +228,10 @@ msgstr "Αποστολή…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Αργό"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Χρειάζεστε ακόμα βοήθεια;"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Πείτε μας περισσότερα"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Ευχαριστούμε για τα σχόλιά σας"
 
@@ -229,9 +279,17 @@ msgstr "Επιλέξτε το πλαίσιο για να συμφωνήσετε.
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Πάρα πολλές προσπάθειες. Περιμένετε λίγο και δοκιμάστε ξανά."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Δοκιμή ξανά"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Προβολή σχολίων"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Ήταν χρήσιμο;"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Τι θα το έκανε καλύτερο για εσάς;"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Τι έχετε στο μυαλό σας;"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Ναι"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

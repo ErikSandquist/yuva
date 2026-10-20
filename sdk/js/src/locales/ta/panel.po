@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "நன்று"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "வழிகாட்டிகளும் பதில்களும்"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "உதவி மையம்"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "நாங்கள் எப்படி உதவலாம்?"
 
@@ -250,6 +258,10 @@ msgstr "சேமி"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "திட்டமிடப்பட்டது"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "உதவியைத் தேடுங்கள்"
 
 #: src/panel/chat.ts
 msgid "Seen"

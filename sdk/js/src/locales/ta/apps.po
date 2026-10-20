@@ -19,9 +19,25 @@ msgstr "அனைத்து அமைப்புகளும் இயங்�
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "கிட்டத்தட்ட முடிந்தது. உங்கள் இன்பாக்ஸைப் பார்த்து சந்தாவை உறுதிசெய்யுங்கள்."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "குழுவிடம் கேளுங்கள், ஒவ்வொரு செய்தியையும் படிக்கிறோம்."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "கோப்புகளை இணை"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "பின்செல்"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "சிறந்த பொருத்தங்கள்"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "உலாவுக"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "முடிந்தது"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "கூறுகள்"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "ஏற்ற முடியவில்லை. மீண்டும் முயலவும்."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "ஆராயப்படுகிறது"
 msgid "Lists"
 msgstr "பட்டியல்கள்"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "ஏற்றுகிறது…"
@@ -123,9 +144,21 @@ msgstr "பராமரிப்பு"
 msgid "Major outage"
 msgstr "பெரிய தடங்கல்"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "எங்களுக்கு செய்தி அனுப்புங்கள்"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "கண்காணிக்கப்படுகிறது"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "இல்லை"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "கட்டுரைகள் எதுவும் இல்லை."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "பகுதி"
 msgid "Partial outage"
 msgstr "பகுதி தடங்கல்"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "பிரபலமான கட்டுரைகள்"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "பாராட்டு"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "தொடர்புடைய கட்டுரைகள்"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "தீர்க்கப்பட்டது"
 msgid "Scheduled"
 msgstr "திட்டமிடப்பட்டது"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "உதவியைத் தேடுங்கள்"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "கருத்தை அனுப்பு"
@@ -183,6 +228,10 @@ msgstr "அனுப்புகிறது…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "மெதுவு"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "இன்னும் சிக்கலா?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "மேலும் சொல்லுங்கள்"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "உங்கள் கருத்துக்கு நன்றி"
 
@@ -229,9 +279,17 @@ msgstr "ஒப்புக்கொள்ள பெட்டியில் ட�
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "மிக அதிக முயற்சிகள். சிறிது காத்திருந்து மீண்டும் முயலுங்கள்."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "மீண்டும் முயல்க"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "கருத்தைக் காண்க"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "இது உதவியாக இருந்ததா?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "இதை உங்களுக்கு எது சிறப்பா
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "உங்கள் மனதில் என்ன இருக்கிறது?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "ஆம்"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

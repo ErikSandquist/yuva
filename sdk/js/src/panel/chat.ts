@@ -7,6 +7,7 @@ import {
   writeStored,
   type AppHandle,
   type AppKind,
+  type AppParams,
   type AppsModule,
   type PanelController,
   type PanelHost,
@@ -14,6 +15,7 @@ import {
 import {
   ApiError,
   type ClientAttachment,
+  type MessageCard,
   type ClientContact,
   type ClientConversation,
   type ClientInbox,
@@ -76,6 +78,7 @@ interface Pending {
   files: File[]
   state: "sending" | "failed" | "refused"
   status?: number
+  help_article_id?: string
 }
 
 interface RatingDraft {
@@ -135,6 +138,7 @@ export class Chat implements PanelController {
   #app: { kind: AppKind; handle: AppHandle } | null = null
   #appLoad = 0
   #appError = false
+  #helpArticle: string | null = null
   #missed = 0
   #loaded = ""
   ready: Promise<void>
@@ -745,6 +749,10 @@ export class Chat implements PanelController {
     this.#renderChips()
     this.#syncSend()
     const pending: Pending = { client_id: randomId(), conversation: this.#view.id, body, files, state: "sending" }
+    if (this.#view.id === null && this.#helpArticle) {
+      pending.help_article_id = this.#helpArticle
+      this.#helpArticle = null
+    }
     this.#pending.push(pending)
     this.#render()
     this.#scrollToEnd()
@@ -757,7 +765,7 @@ export class Chat implements PanelController {
     const input = { body: pending.body, files: pending.files, client_id: pending.client_id }
     try {
       if (pending.conversation === null) {
-        const created = await this.#client.startConversation(input)
+        const created = await this.#client.startConversation({ ...input, help_article_id: pending.help_article_id })
         const id = created.conversation.id
         if (!this.#conversations.has(id)) this.#conversations.set(id, created.conversation)
         if (!this.#threads.has(id)) this.#threads.set(id, { messages: [], complete: true, loading: false })
@@ -921,6 +929,7 @@ export class Chat implements PanelController {
 
   #go(view: View): void {
     this.#stopTyping()
+    if (view.kind !== "thread" || view.id !== null) this.#helpArticle = null
     if (view.kind !== "app") this.#closeApp()
     this.#view = view
     this.#render()
@@ -937,7 +946,7 @@ export class Chat implements PanelController {
     this.#app = null
   }
 
-  async #openApp(kind: AppKind): Promise<void> {
+  async #openApp(kind: AppKind, params: AppParams = {}): Promise<void> {
     this.#closeApp()
     const load = this.#appLoad
     this.#view = { kind: "app", app: kind }
@@ -953,8 +962,13 @@ export class Chat implements PanelController {
         inbox,
         locale,
         mailingLists: this.#lists,
+        params,
         back: () => this.#go({ kind: "home" }),
-        open: (next) => void this.#openApp(next),
+        open: (next, nextParams) => void this.#openApp(next, nextParams),
+        ask: (articleId) => {
+          this.#go({ kind: "thread", id: null })
+          this.#helpArticle = articleId ?? null
+        },
         created: (result) => {
           const id = result.conversation.id
           if (!this.#conversations.has(id)) this.#conversations.set(id, result.conversation)
@@ -1110,7 +1124,7 @@ export class Chat implements PanelController {
       openConversation: (id) => void this.#openThread(id),
       allConversations: () => this.#go({ kind: "list" }),
       newConversation: () => this.#go({ kind: "thread", id: null }),
-      openApp: (kind) => void this.#openApp(kind),
+      openApp: (kind, params) => void this.#openApp(kind, params),
     })
     this.#body.replaceChildren(home)
   }
@@ -1317,6 +1331,7 @@ export class Chat implements PanelController {
           group.stack.append(bubble)
         }
         if (message.attachments.length > 0) group.stack.append(this.#renderAttachments(message.attachments, mine))
+        for (const card of message.cards ?? []) group.stack.append(this.#renderCard(card))
       } else if (entry.kind === "pending") {
         const item = entry.pending
         if (item.body) {
@@ -1481,6 +1496,26 @@ export class Chat implements PanelController {
     card.append(form)
     if (draft.state === "failed") card.append(el("p", "error", this.#t(msg`Could not send your rating. Try again.`)))
     return card
+  }
+
+  #renderCard(card: MessageCard): HTMLElement {
+    const link = el("a", "article-card")
+    link.href = card.url
+    link.target = "_blank"
+    link.rel = "noopener noreferrer"
+    link.dir = "auto"
+    const text = el("span", "article-card-text")
+    text.append(el("b", "", card.title))
+    if (card.excerpt) text.append(el("span", "", card.excerpt))
+    link.insertAdjacentHTML("beforeend", icons.book)
+    link.append(text)
+    link.insertAdjacentHTML("beforeend", icons.chevron)
+    link.addEventListener("click", (event) => {
+      if (!this.#inbox?.help || event.metaKey || event.ctrlKey || event.shiftKey) return
+      event.preventDefault()
+      void this.#openApp("help", { article: card.article_id })
+    })
+    return link
   }
 
   #renderAttachments(attachments: ClientAttachment[], mine: boolean): HTMLElement {

@@ -19,9 +19,25 @@ msgstr "جميع الأنظمة تعمل"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "أوشكت على الانتهاء. تحقق من بريدك الوارد وأكّد اشتراكك."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "اسأل الفريق، نقرأ كل رسالة."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "إرفاق ملفات"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "رجوع"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "أفضل النتائج"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "تصفح"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "اكتمل"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "المكوّنات"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "تعذّر التحميل. حاول مرة أخرى."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "قيد التحقيق"
 msgid "Lists"
 msgstr "القوائم"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "جارٍ التحميل…"
@@ -123,9 +144,21 @@ msgstr "صيانة"
 msgid "Major outage"
 msgstr "انقطاع كبير"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "راسلنا"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "قيد المراقبة"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "لا"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "لم يتم العثور على مقالات."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "جزئي"
 msgid "Partial outage"
 msgstr "انقطاع جزئي"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "مقالات شائعة"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "إشادة"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "مقالات ذات صلة"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "تم الحل"
 msgid "Scheduled"
 msgstr "مجدول"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "ابحث في المساعدة"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "إرسال الملاحظات"
@@ -183,6 +228,10 @@ msgstr "جارٍ الإرسال…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "بطيء"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "لا تزال بحاجة إلى مساعدة؟"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "أخبرنا بالمزيد"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "شكرًا على ملاحظاتك"
 
@@ -229,9 +279,17 @@ msgstr "ضع علامة في المربع للموافقة."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "محاولات كثيرة جدًا. انتظر قليلًا وحاول مرة أخرى."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "حاول مرة أخرى"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "عرض الملاحظات"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "هل كان هذا مفيدًا؟"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "ما الذي سيجعله أفضل بالنسبة لك؟"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "ما الذي يشغل بالك؟"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "نعم"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

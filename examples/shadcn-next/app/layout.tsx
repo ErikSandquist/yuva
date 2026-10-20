@@ -45,6 +45,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 </Link>
               ))}
               <Link
+                href="/help"
+                className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                Help center
+              </Link>
+              <Link
                 href="/chat"
                 className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
               >

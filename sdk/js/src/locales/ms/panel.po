@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Bagus"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Panduan dan jawapan"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Pusat bantuan"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Bagaimana kami boleh membantu?"
 
@@ -250,6 +258,10 @@ msgstr "Simpan"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Dijadualkan"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Cari bantuan"
 
 #: src/panel/chat.ts
 msgid "Seen"

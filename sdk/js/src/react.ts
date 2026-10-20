@@ -4,14 +4,15 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
   type ReactElement,
   type ReactNode,
 } from "react"
-import type { ClientConversation, ClientMessage } from "./client/api"
-import type { IdentityTokenSource, MessageInput, YuvaClient } from "./client/client"
+import type { ClientConversation, ClientHelp, ClientMessage } from "./client/api"
+import type { Help, IdentityTokenSource, MessageInput, YuvaClient } from "./client/client"
 import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "./docs"
 import type { SubscribeDetail, SubscribeErrorDetail } from "./subscribe"
 import type { ReaderProfile } from "./client/api"
@@ -145,6 +146,60 @@ export function useConversations(): ConversationsResult {
     loadMore: () => load(true),
     reload: () => load(false),
   }
+}
+
+export interface HelpResult {
+  help: ClientHelp | null
+  loading: boolean
+  error: unknown
+  reload(): Promise<void>
+  search: Help["search"]
+  collection: Help["collection"]
+  article: Help["article"]
+  react: Help["react"]
+  click: Help["click"]
+}
+
+export interface UseHelpOptions {
+  locale?: string
+  page?: string
+}
+
+export function useHelp({ locale, page }: UseHelpOptions = {}): HelpResult {
+  const client = useYuva()
+  const [state, setState] = useState<{ help: ClientHelp | null; loading: boolean; error: unknown }>({
+    help: null,
+    loading: true,
+    error: null,
+  })
+
+  const load = useCallback(async () => {
+    setState((s) => ({ ...s, loading: true }))
+    try {
+      const help = await client.help.get({ locale, page })
+      setState({ help, loading: false, error: null })
+    } catch (error) {
+      setState((s) => ({ ...s, loading: false, error }))
+    }
+  }, [client, locale, page])
+
+  useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- fetching from the client is syncing with an external system
+    void load()
+  }, [load])
+
+  const bound = useMemo<Pick<HelpResult, "search" | "collection" | "article" | "react" | "click">>(
+    () => ({
+      search: (q, options) => client.help.search(q, { locale, ...options }),
+      collection: (id, options) => client.help.collection(id, { locale, ...options }),
+      article: (id, options) => client.help.article(id, { locale, ...options }),
+      react: client.help.react,
+      click: client.help.click,
+    }),
+    [client, locale]
+  )
+
+  return { ...state, reload: load, ...bound }
 }
 
 export interface MessagesResult {

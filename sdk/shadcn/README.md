@@ -21,6 +21,10 @@ npx shadcn@latest add https://useyuva.com/r/yuva-discussions.json
 | `yuva-chat-thread` | component | One conversation with grouped messages, day separators, attachments, typing and a jump-to-latest button. |
 | `yuva-chat-composer` | component | Message box with file chips, an Enter to send hint and a send button. |
 | `yuva-chat-conversations` | component | The visitor's conversations as rows, with an empty state. |
+| `yuva-help` | block | The help center: search, best matches or popular articles, collections, the article view with a Yes and No rating and related articles, and a Message us row. |
+| `yuva-help-search` | component | Search field with live results, highlighted words and counted clicks. |
+| `yuva-help-article` | component | One article with the rating, related articles and Message us. |
+| `use-yuva-help` | hook | `useYuvaHelp`, `useYuvaHelpSearch` and `useYuvaHelpArticle`, plus labels and helpers in `lib/yuva-help-utils.tsx`. |
 | `use-yuva-chat` | hook | `useYuvaChat`: session, conversations, one thread over realtime, typing, read state, sending text and files. |
 | `use-yuva-subscribe` | hook | `useYuvaSubscribe`: public lists, form subscribing and the signed-in user's subscriptions. |
 | `use-yuva-discussions` | hook | `YuvaDiscussionsProvider` and the hooks, plus labels and helpers in `lib/yuva-utils.ts`. |

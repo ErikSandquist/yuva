@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Hyvä"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Oppaat ja vastaukset"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Ohjekeskus"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Miten voimme auttaa?"
 
@@ -250,6 +258,10 @@ msgstr "Tallenna"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Ajastettu"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Hae ohjeita"
 
 #: src/panel/chat.ts
 msgid "Seen"

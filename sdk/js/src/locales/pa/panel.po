@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "ਚੰਗਾ"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "ਗਾਈਡ ਅਤੇ ਜਵਾਬ"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "ਮਦਦ ਕੇਂਦਰ"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "ਅਸੀਂ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦੇ ਹਾਂ?"
 
@@ -250,6 +258,10 @@ msgstr "ਸੇਵ ਕਰੋ"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "ਨਿਰਧਾਰਤ"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "ਮਦਦ ਖੋਜੋ"
 
 #: src/panel/chat.ts
 msgid "Seen"

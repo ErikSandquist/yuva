@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "良い"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "ガイドと回答"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "ヘルプセンター"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "どのようなご用件ですか?"
 
@@ -250,6 +258,10 @@ msgstr "保存"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "予定"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "ヘルプを検索"
 
 #: src/panel/chat.ts
 msgid "Seen"

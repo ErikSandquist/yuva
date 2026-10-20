@@ -19,9 +19,25 @@ msgstr "تمام سسٹم کام کر رہے ہیں"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "تقریباً مکمل۔ اپنا ان باکس چیک کریں اور سبسکرپشن کی تصدیق کریں۔"
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "ٹیم سے پوچھیں، ہم ہر پیغام پڑھتے ہیں۔"
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "فائلیں منسلک کریں"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "واپس"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "بہترین نتائج"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "براؤز کریں"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "مکمل"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "اجزاء"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "لوڈ نہیں ہو سکا۔ دوبارہ کوشش کریں۔"
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "جانچ جاری ہے"
 msgid "Lists"
 msgstr "فہرستیں"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "لوڈ ہو رہا ہے…"
@@ -123,9 +144,21 @@ msgstr "دیکھ بھال"
 msgid "Major outage"
 msgstr "بڑی رکاوٹ"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "ہمیں پیغام بھیجیں"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "نگرانی جاری ہے"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "نہیں"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "کوئی مضمون نہیں ملا۔"
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "جزوی"
 msgid "Partial outage"
 msgstr "جزوی رکاوٹ"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "مقبول مضامین"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "تعریف"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "متعلقہ مضامین"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "حل ہو گیا"
 msgid "Scheduled"
 msgstr "طے شدہ"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "مدد تلاش کریں"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "رائے بھیجیں"
@@ -183,6 +228,10 @@ msgstr "بھیجا جا رہا ہے…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "سست"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "کیا ابھی بھی مسئلہ ہے؟"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "ہمیں مزید بتائیں"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "آپ کی رائے کا شکریہ"
 
@@ -229,9 +279,17 @@ msgstr "اتفاق کرنے کے لیے خانے پر نشان لگائیں۔"
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "بہت زیادہ کوششیں ہو گئیں۔ ذرا انتظار کریں اور دوبارہ کوشش کریں۔"
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "دوبارہ کوشش کریں"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "رائے دیکھیں"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "کیا یہ مفید تھا؟"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "آپ کے لیے اسے کیا بہتر بنائے گا؟"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "آپ کے ذہن میں کیا ہے؟"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "ہاں"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

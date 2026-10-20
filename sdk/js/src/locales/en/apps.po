@@ -19,9 +19,25 @@ msgstr "All systems operational"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Almost done. Check your inbox and confirm your subscription."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Ask the team, we read every message."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Attach files"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Back"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Best matches"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Browse"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Completed"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Components"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Could not load this. Try again."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Investigating"
 msgid "Lists"
 msgstr "Lists"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Loading…"
@@ -123,9 +144,21 @@ msgstr "Maintenance"
 msgid "Major outage"
 msgstr "Major outage"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Message us"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Monitoring"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "No"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "No articles found."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Partial"
 msgid "Partial outage"
 msgstr "Partial outage"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Popular articles"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Praise"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Related articles"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Resolved"
 msgid "Scheduled"
 msgstr "Scheduled"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Search for help"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Send feedback"
@@ -183,6 +228,10 @@ msgstr "Sending…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Slow"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Still stuck?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Tell us more"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Thanks for your feedback"
 
@@ -229,9 +279,17 @@ msgstr "Tick the box to agree."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Too many attempts. Wait a moment and try again."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Try again"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "View feedback"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Was this helpful?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "What would make this better for you?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "What's on your mind?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Yes"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

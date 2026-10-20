@@ -19,9 +19,25 @@ msgstr "Minden rendszer működik"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Mindjárt kész. Nézze meg a postaládáját, és erősítse meg a feliratkozást."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Kérdezze a csapatot, minden üzenetet elolvasunk."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Fájlok csatolása"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Vissza"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Legjobb találatok"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Böngészés"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Befejezve"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Komponensek"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Nem sikerült betölteni. Próbálja újra."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Vizsgálat alatt"
 msgid "Lists"
 msgstr "Listák"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Betöltés…"
@@ -123,9 +144,21 @@ msgstr "Karbantartás"
 msgid "Major outage"
 msgstr "Nagy kiesés"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Írjon nekünk"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Megfigyelés alatt"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Nem"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Nem található cikk."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Részleges"
 msgid "Partial outage"
 msgstr "Részleges kiesés"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Népszerű cikkek"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Dicséret"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Kapcsolódó cikkek"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Megoldva"
 msgid "Scheduled"
 msgstr "Ütemezve"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Súgó keresése"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Visszajelzés küldése"
@@ -183,6 +228,10 @@ msgstr "Küldés…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Lassú"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Még mindig elakadt?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Mesélj többet"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Köszönjük a visszajelzését"
 
@@ -229,9 +279,17 @@ msgstr "A beleegyezéshez jelölje be a négyzetet."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Túl sok próbálkozás. Várjon egy pillanatot, és próbálja újra."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Próbálja újra"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Visszajelzés megtekintése"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Hasznos volt?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Mitől lenne jobb Önnek?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Mi jár a fejében?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Igen"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

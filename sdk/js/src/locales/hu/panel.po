@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Jó"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Útmutatók és válaszok"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Súgóközpont"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Miben segíthetünk?"
 
@@ -250,6 +258,10 @@ msgstr "Mentés"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Ütemezve"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Súgó keresése"
 
 #: src/panel/chat.ts
 msgid "Seen"

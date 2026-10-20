@@ -19,9 +19,25 @@ msgstr "Mọi hệ thống đang hoạt động"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Sắp xong rồi. Hãy kiểm tra hộp thư đến và xác nhận đăng ký."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Hỏi nhóm của chúng tôi, chúng tôi đọc mọi tin nhắn."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Đính kèm tệp"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Quay lại"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Kết quả phù hợp nhất"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Duyệt"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Đã hoàn tất"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Thành phần"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Không thể tải. Hãy thử lại."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Đang điều tra"
 msgid "Lists"
 msgstr "Danh sách"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Đang tải…"
@@ -123,9 +144,21 @@ msgstr "Bảo trì"
 msgid "Major outage"
 msgstr "Sự cố nghiêm trọng"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Nhắn tin cho chúng tôi"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Đang theo dõi"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Không"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Không tìm thấy bài viết nào."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Một phần"
 msgid "Partial outage"
 msgstr "Sự cố một phần"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Bài viết phổ biến"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Lời khen"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Bài viết liên quan"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Đã giải quyết"
 msgid "Scheduled"
 msgstr "Đã lên lịch"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Tìm trợ giúp"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Gửi phản hồi"
@@ -183,6 +228,10 @@ msgstr "Đang gửi…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Chậm"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Vẫn chưa giải quyết được?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Cho chúng tôi biết thêm"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Cảm ơn phản hồi của bạn"
 
@@ -229,9 +279,17 @@ msgstr "Đánh dấu vào ô để đồng ý."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Quá nhiều lần thử. Hãy chờ một lát rồi thử lại."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Thử lại"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Xem phản hồi"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Bài viết này có hữu ích không?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Điều gì sẽ giúp nó tốt hơn cho bạn?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Bạn đang nghĩ gì?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Có"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

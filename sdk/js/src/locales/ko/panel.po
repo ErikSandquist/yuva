@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "좋음"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "가이드와 답변"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "도움말 센터"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "무엇을 도와드릴까요?"
 
@@ -250,6 +258,10 @@ msgstr "저장"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "예정됨"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "도움말 검색"
 
 #: src/panel/chat.ts
 msgid "Seen"

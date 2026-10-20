@@ -19,9 +19,25 @@ msgstr "כל המערכות פועלות"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "כמעט סיימנו. בדקו את תיבת הדואר ואשרו את ההרשמה."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "שאלו את הצוות, אנחנו קוראים כל הודעה."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "צירוף קבצים"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "חזרה"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "התוצאות הטובות ביותר"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "עיון"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "הושלם"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "רכיבים"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "לא ניתן לטעון. נסו שוב."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "בבדיקה"
 msgid "Lists"
 msgstr "רשימות"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "טוען…"
@@ -123,9 +144,21 @@ msgstr "תחזוקה"
 msgid "Major outage"
 msgstr "השבתה רחבה"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "שלחו לנו הודעה"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "במעקב"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "לא"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "לא נמצאו מאמרים."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "חלקי"
 msgid "Partial outage"
 msgstr "השבתה חלקית"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "מאמרים פופולריים"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "מחמאה"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "מאמרים קשורים"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "נפתר"
 msgid "Scheduled"
 msgstr "מתוזמן"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "חיפוש עזרה"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "שליחת משוב"
@@ -183,6 +228,10 @@ msgstr "שולח…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "איטי"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "עדיין תקועים?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "ספרו לנו עוד"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "תודה על המשוב"
 
@@ -229,9 +279,17 @@ msgstr "סמנו את התיבה כדי להסכים."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "יותר מדי ניסיונות. המתינו רגע ונסו שוב."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "נסו שוב"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "הצגת המשוב"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "האם זה עזר?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "מה היה משפר את זה עבורכם?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "מה על הלב?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "כן"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

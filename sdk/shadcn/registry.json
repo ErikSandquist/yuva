@@ -292,6 +292,86 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "use-yuva-help",
+      "type": "registry:hook",
+      "title": "Yuva help hooks",
+      "description": "React hooks over the useyuva headless client for the inbox's help center: the center with its collections and the best matches for the page, debounced article search that counts a submitted search, and one article with its Yes and No rating. Labels with English defaults.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/hooks/use-yuva-help.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/yuva/lib/yuva-help-utils.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "yuva-help-search",
+      "type": "registry:component",
+      "title": "Yuva help search",
+      "description": "A search field over the help center with live results: the matched words highlighted in the title and excerpt, and the click counted for the report.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "input",
+        "https://useyuva.com/r/use-yuva-help.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-help-search.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-help-article",
+      "type": "registry:component",
+      "title": "Yuva help article",
+      "description": "One help article with its sanitized body, a Was this helpful? Yes and No rating, related articles and a Message us button that hands the article id to your chat.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "skeleton",
+        "https://useyuva.com/r/use-yuva-help.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-help-article.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-help",
+      "type": "registry:block",
+      "title": "Yuva help",
+      "description": "The help center in one block: search, the best matches for the page or the popular articles, collections, the article view with its rating and related articles, and a Message us row.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "skeleton",
+        "https://useyuva.com/r/use-yuva-help.json",
+        "https://useyuva.com/r/yuva-help-search.json",
+        "https://useyuva.com/r/yuva-help-article.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-help.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

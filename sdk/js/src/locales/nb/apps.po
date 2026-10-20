@@ -19,9 +19,25 @@ msgstr "Alle systemer fungerer"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Nesten ferdig. Sjekk innboksen og bekreft abonnementet."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Spør teamet, vi leser alle meldinger."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Legg ved filer"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Tilbake"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Beste treff"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Bla gjennom"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Fullført"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Komponenter"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Kunne ikke lastes. Prøv igjen."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Undersøker"
 msgid "Lists"
 msgstr "Lister"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Laster…"
@@ -123,9 +144,21 @@ msgstr "Vedlikehold"
 msgid "Major outage"
 msgstr "Stort avbrudd"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Send oss en melding"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Overvåker"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Nei"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Ingen artikler funnet."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Delvis"
 msgid "Partial outage"
 msgstr "Delvis avbrudd"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Populære artikler"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Ros"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Relaterte artikler"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Løst"
 msgid "Scheduled"
 msgstr "Planlagt"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Søk etter hjelp"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Send tilbakemelding"
@@ -183,6 +228,10 @@ msgstr "Sender…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Treg"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Trenger du mer hjelp?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Fortell oss mer"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Takk for tilbakemeldingen"
 
@@ -229,9 +279,17 @@ msgstr "Kryss av i ruten for å godta."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "For mange forsøk. Vent litt og prøv igjen."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Prøv igjen"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Se tilbakemelding"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Var dette nyttig?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Hva ville gjort det bedre for deg?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Hva har du på hjertet?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Ja"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

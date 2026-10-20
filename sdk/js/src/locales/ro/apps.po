@@ -19,9 +19,25 @@ msgstr "Toate sistemele funcționează"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Aproape gata. Verifică-ți inboxul și confirmă abonarea."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Întreabă echipa, citim fiecare mesaj."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Atașează fișiere"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Înapoi"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Cele mai bune potriviri"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Răsfoiește"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Finalizat"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Componente"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Nu s-a putut încărca. Încearcă din nou."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "În investigare"
 msgid "Lists"
 msgstr "Liste"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Se încarcă…"
@@ -123,9 +144,21 @@ msgstr "Mentenanță"
 msgid "Major outage"
 msgstr "Întrerupere majoră"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Scrie-ne"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "În monitorizare"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Nu"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Nu s-a găsit niciun articol."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Parțial"
 msgid "Partial outage"
 msgstr "Întrerupere parțială"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Articole populare"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Apreciere"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Articole conexe"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Rezolvat"
 msgid "Scheduled"
 msgstr "Programat"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Caută ajutor"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Trimite feedback"
@@ -183,6 +228,10 @@ msgstr "Se trimite…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Lent"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Încă ai probleme?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Spune-ne mai multe"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Mulțumim pentru feedback"
 
@@ -229,9 +279,17 @@ msgstr "Bifează căsuța pentru a fi de acord."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Prea multe încercări. Așteaptă puțin și încearcă din nou."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Încearcă din nou"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Vezi feedbackul"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "A fost de ajutor?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Ce ar îmbunătăți pentru tine?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Ce ai în minte?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Da"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

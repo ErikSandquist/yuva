@@ -1,7 +1,8 @@
-import { StrictMode, type ReactNode } from "react"
+import { StrictMode, useRef, useState, type ReactNode } from "react"
 import { createRoot } from "react-dom/client"
 import { YuvaChat } from "@/components/yuva-chat"
 import { YuvaDiscussions } from "@/components/yuva-discussions"
+import { YuvaHelp } from "@/components/yuva-help"
 import "./index.css"
 
 const server = import.meta.env.VITE_YUVA_SERVER
@@ -30,15 +31,35 @@ function Section({ index, title, children }: { index: string; title: string; chi
   )
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+function App() {
+  const [asked, setAsked] = useState<string | undefined>()
+  const chat = useRef<HTMLDivElement>(null)
+  return (
     <main className="frame">
-      <Section index="01" title="Chat">
-        <YuvaChat server={server} channel={channel} variant="lined" />
+      <div ref={chat}>
+        <Section index="01" title="Chat">
+          <YuvaChat server={server} channel={channel} variant="lined" helpArticleId={asked} />
+        </Section>
+      </div>
+      <Section index="02" title="Help">
+        <YuvaHelp
+          server={server}
+          channel={channel}
+          onAsk={(articleId) => {
+            setAsked(articleId)
+            chat.current?.scrollIntoView({ behavior: "smooth" })
+          }}
+        />
       </Section>
-      <Section index="02" title="Discussions">
+      <Section index="03" title="Discussions">
         <YuvaDiscussions server={server} channel={channel} />
       </Section>
     </main>
+  )
+}
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
   </StrictMode>
 )

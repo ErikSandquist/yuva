@@ -17,6 +17,7 @@ export interface YuvaChatProps {
   channel?: string
   client?: YuvaClient
   identityToken?: IdentityTokenSource | null
+  helpArticleId?: string
   labels?: Partial<YuvaChatLabels>
   locale?: string
   confirmation?: React.ReactNode
@@ -52,6 +53,7 @@ export function YuvaChat({
   channel,
   client,
   identityToken,
+  helpArticleId,
   labels: custom,
   locale,
   confirmation,
@@ -61,7 +63,7 @@ export function YuvaChat({
 }: YuvaChatProps) {
   const lined = variant === "lined"
   const labels = React.useMemo(() => ({ ...defaultYuvaChatLabels, ...custom }), [custom])
-  const chat = useYuvaChat({ server, channel, client, identityToken })
+  const chat = useYuvaChat({ server, channel, client, identityToken, helpArticleId })
   const [view, setView] = React.useState<"list" | "thread">("thread")
   const decided = React.useRef(false)
   const { loading, conversations, open } = chat

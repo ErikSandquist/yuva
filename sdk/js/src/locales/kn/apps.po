@@ -19,9 +19,25 @@ msgstr "ಎಲ್ಲಾ ಸಿಸ್ಟಮ್‌ಗಳು ಕಾರ್ಯನಿ�
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "ಬಹುತೇಕ ಮುಗಿಯಿತು. ನಿಮ್ಮ ಇನ್‌ಬಾಕ್ಸ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಚಂದಾದಾರಿಕೆಯನ್ನು ಖಚಿತಪಡಿಸಿ."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "ತಂಡವನ್ನು ಕೇಳಿ, ನಾವು ಪ್ರತಿ ಸಂದೇಶವನ್ನೂ ಓದುತ್ತೇವೆ."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "ಫೈಲ್‌ಗಳನ್ನು ಲಗತ್ತಿಸಿ"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "ಹಿಂದೆ"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "ಉತ್ತಮ ಹೊಂದಾಣಿಕೆಗಳು"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "ಬ್ರೌಸ್ ಮಾಡಿ"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "ಪೂರ್ಣಗೊಂಡಿದೆ"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "ಘಟಕಗಳು"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ"
 msgid "Lists"
 msgstr "ಪಟ್ಟಿಗಳು"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "ಲೋಡ್ ಆಗುತ್ತಿದೆ…"
@@ -123,9 +144,21 @@ msgstr "ನಿರ್ವಹಣೆ"
 msgid "Major outage"
 msgstr "ದೊಡ್ಡ ಅಡಚಣೆ"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "ನಮಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "ನಿಗಾದಲ್ಲಿದೆ"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "ಇಲ್ಲ"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "ಯಾವುದೇ ಲೇಖನಗಳು ಕಂಡುಬಂದಿಲ್ಲ."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "ಭಾಗಶಃ"
 msgid "Partial outage"
 msgstr "ಭಾಗಶಃ ಅಡಚಣೆ"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "ಜನಪ್ರಿಯ ಲೇಖನಗಳು"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "ಪ್ರಶಂಸೆ"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "ಸಂಬಂಧಿತ ಲೇಖನಗಳು"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "ಪರಿಹರಿಸಲಾಗಿದೆ"
 msgid "Scheduled"
 msgstr "ನಿಗದಿಯಾಗಿದೆ"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "ಸಹಾಯಕ್ಕಾಗಿ ಹುಡುಕಿ"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ"
@@ -183,6 +228,10 @@ msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "ನಿಧಾನ"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "ಇನ್ನೂ ತೊಂದರೆಯೇ?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "ಇನ್ನಷ್ಟು ಹೇಳಿ"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಗೆ ಧನ್ಯವಾದಗಳು"
 
@@ -229,9 +279,17 @@ msgstr "ಒಪ್ಪಲು ಬಾಕ್ಸ್ ಟಿಕ್ ಮಾಡಿ."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "ತುಂಬಾ ಪ್ರಯತ್ನಗಳು. ಸ್ವಲ್ಪ ಕಾಯಿರಿ ಮತ್ತು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "ಪ್ರತಿಕ್ರಿಯೆ ನೋಡಿ"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "ಇದು ಸಹಾಯಕವಾಗಿತ್ತೇ?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "ಯಾವುದು ಇದನ್ನು ನಿಮಗೆ ಉತ್ತಮಗ
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "ನಿಮ್ಮ ಮನಸ್ಸಿನಲ್ಲಿ ಏನಿದೆ?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "ಹೌದು"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

@@ -19,9 +19,25 @@ msgstr "Všechny systémy fungují"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Skoro hotovo. Zkontrolujte doručenou poštu a potvrďte odběr."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Zeptejte se týmu, čteme každou zprávu."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Přiložit soubory"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Zpět"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Nejlepší shody"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Procházet"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Dokončeno"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Součásti"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Nepodařilo se načíst. Zkuste to znovu."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Zkoumáme"
 msgid "Lists"
 msgstr "Seznamy"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Načítání…"
@@ -123,9 +144,21 @@ msgstr "Údržba"
 msgid "Major outage"
 msgstr "Velký výpadek"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Napište nám"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Sledujeme"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Ne"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Nenalezeny žádné články."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Částečně"
 msgid "Partial outage"
 msgstr "Částečný výpadek"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Oblíbené články"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Pochvala"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Související články"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Vyřešeno"
 msgid "Scheduled"
 msgstr "Naplánováno"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Hledat v nápovědě"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Odeslat zpětnou vazbu"
@@ -183,6 +228,10 @@ msgstr "Odesílání…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Pomalé"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Stále si nevíte rady?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Řekněte nám víc"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Děkujeme za zpětnou vazbu"
 
@@ -229,9 +279,17 @@ msgstr "Zaškrtnutím souhlasíte."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Příliš mnoho pokusů. Chvíli počkejte a zkuste to znovu."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Zkusit znovu"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Zobrazit zpětnou vazbu"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Pomohlo vám to?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Co by to pro vás zlepšilo?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Co vás trápí?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Ano"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

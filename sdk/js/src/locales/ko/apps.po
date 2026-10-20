@@ -19,9 +19,25 @@ msgstr "모든 시스템 정상"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "거의 끝났습니다. 받은편지함을 확인하고 구독을 확정해 주세요."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "팀에 문의하세요. 모든 메시지를 읽고 있습니다."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "파일 첨부"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "뒤로"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "가장 일치하는 항목"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "둘러보기"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "완료"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "구성 요소"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "불러오지 못했습니다. 다시 시도하세요."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "조사 중"
 msgid "Lists"
 msgstr "목록"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "불러오는 중…"
@@ -123,9 +144,21 @@ msgstr "점검"
 msgid "Major outage"
 msgstr "대규모 장애"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "메시지 보내기"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "모니터링 중"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "아니요"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "문서를 찾을 수 없습니다."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "일부"
 msgid "Partial outage"
 msgstr "부분 장애"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "인기 문서"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "칭찬"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "관련 문서"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "해결됨"
 msgid "Scheduled"
 msgstr "예정됨"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "도움말 검색"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "피드백 보내기"
@@ -183,6 +228,10 @@ msgstr "보내는 중…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "느림"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "아직 해결되지 않았나요?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "자세히 알려 주세요"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "의견 감사합니다"
 
@@ -229,9 +279,17 @@ msgstr "동의하려면 체크박스를 선택해 주세요."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "시도 횟수가 너무 많습니다. 잠시 기다린 후 다시 시도해 주세요."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "다시 시도"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "피드백 보기"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "도움이 되었나요?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "어떻게 하면 더 좋아질까요?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "어떤 생각을 하고 계신가요?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "예"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

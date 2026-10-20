@@ -19,9 +19,25 @@ msgstr "ทุกระบบทำงานปกติ"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "เกือบเสร็จแล้ว ตรวจสอบกล่องจดหมายและยืนยันการสมัครรับ"
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "ถามทีมงานได้เลย เราอ่านทุกข้อความ"
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "แนบไฟล์"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "กลับ"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "ผลลัพธ์ที่ตรงที่สุด"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "เรียกดู"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "เสร็จสิ้น"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "ส่วนประกอบ"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "โหลดไม่สำเร็จ ลองอีกครั้ง"
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "กำลังตรวจสอบ"
 msgid "Lists"
 msgstr "รายการ"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "กำลังโหลด…"
@@ -123,9 +144,21 @@ msgstr "การบำรุงรักษา"
 msgid "Major outage"
 msgstr "ระบบขัดข้องรุนแรง"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "ส่งข้อความถึงเรา"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "กำลังเฝ้าติดตาม"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "ไม่"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "ไม่พบบทความ"
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "บางส่วน"
 msgid "Partial outage"
 msgstr "ขัดข้องบางส่วน"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "บทความยอดนิยม"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "คำชม"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "บทความที่เกี่ยวข้อง"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "แก้ไขแล้ว"
 msgid "Scheduled"
 msgstr "กำหนดไว้"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "ค้นหาความช่วยเหลือ"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "ส่งความคิดเห็น"
@@ -183,6 +228,10 @@ msgstr "กำลังส่ง…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "ช้า"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "ยังติดปัญหาอยู่ใช่ไหม"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "บอกเราเพิ่มเติม"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
 
@@ -229,9 +279,17 @@ msgstr "ทำเครื่องหมายในช่องเพื่อ
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "ลองหลายครั้งเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง"
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "ดูความคิดเห็น"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "บทความนี้มีประโยชน์ไหม"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "อะไรจะทำให้ดีขึ้นสำหรับค
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "คุณกำลังคิดอะไรอยู่"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "ใช่"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

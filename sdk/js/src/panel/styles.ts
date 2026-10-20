@@ -92,6 +92,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .page > .fill { flex: 1; }
 .center { flex: 1; display: grid; place-content: center; gap: 6px; padding: 24px 32px; text-align: center; }
 .empty { margin: 0; font-weight: 600; }
+.search { display: flex; align-items: center; gap: 10px; min-block-size: 44px; padding: 0 14px; border: 1px solid var(--yuva-strong); border-radius: 10px; background: var(--yuva-deep); color: var(--yuva-faint); }
+.search:focus-within { border-color: var(--yuva-brand); }
+.search svg { flex: none; }
+.search input { flex: 1; min-inline-size: 0; border: 0; outline: 0; background: transparent; font: inherit; color: var(--yuva-fg); }
+.article-card { display: flex; align-items: center; gap: 10px; max-inline-size: 88%; padding: 10px 12px; border: 1px solid var(--yuva-border); border-radius: 12px; background: var(--yuva-bg); color: var(--yuva-fg); text-decoration: none; }
+.article-card:hover { background: var(--yuva-deep); }
+.article-card > svg:first-child { flex: none; color: var(--yuva-brand); }
+.article-card > svg:last-child { flex: none; color: var(--yuva-faint); }
+.article-card-text { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; gap: 2px; }
+.article-card-text b { font-weight: 500; }
+.article-card-text span { font-size: 12px; color: var(--yuva-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hint { margin: 0; color: var(--yuva-muted); font-size: 14px; }
 .hint.resolved { text-align: center; }
 .hero { padding-block: 28px 24px; gap: 14px; }

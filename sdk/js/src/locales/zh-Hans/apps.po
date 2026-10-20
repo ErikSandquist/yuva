@@ -19,9 +19,25 @@ msgstr "所有系统运行正常"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "快完成了。请查看收件箱并确认订阅。"
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "向团队提问，我们会阅读每一条消息。"
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "添加附件"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "返回"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "最佳匹配"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "浏览"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "已完成"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "组件"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "无法加载，请重试。"
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "正在调查"
 msgid "Lists"
 msgstr "列表"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "加载中…"
@@ -123,9 +144,21 @@ msgstr "维护"
 msgid "Major outage"
 msgstr "严重故障"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "给我们留言"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "监控中"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "否"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "未找到文章。"
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "部分"
 msgid "Partial outage"
 msgstr "部分故障"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "热门文章"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "表扬"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "相关文章"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "已解决"
 msgid "Scheduled"
 msgstr "已计划"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "搜索帮助"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "发送反馈"
@@ -183,6 +228,10 @@ msgstr "正在发送…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "缓慢"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "还是没解决？"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "告诉我们更多"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "感谢您的反馈"
 
@@ -229,9 +279,17 @@ msgstr "请勾选复选框表示同意。"
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "尝试次数过多。请稍等片刻后重试。"
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "重试"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "查看反馈"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "这对您有帮助吗？"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "怎样会对你更好？"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "你在想什么？"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "是"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

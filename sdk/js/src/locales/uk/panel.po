@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Добре"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Посібники та відповіді"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Довідковий центр"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Чим ми можемо допомогти?"
 
@@ -250,6 +258,10 @@ msgstr "Зберегти"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Заплановано"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Пошук у довідці"
 
 #: src/panel/chat.ts
 msgid "Seen"

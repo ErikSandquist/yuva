@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "Dobré"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "Návody a odpovede"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "Centrum pomoci"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "Ako vám môžeme pomôcť?"
 
@@ -250,6 +258,10 @@ msgstr "Uložiť"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "Naplánované"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "Hľadať v pomocníkovi"
 
 #: src/panel/chat.ts
 msgid "Seen"

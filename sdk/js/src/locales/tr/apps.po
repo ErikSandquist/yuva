@@ -19,9 +19,25 @@ msgstr "Tüm sistemler çalışıyor"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Neredeyse bitti. Gelen kutunuza bakın ve aboneliğinizi onaylayın."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Ekibe sorun, her mesajı okuyoruz."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Dosya ekle"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Geri"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "En iyi eşleşmeler"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Göz at"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Tamamlandı"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Bileşenler"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Yüklenemedi. Tekrar deneyin."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "İnceleniyor"
 msgid "Lists"
 msgstr "Listeler"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Yükleniyor…"
@@ -123,9 +144,21 @@ msgstr "Bakım"
 msgid "Major outage"
 msgstr "Büyük kesinti"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Bize yazın"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "İzleniyor"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Hayır"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Makale bulunamadı."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Kısmi"
 msgid "Partial outage"
 msgstr "Kısmi kesinti"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Popüler makaleler"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Övgü"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "İlgili makaleler"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Çözüldü"
 msgid "Scheduled"
 msgstr "Planlandı"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Yardım ara"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Geri bildirim gönder"
@@ -183,6 +228,10 @@ msgstr "Gönderiliyor…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Yavaş"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Hâlâ çözemediniz mi?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Daha fazlasını anlatın"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Geri bildiriminiz için teşekkürler"
 
@@ -229,9 +279,17 @@ msgstr "Onaylamak için kutuyu işaretleyin."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Çok fazla deneme. Biraz bekleyip tekrar deneyin."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Tekrar dene"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Geri bildirimi görüntüle"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Bu yararlı oldu mu?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Sizin için neyi daha iyi yapabiliriz?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Aklınızda ne var?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Evet"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

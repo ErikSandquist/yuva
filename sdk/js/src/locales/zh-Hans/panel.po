@@ -139,6 +139,14 @@ msgid "Good"
 msgstr "好"
 
 #: src/panel/home.ts
+msgid "Guides and answers"
+msgstr "指南与解答"
+
+#: src/panel/home.ts
+msgid "Help center"
+msgstr "帮助中心"
+
+#: src/panel/home.ts
 msgid "How can we help?"
 msgstr "有什么可以帮你？"
 
@@ -250,6 +258,10 @@ msgstr "保存"
 #: src/panel/chat.ts
 msgid "Scheduled"
 msgstr "已计划"
+
+#: src/panel/home.ts
+msgid "Search for help"
+msgstr "搜索帮助"
 
 #: src/panel/chat.ts
 msgid "Seen"

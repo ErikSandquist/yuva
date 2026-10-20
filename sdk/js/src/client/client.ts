@@ -15,6 +15,12 @@ import {
   type ClientConversationCreated,
   type ClientConversationPage,
   type ClientFeedbackCreate,
+  type ClientHelp,
+  type ClientHelpArticle,
+  type ClientHelpCollectionDetail,
+  type ClientHelpReaction,
+  type ClientHelpSearchClick,
+  type ClientHelpSearchResults,
   type ClientInbox,
   type ClientMessage,
   type ClientMessagePage,
@@ -83,6 +89,29 @@ export interface ConversationInput extends MessageInput {
   subject?: string
   page_url?: string | null
   page_title?: string
+  help_article_id?: string
+}
+
+export interface HelpOptions {
+  locale?: string
+}
+
+export interface HelpGetOptions extends HelpOptions {
+  page?: string
+}
+
+export interface HelpSearchOptions extends HelpOptions {
+  limit?: number
+  final?: boolean
+}
+
+export interface Help {
+  get(options?: HelpGetOptions): Promise<ClientHelp>
+  search(q: string, options?: HelpSearchOptions): Promise<ClientHelpSearchResults>
+  collection(id: string, options?: HelpOptions): Promise<ClientHelpCollectionDetail>
+  article(id: string, options?: HelpOptions): Promise<ClientHelpArticle>
+  react(articleId: string, input: ClientHelpReaction): Promise<void>
+  click(input: ClientHelpSearchClick): Promise<void>
 }
 
 export interface Page {
@@ -138,7 +167,7 @@ function defaultStorage(): YuvaStorage {
   return { getItem: (key) => memory.get(key) ?? null, setItem: (key, value) => void memory.set(key, value) }
 }
 
-function query(params: Record<string, string | number | undefined>): string {
+function query(params: Record<string, string | number | boolean | undefined>): string {
   const search = new URLSearchParams()
   for (const [name, value] of Object.entries(params)) if (value !== undefined) search.set(name, String(value))
   const text = search.toString()
@@ -182,6 +211,16 @@ export class YuvaClient {
   #realtime: Realtime | null = null
   #reader: ReaderSession | null | undefined
   #handlers = new Map<keyof YuvaClientEvents, Set<(value: never) => void>>()
+
+  readonly help: Help = {
+    get: (options = {}) => this.#helpCall(`${query({ ...options })}`),
+    search: (q, options = {}) => this.#helpCall(`/search${query({ q, ...options })}`),
+    collection: (id, options = {}) => this.#helpCall(`/collections/${encodeURIComponent(id)}${query({ ...options })}`),
+    article: (id, options = {}) => this.#helpCall(`/articles/${encodeURIComponent(id)}${query({ ...options })}`),
+    react: (articleId, input) =>
+      this.#helpCall(`/articles/${encodeURIComponent(articleId)}/reactions`, { method: "POST", json: input }),
+    click: (input) => this.#helpCall("/searches/click", { method: "POST", json: input }),
+  }
 
   constructor(options: YuvaClientOptions) {
     this.server = options.server.replace(/\/+$/, "")
@@ -524,6 +563,10 @@ export class YuvaClient {
     return this.#call<T>(path, request)
   }
 
+  #helpCall<T>(path: string, request?: Request): Promise<T> {
+    return this.#call<T>(`/client/v1/channels/${encodeURIComponent(this.channel)}/help${path}`, request)
+  }
+
   #idempotency(client_id: string): Record<string, string> {
     return this.#idempotencyKeys && /^[\x20-\x7e]{1,255}$/.test(client_id) ? { "Idempotency-Key": client_id } : {}
   }
@@ -532,13 +575,16 @@ export class YuvaClient {
     const headers = this.#idempotency(client_id)
     const page_url = page.page_url ?? undefined
     const page_title = page_url ? page.page_title : undefined
-    if (files.length === 0) return { method: "POST", headers, json: { body, subject, client_id, page_url, page_title } }
+    const help_article_id = page.help_article_id
+    if (files.length === 0)
+      return { method: "POST", headers, json: { body, subject, client_id, page_url, page_title, help_article_id } }
     const fields: [string, string][] = []
     if (subject) fields.push(["subject", subject])
     if (body) fields.push(["body", body])
     fields.push(["client_id", client_id])
     if (page_url) fields.push(["page_url", page_url])
     if (page_title) fields.push(["page_title", page_title])
+    if (help_article_id) fields.push(["help_article_id", help_article_id])
     const boundary = `yuva-${client_id.replace(/[^\w-]/g, "").slice(0, 60)}-${client_id.length}`
     headers["Content-Type"] = `multipart/form-data; boundary=${boundary}`
     return { method: "POST", headers, body: multipart(fields, files, boundary) }

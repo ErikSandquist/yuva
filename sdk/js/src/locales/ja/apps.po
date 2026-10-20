@@ -19,9 +19,25 @@ msgstr "すべてのシステムが稼働中"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "もう少しです。受信トレイを確認して、登録を確定してください。"
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "チームに質問してください。すべてのメッセージに目を通しています。"
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "ファイルを添付"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "戻る"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "最も一致する記事"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "探す"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "完了"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "コンポーネント"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "読み込めませんでした。もう一度お試しください。"
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "調査中"
 msgid "Lists"
 msgstr "リスト"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "読み込み中…"
@@ -123,9 +144,21 @@ msgstr "メンテナンス"
 msgid "Major outage"
 msgstr "大規模な障害"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "メッセージを送る"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "監視中"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "いいえ"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "記事が見つかりませんでした。"
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "一部"
 msgid "Partial outage"
 msgstr "部分的な障害"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "人気の記事"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "お褒めの言葉"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "関連記事"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "解決済み"
 msgid "Scheduled"
 msgstr "予定"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "ヘルプを検索"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "フィードバックを送信"
@@ -183,6 +228,10 @@ msgstr "送信中…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "低速"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "まだ解決しませんか？"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "詳しく教えてください"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "フィードバックありがとうございます"
 
@@ -229,9 +279,17 @@ msgstr "同意するにはチェックボックスをオンにしてください
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。"
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "再試行"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "フィードバックを見る"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "この記事は役に立ちましたか？"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "どうなればより良くなりますか?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "どのようなことでしょうか?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "はい"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

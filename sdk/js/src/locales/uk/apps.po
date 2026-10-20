@@ -19,9 +19,25 @@ msgstr "Усі системи працюють"
 msgid "Almost done. Check your inbox and confirm your subscription."
 msgstr "Майже готово. Перевірте пошту й підтвердьте підписку."
 
+#: src/apps/help.ts
+msgid "Ask the team, we read every message."
+msgstr "Запитайте команду, ми читаємо кожне повідомлення."
+
 #: src/apps/feedback.ts
 msgid "Attach files"
 msgstr "Прикріпити файли"
+
+#: src/apps/help.ts
+msgid "Back"
+msgstr "Назад"
+
+#: src/apps/help.ts
+msgid "Best matches"
+msgstr "Найкращі збіги"
+
+#: src/apps/help.ts
+msgid "Browse"
+msgstr "Огляд"
 
 #: src/apps/feedback.ts
 msgid "Bug"
@@ -38,6 +54,10 @@ msgstr "Завершено"
 #: src/apps/status.ts
 msgid "Components"
 msgstr "Компоненти"
+
+#: src/apps/help.ts
+msgid "Could not load this. Try again."
+msgstr "Не вдалося завантажити. Спробуйте ще раз."
 
 #: src/apps/feedback.ts
 msgid "Could not send. Try again."
@@ -111,6 +131,7 @@ msgstr "Досліджуємо"
 msgid "Lists"
 msgstr "Списки"
 
+#: src/apps/help.ts
 #: src/apps/subscribe.ts
 msgid "Loading…"
 msgstr "Завантаження…"
@@ -123,9 +144,21 @@ msgstr "Обслуговування"
 msgid "Major outage"
 msgstr "Серйозний збій"
 
+#: src/apps/help.ts
+msgid "Message us"
+msgstr "Написати нам"
+
 #: src/apps/status.ts
 msgid "Monitoring"
 msgstr "Спостерігаємо"
+
+#: src/apps/help.ts
+msgid "No"
+msgstr "Ні"
+
+#: src/apps/help.ts
+msgid "No articles found."
+msgstr "Статей не знайдено."
 
 #: src/apps/status.ts
 msgid "No open incidents."
@@ -155,9 +188,17 @@ msgstr "Частково"
 msgid "Partial outage"
 msgstr "Частковий збій"
 
+#: src/apps/help.ts
+msgid "Popular articles"
+msgstr "Популярні статті"
+
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Похвала"
+
+#: src/apps/help.ts
+msgid "Related articles"
+msgstr "Схожі статті"
 
 #. placeholder {0}: file.name
 #: src/apps/feedback.ts
@@ -172,6 +213,10 @@ msgstr "Вирішено"
 msgid "Scheduled"
 msgstr "Заплановано"
 
+#: src/apps/help.ts
+msgid "Search for help"
+msgstr "Пошук у довідці"
+
 #: src/apps/feedback.ts
 msgid "Send feedback"
 msgstr "Надіслати відгук"
@@ -183,6 +228,10 @@ msgstr "Надсилання…"
 #: src/apps/status.ts
 msgid "Slow"
 msgstr "Повільно"
+
+#: src/apps/help.ts
+msgid "Still stuck?"
+msgstr "Лишилися питання?"
 
 #: src/apps/subscribe.ts
 msgid "Subscribe"
@@ -201,6 +250,7 @@ msgid "Tell us more"
 msgstr "Розкажіть більше"
 
 #: src/apps/feedback.ts
+#: src/apps/help.ts
 msgid "Thanks for your feedback"
 msgstr "Дякуємо за відгук"
 
@@ -229,9 +279,17 @@ msgstr "Поставте позначку, щоб погодитися."
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Забагато спроб. Зачекайте трохи й спробуйте ще раз."
 
+#: src/apps/help.ts
+msgid "Try again"
+msgstr "Повторити"
+
 #: src/apps/feedback.ts
 msgid "View feedback"
 msgstr "Переглянути відгук"
+
+#: src/apps/help.ts
+msgid "Was this helpful?"
+msgstr "Це було корисно?"
 
 #: src/apps/feedback.ts
 msgid "What do you like?"
@@ -252,6 +310,10 @@ msgstr "Що зробило б це кращим для вас?"
 #: src/apps/feedback.ts
 msgid "What's on your mind?"
 msgstr "Що у вас на думці?"
+
+#: src/apps/help.ts
+msgid "Yes"
+msgstr "Так"
 
 #: src/apps/feedback.ts
 #: src/apps/subscribe.ts

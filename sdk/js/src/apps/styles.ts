@@ -45,4 +45,38 @@ export const styles = `
 .done-card svg { inline-size: 28px; block-size: 28px; color: var(--yuva-ok); }
 .done-card .rowbtns { inline-size: 100%; margin-block-start: 8px; }
 .note { margin: 0; font-size: 12px; color: var(--yuva-faint); }
+.hback { flex: none; padding: 6px 28px 0; }
+.hback .link { display: inline-flex; align-items: center; gap: 4px; }
+.hrows { display: flex; flex-direction: column; margin-block-end: -8px; }
+.hrow { display: flex; align-items: center; gap: 12px; min-block-size: 56px; padding: 8px 0; border: 0; border-block-end: 1px solid var(--yuva-border); background: transparent; color: inherit; text-align: start; cursor: pointer; }
+.hrow:last-child { border-block-end: 0; }
+.hrow-text { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; gap: 2px; }
+.hrow-text b { font-weight: 500; }
+.hrow-text span { font-size: 12px; color: var(--yuva-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hrow > svg { flex: none; color: var(--yuva-faint); }
+.hrow mark, .hrow-text mark { background: var(--yuva-wash); color: inherit; border-radius: 2px; }
+.hrow:hover .hrow-text b { text-decoration: underline; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; min-block-size: 36px; padding: 0 12px; border: 1px solid var(--yuva-strong); border-radius: 999px; background: transparent; color: inherit; cursor: pointer; }
+.pill:hover { background: var(--yuva-deep); }
+.pill span { font-family: var(--yuva-mono); font-size: 11px; color: var(--yuva-faint); }
+.ask { display: flex; align-items: center; gap: 12px; }
+.ask-text { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; }
+.ask-text b { font-weight: 500; }
+.ask-text span { font-size: 12px; color: var(--yuva-muted); }
+.article-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.prose { overflow-wrap: anywhere; line-height: 1.55; }
+.prose > :first-child { margin-block-start: 0; }
+.prose > :last-child { margin-block-end: 0; }
+.prose h1, .prose h2, .prose h3, .prose h4 { margin: 20px 0 8px; font-size: 16px; line-height: 1.3; font-weight: 600; }
+.prose p, .prose ul, .prose ol, .prose pre, .prose blockquote, .prose table { margin: 0 0 12px; }
+.prose ul, .prose ol { padding-inline-start: 20px; }
+.prose a { color: var(--yuva-brand); }
+.prose img { max-inline-size: 100%; block-size: auto; border-radius: 8px; }
+.prose code { font-family: var(--yuva-mono); font-size: 13px; padding: 1px 4px; border-radius: 4px; background: var(--yuva-deep); }
+.prose pre { padding: 10px; border-radius: 8px; background: var(--yuva-deep); overflow-x: auto; }
+.prose pre code { padding: 0; background: none; }
+.prose blockquote { padding-inline-start: 12px; border-inline-start: 2px solid var(--yuva-strong); color: var(--yuva-muted); }
+.prose table { display: block; overflow-x: auto; border-collapse: collapse; }
+.prose th, .prose td { padding: 4px 8px; border: 1px solid var(--yuva-border); text-align: start; }
 `
