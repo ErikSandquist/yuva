@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: el\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} στα 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Όλα τα συστήματα λειτουργούν"
@@ -71,6 +75,14 @@ msgstr "Ειδοποιήσεις για συμβάντα"
 msgid "Get updates by e-mail"
 msgstr "Λάβετε ενημερώσεις με email"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Εξαιρετικό"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Πώς σας φαίνεται"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "Θέλω να λαμβάνω email για {list} από {inbox}. Μπορώ να ακυρώσω τη συνδρομή μου οποιαδήποτε στιγμή."
@@ -118,6 +130,10 @@ msgstr "Παρακολούθηση"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Δεν υπάρχουν ανοιχτά συμβάντα."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Όχι καλό"
 
 #: src/apps/status.ts
 msgid "OK"

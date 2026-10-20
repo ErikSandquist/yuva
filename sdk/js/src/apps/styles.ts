@@ -5,6 +5,10 @@ export const styles = `
 .seg button { min-block-size: 44px; padding: 0 8px; border: 0; background: transparent; color: var(--yuva-muted); cursor: pointer; }
 .seg button + button { border-inline-start: 1px solid var(--yuva-strong); }
 .seg button[aria-pressed="true"] { background: var(--yuva-fg); color: var(--yuva-bg); }
+.scores { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.scores button { min-block-size: 48px; padding: 0; border: 1px solid var(--yuva-strong); border-radius: 10px; background: transparent; color: var(--yuva-muted); font-family: var(--yuva-mono); font-size: 15px; font-weight: 500; cursor: pointer; }
+.scores button[aria-pressed="true"] { background: var(--yuva-wash); border-color: var(--yuva-brand); color: var(--yuva-brand); }
+.ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--yuva-faint); }
 .attach { display: flex; align-items: center; gap: 4px; }
 .attach .chips { padding: 0; flex: 1; }
 .rowbtns { display: flex; gap: 8px; align-self: stretch; }

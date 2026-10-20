@@ -42,15 +42,6 @@ const incidentState = {
   completed: msg`Completed`,
 }
 
-function slugOf(url: string): string | null {
-  try {
-    const match = /^\/status\/([^/]+)\/?$/.exec(new URL(url).pathname)
-    return match?.[1] ? decodeURIComponent(match[1]) : null
-  } catch {
-    return null
-  }
-}
-
 interface Incident {
   id: string
   title: string
@@ -174,7 +165,7 @@ export function statusApp(context: AppContext, t: Translate, root: HTMLElement):
   }
 
   render()
-  const slug = status ? slugOf(status.url) : null
+  const slug = status?.slug
   if (slug)
     void call<PublicStatusPage>(fetcher, context.client.server, `/client/v1/status/${encodeURIComponent(slug)}`)
       .then((result) => {

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fi\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} / 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Kaikki järjestelmät toimivat"
@@ -71,6 +75,14 @@ msgstr "Tilaa ilmoitukset häiriöistä"
 msgid "Get updates by e-mail"
 msgstr "Tilaa päivitykset sähköpostitse"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Erinomainen"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Miten se toimii sinulle"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "Haluan saada sähköpostia aiheesta {list} lähettäjältä {inbox}. Voin perua tilauksen milloin tahansa."
@@ -118,6 +130,10 @@ msgstr "Seurannassa"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Ei avoimia häiriöitä."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Ei hyvä"
 
 #: src/apps/status.ts
 msgid "OK"

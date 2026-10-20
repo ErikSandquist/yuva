@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: th\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} จาก 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "ทุกระบบทำงานปกติ"
@@ -71,6 +75,14 @@ msgstr "รับการแจ้งเตือนเหตุขัดข้
 msgid "Get updates by e-mail"
 msgstr "รับข่าวสารอัปเดตทางอีเมล"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "ยอดเยี่ยม"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "ใช้งานแล้วเป็นอย่างไรบ้าง"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "ฉันต้องการรับอีเมลเกี่ยวกับ {list} จาก {inbox} และยกเลิกการสมัครรับได้ทุกเมื่อ"
@@ -118,6 +130,10 @@ msgstr "กำลังเฝ้าติดตาม"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "ไม่มีเหตุขัดข้องที่เปิดอยู่"
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "ไม่ดี"
 
 #: src/apps/status.ts
 msgid "OK"

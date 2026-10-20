@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-Hant\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} 分（滿分 5 分）"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "所有系統運作正常"
@@ -71,6 +75,14 @@ msgstr "接收事件通知"
 msgid "Get updates by e-mail"
 msgstr "透過電子郵件取得更新"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "很好"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "您用起來感覺如何"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "我願意接收來自 {inbox} 的有關 {list} 的電子郵件。我可以隨時取消訂閱。"
@@ -118,6 +130,10 @@ msgstr "監控中"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "目前沒有進行中的事件。"
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "不好"
 
 #: src/apps/status.ts
 msgid "OK"

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5 üzerinden {n}"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Tüm sistemler çalışıyor"
@@ -71,6 +75,14 @@ msgstr "Olaylardan haberdar olun"
 msgid "Get updates by e-mail"
 msgstr "E-postayla güncelleme alın"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Harika"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Bizimle deneyiminiz nasıl"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "{list} hakkında {inbox} tarafından gönderilen e-postaları almak istiyorum. Aboneliğimi istediğim zaman bırakabilirim."
@@ -118,6 +130,10 @@ msgstr "İzleniyor"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Açık olay yok."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Kötü"
 
 #: src/apps/status.ts
 msgid "OK"

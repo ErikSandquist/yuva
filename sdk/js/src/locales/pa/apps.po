@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: pa\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5 ਵਿੱਚੋਂ {n}"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "ਸਾਰੇ ਸਿਸਟਮ ਚੱਲ ਰਹੇ ਹਨ"
@@ -71,6 +75,14 @@ msgstr "ਘਟਨਾਵਾਂ ਦੀ ਸੂਚਨਾ ਪ੍ਰਾਪਤ ਕਰ�
 msgid "Get updates by e-mail"
 msgstr "ਈਮੇਲ ਰਾਹੀਂ ਅੱਪਡੇਟ ਪ੍ਰਾਪਤ ਕਰੋ"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "ਬਹੁਤ ਵਧੀਆ"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "ਇਹ ਤੁਹਾਡੇ ਲਈ ਕਿਵੇਂ ਕੰਮ ਕਰ ਰਿਹਾ ਹੈ"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "ਮੈਂ {inbox} ਤੋਂ {list} ਬਾਰੇ ਈਮੇਲਾਂ ਪ੍ਰਾਪਤ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ। ਮੈਂ ਕਿਸੇ ਵੀ ਸਮੇਂ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਰੱਦ ਕਰ ਸਕਦਾ ਹਾਂ।"
@@ -118,6 +130,10 @@ msgstr "ਨਿਗਰਾਨੀ ਜਾਰੀ ਹੈ"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "ਕੋਈ ਖੁੱਲ੍ਹੀ ਘਟਨਾ ਨਹੀਂ।"
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "ਚੰਗਾ ਨਹੀਂ"
 
 #: src/apps/status.ts
 msgid "OK"

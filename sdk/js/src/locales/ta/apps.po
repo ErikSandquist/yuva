@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ta\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5 இல் {n}"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "அனைத்து அமைப்புகளும் இயங்குகின்றன"
@@ -71,6 +75,14 @@ msgstr "சம்பவங்கள் பற்றிய அறிவிப்�
 msgid "Get updates by e-mail"
 msgstr "மின்னஞ்சலில் புதுப்பிப்புகளைப் பெறுங்கள்"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "அருமை"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "இது உங்களுக்கு எப்படி செயல்படுகிறது"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "{inbox} இடமிருந்து {list} பற்றிய மின்னஞ்சல்களைப் பெற விரும்புகிறேன். எப்போது வேண்டுமானாலும் சந்தாவை ரத்துசெய்யலாம்."
@@ -118,6 +130,10 @@ msgstr "கண்காணிக்கப்படுகிறது"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "திறந்த சம்பவங்கள் இல்லை."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "நன்றாக இல்லை"
 
 #: src/apps/status.ts
 msgid "OK"

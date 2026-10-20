@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ja\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5段階中{n}"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "すべてのシステムが稼働中"
@@ -71,6 +75,14 @@ msgstr "障害の通知を受け取る"
 msgid "Get updates by e-mail"
 msgstr "メールで最新情報を受け取る"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "とても良い"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "使い心地はいかがですか"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "{inbox}から{list}に関するメールを受け取ることに同意します。いつでも配信を停止できます。"
@@ -118,6 +130,10 @@ msgstr "監視中"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "対応中の障害はありません。"
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "良くない"
 
 #: src/apps/status.ts
 msgid "OK"

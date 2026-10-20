@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5점 중 {n}점"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "모든 시스템 정상"
@@ -71,6 +75,14 @@ msgstr "장애 알림 받기"
 msgid "Get updates by e-mail"
 msgstr "이메일로 업데이트 받기"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "훌륭함"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "사용해 보시니 어떠세요"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "{inbox}에서 보내는 {list} 관련 이메일을 받는 데 동의합니다. 언제든지 구독을 취소할 수 있습니다."
@@ -118,6 +130,10 @@ msgstr "모니터링 중"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "진행 중인 장애가 없습니다."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "좋지 않음"
 
 #: src/apps/status.ts
 msgid "OK"

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} з 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Усі системи працюють"
@@ -71,6 +75,14 @@ msgstr "Отримувати сповіщення про інциденти"
 msgid "Get updates by e-mail"
 msgstr "Отримувати новини на e-mail"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Чудово"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Як вам працюється"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "Я хочу отримувати листи про {list} від {inbox}. Я можу відписатися будь-коли."
@@ -118,6 +130,10 @@ msgstr "Спостерігаємо"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Відкритих інцидентів немає."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Погано"
 
 #: src/apps/status.ts
 msgid "OK"

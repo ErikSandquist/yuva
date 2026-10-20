@@ -33,6 +33,7 @@ function currentPage(): { page_url?: string; page_title?: string } {
 export function feedbackApp(context: AppContext, t: Translate, root: HTMLElement): () => void {
   const categories = context.inbox.feedback_categories
   let category = categories[0] ?? "other"
+  let score = 0
   let files: File[] = []
   let phase: "form" | "sending" | "sent" = "form"
   let error = ""
@@ -75,6 +76,7 @@ export function feedbackApp(context: AppContext, t: Translate, root: HTMLElement
       const result = await context.client.sendFeedback({
         category,
         body: body || undefined,
+        score: score || undefined,
         allow_email: false,
         files,
         ...currentPage(),
@@ -139,7 +141,24 @@ export function feedbackApp(context: AppContext, t: Translate, root: HTMLElement
     }
     kinds.append(group)
 
-    const more = section(`02 — ${t(msg`Tell us more`)}`)
+    const rate = section(`02 — ${t(msg`How is it working for you`)}`)
+    const scores = el("div", "scores")
+    scores.setAttribute("role", "group")
+    scores.setAttribute("aria-label", t(msg`How is it working for you`))
+    for (let n = 1; n <= 5; n++) {
+      const button = textButton(String(n), "", () => {
+        score = score === n ? 0 : n
+        render()
+      })
+      button.setAttribute("aria-label", t(msg`${n} out of 5`))
+      button.setAttribute("aria-pressed", String(n === score))
+      scores.append(button)
+    }
+    const ends = el("div", "ends")
+    ends.append(el("span", "", t(msg`Not good`)), el("span", "", t(msg`Great`)))
+    rate.append(scores, ends)
+
+    const more = section(`03 — ${t(msg`Tell us more`)}`)
     text.placeholder = t(prompts[category])
     text.setAttribute("aria-label", t(msg`Tell us more`))
     text.disabled = phase === "sending"
@@ -187,7 +206,7 @@ export function feedbackApp(context: AppContext, t: Translate, root: HTMLElement
     if (error) foot.append(el("p", "error", error))
     foot.append(el("p", "note", t(msg`The team reads every note. Replies show up in your messages.`)))
     syncSend()
-    root.replaceChildren(kinds, more, el("div", "fill"), foot)
+    root.replaceChildren(kinds, rate, more, el("div", "fill"), foot)
   }
 
   render()

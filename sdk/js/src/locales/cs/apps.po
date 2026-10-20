@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: cs\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} z 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Všechny systémy fungují"
@@ -71,6 +75,14 @@ msgstr "Dostávat upozornění na incidenty"
 msgid "Get updates by e-mail"
 msgstr "Odebírat novinky e-mailem"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Skvělé"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Jak se vám s tím pracuje"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "Chci dostávat e-maily o tématu {list} od {inbox}. Odběr mohu kdykoli zrušit."
@@ -118,6 +130,10 @@ msgstr "Sledujeme"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Žádné otevřené incidenty."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Špatné"
 
 #: src/apps/status.ts
 msgid "OK"

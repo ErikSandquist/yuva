@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: vi\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} trên 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "Mọi hệ thống đang hoạt động"
@@ -71,6 +75,14 @@ msgstr "Nhận thông báo sự cố"
 msgid "Get updates by e-mail"
 msgstr "Nhận cập nhật qua e-mail"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "Tuyệt vời"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "Bạn thấy sản phẩm thế nào"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "Tôi muốn nhận email về {list} từ {inbox}. Tôi có thể hủy đăng ký bất cứ lúc nào."
@@ -118,6 +130,10 @@ msgstr "Đang theo dõi"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "Không có sự cố đang mở."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "Chưa tốt"
 
 #: src/apps/status.ts
 msgid "OK"

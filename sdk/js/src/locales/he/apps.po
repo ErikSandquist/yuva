@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: he\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "{n} מתוך 5"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "כל המערכות פועלות"
@@ -71,6 +75,14 @@ msgstr "קבלת התראות על תקלות"
 msgid "Get updates by e-mail"
 msgstr "קבלת עדכונים במייל"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "מצוין"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "איך זה עובד בשבילך"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "אני רוצה לקבל אימיילים על {list} מאת {inbox}. אפשר לבטל את ההרשמה בכל עת."
@@ -118,6 +130,10 @@ msgstr "במעקב"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "אין תקלות פתוחות."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "לא טוב"
 
 #: src/apps/status.ts
 msgid "OK"

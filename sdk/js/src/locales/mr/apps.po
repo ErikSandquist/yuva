@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: mr\n"
 
+#: src/apps/feedback.ts
+msgid "{n} out of 5"
+msgstr "5 पैकी {n}"
+
 #: src/apps/status.ts
 msgid "All systems operational"
 msgstr "सर्व सिस्टम सुरू आहेत"
@@ -71,6 +75,14 @@ msgstr "घटनांची सूचना मिळवा"
 msgid "Get updates by e-mail"
 msgstr "ईमेलवर अपडेट मिळवा"
 
+#: src/apps/feedback.ts
+msgid "Great"
+msgstr "उत्कृष्ट"
+
+#: src/apps/feedback.ts
+msgid "How is it working for you"
+msgstr "हे तुमच्यासाठी कसे काम करत आहे"
+
 #: src/apps/subscribe.ts
 msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
 msgstr "मला {inbox} कडून {list} बद्दल ईमेल मिळवायचे आहेत. मी केव्हाही सदस्यत्व रद्द करू शकतो."
@@ -118,6 +130,10 @@ msgstr "देखरेख सुरू आहे"
 #: src/apps/status.ts
 msgid "No open incidents."
 msgstr "कोणतीही खुली घटना नाही."
+
+#: src/apps/feedback.ts
+msgid "Not good"
+msgstr "चांगले नाही"
 
 #: src/apps/status.ts
 msgid "OK"
