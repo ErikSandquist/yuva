@@ -438,3 +438,118 @@ export function createSubscribeFixture(): YuvaClient {
   }
   return client as unknown as YuvaClient
 }
+
+const helpCollections = [
+  {
+    id: "hc_start",
+    number: 1,
+    icon: "rocket",
+    name: "Getting started",
+    description: "Set up your account in a few minutes.",
+    article_count: 2,
+    url: "https://fixture.invalid/help/acme/en/collections/1-getting-started",
+  },
+  {
+    id: "hc_billing",
+    number: 2,
+    icon: "billing",
+    name: "Billing",
+    description: "Invoices, plans and payment methods.",
+    article_count: 1,
+    url: "https://fixture.invalid/help/acme/en/collections/2-billing",
+  },
+]
+
+const helpArticles = [
+  {
+    id: "ha_invite",
+    number: 1,
+    locale: "en",
+    title: "Invite your team",
+    excerpt: "Add teammates from Settings, then pick the inboxes each of them may see.",
+    url: "https://fixture.invalid/help/acme/en/articles/1-invite-your-team",
+    collection: { id: "hc_start", name: "Getting started" },
+    body_html:
+      "<p>Add teammates from <strong>Settings</strong>, then pick the inboxes each of them may see.</p><h2>Roles</h2><ul><li>Owners and admins change settings.</li><li>Agents answer conversations.</li></ul>",
+  },
+  {
+    id: "ha_export",
+    number: 2,
+    locale: "en",
+    title: "Export your contacts",
+    excerpt: "Open Contacts, choose Export, and the file is mailed to you.",
+    url: "https://fixture.invalid/help/acme/en/articles/2-export-your-contacts",
+    collection: { id: "hc_start", name: "Getting started" },
+    body_html: "<p>Open <strong>Contacts</strong>, choose <strong>Export</strong>, and the file is mailed to you.</p>",
+  },
+  {
+    id: "ha_invoice",
+    number: 3,
+    locale: "en",
+    title: "Download an invoice",
+    excerpt: "Invoices are under Billing. Pick a month and download the PDF.",
+    url: "https://fixture.invalid/help/acme/en/articles/3-download-an-invoice",
+    collection: { id: "hc_billing", name: "Billing" },
+    body_html: "<p>Invoices are under <strong>Billing</strong>. Pick a month and download the PDF.</p>",
+  },
+]
+
+const helpSummary = ({ body_html: _, ...summary }: (typeof helpArticles)[number]) => summary
+
+export function createHelpFixture(): YuvaClient {
+  const help = {
+    get: () =>
+      wait({
+        center: {
+          name: "Acme help",
+          description: "Answers to common questions.",
+          locale: "en",
+          locales: ["en"],
+          default_locale: "en",
+          url: "https://fixture.invalid/help/acme/en/",
+        },
+        collections: helpCollections,
+        suggested: [],
+        popular: helpArticles.map(helpSummary),
+      }),
+    search: (q: string) => {
+      const words = q.toLowerCase().split(/\s+/).filter(Boolean)
+      const items = helpArticles
+        .filter((a) => words.some((w) => `${a.title} ${a.excerpt}`.toLowerCase().includes(w)))
+        .map((a) => ({
+          ...helpSummary(a),
+          highlights: words.flatMap((w) => {
+            const start = a.title.toLowerCase().indexOf(w)
+            return start < 0 ? [] : [{ field: "title", start, end: start + w.length }]
+          }),
+        }))
+      return wait({ items, partial: false }, 200)
+    },
+    collection: (id: string) => {
+      const collection = helpCollections.find((c) => c.id === id)!
+      return wait({
+        collection,
+        collections: [],
+        articles: helpArticles.filter((a) => a.collection.id === id).map(helpSummary),
+      })
+    },
+    article: (id: string) => {
+      const found = helpArticles.find((a) => a.id === id)!
+      return wait({
+        ...found,
+        fallback: false,
+        updated_at: minutes(60 * 24 * 3),
+        related: helpArticles.filter((a) => a.id !== id).map(helpSummary),
+      })
+    },
+    react: () => wait(undefined, 200),
+    click: () => wait(undefined, 50),
+  }
+  const client = {
+    server: "https://fixture.invalid",
+    channel: "fixture",
+    on: () => () => undefined,
+    help,
+  }
+  return client as unknown as YuvaClient
+}

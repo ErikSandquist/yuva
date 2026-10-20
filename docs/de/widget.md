@@ -52,7 +52,12 @@ braucht, und lädt sie erst bei der ersten Nutzung. **Feedback** sendet eine Kat
 Dateien als Feedback-Unterhaltung, die der Besucher in seinen Nachrichten findet. **Status** zeigt
 die veröffentlichte Statusseite der Inbox: den Gesamtzustand, die Komponenten mit ihren letzten
 60 Tagen sowie offene und aktuelle Störungen. **Updates erhalten** meldet den Besucher bei den
-öffentlichen Mailinglisten der Inbox an und sendet den Einwilligungstext, wie er angezeigt wurde.
+öffentlichen Mailinglisten der Inbox an und sendet den Einwilligungstext, wie er angezeigt wurde. **Hilfecenter** erscheint, wenn die Inbox ein
+veröffentlichtes [Hilfecenter](help-center.md) hat, zusammen mit einem Suchfeld auf der Startseite:
+Es zeigt die Artikel, die zur Seite des Besuchers passen, die beliebten und die Sammlungen, öffnet
+Artikel im Panel mit „War das hilfreich?“ und endet mit einer Schaltfläche „Schreiben Sie uns“. Eine
+Unterhaltung, die nach dem Lesen eines Artikels beginnt, hält ihn fest, und ein Artikel, den Ihr Team
+in einer Antwort sendet, öffnet sich in derselben App.
 
 Ist niemand erreichbar und fragt der Kanal nach einer E-Mail-Adresse, bittet die Unterhaltung darum.
 Nach dem Speichern sagt sie, dass ein Bestätigungslink verschickt wurde (mit Adresse ändern und

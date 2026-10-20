@@ -18,6 +18,12 @@ import {
   YuvaDiscussionThreadPreview,
   YuvaPageFeedbackPreview,
 } from "@/shadcn/previews/discussions"
+import {
+  UseYuvaHelpPreview,
+  YuvaHelpArticlePreview,
+  YuvaHelpPreview,
+  YuvaHelpSearchPreview,
+} from "@/shadcn/previews/help"
 import { UseYuvaSubscribePreview, YuvaSubscribePreview } from "@/shadcn/previews/subscribe"
 import ShadcnCode from "@/ui/ShadcnCode.astro"
 import ShadcnTabs from "@/ui/ShadcnTabs.astro"
@@ -56,6 +62,10 @@ const t = shadcnCopy(i18nFor(locale))
       {name === "yuva-discussion-composer" && <YuvaDiscussionComposerPreview client:visible />}
       {name === "yuva-page-feedback" && <YuvaPageFeedbackPreview client:visible />}
       {name === "use-yuva-discussions" && <UseYuvaDiscussionsPreview client:visible />}
+      {name === "yuva-help" && <YuvaHelpPreview client:visible />}
+      {name === "yuva-help-search" && <YuvaHelpSearchPreview client:visible />}
+      {name === "yuva-help-article" && <YuvaHelpArticlePreview client:visible />}
+      {name === "use-yuva-help" && <UseYuvaHelpPreview client:visible />}
       {name === "yuva-subscribe" && <YuvaSubscribePreview client:visible />}
       {name === "use-yuva-subscribe" && <UseYuvaSubscribePreview client:visible />}
     </div>

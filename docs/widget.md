@@ -47,7 +47,11 @@ them on first use. **Feedback** sends a category, text and files as a feedback c
 the visitor finds in their messages. **Status** shows the inbox's published status page: the overall
 state, the components with their last 60 days, and open and recent incidents. **Get updates**
 subscribes the visitor to the inbox's public mailing lists and sends the consent text as it was
-shown.
+shown. **Help center** appears when the inbox has a published [help center](help-center.md), together
+with a search field on Home: it shows the articles that fit the page the visitor is on, the popular
+ones and the collections, opens articles inside the panel with "Was this helpful?" and ends with a
+"Message us" button. A conversation started after reading an article records it, and an article your
+team sends in a reply opens in the same app.
 
 When nobody is available and the channel asks for an e-mail address, the thread asks for one. After
 the visitor saves it, the thread says a confirmation link went out (with Change address and Send

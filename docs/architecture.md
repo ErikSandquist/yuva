@@ -2482,7 +2482,14 @@ and the searches that found nothing say which article to write next.
   so a rename needs no slug history. There is no redirect from `Accept-Language`; every page has
   `hreflang` alternates for its published translations, a canonical link, Open Graph tags and JSON-LD
   `Article` and `BreadcrumbList`. An unpublished center or article answers `404` with the plain text
-  of status pages. "Was this helpful?" is two POST buttons that work without JavaScript. With a
+  of status pages. "Was this helpful?" is two POST buttons that work without JavaScript: a form post to
+  `/{locale}/articles/{number}-{slug}/helpful` with `rating` (`up` or `down`) and `previous` (the earlier
+  answer, which it replaces), 4 KiB at most, rate limited per address and per center. It answers
+  `303` to the article with `?thanks=up` or `?thanks=down` and the fragment `#helpful`, where the page
+  shows the thank-you line and one button to change the answer, which sends the earlier one as
+  `previous` (any other `thanks` value is ignored); a small script posts the form in place with
+  `Accept: application/json` and gets `204`, and falls back to the form post if that fails. The answer is `no-store`; an unknown or unpublished article,
+  or a locale the center does not offer, answers the center's `404`. With a
   `chat_channel_id` the page embeds `<yuva-chat>` under "Still need help?", and a conversation started
   there carries the article.
   Own domains (`help.example.com`) are not part of M20: generalising the status custom-domain machinery

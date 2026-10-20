@@ -36,6 +36,11 @@ const discussionLabels = {
   interface: "YuvaDiscussionsLabels",
   defaults: "defaultYuvaDiscussionsLabels",
 }
+const helpLabels = {
+  file: "lib/yuva-help-utils.tsx",
+  interface: "YuvaHelpLabels",
+  defaults: "defaultYuvaHelpLabels",
+}
 const provider = (inner: string) => `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
 
 export function Docs({ children }: { children: React.ReactNode }) {
@@ -379,6 +384,88 @@ export function Lists() {
             {states[list.id] === "subscribed" ? "Unsubscribe" : "Subscribe"}
           </button>
         </li>
+      ))}
+    </ul>
+  )
+}`,
+  },
+  "yuva-help": {
+    props: [{ id: "props", file: "components/yuva-help.tsx", interface: "YuvaHelpProps" }],
+    labels: helpLabels,
+    usage: `import { YuvaHelp } from "@/components/yuva-help"
+
+<YuvaHelp server={server} channel={channel} page="/billing" onAsk={() => chat.open()} />`,
+    example: `import { YuvaHelp } from "@/components/yuva-help"
+
+export function HelpCenter() {
+  return (
+    <YuvaHelp
+      ${chatEnv}
+      page={window.location.pathname}
+      onAsk={(articleId) => openChat(articleId)}
+    />
+  )
+}`,
+  },
+  "yuva-help-search": {
+    props: [{ id: "props", file: "components/yuva-help-search.tsx", interface: "YuvaHelpSearchProps" }],
+    labelsFrom: "yuva-help",
+    usage: `import { YuvaHelpSearch } from "@/components/yuva-help-search"
+
+<YuvaHelpSearch server={server} channel={channel} onSelect={(article) => setId(article.id)} />`,
+    example: `import { YuvaHelpSearch } from "@/components/yuva-help-search"
+
+export function Search() {
+  return (
+    <YuvaHelpSearch
+      ${chatEnv}
+      onSelect={(article, query) => console.log(article.title, query)}
+    />
+  )
+}`,
+  },
+  "yuva-help-article": {
+    props: [{ id: "props", file: "components/yuva-help-article.tsx", interface: "YuvaHelpArticleProps" }],
+    labelsFrom: "yuva-help",
+    usage: `import { YuvaHelpArticle } from "@/components/yuva-help-article"
+
+<YuvaHelpArticle server={server} channel={channel} id={articleId} onAsk={(id) => chat.open(id)} />`,
+    example: `import { YuvaHelpArticle } from "@/components/yuva-help-article"
+
+export function Article({ id }: { id: string }) {
+  return (
+    <YuvaHelpArticle
+      ${chatEnv}
+      id={id}
+      onAsk={(articleId) => openChat(articleId)}
+    />
+  )
+}`,
+  },
+  "use-yuva-help": {
+    props: [
+      { id: "options", file: "hooks/use-yuva-help.tsx", interface: "UseYuvaHelpOptions" },
+      { id: "returns", file: "hooks/use-yuva-help.tsx", interface: "YuvaHelpState" },
+      { id: "search", file: "hooks/use-yuva-help.tsx", interface: "YuvaHelpSearchState" },
+      { id: "article", file: "hooks/use-yuva-help.tsx", interface: "YuvaHelpArticleState" },
+    ],
+    labels: helpLabels,
+    usage: `import { useYuvaHelp, useYuvaHelpSearch } from "@/hooks/use-yuva-help"
+
+const help = useYuvaHelp({ server, channel })
+const { results } = useYuvaHelpSearch(help, query)`,
+    example: `import { useYuvaHelp, useYuvaHelpSearch } from "@/hooks/use-yuva-help"
+
+export function Results({ query }: { query: string }) {
+  const help = useYuvaHelp({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+  const { results } = useYuvaHelpSearch(help, query)
+
+  return (
+    <ul>
+      {results?.items.map((article) => (
+        <li key={article.id}>{article.title}</li>
       ))}
     </ul>
   )

@@ -116,6 +116,9 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `analytics:manage` | Mülk oluşturma, değiştirme ve silme, anahtarlarını yenileme, verilerini silme. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
 | `status:read` | [Durum sayfaları](status-pages.md): sayfalar, bileşenler, olaylar, bildirimler, monitörler ve kontrolleri |
 | `status:manage` | Durum sayfalarını değiştirme, durum ayarlama, olay güncellemesi gönderme, monitörleri yönetme, konuşmaları olaylara bağlama ve onlara yanıt verme. `status:read` içermez. |
+| `help:read` | [Yardım merkezleri](help-center.md): merkezler, koleksiyonlar, taslakları ve revizyonlarıyla makaleler, arama, rapor |
+| `help:write` | Koleksiyon ve makale oluşturma ve değiştirme, taslak kaydetme, görsel yükleme |
+| `help:publish` | Yardım makalelerini yayınlama, yayından kaldırma ve yayımlanmış olanları silme. Başka hiçbir yetkiye dahil değildir: adıyla verin. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

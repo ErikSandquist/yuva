@@ -113,6 +113,9 @@ A call without the needed scope answers `403 insufficient_scope`.
 | `analytics:manage` | Create, change and delete properties, rotate their keys, delete their data. Never given to agents or to keys limited to inboxes. |
 | `status:read` | [Status pages](status-pages.md): pages, components, incidents, notices, monitors and their checks |
 | `status:manage` | Change status pages, set states, post incident updates, manage monitors, link conversations to incidents and reply to them. Does not include `status:read`. |
+| `help:read` | [Help centers](help-center.md): centers, collections, articles with drafts and revisions, search, the report |
+| `help:write` | Create and change collections and articles, save drafts, upload images |
+| `help:publish` | Publish, unpublish and delete published help articles. Not included in any other scope: name it. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Keys

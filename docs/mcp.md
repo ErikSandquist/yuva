@@ -141,6 +141,16 @@ detects the provider, creates the migration and gives you a Yuva page to enter t
 asks for one in the chat. It starts the copy only after you confirm the dry run, then explains how to
 forward the mail and finishes the migration. The steps are in [Move to Yuva](migrate.md).
 
+## Help center from an assistant
+
+With the `help:read` and `help:write` scopes an assistant can search a [help center](help-center.md),
+read its articles and write drafts. Ask: "Find what customers searched for in the last 30 days
+without finding an answer and draft the three most important articles." The `help_gaps_review` prompt
+does this; `write_help_article` drafts one article from a conversation or a topic, after searching so
+nothing is written twice. An assistant never publishes: it saves drafts, and a member reads and
+publishes them in Yuva. In `draft_reply`, `article_ids` attaches up to three published articles to the
+reply as cards.
+
 ## Reference
 
 ### Tools
@@ -168,6 +178,8 @@ answers `insufficient_scope` with the scope to grant.
 | `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
 | `set_component_state`, `create_incident` (always a draft), `post_incident_update`, `resolve_incident` | `status:manage` |
 | `link_conversation_to_incident` | `status:manage` and `conversations:read` |
+| `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
+| `draft_help_article`, `update_help_article_draft` (drafts only, with `base_version`; a `locale` writes a translation) | `help:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
@@ -185,8 +197,8 @@ With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail 
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`); subscriptions follow changes. |
-| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`). |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`), `yuva://help-center/{id}` (with `help:read`); subscriptions follow changes. |
+| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `write_help_article` (center, optional conversation or topic, locale; with `help:write`), `help_gaps_review` (center, optional days; with `help:read`). |
 
 ### Safety and limits
 

@@ -158,6 +158,16 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_CLOUDFLARE_ZONE_ID` | unset | The Cloudflare zone whose custom hostnames hold own domains, for `YUVA_STATUS_DOMAINS=cloudflare`. |
 | `YUVA_CLOUDFLARE_API_TOKEN` | unset | A Cloudflare API token with the zone's *SSL and Certificates: Edit* permission, for `YUVA_STATUS_DOMAINS=cloudflare`. |
 
+## Help center
+
+[Help centers](help-center.md).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_HELP` | `on` | `off` removes help centers: their endpoints and public pages answer `404`, and the widget shows no Help app. |
+| `YUVA_HELP_URL` | unset | Origin that public help centers are served from, such as `https://help.example.com` (scheme and host, no path). It must reach this server and differ from `YUVA_PUBLIC_URL`. Centers are then at `<origin>/{slug}`. Unset, they are at `<YUVA_PUBLIC_URL>/help/{slug}`. |
+| `YUVA_HELP_MAX_ARTICLES` | `500` when `YUVA_SIGNUP=open`, else `0` | Most help articles one workspace may have; `0` is no limit. Beyond it, creating one answers `422 hosted_limit`. |
+
 ## Analytics
 
 [Counting your websites](analytics.md).

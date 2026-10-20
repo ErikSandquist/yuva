@@ -49,7 +49,12 @@ Ana ekran ayrıca aynı panelin içinde uygulamalar açar; her biri yalnızca ka
 ziyaretçinin mesajlarında bulacağı bir geri bildirim konuşması olarak gönderir. **Durum**, gelen
 kutusunun yayımlanmış durum sayfasını gösterir: genel durum, son 60 günüyle bileşenler, açık ve
 yakın zamanlı olaylar. **Güncellemeleri al** ziyaretçiyi gelen kutusunun herkese açık posta
-listelerine abone eder ve onay metnini gösterildiği haliyle gönderir.
+listelerine abone eder ve onay metnini gösterildiği haliyle gönderir. **Yardım merkezi**, gelen
+kutusunun yayımlanmış bir [yardım merkezi](help-center.md) olduğunda görünür ve Ana ekranda bir
+arama alanı da belirir: ziyaretçinin bulunduğu sayfaya uyan makaleleri, popüler olanları ve
+koleksiyonları gösterir, makaleleri panelin içinde "Bu yararlı oldu mu?" sorusuyla açar ve bir
+"Bize yazın" düğmesiyle biter. Bir makaleyi okuduktan sonra başlayan konuşma onu kaydeder; ekibinizin
+yanıtta gönderdiği makale de aynı uygulamada açılır.
 
 Kimse çevrimiçi değilse ve kanal e-posta adresi istiyorsa konuşma bir adres ister. Ziyaretçi adresi
 kaydedince konuşma onay bağlantısının gönderildiğini söyler (Adresi değiştir ve Tekrar gönder ile),

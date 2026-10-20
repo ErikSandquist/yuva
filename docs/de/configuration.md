@@ -160,6 +160,16 @@ Einstellung nennt.
 | `YUVA_CLOUDFLARE_ZONE_ID` | nicht gesetzt | Die Cloudflare-Zone, deren Custom Hostnames die eigenen Domains tragen, für `YUVA_STATUS_DOMAINS=cloudflare`. |
 | `YUVA_CLOUDFLARE_API_TOKEN` | nicht gesetzt | Ein Cloudflare-API-Token mit der Berechtigung *SSL and Certificates: Edit* für die Zone, für `YUVA_STATUS_DOMAINS=cloudflare`. |
 
+## Hilfecenter
+
+[Hilfecenter](help-center.md).
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_HELP` | `on` | `off` entfernt Hilfecenter: ihre Endpunkte und öffentlichen Seiten antworten mit `404`, und das Widget zeigt keine Hilfe-App. |
+| `YUVA_HELP_URL` | nicht gesetzt | Ursprung, von dem öffentliche Hilfecenter ausgeliefert werden, z. B. `https://help.example.com` (Schema und Host, kein Pfad). Er muss diesen Server erreichen und sich von `YUVA_PUBLIC_URL` unterscheiden. Die Center liegen dann unter `<Ursprung>/{slug}`. Nicht gesetzt, liegen sie unter `<YUVA_PUBLIC_URL>/help/{slug}`. |
+| `YUVA_HELP_MAX_ARTICLES` | `500` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl Hilfe-Artikel eines Workspace; `0` heißt unbegrenzt. Darüber antwortet das Anlegen eines Artikels mit `422 hosted_limit`. |
+
 ## Analytics
 
 [Ihre Websites zählen](analytics.md).

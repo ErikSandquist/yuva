@@ -146,6 +146,16 @@ sohbette asla şifre istemez. Kopyalamayı yalnızca deneme sonucunu onayladıkt
 e-postaların nasıl yönlendirileceğini anlatır ve taşımayı bitirir. Adımlar [Yuva'ya taşı](migrate.md)
 sayfasındadır.
 
+## Yardım merkezini bir asistanla kullanın
+
+`help:read` ve `help:write` yetkileriyle bir asistan [yardım merkezinde](help-center.md) arama yapabilir,
+makaleleri okuyabilir ve taslak yazabilir. Şunu deneyin: "Son 30 günde müşterilerin aradığı ama
+yanıt bulamadığı şeyleri bul ve en önemli üç makalenin taslağını yaz." `help_gaps_review` prompt'u
+bunu yapar; `write_help_article` bir konuşmadan ya da konudan tek bir makale taslağı yazar, önce
+arama yaparak aynı şeyin iki kez yazılmasını önler. Asistan asla yayınlamaz: taslak kaydeder, bir
+üye onu Yuva'da okuyup yayınlar. `draft_reply` içindeki `article_ids`, yanıta en fazla üç yayımlanmış
+makaleyi kart olarak ekler.
+
 ## Başvuru
 
 ### Araçlar
@@ -173,6 +183,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
 | `set_component_state`, `create_incident` (her zaman taslak), `post_incident_update`, `resolve_incident` | `status:manage` |
 | `link_conversation_to_incident` | `status:manage` ve `conversations:read` |
+| `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
+| `draft_help_article`, `update_help_article_draft` (yalnızca taslak, `base_version` ile; `locale` bir çeviri yazar) | `help:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
@@ -190,8 +202,8 @@ Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini gi
 
 | Tür | Öğeler |
 |---|---|
-| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile); abonelikler değişiklikleri izler. |
-| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile). |
+| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile), `yuva://help-center/{id}` (`help:read` ile); abonelikler değişiklikleri izler. |
+| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile), `write_help_article` (merkez, isteğe bağlı konuşma ya da konu, dil; `help:write` ile), `help_gaps_review` (merkez, isteğe bağlı gün sayısı; `help:read` ile). |
 
 ### Güvenlik ve sınırlar
 

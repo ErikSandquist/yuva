@@ -59,6 +59,7 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `status.component.updated` | Eine Komponente einer [Statusseite](status-pages.md) wurde angelegt, geändert oder hat einen neuen Zustand | `component`, `page`, `previous_state` |
 | `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | Ein veröffentlichter Vorfall oder eine Wartung wurde veröffentlicht, geändert oder gelöst bzw. abgeschlossen | `incident`, `page`, `change`, `update` |
 | `status.monitor.down`, `status.monitor.up` | Ein Monitor ist ausgefallen oder hat sich erholt | `monitor`, `page`, `incident_id` |
+| `help.article.published`, `help.article.unpublished`, `help.article.deleted` | Die Übersetzung eines Artikels eines [Hilfecenters](help-center.md) wurde veröffentlicht, zurückgezogen oder gelöscht (ein ganzer Artikel, wenn `locale` fehlt) | `center_id`, `article_id`, `number`, `locale`; bei Veröffentlichung `title` und `url` |
 
 Jeder Body hat `type`, `timestamp` (wann es passiert ist), `workspace_id`, `inbox_id` (nicht bei
 Kontaktereignissen) und `data`. `data.contact.online` ist `false`, wenn der Kontakt keine

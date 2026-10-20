@@ -148,6 +148,17 @@ eingeben; im Chat fragt er nie danach. Er startet das Kopieren erst, wenn Sie de
 erklärt dann, wie die E-Mails weitergeleitet werden, und schließt den Umzug ab. Die Schritte stehen unter
 [Zu Yuva umziehen](migrate.md).
 
+## Hilfecenter über einen Assistenten
+
+Mit den Berechtigungen `help:read` und `help:write` kann ein Assistent ein [Hilfecenter](help-center.md)
+durchsuchen, Artikel lesen und Entwürfe schreiben. Fragen Sie zum Beispiel: „Finde, wonach Kunden in
+den letzten 30 Tagen gesucht haben, ohne eine Antwort zu finden, und schreibe Entwürfe für die drei
+wichtigsten Artikel.“ Der Prompt `help_gaps_review` macht das; `write_help_article` entwirft einen
+Artikel aus einer Unterhaltung oder einem Thema und sucht vorher, damit nichts doppelt geschrieben
+wird. Ein Assistent veröffentlicht nie: Er speichert Entwürfe, und ein Mitglied liest und
+veröffentlicht sie in Yuva. In `draft_reply` hängt `article_ids` bis zu drei veröffentlichte Artikel
+als Karten an die Antwort.
+
 ## Referenz
 
 ### Tools
@@ -175,6 +186,8 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
 | `set_component_state`, `create_incident` (immer ein Entwurf), `post_incident_update`, `resolve_incident` | `status:manage` |
 | `link_conversation_to_incident` | `status:manage` und `conversations:read` |
+| `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
+| `draft_help_article`, `update_help_article_draft` (nur Entwürfe, mit `base_version`; eine `locale` schreibt eine Übersetzung) | `help:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
@@ -192,8 +205,8 @@ Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kan
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`); Abonnements folgen Änderungen. |
-| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`). |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`), `yuva://help-center/{id}` (mit `help:read`); Abonnements folgen Änderungen. |
+| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `write_help_article` (Center, optional Unterhaltung oder Thema, Sprache; mit `help:write`), `help_gaps_review` (Center, optional Tage; mit `help:read`). |
 
 ### Sicherheit und Grenzen
 

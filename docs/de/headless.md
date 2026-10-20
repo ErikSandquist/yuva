@@ -118,6 +118,9 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `analytics:manage` | Properties anlegen, ändern und löschen, ihre Schlüssel erneuern, ihre Daten löschen. Nie für Agents oder auf Posteingänge beschränkte Keys. |
 | `status:read` | [Statusseiten](status-pages.md): Seiten, Komponenten, Vorfälle, Benachrichtigungen, Monitore und ihre Prüfungen |
 | `status:manage` | Statusseiten ändern, Zustände setzen, Vorfall-Updates senden, Monitore verwalten, Konversationen mit Vorfällen verknüpfen und ihnen antworten. Enthält `status:read` nicht. |
+| `help:read` | [Hilfecenter](help-center.md): Center, Sammlungen, Artikel mit Entwürfen und Revisionen, Suche, Bericht |
+| `help:write` | Sammlungen und Artikel anlegen und ändern, Entwürfe speichern, Bilder hochladen |
+| `help:publish` | Hilfe-Artikel veröffentlichen, zurückziehen und veröffentlichte löschen. In keiner anderen Berechtigung enthalten: Nennen Sie sie ausdrücklich. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Schlüssel

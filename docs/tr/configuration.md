@@ -159,6 +159,16 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_CLOUDFLARE_ZONE_ID` | atanmamış | `YUVA_STATUS_DOMAINS=cloudflare` için, özel ana makine adlarının tutulduğu Cloudflare bölgesi. |
 | `YUVA_CLOUDFLARE_API_TOKEN` | atanmamış | `YUVA_STATUS_DOMAINS=cloudflare` için, bölgede *SSL and Certificates: Edit* izni olan bir Cloudflare API anahtarı. |
 
+## Yardım merkezi
+
+[Yardım merkezleri](help-center.md).
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_HELP` | `on` | `off` yardım merkezlerini kaldırır: uç noktaları ve herkese açık sayfaları `404` verir, widget'ta Yardım uygulaması görünmez. |
+| `YUVA_HELP_URL` | atanmamış | Herkese açık yardım merkezlerinin sunulduğu origin, örneğin `https://help.example.com` (şema ve host, yol yok). Bu sunucuya ulaşmalı ve `YUVA_PUBLIC_URL`'den farklı olmalıdır. Merkezler bu durumda `<origin>/{slug}` adresindedir. Atanmamışsa `<YUVA_PUBLIC_URL>/help/{slug}` adresindedir. |
+| `YUVA_HELP_MAX_ARTICLES` | `YUVA_SIGNUP=open` ise `500`, değilse `0` | Bir çalışma alanının en fazla kaç yardım makalesi olabileceği; `0` sınırsız. Aşılırsa makale oluşturmak `422 hosted_limit` verir. |
+
 ## Analitik
 
 [Web sitelerinizi sayma](analytics.md).
