@@ -968,6 +968,18 @@ msgstr "파일 내용이 형식과 일치하지 않습니다. 파일을 확인�
 msgid "A former teammate"
 msgstr "이전 팀원"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "도움말 센터 문서가 삭제되었습니다"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "도움말 센터 문서가 게시되었습니다"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "도움말 센터 문서가 게시 취소되었습니다"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "담당자가 없는 동안 연락처가 보낸 이후 메시지."
@@ -4161,6 +4173,10 @@ msgstr "세부 정보 편집"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "세부 정보 편집({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "도움말 센터 컬렉션과 문서 초안 편집"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "게시({publishKey})"
 msgid "Publish an incident"
 msgstr "인시던트 게시"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "도움말 센터 문서 게시 및 게시 취소"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "지금 게시"
@@ -9199,6 +9219,10 @@ msgstr "연락처 읽기"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "대화, 메시지, 레이블, 자주 쓰는 답장 읽기"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "도움말 센터, 컬렉션, 문서 읽기"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

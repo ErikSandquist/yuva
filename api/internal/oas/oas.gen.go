@@ -926,6 +926,9 @@ const (
 	ConversationsWrite ApiKeyScope = "conversations:write"
 	DraftsSend         ApiKeyScope = "drafts:send"
 	FeedbackWrite      ApiKeyScope = "feedback:write"
+	HelpPublish        ApiKeyScope = "help:publish"
+	HelpRead           ApiKeyScope = "help:read"
+	HelpWrite          ApiKeyScope = "help:write"
 	InboxesManage      ApiKeyScope = "inboxes:manage"
 	InboxesRead        ApiKeyScope = "inboxes:read"
 	LabelsWrite        ApiKeyScope = "labels:write"
@@ -968,6 +971,12 @@ func (e ApiKeyScope) Valid() bool {
 	case DraftsSend:
 		return true
 	case FeedbackWrite:
+		return true
+	case HelpPublish:
+		return true
+	case HelpRead:
+		return true
+	case HelpWrite:
 		return true
 	case InboxesManage:
 		return true
@@ -2687,6 +2696,168 @@ func (e HealthStatus) Valid() bool {
 	}
 }
 
+// Defines values for HelpArticleEventType.
+const (
+	HelpArticleDeletedEvent     HelpArticleEventType = "help.article.deleted"
+	HelpArticlePublishedEvent   HelpArticleEventType = "help.article.published"
+	HelpArticleUnpublishedEvent HelpArticleEventType = "help.article.unpublished"
+)
+
+// Valid indicates whether the value is a known member of the HelpArticleEventType enum.
+func (e HelpArticleEventType) Valid() bool {
+	switch e {
+	case HelpArticleDeletedEvent:
+		return true
+	case HelpArticlePublishedEvent:
+		return true
+	case HelpArticleUnpublishedEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpArticleSignalType.
+const (
+	HelpArticleUpdated HelpArticleSignalType = "help.article.updated"
+)
+
+// Valid indicates whether the value is a known member of the HelpArticleSignalType enum.
+func (e HelpArticleSignalType) Valid() bool {
+	switch e {
+	case HelpArticleUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpHighlightField.
+const (
+	HelpHighlightExcerpt HelpHighlightField = "excerpt"
+	HelpHighlightTitle   HelpHighlightField = "title"
+)
+
+// Valid indicates whether the value is a known member of the HelpHighlightField enum.
+func (e HelpHighlightField) Valid() bool {
+	switch e {
+	case HelpHighlightExcerpt:
+		return true
+	case HelpHighlightTitle:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpIcon.
+const (
+	HelpIconBell     HelpIcon = "bell"
+	HelpIconBilling  HelpIcon = "billing"
+	HelpIconBook     HelpIcon = "book"
+	HelpIconChart    HelpIcon = "chart"
+	HelpIconChat     HelpIcon = "chat"
+	HelpIconCode     HelpIcon = "code"
+	HelpIconGlobe    HelpIcon = "globe"
+	HelpIconHelp     HelpIcon = "help"
+	HelpIconLock     HelpIcon = "lock"
+	HelpIconMail     HelpIcon = "mail"
+	HelpIconMobile   HelpIcon = "mobile"
+	HelpIconPlug     HelpIcon = "plug"
+	HelpIconRocket   HelpIcon = "rocket"
+	HelpIconSettings HelpIcon = "settings"
+	HelpIconShield   HelpIcon = "shield"
+	HelpIconStar     HelpIcon = "star"
+	HelpIconTeam     HelpIcon = "team"
+	HelpIconUser     HelpIcon = "user"
+)
+
+// Valid indicates whether the value is a known member of the HelpIcon enum.
+func (e HelpIcon) Valid() bool {
+	switch e {
+	case HelpIconBell:
+		return true
+	case HelpIconBilling:
+		return true
+	case HelpIconBook:
+		return true
+	case HelpIconChart:
+		return true
+	case HelpIconChat:
+		return true
+	case HelpIconCode:
+		return true
+	case HelpIconGlobe:
+		return true
+	case HelpIconHelp:
+		return true
+	case HelpIconLock:
+		return true
+	case HelpIconMail:
+		return true
+	case HelpIconMobile:
+		return true
+	case HelpIconPlug:
+		return true
+	case HelpIconRocket:
+		return true
+	case HelpIconSettings:
+		return true
+	case HelpIconShield:
+		return true
+	case HelpIconStar:
+		return true
+	case HelpIconTeam:
+		return true
+	case HelpIconUser:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpRevisionKind.
+const (
+	HelpRevisionPublish HelpRevisionKind = "publish"
+	HelpRevisionRestore HelpRevisionKind = "restore"
+	HelpRevisionSave    HelpRevisionKind = "save"
+)
+
+// Valid indicates whether the value is a known member of the HelpRevisionKind enum.
+func (e HelpRevisionKind) Valid() bool {
+	switch e {
+	case HelpRevisionPublish:
+		return true
+	case HelpRevisionRestore:
+		return true
+	case HelpRevisionSave:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpTranslationState.
+const (
+	HelpStateChanged   HelpTranslationState = "changed"
+	HelpStateDraft     HelpTranslationState = "draft"
+	HelpStatePublished HelpTranslationState = "published"
+)
+
+// Valid indicates whether the value is a known member of the HelpTranslationState enum.
+func (e HelpTranslationState) Valid() bool {
+	switch e {
+	case HelpStateChanged:
+		return true
+	case HelpStateDraft:
+		return true
+	case HelpStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HomeSetupItemId.
 const (
 	HomeSetupItemIdAnalytics  HomeSetupItemId = "analytics"
@@ -2719,6 +2890,7 @@ func (e HomeSetupItemId) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
+	LimitHelpMaxArticles         HostedLimit = "YUVA_HELP_MAX_ARTICLES"
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
 	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
@@ -2728,6 +2900,8 @@ const (
 // Valid indicates whether the value is a known member of the HostedLimit enum.
 func (e HostedLimit) Valid() bool {
 	switch e {
+	case LimitHelpMaxArticles:
+		return true
 	case LimitMigrationMaxActive:
 		return true
 	case LimitMigrationMaxBytes:
@@ -3233,6 +3407,21 @@ const (
 func (e MemberPresenceEventType) Valid() bool {
 	switch e {
 	case MemberPresenceEventTypeMemberPresence:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MessageCardKind.
+const (
+	MessageCardArticle MessageCardKind = "article"
+)
+
+// Valid indicates whether the value is a known member of the MessageCardKind enum.
+func (e MessageCardKind) Valid() bool {
+	switch e {
+	case MessageCardArticle:
 		return true
 	default:
 		return false
@@ -5377,6 +5566,9 @@ const (
 	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
 	WebhookEventTypeDraftUpdated           WebhookEventType = "draft.updated"
 	WebhookEventTypeFeedbackCreated        WebhookEventType = "feedback.created"
+	WebhookEventTypeHelpArticleDeleted     WebhookEventType = "help.article.deleted"
+	WebhookEventTypeHelpArticlePublished   WebhookEventType = "help.article.published"
+	WebhookEventTypeHelpArticleUnpublished WebhookEventType = "help.article.unpublished"
 	WebhookEventTypeMessageCreated         WebhookEventType = "message.created"
 	WebhookEventTypeStatusComponentUpdated WebhookEventType = "status.component.updated"
 	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
@@ -5420,6 +5612,12 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeDraftUpdated:
 		return true
 	case WebhookEventTypeFeedbackCreated:
+		return true
+	case WebhookEventTypeHelpArticleDeleted:
+		return true
+	case WebhookEventTypeHelpArticlePublished:
+		return true
+	case WebhookEventTypeHelpArticleUnpublished:
 		return true
 	case WebhookEventTypeMessageCreated:
 		return true
@@ -5699,6 +5897,51 @@ func (e ListMessagesParamsOrder) Valid() bool {
 	case ListMessagesParamsOrderAsc:
 		return true
 	case ListMessagesParamsOrderDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListHelpArticlesParamsState.
+const (
+	ListHelpArticlesParamsStateChanged   ListHelpArticlesParamsState = "changed"
+	ListHelpArticlesParamsStateDraft     ListHelpArticlesParamsState = "draft"
+	ListHelpArticlesParamsStateMissing   ListHelpArticlesParamsState = "missing"
+	ListHelpArticlesParamsStatePublished ListHelpArticlesParamsState = "published"
+)
+
+// Valid indicates whether the value is a known member of the ListHelpArticlesParamsState enum.
+func (e ListHelpArticlesParamsState) Valid() bool {
+	switch e {
+	case ListHelpArticlesParamsStateChanged:
+		return true
+	case ListHelpArticlesParamsStateDraft:
+		return true
+	case ListHelpArticlesParamsStateMissing:
+		return true
+	case ListHelpArticlesParamsStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PreviewHelpCenterParamsView.
+const (
+	PreviewHelpCenterParamsViewArticle    PreviewHelpCenterParamsView = "article"
+	PreviewHelpCenterParamsViewCollection PreviewHelpCenterParamsView = "collection"
+	PreviewHelpCenterParamsViewHome       PreviewHelpCenterParamsView = "home"
+)
+
+// Valid indicates whether the value is a known member of the PreviewHelpCenterParamsView enum.
+func (e PreviewHelpCenterParamsView) Valid() bool {
+	switch e {
+	case PreviewHelpCenterParamsViewArticle:
+		return true
+	case PreviewHelpCenterParamsViewCollection:
+		return true
+	case PreviewHelpCenterParamsViewHome:
 		return true
 	default:
 		return false
@@ -6958,6 +7201,7 @@ type AnalyticsRangeProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7502,8 +7746,15 @@ type ApiKeyList struct {
 //	  - `status:manage`: set component states, open, change and resolve incidents and their
 //	    updates; create, change and delete pages, groups and components (owners and admins).
 //	    Never implied: a key made without naming its scopes does not hold it.
+//	  - `help:read`: help centers, their collections, articles, translations, revisions,
+//	    previews, search and report.
+//	  - `help:write`: create and change collections and articles, save, restore and delete draft
+//	    translations, render Markdown, upload images.
+//	  - `help:publish`: create, configure and delete help centers; publish and unpublish
+//	    translations, delete published ones. API keys only, and never implied: a key made without
+//	    naming its scopes does not hold it, and OAuth clients are not offered it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -7928,6 +8179,7 @@ type BroadcastProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8426,6 +8678,9 @@ type ClientConversationCreate struct {
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
 
+	// HelpArticleId The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+
 	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
@@ -8439,6 +8694,9 @@ type ClientConversationCreateMultipart struct {
 	Body     *string               `json:"body,omitempty"`
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
+
+	// HelpArticleId The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 
 	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
@@ -8630,6 +8888,161 @@ type ClientFeedbackCreateMultipart struct {
 	Subject *string        `json:"subject,omitempty"`
 }
 
+// ClientHelp defines model for ClientHelp.
+type ClientHelp struct {
+	Center ClientHelpCenter `json:"center"`
+
+	// Collections Top-level collections by position, each followed by its sub-collections.
+	Collections []ClientHelpCollection     `json:"collections"`
+	Popular     []ClientHelpArticleSummary `json:"popular"`
+	Suggested   []ClientHelpArticleSummary `json:"suggested"`
+}
+
+// ClientHelpArticle defines model for ClientHelpArticle.
+type ClientHelpArticle struct {
+	// BodyHtml Sanitized HTML.
+	BodyHtml   string                   `json:"body_html"`
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Fallback The article has no published translation in the requested locale; this is the default locale's.
+	Fallback bool      `json:"fallback"`
+	Id       uuid.UUID `json:"id"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag                `json:"locale"`
+	Number  int32                      `json:"number"`
+	Related []ClientHelpArticleSummary `json:"related"`
+	Title   string                     `json:"title"`
+
+	// UpdatedAt When this translation was last published.
+	UpdatedAt time.Time `json:"updated_at"`
+	Url       string    `json:"url"`
+}
+
+// ClientHelpArticleSummary defines model for ClientHelpArticleSummary.
+type ClientHelpArticleSummary struct {
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt string    `json:"excerpt"`
+	Id      uuid.UUID `json:"id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// ClientHelpCenter defines model for ClientHelpCenter.
+type ClientHelpCenter struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+	Description   string      `json:"description"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag   `json:"locale"`
+	Locales []LanguageTag `json:"locales"`
+	LogoUrl *string       `json:"logo_url,omitempty"`
+	Name    string        `json:"name"`
+
+	// Url The public home page in the served locale.
+	Url string `json:"url"`
+}
+
+// ClientHelpCollection defines model for ClientHelpCollection.
+type ClientHelpCollection struct {
+	// ArticleCount Published articles in the served locale.
+	ArticleCount int32  `json:"article_count"`
+	Description  string `json:"description"`
+
+	// Icon One of a fixed set of icons a collection shows.
+	Icon     *HelpIcon  `json:"icon,omitempty"`
+	Id       uuid.UUID  `json:"id"`
+	Name     string     `json:"name"`
+	Number   int32      `json:"number"`
+	ParentId *uuid.UUID `json:"parent_id,omitempty"`
+	Url      string     `json:"url"`
+}
+
+// ClientHelpCollectionDetail defines model for ClientHelpCollectionDetail.
+type ClientHelpCollectionDetail struct {
+	Articles   []ClientHelpArticleSummary `json:"articles"`
+	Collection ClientHelpCollection       `json:"collection"`
+
+	// Collections Its sub-collections.
+	Collections []ClientHelpCollection `json:"collections"`
+}
+
+// ClientHelpCollectionRef defines model for ClientHelpCollectionRef.
+type ClientHelpCollectionRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// ClientHelpReaction defines model for ClientHelpReaction.
+type ClientHelpReaction struct {
+	// Locale The locale of the translation the visitor read.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Previous The visitor's earlier answer for this article, which this one replaces.
+	Previous *PageRating `json:"previous,omitempty"`
+	Rating   PageRating  `json:"rating"`
+
+	// Search The query that led to the article.
+	Search *string `json:"search,omitempty"`
+}
+
+// ClientHelpSearchClick defines model for ClientHelpSearchClick.
+type ClientHelpSearchClick struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Q      string      `json:"q"`
+}
+
+// ClientHelpSearchResult defines model for ClientHelpSearchResult.
+type ClientHelpSearchResult struct {
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt    string          `json:"excerpt"`
+	Highlights []HelpHighlight `json:"highlights"`
+	Id         uuid.UUID       `json:"id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// ClientHelpSearchResults defines model for ClientHelpSearchResults.
+type ClientHelpSearchResults struct {
+	Items []ClientHelpSearchResult `json:"items"`
+
+	// Partial No article had every word; these have some of them.
+	Partial bool `json:"partial"`
+}
+
 // ClientInbox The inbox's public settings. `live` inboxes carry `presence`; `async` inboxes never do and
 // show `expected_reply_minutes` instead.
 type ClientInbox struct {
@@ -8652,7 +9065,12 @@ type ClientInbox struct {
 
 	// FeedbackCategories The categories `POST /client/v1/feedback` accepts, in display order.
 	FeedbackCategories []FeedbackCategory `json:"feedback_categories"`
-	Id                 uuid.UUID          `json:"id"`
+
+	// Help Absent unless the inbox has a published help center (and on a server with
+	// `YUVA_HELP=off`); show the Help tile and the Home search only then. An `inbox.updated`
+	// frame brings every change.
+	Help *ClientInboxHelp `json:"help,omitempty"`
+	Id   uuid.UUID        `json:"id"`
 
 	// Mode `live` shows who is available, typing and read receipts; `async` shows the expected reply
 	// time instead.
@@ -8669,6 +9087,18 @@ type ClientInbox struct {
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
 	Timezone string             `json:"timezone"`
+}
+
+// ClientInboxHelp The inbox's published help center.
+type ClientInboxHelp struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag   `json:"default_locale"`
+	Locales       []LanguageTag `json:"locales"`
+
+	// Url The center's public home page.
+	Url string `json:"url"`
 }
 
 // ClientInboxStatus The inbox's published status page: its overall state and what is open on it. Drafts,
@@ -8731,6 +9161,10 @@ type ClientMessage struct {
 	Attachments []ClientAttachment  `json:"attachments"`
 	Author      ClientMessageAuthor `json:"author"`
 	Body        string              `json:"body"`
+
+	// Cards Help articles sent with the message, to show as cards that open the article; absent when
+	// none were. The body ends with their titles and URLs either way.
+	Cards *[]MessageCard `json:"cards,omitempty"`
 
 	// ClientId The contact's own messages only.
 	ClientId       *string   `json:"client_id,omitempty"`
@@ -9370,7 +9804,10 @@ type Conversation struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -9585,7 +10022,10 @@ type ConversationListItem struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -10629,6 +11069,7 @@ type EmailDesignProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -10960,6 +11401,7 @@ type EmailImageProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -10985,6 +11427,14 @@ type EmailImageUsage struct {
 		Id   uuid.UUID `json:"id"`
 		Name string    `json:"name"`
 	} `json:"designs"`
+
+	// HelpArticles Help articles whose draft, published copy or kept revision shows the image; absent when none do.
+	HelpArticles *[]struct {
+		CenterId uuid.UUID `json:"center_id"`
+		Id       uuid.UUID `json:"id"`
+		Number   int32     `json:"number"`
+		Title    string    `json:"title"`
+	} `json:"help_articles,omitempty"`
 }
 
 // EmailSectionBlock A group of blocks on its own background. Sections do not nest.
@@ -11482,6 +11932,620 @@ type Health struct {
 // HealthStatus defines model for Health.Status.
 type HealthStatus string
 
+// HelpArticle defines model for HelpArticle.
+type HelpArticle struct {
+	CenterId uuid.UUID `json:"center_id"`
+
+	// CollectionId Absent for an article in no collection.
+	CollectionId      *uuid.UUID `json:"collection_id,omitempty"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Number The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+	Number       int32                    `json:"number"`
+	Paths        []string                 `json:"paths"`
+	Position     int32                    `json:"position"`
+	Translations []HelpArticleTranslation `json:"translations"`
+	UpdatedAt    time.Time                `json:"updated_at"`
+}
+
+// HelpArticleCreate defines model for HelpArticleCreate.
+type HelpArticleCreate struct {
+	// Body Markdown.
+	Body         *string    `json:"body,omitempty"`
+	CollectionId *uuid.UUID `json:"collection_id,omitempty"`
+	Keywords     *string    `json:"keywords,omitempty"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale   LanguageTag `json:"locale"`
+	Paths    *[]string   `json:"paths,omitempty"`
+	Position *int32      `json:"position,omitempty"`
+
+	// Slug Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// HelpArticleEvent `help.article.published`, `help.article.unpublished`, `help.article.deleted`: a translation
+// was published or unpublished, or an article or one of its translations was deleted.
+// Delivered to callers who hold `help:read` and can see the center's inbox.
+type HelpArticleEvent struct {
+	CreatedAt   time.Time            `json:"created_at"`
+	Data        HelpArticleEventData `json:"data"`
+	Id          int64                `json:"id"`
+	InboxId     uuid.UUID            `json:"inbox_id"`
+	Type        HelpArticleEventType `json:"type"`
+	WorkspaceId uuid.UUID            `json:"workspace_id"`
+}
+
+// HelpArticleEventType defines model for HelpArticleEvent.Type.
+type HelpArticleEventType string
+
+// HelpArticleEventData defines model for HelpArticleEventData.
+type HelpArticleEventData struct {
+	ArticleId uuid.UUID `json:"article_id"`
+	CenterId  uuid.UUID `json:"center_id"`
+
+	// Locale The translation; absent when a whole article was deleted.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Number int32        `json:"number"`
+
+	// Title The published title (published and unpublished only).
+	Title *string `json:"title,omitempty"`
+
+	// Url The public page (published only).
+	Url *string `json:"url,omitempty"`
+}
+
+// HelpArticlePage defines model for HelpArticlePage.
+type HelpArticlePage struct {
+	Items []HelpArticleSummary `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// HelpArticlePublish defines model for HelpArticlePublish.
+type HelpArticlePublish struct {
+	// BaseVersion The `version` the caller reviewed; a draft saved since is refused with `409 version_conflict`.
+	BaseVersion *int32 `json:"base_version,omitempty"`
+}
+
+// HelpArticleRestore defines model for HelpArticleRestore.
+type HelpArticleRestore struct {
+	BaseVersion int32 `json:"base_version"`
+}
+
+// HelpArticleRevision defines model for HelpArticleRevision.
+type HelpArticleRevision struct {
+	AuthorApiKeyId *uuid.UUID       `json:"author_api_key_id,omitempty"`
+	AuthorMemberId *uuid.UUID       `json:"author_member_id,omitempty"`
+	Body           string           `json:"body"`
+	CreatedAt      time.Time        `json:"created_at"`
+	Id             uuid.UUID        `json:"id"`
+	Keywords       string           `json:"keywords"`
+	Kind           HelpRevisionKind `json:"kind"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Title  string      `json:"title"`
+
+	// Via The OAuth client that wrote it, when one did.
+	Via *string `json:"via,omitempty"`
+}
+
+// HelpArticleRevisionList defines model for HelpArticleRevisionList.
+type HelpArticleRevisionList struct {
+	Items []HelpArticleRevision `json:"items"`
+}
+
+// HelpArticleSignal `help.article.updated`, on `/v1/realtime` only: a translation's draft was saved, so an
+// editor open on an older `version` can say it changed elsewhere. Not stored, no id, never
+// replayed. Reaches whoever holds `help:read` and sees the center's inbox.
+type HelpArticleSignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		ArticleId uuid.UUID `json:"article_id"`
+		CenterId  uuid.UUID `json:"center_id"`
+
+		// Locale A BCP 47 language tag.
+		//
+		// Examples: en, tr
+		Locale LanguageTag `json:"locale"`
+
+		// MemberId The member who saved; absent for API keys.
+		MemberId *uuid.UUID `json:"member_id,omitempty"`
+		Version  int32      `json:"version"`
+	} `json:"data"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        HelpArticleSignalType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// HelpArticleSignalType defines model for HelpArticleSignal.Type.
+type HelpArticleSignalType string
+
+// HelpArticleSummary defines model for HelpArticleSummary.
+type HelpArticleSummary struct {
+	CenterId uuid.UUID `json:"center_id"`
+
+	// CollectionId Absent for an article in no collection.
+	CollectionId      *uuid.UUID `json:"collection_id,omitempty"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Number The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+	Number       int32                           `json:"number"`
+	Paths        []string                        `json:"paths"`
+	Position     int32                           `json:"position"`
+	Translations []HelpArticleTranslationSummary `json:"translations"`
+	UpdatedAt    time.Time                       `json:"updated_at"`
+}
+
+// HelpArticleTranslation defines model for HelpArticleTranslation.
+type HelpArticleTranslation struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Body The draft, Markdown.
+	Body      string    `json:"body"`
+	CreatedAt time.Time `json:"created_at"`
+
+	// Keywords More words the article is found by, such as synonyms.
+	Keywords string `json:"keywords"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// Published The published copy; absent unless published.
+	Published *HelpPublishedCopy `json:"published,omitempty"`
+	Slug      string             `json:"slug"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title string `json:"title"`
+
+	// UpdatedAt When the draft was last saved.
+	UpdatedAt         time.Time  `json:"updated_at"`
+	UpdatedByApiKeyId *uuid.UUID `json:"updated_by_api_key_id,omitempty"`
+	UpdatedByMemberId *uuid.UUID `json:"updated_by_member_id,omitempty"`
+
+	// Url The public page; absent unless published.
+	Url *string `json:"url,omitempty"`
+
+	// Version Moves with every save; send it as `base_version`.
+	Version int32 `json:"version"`
+}
+
+// HelpArticleTranslationSummary defines model for HelpArticleTranslationSummary.
+type HelpArticleTranslationSummary struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// PublishedAt Absent unless published.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	Slug        string     `json:"slug"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title     string    `json:"title"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The public page; absent unless published.
+	Url     *string `json:"url,omitempty"`
+	Version int32   `json:"version"`
+}
+
+// HelpArticleTranslationWrite defines model for HelpArticleTranslationWrite.
+type HelpArticleTranslationWrite struct {
+	// BaseVersion The `version` the editor loaded; `0` for a new translation.
+	BaseVersion int32 `json:"base_version"`
+
+	// Body Markdown; empty when absent.
+	Body     *string `json:"body,omitempty"`
+	Keywords *string `json:"keywords,omitempty"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// HelpArticleUpdate defines model for HelpArticleUpdate.
+type HelpArticleUpdate struct {
+	CollectionId nullable.Nullable[uuid.UUID] `json:"collection_id,omitempty"`
+	Paths        *[]string                    `json:"paths,omitempty"`
+	Position     *int32                       `json:"position,omitempty"`
+}
+
+// HelpCenter defines model for HelpCenter.
+type HelpCenter struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// AgentsMayPublish Agents with access to the inbox may publish, unpublish and delete published articles.
+	AgentsMayPublish bool `json:"agents_may_publish"`
+
+	// AnalyticsPropertyId The analytics property the public pages count cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// CanPublish The caller may publish and unpublish this center's articles.
+	CanPublish bool `json:"can_publish"`
+
+	// ChatChannelId The `chat` channel whose chat the public pages offer under "Still need help?".
+	ChatChannelId *uuid.UUID       `json:"chat_channel_id,omitempty"`
+	Counts        HelpCenterCounts `json:"counts"`
+	CreatedAt     time.Time        `json:"created_at"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// Description Shown on the center's home page.
+	Description string    `json:"description"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locales The locales articles may be written and published in; the default locale is one of them.
+	Locales   []LanguageTag `json:"locales"`
+	LogoUrl   *string       `json:"logo_url,omitempty"`
+	Name      string        `json:"name"`
+	Published bool          `json:"published"`
+	SiteUrl   *string       `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug      HelpCenterSlug `json:"slug"`
+	UpdatedAt time.Time      `json:"updated_at"`
+
+	// Url The public home page, at the server's help URL.
+	Url string `json:"url"`
+}
+
+// HelpCenterCounts defines model for HelpCenterCounts.
+type HelpCenterCounts struct {
+	Articles    int32 `json:"articles"`
+	Collections int32 `json:"collections"`
+
+	// PublishedArticles Articles with at least one published translation.
+	PublishedArticles int32 `json:"published_articles"`
+}
+
+// HelpCenterCreate defines model for HelpCenterCreate.
+type HelpCenterCreate struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// AgentsMayPublish Default `false`.
+	AgentsMayPublish    *bool      `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+	ChatChannelId       *uuid.UUID `json:"chat_channel_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	InboxId       uuid.UUID      `json:"inbox_id"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+
+	// LogoUrl An `https` image URL.
+	LogoUrl *string `json:"logo_url,omitempty"`
+	Name    string  `json:"name"`
+
+	// Published Default `false`.
+	Published *bool `json:"published,omitempty"`
+
+	// SiteUrl An `http(s)` URL of the product.
+	SiteUrl *string `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug HelpCenterSlug `json:"slug"`
+}
+
+// HelpCenterList defines model for HelpCenterList.
+type HelpCenterList struct {
+	Items []HelpCenter `json:"items"`
+}
+
+// HelpCenterSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme
+type HelpCenterSlug = string
+
+// HelpCenterUpdate defines model for HelpCenterUpdate.
+type HelpCenterUpdate struct {
+	AccentColor         nullable.Nullable[string]    `json:"accent_color,omitempty"`
+	AgentsMayPublish    *bool                        `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+	ChatChannelId       nullable.Nullable[uuid.UUID] `json:"chat_channel_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag              `json:"default_locale,omitempty"`
+	Description   *string                   `json:"description,omitempty"`
+	Locales       *[]LanguageTag            `json:"locales,omitempty"`
+	LogoUrl       nullable.Nullable[string] `json:"logo_url,omitempty"`
+	Name          *string                   `json:"name,omitempty"`
+	Published     *bool                     `json:"published,omitempty"`
+	SiteUrl       nullable.Nullable[string] `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug *HelpCenterSlug `json:"slug,omitempty"`
+}
+
+// HelpCollection defines model for HelpCollection.
+type HelpCollection struct {
+	// ArticleCount Articles directly in the collection.
+	ArticleCount int32     `json:"article_count"`
+	CenterId     uuid.UUID `json:"center_id"`
+	CreatedAt    time.Time `json:"created_at"`
+
+	// Icon One of a fixed set of icons a collection shows.
+	Icon *HelpIcon `json:"icon,omitempty"`
+	Id   uuid.UUID `json:"id"`
+
+	// Number The collection's number in its center's URLs.
+	Number int32 `json:"number"`
+
+	// ParentId The top-level collection this one is in; absent for a top-level collection.
+	ParentId *uuid.UUID `json:"parent_id,omitempty"`
+	Position int32      `json:"position"`
+
+	// Translations The name of the collection per locale.
+	Translations map[string]HelpCollectionTranslation `json:"translations"`
+	UpdatedAt    time.Time                            `json:"updated_at"`
+}
+
+// HelpCollectionCreate defines model for HelpCollectionCreate.
+type HelpCollectionCreate struct {
+	// Icon One of a fixed set of icons a collection shows.
+	Icon         *HelpIcon                                 `json:"icon,omitempty"`
+	ParentId     *uuid.UUID                                `json:"parent_id,omitempty"`
+	Position     *int32                                    `json:"position,omitempty"`
+	Translations map[string]HelpCollectionTranslationInput `json:"translations"`
+}
+
+// HelpCollectionList defines model for HelpCollectionList.
+type HelpCollectionList struct {
+	Items []HelpCollection `json:"items"`
+}
+
+// HelpCollectionTranslation defines model for HelpCollectionTranslation.
+type HelpCollectionTranslation struct {
+	Description string `json:"description"`
+	Name        string `json:"name"`
+
+	// Slug Made from the name; the collection's URL is `/{locale}/collections/{number}-{slug}`.
+	Slug string `json:"slug"`
+}
+
+// HelpCollectionTranslationInput defines model for HelpCollectionTranslationInput.
+type HelpCollectionTranslationInput struct {
+	Description *string `json:"description,omitempty"`
+	Name        string  `json:"name"`
+}
+
+// HelpCollectionUpdate defines model for HelpCollectionUpdate.
+type HelpCollectionUpdate struct {
+	// Icon A `HelpIcon` name, `null` for none.
+	Icon nullable.Nullable[string] `json:"icon,omitempty"`
+
+	// ParentId `null` makes it a top-level collection.
+	ParentId nullable.Nullable[uuid.UUID] `json:"parent_id,omitempty"`
+	Position *int32                       `json:"position,omitempty"`
+
+	// RemoveLocales Locales whose translation is removed; at least one translation stays (`400`).
+	RemoveLocales *[]LanguageTag                             `json:"remove_locales,omitempty"`
+	Translations  *map[string]HelpCollectionTranslationInput `json:"translations,omitempty"`
+}
+
+// HelpConflictProblem defines model for HelpConflictProblem.
+type HelpConflictProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Translation `version_conflict` only: the translation as it is now.
+	Translation *HelpArticleTranslation `json:"translation,omitempty"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// HelpHighlight A matched word, by offsets in UTF-16 code units into `title` or `excerpt`.
+type HelpHighlight struct {
+	End   int32              `json:"end"`
+	Field HelpHighlightField `json:"field"`
+	Start int32              `json:"start"`
+}
+
+// HelpHighlightField defines model for HelpHighlight.Field.
+type HelpHighlightField string
+
+// HelpIcon One of a fixed set of icons a collection shows.
+type HelpIcon string
+
+// HelpImage defines model for HelpImage.
+type HelpImage struct {
+	Height int32 `json:"height"`
+
+	// Id The e-mail image.
+	Id uuid.UUID `json:"id"`
+
+	// Markdown The Markdown that shows the image, its file name as the alternative text.
+	//
+	// Examples: ![invoice.png](https://yuva.example.com/i/abcdefghijklmnopqrstuvwxyz)
+	Markdown string `json:"markdown"`
+	Url      string `json:"url"`
+	Width    int32  `json:"width"`
+}
+
+// HelpMarkdown defines model for HelpMarkdown.
+type HelpMarkdown struct {
+	Body string `json:"body"`
+}
+
+// HelpPublishedCopy defines model for HelpPublishedCopy.
+type HelpPublishedCopy struct {
+	Body string `json:"body"`
+
+	// Excerpt The start of the rendered body as plain text.
+	Excerpt string `json:"excerpt"`
+
+	// Html The body rendered at publish.
+	Html                string     `json:"html"`
+	Keywords            string     `json:"keywords"`
+	PublishedAt         time.Time  `json:"published_at"`
+	PublishedByApiKeyId *uuid.UUID `json:"published_by_api_key_id,omitempty"`
+	PublishedByMemberId *uuid.UUID `json:"published_by_member_id,omitempty"`
+	Slug                string     `json:"slug"`
+	Title               string     `json:"title"`
+}
+
+// HelpRendered defines model for HelpRendered.
+type HelpRendered struct {
+	Html string `json:"html"`
+}
+
+// HelpReport defines model for HelpReport.
+type HelpReport struct {
+	// Clicks Results opened from a search.
+	Clicks int64 `json:"clicks"`
+	Days   int32 `json:"days"`
+
+	// MostDown Articles with the most "no" answers, at most 10.
+	MostDown []HelpReportArticle `json:"most_down"`
+
+	// NoResultQueries Searches that found nothing, most frequent first, at most 50.
+	NoResultQueries  []HelpReportQuery `json:"no_result_queries"`
+	NoResultSearches int64             `json:"no_result_searches"`
+	Searches         int64             `json:"searches"`
+
+	// TopArticles Most viewed first, at most 20.
+	TopArticles []HelpReportArticle `json:"top_articles"`
+	Views       int64               `json:"views"`
+}
+
+// HelpReportArticle defines model for HelpReportArticle.
+type HelpReportArticle struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Conversations Conversations started from the article.
+	Conversations int64 `json:"conversations"`
+	HelpfulDown   int64 `json:"helpful_down"`
+	HelpfulUp     int64 `json:"helpful_up"`
+	Number        int32 `json:"number"`
+
+	// Sent Times members sent it as a card.
+	Sent int64 `json:"sent"`
+
+	// Title The title in the center's default locale, else in another locale.
+	Title string `json:"title"`
+	Views int64  `json:"views"`
+}
+
+// HelpReportQuery defines model for HelpReportQuery.
+type HelpReportQuery struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Query The normalized query, or `(scrubbed)`. Written by visitors.
+	Query    string `json:"query"`
+	Searches int64  `json:"searches"`
+}
+
+// HelpRevisionKind defines model for HelpRevisionKind.
+type HelpRevisionKind string
+
+// HelpSearchResult defines model for HelpSearchResult.
+type HelpSearchResult struct {
+	ArticleId    uuid.UUID  `json:"article_id"`
+	CollectionId *uuid.UUID `json:"collection_id,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt    string          `json:"excerpt"`
+	Highlights []HelpHighlight `json:"highlights"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+	Title string               `json:"title"`
+
+	// Url The public page; absent unless published.
+	Url *string `json:"url,omitempty"`
+}
+
+// HelpSearchResults defines model for HelpSearchResults.
+type HelpSearchResults struct {
+	Items []HelpSearchResult `json:"items"`
+
+	// Partial No article had every word; these have some of them.
+	Partial bool `json:"partial"`
+}
+
+// HelpTranslationState `draft`: never published, or unpublished. `published`: the published copy is the draft.
+// `changed`: published, with a draft saved since that differs.
+type HelpTranslationState string
+
 // Home The Home blocks; a block the member may not see is absent.
 type Home struct {
 	Analytics  *HomeAnalytics  `json:"analytics,omitempty"`
@@ -11603,6 +12667,7 @@ type HomeWaitingConversation struct {
 // the workspace already runs as many migrations at a time as the server allows;
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 type HostedLimit string
 
 // IdentitySecret defines model for IdentitySecret.
@@ -12399,9 +13464,12 @@ type Message struct {
 	Author      MessageAuthor `json:"author"`
 
 	// Body Plain text.
-	Body           string    `json:"body"`
-	ClientId       *string   `json:"client_id,omitempty"`
-	ConversationId uuid.UUID `json:"conversation_id"`
+	Body string `json:"body"`
+
+	// Cards Help articles sent with the message; absent when none were.
+	Cards          *[]MessageCard `json:"cards,omitempty"`
+	ClientId       *string        `json:"client_id,omitempty"`
+	ConversationId uuid.UUID      `json:"conversation_id"`
 
 	// CreatedAt For a sent draft, when it was sent.
 	CreatedAt time.Time `json:"created_at"`
@@ -12468,8 +13536,32 @@ type MessageAuthor struct {
 	Via *string `json:"via,omitempty"`
 }
 
+// MessageCard A help article sent with the message, as it was when it was sent. The message's body ends
+// with the article's URL, so clients that show no cards lose nothing.
+type MessageCard struct {
+	ArticleId uuid.UUID       `json:"article_id"`
+	Excerpt   string          `json:"excerpt"`
+	Kind      MessageCardKind `json:"kind"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// MessageCardKind defines model for MessageCard.Kind.
+type MessageCardKind string
+
 // MessageCreate defines model for MessageCreate.
 type MessageCreate struct {
+	// ArticleIds Outgoing messages only: help articles of the inbox's center to send as cards. Each must
+	// have a published translation (`400 validation_failed` otherwise); the card takes the
+	// contact's locale, else the inbox's, else the center's default. The body gets each
+	// article's title and URL as its last lines.
+	ArticleIds *[]uuid.UUID `json:"article_ids,omitempty"`
+
 	// Body Required unless files are attached.
 	Body *string `json:"body,omitempty"`
 
@@ -12497,13 +13589,15 @@ type MessageCreateKind string
 
 // MessageCreateMultipart defines model for MessageCreateMultipart.
 type MessageCreateMultipart struct {
-	Body      *string                    `json:"body,omitempty"`
-	ClientId  *string                    `json:"client_id,omitempty"`
-	Direction *Direction                 `json:"direction,omitempty"`
-	Draft     *bool                      `json:"draft,omitempty"`
-	Files     *[]openapi_types.File      `json:"files,omitempty"`
-	Html      *string                    `json:"html,omitempty"`
-	Kind      MessageCreateMultipartKind `json:"kind"`
+	// ArticleIds Outgoing messages only; repeat the field once per article id.
+	ArticleIds *[]uuid.UUID               `json:"article_ids,omitempty"`
+	Body       *string                    `json:"body,omitempty"`
+	ClientId   *string                    `json:"client_id,omitempty"`
+	Direction  *Direction                 `json:"direction,omitempty"`
+	Draft      *bool                      `json:"draft,omitempty"`
+	Files      *[]openapi_types.File      `json:"files,omitempty"`
+	Html       *string                    `json:"html,omitempty"`
+	Kind       MessageCreateMultipartKind `json:"kind"`
 
 	// Mentions Notes only; repeat the field once per member id.
 	Mentions *[]uuid.UUID `json:"mentions,omitempty"`
@@ -13153,6 +14247,7 @@ type MigrationFileProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -14181,6 +15276,7 @@ type Problem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -15050,7 +16146,10 @@ type StatusIncidentConversation struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -16526,6 +17625,19 @@ type WebhookFeedbackPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookHelpArticlePayload defines model for WebhookHelpArticlePayload.
+type WebhookHelpArticlePayload struct {
+	Data HelpArticleEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookMessageData defines model for WebhookMessageData.
 type WebhookMessageData struct {
 	// Contact The contact as a host backend needs it.
@@ -16731,6 +17843,14 @@ type ChannelId = uuid.UUID
 // ChannelKey defines model for ChannelKey.
 type ChannelKey = string
 
+// ClientHelpChannelKey defines model for ClientHelpChannelKey.
+type ClientHelpChannelKey = string
+
+// ClientHelpLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ClientHelpLocale = LanguageTag
+
 // ConsentFormat defines model for ConsentFormat.
 type ConsentFormat string
 
@@ -16766,6 +17886,23 @@ type DocsDays = int32
 
 // DocsSiteFilter Examples: https://docs.example.com
 type DocsSiteFilter = string
+
+// HelpArticleId defines model for HelpArticleId.
+type HelpArticleId = uuid.UUID
+
+// HelpCenterId defines model for HelpCenterId.
+type HelpCenterId = uuid.UUID
+
+// HelpCollectionId defines model for HelpCollectionId.
+type HelpCollectionId = uuid.UUID
+
+// HelpLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type HelpLocale = LanguageTag
+
+// HelpRevisionId defines model for HelpRevisionId.
+type HelpRevisionId = uuid.UUID
 
 // IdempotencyKey defines model for IdempotencyKey.
 type IdempotencyKey = string
@@ -16889,6 +18026,39 @@ type ListClientDiscussionsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetClientHelpParams defines parameters for GetClientHelp.
+type GetClientHelpParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Page The page the widget is shown on, an absolute http(s) URL.
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+}
+
+// GetClientHelpArticleParams defines parameters for GetClientHelpArticle.
+type GetClientHelpArticleParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+}
+
+// GetClientHelpCollectionParams defines parameters for GetClientHelpCollection.
+type GetClientHelpCollectionParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+}
+
+// SearchClientHelpParams defines parameters for SearchClientHelp.
+type SearchClientHelpParams struct {
+	Q string `form:"q" json:"q"`
+
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Limit 1 to 10; 5 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+	Final *bool  `form:"final,omitempty" json:"final,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -18286,6 +19456,214 @@ type CreateFeedbackParams struct {
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
+// ListHelpCentersParams defines parameters for ListHelpCenters.
+type ListHelpCentersParams struct {
+	// InboxId Only the center of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateHelpCenterParams defines parameters for CreateHelpCenter.
+type CreateHelpCenterParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpCenterParams defines parameters for DeleteHelpCenter.
+type DeleteHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpCenterParams defines parameters for GetHelpCenter.
+type GetHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpCenterParams defines parameters for UpdateHelpCenter.
+type UpdateHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticlesParams defines parameters for ListHelpArticles.
+type ListHelpArticlesParams struct {
+	CollectionId *uuid.UUID                   `form:"collection_id,omitempty" json:"collection_id,omitempty"`
+	Locale       *LanguageTag                 `form:"locale,omitempty" json:"locale,omitempty"`
+	State        *ListHelpArticlesParamsState `form:"state,omitempty" json:"state,omitempty"`
+	Q            *string                      `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticlesParamsState defines parameters for ListHelpArticles.
+type ListHelpArticlesParamsState string
+
+// CreateHelpArticleParams defines parameters for CreateHelpArticle.
+type CreateHelpArticleParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpArticleParams defines parameters for DeleteHelpArticle.
+type DeleteHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpArticleParams defines parameters for GetHelpArticle.
+type GetHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpArticleParams defines parameters for UpdateHelpArticle.
+type UpdateHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpArticleTranslationParams defines parameters for DeleteHelpArticleTranslation.
+type DeleteHelpArticleTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PutHelpArticleTranslationParams defines parameters for PutHelpArticleTranslation.
+type PutHelpArticleTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PublishHelpArticleTranslationParams defines parameters for PublishHelpArticleTranslation.
+type PublishHelpArticleTranslationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticleRevisionsParams defines parameters for ListHelpArticleRevisions.
+type ListHelpArticleRevisionsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RestoreHelpArticleRevisionParams defines parameters for RestoreHelpArticleRevision.
+type RestoreHelpArticleRevisionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnpublishHelpArticleTranslationParams defines parameters for UnpublishHelpArticleTranslation.
+type UnpublishHelpArticleTranslationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpCollectionsParams defines parameters for ListHelpCollections.
+type ListHelpCollectionsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateHelpCollectionParams defines parameters for CreateHelpCollection.
+type CreateHelpCollectionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpCollectionParams defines parameters for DeleteHelpCollection.
+type DeleteHelpCollectionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpCollectionParams defines parameters for UpdateHelpCollection.
+type UpdateHelpCollectionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadHelpImageParams defines parameters for UploadHelpImage.
+type UploadHelpImageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewHelpCenterParams defines parameters for PreviewHelpCenter.
+type PreviewHelpCenterParams struct {
+	View *PreviewHelpCenterParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The collection or article, for `view=collection` and `view=article`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Draft  *bool        `form:"draft,omitempty" json:"draft,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewHelpCenterParamsView defines parameters for PreviewHelpCenter.
+type PreviewHelpCenterParamsView string
+
+// RenderHelpMarkdownParams defines parameters for RenderHelpMarkdown.
+type RenderHelpMarkdownParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpReportParams defines parameters for GetHelpReport.
+type GetHelpReportParams struct {
+	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
+	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SearchHelpArticlesParams defines parameters for SearchHelpArticles.
+type SearchHelpArticlesParams struct {
+	Q      string       `form:"q" json:"q"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Drafts *bool        `form:"drafts,omitempty" json:"drafts,omitempty"`
+
+	// Limit 1 to 20; 10 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetHomeParams defines parameters for GetHome.
 type GetHomeParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -19538,6 +20916,48 @@ type WebhookFeedbackCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookHelpArticleDeletedParams defines parameters for WebhookHelpArticleDeleted.
+type WebhookHelpArticleDeletedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookHelpArticlePublishedParams defines parameters for WebhookHelpArticlePublished.
+type WebhookHelpArticlePublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookHelpArticleUnpublishedParams defines parameters for WebhookHelpArticleUnpublished.
+type WebhookHelpArticleUnpublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookMessageCreatedParams defines parameters for WebhookMessageCreated.
 type WebhookMessageCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -19669,6 +21089,12 @@ type UnlockSharedAnalyticsJSONRequestBody = AnalyticsShareUnlock
 
 // QuerySharedAnalyticsJSONRequestBody defines body for QuerySharedAnalytics for application/json ContentType.
 type QuerySharedAnalyticsJSONRequestBody = AnalyticsQuery
+
+// CreateClientHelpReactionJSONRequestBody defines body for CreateClientHelpReaction for application/json ContentType.
+type CreateClientHelpReactionJSONRequestBody = ClientHelpReaction
+
+// CreateClientHelpSearchClickJSONRequestBody defines body for CreateClientHelpSearchClick for application/json ContentType.
+type CreateClientHelpSearchClickJSONRequestBody = ClientHelpSearchClick
 
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
@@ -19901,6 +21327,39 @@ type UploadEmailImageMultipartRequestBody = EmailImageUpload
 // CreateFeedbackJSONRequestBody defines body for CreateFeedback for application/json ContentType.
 type CreateFeedbackJSONRequestBody = FeedbackCreate
 
+// CreateHelpCenterJSONRequestBody defines body for CreateHelpCenter for application/json ContentType.
+type CreateHelpCenterJSONRequestBody = HelpCenterCreate
+
+// UpdateHelpCenterJSONRequestBody defines body for UpdateHelpCenter for application/json ContentType.
+type UpdateHelpCenterJSONRequestBody = HelpCenterUpdate
+
+// CreateHelpArticleJSONRequestBody defines body for CreateHelpArticle for application/json ContentType.
+type CreateHelpArticleJSONRequestBody = HelpArticleCreate
+
+// UpdateHelpArticleJSONRequestBody defines body for UpdateHelpArticle for application/json ContentType.
+type UpdateHelpArticleJSONRequestBody = HelpArticleUpdate
+
+// PutHelpArticleTranslationJSONRequestBody defines body for PutHelpArticleTranslation for application/json ContentType.
+type PutHelpArticleTranslationJSONRequestBody = HelpArticleTranslationWrite
+
+// PublishHelpArticleTranslationJSONRequestBody defines body for PublishHelpArticleTranslation for application/json ContentType.
+type PublishHelpArticleTranslationJSONRequestBody = HelpArticlePublish
+
+// RestoreHelpArticleRevisionJSONRequestBody defines body for RestoreHelpArticleRevision for application/json ContentType.
+type RestoreHelpArticleRevisionJSONRequestBody = HelpArticleRestore
+
+// CreateHelpCollectionJSONRequestBody defines body for CreateHelpCollection for application/json ContentType.
+type CreateHelpCollectionJSONRequestBody = HelpCollectionCreate
+
+// UpdateHelpCollectionJSONRequestBody defines body for UpdateHelpCollection for application/json ContentType.
+type UpdateHelpCollectionJSONRequestBody = HelpCollectionUpdate
+
+// UploadHelpImageMultipartRequestBody defines body for UploadHelpImage for multipart/form-data ContentType.
+type UploadHelpImageMultipartRequestBody = EmailImageUpload
+
+// RenderHelpMarkdownJSONRequestBody defines body for RenderHelpMarkdown for application/json ContentType.
+type RenderHelpMarkdownJSONRequestBody = HelpMarkdown
+
 // CreateInboxJSONRequestBody defines body for CreateInbox for application/json ContentType.
 type CreateInboxJSONRequestBody = InboxCreate
 
@@ -20098,6 +21557,15 @@ type WebhookDraftUpdatedJSONRequestBody = WebhookMessagePayload
 
 // WebhookFeedbackCreatedJSONRequestBody defines body for WebhookFeedbackCreated for application/json ContentType.
 type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
+
+// WebhookHelpArticleDeletedJSONRequestBody defines body for WebhookHelpArticleDeleted for application/json ContentType.
+type WebhookHelpArticleDeletedJSONRequestBody = WebhookHelpArticlePayload
+
+// WebhookHelpArticlePublishedJSONRequestBody defines body for WebhookHelpArticlePublished for application/json ContentType.
+type WebhookHelpArticlePublishedJSONRequestBody = WebhookHelpArticlePayload
+
+// WebhookHelpArticleUnpublishedJSONRequestBody defines body for WebhookHelpArticleUnpublished for application/json ContentType.
+type WebhookHelpArticleUnpublishedJSONRequestBody = WebhookHelpArticlePayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
@@ -22498,6 +23966,58 @@ func (t *RealtimeMessage) MergeStatusPageEvent(v StatusPageEvent) error {
 	return err
 }
 
+// AsHelpArticleEvent returns the union data inside the RealtimeMessage as a HelpArticleEvent
+func (t RealtimeMessage) AsHelpArticleEvent() (HelpArticleEvent, error) {
+	var body HelpArticleEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleEvent overwrites any union data inside the RealtimeMessage as the provided HelpArticleEvent
+func (t *RealtimeMessage) FromHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleEvent performs a merge with any union data inside the RealtimeMessage, using the provided HelpArticleEvent
+func (t *RealtimeMessage) MergeHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsHelpArticleSignal returns the union data inside the RealtimeMessage as a HelpArticleSignal
+func (t RealtimeMessage) AsHelpArticleSignal() (HelpArticleSignal, error) {
+	var body HelpArticleSignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleSignal overwrites any union data inside the RealtimeMessage as the provided HelpArticleSignal
+func (t *RealtimeMessage) FromHelpArticleSignal(v HelpArticleSignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleSignal performs a merge with any union data inside the RealtimeMessage, using the provided HelpArticleSignal
+func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -22758,6 +24278,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDraftEvent()
 	case "draft.updated":
 		return t.AsDraftEvent()
+	case "help.article.deleted":
+		return t.AsHelpArticleEvent()
+	case "help.article.published":
+		return t.AsHelpArticleEvent()
+	case "help.article.unpublished":
+		return t.AsHelpArticleEvent()
+	case "help.article.updated":
+		return t.AsHelpArticleSignal()
 	case "inbox.created":
 		return t.AsInboxCreatedEvent()
 	case "inbox.deleted":
@@ -23397,6 +24925,32 @@ func (t *StoredEvent) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
 	return err
 }
 
+// AsHelpArticleEvent returns the union data inside the StoredEvent as a HelpArticleEvent
+func (t StoredEvent) AsHelpArticleEvent() (HelpArticleEvent, error) {
+	var body HelpArticleEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleEvent overwrites any union data inside the StoredEvent as the provided HelpArticleEvent
+func (t *StoredEvent) FromHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleEvent performs a merge with any union data inside the StoredEvent, using the provided HelpArticleEvent
+func (t *StoredEvent) MergeHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -23445,6 +24999,12 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDraftEvent()
 	case "draft.updated":
 		return t.AsDraftEvent()
+	case "help.article.deleted":
+		return t.AsHelpArticleEvent()
+	case "help.article.published":
+		return t.AsHelpArticleEvent()
+	case "help.article.unpublished":
+		return t.AsHelpArticleEvent()
 	case "inbox.created":
 		return t.AsInboxCreatedEvent()
 	case "inbox.deleted":
@@ -23516,6 +25076,24 @@ type ServerInterface interface {
 	// GetClientDiscussion A thread with its replies
 	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
 	GetClientDiscussion(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, discussionId DiscussionId)
+	// GetClientHelp The inbox's help center
+	// (GET /client/v1/channels/{channel_key}/help)
+	GetClientHelp(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, params GetClientHelpParams)
+	// GetClientHelpArticle A help article
+	// (GET /client/v1/channels/{channel_key}/help/articles/{articleId})
+	GetClientHelpArticle(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, articleId HelpArticleId, params GetClientHelpArticleParams)
+	// CreateClientHelpReaction Answer "Was this helpful?"
+	// (POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions)
+	CreateClientHelpReaction(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, articleId HelpArticleId)
+	// GetClientHelpCollection A help collection
+	// (GET /client/v1/channels/{channel_key}/help/collections/{collectionId})
+	GetClientHelpCollection(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params GetClientHelpCollectionParams)
+	// SearchClientHelp Search the help center
+	// (GET /client/v1/channels/{channel_key}/help/search)
+	SearchClientHelp(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, params SearchClientHelpParams)
+	// CreateClientHelpSearchClick Count an opened search result
+	// (POST /client/v1/channels/{channel_key}/help/searches/click)
+	CreateClientHelpSearchClick(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey)
 	// ListClientMailingLists The public mailing lists a form may offer
 	// (GET /client/v1/channels/{channel_key}/lists)
 	ListClientMailingLists(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
@@ -24092,6 +25670,81 @@ type ServerInterface interface {
 	// CreateFeedback Post feedback for a host app's user
 	// (POST /v1/feedback)
 	CreateFeedback(w http.ResponseWriter, r *http.Request, params CreateFeedbackParams)
+	// ListHelpCenters List help centers
+	// (GET /v1/help-centers)
+	ListHelpCenters(w http.ResponseWriter, r *http.Request, params ListHelpCentersParams)
+	// CreateHelpCenter Create a help center
+	// (POST /v1/help-centers)
+	CreateHelpCenter(w http.ResponseWriter, r *http.Request, params CreateHelpCenterParams)
+	// DeleteHelpCenter Delete a help center
+	// (DELETE /v1/help-centers/{centerId})
+	DeleteHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params DeleteHelpCenterParams)
+	// GetHelpCenter A help center
+	// (GET /v1/help-centers/{centerId})
+	GetHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params GetHelpCenterParams)
+	// UpdateHelpCenter Update a help center
+	// (PATCH /v1/help-centers/{centerId})
+	UpdateHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params UpdateHelpCenterParams)
+	// ListHelpArticles List a center's articles
+	// (GET /v1/help-centers/{centerId}/articles)
+	ListHelpArticles(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params ListHelpArticlesParams)
+	// CreateHelpArticle Create an article
+	// (POST /v1/help-centers/{centerId}/articles)
+	CreateHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params CreateHelpArticleParams)
+	// DeleteHelpArticle Delete an article
+	// (DELETE /v1/help-centers/{centerId}/articles/{articleId})
+	DeleteHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params DeleteHelpArticleParams)
+	// GetHelpArticle An article with its translations
+	// (GET /v1/help-centers/{centerId}/articles/{articleId})
+	GetHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params GetHelpArticleParams)
+	// UpdateHelpArticle Move an article or change its pages
+	// (PATCH /v1/help-centers/{centerId}/articles/{articleId})
+	UpdateHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params UpdateHelpArticleParams)
+	// DeleteHelpArticleTranslation Delete a translation
+	// (DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale})
+	DeleteHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params DeleteHelpArticleTranslationParams)
+	// PutHelpArticleTranslation Save a translation's draft
+	// (PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale})
+	PutHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params PutHelpArticleTranslationParams)
+	// PublishHelpArticleTranslation Publish a translation
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish)
+	PublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params PublishHelpArticleTranslationParams)
+	// ListHelpArticleRevisions List a translation's revisions
+	// (GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions)
+	ListHelpArticleRevisions(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params ListHelpArticleRevisionsParams)
+	// RestoreHelpArticleRevision Restore a revision into the draft
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore)
+	RestoreHelpArticleRevision(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params RestoreHelpArticleRevisionParams)
+	// UnpublishHelpArticleTranslation Unpublish a translation
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish)
+	UnpublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params UnpublishHelpArticleTranslationParams)
+	// ListHelpCollections List a center's collections
+	// (GET /v1/help-centers/{centerId}/collections)
+	ListHelpCollections(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params ListHelpCollectionsParams)
+	// CreateHelpCollection Create a collection
+	// (POST /v1/help-centers/{centerId}/collections)
+	CreateHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params CreateHelpCollectionParams)
+	// DeleteHelpCollection Delete a collection
+	// (DELETE /v1/help-centers/{centerId}/collections/{collectionId})
+	DeleteHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, collectionId HelpCollectionId, params DeleteHelpCollectionParams)
+	// UpdateHelpCollection Update a collection
+	// (PATCH /v1/help-centers/{centerId}/collections/{collectionId})
+	UpdateHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, collectionId HelpCollectionId, params UpdateHelpCollectionParams)
+	// UploadHelpImage Upload an image for articles
+	// (POST /v1/help-centers/{centerId}/images)
+	UploadHelpImage(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params UploadHelpImageParams)
+	// PreviewHelpCenter Preview a help center page
+	// (GET /v1/help-centers/{centerId}/preview)
+	PreviewHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params PreviewHelpCenterParams)
+	// RenderHelpMarkdown Render Markdown as an article
+	// (POST /v1/help-centers/{centerId}/render)
+	RenderHelpMarkdown(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params RenderHelpMarkdownParams)
+	// GetHelpReport A help center's report
+	// (GET /v1/help-centers/{centerId}/report)
+	GetHelpReport(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params GetHelpReportParams)
+	// SearchHelpArticles Search a center's articles
+	// (GET /v1/help-centers/{centerId}/search)
+	SearchHelpArticles(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params SearchHelpArticlesParams)
 	// GetHome Everything the workspace has today, in one answer
 	// (GET /v1/home)
 	GetHome(w http.ResponseWriter, r *http.Request, params GetHomeParams)
@@ -24825,6 +26478,305 @@ func (siw *ServerInterfaceWrapper) GetClientDiscussion(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetClientDiscussion(w, r, channelKey, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientHelp operation middleware
+func (siw *ServerInterfaceWrapper) GetClientHelp(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetClientHelpParams
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "page" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientHelp(w, r, channelKey, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientHelpArticle operation middleware
+func (siw *ServerInterfaceWrapper) GetClientHelpArticle(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetClientHelpArticleParams
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientHelpArticle(w, r, channelKey, articleId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClientHelpReaction operation middleware
+func (siw *ServerInterfaceWrapper) CreateClientHelpReaction(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClientHelpReaction(w, r, channelKey, articleId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientHelpCollection operation middleware
+func (siw *ServerInterfaceWrapper) GetClientHelpCollection(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "collectionId" -------------
+	var collectionId HelpCollectionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "collectionId", r.PathValue("collectionId"), &collectionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "collectionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetClientHelpCollectionParams
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientHelpCollection(w, r, channelKey, collectionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SearchClientHelp operation middleware
+func (siw *ServerInterfaceWrapper) SearchClientHelp(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SearchClientHelpParams
+
+	// ------------- Required query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, true, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "final" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "final", r.URL.Query(), &params.Final, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "final"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "final", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SearchClientHelp(w, r, channelKey, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClientHelpSearchClick operation middleware
+func (siw *ServerInterfaceWrapper) CreateClientHelpSearchClick(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientHelpChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClientHelpSearchClick(w, r, channelKey)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -35378,6 +37330,1741 @@ func (siw *ServerInterfaceWrapper) CreateFeedback(w http.ResponseWriter, r *http
 	handler.ServeHTTP(w, r)
 }
 
+// ListHelpCenters operation middleware
+func (siw *ServerInterfaceWrapper) ListHelpCenters(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListHelpCentersParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListHelpCenters(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateHelpCenter operation middleware
+func (siw *ServerInterfaceWrapper) CreateHelpCenter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateHelpCenterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateHelpCenter(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteHelpCenter operation middleware
+func (siw *ServerInterfaceWrapper) DeleteHelpCenter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteHelpCenterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteHelpCenter(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetHelpCenter operation middleware
+func (siw *ServerInterfaceWrapper) GetHelpCenter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetHelpCenterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetHelpCenter(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateHelpCenter operation middleware
+func (siw *ServerInterfaceWrapper) UpdateHelpCenter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateHelpCenterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateHelpCenter(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListHelpArticles operation middleware
+func (siw *ServerInterfaceWrapper) ListHelpArticles(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListHelpArticlesParams
+
+	// ------------- Optional query parameter "collection_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "collection_id", r.URL.Query(), &params.CollectionId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "collection_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "collection_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListHelpArticles(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateHelpArticle operation middleware
+func (siw *ServerInterfaceWrapper) CreateHelpArticle(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateHelpArticleParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateHelpArticle(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteHelpArticle operation middleware
+func (siw *ServerInterfaceWrapper) DeleteHelpArticle(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteHelpArticleParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteHelpArticle(w, r, centerId, articleId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetHelpArticle operation middleware
+func (siw *ServerInterfaceWrapper) GetHelpArticle(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetHelpArticleParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetHelpArticle(w, r, centerId, articleId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateHelpArticle operation middleware
+func (siw *ServerInterfaceWrapper) UpdateHelpArticle(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateHelpArticleParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateHelpArticle(w, r, centerId, articleId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteHelpArticleTranslation operation middleware
+func (siw *ServerInterfaceWrapper) DeleteHelpArticleTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteHelpArticleTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteHelpArticleTranslation(w, r, centerId, articleId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PutHelpArticleTranslation operation middleware
+func (siw *ServerInterfaceWrapper) PutHelpArticleTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PutHelpArticleTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PutHelpArticleTranslation(w, r, centerId, articleId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PublishHelpArticleTranslation operation middleware
+func (siw *ServerInterfaceWrapper) PublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PublishHelpArticleTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PublishHelpArticleTranslation(w, r, centerId, articleId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListHelpArticleRevisions operation middleware
+func (siw *ServerInterfaceWrapper) ListHelpArticleRevisions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListHelpArticleRevisionsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListHelpArticleRevisions(w, r, centerId, articleId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RestoreHelpArticleRevision operation middleware
+func (siw *ServerInterfaceWrapper) RestoreHelpArticleRevision(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "revisionId" -------------
+	var revisionId HelpRevisionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "revisionId", r.PathValue("revisionId"), &revisionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "revisionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RestoreHelpArticleRevisionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RestoreHelpArticleRevision(w, r, centerId, articleId, locale, revisionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnpublishHelpArticleTranslation operation middleware
+func (siw *ServerInterfaceWrapper) UnpublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "articleId" -------------
+	var articleId HelpArticleId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "articleId", r.PathValue("articleId"), &articleId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "articleId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale HelpLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnpublishHelpArticleTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnpublishHelpArticleTranslation(w, r, centerId, articleId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListHelpCollections operation middleware
+func (siw *ServerInterfaceWrapper) ListHelpCollections(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListHelpCollectionsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListHelpCollections(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateHelpCollection operation middleware
+func (siw *ServerInterfaceWrapper) CreateHelpCollection(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateHelpCollectionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateHelpCollection(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteHelpCollection operation middleware
+func (siw *ServerInterfaceWrapper) DeleteHelpCollection(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "collectionId" -------------
+	var collectionId HelpCollectionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "collectionId", r.PathValue("collectionId"), &collectionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "collectionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteHelpCollectionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteHelpCollection(w, r, centerId, collectionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateHelpCollection operation middleware
+func (siw *ServerInterfaceWrapper) UpdateHelpCollection(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "collectionId" -------------
+	var collectionId HelpCollectionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "collectionId", r.PathValue("collectionId"), &collectionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "collectionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateHelpCollectionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateHelpCollection(w, r, centerId, collectionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UploadHelpImage operation middleware
+func (siw *ServerInterfaceWrapper) UploadHelpImage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UploadHelpImageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UploadHelpImage(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PreviewHelpCenter operation middleware
+func (siw *ServerInterfaceWrapper) PreviewHelpCenter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PreviewHelpCenterParams
+
+	// ------------- Optional query parameter "view" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "view", r.URL.Query(), &params.View, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "view"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "view", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "id", r.URL.Query(), &params.Id, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "draft" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "draft", r.URL.Query(), &params.Draft, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "draft"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "draft", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewHelpCenter(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RenderHelpMarkdown operation middleware
+func (siw *ServerInterfaceWrapper) RenderHelpMarkdown(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RenderHelpMarkdownParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RenderHelpMarkdown(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetHelpReport operation middleware
+func (siw *ServerInterfaceWrapper) GetHelpReport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetHelpReportParams
+
+	// ------------- Optional query parameter "days" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "days"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "days", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetHelpReport(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SearchHelpArticles operation middleware
+func (siw *ServerInterfaceWrapper) SearchHelpArticles(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "centerId" -------------
+	var centerId HelpCenterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "centerId", r.PathValue("centerId"), &centerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "centerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SearchHelpArticlesParams
+
+	// ------------- Required query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, true, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "drafts" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "drafts", r.URL.Query(), &params.Drafts, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "drafts"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "drafts", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SearchHelpArticles(w, r, centerId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetHome operation middleware
 func (siw *ServerInterfaceWrapper) GetHome(w http.ResponseWriter, r *http.Request) {
 
@@ -44324,6 +48011,31 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/token", wrapper.RotateStatusMonitorToken)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks", wrapper.ListStatusMonitorChecks)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary", wrapper.GetStatusMonitorCheckSummary)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers", wrapper.ListHelpCenters)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers", wrapper.CreateHelpCenter)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/help-centers/{centerId}", wrapper.DeleteHelpCenter)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}", wrapper.GetHelpCenter)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/help-centers/{centerId}", wrapper.UpdateHelpCenter)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/preview", wrapper.PreviewHelpCenter)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/collections", wrapper.ListHelpCollections)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/collections", wrapper.CreateHelpCollection)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/help-centers/{centerId}/collections/{collectionId}", wrapper.DeleteHelpCollection)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/help-centers/{centerId}/collections/{collectionId}", wrapper.UpdateHelpCollection)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles", wrapper.ListHelpArticles)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles", wrapper.CreateHelpArticle)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}", wrapper.DeleteHelpArticle)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}", wrapper.GetHelpArticle)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}", wrapper.UpdateHelpArticle)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}", wrapper.DeleteHelpArticleTranslation)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}", wrapper.PutHelpArticleTranslation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish", wrapper.PublishHelpArticleTranslation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish", wrapper.UnpublishHelpArticleTranslation)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions", wrapper.ListHelpArticleRevisions)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore", wrapper.RestoreHelpArticleRevision)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/render", wrapper.RenderHelpMarkdown)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers/{centerId}/images", wrapper.UploadHelpImage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/search", wrapper.SearchHelpArticles)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers/{centerId}/report", wrapper.GetHelpReport)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -44333,6 +48045,12 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions/{discussionId}", wrapper.GetClientDiscussion)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/lists", wrapper.ListClientMailingLists)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/subscriptions", wrapper.CreateClientSubscription)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help", wrapper.GetClientHelp)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help/search", wrapper.SearchClientHelp)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help/collections/{collectionId}", wrapper.GetClientHelpCollection)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help/articles/{articleId}", wrapper.GetClientHelpArticle)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help/articles/{articleId}/reactions", wrapper.CreateClientHelpReaction)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help/searches/click", wrapper.CreateClientHelpSearchClick)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions", wrapper.CreateClientDiscussion)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/posts", wrapper.CreateClientDiscussionPost)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/answer", wrapper.ClearClientDiscussionAnswer)
@@ -44418,6 +48136,15 @@ type WebhookReceiverInterface interface {
 	// Feedback arrived
 	// HandleWebhookFeedbackCreatedWebhook handles the POST webhook for feedback.created.
 	HandleWebhookFeedbackCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookFeedbackCreatedParams)
+	// A help article or one of its translations was deleted
+	// HandleWebhookHelpArticleDeletedWebhook handles the POST webhook for help.article.deleted.
+	HandleWebhookHelpArticleDeletedWebhook(w http.ResponseWriter, r *http.Request, params WebhookHelpArticleDeletedParams)
+	// A help article translation was published
+	// HandleWebhookHelpArticlePublishedWebhook handles the POST webhook for help.article.published.
+	HandleWebhookHelpArticlePublishedWebhook(w http.ResponseWriter, r *http.Request, params WebhookHelpArticlePublishedParams)
+	// A help article translation was unpublished
+	// HandleWebhookHelpArticleUnpublishedWebhook handles the POST webhook for help.article.unpublished.
+	HandleWebhookHelpArticleUnpublishedWebhook(w http.ResponseWriter, r *http.Request, params WebhookHelpArticleUnpublishedParams)
 	// A message was added
 	// HandleWebhookMessageCreatedWebhook handles the POST webhook for message.created.
 	HandleWebhookMessageCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookMessageCreatedParams)
@@ -45831,6 +49558,282 @@ func WebhookFeedbackCreatedWebhookHandler(si WebhookReceiverInterface, errHandle
 	return h
 }
 
+// WebhookHelpArticleDeletedWebhookHandler returns the http.Handler for the help.article.deleted webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookHelpArticleDeletedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookHelpArticleDeletedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookHelpArticleDeletedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookHelpArticlePublishedWebhookHandler returns the http.Handler for the help.article.published webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookHelpArticlePublishedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookHelpArticlePublishedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookHelpArticlePublishedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookHelpArticleUnpublishedWebhookHandler returns the http.Handler for the help.article.unpublished webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookHelpArticleUnpublishedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookHelpArticleUnpublishedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookHelpArticleUnpublishedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
 // WebhookMessageCreatedWebhookHandler returns the http.Handler for the message.created webhook.
 // Mount this at the URL path advertised to webhook senders. errHandler
 // may be nil; if so, parameter-binding errors return 400 with the error
@@ -46663,6 +50666,8 @@ type BroadcastProblemApplicationProblemPlusJSONResponse BroadcastProblem
 
 type EmailDesignProblemApplicationProblemPlusJSONResponse EmailDesignProblem
 
+type HelpConflictProblemApplicationProblemPlusJSONResponse HelpConflictProblem
+
 type IngressRejectionJSONResponse IngressRejection
 
 type MigrationFileProblemApplicationProblemPlusJSONResponse MigrationFileProblem
@@ -47364,6 +51369,469 @@ func (response GetClientDiscussion404ApplicationProblemPlusJSONResponse) VisitGe
 type GetClientDiscussion429ApplicationProblemPlusJSONResponse Problem
 
 func (response GetClientDiscussion429ApplicationProblemPlusJSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpRequestObject struct {
+	ChannelKey ClientHelpChannelKey `json:"channel_key"`
+	Params     GetClientHelpParams
+}
+
+type GetClientHelpResponseObject interface {
+	VisitGetClientHelpResponse(w http.ResponseWriter) error
+}
+
+type GetClientHelp200JSONResponse ClientHelp
+
+func (response GetClientHelp200JSONResponse) VisitGetClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelp400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientHelp400ApplicationProblemPlusJSONResponse) VisitGetClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelp403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelp403ApplicationProblemPlusJSONResponse) VisitGetClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelp404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelp404ApplicationProblemPlusJSONResponse) VisitGetClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelp429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelp429ApplicationProblemPlusJSONResponse) VisitGetClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpArticleRequestObject struct {
+	ChannelKey ClientHelpChannelKey `json:"channel_key"`
+	ArticleId  HelpArticleId        `json:"articleId"`
+	Params     GetClientHelpArticleParams
+}
+
+type GetClientHelpArticleResponseObject interface {
+	VisitGetClientHelpArticleResponse(w http.ResponseWriter) error
+}
+
+type GetClientHelpArticle200JSONResponse ClientHelpArticle
+
+func (response GetClientHelpArticle200JSONResponse) VisitGetClientHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpArticle403ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientHelpArticle403ApplicationProblemPlusJSONResponse) VisitGetClientHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpArticle404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelpArticle404ApplicationProblemPlusJSONResponse) VisitGetClientHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpArticle429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelpArticle429ApplicationProblemPlusJSONResponse) VisitGetClientHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpReactionRequestObject struct {
+	ChannelKey ClientHelpChannelKey `json:"channel_key"`
+	ArticleId  HelpArticleId        `json:"articleId"`
+	Body       *CreateClientHelpReactionJSONRequestBody
+}
+
+type CreateClientHelpReactionResponseObject interface {
+	VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error
+}
+
+type CreateClientHelpReaction204Response struct {
+}
+
+func (response CreateClientHelpReaction204Response) VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type CreateClientHelpReaction400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateClientHelpReaction400ApplicationProblemPlusJSONResponse) VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpReaction403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpReaction403ApplicationProblemPlusJSONResponse) VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpReaction404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpReaction404ApplicationProblemPlusJSONResponse) VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpReaction429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpReaction429ApplicationProblemPlusJSONResponse) VisitCreateClientHelpReactionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpCollectionRequestObject struct {
+	ChannelKey   ClientHelpChannelKey `json:"channel_key"`
+	CollectionId HelpCollectionId     `json:"collectionId"`
+	Params       GetClientHelpCollectionParams
+}
+
+type GetClientHelpCollectionResponseObject interface {
+	VisitGetClientHelpCollectionResponse(w http.ResponseWriter) error
+}
+
+type GetClientHelpCollection200JSONResponse ClientHelpCollectionDetail
+
+func (response GetClientHelpCollection200JSONResponse) VisitGetClientHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpCollection403ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientHelpCollection403ApplicationProblemPlusJSONResponse) VisitGetClientHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpCollection404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelpCollection404ApplicationProblemPlusJSONResponse) VisitGetClientHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientHelpCollection429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientHelpCollection429ApplicationProblemPlusJSONResponse) VisitGetClientHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelpRequestObject struct {
+	ChannelKey ClientHelpChannelKey `json:"channel_key"`
+	Params     SearchClientHelpParams
+}
+
+type SearchClientHelpResponseObject interface {
+	VisitSearchClientHelpResponse(w http.ResponseWriter) error
+}
+
+type SearchClientHelp200JSONResponse ClientHelpSearchResults
+
+func (response SearchClientHelp200JSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelp400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SearchClientHelp400ApplicationProblemPlusJSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelp403ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchClientHelp403ApplicationProblemPlusJSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelp404ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchClientHelp404ApplicationProblemPlusJSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelp429ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchClientHelp429ApplicationProblemPlusJSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchClientHelp503ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchClientHelp503ApplicationProblemPlusJSONResponse) VisitSearchClientHelpResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(503)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpSearchClickRequestObject struct {
+	ChannelKey ClientHelpChannelKey `json:"channel_key"`
+	Body       *CreateClientHelpSearchClickJSONRequestBody
+}
+
+type CreateClientHelpSearchClickResponseObject interface {
+	VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error
+}
+
+type CreateClientHelpSearchClick204Response struct {
+}
+
+func (response CreateClientHelpSearchClick204Response) VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type CreateClientHelpSearchClick400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateClientHelpSearchClick400ApplicationProblemPlusJSONResponse) VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpSearchClick403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpSearchClick403ApplicationProblemPlusJSONResponse) VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpSearchClick404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpSearchClick404ApplicationProblemPlusJSONResponse) VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientHelpSearchClick429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientHelpSearchClick429ApplicationProblemPlusJSONResponse) VisitCreateClientHelpSearchClickResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -62247,6 +66715,2130 @@ func (response CreateFeedback404ApplicationProblemPlusJSONResponse) VisitCreateF
 	return err
 }
 
+type ListHelpCentersRequestObject struct {
+	Params ListHelpCentersParams
+}
+
+type ListHelpCentersResponseObject interface {
+	VisitListHelpCentersResponse(w http.ResponseWriter) error
+}
+
+type ListHelpCenters200JSONResponse HelpCenterList
+
+func (response ListHelpCenters200JSONResponse) VisitListHelpCentersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCenters401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListHelpCenters401ApplicationProblemPlusJSONResponse) VisitListHelpCentersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCenters403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpCenters403ApplicationProblemPlusJSONResponse) VisitListHelpCentersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCenters404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpCenters404ApplicationProblemPlusJSONResponse) VisitListHelpCentersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenterRequestObject struct {
+	Params CreateHelpCenterParams
+	Body   *CreateHelpCenterJSONRequestBody
+}
+
+type CreateHelpCenterResponseObject interface {
+	VisitCreateHelpCenterResponse(w http.ResponseWriter) error
+}
+
+type CreateHelpCenter201JSONResponse HelpCenter
+
+func (response CreateHelpCenter201JSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenter400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateHelpCenter400ApplicationProblemPlusJSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenter401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCenter401ApplicationProblemPlusJSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenter403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCenter403ApplicationProblemPlusJSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenter404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCenter404ApplicationProblemPlusJSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCenter409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCenter409ApplicationProblemPlusJSONResponse) VisitCreateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCenterRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   DeleteHelpCenterParams
+}
+
+type DeleteHelpCenterResponseObject interface {
+	VisitDeleteHelpCenterResponse(w http.ResponseWriter) error
+}
+
+type DeleteHelpCenter204Response struct {
+}
+
+func (response DeleteHelpCenter204Response) VisitDeleteHelpCenterResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteHelpCenter401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteHelpCenter401ApplicationProblemPlusJSONResponse) VisitDeleteHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCenter403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpCenter403ApplicationProblemPlusJSONResponse) VisitDeleteHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCenter404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpCenter404ApplicationProblemPlusJSONResponse) VisitDeleteHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpCenterRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   GetHelpCenterParams
+}
+
+type GetHelpCenterResponseObject interface {
+	VisitGetHelpCenterResponse(w http.ResponseWriter) error
+}
+
+type GetHelpCenter200JSONResponse HelpCenter
+
+func (response GetHelpCenter200JSONResponse) VisitGetHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpCenter401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetHelpCenter401ApplicationProblemPlusJSONResponse) VisitGetHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpCenter403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpCenter403ApplicationProblemPlusJSONResponse) VisitGetHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpCenter404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpCenter404ApplicationProblemPlusJSONResponse) VisitGetHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenterRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   UpdateHelpCenterParams
+	Body     *UpdateHelpCenterJSONRequestBody
+}
+
+type UpdateHelpCenterResponseObject interface {
+	VisitUpdateHelpCenterResponse(w http.ResponseWriter) error
+}
+
+type UpdateHelpCenter200JSONResponse HelpCenter
+
+func (response UpdateHelpCenter200JSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateHelpCenter400ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCenter401ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCenter403ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCenter404ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCenter409ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCenter429ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCenter429ApplicationProblemPlusJSONResponse) VisitUpdateHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticlesRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   ListHelpArticlesParams
+}
+
+type ListHelpArticlesResponseObject interface {
+	VisitListHelpArticlesResponse(w http.ResponseWriter) error
+}
+
+type ListHelpArticles200JSONResponse HelpArticlePage
+
+func (response ListHelpArticles200JSONResponse) VisitListHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticles400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListHelpArticles400ApplicationProblemPlusJSONResponse) VisitListHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticles401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpArticles401ApplicationProblemPlusJSONResponse) VisitListHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticles403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpArticles403ApplicationProblemPlusJSONResponse) VisitListHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticles404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpArticles404ApplicationProblemPlusJSONResponse) VisitListHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticleRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   CreateHelpArticleParams
+	Body     *CreateHelpArticleJSONRequestBody
+}
+
+type CreateHelpArticleResponseObject interface {
+	VisitCreateHelpArticleResponse(w http.ResponseWriter) error
+}
+
+type CreateHelpArticle201JSONResponse HelpArticle
+
+func (response CreateHelpArticle201JSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticle400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateHelpArticle400ApplicationProblemPlusJSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticle401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpArticle401ApplicationProblemPlusJSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticle403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpArticle403ApplicationProblemPlusJSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticle404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpArticle404ApplicationProblemPlusJSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpArticle422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpArticle422ApplicationProblemPlusJSONResponse) VisitCreateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticleRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Params    DeleteHelpArticleParams
+}
+
+type DeleteHelpArticleResponseObject interface {
+	VisitDeleteHelpArticleResponse(w http.ResponseWriter) error
+}
+
+type DeleteHelpArticle204Response struct {
+}
+
+func (response DeleteHelpArticle204Response) VisitDeleteHelpArticleResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteHelpArticle401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteHelpArticle401ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticle403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpArticle403ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticle404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpArticle404ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpArticleRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Params    GetHelpArticleParams
+}
+
+type GetHelpArticleResponseObject interface {
+	VisitGetHelpArticleResponse(w http.ResponseWriter) error
+}
+
+type GetHelpArticle200JSONResponse HelpArticle
+
+func (response GetHelpArticle200JSONResponse) VisitGetHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpArticle401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetHelpArticle401ApplicationProblemPlusJSONResponse) VisitGetHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpArticle403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpArticle403ApplicationProblemPlusJSONResponse) VisitGetHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpArticle404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpArticle404ApplicationProblemPlusJSONResponse) VisitGetHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpArticleRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Params    UpdateHelpArticleParams
+	Body      *UpdateHelpArticleJSONRequestBody
+}
+
+type UpdateHelpArticleResponseObject interface {
+	VisitUpdateHelpArticleResponse(w http.ResponseWriter) error
+}
+
+type UpdateHelpArticle200JSONResponse HelpArticle
+
+func (response UpdateHelpArticle200JSONResponse) VisitUpdateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpArticle400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateHelpArticle400ApplicationProblemPlusJSONResponse) VisitUpdateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpArticle401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpArticle401ApplicationProblemPlusJSONResponse) VisitUpdateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpArticle403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpArticle403ApplicationProblemPlusJSONResponse) VisitUpdateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpArticle404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpArticle404ApplicationProblemPlusJSONResponse) VisitUpdateHelpArticleResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticleTranslationRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Locale    HelpLocale    `json:"locale"`
+	Params    DeleteHelpArticleTranslationParams
+}
+
+type DeleteHelpArticleTranslationResponseObject interface {
+	VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error
+}
+
+type DeleteHelpArticleTranslation204Response struct {
+}
+
+func (response DeleteHelpArticleTranslation204Response) VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteHelpArticleTranslation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteHelpArticleTranslation401ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticleTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpArticleTranslation403ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticleTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpArticleTranslation404ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpArticleTranslation409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpArticleTranslation409ApplicationProblemPlusJSONResponse) VisitDeleteHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslationRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Locale    HelpLocale    `json:"locale"`
+	Params    PutHelpArticleTranslationParams
+	Body      *PutHelpArticleTranslationJSONRequestBody
+}
+
+type PutHelpArticleTranslationResponseObject interface {
+	VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error
+}
+
+type PutHelpArticleTranslation200JSONResponse HelpArticleTranslation
+
+func (response PutHelpArticleTranslation200JSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation201JSONResponse HelpArticleTranslation
+
+func (response PutHelpArticleTranslation201JSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PutHelpArticleTranslation400ApplicationProblemPlusJSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation401ApplicationProblemPlusJSONResponse Problem
+
+func (response PutHelpArticleTranslation401ApplicationProblemPlusJSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response PutHelpArticleTranslation403ApplicationProblemPlusJSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response PutHelpArticleTranslation404ApplicationProblemPlusJSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutHelpArticleTranslation409ApplicationProblemPlusJSONResponse struct {
+	HelpConflictProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PutHelpArticleTranslation409ApplicationProblemPlusJSONResponse) VisitPutHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishHelpArticleTranslationRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Locale    HelpLocale    `json:"locale"`
+	Params    PublishHelpArticleTranslationParams
+	Body      *PublishHelpArticleTranslationJSONRequestBody
+}
+
+type PublishHelpArticleTranslationResponseObject interface {
+	VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error
+}
+
+type PublishHelpArticleTranslation200JSONResponse HelpArticleTranslation
+
+func (response PublishHelpArticleTranslation200JSONResponse) VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishHelpArticleTranslation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PublishHelpArticleTranslation401ApplicationProblemPlusJSONResponse) VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishHelpArticleTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishHelpArticleTranslation403ApplicationProblemPlusJSONResponse) VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishHelpArticleTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishHelpArticleTranslation404ApplicationProblemPlusJSONResponse) VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishHelpArticleTranslation409ApplicationProblemPlusJSONResponse struct {
+	HelpConflictProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PublishHelpArticleTranslation409ApplicationProblemPlusJSONResponse) VisitPublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticleRevisionsRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Locale    HelpLocale    `json:"locale"`
+	Params    ListHelpArticleRevisionsParams
+}
+
+type ListHelpArticleRevisionsResponseObject interface {
+	VisitListHelpArticleRevisionsResponse(w http.ResponseWriter) error
+}
+
+type ListHelpArticleRevisions200JSONResponse HelpArticleRevisionList
+
+func (response ListHelpArticleRevisions200JSONResponse) VisitListHelpArticleRevisionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticleRevisions401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListHelpArticleRevisions401ApplicationProblemPlusJSONResponse) VisitListHelpArticleRevisionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticleRevisions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpArticleRevisions403ApplicationProblemPlusJSONResponse) VisitListHelpArticleRevisionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpArticleRevisions404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpArticleRevisions404ApplicationProblemPlusJSONResponse) VisitListHelpArticleRevisionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevisionRequestObject struct {
+	CenterId   HelpCenterId   `json:"centerId"`
+	ArticleId  HelpArticleId  `json:"articleId"`
+	Locale     HelpLocale     `json:"locale"`
+	RevisionId HelpRevisionId `json:"revisionId"`
+	Params     RestoreHelpArticleRevisionParams
+	Body       *RestoreHelpArticleRevisionJSONRequestBody
+}
+
+type RestoreHelpArticleRevisionResponseObject interface {
+	VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error
+}
+
+type RestoreHelpArticleRevision200JSONResponse HelpArticleTranslation
+
+func (response RestoreHelpArticleRevision200JSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevision400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RestoreHelpArticleRevision400ApplicationProblemPlusJSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevision401ApplicationProblemPlusJSONResponse Problem
+
+func (response RestoreHelpArticleRevision401ApplicationProblemPlusJSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevision403ApplicationProblemPlusJSONResponse Problem
+
+func (response RestoreHelpArticleRevision403ApplicationProblemPlusJSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevision404ApplicationProblemPlusJSONResponse Problem
+
+func (response RestoreHelpArticleRevision404ApplicationProblemPlusJSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RestoreHelpArticleRevision409ApplicationProblemPlusJSONResponse struct {
+	HelpConflictProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RestoreHelpArticleRevision409ApplicationProblemPlusJSONResponse) VisitRestoreHelpArticleRevisionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishHelpArticleTranslationRequestObject struct {
+	CenterId  HelpCenterId  `json:"centerId"`
+	ArticleId HelpArticleId `json:"articleId"`
+	Locale    HelpLocale    `json:"locale"`
+	Params    UnpublishHelpArticleTranslationParams
+}
+
+type UnpublishHelpArticleTranslationResponseObject interface {
+	VisitUnpublishHelpArticleTranslationResponse(w http.ResponseWriter) error
+}
+
+type UnpublishHelpArticleTranslation200JSONResponse HelpArticleTranslation
+
+func (response UnpublishHelpArticleTranslation200JSONResponse) VisitUnpublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishHelpArticleTranslation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnpublishHelpArticleTranslation401ApplicationProblemPlusJSONResponse) VisitUnpublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishHelpArticleTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnpublishHelpArticleTranslation403ApplicationProblemPlusJSONResponse) VisitUnpublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishHelpArticleTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnpublishHelpArticleTranslation404ApplicationProblemPlusJSONResponse) VisitUnpublishHelpArticleTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCollectionsRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   ListHelpCollectionsParams
+}
+
+type ListHelpCollectionsResponseObject interface {
+	VisitListHelpCollectionsResponse(w http.ResponseWriter) error
+}
+
+type ListHelpCollections200JSONResponse HelpCollectionList
+
+func (response ListHelpCollections200JSONResponse) VisitListHelpCollectionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCollections401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListHelpCollections401ApplicationProblemPlusJSONResponse) VisitListHelpCollectionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCollections403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpCollections403ApplicationProblemPlusJSONResponse) VisitListHelpCollectionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListHelpCollections404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListHelpCollections404ApplicationProblemPlusJSONResponse) VisitListHelpCollectionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCollectionRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   CreateHelpCollectionParams
+	Body     *CreateHelpCollectionJSONRequestBody
+}
+
+type CreateHelpCollectionResponseObject interface {
+	VisitCreateHelpCollectionResponse(w http.ResponseWriter) error
+}
+
+type CreateHelpCollection201JSONResponse HelpCollection
+
+func (response CreateHelpCollection201JSONResponse) VisitCreateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCollection400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateHelpCollection400ApplicationProblemPlusJSONResponse) VisitCreateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCollection401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCollection401ApplicationProblemPlusJSONResponse) VisitCreateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCollection403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCollection403ApplicationProblemPlusJSONResponse) VisitCreateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateHelpCollection404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateHelpCollection404ApplicationProblemPlusJSONResponse) VisitCreateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCollectionRequestObject struct {
+	CenterId     HelpCenterId     `json:"centerId"`
+	CollectionId HelpCollectionId `json:"collectionId"`
+	Params       DeleteHelpCollectionParams
+}
+
+type DeleteHelpCollectionResponseObject interface {
+	VisitDeleteHelpCollectionResponse(w http.ResponseWriter) error
+}
+
+type DeleteHelpCollection204Response struct {
+}
+
+func (response DeleteHelpCollection204Response) VisitDeleteHelpCollectionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteHelpCollection401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteHelpCollection401ApplicationProblemPlusJSONResponse) VisitDeleteHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCollection403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpCollection403ApplicationProblemPlusJSONResponse) VisitDeleteHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteHelpCollection404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteHelpCollection404ApplicationProblemPlusJSONResponse) VisitDeleteHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCollectionRequestObject struct {
+	CenterId     HelpCenterId     `json:"centerId"`
+	CollectionId HelpCollectionId `json:"collectionId"`
+	Params       UpdateHelpCollectionParams
+	Body         *UpdateHelpCollectionJSONRequestBody
+}
+
+type UpdateHelpCollectionResponseObject interface {
+	VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error
+}
+
+type UpdateHelpCollection200JSONResponse HelpCollection
+
+func (response UpdateHelpCollection200JSONResponse) VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCollection400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateHelpCollection400ApplicationProblemPlusJSONResponse) VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCollection401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCollection401ApplicationProblemPlusJSONResponse) VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCollection403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCollection403ApplicationProblemPlusJSONResponse) VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateHelpCollection404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateHelpCollection404ApplicationProblemPlusJSONResponse) VisitUpdateHelpCollectionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImageRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   UploadHelpImageParams
+	Body     *multipart.Reader
+}
+
+type UploadHelpImageResponseObject interface {
+	VisitUploadHelpImageResponse(w http.ResponseWriter) error
+}
+
+type UploadHelpImage200JSONResponse HelpImage
+
+func (response UploadHelpImage200JSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage201JSONResponse HelpImage
+
+func (response UploadHelpImage201JSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UploadHelpImage400ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage401ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage401ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage403ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage403ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage404ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage404ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage409ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage409ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage413ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage413ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(413)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage415ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage415ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(415)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage422ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage422ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadHelpImage429ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadHelpImage429ApplicationProblemPlusJSONResponse) VisitUploadHelpImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewHelpCenterRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   PreviewHelpCenterParams
+}
+
+type PreviewHelpCenterResponseObject interface {
+	VisitPreviewHelpCenterResponse(w http.ResponseWriter) error
+}
+
+type PreviewHelpCenter200TexthtmlResponse struct {
+	Body          io.Reader
+	ContentLength int64
+}
+
+func (response PreviewHelpCenter200TexthtmlResponse) VisitPreviewHelpCenterResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/html")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type PreviewHelpCenter400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PreviewHelpCenter400ApplicationProblemPlusJSONResponse) VisitPreviewHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewHelpCenter401ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewHelpCenter401ApplicationProblemPlusJSONResponse) VisitPreviewHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewHelpCenter403ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewHelpCenter403ApplicationProblemPlusJSONResponse) VisitPreviewHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewHelpCenter404ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewHelpCenter404ApplicationProblemPlusJSONResponse) VisitPreviewHelpCenterResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdownRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   RenderHelpMarkdownParams
+	Body     *RenderHelpMarkdownJSONRequestBody
+}
+
+type RenderHelpMarkdownResponseObject interface {
+	VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error
+}
+
+type RenderHelpMarkdown200JSONResponse HelpRendered
+
+func (response RenderHelpMarkdown200JSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdown400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RenderHelpMarkdown400ApplicationProblemPlusJSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdown401ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderHelpMarkdown401ApplicationProblemPlusJSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdown403ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderHelpMarkdown403ApplicationProblemPlusJSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdown404ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderHelpMarkdown404ApplicationProblemPlusJSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderHelpMarkdown429ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderHelpMarkdown429ApplicationProblemPlusJSONResponse) VisitRenderHelpMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpReportRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   GetHelpReportParams
+}
+
+type GetHelpReportResponseObject interface {
+	VisitGetHelpReportResponse(w http.ResponseWriter) error
+}
+
+type GetHelpReport200JSONResponse HelpReport
+
+func (response GetHelpReport200JSONResponse) VisitGetHelpReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpReport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetHelpReport400ApplicationProblemPlusJSONResponse) VisitGetHelpReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpReport401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpReport401ApplicationProblemPlusJSONResponse) VisitGetHelpReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpReport403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpReport403ApplicationProblemPlusJSONResponse) VisitGetHelpReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHelpReport404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHelpReport404ApplicationProblemPlusJSONResponse) VisitGetHelpReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticlesRequestObject struct {
+	CenterId HelpCenterId `json:"centerId"`
+	Params   SearchHelpArticlesParams
+}
+
+type SearchHelpArticlesResponseObject interface {
+	VisitSearchHelpArticlesResponse(w http.ResponseWriter) error
+}
+
+type SearchHelpArticles200JSONResponse HelpSearchResults
+
+func (response SearchHelpArticles200JSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticles400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SearchHelpArticles400ApplicationProblemPlusJSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticles401ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchHelpArticles401ApplicationProblemPlusJSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticles403ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchHelpArticles403ApplicationProblemPlusJSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticles404ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchHelpArticles404ApplicationProblemPlusJSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SearchHelpArticles503ApplicationProblemPlusJSONResponse Problem
+
+func (response SearchHelpArticles503ApplicationProblemPlusJSONResponse) VisitSearchHelpArticlesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(503)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetHomeRequestObject struct {
 	Params GetHomeParams
 }
@@ -73865,6 +80457,24 @@ type StrictServerInterface interface {
 	// GetClientDiscussion A thread with its replies
 	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
 	GetClientDiscussion(ctx context.Context, request GetClientDiscussionRequestObject) (GetClientDiscussionResponseObject, error)
+	// GetClientHelp The inbox's help center
+	// (GET /client/v1/channels/{channel_key}/help)
+	GetClientHelp(ctx context.Context, request GetClientHelpRequestObject) (GetClientHelpResponseObject, error)
+	// GetClientHelpArticle A help article
+	// (GET /client/v1/channels/{channel_key}/help/articles/{articleId})
+	GetClientHelpArticle(ctx context.Context, request GetClientHelpArticleRequestObject) (GetClientHelpArticleResponseObject, error)
+	// CreateClientHelpReaction Answer "Was this helpful?"
+	// (POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions)
+	CreateClientHelpReaction(ctx context.Context, request CreateClientHelpReactionRequestObject) (CreateClientHelpReactionResponseObject, error)
+	// GetClientHelpCollection A help collection
+	// (GET /client/v1/channels/{channel_key}/help/collections/{collectionId})
+	GetClientHelpCollection(ctx context.Context, request GetClientHelpCollectionRequestObject) (GetClientHelpCollectionResponseObject, error)
+	// SearchClientHelp Search the help center
+	// (GET /client/v1/channels/{channel_key}/help/search)
+	SearchClientHelp(ctx context.Context, request SearchClientHelpRequestObject) (SearchClientHelpResponseObject, error)
+	// CreateClientHelpSearchClick Count an opened search result
+	// (POST /client/v1/channels/{channel_key}/help/searches/click)
+	CreateClientHelpSearchClick(ctx context.Context, request CreateClientHelpSearchClickRequestObject) (CreateClientHelpSearchClickResponseObject, error)
 	// ListClientMailingLists The public mailing lists a form may offer
 	// (GET /client/v1/channels/{channel_key}/lists)
 	ListClientMailingLists(ctx context.Context, request ListClientMailingListsRequestObject) (ListClientMailingListsResponseObject, error)
@@ -74441,6 +81051,81 @@ type StrictServerInterface interface {
 	// CreateFeedback Post feedback for a host app's user
 	// (POST /v1/feedback)
 	CreateFeedback(ctx context.Context, request CreateFeedbackRequestObject) (CreateFeedbackResponseObject, error)
+	// ListHelpCenters List help centers
+	// (GET /v1/help-centers)
+	ListHelpCenters(ctx context.Context, request ListHelpCentersRequestObject) (ListHelpCentersResponseObject, error)
+	// CreateHelpCenter Create a help center
+	// (POST /v1/help-centers)
+	CreateHelpCenter(ctx context.Context, request CreateHelpCenterRequestObject) (CreateHelpCenterResponseObject, error)
+	// DeleteHelpCenter Delete a help center
+	// (DELETE /v1/help-centers/{centerId})
+	DeleteHelpCenter(ctx context.Context, request DeleteHelpCenterRequestObject) (DeleteHelpCenterResponseObject, error)
+	// GetHelpCenter A help center
+	// (GET /v1/help-centers/{centerId})
+	GetHelpCenter(ctx context.Context, request GetHelpCenterRequestObject) (GetHelpCenterResponseObject, error)
+	// UpdateHelpCenter Update a help center
+	// (PATCH /v1/help-centers/{centerId})
+	UpdateHelpCenter(ctx context.Context, request UpdateHelpCenterRequestObject) (UpdateHelpCenterResponseObject, error)
+	// ListHelpArticles List a center's articles
+	// (GET /v1/help-centers/{centerId}/articles)
+	ListHelpArticles(ctx context.Context, request ListHelpArticlesRequestObject) (ListHelpArticlesResponseObject, error)
+	// CreateHelpArticle Create an article
+	// (POST /v1/help-centers/{centerId}/articles)
+	CreateHelpArticle(ctx context.Context, request CreateHelpArticleRequestObject) (CreateHelpArticleResponseObject, error)
+	// DeleteHelpArticle Delete an article
+	// (DELETE /v1/help-centers/{centerId}/articles/{articleId})
+	DeleteHelpArticle(ctx context.Context, request DeleteHelpArticleRequestObject) (DeleteHelpArticleResponseObject, error)
+	// GetHelpArticle An article with its translations
+	// (GET /v1/help-centers/{centerId}/articles/{articleId})
+	GetHelpArticle(ctx context.Context, request GetHelpArticleRequestObject) (GetHelpArticleResponseObject, error)
+	// UpdateHelpArticle Move an article or change its pages
+	// (PATCH /v1/help-centers/{centerId}/articles/{articleId})
+	UpdateHelpArticle(ctx context.Context, request UpdateHelpArticleRequestObject) (UpdateHelpArticleResponseObject, error)
+	// DeleteHelpArticleTranslation Delete a translation
+	// (DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale})
+	DeleteHelpArticleTranslation(ctx context.Context, request DeleteHelpArticleTranslationRequestObject) (DeleteHelpArticleTranslationResponseObject, error)
+	// PutHelpArticleTranslation Save a translation's draft
+	// (PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale})
+	PutHelpArticleTranslation(ctx context.Context, request PutHelpArticleTranslationRequestObject) (PutHelpArticleTranslationResponseObject, error)
+	// PublishHelpArticleTranslation Publish a translation
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish)
+	PublishHelpArticleTranslation(ctx context.Context, request PublishHelpArticleTranslationRequestObject) (PublishHelpArticleTranslationResponseObject, error)
+	// ListHelpArticleRevisions List a translation's revisions
+	// (GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions)
+	ListHelpArticleRevisions(ctx context.Context, request ListHelpArticleRevisionsRequestObject) (ListHelpArticleRevisionsResponseObject, error)
+	// RestoreHelpArticleRevision Restore a revision into the draft
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore)
+	RestoreHelpArticleRevision(ctx context.Context, request RestoreHelpArticleRevisionRequestObject) (RestoreHelpArticleRevisionResponseObject, error)
+	// UnpublishHelpArticleTranslation Unpublish a translation
+	// (POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish)
+	UnpublishHelpArticleTranslation(ctx context.Context, request UnpublishHelpArticleTranslationRequestObject) (UnpublishHelpArticleTranslationResponseObject, error)
+	// ListHelpCollections List a center's collections
+	// (GET /v1/help-centers/{centerId}/collections)
+	ListHelpCollections(ctx context.Context, request ListHelpCollectionsRequestObject) (ListHelpCollectionsResponseObject, error)
+	// CreateHelpCollection Create a collection
+	// (POST /v1/help-centers/{centerId}/collections)
+	CreateHelpCollection(ctx context.Context, request CreateHelpCollectionRequestObject) (CreateHelpCollectionResponseObject, error)
+	// DeleteHelpCollection Delete a collection
+	// (DELETE /v1/help-centers/{centerId}/collections/{collectionId})
+	DeleteHelpCollection(ctx context.Context, request DeleteHelpCollectionRequestObject) (DeleteHelpCollectionResponseObject, error)
+	// UpdateHelpCollection Update a collection
+	// (PATCH /v1/help-centers/{centerId}/collections/{collectionId})
+	UpdateHelpCollection(ctx context.Context, request UpdateHelpCollectionRequestObject) (UpdateHelpCollectionResponseObject, error)
+	// UploadHelpImage Upload an image for articles
+	// (POST /v1/help-centers/{centerId}/images)
+	UploadHelpImage(ctx context.Context, request UploadHelpImageRequestObject) (UploadHelpImageResponseObject, error)
+	// PreviewHelpCenter Preview a help center page
+	// (GET /v1/help-centers/{centerId}/preview)
+	PreviewHelpCenter(ctx context.Context, request PreviewHelpCenterRequestObject) (PreviewHelpCenterResponseObject, error)
+	// RenderHelpMarkdown Render Markdown as an article
+	// (POST /v1/help-centers/{centerId}/render)
+	RenderHelpMarkdown(ctx context.Context, request RenderHelpMarkdownRequestObject) (RenderHelpMarkdownResponseObject, error)
+	// GetHelpReport A help center's report
+	// (GET /v1/help-centers/{centerId}/report)
+	GetHelpReport(ctx context.Context, request GetHelpReportRequestObject) (GetHelpReportResponseObject, error)
+	// SearchHelpArticles Search a center's articles
+	// (GET /v1/help-centers/{centerId}/search)
+	SearchHelpArticles(ctx context.Context, request SearchHelpArticlesRequestObject) (SearchHelpArticlesResponseObject, error)
 	// GetHome Everything the workspace has today, in one answer
 	// (GET /v1/home)
 	GetHome(ctx context.Context, request GetHomeRequestObject) (GetHomeResponseObject, error)
@@ -75158,6 +81843,183 @@ func (sh *strictHandler) GetClientDiscussion(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetClientDiscussionResponseObject); ok {
 		if err := validResponse.VisitGetClientDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientHelp operation middleware
+func (sh *strictHandler) GetClientHelp(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, params GetClientHelpParams) {
+	var request GetClientHelpRequestObject
+
+	request.ChannelKey = channelKey
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientHelp(ctx, request.(GetClientHelpRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientHelp")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientHelpResponseObject); ok {
+		if err := validResponse.VisitGetClientHelpResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientHelpArticle operation middleware
+func (sh *strictHandler) GetClientHelpArticle(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, articleId HelpArticleId, params GetClientHelpArticleParams) {
+	var request GetClientHelpArticleRequestObject
+
+	request.ChannelKey = channelKey
+	request.ArticleId = articleId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientHelpArticle(ctx, request.(GetClientHelpArticleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientHelpArticle")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientHelpArticleResponseObject); ok {
+		if err := validResponse.VisitGetClientHelpArticleResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateClientHelpReaction operation middleware
+func (sh *strictHandler) CreateClientHelpReaction(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, articleId HelpArticleId) {
+	var request CreateClientHelpReactionRequestObject
+
+	request.ChannelKey = channelKey
+	request.ArticleId = articleId
+
+	var body CreateClientHelpReactionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateClientHelpReaction(ctx, request.(CreateClientHelpReactionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateClientHelpReaction")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateClientHelpReactionResponseObject); ok {
+		if err := validResponse.VisitCreateClientHelpReactionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientHelpCollection operation middleware
+func (sh *strictHandler) GetClientHelpCollection(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params GetClientHelpCollectionParams) {
+	var request GetClientHelpCollectionRequestObject
+
+	request.ChannelKey = channelKey
+	request.CollectionId = collectionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientHelpCollection(ctx, request.(GetClientHelpCollectionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientHelpCollection")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientHelpCollectionResponseObject); ok {
+		if err := validResponse.VisitGetClientHelpCollectionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SearchClientHelp operation middleware
+func (sh *strictHandler) SearchClientHelp(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey, params SearchClientHelpParams) {
+	var request SearchClientHelpRequestObject
+
+	request.ChannelKey = channelKey
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SearchClientHelp(ctx, request.(SearchClientHelpRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SearchClientHelp")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SearchClientHelpResponseObject); ok {
+		if err := validResponse.VisitSearchClientHelpResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateClientHelpSearchClick operation middleware
+func (sh *strictHandler) CreateClientHelpSearchClick(w http.ResponseWriter, r *http.Request, channelKey ClientHelpChannelKey) {
+	var request CreateClientHelpSearchClickRequestObject
+
+	request.ChannelKey = channelKey
+
+	var body CreateClientHelpSearchClickJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateClientHelpSearchClick(ctx, request.(CreateClientHelpSearchClickRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateClientHelpSearchClick")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateClientHelpSearchClickResponseObject); ok {
+		if err := validResponse.VisitCreateClientHelpSearchClickResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -80828,6 +87690,777 @@ func (sh *strictHandler) CreateFeedback(w http.ResponseWriter, r *http.Request, 
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateFeedbackResponseObject); ok {
 		if err := validResponse.VisitCreateFeedbackResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListHelpCenters operation middleware
+func (sh *strictHandler) ListHelpCenters(w http.ResponseWriter, r *http.Request, params ListHelpCentersParams) {
+	var request ListHelpCentersRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListHelpCenters(ctx, request.(ListHelpCentersRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListHelpCenters")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListHelpCentersResponseObject); ok {
+		if err := validResponse.VisitListHelpCentersResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateHelpCenter operation middleware
+func (sh *strictHandler) CreateHelpCenter(w http.ResponseWriter, r *http.Request, params CreateHelpCenterParams) {
+	var request CreateHelpCenterRequestObject
+
+	request.Params = params
+
+	var body CreateHelpCenterJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateHelpCenter(ctx, request.(CreateHelpCenterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateHelpCenter")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateHelpCenterResponseObject); ok {
+		if err := validResponse.VisitCreateHelpCenterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteHelpCenter operation middleware
+func (sh *strictHandler) DeleteHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params DeleteHelpCenterParams) {
+	var request DeleteHelpCenterRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteHelpCenter(ctx, request.(DeleteHelpCenterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteHelpCenter")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteHelpCenterResponseObject); ok {
+		if err := validResponse.VisitDeleteHelpCenterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetHelpCenter operation middleware
+func (sh *strictHandler) GetHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params GetHelpCenterParams) {
+	var request GetHelpCenterRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetHelpCenter(ctx, request.(GetHelpCenterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetHelpCenter")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetHelpCenterResponseObject); ok {
+		if err := validResponse.VisitGetHelpCenterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateHelpCenter operation middleware
+func (sh *strictHandler) UpdateHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params UpdateHelpCenterParams) {
+	var request UpdateHelpCenterRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	var body UpdateHelpCenterJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateHelpCenter(ctx, request.(UpdateHelpCenterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateHelpCenter")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateHelpCenterResponseObject); ok {
+		if err := validResponse.VisitUpdateHelpCenterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListHelpArticles operation middleware
+func (sh *strictHandler) ListHelpArticles(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params ListHelpArticlesParams) {
+	var request ListHelpArticlesRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListHelpArticles(ctx, request.(ListHelpArticlesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListHelpArticles")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListHelpArticlesResponseObject); ok {
+		if err := validResponse.VisitListHelpArticlesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateHelpArticle operation middleware
+func (sh *strictHandler) CreateHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params CreateHelpArticleParams) {
+	var request CreateHelpArticleRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	var body CreateHelpArticleJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateHelpArticle(ctx, request.(CreateHelpArticleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateHelpArticle")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateHelpArticleResponseObject); ok {
+		if err := validResponse.VisitCreateHelpArticleResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteHelpArticle operation middleware
+func (sh *strictHandler) DeleteHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params DeleteHelpArticleParams) {
+	var request DeleteHelpArticleRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteHelpArticle(ctx, request.(DeleteHelpArticleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteHelpArticle")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteHelpArticleResponseObject); ok {
+		if err := validResponse.VisitDeleteHelpArticleResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetHelpArticle operation middleware
+func (sh *strictHandler) GetHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params GetHelpArticleParams) {
+	var request GetHelpArticleRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetHelpArticle(ctx, request.(GetHelpArticleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetHelpArticle")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetHelpArticleResponseObject); ok {
+		if err := validResponse.VisitGetHelpArticleResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateHelpArticle operation middleware
+func (sh *strictHandler) UpdateHelpArticle(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, params UpdateHelpArticleParams) {
+	var request UpdateHelpArticleRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Params = params
+
+	var body UpdateHelpArticleJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateHelpArticle(ctx, request.(UpdateHelpArticleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateHelpArticle")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateHelpArticleResponseObject); ok {
+		if err := validResponse.VisitUpdateHelpArticleResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteHelpArticleTranslation operation middleware
+func (sh *strictHandler) DeleteHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params DeleteHelpArticleTranslationParams) {
+	var request DeleteHelpArticleTranslationRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteHelpArticleTranslation(ctx, request.(DeleteHelpArticleTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteHelpArticleTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteHelpArticleTranslationResponseObject); ok {
+		if err := validResponse.VisitDeleteHelpArticleTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PutHelpArticleTranslation operation middleware
+func (sh *strictHandler) PutHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params PutHelpArticleTranslationParams) {
+	var request PutHelpArticleTranslationRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.Params = params
+
+	var body PutHelpArticleTranslationJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PutHelpArticleTranslation(ctx, request.(PutHelpArticleTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutHelpArticleTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PutHelpArticleTranslationResponseObject); ok {
+		if err := validResponse.VisitPutHelpArticleTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PublishHelpArticleTranslation operation middleware
+func (sh *strictHandler) PublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params PublishHelpArticleTranslationParams) {
+	var request PublishHelpArticleTranslationRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.Params = params
+
+	var body PublishHelpArticleTranslationJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PublishHelpArticleTranslation(ctx, request.(PublishHelpArticleTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PublishHelpArticleTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PublishHelpArticleTranslationResponseObject); ok {
+		if err := validResponse.VisitPublishHelpArticleTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListHelpArticleRevisions operation middleware
+func (sh *strictHandler) ListHelpArticleRevisions(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params ListHelpArticleRevisionsParams) {
+	var request ListHelpArticleRevisionsRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListHelpArticleRevisions(ctx, request.(ListHelpArticleRevisionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListHelpArticleRevisions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListHelpArticleRevisionsResponseObject); ok {
+		if err := validResponse.VisitListHelpArticleRevisionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RestoreHelpArticleRevision operation middleware
+func (sh *strictHandler) RestoreHelpArticleRevision(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params RestoreHelpArticleRevisionParams) {
+	var request RestoreHelpArticleRevisionRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.RevisionId = revisionId
+	request.Params = params
+
+	var body RestoreHelpArticleRevisionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RestoreHelpArticleRevision(ctx, request.(RestoreHelpArticleRevisionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RestoreHelpArticleRevision")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RestoreHelpArticleRevisionResponseObject); ok {
+		if err := validResponse.VisitRestoreHelpArticleRevisionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnpublishHelpArticleTranslation operation middleware
+func (sh *strictHandler) UnpublishHelpArticleTranslation(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params UnpublishHelpArticleTranslationParams) {
+	var request UnpublishHelpArticleTranslationRequestObject
+
+	request.CenterId = centerId
+	request.ArticleId = articleId
+	request.Locale = locale
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnpublishHelpArticleTranslation(ctx, request.(UnpublishHelpArticleTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnpublishHelpArticleTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnpublishHelpArticleTranslationResponseObject); ok {
+		if err := validResponse.VisitUnpublishHelpArticleTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListHelpCollections operation middleware
+func (sh *strictHandler) ListHelpCollections(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params ListHelpCollectionsParams) {
+	var request ListHelpCollectionsRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListHelpCollections(ctx, request.(ListHelpCollectionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListHelpCollections")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListHelpCollectionsResponseObject); ok {
+		if err := validResponse.VisitListHelpCollectionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateHelpCollection operation middleware
+func (sh *strictHandler) CreateHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params CreateHelpCollectionParams) {
+	var request CreateHelpCollectionRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	var body CreateHelpCollectionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateHelpCollection(ctx, request.(CreateHelpCollectionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateHelpCollection")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateHelpCollectionResponseObject); ok {
+		if err := validResponse.VisitCreateHelpCollectionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteHelpCollection operation middleware
+func (sh *strictHandler) DeleteHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, collectionId HelpCollectionId, params DeleteHelpCollectionParams) {
+	var request DeleteHelpCollectionRequestObject
+
+	request.CenterId = centerId
+	request.CollectionId = collectionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteHelpCollection(ctx, request.(DeleteHelpCollectionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteHelpCollection")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteHelpCollectionResponseObject); ok {
+		if err := validResponse.VisitDeleteHelpCollectionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateHelpCollection operation middleware
+func (sh *strictHandler) UpdateHelpCollection(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, collectionId HelpCollectionId, params UpdateHelpCollectionParams) {
+	var request UpdateHelpCollectionRequestObject
+
+	request.CenterId = centerId
+	request.CollectionId = collectionId
+	request.Params = params
+
+	var body UpdateHelpCollectionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateHelpCollection(ctx, request.(UpdateHelpCollectionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateHelpCollection")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateHelpCollectionResponseObject); ok {
+		if err := validResponse.VisitUpdateHelpCollectionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UploadHelpImage operation middleware
+func (sh *strictHandler) UploadHelpImage(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params UploadHelpImageParams) {
+	var request UploadHelpImageRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	if reader, err := r.MultipartReader(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode multipart body: %w", err))
+		return
+	} else {
+		request.Body = reader
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UploadHelpImage(ctx, request.(UploadHelpImageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UploadHelpImage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UploadHelpImageResponseObject); ok {
+		if err := validResponse.VisitUploadHelpImageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PreviewHelpCenter operation middleware
+func (sh *strictHandler) PreviewHelpCenter(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params PreviewHelpCenterParams) {
+	var request PreviewHelpCenterRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PreviewHelpCenter(ctx, request.(PreviewHelpCenterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PreviewHelpCenter")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PreviewHelpCenterResponseObject); ok {
+		if err := validResponse.VisitPreviewHelpCenterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RenderHelpMarkdown operation middleware
+func (sh *strictHandler) RenderHelpMarkdown(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params RenderHelpMarkdownParams) {
+	var request RenderHelpMarkdownRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	var body RenderHelpMarkdownJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RenderHelpMarkdown(ctx, request.(RenderHelpMarkdownRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RenderHelpMarkdown")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RenderHelpMarkdownResponseObject); ok {
+		if err := validResponse.VisitRenderHelpMarkdownResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetHelpReport operation middleware
+func (sh *strictHandler) GetHelpReport(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params GetHelpReportParams) {
+	var request GetHelpReportRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetHelpReport(ctx, request.(GetHelpReportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetHelpReport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetHelpReportResponseObject); ok {
+		if err := validResponse.VisitGetHelpReportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SearchHelpArticles operation middleware
+func (sh *strictHandler) SearchHelpArticles(w http.ResponseWriter, r *http.Request, centerId HelpCenterId, params SearchHelpArticlesParams) {
+	var request SearchHelpArticlesRequestObject
+
+	request.CenterId = centerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SearchHelpArticles(ctx, request.(SearchHelpArticlesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SearchHelpArticles")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SearchHelpArticlesResponseObject); ok {
+		if err := validResponse.VisitSearchHelpArticlesResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

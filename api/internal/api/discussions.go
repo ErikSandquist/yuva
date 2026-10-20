@@ -75,28 +75,32 @@ func (imagesAsLinks) Transform(doc *ast.Document, _ text.Reader, _ parser.Contex
 		return ast.WalkContinue, nil
 	})
 	for _, img := range images {
-		parent := img.Parent()
-		if insideLink(img) {
-			for c := img.FirstChild(); c != nil; {
-				next := c.NextSibling()
-				parent.InsertBefore(parent, img, c)
-				c = next
-			}
-			parent.RemoveChild(parent, img)
-			continue
-		}
-		link := ast.NewLink()
-		link.Destination, link.Title = img.Destination, img.Title
+		imageAsLink(img)
+	}
+}
+
+func imageAsLink(img *ast.Image) {
+	parent := img.Parent()
+	if insideLink(img) {
 		for c := img.FirstChild(); c != nil; {
 			next := c.NextSibling()
-			link.AppendChild(link, c)
+			parent.InsertBefore(parent, img, c)
 			c = next
 		}
-		if !link.HasChildren() {
-			link.AppendChild(link, ast.NewString(img.Destination))
-		}
-		parent.ReplaceChild(parent, img, link)
+		parent.RemoveChild(parent, img)
+		return
 	}
+	link := ast.NewLink()
+	link.Destination, link.Title = img.Destination, img.Title
+	for c := img.FirstChild(); c != nil; {
+		next := c.NextSibling()
+		link.AppendChild(link, c)
+		c = next
+	}
+	if !link.HasChildren() {
+		link.AppendChild(link, ast.NewString(img.Destination))
+	}
+	parent.ReplaceChild(parent, img, link)
 }
 
 func insideLink(n ast.Node) bool {
@@ -131,10 +135,15 @@ func renderMarkdown(src string) string {
 
 var plainText = bluemonday.StrictPolicy().AddSpaceWhenStrippingTag(true)
 
-// postExcerpt is the start of a post as plain text: the text of its rendered HTML, whitespace
-// collapsed, cut at a word boundary.
+// postExcerpt is the start of a post as plain text.
 func postExcerpt(body string) string {
-	text := strings.Join(strings.Fields(html.UnescapeString(plainText.Sanitize(renderMarkdown(body)))), " ")
+	return htmlExcerpt(renderMarkdown(body))
+}
+
+// htmlExcerpt is the start of sanitized HTML as plain text, whitespace collapsed, cut at a word
+// boundary.
+func htmlExcerpt(rendered string) string {
+	text := strings.Join(strings.Fields(html.UnescapeString(plainText.Sanitize(rendered))), " ")
 	r := []rune(text)
 	if len(r) <= excerptRunes {
 		return text

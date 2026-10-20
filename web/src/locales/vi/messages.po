@@ -968,6 +968,18 @@ msgstr "Nội dung của tệp không khớp với loại của nó. Hãy kiểm
 msgid "A former teammate"
 msgstr "Một đồng nghiệp cũ"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "Một bài viết của trung tâm trợ giúp đã bị xóa"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "Một bài viết của trung tâm trợ giúp đã được xuất bản"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "Một bài viết của trung tâm trợ giúp đã bị hủy xuất bản"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Một tin nhắn sau đó từ liên hệ khi chưa giao cho ai."
@@ -4161,6 +4173,10 @@ msgstr "Sửa chi tiết"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Sửa chi tiết ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Chỉnh sửa bộ sưu tập của trung tâm trợ giúp và bản nháp bài viết"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Xuất bản ({publishKey})"
 msgid "Publish an incident"
 msgstr "Công bố sự cố"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Xuất bản và hủy xuất bản bài viết của trung tâm trợ giúp"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Xuất bản ngay"
@@ -9199,6 +9219,10 @@ msgstr "Đọc liên hệ"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Đọc cuộc trò chuyện, tin nhắn, nhãn và phản hồi mẫu"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Đọc trung tâm trợ giúp, bộ sưu tập và bài viết"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

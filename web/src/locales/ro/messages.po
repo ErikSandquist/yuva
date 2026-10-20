@@ -968,6 +968,18 @@ msgstr "Conținutul unui fișier nu se potrivește cu tipul său. Verifică fiș
 msgid "A former teammate"
 msgstr "Un fost coleg de echipă"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "Un articol din centrul de ajutor a fost șters"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "Un articol din centrul de ajutor a fost publicat"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "Un articol din centrul de ajutor a fost depublicat"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Un mesaj ulterior al contactului când nu e atribuit nimeni."
@@ -4161,6 +4173,10 @@ msgstr "Editează detaliile"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Editează detaliile ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Editează colecțiile centrului de ajutor și ciornele articolelor"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Publică ({publishKey})"
 msgid "Publish an incident"
 msgstr "Publică un incident"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Publică și depublică articole din centrul de ajutor"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publică acum"
@@ -9199,6 +9219,10 @@ msgstr "Citește contactele"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Citește conversațiile, mesajele, etichetele și răspunsurile gata făcute"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Citește centre de ajutor, colecții și articole"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

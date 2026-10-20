@@ -133,6 +133,12 @@ func UniqueViolationConstraint(err error) string {
 	return ""
 }
 
+// IsQueryCanceled reports a statement stopped by statement_timeout or a cancel request.
+func IsQueryCanceled(err error) bool {
+	var pgErr *pgconn.PgError
+	return errors.As(err, &pgErr) && pgErr.Code == "57014"
+}
+
 func IsForeignKeyViolation(err error) bool {
 	var pgErr *pgconn.PgError
 	return errors.As(err, &pgErr) && pgErr.Code == "23503"

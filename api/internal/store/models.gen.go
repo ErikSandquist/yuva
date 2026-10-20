@@ -942,6 +942,140 @@ type Event struct {
 	CreatedAt      time.Time
 }
 
+type HelpArticle struct {
+	ID                uuid.UUID
+	WorkspaceID       uuid.UUID
+	CenterID          uuid.UUID
+	CollectionID      *uuid.UUID
+	Number            int32
+	Position          int32
+	Paths             []string
+	CreatedByMemberID *uuid.UUID
+	CreatedByApiKeyID *uuid.UUID
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
+}
+
+type HelpArticleDaily struct {
+	WorkspaceID   uuid.UUID
+	CenterID      uuid.UUID
+	ArticleID     uuid.UUID
+	Locale        string
+	Day           time.Time
+	Views         int32
+	HelpfulUp     int32
+	HelpfulDown   int32
+	Conversations int32
+	Sent          int32
+}
+
+type HelpArticleRevision struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	ArticleID      uuid.UUID
+	Locale         string
+	Kind           string
+	Title          string
+	Body           string
+	Keywords       string
+	ImageIds       []uuid.UUID
+	AuthorMemberID *uuid.UUID
+	AuthorApiKeyID *uuid.UUID
+	Via            *string
+	CreatedAt      time.Time
+}
+
+type HelpArticleTranslation struct {
+	WorkspaceID           uuid.UUID
+	ArticleID             uuid.UUID
+	Locale                string
+	Title                 string
+	Body                  string
+	Keywords              string
+	Slug                  string
+	Version               int32
+	ImageIds              []uuid.UUID
+	PublishedTitle        *string
+	PublishedBody         *string
+	PublishedKeywords     *string
+	PublishedSlug         *string
+	PublishedHtml         *string
+	PublishedExcerpt      *string
+	PublishedAt           *time.Time
+	PublishedByMemberID   *uuid.UUID
+	PublishedByApiKeyID   *uuid.UUID
+	HasUnpublishedChanges bool
+	SearchConfig          string
+	Search                interface{}
+	UpdatedByMemberID     *uuid.UUID
+	UpdatedByApiKeyID     *uuid.UUID
+	CreatedAt             time.Time
+	UpdatedAt             time.Time
+}
+
+type HelpCenter struct {
+	ID                   uuid.UUID
+	WorkspaceID          uuid.UUID
+	InboxID              uuid.UUID
+	Name                 string
+	Description          string
+	Slug                 string
+	DefaultLocale        string
+	Locales              []string
+	LogoUrl              *string
+	AccentColor          *string
+	SiteUrl              *string
+	ChatChannelID        *uuid.UUID
+	AnalyticsPropertyID  *uuid.UUID
+	AgentsMayPublish     bool
+	Published            bool
+	NextCollectionNumber int32
+	NextArticleNumber    int32
+	ChangedAt            time.Time
+	CreatedAt            time.Time
+	UpdatedAt            time.Time
+}
+
+type HelpCenterSlug struct {
+	Slug        string
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	CreatedAt   time.Time
+}
+
+type HelpCollection struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	ParentID    *uuid.UUID
+	Number      int32
+	Icon        *string
+	Position    int32
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type HelpCollectionTranslation struct {
+	WorkspaceID  uuid.UUID
+	CollectionID uuid.UUID
+	Locale       string
+	Name         string
+	Description  string
+	Slug         string
+	UpdatedAt    time.Time
+}
+
+type HelpSearchDaily struct {
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	Locale      string
+	Day         time.Time
+	Query       string
+	Searches    int32
+	NoResults   int32
+	Clicks      int32
+}
+
 type IdempotencyKey struct {
 	WorkspaceID uuid.UUID
 	CallerType  string
@@ -1842,6 +1976,7 @@ type UsageCounter struct {
 	AnalyticsEvents         int64
 	AnalyticsLimitReachedAt *time.Time
 	StatusNotices           int64
+	HelpSearches            int64
 }
 
 type WebauthnCeremony struct {

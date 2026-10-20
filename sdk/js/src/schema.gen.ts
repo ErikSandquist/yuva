@@ -3254,7 +3254,8 @@ export interface paths {
         /**
          * Delete an e-mail image
          * @description Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-         *     not archived uses the image. An image that went out in a sent broadcast needs
+         *     not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+         *     article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
          *     `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
          *     image. The public URL stops working at once.
          *
@@ -6387,6 +6388,477 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/help-centers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List help centers
+         * @description The centers of the inboxes the caller can see, oldest first.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["listHelpCenters"];
+        put?: never;
+        /**
+         * Create a help center
+         * @description A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+         *     its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+         *     cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+         *     `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+         *     unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+         *     same inbox, `analytics_property_id` a property of the workspace.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+         */
+        post: operations["createHelpCenter"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A help center
+         * @description With its counts and public `url`.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["getHelpCenter"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a help center
+         * @description The center with its collections, articles, translations, revisions and counters. Its
+         *     images stay e-mail images of the workspace and are swept like any unused one.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+         */
+        delete: operations["deleteHelpCenter"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a help center
+         * @description Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+         *     property. `published: false` takes the center and every article off the web (`404`) at once.
+         *     Changing `slug` keeps the old one reserved for this center, and its public addresses
+         *     redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+         *     slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+         *     while an article has a translation in it (`409 locale_in_use`).
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+         */
+        patch: operations["updateHelpCenter"];
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview a help center page
+         * @description A page of the center as visitors see it, also while the center or the article is
+         *     unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+         *     (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+         *     draft instead of the published copy). `locale` defaults to the center's default locale. It
+         *     is sent with `Cache-Control: no-store` and its links point to the public URLs.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["previewHelpCenter"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a center's collections
+         * @description Top-level collections by `position`, each followed by its sub-collections, with their
+         *     translations and the number of articles in each.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["listHelpCollections"];
+        put?: never;
+        /**
+         * Create a collection
+         * @description A group of articles, named per locale in `translations` (only the center's `locales`,
+         *     `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+         *     collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+         *     collections.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        post: operations["createHelpCollection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/collections/{collectionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a collection
+         * @description Its articles stay, in no collection; its sub-collections become top-level collections.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        delete: operations["deleteHelpCollection"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a collection
+         * @description `translations` sets the name and description of the locales it names and keeps the others;
+         *     `remove_locales` removes translations. A collection with sub-collections cannot get a
+         *     parent (`400`).
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        patch: operations["updateHelpCollection"];
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a center's articles
+         * @description By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+         *     articles of one collection. `state` keeps the articles whose translation in `locale` (the
+         *     center's default locale when absent) is a `draft` (never published, or unpublished),
+         *     `published` (no change since), `changed` (published, with a draft that differs) or
+         *     `missing` (no translation in that locale). `q` matches the words of the titles of every
+         *     translation, drafts included.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["listHelpArticles"];
+        put?: never;
+        /**
+         * Create an article
+         * @description An article with its first translation, a draft in `locale` (one of the center's `locales`,
+         *     `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+         *     workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        post: operations["createHelpArticle"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An article with its translations
+         * @description Every translation with its draft and its published copy.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["getHelpArticle"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an article
+         * @description With every translation, revision and counter, and sends `help.article.deleted`. An article
+         *     with a published translation can be deleted only by those who may publish
+         *     (`403 forbidden`), and API keys also need `help:publish`.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        delete: operations["deleteHelpArticle"];
+        options?: never;
+        head?: never;
+        /**
+         * Move an article or change its pages
+         * @description Its collection (`null` for none), its position and the page `paths` where the widget
+         *     suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+         *     trailing `*` matches any rest (`/billing/*`).
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        patch: operations["updateHelpArticle"];
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save a translation's draft
+         * @description Writes the working draft of the translation in `locale`, one of the center's `locales`
+         *     (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+         *     translation that does not exist yet; any other is refused with `409 version_conflict`,
+         *     which carries the translation as it is now in `translation`. A save moves `version` by one,
+         *     keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+         *     with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+         *     translation is published again. Images of the body stay only when they are this
+         *     workspace's uploads.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        put: operations["putHelpArticleTranslation"];
+        post?: never;
+        /**
+         * Delete a translation
+         * @description With its revisions, and sends `help.article.deleted` naming the locale. The last
+         *     translation of an article cannot be deleted (`409 last_translation`); delete the article
+         *     instead. A published translation can be deleted only by those who may publish
+         *     (`403 forbidden`), and API keys also need `help:publish`.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        delete: operations["deleteHelpArticleTranslation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish a translation
+         * @description Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+         *     revision and sends `help.article.published`. With `base_version`, a draft saved since is
+         *     refused with `409 version_conflict`. The article is public once its center is published.
+         *     Publishing an unchanged published translation changes nothing.
+         *
+         *     Owners, admins and API keys; agents with access to the center's inbox when the center's
+         *     `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+         *     (`403 member_session_required`). Scope: `help:publish`.
+         */
+        post: operations["publishHelpArticleTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish a translation
+         * @description Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+         *     and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+         *
+         *     Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+         */
+        post: operations["unpublishHelpArticleTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a translation's revisions
+         * @description Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+         *     `restore`, each with its title, body and keywords.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["listHelpArticleRevisions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore a revision into the draft
+         * @description Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+         *     same `base_version` check) and keeps a `restore` revision. The published copy does not
+         *     change.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        post: operations["restoreHelpArticleRevision"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Render Markdown as an article
+         * @description The editor's preview: the HTML a body would publish as, with the same rules for images.
+         *     60 renders a minute per caller (`429 rate_limited`).
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        post: operations["renderHelpMarkdown"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload an image for articles
+         * @description Stores the image as one of the workspace's e-mail images, with the same rules as
+         *     `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+         *     the rate), and answers its public URL with the Markdown that shows it. An image no draft
+         *     uses and no published article showed is deleted a week after its upload.
+         *
+         *     Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+         */
+        post: operations["uploadHelpImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search a center's articles
+         * @description The ranking the widget and the public pages use, over published translations in `locale`
+         *     (the center's default locale when absent) and, when that locale has fewer than 3 published
+         *     articles, the default locale too. `drafts=true` searches the drafts instead, also of
+         *     translations never published. `q` is normalized and cut to 8 words of at most 50
+         *     characters; a query left empty is refused with `400 query_empty`. Members' searches are
+         *     not counted in the report.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["searchHelpArticles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/help-centers/{centerId}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A help center's report
+         * @description Counters of the last `days` UTC days, today included: views (approximate: one per address,
+         *     article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+         *     conversations started from an article and times an article was sent as a card, per article;
+         *     searches, and the searches that found nothing by their normalized query. Counts reach the
+         *     report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+         *     as `(scrubbed)`.
+         *
+         *     Scope: `help:read`.
+         */
+        get: operations["getHelpReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/client/v1/session": {
         parameters: {
             query?: never;
@@ -6627,6 +7099,155 @@ export interface paths {
          *     An `app` channel's key answers `404`.
          */
         post: operations["createClientSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The inbox's help center
+         * @description The published help center of the inbox of a `chat` or `app` channel, without a session: the
+         *     center in the served locale, its collections that have published articles there,
+         *     `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+         *     ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+         *     it, else its base language, else the center's default locale. Nothing is created.
+         *
+         *     Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+         *     `404 help_off` when the inbox has no published center. Sent with
+         *     `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientHelp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search the help center
+         * @description Published articles that match `q`, best first, in the served locale and, when it has fewer
+         *     than 3 published articles, the default locale too; each result names its `locale`. Every
+         *     word must match and the last may be the start of a word; when nothing matches, any word
+         *     may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+         *     which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+         *
+         *     Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+         *     seconds without typing); only those are counted in the report. 30 searches a minute per
+         *     address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+         *     `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+         */
+        get: operations["searchClientHelp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help/collections/{collectionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A help collection
+         * @description A collection with its sub-collections and its published articles in the served locale, by
+         *     position. `404` for a collection with no published article in that locale. Sent with
+         *     `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientHelpCollection"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help/articles/{articleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A help article
+         * @description The published article in the served locale, or in the center's default locale with
+         *     `fallback: true` when it has no published translation there, with up to 3 `related`
+         *     articles of its collection. Counts one view per address, article and hour. `404` for an
+         *     unpublished article. Sent with `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientHelpArticle"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help/articles/{articleId}/reactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Answer "Was this helpful?"
+         * @description Counts one `up` or `down` for the article's translation in `locale`, without a session and
+         *     without storing anything about the visitor. A visitor who changes their mind sends the new
+         *     `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+         *     `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+         *     limited per address and per channel (`429 rate_limited`). Sent with
+         *     `Cache-Control: no-store`.
+         */
+        post: operations["createClientHelpReaction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/help/searches/click": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Count an opened search result
+         * @description Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+         *     visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+         *     `Cache-Control: no-store`.
+         */
+        post: operations["createClientHelpSearchClick"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8185,6 +8806,67 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "help.article.published": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A help article translation was published
+         * @description A translation's draft became its published copy. It is public when the center is
+         *     published. Endpoints of an inbox get the articles of that inbox's center.
+         */
+        post: operations["webhookHelpArticlePublished"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "help.article.unpublished": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A help article translation was unpublished
+         * @description The translation is no longer on the web; its draft stays.
+         */
+        post: operations["webhookHelpArticleUnpublished"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "help.article.deleted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A help article or one of its translations was deleted
+         * @description `locale` names the deleted translation; absent when the whole article was deleted.
+         */
+        post: operations["webhookHelpArticleDeleted"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -8452,11 +9134,18 @@ export interface components {
          *     - `status:manage`: set component states, open, change and resolve incidents and their
          *       updates; create, change and delete pages, groups and components (owners and admins).
          *       Never implied: a key made without naming its scopes does not hold it.
+         *     - `help:read`: help centers, their collections, articles, translations, revisions,
+         *       previews, search and report.
+         *     - `help:write`: create and change collections and articles, save, restore and delete draft
+         *       translations, render Markdown, upload images.
+         *     - `help:publish`: create, configure and delete help centers; publish and unpublish
+         *       translations, delete published ones. API keys only, and never implied: a key made without
+         *       naming its scopes does not hold it, and OAuth clients are not offered it.
          *
-         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
+         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage" | "help:read" | "help:write" | "help:publish";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -9318,7 +10007,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up" | "help.article.published" | "help.article.unpublished" | "help.article.deleted";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -9565,6 +10254,11 @@ export interface components {
             feedback?: components["schemas"]["Feedback"];
             /** @description The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise. */
             page?: components["schemas"]["SourcePage"];
+            /**
+             * Format: uuid
+             * @description The help article the contact read just before starting the conversation from it; absent otherwise.
+             */
+            help_article_id?: string;
             /**
              * Format: uuid
              * @description The channel it started on; absent when unknown or removed.
@@ -10205,6 +10899,8 @@ export interface components {
             imported_at?: string;
             /** @description An imported outgoing message whose sender is not mapped to a member; absent otherwise. */
             imported_author?: components["schemas"]["ImportedAuthor"];
+            /** @description Help articles sent with the message; absent when none were. */
+            cards?: components["schemas"]["MessageCard"][];
             /**
              * Format: date-time
              * @description For a sent draft, when it was sent.
@@ -10304,6 +11000,13 @@ export interface components {
              *     body as it likes; the server does not parse `@` in the text.
              */
             mentions?: string[];
+            /**
+             * @description Outgoing messages only: help articles of the inbox's center to send as cards. Each must
+             *     have a published translation (`400 validation_failed` otherwise); the card takes the
+             *     contact's locale, else the inbox's, else the center's default. The body gets each
+             *     article's title and URL as its last lines.
+             */
+            article_ids?: string[];
         };
         MessageCreateMultipart: {
             /** @enum {string} */
@@ -10315,6 +11018,8 @@ export interface components {
             draft?: boolean;
             /** @description Notes only; repeat the field once per member id. */
             mentions?: string[];
+            /** @description Outgoing messages only; repeat the field once per article id. */
+            article_ids?: string[];
             files?: string[];
         };
         /** @description Only the fields sent change. */
@@ -11871,7 +12576,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["HelpArticleEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -11890,7 +12595,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["HelpArticleSignal"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -13800,6 +14505,12 @@ export interface components {
              *     empty; an `inbox.updated` frame brings every change.
              */
             status?: components["schemas"]["ClientInboxStatus"];
+            /**
+             * @description Absent unless the inbox has a published help center (and on a server with
+             *     `YUVA_HELP=off`); show the Help tile and the Home search only then. An `inbox.updated`
+             *     frame brings every change.
+             */
+            help?: components["schemas"]["ClientInboxHelp"];
         };
         ClientContact: {
             /** Format: uuid */
@@ -13954,6 +14665,11 @@ export interface components {
             /** @description The contact's own messages only. */
             client_id?: string;
             attachments: components["schemas"]["ClientAttachment"][];
+            /**
+             * @description Help articles sent with the message, to show as cards that open the article; absent when
+             *     none were. The body ends with their titles and URLs either way.
+             */
+            cards?: components["schemas"]["MessageCard"][];
             /** Format: date-time */
             created_at: string;
         };
@@ -13983,6 +14699,11 @@ export interface components {
             page_url?: string;
             /** @description The page's title; ignored without a kept `page_url`. */
             page_title?: string;
+            /**
+             * Format: uuid
+             * @description The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+             */
+            help_article_id?: string;
         };
         ClientConversationCreateMultipart: {
             subject?: string;
@@ -13992,6 +14713,11 @@ export interface components {
             page_url?: string;
             /** @description The page's title; ignored without a kept `page_url`. */
             page_title?: string;
+            /**
+             * Format: uuid
+             * @description The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+             */
+            help_article_id?: string;
             files?: string[];
         };
         ClientConversationCreated: {
@@ -17576,6 +18302,16 @@ export interface components {
                 id: string;
                 name: string;
             }[];
+            /** @description Help articles whose draft, published copy or kept revision shows the image; absent when none do. */
+            help_articles?: {
+                /** Format: uuid */
+                id: string;
+                /** Format: uuid */
+                center_id: string;
+                /** Format: int32 */
+                number: number;
+                title: string;
+            }[];
         };
         EmailImageProblem: components["schemas"]["Problem"] & {
             used_by?: components["schemas"]["EmailImageUsage"];
@@ -17622,14 +18358,702 @@ export interface components {
             images: components["schemas"]["EmailTemplateImage"][];
         };
         /**
+         * @description `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+         * @example acme
+         */
+        HelpCenterSlug: string;
+        HelpCenterCounts: {
+            /** Format: int32 */
+            collections: number;
+            /** Format: int32 */
+            articles: number;
+            /**
+             * Format: int32
+             * @description Articles with at least one published translation.
+             */
+            published_articles: number;
+        };
+        HelpCenter: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            /** @description Shown on the center's home page. */
+            description: string;
+            slug: components["schemas"]["HelpCenterSlug"];
+            /** @description The public home page, at the server's help URL. */
+            url: string;
+            default_locale: components["schemas"]["LanguageTag"];
+            /** @description The locales articles may be written and published in; the default locale is one of them. */
+            locales: components["schemas"]["LanguageTag"][];
+            logo_url?: string;
+            accent_color?: components["schemas"]["StatusColor"];
+            site_url?: string;
+            /**
+             * Format: uuid
+             * @description The `chat` channel whose chat the public pages offer under "Still need help?".
+             */
+            chat_channel_id?: string;
+            /**
+             * Format: uuid
+             * @description The analytics property the public pages count cookieless page views in.
+             */
+            analytics_property_id?: string;
+            /** @description Agents with access to the inbox may publish, unpublish and delete published articles. */
+            agents_may_publish: boolean;
+            published: boolean;
+            /** @description The caller may publish and unpublish this center's articles. */
+            can_publish: boolean;
+            counts: components["schemas"]["HelpCenterCounts"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        HelpCenterList: {
+            items: components["schemas"]["HelpCenter"][];
+        };
+        HelpCenterCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            description?: string;
+            slug: components["schemas"]["HelpCenterSlug"];
+            default_locale?: components["schemas"]["LanguageTag"];
+            locales?: components["schemas"]["LanguageTag"][];
+            /**
+             * Format: uri
+             * @description An `https` image URL.
+             */
+            logo_url?: string;
+            accent_color?: components["schemas"]["StatusColor"];
+            /**
+             * Format: uri
+             * @description An `http(s)` URL of the product.
+             */
+            site_url?: string;
+            /** Format: uuid */
+            chat_channel_id?: string;
+            /** Format: uuid */
+            analytics_property_id?: string;
+            /** @description Default `false`. */
+            agents_may_publish?: boolean;
+            /** @description Default `false`. */
+            published?: boolean;
+        };
+        HelpCenterUpdate: {
+            name?: string;
+            description?: string;
+            slug?: components["schemas"]["HelpCenterSlug"];
+            default_locale?: components["schemas"]["LanguageTag"];
+            locales?: components["schemas"]["LanguageTag"][];
+            /** Format: uri */
+            logo_url?: string | null;
+            accent_color?: string | null;
+            /** Format: uri */
+            site_url?: string | null;
+            /** Format: uuid */
+            chat_channel_id?: string | null;
+            /** Format: uuid */
+            analytics_property_id?: string | null;
+            agents_may_publish?: boolean;
+            published?: boolean;
+        };
+        /**
+         * @description One of a fixed set of icons a collection shows.
+         * @enum {string}
+         */
+        HelpIcon: "book" | "rocket" | "settings" | "billing" | "user" | "team" | "shield" | "lock" | "plug" | "code" | "chat" | "mail" | "bell" | "chart" | "globe" | "mobile" | "star" | "help";
+        HelpCollectionTranslation: {
+            name: string;
+            description: string;
+            /** @description Made from the name; the collection's URL is `/{locale}/collections/{number}-{slug}`. */
+            slug: string;
+        };
+        HelpCollectionTranslationInput: {
+            name: string;
+            description?: string;
+        };
+        HelpCollection: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            center_id: string;
+            /**
+             * Format: uuid
+             * @description The top-level collection this one is in; absent for a top-level collection.
+             */
+            parent_id?: string;
+            /**
+             * Format: int32
+             * @description The collection's number in its center's URLs.
+             */
+            number: number;
+            icon?: components["schemas"]["HelpIcon"];
+            /** Format: int32 */
+            position: number;
+            /** @description The name of the collection per locale. */
+            translations: {
+                [key: string]: components["schemas"]["HelpCollectionTranslation"];
+            };
+            /**
+             * Format: int32
+             * @description Articles directly in the collection.
+             */
+            article_count: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        HelpCollectionList: {
+            items: components["schemas"]["HelpCollection"][];
+        };
+        HelpCollectionCreate: {
+            translations: {
+                [key: string]: components["schemas"]["HelpCollectionTranslationInput"];
+            };
+            /** Format: uuid */
+            parent_id?: string;
+            icon?: components["schemas"]["HelpIcon"];
+            /** Format: int32 */
+            position?: number;
+        };
+        HelpCollectionUpdate: {
+            translations?: {
+                [key: string]: components["schemas"]["HelpCollectionTranslationInput"];
+            };
+            /** @description Locales whose translation is removed; at least one translation stays (`400`). */
+            remove_locales?: components["schemas"]["LanguageTag"][];
+            /**
+             * Format: uuid
+             * @description `null` makes it a top-level collection.
+             */
+            parent_id?: string | null;
+            /** @description A `HelpIcon` name, `null` for none. */
+            icon?: string | null;
+            /** Format: int32 */
+            position?: number;
+        };
+        /**
+         * @description `draft`: never published, or unpublished. `published`: the published copy is the draft.
+         *     `changed`: published, with a draft saved since that differs.
+         * @enum {string}
+         */
+        HelpTranslationState: "draft" | "published" | "changed";
+        HelpArticleTranslationSummary: {
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The draft's title. */
+            title: string;
+            slug: string;
+            state: components["schemas"]["HelpTranslationState"];
+            /** Format: int32 */
+            version: number;
+            /** @description The default locale's translation was published after this translation was last saved; always false in the default locale. */
+            outdated: boolean;
+            /**
+             * Format: date-time
+             * @description Absent unless published.
+             */
+            published_at?: string;
+            /** @description The public page; absent unless published. */
+            url?: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        HelpArticleSummary: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            center_id: string;
+            /**
+             * Format: uuid
+             * @description Absent for an article in no collection.
+             */
+            collection_id?: string;
+            /**
+             * Format: int32
+             * @description The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+             */
+            number: number;
+            /** Format: int32 */
+            position: number;
+            paths: string[];
+            translations: components["schemas"]["HelpArticleTranslationSummary"][];
+            /** Format: uuid */
+            created_by_member_id?: string;
+            /** Format: uuid */
+            created_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        HelpArticlePage: {
+            items: components["schemas"]["HelpArticleSummary"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        HelpPublishedCopy: {
+            title: string;
+            body: string;
+            keywords: string;
+            slug: string;
+            /** @description The body rendered at publish. */
+            html: string;
+            /** @description The start of the rendered body as plain text. */
+            excerpt: string;
+            /** Format: date-time */
+            published_at: string;
+            /** Format: uuid */
+            published_by_member_id?: string;
+            /** Format: uuid */
+            published_by_api_key_id?: string;
+        };
+        HelpArticleTranslation: {
+            /** Format: uuid */
+            article_id: string;
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The draft's title. */
+            title: string;
+            /** @description The draft, Markdown. */
+            body: string;
+            /** @description More words the article is found by, such as synonyms. */
+            keywords: string;
+            slug: string;
+            /**
+             * Format: int32
+             * @description Moves with every save; send it as `base_version`.
+             */
+            version: number;
+            state: components["schemas"]["HelpTranslationState"];
+            /** @description The default locale's translation was published after this translation was last saved; always false in the default locale. */
+            outdated: boolean;
+            /** @description The published copy; absent unless published. */
+            published?: components["schemas"]["HelpPublishedCopy"];
+            /** @description The public page; absent unless published. */
+            url?: string;
+            /** Format: uuid */
+            updated_by_member_id?: string;
+            /** Format: uuid */
+            updated_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description When the draft was last saved.
+             */
+            updated_at: string;
+        };
+        HelpArticle: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            center_id: string;
+            /**
+             * Format: uuid
+             * @description Absent for an article in no collection.
+             */
+            collection_id?: string;
+            /**
+             * Format: int32
+             * @description The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+             */
+            number: number;
+            /** Format: int32 */
+            position: number;
+            paths: string[];
+            translations: components["schemas"]["HelpArticleTranslation"][];
+            /** Format: uuid */
+            created_by_member_id?: string;
+            /** Format: uuid */
+            created_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        HelpArticleCreate: {
+            locale: components["schemas"]["LanguageTag"];
+            title: string;
+            /** @description Markdown. */
+            body?: string;
+            keywords?: string;
+            slug?: components["schemas"]["Slug"];
+            /** Format: uuid */
+            collection_id?: string;
+            /** Format: int32 */
+            position?: number;
+            paths?: string[];
+        };
+        HelpArticleUpdate: {
+            /** Format: uuid */
+            collection_id?: string | null;
+            /** Format: int32 */
+            position?: number;
+            paths?: string[];
+        };
+        HelpArticleTranslationWrite: {
+            /**
+             * Format: int32
+             * @description The `version` the editor loaded; `0` for a new translation.
+             */
+            base_version: number;
+            title: string;
+            /** @description Markdown; empty when absent. */
+            body?: string;
+            keywords?: string;
+            /** @description Made from the title when absent. */
+            slug?: components["schemas"]["Slug"];
+        };
+        HelpArticlePublish: {
+            /**
+             * Format: int32
+             * @description The `version` the caller reviewed; a draft saved since is refused with `409 version_conflict`.
+             */
+            base_version?: number;
+        };
+        /** @enum {string} */
+        HelpRevisionKind: "save" | "publish" | "restore";
+        HelpArticleRevision: {
+            /** Format: uuid */
+            id: string;
+            locale: components["schemas"]["LanguageTag"];
+            kind: components["schemas"]["HelpRevisionKind"];
+            title: string;
+            body: string;
+            keywords: string;
+            /** Format: uuid */
+            author_member_id?: string;
+            /** Format: uuid */
+            author_api_key_id?: string;
+            /** @description The OAuth client that wrote it, when one did. */
+            via?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        HelpArticleRevisionList: {
+            items: components["schemas"]["HelpArticleRevision"][];
+        };
+        HelpArticleRestore: {
+            /** Format: int32 */
+            base_version: number;
+        };
+        HelpMarkdown: {
+            body: string;
+        };
+        HelpRendered: {
+            html: string;
+        };
+        HelpImage: {
+            /**
+             * Format: uuid
+             * @description The e-mail image.
+             */
+            id: string;
+            /** Format: uri */
+            url: string;
+            /**
+             * @description The Markdown that shows the image, its file name as the alternative text.
+             * @example ![invoice.png](https://yuva.example.com/i/abcdefghijklmnopqrstuvwxyz)
+             */
+            markdown: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+        };
+        /** @description A matched word, by offsets in UTF-16 code units into `title` or `excerpt`. */
+        HelpHighlight: {
+            /** @enum {string} */
+            field: "title" | "excerpt";
+            /** Format: int32 */
+            start: number;
+            /** Format: int32 */
+            end: number;
+        };
+        HelpSearchResult: {
+            /** Format: uuid */
+            article_id: string;
+            /** Format: int32 */
+            number: number;
+            locale: components["schemas"]["LanguageTag"];
+            title: string;
+            /** @description Plain text. */
+            excerpt: string;
+            /** Format: uuid */
+            collection_id?: string;
+            state: components["schemas"]["HelpTranslationState"];
+            /** @description The public page; absent unless published. */
+            url?: string;
+            highlights: components["schemas"]["HelpHighlight"][];
+        };
+        HelpSearchResults: {
+            items: components["schemas"]["HelpSearchResult"][];
+            /** @description No article had every word; these have some of them. */
+            partial: boolean;
+        };
+        HelpReportArticle: {
+            /** Format: uuid */
+            article_id: string;
+            /** Format: int32 */
+            number: number;
+            /** @description The title in the center's default locale, else in another locale. */
+            title: string;
+            /** Format: int64 */
+            views: number;
+            /** Format: int64 */
+            helpful_up: number;
+            /** Format: int64 */
+            helpful_down: number;
+            /**
+             * Format: int64
+             * @description Conversations started from the article.
+             */
+            conversations: number;
+            /**
+             * Format: int64
+             * @description Times members sent it as a card.
+             */
+            sent: number;
+        };
+        HelpReportQuery: {
+            /** @description The normalized query, or `(scrubbed)`. Written by visitors. */
+            query: string;
+            locale: components["schemas"]["LanguageTag"];
+            /** Format: int64 */
+            searches: number;
+        };
+        HelpReport: {
+            /** Format: int32 */
+            days: number;
+            /** Format: int64 */
+            views: number;
+            /** Format: int64 */
+            searches: number;
+            /** Format: int64 */
+            no_result_searches: number;
+            /**
+             * Format: int64
+             * @description Results opened from a search.
+             */
+            clicks: number;
+            /** @description Most viewed first, at most 20. */
+            top_articles: components["schemas"]["HelpReportArticle"][];
+            /** @description Searches that found nothing, most frequent first, at most 50. */
+            no_result_queries: components["schemas"]["HelpReportQuery"][];
+            /** @description Articles with the most "no" answers, at most 10. */
+            most_down: components["schemas"]["HelpReportArticle"][];
+        };
+        HelpConflictProblem: components["schemas"]["Problem"] & {
+            /** @description `version_conflict` only: the translation as it is now. */
+            translation?: components["schemas"]["HelpArticleTranslation"];
+        };
+        HelpArticleEventData: {
+            /** Format: uuid */
+            center_id: string;
+            /** Format: uuid */
+            article_id: string;
+            /** Format: int32 */
+            number: number;
+            /** @description The translation; absent when a whole article was deleted. */
+            locale?: components["schemas"]["LanguageTag"];
+            /** @description The published title (published and unpublished only). */
+            title?: string;
+            /** @description The public page (published only). */
+            url?: string;
+        };
+        /**
+         * @description `help.article.published`, `help.article.unpublished`, `help.article.deleted`: a translation
+         *     was published or unpublished, or an article or one of its translations was deleted.
+         *     Delivered to callers who hold `help:read` and can see the center's inbox.
+         */
+        HelpArticleEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "help.article.published" | "help.article.unpublished" | "help.article.deleted";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["HelpArticleEventData"];
+        };
+        WebhookHelpArticlePayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["HelpArticleEventData"];
+        };
+        /**
+         * @description `help.article.updated`, on `/v1/realtime` only: a translation's draft was saved, so an
+         *     editor open on an older `version` can say it changed elsewhere. Not stored, no id, never
+         *     replayed. Reaches whoever holds `help:read` and sees the center's inbox.
+         */
+        HelpArticleSignal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "help.article.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: {
+                /** Format: uuid */
+                center_id: string;
+                /** Format: uuid */
+                article_id: string;
+                locale: components["schemas"]["LanguageTag"];
+                /** Format: int32 */
+                version: number;
+                /**
+                 * Format: uuid
+                 * @description The member who saved; absent for API keys.
+                 */
+                member_id?: string;
+            };
+        };
+        /**
+         * @description A help article sent with the message, as it was when it was sent. The message's body ends
+         *     with the article's URL, so clients that show no cards lose nothing.
+         */
+        MessageCard: {
+            /** @enum {string} */
+            kind: "article";
+            /** Format: uuid */
+            article_id: string;
+            locale: components["schemas"]["LanguageTag"];
+            title: string;
+            excerpt: string;
+            url: string;
+        };
+        /** @description The inbox's published help center. */
+        ClientInboxHelp: {
+            /** @description The center's public home page. */
+            url: string;
+            locales: components["schemas"]["LanguageTag"][];
+            default_locale: components["schemas"]["LanguageTag"];
+        };
+        ClientHelpCenter: {
+            name: string;
+            description: string;
+            /** @description The locale served. */
+            locale: components["schemas"]["LanguageTag"];
+            locales: components["schemas"]["LanguageTag"][];
+            default_locale: components["schemas"]["LanguageTag"];
+            /** @description The public home page in the served locale. */
+            url: string;
+            logo_url?: string;
+            accent_color?: components["schemas"]["StatusColor"];
+        };
+        ClientHelpCollection: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            number: number;
+            /** Format: uuid */
+            parent_id?: string;
+            icon?: components["schemas"]["HelpIcon"];
+            name: string;
+            description: string;
+            /**
+             * Format: int32
+             * @description Published articles in the served locale.
+             */
+            article_count: number;
+            url: string;
+        };
+        ClientHelpCollectionRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        ClientHelpArticleSummary: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            number: number;
+            locale: components["schemas"]["LanguageTag"];
+            title: string;
+            /** @description Plain text. */
+            excerpt: string;
+            url: string;
+            collection?: components["schemas"]["ClientHelpCollectionRef"];
+        };
+        ClientHelp: {
+            center: components["schemas"]["ClientHelpCenter"];
+            /** @description Top-level collections by position, each followed by its sub-collections. */
+            collections: components["schemas"]["ClientHelpCollection"][];
+            suggested: components["schemas"]["ClientHelpArticleSummary"][];
+            popular: components["schemas"]["ClientHelpArticleSummary"][];
+        };
+        ClientHelpCollectionDetail: {
+            collection: components["schemas"]["ClientHelpCollection"];
+            /** @description Its sub-collections. */
+            collections: components["schemas"]["ClientHelpCollection"][];
+            articles: components["schemas"]["ClientHelpArticleSummary"][];
+        };
+        ClientHelpArticle: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            number: number;
+            /** @description The locale served. */
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The article has no published translation in the requested locale; this is the default locale's. */
+            fallback: boolean;
+            title: string;
+            /** @description Sanitized HTML. */
+            body_html: string;
+            /**
+             * Format: date-time
+             * @description When this translation was last published.
+             */
+            updated_at: string;
+            url: string;
+            collection?: components["schemas"]["ClientHelpCollectionRef"];
+            related: components["schemas"]["ClientHelpArticleSummary"][];
+        };
+        ClientHelpSearchResult: components["schemas"]["ClientHelpArticleSummary"] & {
+            highlights: components["schemas"]["HelpHighlight"][];
+        };
+        ClientHelpSearchResults: {
+            items: components["schemas"]["ClientHelpSearchResult"][];
+            /** @description No article had every word; these have some of them. */
+            partial: boolean;
+        };
+        ClientHelpReaction: {
+            rating: components["schemas"]["PageRating"];
+            /** @description The visitor's earlier answer for this article, which this one replaces. */
+            previous?: components["schemas"]["PageRating"];
+            /** @description The locale of the translation the visitor read. */
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The query that led to the article. */
+            search?: string;
+        };
+        ClientHelpSearchClick: {
+            q: string;
+            locale: components["schemas"]["LanguageTag"];
+            /** Format: uuid */
+            article_id: string;
+        };
+        /**
          * @description `hosted_limit` only: the server limit that was reached, named by the operator's setting.
          *     `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
          *     the workspace already runs as many migrations at a time as the server allows;
          *     `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
          *     allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+         *     `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
          * @enum {string}
          */
-        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES";
+        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES" | "YUVA_HELP_MAX_ARTICLES";
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -17686,6 +19110,15 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["EmailDesignProblem"];
+            };
+        };
+        /** @description The translation was saved since; `translation` is the translation as it is now. */
+        HelpConflictProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["HelpConflictProblem"];
             };
         };
         /** @description The message is refused; `reason` is shown to the sender. */
@@ -17801,6 +19234,16 @@ export interface components {
         StatusMonitorToken: string;
         /** @description `1` or `true` reports a failure. */
         StatusHeartbeatFail: "1" | "true" | "0" | "false";
+        HelpCenterId: string;
+        HelpCollectionId: string;
+        HelpArticleId: string;
+        /** @description One of the center's `locales`. */
+        HelpLocale: components["schemas"]["LanguageTag"];
+        HelpRevisionId: string;
+        /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+        ClientHelpChannelKey: string;
+        /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
+        ClientHelpLocale: components["schemas"]["LanguageTag"];
     };
     requestBodies: never;
     headers: never;
@@ -27589,6 +29032,850 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listHelpCenters: {
+        parameters: {
+            query?: {
+                /** @description Only the center of this inbox. */
+                inbox_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The centers. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCenterList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createHelpCenter: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpCenterCreate"];
+            };
+        };
+        responses: {
+            /** @description The center. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCenter"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getHelpCenter: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The center. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCenter"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteHelpCenter: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateHelpCenter: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpCenterUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated center. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCenter"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    previewHelpCenter: {
+        parameters: {
+            query?: {
+                view?: "home" | "collection" | "article";
+                /** @description The collection or article, for `view=collection` and `view=article`. */
+                id?: string;
+                locale?: components["schemas"]["LanguageTag"];
+                draft?: boolean;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rendered page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listHelpCollections: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The collections. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCollectionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createHelpCollection: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpCollectionCreate"];
+            };
+        };
+        responses: {
+            /** @description The collection. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCollection"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteHelpCollection: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                collectionId: components["parameters"]["HelpCollectionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateHelpCollection: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                collectionId: components["parameters"]["HelpCollectionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpCollectionUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated collection. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCollection"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listHelpArticles: {
+        parameters: {
+            query?: {
+                collection_id?: string;
+                locale?: components["schemas"]["LanguageTag"];
+                state?: "draft" | "published" | "changed" | "missing";
+                q?: string;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of articles. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticlePage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createHelpArticle: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpArticleCreate"];
+            };
+        };
+        responses: {
+            /** @description The article. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticle"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getHelpArticle: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The article. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticle"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteHelpArticle: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateHelpArticle: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpArticleUpdate"];
+            };
+        };
+        responses: {
+            /** @description The article. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticle"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    putHelpArticleTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpArticleTranslationWrite"];
+            };
+        };
+        responses: {
+            /** @description The saved translation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleTranslation"];
+                };
+            };
+            /** @description The new translation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleTranslation"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["HelpConflictProblem"];
+        };
+    };
+    deleteHelpArticleTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    publishHelpArticleTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["HelpArticlePublish"];
+            };
+        };
+        responses: {
+            /** @description The published translation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleTranslation"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["HelpConflictProblem"];
+        };
+    };
+    unpublishHelpArticleTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The translation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleTranslation"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listHelpArticleRevisions: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The revisions. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleRevisionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    restoreHelpArticleRevision: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+                articleId: components["parameters"]["HelpArticleId"];
+                /** @description One of the center's `locales`. */
+                locale: components["parameters"]["HelpLocale"];
+                revisionId: components["parameters"]["HelpRevisionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpArticleRestore"];
+            };
+        };
+        responses: {
+            /** @description The translation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticleTranslation"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["HelpConflictProblem"];
+        };
+    };
+    renderHelpMarkdown: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpMarkdown"];
+            };
+        };
+        responses: {
+            /** @description The HTML. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpRendered"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    uploadHelpImage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["EmailImageUpload"];
+            };
+        };
+        responses: {
+            /** @description The same image was already uploaded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpImage"];
+                };
+            };
+            /** @description The image. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpImage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    searchHelpArticles: {
+        parameters: {
+            query: {
+                q: string;
+                locale?: components["schemas"]["LanguageTag"];
+                drafts?: boolean;
+                /** @description 1 to 20; 10 by default. */
+                limit?: number;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The best matches, best first. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpSearchResults"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
+        };
+    };
+    getHelpReport: {
+        parameters: {
+            query?: {
+                /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
+                days?: components["parameters"]["DocsDays"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                centerId: components["parameters"]["HelpCenterId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The report. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpReport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     getClientSession: {
         parameters: {
             query?: never;
@@ -27834,6 +30121,192 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ClientSubscriptionAccepted"];
                 };
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getClientHelp: {
+        parameters: {
+            query?: {
+                /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
+                locale?: components["parameters"]["ClientHelpLocale"];
+                /** @description The page the widget is shown on, an absolute http(s) URL. */
+                page?: string;
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The center. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientHelp"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    searchClientHelp: {
+        parameters: {
+            query: {
+                q: string;
+                /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
+                locale?: components["parameters"]["ClientHelpLocale"];
+                /** @description 1 to 10; 5 by default. */
+                limit?: number;
+                final?: boolean;
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The best matches. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientHelpSearchResults"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
+        };
+    };
+    getClientHelpCollection: {
+        parameters: {
+            query?: {
+                /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
+                locale?: components["parameters"]["ClientHelpLocale"];
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+                collectionId: components["parameters"]["HelpCollectionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The collection. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientHelpCollectionDetail"];
+                };
+            };
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getClientHelpArticle: {
+        parameters: {
+            query?: {
+                /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
+                locale?: components["parameters"]["ClientHelpLocale"];
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+                articleId: components["parameters"]["HelpArticleId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The article. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientHelpArticle"];
+                };
+            };
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    createClientHelpReaction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+                articleId: components["parameters"]["HelpArticleId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientHelpReaction"];
+            };
+        };
+        responses: {
+            /** @description Counted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    createClientHelpSearchClick: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the center's inbox. */
+                channel_key: components["parameters"]["ClientHelpChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientHelpSearchClick"];
+            };
+        };
+        responses: {
+            /** @description Counted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
@@ -29992,6 +32465,105 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookStatusMonitorPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookHelpArticlePublished: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookHelpArticlePayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookHelpArticleUnpublished: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookHelpArticlePayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookHelpArticleDeleted: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookHelpArticlePayload"];
             };
         };
         responses: {

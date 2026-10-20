@@ -125,6 +125,12 @@ WHERE i.id IN (
           SELECT 1 FROM email_designs d
           WHERE d.workspace_id = c.workspace_id
             AND jsonb_path_exists(d.document, '$.**.image_id ? (@ == $id)', jsonb_build_object('id', c.id::text)))
+      AND NOT EXISTS (
+          SELECT 1 FROM help_article_translations t
+          WHERE t.workspace_id = c.workspace_id AND t.image_ids @> ARRAY[c.id])
+      AND NOT EXISTS (
+          SELECT 1 FROM help_article_revisions r
+          WHERE r.workspace_id = c.workspace_id AND r.image_ids @> ARRAY[c.id])
     LIMIT @lim)
 RETURNING i.storage_key;
 

@@ -924,6 +924,9 @@ const (
 	ConversationsWrite ApiKeyScope = "conversations:write"
 	DraftsSend         ApiKeyScope = "drafts:send"
 	FeedbackWrite      ApiKeyScope = "feedback:write"
+	HelpPublish        ApiKeyScope = "help:publish"
+	HelpRead           ApiKeyScope = "help:read"
+	HelpWrite          ApiKeyScope = "help:write"
 	InboxesManage      ApiKeyScope = "inboxes:manage"
 	InboxesRead        ApiKeyScope = "inboxes:read"
 	LabelsWrite        ApiKeyScope = "labels:write"
@@ -966,6 +969,12 @@ func (e ApiKeyScope) Valid() bool {
 	case DraftsSend:
 		return true
 	case FeedbackWrite:
+		return true
+	case HelpPublish:
+		return true
+	case HelpRead:
+		return true
+	case HelpWrite:
 		return true
 	case InboxesManage:
 		return true
@@ -2685,6 +2694,168 @@ func (e HealthStatus) Valid() bool {
 	}
 }
 
+// Defines values for HelpArticleEventType.
+const (
+	HelpArticleDeletedEvent     HelpArticleEventType = "help.article.deleted"
+	HelpArticlePublishedEvent   HelpArticleEventType = "help.article.published"
+	HelpArticleUnpublishedEvent HelpArticleEventType = "help.article.unpublished"
+)
+
+// Valid indicates whether the value is a known member of the HelpArticleEventType enum.
+func (e HelpArticleEventType) Valid() bool {
+	switch e {
+	case HelpArticleDeletedEvent:
+		return true
+	case HelpArticlePublishedEvent:
+		return true
+	case HelpArticleUnpublishedEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpArticleSignalType.
+const (
+	HelpArticleUpdated HelpArticleSignalType = "help.article.updated"
+)
+
+// Valid indicates whether the value is a known member of the HelpArticleSignalType enum.
+func (e HelpArticleSignalType) Valid() bool {
+	switch e {
+	case HelpArticleUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpHighlightField.
+const (
+	HelpHighlightExcerpt HelpHighlightField = "excerpt"
+	HelpHighlightTitle   HelpHighlightField = "title"
+)
+
+// Valid indicates whether the value is a known member of the HelpHighlightField enum.
+func (e HelpHighlightField) Valid() bool {
+	switch e {
+	case HelpHighlightExcerpt:
+		return true
+	case HelpHighlightTitle:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpIcon.
+const (
+	HelpIconBell     HelpIcon = "bell"
+	HelpIconBilling  HelpIcon = "billing"
+	HelpIconBook     HelpIcon = "book"
+	HelpIconChart    HelpIcon = "chart"
+	HelpIconChat     HelpIcon = "chat"
+	HelpIconCode     HelpIcon = "code"
+	HelpIconGlobe    HelpIcon = "globe"
+	HelpIconHelp     HelpIcon = "help"
+	HelpIconLock     HelpIcon = "lock"
+	HelpIconMail     HelpIcon = "mail"
+	HelpIconMobile   HelpIcon = "mobile"
+	HelpIconPlug     HelpIcon = "plug"
+	HelpIconRocket   HelpIcon = "rocket"
+	HelpIconSettings HelpIcon = "settings"
+	HelpIconShield   HelpIcon = "shield"
+	HelpIconStar     HelpIcon = "star"
+	HelpIconTeam     HelpIcon = "team"
+	HelpIconUser     HelpIcon = "user"
+)
+
+// Valid indicates whether the value is a known member of the HelpIcon enum.
+func (e HelpIcon) Valid() bool {
+	switch e {
+	case HelpIconBell:
+		return true
+	case HelpIconBilling:
+		return true
+	case HelpIconBook:
+		return true
+	case HelpIconChart:
+		return true
+	case HelpIconChat:
+		return true
+	case HelpIconCode:
+		return true
+	case HelpIconGlobe:
+		return true
+	case HelpIconHelp:
+		return true
+	case HelpIconLock:
+		return true
+	case HelpIconMail:
+		return true
+	case HelpIconMobile:
+		return true
+	case HelpIconPlug:
+		return true
+	case HelpIconRocket:
+		return true
+	case HelpIconSettings:
+		return true
+	case HelpIconShield:
+		return true
+	case HelpIconStar:
+		return true
+	case HelpIconTeam:
+		return true
+	case HelpIconUser:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpRevisionKind.
+const (
+	HelpRevisionPublish HelpRevisionKind = "publish"
+	HelpRevisionRestore HelpRevisionKind = "restore"
+	HelpRevisionSave    HelpRevisionKind = "save"
+)
+
+// Valid indicates whether the value is a known member of the HelpRevisionKind enum.
+func (e HelpRevisionKind) Valid() bool {
+	switch e {
+	case HelpRevisionPublish:
+		return true
+	case HelpRevisionRestore:
+		return true
+	case HelpRevisionSave:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for HelpTranslationState.
+const (
+	HelpStateChanged   HelpTranslationState = "changed"
+	HelpStateDraft     HelpTranslationState = "draft"
+	HelpStatePublished HelpTranslationState = "published"
+)
+
+// Valid indicates whether the value is a known member of the HelpTranslationState enum.
+func (e HelpTranslationState) Valid() bool {
+	switch e {
+	case HelpStateChanged:
+		return true
+	case HelpStateDraft:
+		return true
+	case HelpStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HomeSetupItemId.
 const (
 	HomeSetupItemIdAnalytics  HomeSetupItemId = "analytics"
@@ -2717,6 +2888,7 @@ func (e HomeSetupItemId) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
+	LimitHelpMaxArticles         HostedLimit = "YUVA_HELP_MAX_ARTICLES"
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
 	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
@@ -2726,6 +2898,8 @@ const (
 // Valid indicates whether the value is a known member of the HostedLimit enum.
 func (e HostedLimit) Valid() bool {
 	switch e {
+	case LimitHelpMaxArticles:
+		return true
 	case LimitMigrationMaxActive:
 		return true
 	case LimitMigrationMaxBytes:
@@ -3231,6 +3405,21 @@ const (
 func (e MemberPresenceEventType) Valid() bool {
 	switch e {
 	case MemberPresenceEventTypeMemberPresence:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MessageCardKind.
+const (
+	MessageCardArticle MessageCardKind = "article"
+)
+
+// Valid indicates whether the value is a known member of the MessageCardKind enum.
+func (e MessageCardKind) Valid() bool {
+	switch e {
+	case MessageCardArticle:
 		return true
 	default:
 		return false
@@ -5375,6 +5564,9 @@ const (
 	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
 	WebhookEventTypeDraftUpdated           WebhookEventType = "draft.updated"
 	WebhookEventTypeFeedbackCreated        WebhookEventType = "feedback.created"
+	WebhookEventTypeHelpArticleDeleted     WebhookEventType = "help.article.deleted"
+	WebhookEventTypeHelpArticlePublished   WebhookEventType = "help.article.published"
+	WebhookEventTypeHelpArticleUnpublished WebhookEventType = "help.article.unpublished"
 	WebhookEventTypeMessageCreated         WebhookEventType = "message.created"
 	WebhookEventTypeStatusComponentUpdated WebhookEventType = "status.component.updated"
 	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
@@ -5418,6 +5610,12 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeDraftUpdated:
 		return true
 	case WebhookEventTypeFeedbackCreated:
+		return true
+	case WebhookEventTypeHelpArticleDeleted:
+		return true
+	case WebhookEventTypeHelpArticlePublished:
+		return true
+	case WebhookEventTypeHelpArticleUnpublished:
 		return true
 	case WebhookEventTypeMessageCreated:
 		return true
@@ -5745,6 +5943,51 @@ func (e ListMessagesParamsOrder) Valid() bool {
 	case ListMessagesParamsOrderAsc:
 		return true
 	case ListMessagesParamsOrderDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListHelpArticlesParamsState.
+const (
+	ListHelpArticlesParamsStateChanged   ListHelpArticlesParamsState = "changed"
+	ListHelpArticlesParamsStateDraft     ListHelpArticlesParamsState = "draft"
+	ListHelpArticlesParamsStateMissing   ListHelpArticlesParamsState = "missing"
+	ListHelpArticlesParamsStatePublished ListHelpArticlesParamsState = "published"
+)
+
+// Valid indicates whether the value is a known member of the ListHelpArticlesParamsState enum.
+func (e ListHelpArticlesParamsState) Valid() bool {
+	switch e {
+	case ListHelpArticlesParamsStateChanged:
+		return true
+	case ListHelpArticlesParamsStateDraft:
+		return true
+	case ListHelpArticlesParamsStateMissing:
+		return true
+	case ListHelpArticlesParamsStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PreviewHelpCenterParamsView.
+const (
+	PreviewHelpCenterParamsViewArticle    PreviewHelpCenterParamsView = "article"
+	PreviewHelpCenterParamsViewCollection PreviewHelpCenterParamsView = "collection"
+	PreviewHelpCenterParamsViewHome       PreviewHelpCenterParamsView = "home"
+)
+
+// Valid indicates whether the value is a known member of the PreviewHelpCenterParamsView enum.
+func (e PreviewHelpCenterParamsView) Valid() bool {
+	switch e {
+	case PreviewHelpCenterParamsViewArticle:
+		return true
+	case PreviewHelpCenterParamsViewCollection:
+		return true
+	case PreviewHelpCenterParamsViewHome:
 		return true
 	default:
 		return false
@@ -7004,6 +7247,7 @@ type AnalyticsRangeProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7548,8 +7792,15 @@ type ApiKeyList struct {
 //	  - `status:manage`: set component states, open, change and resolve incidents and their
 //	    updates; create, change and delete pages, groups and components (owners and admins).
 //	    Never implied: a key made without naming its scopes does not hold it.
+//	  - `help:read`: help centers, their collections, articles, translations, revisions,
+//	    previews, search and report.
+//	  - `help:write`: create and change collections and articles, save, restore and delete draft
+//	    translations, render Markdown, upload images.
+//	  - `help:publish`: create, configure and delete help centers; publish and unpublish
+//	    translations, delete published ones. API keys only, and never implied: a key made without
+//	    naming its scopes does not hold it, and OAuth clients are not offered it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -7974,6 +8225,7 @@ type BroadcastProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8472,6 +8724,9 @@ type ClientConversationCreate struct {
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
 
+	// HelpArticleId The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+
 	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
@@ -8485,6 +8740,9 @@ type ClientConversationCreateMultipart struct {
 	Body     *string               `json:"body,omitempty"`
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
+
+	// HelpArticleId The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 
 	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
@@ -8676,6 +8934,161 @@ type ClientFeedbackCreateMultipart struct {
 	Subject *string        `json:"subject,omitempty"`
 }
 
+// ClientHelp defines model for ClientHelp.
+type ClientHelp struct {
+	Center ClientHelpCenter `json:"center"`
+
+	// Collections Top-level collections by position, each followed by its sub-collections.
+	Collections []ClientHelpCollection     `json:"collections"`
+	Popular     []ClientHelpArticleSummary `json:"popular"`
+	Suggested   []ClientHelpArticleSummary `json:"suggested"`
+}
+
+// ClientHelpArticle defines model for ClientHelpArticle.
+type ClientHelpArticle struct {
+	// BodyHtml Sanitized HTML.
+	BodyHtml   string                   `json:"body_html"`
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Fallback The article has no published translation in the requested locale; this is the default locale's.
+	Fallback bool      `json:"fallback"`
+	Id       uuid.UUID `json:"id"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag                `json:"locale"`
+	Number  int32                      `json:"number"`
+	Related []ClientHelpArticleSummary `json:"related"`
+	Title   string                     `json:"title"`
+
+	// UpdatedAt When this translation was last published.
+	UpdatedAt time.Time `json:"updated_at"`
+	Url       string    `json:"url"`
+}
+
+// ClientHelpArticleSummary defines model for ClientHelpArticleSummary.
+type ClientHelpArticleSummary struct {
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt string    `json:"excerpt"`
+	Id      uuid.UUID `json:"id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// ClientHelpCenter defines model for ClientHelpCenter.
+type ClientHelpCenter struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+	Description   string      `json:"description"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag   `json:"locale"`
+	Locales []LanguageTag `json:"locales"`
+	LogoUrl *string       `json:"logo_url,omitempty"`
+	Name    string        `json:"name"`
+
+	// Url The public home page in the served locale.
+	Url string `json:"url"`
+}
+
+// ClientHelpCollection defines model for ClientHelpCollection.
+type ClientHelpCollection struct {
+	// ArticleCount Published articles in the served locale.
+	ArticleCount int32  `json:"article_count"`
+	Description  string `json:"description"`
+
+	// Icon One of a fixed set of icons a collection shows.
+	Icon     *HelpIcon  `json:"icon,omitempty"`
+	Id       uuid.UUID  `json:"id"`
+	Name     string     `json:"name"`
+	Number   int32      `json:"number"`
+	ParentId *uuid.UUID `json:"parent_id,omitempty"`
+	Url      string     `json:"url"`
+}
+
+// ClientHelpCollectionDetail defines model for ClientHelpCollectionDetail.
+type ClientHelpCollectionDetail struct {
+	Articles   []ClientHelpArticleSummary `json:"articles"`
+	Collection ClientHelpCollection       `json:"collection"`
+
+	// Collections Its sub-collections.
+	Collections []ClientHelpCollection `json:"collections"`
+}
+
+// ClientHelpCollectionRef defines model for ClientHelpCollectionRef.
+type ClientHelpCollectionRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// ClientHelpReaction defines model for ClientHelpReaction.
+type ClientHelpReaction struct {
+	// Locale The locale of the translation the visitor read.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Previous The visitor's earlier answer for this article, which this one replaces.
+	Previous *PageRating `json:"previous,omitempty"`
+	Rating   PageRating  `json:"rating"`
+
+	// Search The query that led to the article.
+	Search *string `json:"search,omitempty"`
+}
+
+// ClientHelpSearchClick defines model for ClientHelpSearchClick.
+type ClientHelpSearchClick struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Q      string      `json:"q"`
+}
+
+// ClientHelpSearchResult defines model for ClientHelpSearchResult.
+type ClientHelpSearchResult struct {
+	Collection *ClientHelpCollectionRef `json:"collection,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt    string          `json:"excerpt"`
+	Highlights []HelpHighlight `json:"highlights"`
+	Id         uuid.UUID       `json:"id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// ClientHelpSearchResults defines model for ClientHelpSearchResults.
+type ClientHelpSearchResults struct {
+	Items []ClientHelpSearchResult `json:"items"`
+
+	// Partial No article had every word; these have some of them.
+	Partial bool `json:"partial"`
+}
+
 // ClientInbox The inbox's public settings. `live` inboxes carry `presence`; `async` inboxes never do and
 // show `expected_reply_minutes` instead.
 type ClientInbox struct {
@@ -8698,7 +9111,12 @@ type ClientInbox struct {
 
 	// FeedbackCategories The categories `POST /client/v1/feedback` accepts, in display order.
 	FeedbackCategories []FeedbackCategory `json:"feedback_categories"`
-	Id                 uuid.UUID          `json:"id"`
+
+	// Help Absent unless the inbox has a published help center (and on a server with
+	// `YUVA_HELP=off`); show the Help tile and the Home search only then. An `inbox.updated`
+	// frame brings every change.
+	Help *ClientInboxHelp `json:"help,omitempty"`
+	Id   uuid.UUID        `json:"id"`
 
 	// Mode `live` shows who is available, typing and read receipts; `async` shows the expected reply
 	// time instead.
@@ -8715,6 +9133,18 @@ type ClientInbox struct {
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
 	Timezone string             `json:"timezone"`
+}
+
+// ClientInboxHelp The inbox's published help center.
+type ClientInboxHelp struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag   `json:"default_locale"`
+	Locales       []LanguageTag `json:"locales"`
+
+	// Url The center's public home page.
+	Url string `json:"url"`
 }
 
 // ClientInboxStatus The inbox's published status page: its overall state and what is open on it. Drafts,
@@ -8777,6 +9207,10 @@ type ClientMessage struct {
 	Attachments []ClientAttachment  `json:"attachments"`
 	Author      ClientMessageAuthor `json:"author"`
 	Body        string              `json:"body"`
+
+	// Cards Help articles sent with the message, to show as cards that open the article; absent when
+	// none were. The body ends with their titles and URLs either way.
+	Cards *[]MessageCard `json:"cards,omitempty"`
 
 	// ClientId The contact's own messages only.
 	ClientId       *string   `json:"client_id,omitempty"`
@@ -9416,7 +9850,10 @@ type Conversation struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -9631,7 +10068,10 @@ type ConversationListItem struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -10675,6 +11115,7 @@ type EmailDesignProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11006,6 +11447,7 @@ type EmailImageProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11031,6 +11473,14 @@ type EmailImageUsage struct {
 		Id   uuid.UUID `json:"id"`
 		Name string    `json:"name"`
 	} `json:"designs"`
+
+	// HelpArticles Help articles whose draft, published copy or kept revision shows the image; absent when none do.
+	HelpArticles *[]struct {
+		CenterId uuid.UUID `json:"center_id"`
+		Id       uuid.UUID `json:"id"`
+		Number   int32     `json:"number"`
+		Title    string    `json:"title"`
+	} `json:"help_articles,omitempty"`
 }
 
 // EmailSectionBlock A group of blocks on its own background. Sections do not nest.
@@ -11528,6 +11978,620 @@ type Health struct {
 // HealthStatus defines model for Health.Status.
 type HealthStatus string
 
+// HelpArticle defines model for HelpArticle.
+type HelpArticle struct {
+	CenterId uuid.UUID `json:"center_id"`
+
+	// CollectionId Absent for an article in no collection.
+	CollectionId      *uuid.UUID `json:"collection_id,omitempty"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Number The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+	Number       int32                    `json:"number"`
+	Paths        []string                 `json:"paths"`
+	Position     int32                    `json:"position"`
+	Translations []HelpArticleTranslation `json:"translations"`
+	UpdatedAt    time.Time                `json:"updated_at"`
+}
+
+// HelpArticleCreate defines model for HelpArticleCreate.
+type HelpArticleCreate struct {
+	// Body Markdown.
+	Body         *string    `json:"body,omitempty"`
+	CollectionId *uuid.UUID `json:"collection_id,omitempty"`
+	Keywords     *string    `json:"keywords,omitempty"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale   LanguageTag `json:"locale"`
+	Paths    *[]string   `json:"paths,omitempty"`
+	Position *int32      `json:"position,omitempty"`
+
+	// Slug Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// HelpArticleEvent `help.article.published`, `help.article.unpublished`, `help.article.deleted`: a translation
+// was published or unpublished, or an article or one of its translations was deleted.
+// Delivered to callers who hold `help:read` and can see the center's inbox.
+type HelpArticleEvent struct {
+	CreatedAt   time.Time            `json:"created_at"`
+	Data        HelpArticleEventData `json:"data"`
+	Id          int64                `json:"id"`
+	InboxId     uuid.UUID            `json:"inbox_id"`
+	Type        HelpArticleEventType `json:"type"`
+	WorkspaceId uuid.UUID            `json:"workspace_id"`
+}
+
+// HelpArticleEventType defines model for HelpArticleEvent.Type.
+type HelpArticleEventType string
+
+// HelpArticleEventData defines model for HelpArticleEventData.
+type HelpArticleEventData struct {
+	ArticleId uuid.UUID `json:"article_id"`
+	CenterId  uuid.UUID `json:"center_id"`
+
+	// Locale The translation; absent when a whole article was deleted.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Number int32        `json:"number"`
+
+	// Title The published title (published and unpublished only).
+	Title *string `json:"title,omitempty"`
+
+	// Url The public page (published only).
+	Url *string `json:"url,omitempty"`
+}
+
+// HelpArticlePage defines model for HelpArticlePage.
+type HelpArticlePage struct {
+	Items []HelpArticleSummary `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// HelpArticlePublish defines model for HelpArticlePublish.
+type HelpArticlePublish struct {
+	// BaseVersion The `version` the caller reviewed; a draft saved since is refused with `409 version_conflict`.
+	BaseVersion *int32 `json:"base_version,omitempty"`
+}
+
+// HelpArticleRestore defines model for HelpArticleRestore.
+type HelpArticleRestore struct {
+	BaseVersion int32 `json:"base_version"`
+}
+
+// HelpArticleRevision defines model for HelpArticleRevision.
+type HelpArticleRevision struct {
+	AuthorApiKeyId *uuid.UUID       `json:"author_api_key_id,omitempty"`
+	AuthorMemberId *uuid.UUID       `json:"author_member_id,omitempty"`
+	Body           string           `json:"body"`
+	CreatedAt      time.Time        `json:"created_at"`
+	Id             uuid.UUID        `json:"id"`
+	Keywords       string           `json:"keywords"`
+	Kind           HelpRevisionKind `json:"kind"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Title  string      `json:"title"`
+
+	// Via The OAuth client that wrote it, when one did.
+	Via *string `json:"via,omitempty"`
+}
+
+// HelpArticleRevisionList defines model for HelpArticleRevisionList.
+type HelpArticleRevisionList struct {
+	Items []HelpArticleRevision `json:"items"`
+}
+
+// HelpArticleSignal `help.article.updated`, on `/v1/realtime` only: a translation's draft was saved, so an
+// editor open on an older `version` can say it changed elsewhere. Not stored, no id, never
+// replayed. Reaches whoever holds `help:read` and sees the center's inbox.
+type HelpArticleSignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		ArticleId uuid.UUID `json:"article_id"`
+		CenterId  uuid.UUID `json:"center_id"`
+
+		// Locale A BCP 47 language tag.
+		//
+		// Examples: en, tr
+		Locale LanguageTag `json:"locale"`
+
+		// MemberId The member who saved; absent for API keys.
+		MemberId *uuid.UUID `json:"member_id,omitempty"`
+		Version  int32      `json:"version"`
+	} `json:"data"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        HelpArticleSignalType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// HelpArticleSignalType defines model for HelpArticleSignal.Type.
+type HelpArticleSignalType string
+
+// HelpArticleSummary defines model for HelpArticleSummary.
+type HelpArticleSummary struct {
+	CenterId uuid.UUID `json:"center_id"`
+
+	// CollectionId Absent for an article in no collection.
+	CollectionId      *uuid.UUID `json:"collection_id,omitempty"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Number The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+	Number       int32                           `json:"number"`
+	Paths        []string                        `json:"paths"`
+	Position     int32                           `json:"position"`
+	Translations []HelpArticleTranslationSummary `json:"translations"`
+	UpdatedAt    time.Time                       `json:"updated_at"`
+}
+
+// HelpArticleTranslation defines model for HelpArticleTranslation.
+type HelpArticleTranslation struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Body The draft, Markdown.
+	Body      string    `json:"body"`
+	CreatedAt time.Time `json:"created_at"`
+
+	// Keywords More words the article is found by, such as synonyms.
+	Keywords string `json:"keywords"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// Published The published copy; absent unless published.
+	Published *HelpPublishedCopy `json:"published,omitempty"`
+	Slug      string             `json:"slug"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title string `json:"title"`
+
+	// UpdatedAt When the draft was last saved.
+	UpdatedAt         time.Time  `json:"updated_at"`
+	UpdatedByApiKeyId *uuid.UUID `json:"updated_by_api_key_id,omitempty"`
+	UpdatedByMemberId *uuid.UUID `json:"updated_by_member_id,omitempty"`
+
+	// Url The public page; absent unless published.
+	Url *string `json:"url,omitempty"`
+
+	// Version Moves with every save; send it as `base_version`.
+	Version int32 `json:"version"`
+}
+
+// HelpArticleTranslationSummary defines model for HelpArticleTranslationSummary.
+type HelpArticleTranslationSummary struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// PublishedAt Absent unless published.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	Slug        string     `json:"slug"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title     string    `json:"title"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The public page; absent unless published.
+	Url     *string `json:"url,omitempty"`
+	Version int32   `json:"version"`
+}
+
+// HelpArticleTranslationWrite defines model for HelpArticleTranslationWrite.
+type HelpArticleTranslationWrite struct {
+	// BaseVersion The `version` the editor loaded; `0` for a new translation.
+	BaseVersion int32 `json:"base_version"`
+
+	// Body Markdown; empty when absent.
+	Body     *string `json:"body,omitempty"`
+	Keywords *string `json:"keywords,omitempty"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// HelpArticleUpdate defines model for HelpArticleUpdate.
+type HelpArticleUpdate struct {
+	CollectionId nullable.Nullable[uuid.UUID] `json:"collection_id,omitempty"`
+	Paths        *[]string                    `json:"paths,omitempty"`
+	Position     *int32                       `json:"position,omitempty"`
+}
+
+// HelpCenter defines model for HelpCenter.
+type HelpCenter struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// AgentsMayPublish Agents with access to the inbox may publish, unpublish and delete published articles.
+	AgentsMayPublish bool `json:"agents_may_publish"`
+
+	// AnalyticsPropertyId The analytics property the public pages count cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// CanPublish The caller may publish and unpublish this center's articles.
+	CanPublish bool `json:"can_publish"`
+
+	// ChatChannelId The `chat` channel whose chat the public pages offer under "Still need help?".
+	ChatChannelId *uuid.UUID       `json:"chat_channel_id,omitempty"`
+	Counts        HelpCenterCounts `json:"counts"`
+	CreatedAt     time.Time        `json:"created_at"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// Description Shown on the center's home page.
+	Description string    `json:"description"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locales The locales articles may be written and published in; the default locale is one of them.
+	Locales   []LanguageTag `json:"locales"`
+	LogoUrl   *string       `json:"logo_url,omitempty"`
+	Name      string        `json:"name"`
+	Published bool          `json:"published"`
+	SiteUrl   *string       `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug      HelpCenterSlug `json:"slug"`
+	UpdatedAt time.Time      `json:"updated_at"`
+
+	// Url The public home page, at the server's help URL.
+	Url string `json:"url"`
+}
+
+// HelpCenterCounts defines model for HelpCenterCounts.
+type HelpCenterCounts struct {
+	Articles    int32 `json:"articles"`
+	Collections int32 `json:"collections"`
+
+	// PublishedArticles Articles with at least one published translation.
+	PublishedArticles int32 `json:"published_articles"`
+}
+
+// HelpCenterCreate defines model for HelpCenterCreate.
+type HelpCenterCreate struct {
+	// AccentColor Examples: #2563eb
+	AccentColor *StatusColor `json:"accent_color,omitempty"`
+
+	// AgentsMayPublish Default `false`.
+	AgentsMayPublish    *bool      `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+	ChatChannelId       *uuid.UUID `json:"chat_channel_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	InboxId       uuid.UUID      `json:"inbox_id"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+
+	// LogoUrl An `https` image URL.
+	LogoUrl *string `json:"logo_url,omitempty"`
+	Name    string  `json:"name"`
+
+	// Published Default `false`.
+	Published *bool `json:"published,omitempty"`
+
+	// SiteUrl An `http(s)` URL of the product.
+	SiteUrl *string `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug HelpCenterSlug `json:"slug"`
+}
+
+// HelpCenterList defines model for HelpCenterList.
+type HelpCenterList struct {
+	Items []HelpCenter `json:"items"`
+}
+
+// HelpCenterSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme
+type HelpCenterSlug = string
+
+// HelpCenterUpdate defines model for HelpCenterUpdate.
+type HelpCenterUpdate struct {
+	AccentColor         nullable.Nullable[string]    `json:"accent_color,omitempty"`
+	AgentsMayPublish    *bool                        `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+	ChatChannelId       nullable.Nullable[uuid.UUID] `json:"chat_channel_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag              `json:"default_locale,omitempty"`
+	Description   *string                   `json:"description,omitempty"`
+	Locales       *[]LanguageTag            `json:"locales,omitempty"`
+	LogoUrl       nullable.Nullable[string] `json:"logo_url,omitempty"`
+	Name          *string                   `json:"name,omitempty"`
+	Published     *bool                     `json:"published,omitempty"`
+	SiteUrl       nullable.Nullable[string] `json:"site_url,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug *HelpCenterSlug `json:"slug,omitempty"`
+}
+
+// HelpCollection defines model for HelpCollection.
+type HelpCollection struct {
+	// ArticleCount Articles directly in the collection.
+	ArticleCount int32     `json:"article_count"`
+	CenterId     uuid.UUID `json:"center_id"`
+	CreatedAt    time.Time `json:"created_at"`
+
+	// Icon One of a fixed set of icons a collection shows.
+	Icon *HelpIcon `json:"icon,omitempty"`
+	Id   uuid.UUID `json:"id"`
+
+	// Number The collection's number in its center's URLs.
+	Number int32 `json:"number"`
+
+	// ParentId The top-level collection this one is in; absent for a top-level collection.
+	ParentId *uuid.UUID `json:"parent_id,omitempty"`
+	Position int32      `json:"position"`
+
+	// Translations The name of the collection per locale.
+	Translations map[string]HelpCollectionTranslation `json:"translations"`
+	UpdatedAt    time.Time                            `json:"updated_at"`
+}
+
+// HelpCollectionCreate defines model for HelpCollectionCreate.
+type HelpCollectionCreate struct {
+	// Icon One of a fixed set of icons a collection shows.
+	Icon         *HelpIcon                                 `json:"icon,omitempty"`
+	ParentId     *uuid.UUID                                `json:"parent_id,omitempty"`
+	Position     *int32                                    `json:"position,omitempty"`
+	Translations map[string]HelpCollectionTranslationInput `json:"translations"`
+}
+
+// HelpCollectionList defines model for HelpCollectionList.
+type HelpCollectionList struct {
+	Items []HelpCollection `json:"items"`
+}
+
+// HelpCollectionTranslation defines model for HelpCollectionTranslation.
+type HelpCollectionTranslation struct {
+	Description string `json:"description"`
+	Name        string `json:"name"`
+
+	// Slug Made from the name; the collection's URL is `/{locale}/collections/{number}-{slug}`.
+	Slug string `json:"slug"`
+}
+
+// HelpCollectionTranslationInput defines model for HelpCollectionTranslationInput.
+type HelpCollectionTranslationInput struct {
+	Description *string `json:"description,omitempty"`
+	Name        string  `json:"name"`
+}
+
+// HelpCollectionUpdate defines model for HelpCollectionUpdate.
+type HelpCollectionUpdate struct {
+	// Icon A `HelpIcon` name, `null` for none.
+	Icon nullable.Nullable[string] `json:"icon,omitempty"`
+
+	// ParentId `null` makes it a top-level collection.
+	ParentId nullable.Nullable[uuid.UUID] `json:"parent_id,omitempty"`
+	Position *int32                       `json:"position,omitempty"`
+
+	// RemoveLocales Locales whose translation is removed; at least one translation stays (`400`).
+	RemoveLocales *[]LanguageTag                             `json:"remove_locales,omitempty"`
+	Translations  *map[string]HelpCollectionTranslationInput `json:"translations,omitempty"`
+}
+
+// HelpConflictProblem defines model for HelpConflictProblem.
+type HelpConflictProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Translation `version_conflict` only: the translation as it is now.
+	Translation *HelpArticleTranslation `json:"translation,omitempty"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// HelpHighlight A matched word, by offsets in UTF-16 code units into `title` or `excerpt`.
+type HelpHighlight struct {
+	End   int32              `json:"end"`
+	Field HelpHighlightField `json:"field"`
+	Start int32              `json:"start"`
+}
+
+// HelpHighlightField defines model for HelpHighlight.Field.
+type HelpHighlightField string
+
+// HelpIcon One of a fixed set of icons a collection shows.
+type HelpIcon string
+
+// HelpImage defines model for HelpImage.
+type HelpImage struct {
+	Height int32 `json:"height"`
+
+	// Id The e-mail image.
+	Id uuid.UUID `json:"id"`
+
+	// Markdown The Markdown that shows the image, its file name as the alternative text.
+	//
+	// Examples: ![invoice.png](https://yuva.example.com/i/abcdefghijklmnopqrstuvwxyz)
+	Markdown string `json:"markdown"`
+	Url      string `json:"url"`
+	Width    int32  `json:"width"`
+}
+
+// HelpMarkdown defines model for HelpMarkdown.
+type HelpMarkdown struct {
+	Body string `json:"body"`
+}
+
+// HelpPublishedCopy defines model for HelpPublishedCopy.
+type HelpPublishedCopy struct {
+	Body string `json:"body"`
+
+	// Excerpt The start of the rendered body as plain text.
+	Excerpt string `json:"excerpt"`
+
+	// Html The body rendered at publish.
+	Html                string     `json:"html"`
+	Keywords            string     `json:"keywords"`
+	PublishedAt         time.Time  `json:"published_at"`
+	PublishedByApiKeyId *uuid.UUID `json:"published_by_api_key_id,omitempty"`
+	PublishedByMemberId *uuid.UUID `json:"published_by_member_id,omitempty"`
+	Slug                string     `json:"slug"`
+	Title               string     `json:"title"`
+}
+
+// HelpRendered defines model for HelpRendered.
+type HelpRendered struct {
+	Html string `json:"html"`
+}
+
+// HelpReport defines model for HelpReport.
+type HelpReport struct {
+	// Clicks Results opened from a search.
+	Clicks int64 `json:"clicks"`
+	Days   int32 `json:"days"`
+
+	// MostDown Articles with the most "no" answers, at most 10.
+	MostDown []HelpReportArticle `json:"most_down"`
+
+	// NoResultQueries Searches that found nothing, most frequent first, at most 50.
+	NoResultQueries  []HelpReportQuery `json:"no_result_queries"`
+	NoResultSearches int64             `json:"no_result_searches"`
+	Searches         int64             `json:"searches"`
+
+	// TopArticles Most viewed first, at most 20.
+	TopArticles []HelpReportArticle `json:"top_articles"`
+	Views       int64               `json:"views"`
+}
+
+// HelpReportArticle defines model for HelpReportArticle.
+type HelpReportArticle struct {
+	ArticleId uuid.UUID `json:"article_id"`
+
+	// Conversations Conversations started from the article.
+	Conversations int64 `json:"conversations"`
+	HelpfulDown   int64 `json:"helpful_down"`
+	HelpfulUp     int64 `json:"helpful_up"`
+	Number        int32 `json:"number"`
+
+	// Sent Times members sent it as a card.
+	Sent int64 `json:"sent"`
+
+	// Title The title in the center's default locale, else in another locale.
+	Title string `json:"title"`
+	Views int64  `json:"views"`
+}
+
+// HelpReportQuery defines model for HelpReportQuery.
+type HelpReportQuery struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Query The normalized query, or `(scrubbed)`. Written by visitors.
+	Query    string `json:"query"`
+	Searches int64  `json:"searches"`
+}
+
+// HelpRevisionKind defines model for HelpRevisionKind.
+type HelpRevisionKind string
+
+// HelpSearchResult defines model for HelpSearchResult.
+type HelpSearchResult struct {
+	ArticleId    uuid.UUID  `json:"article_id"`
+	CollectionId *uuid.UUID `json:"collection_id,omitempty"`
+
+	// Excerpt Plain text.
+	Excerpt    string          `json:"excerpt"`
+	Highlights []HelpHighlight `json:"highlights"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Number int32       `json:"number"`
+
+	// State `draft`: never published, or unpublished. `published`: the published copy is the draft.
+	// `changed`: published, with a draft saved since that differs.
+	State HelpTranslationState `json:"state"`
+	Title string               `json:"title"`
+
+	// Url The public page; absent unless published.
+	Url *string `json:"url,omitempty"`
+}
+
+// HelpSearchResults defines model for HelpSearchResults.
+type HelpSearchResults struct {
+	Items []HelpSearchResult `json:"items"`
+
+	// Partial No article had every word; these have some of them.
+	Partial bool `json:"partial"`
+}
+
+// HelpTranslationState `draft`: never published, or unpublished. `published`: the published copy is the draft.
+// `changed`: published, with a draft saved since that differs.
+type HelpTranslationState string
+
 // Home The Home blocks; a block the member may not see is absent.
 type Home struct {
 	Analytics  *HomeAnalytics  `json:"analytics,omitempty"`
@@ -11649,6 +12713,7 @@ type HomeWaitingConversation struct {
 // the workspace already runs as many migrations at a time as the server allows;
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 type HostedLimit string
 
 // IdentitySecret defines model for IdentitySecret.
@@ -12445,9 +13510,12 @@ type Message struct {
 	Author      MessageAuthor `json:"author"`
 
 	// Body Plain text.
-	Body           string    `json:"body"`
-	ClientId       *string   `json:"client_id,omitempty"`
-	ConversationId uuid.UUID `json:"conversation_id"`
+	Body string `json:"body"`
+
+	// Cards Help articles sent with the message; absent when none were.
+	Cards          *[]MessageCard `json:"cards,omitempty"`
+	ClientId       *string        `json:"client_id,omitempty"`
+	ConversationId uuid.UUID      `json:"conversation_id"`
 
 	// CreatedAt For a sent draft, when it was sent.
 	CreatedAt time.Time `json:"created_at"`
@@ -12514,8 +13582,32 @@ type MessageAuthor struct {
 	Via *string `json:"via,omitempty"`
 }
 
+// MessageCard A help article sent with the message, as it was when it was sent. The message's body ends
+// with the article's URL, so clients that show no cards lose nothing.
+type MessageCard struct {
+	ArticleId uuid.UUID       `json:"article_id"`
+	Excerpt   string          `json:"excerpt"`
+	Kind      MessageCardKind `json:"kind"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+	Title  string      `json:"title"`
+	Url    string      `json:"url"`
+}
+
+// MessageCardKind defines model for MessageCard.Kind.
+type MessageCardKind string
+
 // MessageCreate defines model for MessageCreate.
 type MessageCreate struct {
+	// ArticleIds Outgoing messages only: help articles of the inbox's center to send as cards. Each must
+	// have a published translation (`400 validation_failed` otherwise); the card takes the
+	// contact's locale, else the inbox's, else the center's default. The body gets each
+	// article's title and URL as its last lines.
+	ArticleIds *[]uuid.UUID `json:"article_ids,omitempty"`
+
 	// Body Required unless files are attached.
 	Body *string `json:"body,omitempty"`
 
@@ -12543,13 +13635,15 @@ type MessageCreateKind string
 
 // MessageCreateMultipart defines model for MessageCreateMultipart.
 type MessageCreateMultipart struct {
-	Body      *string                    `json:"body,omitempty"`
-	ClientId  *string                    `json:"client_id,omitempty"`
-	Direction *Direction                 `json:"direction,omitempty"`
-	Draft     *bool                      `json:"draft,omitempty"`
-	Files     *[]openapi_types.File      `json:"files,omitempty"`
-	Html      *string                    `json:"html,omitempty"`
-	Kind      MessageCreateMultipartKind `json:"kind"`
+	// ArticleIds Outgoing messages only; repeat the field once per article id.
+	ArticleIds *[]uuid.UUID               `json:"article_ids,omitempty"`
+	Body       *string                    `json:"body,omitempty"`
+	ClientId   *string                    `json:"client_id,omitempty"`
+	Direction  *Direction                 `json:"direction,omitempty"`
+	Draft      *bool                      `json:"draft,omitempty"`
+	Files      *[]openapi_types.File      `json:"files,omitempty"`
+	Html       *string                    `json:"html,omitempty"`
+	Kind       MessageCreateMultipartKind `json:"kind"`
 
 	// Mentions Notes only; repeat the field once per member id.
 	Mentions *[]uuid.UUID `json:"mentions,omitempty"`
@@ -13199,6 +14293,7 @@ type MigrationFileProblem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -14227,6 +15322,7 @@ type Problem struct {
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -15096,7 +16192,10 @@ type StatusIncidentConversation struct {
 
 	// Feedback `feedback` conversations only: category and what the app sent with it.
 	Feedback *Feedback `json:"feedback,omitempty"`
-	Id       uuid.UUID `json:"id"`
+
+	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
+	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
+	Id            uuid.UUID  `json:"id"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -16572,6 +17671,19 @@ type WebhookFeedbackPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookHelpArticlePayload defines model for WebhookHelpArticlePayload.
+type WebhookHelpArticlePayload struct {
+	Data HelpArticleEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookMessageData defines model for WebhookMessageData.
 type WebhookMessageData struct {
 	// Contact The contact as a host backend needs it.
@@ -16777,6 +17889,14 @@ type ChannelId = uuid.UUID
 // ChannelKey defines model for ChannelKey.
 type ChannelKey = string
 
+// ClientHelpChannelKey defines model for ClientHelpChannelKey.
+type ClientHelpChannelKey = string
+
+// ClientHelpLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ClientHelpLocale = LanguageTag
+
 // ConsentFormat defines model for ConsentFormat.
 type ConsentFormat string
 
@@ -16812,6 +17932,23 @@ type DocsDays = int32
 
 // DocsSiteFilter Examples: https://docs.example.com
 type DocsSiteFilter = string
+
+// HelpArticleId defines model for HelpArticleId.
+type HelpArticleId = uuid.UUID
+
+// HelpCenterId defines model for HelpCenterId.
+type HelpCenterId = uuid.UUID
+
+// HelpCollectionId defines model for HelpCollectionId.
+type HelpCollectionId = uuid.UUID
+
+// HelpLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type HelpLocale = LanguageTag
+
+// HelpRevisionId defines model for HelpRevisionId.
+type HelpRevisionId = uuid.UUID
 
 // IdempotencyKey defines model for IdempotencyKey.
 type IdempotencyKey = string
@@ -16935,6 +18072,39 @@ type ListClientDiscussionsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetClientHelpParams defines parameters for GetClientHelp.
+type GetClientHelpParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Page The page the widget is shown on, an absolute http(s) URL.
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+}
+
+// GetClientHelpArticleParams defines parameters for GetClientHelpArticle.
+type GetClientHelpArticleParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+}
+
+// GetClientHelpCollectionParams defines parameters for GetClientHelpCollection.
+type GetClientHelpCollectionParams struct {
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+}
+
+// SearchClientHelpParams defines parameters for SearchClientHelp.
+type SearchClientHelpParams struct {
+	Q string `form:"q" json:"q"`
+
+	// Locale The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+	Locale *ClientHelpLocale `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Limit 1 to 10; 5 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+	Final *bool  `form:"final,omitempty" json:"final,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -18355,6 +19525,214 @@ type CreateFeedbackParams struct {
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
+// ListHelpCentersParams defines parameters for ListHelpCenters.
+type ListHelpCentersParams struct {
+	// InboxId Only the center of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateHelpCenterParams defines parameters for CreateHelpCenter.
+type CreateHelpCenterParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpCenterParams defines parameters for DeleteHelpCenter.
+type DeleteHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpCenterParams defines parameters for GetHelpCenter.
+type GetHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpCenterParams defines parameters for UpdateHelpCenter.
+type UpdateHelpCenterParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticlesParams defines parameters for ListHelpArticles.
+type ListHelpArticlesParams struct {
+	CollectionId *uuid.UUID                   `form:"collection_id,omitempty" json:"collection_id,omitempty"`
+	Locale       *LanguageTag                 `form:"locale,omitempty" json:"locale,omitempty"`
+	State        *ListHelpArticlesParamsState `form:"state,omitempty" json:"state,omitempty"`
+	Q            *string                      `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticlesParamsState defines parameters for ListHelpArticles.
+type ListHelpArticlesParamsState string
+
+// CreateHelpArticleParams defines parameters for CreateHelpArticle.
+type CreateHelpArticleParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpArticleParams defines parameters for DeleteHelpArticle.
+type DeleteHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpArticleParams defines parameters for GetHelpArticle.
+type GetHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpArticleParams defines parameters for UpdateHelpArticle.
+type UpdateHelpArticleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpArticleTranslationParams defines parameters for DeleteHelpArticleTranslation.
+type DeleteHelpArticleTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PutHelpArticleTranslationParams defines parameters for PutHelpArticleTranslation.
+type PutHelpArticleTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PublishHelpArticleTranslationParams defines parameters for PublishHelpArticleTranslation.
+type PublishHelpArticleTranslationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpArticleRevisionsParams defines parameters for ListHelpArticleRevisions.
+type ListHelpArticleRevisionsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RestoreHelpArticleRevisionParams defines parameters for RestoreHelpArticleRevision.
+type RestoreHelpArticleRevisionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnpublishHelpArticleTranslationParams defines parameters for UnpublishHelpArticleTranslation.
+type UnpublishHelpArticleTranslationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListHelpCollectionsParams defines parameters for ListHelpCollections.
+type ListHelpCollectionsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateHelpCollectionParams defines parameters for CreateHelpCollection.
+type CreateHelpCollectionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteHelpCollectionParams defines parameters for DeleteHelpCollection.
+type DeleteHelpCollectionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateHelpCollectionParams defines parameters for UpdateHelpCollection.
+type UpdateHelpCollectionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadHelpImageParams defines parameters for UploadHelpImage.
+type UploadHelpImageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewHelpCenterParams defines parameters for PreviewHelpCenter.
+type PreviewHelpCenterParams struct {
+	View *PreviewHelpCenterParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The collection or article, for `view=collection` and `view=article`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Draft  *bool        `form:"draft,omitempty" json:"draft,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewHelpCenterParamsView defines parameters for PreviewHelpCenter.
+type PreviewHelpCenterParamsView string
+
+// RenderHelpMarkdownParams defines parameters for RenderHelpMarkdown.
+type RenderHelpMarkdownParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetHelpReportParams defines parameters for GetHelpReport.
+type GetHelpReportParams struct {
+	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
+	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SearchHelpArticlesParams defines parameters for SearchHelpArticles.
+type SearchHelpArticlesParams struct {
+	Q      string       `form:"q" json:"q"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Drafts *bool        `form:"drafts,omitempty" json:"drafts,omitempty"`
+
+	// Limit 1 to 20; 10 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetHomeParams defines parameters for GetHome.
 type GetHomeParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -19607,6 +20985,48 @@ type WebhookFeedbackCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookHelpArticleDeletedParams defines parameters for WebhookHelpArticleDeleted.
+type WebhookHelpArticleDeletedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookHelpArticlePublishedParams defines parameters for WebhookHelpArticlePublished.
+type WebhookHelpArticlePublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookHelpArticleUnpublishedParams defines parameters for WebhookHelpArticleUnpublished.
+type WebhookHelpArticleUnpublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookMessageCreatedParams defines parameters for WebhookMessageCreated.
 type WebhookMessageCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -19744,6 +21164,12 @@ type CollectAnalyticsJSONRequestBody = AnalyticsBatch
 
 // CollectAnalyticsTextRequestBody defines body for CollectAnalytics for text/plain ContentType.
 type CollectAnalyticsTextRequestBody = AnalyticsBatch
+
+// CreateClientHelpReactionJSONRequestBody defines body for CreateClientHelpReaction for application/json ContentType.
+type CreateClientHelpReactionJSONRequestBody = ClientHelpReaction
+
+// CreateClientHelpSearchClickJSONRequestBody defines body for CreateClientHelpSearchClick for application/json ContentType.
+type CreateClientHelpSearchClickJSONRequestBody = ClientHelpSearchClick
 
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
@@ -19979,6 +21405,39 @@ type UploadEmailImageMultipartRequestBody = EmailImageUpload
 // CreateFeedbackJSONRequestBody defines body for CreateFeedback for application/json ContentType.
 type CreateFeedbackJSONRequestBody = FeedbackCreate
 
+// CreateHelpCenterJSONRequestBody defines body for CreateHelpCenter for application/json ContentType.
+type CreateHelpCenterJSONRequestBody = HelpCenterCreate
+
+// UpdateHelpCenterJSONRequestBody defines body for UpdateHelpCenter for application/json ContentType.
+type UpdateHelpCenterJSONRequestBody = HelpCenterUpdate
+
+// CreateHelpArticleJSONRequestBody defines body for CreateHelpArticle for application/json ContentType.
+type CreateHelpArticleJSONRequestBody = HelpArticleCreate
+
+// UpdateHelpArticleJSONRequestBody defines body for UpdateHelpArticle for application/json ContentType.
+type UpdateHelpArticleJSONRequestBody = HelpArticleUpdate
+
+// PutHelpArticleTranslationJSONRequestBody defines body for PutHelpArticleTranslation for application/json ContentType.
+type PutHelpArticleTranslationJSONRequestBody = HelpArticleTranslationWrite
+
+// PublishHelpArticleTranslationJSONRequestBody defines body for PublishHelpArticleTranslation for application/json ContentType.
+type PublishHelpArticleTranslationJSONRequestBody = HelpArticlePublish
+
+// RestoreHelpArticleRevisionJSONRequestBody defines body for RestoreHelpArticleRevision for application/json ContentType.
+type RestoreHelpArticleRevisionJSONRequestBody = HelpArticleRestore
+
+// CreateHelpCollectionJSONRequestBody defines body for CreateHelpCollection for application/json ContentType.
+type CreateHelpCollectionJSONRequestBody = HelpCollectionCreate
+
+// UpdateHelpCollectionJSONRequestBody defines body for UpdateHelpCollection for application/json ContentType.
+type UpdateHelpCollectionJSONRequestBody = HelpCollectionUpdate
+
+// UploadHelpImageMultipartRequestBody defines body for UploadHelpImage for multipart/form-data ContentType.
+type UploadHelpImageMultipartRequestBody = EmailImageUpload
+
+// RenderHelpMarkdownJSONRequestBody defines body for RenderHelpMarkdown for application/json ContentType.
+type RenderHelpMarkdownJSONRequestBody = HelpMarkdown
+
 // CreateInboxJSONRequestBody defines body for CreateInbox for application/json ContentType.
 type CreateInboxJSONRequestBody = InboxCreate
 
@@ -20176,6 +21635,15 @@ type WebhookDraftUpdatedJSONRequestBody = WebhookMessagePayload
 
 // WebhookFeedbackCreatedJSONRequestBody defines body for WebhookFeedbackCreated for application/json ContentType.
 type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
+
+// WebhookHelpArticleDeletedJSONRequestBody defines body for WebhookHelpArticleDeleted for application/json ContentType.
+type WebhookHelpArticleDeletedJSONRequestBody = WebhookHelpArticlePayload
+
+// WebhookHelpArticlePublishedJSONRequestBody defines body for WebhookHelpArticlePublished for application/json ContentType.
+type WebhookHelpArticlePublishedJSONRequestBody = WebhookHelpArticlePayload
+
+// WebhookHelpArticleUnpublishedJSONRequestBody defines body for WebhookHelpArticleUnpublished for application/json ContentType.
+type WebhookHelpArticleUnpublishedJSONRequestBody = WebhookHelpArticlePayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
@@ -22576,6 +24044,58 @@ func (t *RealtimeMessage) MergeStatusPageEvent(v StatusPageEvent) error {
 	return err
 }
 
+// AsHelpArticleEvent returns the union data inside the RealtimeMessage as a HelpArticleEvent
+func (t RealtimeMessage) AsHelpArticleEvent() (HelpArticleEvent, error) {
+	var body HelpArticleEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleEvent overwrites any union data inside the RealtimeMessage as the provided HelpArticleEvent
+func (t *RealtimeMessage) FromHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleEvent performs a merge with any union data inside the RealtimeMessage, using the provided HelpArticleEvent
+func (t *RealtimeMessage) MergeHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsHelpArticleSignal returns the union data inside the RealtimeMessage as a HelpArticleSignal
+func (t RealtimeMessage) AsHelpArticleSignal() (HelpArticleSignal, error) {
+	var body HelpArticleSignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleSignal overwrites any union data inside the RealtimeMessage as the provided HelpArticleSignal
+func (t *RealtimeMessage) FromHelpArticleSignal(v HelpArticleSignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleSignal performs a merge with any union data inside the RealtimeMessage, using the provided HelpArticleSignal
+func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -22836,6 +24356,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDraftEvent()
 	case "draft.updated":
 		return t.AsDraftEvent()
+	case "help.article.deleted":
+		return t.AsHelpArticleEvent()
+	case "help.article.published":
+		return t.AsHelpArticleEvent()
+	case "help.article.unpublished":
+		return t.AsHelpArticleEvent()
+	case "help.article.updated":
+		return t.AsHelpArticleSignal()
 	case "inbox.created":
 		return t.AsInboxCreatedEvent()
 	case "inbox.deleted":
@@ -23475,6 +25003,32 @@ func (t *StoredEvent) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
 	return err
 }
 
+// AsHelpArticleEvent returns the union data inside the StoredEvent as a HelpArticleEvent
+func (t StoredEvent) AsHelpArticleEvent() (HelpArticleEvent, error) {
+	var body HelpArticleEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromHelpArticleEvent overwrites any union data inside the StoredEvent as the provided HelpArticleEvent
+func (t *StoredEvent) FromHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeHelpArticleEvent performs a merge with any union data inside the StoredEvent, using the provided HelpArticleEvent
+func (t *StoredEvent) MergeHelpArticleEvent(v HelpArticleEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -23523,6 +25077,12 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDraftEvent()
 	case "draft.updated":
 		return t.AsDraftEvent()
+	case "help.article.deleted":
+		return t.AsHelpArticleEvent()
+	case "help.article.published":
+		return t.AsHelpArticleEvent()
+	case "help.article.unpublished":
+		return t.AsHelpArticleEvent()
 	case "inbox.created":
 		return t.AsInboxCreatedEvent()
 	case "inbox.deleted":
@@ -24044,6 +25604,106 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
 	GetClientDiscussion(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientHelp The inbox's help center
+	//
+	// The published help center of the inbox of a `chat` or `app` channel, without a session: the
+	// center in the served locale, its collections that have published articles there,
+	// `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+	// ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+	// it, else its base language, else the center's default locale. Nothing is created.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// `404 help_off` when the inbox has no published center. Sent with
+	// `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help (the `GetClientHelp` operationId).
+	GetClientHelp(ctx context.Context, channelKey ClientHelpChannelKey, params *GetClientHelpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientHelpArticle A help article
+	//
+	// The published article in the served locale, or in the center's default locale with
+	// `fallback: true` when it has no published translation there, with up to 3 `related`
+	// articles of its collection. Counts one view per address, article and hour. `404` for an
+	// unpublished article. Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/articles/{articleId} (the `GetClientHelpArticle` operationId).
+	GetClientHelpArticle(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, params *GetClientHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientHelpReactionWithBody Answer "Was this helpful?"
+	//
+	// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+	// without storing anything about the visitor. A visitor who changes their mind sends the new
+	// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+	// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+	// limited per address and per channel (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+	CreateClientHelpReactionWithBody(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientHelpReaction Answer "Was this helpful?"
+	//
+	// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+	// without storing anything about the visitor. A visitor who changes their mind sends the new
+	// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+	// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+	// limited per address and per channel (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+	CreateClientHelpReaction(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, body CreateClientHelpReactionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientHelpCollection A help collection
+	//
+	// A collection with its sub-collections and its published articles in the served locale, by
+	// position. `404` for a collection with no published article in that locale. Sent with
+	// `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/collections/{collectionId} (the `GetClientHelpCollection` operationId).
+	GetClientHelpCollection(ctx context.Context, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params *GetClientHelpCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SearchClientHelp Search the help center
+	//
+	// Published articles that match `q`, best first, in the served locale and, when it has fewer
+	// than 3 published articles, the default locale too; each result names its `locale`. Every
+	// word must match and the last may be the start of a word; when nothing matches, any word
+	// may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+	// which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+	//
+	// Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+	// seconds without typing); only those are counted in the report. 30 searches a minute per
+	// address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+	// `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/search (the `SearchClientHelp` operationId).
+	SearchClientHelp(ctx context.Context, channelKey ClientHelpChannelKey, params *SearchClientHelpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientHelpSearchClickWithBody Count an opened search result
+	//
+	// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+	// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+	CreateClientHelpSearchClickWithBody(ctx context.Context, channelKey ClientHelpChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientHelpSearchClick Count an opened search result
+	//
+	// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+	// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+	CreateClientHelpSearchClick(ctx context.Context, channelKey ClientHelpChannelKey, body CreateClientHelpSearchClickJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListClientMailingLists The public mailing lists a form may offer
 	//
@@ -27581,7 +29241,8 @@ type ClientInterface interface {
 	// DeleteEmailImage Delete an e-mail image
 	//
 	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-	// not archived uses the image. An image that went out in a sent broadcast needs
+	// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+	// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
 	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 	// image. The public URL stops working at once.
 	//
@@ -27687,6 +29348,462 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 	CreateFeedback(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListHelpCenters List help centers
+	//
+	// The centers of the inboxes the caller can see, oldest first.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers (the `ListHelpCenters` operationId).
+	ListHelpCenters(ctx context.Context, params *ListHelpCentersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpCenterWithBody Create a help center
+	//
+	// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+	// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+	// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+	// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+	// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+	// same inbox, `analytics_property_id` a property of the workspace.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+	CreateHelpCenterWithBody(ctx context.Context, params *CreateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpCenter Create a help center
+	//
+	// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+	// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+	// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+	// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+	// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+	// same inbox, `analytics_property_id` a property of the workspace.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+	CreateHelpCenter(ctx context.Context, params *CreateHelpCenterParams, body CreateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteHelpCenter Delete a help center
+	//
+	// The center with its collections, articles, translations, revisions and counters. Its
+	// images stay e-mail images of the workspace and are swept like any unused one.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId} (the `DeleteHelpCenter` operationId).
+	DeleteHelpCenter(ctx context.Context, centerId HelpCenterId, params *DeleteHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetHelpCenter A help center
+	//
+	// With its counts and public `url`.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId} (the `GetHelpCenter` operationId).
+	GetHelpCenter(ctx context.Context, centerId HelpCenterId, params *GetHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpCenterWithBody Update a help center
+	//
+	// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+	// property. `published: false` takes the center and every article off the web (`404`) at once.
+	// Changing `slug` keeps the old one reserved for this center, and its public addresses
+	// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+	// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+	// while an article has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+	UpdateHelpCenterWithBody(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpCenter Update a help center
+	//
+	// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+	// property. `published: false` takes the center and every article off the web (`404`) at once.
+	// Changing `slug` keeps the old one reserved for this center, and its public addresses
+	// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+	// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+	// while an article has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+	UpdateHelpCenter(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, body UpdateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListHelpArticles List a center's articles
+	//
+	// By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+	// articles of one collection. `state` keeps the articles whose translation in `locale` (the
+	// center's default locale when absent) is a `draft` (never published, or unpublished),
+	// `published` (no change since), `changed` (published, with a draft that differs) or
+	// `missing` (no translation in that locale). `q` matches the words of the titles of every
+	// translation, drafts included.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles (the `ListHelpArticles` operationId).
+	ListHelpArticles(ctx context.Context, centerId HelpCenterId, params *ListHelpArticlesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpArticleWithBody Create an article
+	//
+	// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+	// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+	// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+	CreateHelpArticleWithBody(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpArticle Create an article
+	//
+	// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+	// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+	// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+	CreateHelpArticle(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, body CreateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteHelpArticle Delete an article
+	//
+	// With every translation, revision and counter, and sends `help.article.deleted`. An article
+	// with a published translation can be deleted only by those who may publish
+	// (`403 forbidden`), and API keys also need `help:publish`.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId} (the `DeleteHelpArticle` operationId).
+	DeleteHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *DeleteHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetHelpArticle An article with its translations
+	//
+	// Every translation with its draft and its published copy.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId} (the `GetHelpArticle` operationId).
+	GetHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *GetHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpArticleWithBody Move an article or change its pages
+	//
+	// Its collection (`null` for none), its position and the page `paths` where the widget
+	// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+	// trailing `*` matches any rest (`/billing/*`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+	UpdateHelpArticleWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpArticle Move an article or change its pages
+	//
+	// Its collection (`null` for none), its position and the page `paths` where the widget
+	// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+	// trailing `*` matches any rest (`/billing/*`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+	UpdateHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, body UpdateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteHelpArticleTranslation Delete a translation
+	//
+	// With its revisions, and sends `help.article.deleted` naming the locale. The last
+	// translation of an article cannot be deleted (`409 last_translation`); delete the article
+	// instead. A published translation can be deleted only by those who may publish
+	// (`403 forbidden`), and API keys also need `help:publish`.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `DeleteHelpArticleTranslation` operationId).
+	DeleteHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *DeleteHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PutHelpArticleTranslationWithBody Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the center's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one,
+	// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+	// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+	// translation is published again. Images of the body stay only when they are this
+	// workspace's uploads.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+	PutHelpArticleTranslationWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PutHelpArticleTranslation Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the center's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one,
+	// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+	// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+	// translation is published again. Images of the body stay only when they are this
+	// workspace's uploads.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+	PutHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, body PutHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PublishHelpArticleTranslationWithBody Publish a translation
+	//
+	// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+	// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+	// refused with `409 version_conflict`. The article is public once its center is published.
+	// Publishing an unchanged published translation changes nothing.
+	//
+	// Owners, admins and API keys; agents with access to the center's inbox when the center's
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+	PublishHelpArticleTranslationWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PublishHelpArticleTranslation Publish a translation
+	//
+	// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+	// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+	// refused with `409 version_conflict`. The article is public once its center is published.
+	// Publishing an unchanged published translation changes nothing.
+	//
+	// Owners, admins and API keys; agents with access to the center's inbox when the center's
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+	PublishHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, body PublishHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListHelpArticleRevisions List a translation's revisions
+	//
+	// Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+	// `restore`, each with its title, body and keywords.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions (the `ListHelpArticleRevisions` operationId).
+	ListHelpArticleRevisions(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *ListHelpArticleRevisionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreHelpArticleRevisionWithBody Restore a revision into the draft
+	//
+	// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+	// same `base_version` check) and keeps a `restore` revision. The published copy does not
+	// change.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+	RestoreHelpArticleRevisionWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreHelpArticleRevision Restore a revision into the draft
+	//
+	// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+	// same `base_version` check) and keeps a `restore` revision. The published copy does not
+	// change.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+	RestoreHelpArticleRevision(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, body RestoreHelpArticleRevisionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnpublishHelpArticleTranslation Unpublish a translation
+	//
+	// Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+	// and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+	//
+	// Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish (the `UnpublishHelpArticleTranslation` operationId).
+	UnpublishHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *UnpublishHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListHelpCollections List a center's collections
+	//
+	// Top-level collections by `position`, each followed by its sub-collections, with their
+	// translations and the number of articles in each.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/collections (the `ListHelpCollections` operationId).
+	ListHelpCollections(ctx context.Context, centerId HelpCenterId, params *ListHelpCollectionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpCollectionWithBody Create a collection
+	//
+	// A group of articles, named per locale in `translations` (only the center's `locales`,
+	// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+	// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+	// collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+	CreateHelpCollectionWithBody(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateHelpCollection Create a collection
+	//
+	// A group of articles, named per locale in `translations` (only the center's `locales`,
+	// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+	// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+	// collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+	CreateHelpCollection(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, body CreateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteHelpCollection Delete a collection
+	//
+	// Its articles stay, in no collection; its sub-collections become top-level collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/collections/{collectionId} (the `DeleteHelpCollection` operationId).
+	DeleteHelpCollection(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *DeleteHelpCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpCollectionWithBody Update a collection
+	//
+	// `translations` sets the name and description of the locales it names and keeps the others;
+	// `remove_locales` removes translations. A collection with sub-collections cannot get a
+	// parent (`400`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+	UpdateHelpCollectionWithBody(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateHelpCollection Update a collection
+	//
+	// `translations` sets the name and description of the locales it names and keeps the others;
+	// `remove_locales` removes translations. A collection with sub-collections cannot get a
+	// parent (`400`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+	UpdateHelpCollection(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, body UpdateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UploadHelpImageWithBody Upload an image for articles
+	//
+	// Stores the image as one of the workspace's e-mail images, with the same rules as
+	// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+	// the rate), and answers its public URL with the Markdown that shows it. An image no draft
+	// uses and no published article showed is deleted a week after its upload.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/images (the `UploadHelpImage` operationId).
+	UploadHelpImageWithBody(ctx context.Context, centerId HelpCenterId, params *UploadHelpImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewHelpCenter Preview a help center page
+	//
+	// A page of the center as visitors see it, also while the center or the article is
+	// unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+	// (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+	// draft instead of the published copy). `locale` defaults to the center's default locale. It
+	// is sent with `Cache-Control: no-store` and its links point to the public URLs.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/preview (the `PreviewHelpCenter` operationId).
+	PreviewHelpCenter(ctx context.Context, centerId HelpCenterId, params *PreviewHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderHelpMarkdownWithBody Render Markdown as an article
+	//
+	// The editor's preview: the HTML a body would publish as, with the same rules for images.
+	// 60 renders a minute per caller (`429 rate_limited`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+	RenderHelpMarkdownWithBody(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderHelpMarkdown Render Markdown as an article
+	//
+	// The editor's preview: the HTML a body would publish as, with the same rules for images.
+	// 60 renders a minute per caller (`429 rate_limited`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+	RenderHelpMarkdown(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, body RenderHelpMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetHelpReport A help center's report
+	//
+	// Counters of the last `days` UTC days, today included: views (approximate: one per address,
+	// article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+	// conversations started from an article and times an article was sent as a card, per article;
+	// searches, and the searches that found nothing by their normalized query. Counts reach the
+	// report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+	// as `(scrubbed)`.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/report (the `GetHelpReport` operationId).
+	GetHelpReport(ctx context.Context, centerId HelpCenterId, params *GetHelpReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SearchHelpArticles Search a center's articles
+	//
+	// The ranking the widget and the public pages use, over published translations in `locale`
+	// (the center's default locale when absent) and, when that locale has fewer than 3 published
+	// articles, the default locale too. `drafts=true` searches the drafts instead, also of
+	// translations never published. `q` is normalized and cut to 8 words of at most 50
+	// characters; a query left empty is refused with `400 query_empty`. Members' searches are
+	// not counted in the report.
+	//
+	// Scope: `help:read`.
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/search (the `SearchHelpArticles` operationId).
+	SearchHelpArticles(ctx context.Context, centerId HelpCenterId, params *SearchHelpArticlesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetHome Everything the workspace has today, in one answer
 	//
@@ -30860,6 +32977,186 @@ func (c *Client) ListClientDiscussions(ctx context.Context, channelKey ChannelKe
 // Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
 func (c *Client) GetClientDiscussion(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClientDiscussionRequest(c.Server, channelKey, discussionId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientHelp The inbox's help center
+//
+// The published help center of the inbox of a `chat` or `app` channel, without a session: the
+// center in the served locale, its collections that have published articles there,
+// `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+// ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+// it, else its base language, else the center's default locale. Nothing is created.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// `404 help_off` when the inbox has no published center. Sent with
+// `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help (the `GetClientHelp` operationId).
+func (c *Client) GetClientHelp(ctx context.Context, channelKey ClientHelpChannelKey, params *GetClientHelpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientHelpRequest(c.Server, channelKey, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientHelpArticle A help article
+//
+// The published article in the served locale, or in the center's default locale with
+// `fallback: true` when it has no published translation there, with up to 3 `related`
+// articles of its collection. Counts one view per address, article and hour. `404` for an
+// unpublished article. Sent with `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/articles/{articleId} (the `GetClientHelpArticle` operationId).
+func (c *Client) GetClientHelpArticle(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, params *GetClientHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientHelpArticleRequest(c.Server, channelKey, articleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientHelpReactionWithBody Answer "Was this helpful?"
+//
+// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+// without storing anything about the visitor. A visitor who changes their mind sends the new
+// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+// limited per address and per channel (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+func (c *Client) CreateClientHelpReactionWithBody(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientHelpReactionRequestWithBody(c.Server, channelKey, articleId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientHelpReaction Answer "Was this helpful?"
+//
+// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+// without storing anything about the visitor. A visitor who changes their mind sends the new
+// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+// limited per address and per channel (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+func (c *Client) CreateClientHelpReaction(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, body CreateClientHelpReactionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientHelpReactionRequest(c.Server, channelKey, articleId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientHelpCollection A help collection
+//
+// A collection with its sub-collections and its published articles in the served locale, by
+// position. `404` for a collection with no published article in that locale. Sent with
+// `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/collections/{collectionId} (the `GetClientHelpCollection` operationId).
+func (c *Client) GetClientHelpCollection(ctx context.Context, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params *GetClientHelpCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientHelpCollectionRequest(c.Server, channelKey, collectionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SearchClientHelp Search the help center
+//
+// Published articles that match `q`, best first, in the served locale and, when it has fewer
+// than 3 published articles, the default locale too; each result names its `locale`. Every
+// word must match and the last may be the start of a word; when nothing matches, any word
+// may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+// which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+//
+// Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+// seconds without typing); only those are counted in the report. 30 searches a minute per
+// address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+// `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/search (the `SearchClientHelp` operationId).
+func (c *Client) SearchClientHelp(ctx context.Context, channelKey ClientHelpChannelKey, params *SearchClientHelpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSearchClientHelpRequest(c.Server, channelKey, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientHelpSearchClickWithBody Count an opened search result
+//
+// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+func (c *Client) CreateClientHelpSearchClickWithBody(ctx context.Context, channelKey ClientHelpChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientHelpSearchClickRequestWithBody(c.Server, channelKey, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientHelpSearchClick Count an opened search result
+//
+// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+func (c *Client) CreateClientHelpSearchClick(ctx context.Context, channelKey ClientHelpChannelKey, body CreateClientHelpSearchClickJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientHelpSearchClickRequest(c.Server, channelKey, body)
 	if err != nil {
 		return nil, err
 	}
@@ -37036,7 +39333,8 @@ func (c *Client) UploadEmailImageWithBody(ctx context.Context, params *UploadEma
 // DeleteEmailImage Delete an e-mail image
 //
 // Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-// not archived uses the image. An image that went out in a sent broadcast needs
+// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
 // `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 // image. The public URL stops working at once.
 //
@@ -37203,6 +39501,812 @@ func (c *Client) CreateFeedbackWithBody(ctx context.Context, params *CreateFeedb
 // Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 func (c *Client) CreateFeedback(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateFeedbackRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListHelpCenters List help centers
+//
+// The centers of the inboxes the caller can see, oldest first.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers (the `ListHelpCenters` operationId).
+func (c *Client) ListHelpCenters(ctx context.Context, params *ListHelpCentersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListHelpCentersRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpCenterWithBody Create a help center
+//
+// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+// same inbox, `analytics_property_id` a property of the workspace.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+func (c *Client) CreateHelpCenterWithBody(ctx context.Context, params *CreateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpCenterRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpCenter Create a help center
+//
+// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+// same inbox, `analytics_property_id` a property of the workspace.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+func (c *Client) CreateHelpCenter(ctx context.Context, params *CreateHelpCenterParams, body CreateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpCenterRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteHelpCenter Delete a help center
+//
+// The center with its collections, articles, translations, revisions and counters. Its
+// images stay e-mail images of the workspace and are swept like any unused one.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Corresponds with DELETE /v1/help-centers/{centerId} (the `DeleteHelpCenter` operationId).
+func (c *Client) DeleteHelpCenter(ctx context.Context, centerId HelpCenterId, params *DeleteHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteHelpCenterRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetHelpCenter A help center
+//
+// With its counts and public `url`.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId} (the `GetHelpCenter` operationId).
+func (c *Client) GetHelpCenter(ctx context.Context, centerId HelpCenterId, params *GetHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetHelpCenterRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpCenterWithBody Update a help center
+//
+// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+// property. `published: false` takes the center and every article off the web (`404`) at once.
+// Changing `slug` keeps the old one reserved for this center, and its public addresses
+// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+// while an article has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+func (c *Client) UpdateHelpCenterWithBody(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpCenterRequestWithBody(c.Server, centerId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpCenter Update a help center
+//
+// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+// property. `published: false` takes the center and every article off the web (`404`) at once.
+// Changing `slug` keeps the old one reserved for this center, and its public addresses
+// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+// while an article has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+func (c *Client) UpdateHelpCenter(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, body UpdateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpCenterRequest(c.Server, centerId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListHelpArticles List a center's articles
+//
+// By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+// articles of one collection. `state` keeps the articles whose translation in `locale` (the
+// center's default locale when absent) is a `draft` (never published, or unpublished),
+// `published` (no change since), `changed` (published, with a draft that differs) or
+// `missing` (no translation in that locale). `q` matches the words of the titles of every
+// translation, drafts included.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles (the `ListHelpArticles` operationId).
+func (c *Client) ListHelpArticles(ctx context.Context, centerId HelpCenterId, params *ListHelpArticlesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListHelpArticlesRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpArticleWithBody Create an article
+//
+// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+func (c *Client) CreateHelpArticleWithBody(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpArticleRequestWithBody(c.Server, centerId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpArticle Create an article
+//
+// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+func (c *Client) CreateHelpArticle(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, body CreateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpArticleRequest(c.Server, centerId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteHelpArticle Delete an article
+//
+// With every translation, revision and counter, and sends `help.article.deleted`. An article
+// with a published translation can be deleted only by those who may publish
+// (`403 forbidden`), and API keys also need `help:publish`.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId} (the `DeleteHelpArticle` operationId).
+func (c *Client) DeleteHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *DeleteHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteHelpArticleRequest(c.Server, centerId, articleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetHelpArticle An article with its translations
+//
+// Every translation with its draft and its published copy.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId} (the `GetHelpArticle` operationId).
+func (c *Client) GetHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *GetHelpArticleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetHelpArticleRequest(c.Server, centerId, articleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpArticleWithBody Move an article or change its pages
+//
+// Its collection (`null` for none), its position and the page `paths` where the widget
+// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+// trailing `*` matches any rest (`/billing/*`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+func (c *Client) UpdateHelpArticleWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpArticleRequestWithBody(c.Server, centerId, articleId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpArticle Move an article or change its pages
+//
+// Its collection (`null` for none), its position and the page `paths` where the widget
+// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+// trailing `*` matches any rest (`/billing/*`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+func (c *Client) UpdateHelpArticle(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, body UpdateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpArticleRequest(c.Server, centerId, articleId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteHelpArticleTranslation Delete a translation
+//
+// With its revisions, and sends `help.article.deleted` naming the locale. The last
+// translation of an article cannot be deleted (`409 last_translation`); delete the article
+// instead. A published translation can be deleted only by those who may publish
+// (`403 forbidden`), and API keys also need `help:publish`.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `DeleteHelpArticleTranslation` operationId).
+func (c *Client) DeleteHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *DeleteHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteHelpArticleTranslationRequest(c.Server, centerId, articleId, locale, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PutHelpArticleTranslationWithBody Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the center's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one,
+// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+// translation is published again. Images of the body stay only when they are this
+// workspace's uploads.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+func (c *Client) PutHelpArticleTranslationWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutHelpArticleTranslationRequestWithBody(c.Server, centerId, articleId, locale, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PutHelpArticleTranslation Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the center's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one,
+// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+// translation is published again. Images of the body stay only when they are this
+// workspace's uploads.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+func (c *Client) PutHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, body PutHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutHelpArticleTranslationRequest(c.Server, centerId, articleId, locale, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PublishHelpArticleTranslationWithBody Publish a translation
+//
+// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+// refused with `409 version_conflict`. The article is public once its center is published.
+// Publishing an unchanged published translation changes nothing.
+//
+// Owners, admins and API keys; agents with access to the center's inbox when the center's
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+func (c *Client) PublishHelpArticleTranslationWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishHelpArticleTranslationRequestWithBody(c.Server, centerId, articleId, locale, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PublishHelpArticleTranslation Publish a translation
+//
+// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+// refused with `409 version_conflict`. The article is public once its center is published.
+// Publishing an unchanged published translation changes nothing.
+//
+// Owners, admins and API keys; agents with access to the center's inbox when the center's
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+func (c *Client) PublishHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, body PublishHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishHelpArticleTranslationRequest(c.Server, centerId, articleId, locale, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListHelpArticleRevisions List a translation's revisions
+//
+// Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+// `restore`, each with its title, body and keywords.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions (the `ListHelpArticleRevisions` operationId).
+func (c *Client) ListHelpArticleRevisions(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *ListHelpArticleRevisionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListHelpArticleRevisionsRequest(c.Server, centerId, articleId, locale, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreHelpArticleRevisionWithBody Restore a revision into the draft
+//
+// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+// same `base_version` check) and keeps a `restore` revision. The published copy does not
+// change.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+func (c *Client) RestoreHelpArticleRevisionWithBody(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreHelpArticleRevisionRequestWithBody(c.Server, centerId, articleId, locale, revisionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreHelpArticleRevision Restore a revision into the draft
+//
+// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+// same `base_version` check) and keeps a `restore` revision. The published copy does not
+// change.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+func (c *Client) RestoreHelpArticleRevision(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, body RestoreHelpArticleRevisionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreHelpArticleRevisionRequest(c.Server, centerId, articleId, locale, revisionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnpublishHelpArticleTranslation Unpublish a translation
+//
+// Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+// and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+//
+// Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish (the `UnpublishHelpArticleTranslation` operationId).
+func (c *Client) UnpublishHelpArticleTranslation(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *UnpublishHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnpublishHelpArticleTranslationRequest(c.Server, centerId, articleId, locale, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListHelpCollections List a center's collections
+//
+// Top-level collections by `position`, each followed by its sub-collections, with their
+// translations and the number of articles in each.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/collections (the `ListHelpCollections` operationId).
+func (c *Client) ListHelpCollections(ctx context.Context, centerId HelpCenterId, params *ListHelpCollectionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListHelpCollectionsRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpCollectionWithBody Create a collection
+//
+// A group of articles, named per locale in `translations` (only the center's `locales`,
+// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+// collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+func (c *Client) CreateHelpCollectionWithBody(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpCollectionRequestWithBody(c.Server, centerId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateHelpCollection Create a collection
+//
+// A group of articles, named per locale in `translations` (only the center's `locales`,
+// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+// collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+func (c *Client) CreateHelpCollection(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, body CreateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateHelpCollectionRequest(c.Server, centerId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteHelpCollection Delete a collection
+//
+// Its articles stay, in no collection; its sub-collections become top-level collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/collections/{collectionId} (the `DeleteHelpCollection` operationId).
+func (c *Client) DeleteHelpCollection(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *DeleteHelpCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteHelpCollectionRequest(c.Server, centerId, collectionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpCollectionWithBody Update a collection
+//
+// `translations` sets the name and description of the locales it names and keeps the others;
+// `remove_locales` removes translations. A collection with sub-collections cannot get a
+// parent (`400`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+func (c *Client) UpdateHelpCollectionWithBody(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpCollectionRequestWithBody(c.Server, centerId, collectionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateHelpCollection Update a collection
+//
+// `translations` sets the name and description of the locales it names and keeps the others;
+// `remove_locales` removes translations. A collection with sub-collections cannot get a
+// parent (`400`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+func (c *Client) UpdateHelpCollection(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, body UpdateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateHelpCollectionRequest(c.Server, centerId, collectionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UploadHelpImageWithBody Upload an image for articles
+//
+// Stores the image as one of the workspace's e-mail images, with the same rules as
+// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+// the rate), and answers its public URL with the Markdown that shows it. An image no draft
+// uses and no published article showed is deleted a week after its upload.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/images (the `UploadHelpImage` operationId).
+func (c *Client) UploadHelpImageWithBody(ctx context.Context, centerId HelpCenterId, params *UploadHelpImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadHelpImageRequestWithBody(c.Server, centerId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PreviewHelpCenter Preview a help center page
+//
+// A page of the center as visitors see it, also while the center or the article is
+// unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+// (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+// draft instead of the published copy). `locale` defaults to the center's default locale. It
+// is sent with `Cache-Control: no-store` and its links point to the public URLs.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/preview (the `PreviewHelpCenter` operationId).
+func (c *Client) PreviewHelpCenter(ctx context.Context, centerId HelpCenterId, params *PreviewHelpCenterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewHelpCenterRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderHelpMarkdownWithBody Render Markdown as an article
+//
+// The editor's preview: the HTML a body would publish as, with the same rules for images.
+// 60 renders a minute per caller (`429 rate_limited`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+func (c *Client) RenderHelpMarkdownWithBody(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderHelpMarkdownRequestWithBody(c.Server, centerId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderHelpMarkdown Render Markdown as an article
+//
+// The editor's preview: the HTML a body would publish as, with the same rules for images.
+// 60 renders a minute per caller (`429 rate_limited`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+func (c *Client) RenderHelpMarkdown(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, body RenderHelpMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderHelpMarkdownRequest(c.Server, centerId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetHelpReport A help center's report
+//
+// Counters of the last `days` UTC days, today included: views (approximate: one per address,
+// article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+// conversations started from an article and times an article was sent as a card, per article;
+// searches, and the searches that found nothing by their normalized query. Counts reach the
+// report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+// as `(scrubbed)`.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/report (the `GetHelpReport` operationId).
+func (c *Client) GetHelpReport(ctx context.Context, centerId HelpCenterId, params *GetHelpReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetHelpReportRequest(c.Server, centerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SearchHelpArticles Search a center's articles
+//
+// The ranking the widget and the public pages use, over published translations in `locale`
+// (the center's default locale when absent) and, when that locale has fewer than 3 published
+// articles, the default locale too. `drafts=true` searches the drafts instead, also of
+// translations never published. `q` is normalized and cut to 8 words of at most 50
+// characters; a query left empty is refused with `400 query_empty`. Members' searches are
+// not counted in the report.
+//
+// Scope: `help:read`.
+//
+// Corresponds with GET /v1/help-centers/{centerId}/search (the `SearchHelpArticles` operationId).
+func (c *Client) SearchHelpArticles(ctx context.Context, centerId HelpCenterId, params *SearchHelpArticlesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSearchHelpArticlesRequest(c.Server, centerId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -42387,6 +45491,409 @@ func NewGetClientDiscussionRequest(server string, channelKey ChannelKey, discuss
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetClientHelpRequest constructs an http.Request for the GetClientHelp method
+func NewGetClientHelpRequest(server string, channelKey ClientHelpChannelKey, params *GetClientHelpParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetClientHelpArticleRequest constructs an http.Request for the GetClientHelpArticle method
+func NewGetClientHelpArticleRequest(server string, channelKey ClientHelpChannelKey, articleId HelpArticleId, params *GetClientHelpArticleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help/articles/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateClientHelpReactionRequest calls the generic CreateClientHelpReaction builder with application/json body
+func NewCreateClientHelpReactionRequest(server string, channelKey ClientHelpChannelKey, articleId HelpArticleId, body CreateClientHelpReactionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClientHelpReactionRequestWithBody(server, channelKey, articleId, "application/json", bodyReader)
+}
+
+// NewCreateClientHelpReactionRequestWithBody constructs an http.Request for the CreateClientHelpReaction method, with any body, and a specified content type
+func NewCreateClientHelpReactionRequestWithBody(server string, channelKey ClientHelpChannelKey, articleId HelpArticleId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help/articles/%s/reactions", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetClientHelpCollectionRequest constructs an http.Request for the GetClientHelpCollection method
+func NewGetClientHelpCollectionRequest(server string, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params *GetClientHelpCollectionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "collectionId", collectionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help/collections/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSearchClientHelpRequest constructs an http.Request for the SearchClientHelp method
+func NewSearchClientHelpRequest(server string, channelKey ClientHelpChannelKey, params *SearchClientHelpParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help/search", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Final != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "final", *params.Final, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateClientHelpSearchClickRequest calls the generic CreateClientHelpSearchClick builder with application/json body
+func NewCreateClientHelpSearchClickRequest(server string, channelKey ClientHelpChannelKey, body CreateClientHelpSearchClickJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClientHelpSearchClickRequestWithBody(server, channelKey, "application/json", bodyReader)
+}
+
+// NewCreateClientHelpSearchClickRequestWithBody constructs an http.Request for the CreateClientHelpSearchClick method, with any body, and a specified content type
+func NewCreateClientHelpSearchClickRequestWithBody(server string, channelKey ClientHelpChannelKey, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/help/searches/click", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -54496,6 +58003,1815 @@ func NewCreateFeedbackRequestWithBody(server string, params *CreateFeedbackParam
 	return req, nil
 }
 
+// NewListHelpCentersRequest constructs an http.Request for the ListHelpCenters method
+func NewListHelpCentersRequest(server string, params *ListHelpCentersParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateHelpCenterRequest calls the generic CreateHelpCenter builder with application/json body
+func NewCreateHelpCenterRequest(server string, params *CreateHelpCenterParams, body CreateHelpCenterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateHelpCenterRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateHelpCenterRequestWithBody constructs an http.Request for the CreateHelpCenter method, with any body, and a specified content type
+func NewCreateHelpCenterRequestWithBody(server string, params *CreateHelpCenterParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteHelpCenterRequest constructs an http.Request for the DeleteHelpCenter method
+func NewDeleteHelpCenterRequest(server string, centerId HelpCenterId, params *DeleteHelpCenterParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetHelpCenterRequest constructs an http.Request for the GetHelpCenter method
+func NewGetHelpCenterRequest(server string, centerId HelpCenterId, params *GetHelpCenterParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateHelpCenterRequest calls the generic UpdateHelpCenter builder with application/json body
+func NewUpdateHelpCenterRequest(server string, centerId HelpCenterId, params *UpdateHelpCenterParams, body UpdateHelpCenterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateHelpCenterRequestWithBody(server, centerId, params, "application/json", bodyReader)
+}
+
+// NewUpdateHelpCenterRequestWithBody constructs an http.Request for the UpdateHelpCenter method, with any body, and a specified content type
+func NewUpdateHelpCenterRequestWithBody(server string, centerId HelpCenterId, params *UpdateHelpCenterParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListHelpArticlesRequest constructs an http.Request for the ListHelpArticles method
+func NewListHelpArticlesRequest(server string, centerId HelpCenterId, params *ListHelpArticlesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.CollectionId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "collection_id", *params.CollectionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateHelpArticleRequest calls the generic CreateHelpArticle builder with application/json body
+func NewCreateHelpArticleRequest(server string, centerId HelpCenterId, params *CreateHelpArticleParams, body CreateHelpArticleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateHelpArticleRequestWithBody(server, centerId, params, "application/json", bodyReader)
+}
+
+// NewCreateHelpArticleRequestWithBody constructs an http.Request for the CreateHelpArticle method, with any body, and a specified content type
+func NewCreateHelpArticleRequestWithBody(server string, centerId HelpCenterId, params *CreateHelpArticleParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteHelpArticleRequest constructs an http.Request for the DeleteHelpArticle method
+func NewDeleteHelpArticleRequest(server string, centerId HelpCenterId, articleId HelpArticleId, params *DeleteHelpArticleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetHelpArticleRequest constructs an http.Request for the GetHelpArticle method
+func NewGetHelpArticleRequest(server string, centerId HelpCenterId, articleId HelpArticleId, params *GetHelpArticleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateHelpArticleRequest calls the generic UpdateHelpArticle builder with application/json body
+func NewUpdateHelpArticleRequest(server string, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, body UpdateHelpArticleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateHelpArticleRequestWithBody(server, centerId, articleId, params, "application/json", bodyReader)
+}
+
+// NewUpdateHelpArticleRequestWithBody constructs an http.Request for the UpdateHelpArticle method, with any body, and a specified content type
+func NewUpdateHelpArticleRequestWithBody(server string, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteHelpArticleTranslationRequest constructs an http.Request for the DeleteHelpArticleTranslation method
+func NewDeleteHelpArticleTranslationRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *DeleteHelpArticleTranslationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPutHelpArticleTranslationRequest calls the generic PutHelpArticleTranslation builder with application/json body
+func NewPutHelpArticleTranslationRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, body PutHelpArticleTranslationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPutHelpArticleTranslationRequestWithBody(server, centerId, articleId, locale, params, "application/json", bodyReader)
+}
+
+// NewPutHelpArticleTranslationRequestWithBody constructs an http.Request for the PutHelpArticleTranslation method, with any body, and a specified content type
+func NewPutHelpArticleTranslationRequestWithBody(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPublishHelpArticleTranslationRequest calls the generic PublishHelpArticleTranslation builder with application/json body
+func NewPublishHelpArticleTranslationRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, body PublishHelpArticleTranslationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPublishHelpArticleTranslationRequestWithBody(server, centerId, articleId, locale, params, "application/json", bodyReader)
+}
+
+// NewPublishHelpArticleTranslationRequestWithBody constructs an http.Request for the PublishHelpArticleTranslation method, with any body, and a specified content type
+func NewPublishHelpArticleTranslationRequestWithBody(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s/publish", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListHelpArticleRevisionsRequest constructs an http.Request for the ListHelpArticleRevisions method
+func NewListHelpArticleRevisionsRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *ListHelpArticleRevisionsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s/revisions", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRestoreHelpArticleRevisionRequest calls the generic RestoreHelpArticleRevision builder with application/json body
+func NewRestoreHelpArticleRevisionRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, body RestoreHelpArticleRevisionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestoreHelpArticleRevisionRequestWithBody(server, centerId, articleId, locale, revisionId, params, "application/json", bodyReader)
+}
+
+// NewRestoreHelpArticleRevisionRequestWithBody constructs an http.Request for the RestoreHelpArticleRevision method, with any body, and a specified content type
+func NewRestoreHelpArticleRevisionRequestWithBody(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithOptions("simple", false, "revisionId", revisionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s/revisions/%s/restore", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnpublishHelpArticleTranslationRequest constructs an http.Request for the UnpublishHelpArticleTranslation method
+func NewUnpublishHelpArticleTranslationRequest(server string, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *UnpublishHelpArticleTranslationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "articleId", articleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/articles/%s/translations/%s/unpublish", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListHelpCollectionsRequest constructs an http.Request for the ListHelpCollections method
+func NewListHelpCollectionsRequest(server string, centerId HelpCenterId, params *ListHelpCollectionsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/collections", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateHelpCollectionRequest calls the generic CreateHelpCollection builder with application/json body
+func NewCreateHelpCollectionRequest(server string, centerId HelpCenterId, params *CreateHelpCollectionParams, body CreateHelpCollectionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateHelpCollectionRequestWithBody(server, centerId, params, "application/json", bodyReader)
+}
+
+// NewCreateHelpCollectionRequestWithBody constructs an http.Request for the CreateHelpCollection method, with any body, and a specified content type
+func NewCreateHelpCollectionRequestWithBody(server string, centerId HelpCenterId, params *CreateHelpCollectionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/collections", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteHelpCollectionRequest constructs an http.Request for the DeleteHelpCollection method
+func NewDeleteHelpCollectionRequest(server string, centerId HelpCenterId, collectionId HelpCollectionId, params *DeleteHelpCollectionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "collectionId", collectionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/collections/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateHelpCollectionRequest calls the generic UpdateHelpCollection builder with application/json body
+func NewUpdateHelpCollectionRequest(server string, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, body UpdateHelpCollectionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateHelpCollectionRequestWithBody(server, centerId, collectionId, params, "application/json", bodyReader)
+}
+
+// NewUpdateHelpCollectionRequestWithBody constructs an http.Request for the UpdateHelpCollection method, with any body, and a specified content type
+func NewUpdateHelpCollectionRequestWithBody(server string, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "collectionId", collectionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/collections/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUploadHelpImageRequestWithBody constructs an http.Request for the UploadHelpImage method, with any body, and a specified content type
+func NewUploadHelpImageRequestWithBody(server string, centerId HelpCenterId, params *UploadHelpImageParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/images", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPreviewHelpCenterRequest constructs an http.Request for the PreviewHelpCenter method
+func NewPreviewHelpCenterRequest(server string, centerId HelpCenterId, params *PreviewHelpCenterParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.View != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "view", *params.View, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Id != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "id", *params.Id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Draft != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "draft", *params.Draft, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRenderHelpMarkdownRequest calls the generic RenderHelpMarkdown builder with application/json body
+func NewRenderHelpMarkdownRequest(server string, centerId HelpCenterId, params *RenderHelpMarkdownParams, body RenderHelpMarkdownJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRenderHelpMarkdownRequestWithBody(server, centerId, params, "application/json", bodyReader)
+}
+
+// NewRenderHelpMarkdownRequestWithBody constructs an http.Request for the RenderHelpMarkdown method, with any body, and a specified content type
+func NewRenderHelpMarkdownRequestWithBody(server string, centerId HelpCenterId, params *RenderHelpMarkdownParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/render", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetHelpReportRequest constructs an http.Request for the GetHelpReport method
+func NewGetHelpReportRequest(server string, centerId HelpCenterId, params *GetHelpReportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/report", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Days != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "days", *params.Days, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewSearchHelpArticlesRequest constructs an http.Request for the SearchHelpArticles method
+func NewSearchHelpArticlesRequest(server string, centerId HelpCenterId, params *SearchHelpArticlesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "centerId", centerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/help-centers/%s/search", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Drafts != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "drafts", *params.Drafts, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetHomeRequest constructs an http.Request for the GetHome method
 func NewGetHomeRequest(server string, params *GetHomeParams) (*http.Request, error) {
 	var err error
@@ -64035,6 +69351,114 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
 	GetClientDiscussionWithResponse(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*GetClientDiscussionResponse, error)
 
+	// GetClientHelpWithResponse The inbox's help center
+	//
+	// The published help center of the inbox of a `chat` or `app` channel, without a session: the
+	// center in the served locale, its collections that have published articles there,
+	// `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+	// ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+	// it, else its base language, else the center's default locale. Nothing is created.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// `404 help_off` when the inbox has no published center. Sent with
+	// `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help (the `GetClientHelp` operationId).
+	GetClientHelpWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, params *GetClientHelpParams, reqEditors ...RequestEditorFn) (*GetClientHelpResponse, error)
+
+	// GetClientHelpArticleWithResponse A help article
+	//
+	// The published article in the served locale, or in the center's default locale with
+	// `fallback: true` when it has no published translation there, with up to 3 `related`
+	// articles of its collection. Counts one view per address, article and hour. `404` for an
+	// unpublished article. Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/articles/{articleId} (the `GetClientHelpArticle` operationId).
+	GetClientHelpArticleWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, params *GetClientHelpArticleParams, reqEditors ...RequestEditorFn) (*GetClientHelpArticleResponse, error)
+
+	// CreateClientHelpReactionWithBodyWithResponse Answer "Was this helpful?"
+	//
+	// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+	// without storing anything about the visitor. A visitor who changes their mind sends the new
+	// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+	// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+	// limited per address and per channel (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+	CreateClientHelpReactionWithBodyWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientHelpReactionResponse, error)
+
+	// CreateClientHelpReactionWithResponse Answer "Was this helpful?"
+	//
+	// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+	// without storing anything about the visitor. A visitor who changes their mind sends the new
+	// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+	// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+	// limited per address and per channel (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+	CreateClientHelpReactionWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, body CreateClientHelpReactionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientHelpReactionResponse, error)
+
+	// GetClientHelpCollectionWithResponse A help collection
+	//
+	// A collection with its sub-collections and its published articles in the served locale, by
+	// position. `404` for a collection with no published article in that locale. Sent with
+	// `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/collections/{collectionId} (the `GetClientHelpCollection` operationId).
+	GetClientHelpCollectionWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params *GetClientHelpCollectionParams, reqEditors ...RequestEditorFn) (*GetClientHelpCollectionResponse, error)
+
+	// SearchClientHelpWithResponse Search the help center
+	//
+	// Published articles that match `q`, best first, in the served locale and, when it has fewer
+	// than 3 published articles, the default locale too; each result names its `locale`. Every
+	// word must match and the last may be the start of a word; when nothing matches, any word
+	// may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+	// which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+	//
+	// Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+	// seconds without typing); only those are counted in the report. 30 searches a minute per
+	// address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+	// `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/help/search (the `SearchClientHelp` operationId).
+	SearchClientHelpWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, params *SearchClientHelpParams, reqEditors ...RequestEditorFn) (*SearchClientHelpResponse, error)
+
+	// CreateClientHelpSearchClickWithBodyWithResponse Count an opened search result
+	//
+	// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+	// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+	CreateClientHelpSearchClickWithBodyWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientHelpSearchClickResponse, error)
+
+	// CreateClientHelpSearchClickWithResponse Count an opened search result
+	//
+	// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+	// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+	// `Cache-Control: no-store`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+	CreateClientHelpSearchClickWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, body CreateClientHelpSearchClickJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientHelpSearchClickResponse, error)
+
 	// ListClientMailingListsWithResponse The public mailing lists a form may offer
 	//
 	// The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
@@ -67807,7 +73231,8 @@ type ClientWithResponsesInterface interface {
 	// DeleteEmailImageWithResponse Delete an e-mail image
 	//
 	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-	// not archived uses the image. An image that went out in a sent broadcast needs
+	// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+	// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
 	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 	// image. The public URL stops working at once.
 	//
@@ -67923,6 +73348,490 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 	CreateFeedbackWithResponse(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFeedbackResponse, error)
+
+	// ListHelpCentersWithResponse List help centers
+	//
+	// The centers of the inboxes the caller can see, oldest first.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers (the `ListHelpCenters` operationId).
+	ListHelpCentersWithResponse(ctx context.Context, params *ListHelpCentersParams, reqEditors ...RequestEditorFn) (*ListHelpCentersResponse, error)
+
+	// CreateHelpCenterWithBodyWithResponse Create a help center
+	//
+	// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+	// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+	// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+	// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+	// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+	// same inbox, `analytics_property_id` a property of the workspace.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+	CreateHelpCenterWithBodyWithResponse(ctx context.Context, params *CreateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpCenterResponse, error)
+
+	// CreateHelpCenterWithResponse Create a help center
+	//
+	// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+	// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+	// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+	// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+	// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+	// same inbox, `analytics_property_id` a property of the workspace.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+	CreateHelpCenterWithResponse(ctx context.Context, params *CreateHelpCenterParams, body CreateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpCenterResponse, error)
+
+	// DeleteHelpCenterWithResponse Delete a help center
+	//
+	// The center with its collections, articles, translations, revisions and counters. Its
+	// images stay e-mail images of the workspace and are swept like any unused one.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId} (the `DeleteHelpCenter` operationId).
+	DeleteHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *DeleteHelpCenterParams, reqEditors ...RequestEditorFn) (*DeleteHelpCenterResponse, error)
+
+	// GetHelpCenterWithResponse A help center
+	//
+	// With its counts and public `url`.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId} (the `GetHelpCenter` operationId).
+	GetHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *GetHelpCenterParams, reqEditors ...RequestEditorFn) (*GetHelpCenterResponse, error)
+
+	// UpdateHelpCenterWithBodyWithResponse Update a help center
+	//
+	// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+	// property. `published: false` takes the center and every article off the web (`404`) at once.
+	// Changing `slug` keeps the old one reserved for this center, and its public addresses
+	// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+	// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+	// while an article has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+	UpdateHelpCenterWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpCenterResponse, error)
+
+	// UpdateHelpCenterWithResponse Update a help center
+	//
+	// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+	// property. `published: false` takes the center and every article off the web (`404`) at once.
+	// Changing `slug` keeps the old one reserved for this center, and its public addresses
+	// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+	// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+	// while an article has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+	UpdateHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, body UpdateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpCenterResponse, error)
+
+	// ListHelpArticlesWithResponse List a center's articles
+	//
+	// By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+	// articles of one collection. `state` keeps the articles whose translation in `locale` (the
+	// center's default locale when absent) is a `draft` (never published, or unpublished),
+	// `published` (no change since), `changed` (published, with a draft that differs) or
+	// `missing` (no translation in that locale). `q` matches the words of the titles of every
+	// translation, drafts included.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles (the `ListHelpArticles` operationId).
+	ListHelpArticlesWithResponse(ctx context.Context, centerId HelpCenterId, params *ListHelpArticlesParams, reqEditors ...RequestEditorFn) (*ListHelpArticlesResponse, error)
+
+	// CreateHelpArticleWithBodyWithResponse Create an article
+	//
+	// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+	// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+	// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+	CreateHelpArticleWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpArticleResponse, error)
+
+	// CreateHelpArticleWithResponse Create an article
+	//
+	// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+	// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+	// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+	CreateHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, body CreateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpArticleResponse, error)
+
+	// DeleteHelpArticleWithResponse Delete an article
+	//
+	// With every translation, revision and counter, and sends `help.article.deleted`. An article
+	// with a published translation can be deleted only by those who may publish
+	// (`403 forbidden`), and API keys also need `help:publish`.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId} (the `DeleteHelpArticle` operationId).
+	DeleteHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *DeleteHelpArticleParams, reqEditors ...RequestEditorFn) (*DeleteHelpArticleResponse, error)
+
+	// GetHelpArticleWithResponse An article with its translations
+	//
+	// Every translation with its draft and its published copy.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId} (the `GetHelpArticle` operationId).
+	GetHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *GetHelpArticleParams, reqEditors ...RequestEditorFn) (*GetHelpArticleResponse, error)
+
+	// UpdateHelpArticleWithBodyWithResponse Move an article or change its pages
+	//
+	// Its collection (`null` for none), its position and the page `paths` where the widget
+	// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+	// trailing `*` matches any rest (`/billing/*`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+	UpdateHelpArticleWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpArticleResponse, error)
+
+	// UpdateHelpArticleWithResponse Move an article or change its pages
+	//
+	// Its collection (`null` for none), its position and the page `paths` where the widget
+	// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+	// trailing `*` matches any rest (`/billing/*`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+	UpdateHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, body UpdateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpArticleResponse, error)
+
+	// DeleteHelpArticleTranslationWithResponse Delete a translation
+	//
+	// With its revisions, and sends `help.article.deleted` naming the locale. The last
+	// translation of an article cannot be deleted (`409 last_translation`); delete the article
+	// instead. A published translation can be deleted only by those who may publish
+	// (`403 forbidden`), and API keys also need `help:publish`.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `DeleteHelpArticleTranslation` operationId).
+	DeleteHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *DeleteHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*DeleteHelpArticleTranslationResponse, error)
+
+	// PutHelpArticleTranslationWithBodyWithResponse Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the center's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one,
+	// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+	// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+	// translation is published again. Images of the body stay only when they are this
+	// workspace's uploads.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+	PutHelpArticleTranslationWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutHelpArticleTranslationResponse, error)
+
+	// PutHelpArticleTranslationWithResponse Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the center's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one,
+	// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+	// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+	// translation is published again. Images of the body stay only when they are this
+	// workspace's uploads.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+	PutHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, body PutHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PutHelpArticleTranslationResponse, error)
+
+	// PublishHelpArticleTranslationWithBodyWithResponse Publish a translation
+	//
+	// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+	// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+	// refused with `409 version_conflict`. The article is public once its center is published.
+	// Publishing an unchanged published translation changes nothing.
+	//
+	// Owners, admins and API keys; agents with access to the center's inbox when the center's
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+	PublishHelpArticleTranslationWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishHelpArticleTranslationResponse, error)
+
+	// PublishHelpArticleTranslationWithResponse Publish a translation
+	//
+	// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+	// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+	// refused with `409 version_conflict`. The article is public once its center is published.
+	// Publishing an unchanged published translation changes nothing.
+	//
+	// Owners, admins and API keys; agents with access to the center's inbox when the center's
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `help:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+	PublishHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, body PublishHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishHelpArticleTranslationResponse, error)
+
+	// ListHelpArticleRevisionsWithResponse List a translation's revisions
+	//
+	// Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+	// `restore`, each with its title, body and keywords.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions (the `ListHelpArticleRevisions` operationId).
+	ListHelpArticleRevisionsWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *ListHelpArticleRevisionsParams, reqEditors ...RequestEditorFn) (*ListHelpArticleRevisionsResponse, error)
+
+	// RestoreHelpArticleRevisionWithBodyWithResponse Restore a revision into the draft
+	//
+	// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+	// same `base_version` check) and keeps a `restore` revision. The published copy does not
+	// change.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+	RestoreHelpArticleRevisionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreHelpArticleRevisionResponse, error)
+
+	// RestoreHelpArticleRevisionWithResponse Restore a revision into the draft
+	//
+	// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+	// same `base_version` check) and keeps a `restore` revision. The published copy does not
+	// change.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+	RestoreHelpArticleRevisionWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, body RestoreHelpArticleRevisionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreHelpArticleRevisionResponse, error)
+
+	// UnpublishHelpArticleTranslationWithResponse Unpublish a translation
+	//
+	// Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+	// and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+	//
+	// Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish (the `UnpublishHelpArticleTranslation` operationId).
+	UnpublishHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *UnpublishHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*UnpublishHelpArticleTranslationResponse, error)
+
+	// ListHelpCollectionsWithResponse List a center's collections
+	//
+	// Top-level collections by `position`, each followed by its sub-collections, with their
+	// translations and the number of articles in each.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/collections (the `ListHelpCollections` operationId).
+	ListHelpCollectionsWithResponse(ctx context.Context, centerId HelpCenterId, params *ListHelpCollectionsParams, reqEditors ...RequestEditorFn) (*ListHelpCollectionsResponse, error)
+
+	// CreateHelpCollectionWithBodyWithResponse Create a collection
+	//
+	// A group of articles, named per locale in `translations` (only the center's `locales`,
+	// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+	// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+	// collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+	CreateHelpCollectionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpCollectionResponse, error)
+
+	// CreateHelpCollectionWithResponse Create a collection
+	//
+	// A group of articles, named per locale in `translations` (only the center's `locales`,
+	// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+	// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+	// collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+	CreateHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, body CreateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpCollectionResponse, error)
+
+	// DeleteHelpCollectionWithResponse Delete a collection
+	//
+	// Its articles stay, in no collection; its sub-collections become top-level collections.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/help-centers/{centerId}/collections/{collectionId} (the `DeleteHelpCollection` operationId).
+	DeleteHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *DeleteHelpCollectionParams, reqEditors ...RequestEditorFn) (*DeleteHelpCollectionResponse, error)
+
+	// UpdateHelpCollectionWithBodyWithResponse Update a collection
+	//
+	// `translations` sets the name and description of the locales it names and keeps the others;
+	// `remove_locales` removes translations. A collection with sub-collections cannot get a
+	// parent (`400`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+	UpdateHelpCollectionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpCollectionResponse, error)
+
+	// UpdateHelpCollectionWithResponse Update a collection
+	//
+	// `translations` sets the name and description of the locales it names and keeps the others;
+	// `remove_locales` removes translations. A collection with sub-collections cannot get a
+	// parent (`400`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+	UpdateHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, body UpdateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpCollectionResponse, error)
+
+	// UploadHelpImageWithBodyWithResponse Upload an image for articles
+	//
+	// Stores the image as one of the workspace's e-mail images, with the same rules as
+	// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+	// the rate), and answers its public URL with the Markdown that shows it. An image no draft
+	// uses and no published article showed is deleted a week after its upload.
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/images (the `UploadHelpImage` operationId).
+	UploadHelpImageWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *UploadHelpImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadHelpImageResponse, error)
+
+	// PreviewHelpCenterWithResponse Preview a help center page
+	//
+	// A page of the center as visitors see it, also while the center or the article is
+	// unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+	// (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+	// draft instead of the published copy). `locale` defaults to the center's default locale. It
+	// is sent with `Cache-Control: no-store` and its links point to the public URLs.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/preview (the `PreviewHelpCenter` operationId).
+	PreviewHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *PreviewHelpCenterParams, reqEditors ...RequestEditorFn) (*PreviewHelpCenterResponse, error)
+
+	// RenderHelpMarkdownWithBodyWithResponse Render Markdown as an article
+	//
+	// The editor's preview: the HTML a body would publish as, with the same rules for images.
+	// 60 renders a minute per caller (`429 rate_limited`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+	RenderHelpMarkdownWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderHelpMarkdownResponse, error)
+
+	// RenderHelpMarkdownWithResponse Render Markdown as an article
+	//
+	// The editor's preview: the HTML a body would publish as, with the same rules for images.
+	// 60 renders a minute per caller (`429 rate_limited`).
+	//
+	// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+	RenderHelpMarkdownWithResponse(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, body RenderHelpMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderHelpMarkdownResponse, error)
+
+	// GetHelpReportWithResponse A help center's report
+	//
+	// Counters of the last `days` UTC days, today included: views (approximate: one per address,
+	// article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+	// conversations started from an article and times an article was sent as a card, per article;
+	// searches, and the searches that found nothing by their normalized query. Counts reach the
+	// report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+	// as `(scrubbed)`.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/report (the `GetHelpReport` operationId).
+	GetHelpReportWithResponse(ctx context.Context, centerId HelpCenterId, params *GetHelpReportParams, reqEditors ...RequestEditorFn) (*GetHelpReportResponse, error)
+
+	// SearchHelpArticlesWithResponse Search a center's articles
+	//
+	// The ranking the widget and the public pages use, over published translations in `locale`
+	// (the center's default locale when absent) and, when that locale has fewer than 3 published
+	// articles, the default locale too. `drafts=true` searches the drafts instead, also of
+	// translations never published. `q` is normalized and cut to 8 words of at most 50
+	// characters; a query left empty is refused with `400 query_empty`. Members' searches are
+	// not counted in the report.
+	//
+	// Scope: `help:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/help-centers/{centerId}/search (the `SearchHelpArticles` operationId).
+	SearchHelpArticlesWithResponse(ctx context.Context, centerId HelpCenterId, params *SearchHelpArticlesParams, reqEditors ...RequestEditorFn) (*SearchHelpArticlesResponse, error)
 
 	// GetHomeWithResponse Everything the workspace has today, in one answer
 	//
@@ -71509,6 +77418,399 @@ func (r GetClientDiscussionResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetClientDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientHelpResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientHelp
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientHelpResponse) GetJSON200() *ClientHelp {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetClientHelpResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientHelpResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientHelpResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientHelpResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientHelpResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientHelpResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientHelpResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientHelpResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientHelpArticleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientHelpArticle
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientHelpArticleResponse) GetJSON200() *ClientHelpArticle {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientHelpArticleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientHelpArticleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientHelpArticleResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientHelpArticleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientHelpArticleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientHelpArticleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientHelpArticleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClientHelpReactionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClientHelpReactionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateClientHelpReactionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClientHelpReactionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateClientHelpReactionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClientHelpReactionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClientHelpReactionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClientHelpReactionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClientHelpReactionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientHelpCollectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientHelpCollectionDetail
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientHelpCollectionResponse) GetJSON200() *ClientHelpCollectionDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientHelpCollectionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientHelpCollectionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientHelpCollectionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientHelpCollectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientHelpCollectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientHelpCollectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientHelpCollectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SearchClientHelpResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientHelpSearchResults
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// ApplicationproblemJSON503 the response for an HTTP 503 `application/problem+json` response
+	ApplicationproblemJSON503 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SearchClientHelpResponse) GetJSON200() *ClientHelpSearchResults {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SearchClientHelpResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SearchClientHelpResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SearchClientHelpResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r SearchClientHelpResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetApplicationproblemJSON503 returns the response for an HTTP 503 `application/problem+json` response
+func (r SearchClientHelpResponse) GetApplicationproblemJSON503() *Problem {
+	return r.ApplicationproblemJSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r SearchClientHelpResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SearchClientHelpResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SearchClientHelpResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SearchClientHelpResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClientHelpSearchClickResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClientHelpSearchClickResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateClientHelpSearchClickResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClientHelpSearchClickResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateClientHelpSearchClickResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClientHelpSearchClickResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClientHelpSearchClickResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClientHelpSearchClickResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClientHelpSearchClickResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -84563,6 +90865,1738 @@ func (r CreateFeedbackResponse) ContentType() string {
 	return ""
 }
 
+type ListHelpCentersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpCenterList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListHelpCentersResponse) GetJSON200() *HelpCenterList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListHelpCentersResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListHelpCentersResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListHelpCentersResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListHelpCentersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListHelpCentersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListHelpCentersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListHelpCentersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateHelpCenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpCenter
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateHelpCenterResponse) GetJSON201() *HelpCenter {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateHelpCenterResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateHelpCenterResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateHelpCenterResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateHelpCenterResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateHelpCenterResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateHelpCenterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateHelpCenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateHelpCenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateHelpCenterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteHelpCenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteHelpCenterResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteHelpCenterResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteHelpCenterResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteHelpCenterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteHelpCenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteHelpCenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteHelpCenterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetHelpCenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpCenter
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetHelpCenterResponse) GetJSON200() *HelpCenter {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetHelpCenterResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetHelpCenterResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetHelpCenterResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetHelpCenterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetHelpCenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetHelpCenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetHelpCenterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateHelpCenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpCenter
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateHelpCenterResponse) GetJSON200() *HelpCenter {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UpdateHelpCenterResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateHelpCenterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateHelpCenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateHelpCenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateHelpCenterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListHelpArticlesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticlePage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListHelpArticlesResponse) GetJSON200() *HelpArticlePage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListHelpArticlesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListHelpArticlesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListHelpArticlesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListHelpArticlesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListHelpArticlesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListHelpArticlesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListHelpArticlesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListHelpArticlesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateHelpArticleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpArticle
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateHelpArticleResponse) GetJSON201() *HelpArticle {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateHelpArticleResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateHelpArticleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateHelpArticleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateHelpArticleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateHelpArticleResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateHelpArticleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateHelpArticleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateHelpArticleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateHelpArticleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteHelpArticleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteHelpArticleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteHelpArticleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteHelpArticleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteHelpArticleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteHelpArticleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteHelpArticleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteHelpArticleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetHelpArticleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticle
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetHelpArticleResponse) GetJSON200() *HelpArticle {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetHelpArticleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetHelpArticleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetHelpArticleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetHelpArticleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetHelpArticleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetHelpArticleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetHelpArticleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateHelpArticleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticle
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateHelpArticleResponse) GetJSON200() *HelpArticle {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateHelpArticleResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateHelpArticleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateHelpArticleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateHelpArticleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateHelpArticleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateHelpArticleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateHelpArticleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateHelpArticleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteHelpArticleTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteHelpArticleTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteHelpArticleTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteHelpArticleTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteHelpArticleTranslationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteHelpArticleTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteHelpArticleTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteHelpArticleTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteHelpArticleTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PutHelpArticleTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticleTranslation
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpArticleTranslation
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *HelpConflictProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PutHelpArticleTranslationResponse) GetJSON200() *HelpArticleTranslation {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r PutHelpArticleTranslationResponse) GetJSON201() *HelpArticleTranslation {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PutHelpArticleTranslationResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PutHelpArticleTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PutHelpArticleTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PutHelpArticleTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PutHelpArticleTranslationResponse) GetApplicationproblemJSON409() *HelpConflictProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PutHelpArticleTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PutHelpArticleTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PutHelpArticleTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PutHelpArticleTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PublishHelpArticleTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticleTranslation
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *HelpConflictProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PublishHelpArticleTranslationResponse) GetJSON200() *HelpArticleTranslation {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PublishHelpArticleTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PublishHelpArticleTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PublishHelpArticleTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PublishHelpArticleTranslationResponse) GetApplicationproblemJSON409() *HelpConflictProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PublishHelpArticleTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PublishHelpArticleTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PublishHelpArticleTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PublishHelpArticleTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListHelpArticleRevisionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticleRevisionList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListHelpArticleRevisionsResponse) GetJSON200() *HelpArticleRevisionList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListHelpArticleRevisionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListHelpArticleRevisionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListHelpArticleRevisionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListHelpArticleRevisionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListHelpArticleRevisionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListHelpArticleRevisionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListHelpArticleRevisionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RestoreHelpArticleRevisionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticleTranslation
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *HelpConflictProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestoreHelpArticleRevisionResponse) GetJSON200() *HelpArticleTranslation {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RestoreHelpArticleRevisionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RestoreHelpArticleRevisionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RestoreHelpArticleRevisionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RestoreHelpArticleRevisionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r RestoreHelpArticleRevisionResponse) GetApplicationproblemJSON409() *HelpConflictProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r RestoreHelpArticleRevisionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreHelpArticleRevisionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreHelpArticleRevisionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestoreHelpArticleRevisionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnpublishHelpArticleTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpArticleTranslation
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnpublishHelpArticleTranslationResponse) GetJSON200() *HelpArticleTranslation {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnpublishHelpArticleTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnpublishHelpArticleTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnpublishHelpArticleTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnpublishHelpArticleTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnpublishHelpArticleTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnpublishHelpArticleTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnpublishHelpArticleTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListHelpCollectionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpCollectionList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListHelpCollectionsResponse) GetJSON200() *HelpCollectionList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListHelpCollectionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListHelpCollectionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListHelpCollectionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListHelpCollectionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListHelpCollectionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListHelpCollectionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListHelpCollectionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateHelpCollectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpCollection
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateHelpCollectionResponse) GetJSON201() *HelpCollection {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateHelpCollectionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateHelpCollectionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateHelpCollectionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateHelpCollectionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateHelpCollectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateHelpCollectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateHelpCollectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateHelpCollectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteHelpCollectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteHelpCollectionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteHelpCollectionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteHelpCollectionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteHelpCollectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteHelpCollectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteHelpCollectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteHelpCollectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateHelpCollectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpCollection
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateHelpCollectionResponse) GetJSON200() *HelpCollection {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateHelpCollectionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateHelpCollectionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateHelpCollectionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateHelpCollectionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateHelpCollectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateHelpCollectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateHelpCollectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateHelpCollectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UploadHelpImageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpImage
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpImage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON415 the response for an HTTP 415 `application/problem+json` response
+	ApplicationproblemJSON415 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UploadHelpImageResponse) GetJSON200() *HelpImage {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r UploadHelpImageResponse) GetJSON201() *HelpImage {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON415 returns the response for an HTTP 415 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON415() *Problem {
+	return r.ApplicationproblemJSON415
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UploadHelpImageResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UploadHelpImageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UploadHelpImageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UploadHelpImageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UploadHelpImageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewHelpCenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PreviewHelpCenterResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PreviewHelpCenterResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PreviewHelpCenterResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PreviewHelpCenterResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r PreviewHelpCenterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewHelpCenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewHelpCenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewHelpCenterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RenderHelpMarkdownResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpRendered
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RenderHelpMarkdownResponse) GetJSON200() *HelpRendered {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RenderHelpMarkdownResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RenderHelpMarkdownResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RenderHelpMarkdownResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RenderHelpMarkdownResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r RenderHelpMarkdownResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r RenderHelpMarkdownResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RenderHelpMarkdownResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RenderHelpMarkdownResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RenderHelpMarkdownResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetHelpReportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpReport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetHelpReportResponse) GetJSON200() *HelpReport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetHelpReportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetHelpReportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetHelpReportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetHelpReportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetHelpReportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetHelpReportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetHelpReportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetHelpReportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SearchHelpArticlesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpSearchResults
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON503 the response for an HTTP 503 `application/problem+json` response
+	ApplicationproblemJSON503 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SearchHelpArticlesResponse) GetJSON200() *HelpSearchResults {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SearchHelpArticlesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SearchHelpArticlesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SearchHelpArticlesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SearchHelpArticlesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON503 returns the response for an HTTP 503 `application/problem+json` response
+func (r SearchHelpArticlesResponse) GetApplicationproblemJSON503() *Problem {
+	return r.ApplicationproblemJSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r SearchHelpArticlesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SearchHelpArticlesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SearchHelpArticlesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SearchHelpArticlesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetHomeResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -94966,6 +103000,162 @@ func (c *ClientWithResponses) GetClientDiscussionWithResponse(ctx context.Contex
 	return ParseGetClientDiscussionResponse(rsp)
 }
 
+// GetClientHelpWithResponse The inbox's help center
+//
+// The published help center of the inbox of a `chat` or `app` channel, without a session: the
+// center in the served locale, its collections that have published articles there,
+// `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+// ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+// it, else its base language, else the center's default locale. Nothing is created.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// `404 help_off` when the inbox has no published center. Sent with
+// `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help (the `GetClientHelp` operationId).
+func (c *ClientWithResponses) GetClientHelpWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, params *GetClientHelpParams, reqEditors ...RequestEditorFn) (*GetClientHelpResponse, error) {
+	rsp, err := c.GetClientHelp(ctx, channelKey, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientHelpResponse(rsp)
+}
+
+// GetClientHelpArticleWithResponse A help article
+//
+// The published article in the served locale, or in the center's default locale with
+// `fallback: true` when it has no published translation there, with up to 3 `related`
+// articles of its collection. Counts one view per address, article and hour. `404` for an
+// unpublished article. Sent with `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/articles/{articleId} (the `GetClientHelpArticle` operationId).
+func (c *ClientWithResponses) GetClientHelpArticleWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, params *GetClientHelpArticleParams, reqEditors ...RequestEditorFn) (*GetClientHelpArticleResponse, error) {
+	rsp, err := c.GetClientHelpArticle(ctx, channelKey, articleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientHelpArticleResponse(rsp)
+}
+
+// CreateClientHelpReactionWithBodyWithResponse Answer "Was this helpful?"
+//
+// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+// without storing anything about the visitor. A visitor who changes their mind sends the new
+// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+// limited per address and per channel (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+func (c *ClientWithResponses) CreateClientHelpReactionWithBodyWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientHelpReactionResponse, error) {
+	rsp, err := c.CreateClientHelpReactionWithBody(ctx, channelKey, articleId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientHelpReactionResponse(rsp)
+}
+
+// CreateClientHelpReactionWithResponse Answer "Was this helpful?"
+//
+// Counts one `up` or `down` for the article's translation in `locale`, without a session and
+// without storing anything about the visitor. A visitor who changes their mind sends the new
+// `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+// `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+// limited per address and per channel (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions (the `CreateClientHelpReaction` operationId).
+func (c *ClientWithResponses) CreateClientHelpReactionWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, articleId HelpArticleId, body CreateClientHelpReactionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientHelpReactionResponse, error) {
+	rsp, err := c.CreateClientHelpReaction(ctx, channelKey, articleId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientHelpReactionResponse(rsp)
+}
+
+// GetClientHelpCollectionWithResponse A help collection
+//
+// A collection with its sub-collections and its published articles in the served locale, by
+// position. `404` for a collection with no published article in that locale. Sent with
+// `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/collections/{collectionId} (the `GetClientHelpCollection` operationId).
+func (c *ClientWithResponses) GetClientHelpCollectionWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, collectionId HelpCollectionId, params *GetClientHelpCollectionParams, reqEditors ...RequestEditorFn) (*GetClientHelpCollectionResponse, error) {
+	rsp, err := c.GetClientHelpCollection(ctx, channelKey, collectionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientHelpCollectionResponse(rsp)
+}
+
+// SearchClientHelpWithResponse Search the help center
+//
+// Published articles that match `q`, best first, in the served locale and, when it has fewer
+// than 3 published articles, the default locale too; each result names its `locale`. Every
+// word must match and the last may be the start of a word; when nothing matches, any word
+// may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+// which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+//
+// Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+// seconds without typing); only those are counted in the report. 30 searches a minute per
+// address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+// `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/help/search (the `SearchClientHelp` operationId).
+func (c *ClientWithResponses) SearchClientHelpWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, params *SearchClientHelpParams, reqEditors ...RequestEditorFn) (*SearchClientHelpResponse, error) {
+	rsp, err := c.SearchClientHelp(ctx, channelKey, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSearchClientHelpResponse(rsp)
+}
+
+// CreateClientHelpSearchClickWithBodyWithResponse Count an opened search result
+//
+// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+func (c *ClientWithResponses) CreateClientHelpSearchClickWithBodyWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientHelpSearchClickResponse, error) {
+	rsp, err := c.CreateClientHelpSearchClickWithBody(ctx, channelKey, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientHelpSearchClickResponse(rsp)
+}
+
+// CreateClientHelpSearchClickWithResponse Count an opened search result
+//
+// Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+// visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+// `Cache-Control: no-store`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/help/searches/click (the `CreateClientHelpSearchClick` operationId).
+func (c *ClientWithResponses) CreateClientHelpSearchClickWithResponse(ctx context.Context, channelKey ClientHelpChannelKey, body CreateClientHelpSearchClickJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientHelpSearchClickResponse, error) {
+	rsp, err := c.CreateClientHelpSearchClick(ctx, channelKey, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientHelpSearchClickResponse(rsp)
+}
+
 // ListClientMailingListsWithResponse The public mailing lists a form may offer
 //
 // The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
@@ -100316,7 +108506,8 @@ func (c *ClientWithResponses) UploadEmailImageWithBodyWithResponse(ctx context.C
 // DeleteEmailImageWithResponse Delete an e-mail image
 //
 // Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-// not archived uses the image. An image that went out in a sent broadcast needs
+// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
 // `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 // image. The public URL stops working at once.
 //
@@ -100473,6 +108664,700 @@ func (c *ClientWithResponses) CreateFeedbackWithResponse(ctx context.Context, pa
 		return nil, err
 	}
 	return ParseCreateFeedbackResponse(rsp)
+}
+
+// ListHelpCentersWithResponse List help centers
+//
+// The centers of the inboxes the caller can see, oldest first.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers (the `ListHelpCenters` operationId).
+func (c *ClientWithResponses) ListHelpCentersWithResponse(ctx context.Context, params *ListHelpCentersParams, reqEditors ...RequestEditorFn) (*ListHelpCentersResponse, error) {
+	rsp, err := c.ListHelpCenters(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListHelpCentersResponse(rsp)
+}
+
+// CreateHelpCenterWithBodyWithResponse Create a help center
+//
+// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+// same inbox, `analytics_property_id` a property of the workspace.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+func (c *ClientWithResponses) CreateHelpCenterWithBodyWithResponse(ctx context.Context, params *CreateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpCenterResponse, error) {
+	rsp, err := c.CreateHelpCenterWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpCenterResponse(rsp)
+}
+
+// CreateHelpCenterWithResponse Create a help center
+//
+// A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+// its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+// cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+// `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+// unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+// same inbox, `analytics_property_id` a property of the workspace.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers (the `CreateHelpCenter` operationId).
+func (c *ClientWithResponses) CreateHelpCenterWithResponse(ctx context.Context, params *CreateHelpCenterParams, body CreateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpCenterResponse, error) {
+	rsp, err := c.CreateHelpCenter(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpCenterResponse(rsp)
+}
+
+// DeleteHelpCenterWithResponse Delete a help center
+//
+// The center with its collections, articles, translations, revisions and counters. Its
+// images stay e-mail images of the workspace and are swept like any unused one.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/help-centers/{centerId} (the `DeleteHelpCenter` operationId).
+func (c *ClientWithResponses) DeleteHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *DeleteHelpCenterParams, reqEditors ...RequestEditorFn) (*DeleteHelpCenterResponse, error) {
+	rsp, err := c.DeleteHelpCenter(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteHelpCenterResponse(rsp)
+}
+
+// GetHelpCenterWithResponse A help center
+//
+// With its counts and public `url`.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId} (the `GetHelpCenter` operationId).
+func (c *ClientWithResponses) GetHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *GetHelpCenterParams, reqEditors ...RequestEditorFn) (*GetHelpCenterResponse, error) {
+	rsp, err := c.GetHelpCenter(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetHelpCenterResponse(rsp)
+}
+
+// UpdateHelpCenterWithBodyWithResponse Update a help center
+//
+// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+// property. `published: false` takes the center and every article off the web (`404`) at once.
+// Changing `slug` keeps the old one reserved for this center, and its public addresses
+// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+// while an article has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+func (c *ClientWithResponses) UpdateHelpCenterWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpCenterResponse, error) {
+	rsp, err := c.UpdateHelpCenterWithBody(ctx, centerId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpCenterResponse(rsp)
+}
+
+// UpdateHelpCenterWithResponse Update a help center
+//
+// Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+// property. `published: false` takes the center and every article off the web (`404`) at once.
+// Changing `slug` keeps the old one reserved for this center, and its public addresses
+// redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+// slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+// while an article has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId} (the `UpdateHelpCenter` operationId).
+func (c *ClientWithResponses) UpdateHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *UpdateHelpCenterParams, body UpdateHelpCenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpCenterResponse, error) {
+	rsp, err := c.UpdateHelpCenter(ctx, centerId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpCenterResponse(rsp)
+}
+
+// ListHelpArticlesWithResponse List a center's articles
+//
+// By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+// articles of one collection. `state` keeps the articles whose translation in `locale` (the
+// center's default locale when absent) is a `draft` (never published, or unpublished),
+// `published` (no change since), `changed` (published, with a draft that differs) or
+// `missing` (no translation in that locale). `q` matches the words of the titles of every
+// translation, drafts included.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles (the `ListHelpArticles` operationId).
+func (c *ClientWithResponses) ListHelpArticlesWithResponse(ctx context.Context, centerId HelpCenterId, params *ListHelpArticlesParams, reqEditors ...RequestEditorFn) (*ListHelpArticlesResponse, error) {
+	rsp, err := c.ListHelpArticles(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListHelpArticlesResponse(rsp)
+}
+
+// CreateHelpArticleWithBodyWithResponse Create an article
+//
+// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+func (c *ClientWithResponses) CreateHelpArticleWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpArticleResponse, error) {
+	rsp, err := c.CreateHelpArticleWithBody(ctx, centerId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpArticleResponse(rsp)
+}
+
+// CreateHelpArticleWithResponse Create an article
+//
+// An article with its first translation, a draft in `locale` (one of the center's `locales`,
+// `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+// workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles (the `CreateHelpArticle` operationId).
+func (c *ClientWithResponses) CreateHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpArticleParams, body CreateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpArticleResponse, error) {
+	rsp, err := c.CreateHelpArticle(ctx, centerId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpArticleResponse(rsp)
+}
+
+// DeleteHelpArticleWithResponse Delete an article
+//
+// With every translation, revision and counter, and sends `help.article.deleted`. An article
+// with a published translation can be deleted only by those who may publish
+// (`403 forbidden`), and API keys also need `help:publish`.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId} (the `DeleteHelpArticle` operationId).
+func (c *ClientWithResponses) DeleteHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *DeleteHelpArticleParams, reqEditors ...RequestEditorFn) (*DeleteHelpArticleResponse, error) {
+	rsp, err := c.DeleteHelpArticle(ctx, centerId, articleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteHelpArticleResponse(rsp)
+}
+
+// GetHelpArticleWithResponse An article with its translations
+//
+// Every translation with its draft and its published copy.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId} (the `GetHelpArticle` operationId).
+func (c *ClientWithResponses) GetHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *GetHelpArticleParams, reqEditors ...RequestEditorFn) (*GetHelpArticleResponse, error) {
+	rsp, err := c.GetHelpArticle(ctx, centerId, articleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetHelpArticleResponse(rsp)
+}
+
+// UpdateHelpArticleWithBodyWithResponse Move an article or change its pages
+//
+// Its collection (`null` for none), its position and the page `paths` where the widget
+// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+// trailing `*` matches any rest (`/billing/*`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+func (c *ClientWithResponses) UpdateHelpArticleWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpArticleResponse, error) {
+	rsp, err := c.UpdateHelpArticleWithBody(ctx, centerId, articleId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpArticleResponse(rsp)
+}
+
+// UpdateHelpArticleWithResponse Move an article or change its pages
+//
+// Its collection (`null` for none), its position and the page `paths` where the widget
+// suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+// trailing `*` matches any rest (`/billing/*`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/articles/{articleId} (the `UpdateHelpArticle` operationId).
+func (c *ClientWithResponses) UpdateHelpArticleWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, params *UpdateHelpArticleParams, body UpdateHelpArticleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpArticleResponse, error) {
+	rsp, err := c.UpdateHelpArticle(ctx, centerId, articleId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpArticleResponse(rsp)
+}
+
+// DeleteHelpArticleTranslationWithResponse Delete a translation
+//
+// With its revisions, and sends `help.article.deleted` naming the locale. The last
+// translation of an article cannot be deleted (`409 last_translation`); delete the article
+// instead. A published translation can be deleted only by those who may publish
+// (`403 forbidden`), and API keys also need `help:publish`.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `DeleteHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) DeleteHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *DeleteHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*DeleteHelpArticleTranslationResponse, error) {
+	rsp, err := c.DeleteHelpArticleTranslation(ctx, centerId, articleId, locale, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteHelpArticleTranslationResponse(rsp)
+}
+
+// PutHelpArticleTranslationWithBodyWithResponse Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the center's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one,
+// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+// translation is published again. Images of the body stay only when they are this
+// workspace's uploads.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) PutHelpArticleTranslationWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutHelpArticleTranslationResponse, error) {
+	rsp, err := c.PutHelpArticleTranslationWithBody(ctx, centerId, articleId, locale, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutHelpArticleTranslationResponse(rsp)
+}
+
+// PutHelpArticleTranslationWithResponse Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the center's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one,
+// keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+// with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+// translation is published again. Images of the body stay only when they are this
+// workspace's uploads.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale} (the `PutHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) PutHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PutHelpArticleTranslationParams, body PutHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PutHelpArticleTranslationResponse, error) {
+	rsp, err := c.PutHelpArticleTranslation(ctx, centerId, articleId, locale, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutHelpArticleTranslationResponse(rsp)
+}
+
+// PublishHelpArticleTranslationWithBodyWithResponse Publish a translation
+//
+// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+// refused with `409 version_conflict`. The article is public once its center is published.
+// Publishing an unchanged published translation changes nothing.
+//
+// Owners, admins and API keys; agents with access to the center's inbox when the center's
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) PublishHelpArticleTranslationWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishHelpArticleTranslationResponse, error) {
+	rsp, err := c.PublishHelpArticleTranslationWithBody(ctx, centerId, articleId, locale, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePublishHelpArticleTranslationResponse(rsp)
+}
+
+// PublishHelpArticleTranslationWithResponse Publish a translation
+//
+// Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+// revision and sends `help.article.published`. With `base_version`, a draft saved since is
+// refused with `409 version_conflict`. The article is public once its center is published.
+// Publishing an unchanged published translation changes nothing.
+//
+// Owners, admins and API keys; agents with access to the center's inbox when the center's
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `help:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish (the `PublishHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) PublishHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *PublishHelpArticleTranslationParams, body PublishHelpArticleTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishHelpArticleTranslationResponse, error) {
+	rsp, err := c.PublishHelpArticleTranslation(ctx, centerId, articleId, locale, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePublishHelpArticleTranslationResponse(rsp)
+}
+
+// ListHelpArticleRevisionsWithResponse List a translation's revisions
+//
+// Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+// `restore`, each with its title, body and keywords.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions (the `ListHelpArticleRevisions` operationId).
+func (c *ClientWithResponses) ListHelpArticleRevisionsWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *ListHelpArticleRevisionsParams, reqEditors ...RequestEditorFn) (*ListHelpArticleRevisionsResponse, error) {
+	rsp, err := c.ListHelpArticleRevisions(ctx, centerId, articleId, locale, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListHelpArticleRevisionsResponse(rsp)
+}
+
+// RestoreHelpArticleRevisionWithBodyWithResponse Restore a revision into the draft
+//
+// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+// same `base_version` check) and keeps a `restore` revision. The published copy does not
+// change.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+func (c *ClientWithResponses) RestoreHelpArticleRevisionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreHelpArticleRevisionResponse, error) {
+	rsp, err := c.RestoreHelpArticleRevisionWithBody(ctx, centerId, articleId, locale, revisionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreHelpArticleRevisionResponse(rsp)
+}
+
+// RestoreHelpArticleRevisionWithResponse Restore a revision into the draft
+//
+// Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+// same `base_version` check) and keeps a `restore` revision. The published copy does not
+// change.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore (the `RestoreHelpArticleRevision` operationId).
+func (c *ClientWithResponses) RestoreHelpArticleRevisionWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, revisionId HelpRevisionId, params *RestoreHelpArticleRevisionParams, body RestoreHelpArticleRevisionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreHelpArticleRevisionResponse, error) {
+	rsp, err := c.RestoreHelpArticleRevision(ctx, centerId, articleId, locale, revisionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreHelpArticleRevisionResponse(rsp)
+}
+
+// UnpublishHelpArticleTranslationWithResponse Unpublish a translation
+//
+// Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+// and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+//
+// Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish (the `UnpublishHelpArticleTranslation` operationId).
+func (c *ClientWithResponses) UnpublishHelpArticleTranslationWithResponse(ctx context.Context, centerId HelpCenterId, articleId HelpArticleId, locale HelpLocale, params *UnpublishHelpArticleTranslationParams, reqEditors ...RequestEditorFn) (*UnpublishHelpArticleTranslationResponse, error) {
+	rsp, err := c.UnpublishHelpArticleTranslation(ctx, centerId, articleId, locale, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnpublishHelpArticleTranslationResponse(rsp)
+}
+
+// ListHelpCollectionsWithResponse List a center's collections
+//
+// Top-level collections by `position`, each followed by its sub-collections, with their
+// translations and the number of articles in each.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/collections (the `ListHelpCollections` operationId).
+func (c *ClientWithResponses) ListHelpCollectionsWithResponse(ctx context.Context, centerId HelpCenterId, params *ListHelpCollectionsParams, reqEditors ...RequestEditorFn) (*ListHelpCollectionsResponse, error) {
+	rsp, err := c.ListHelpCollections(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListHelpCollectionsResponse(rsp)
+}
+
+// CreateHelpCollectionWithBodyWithResponse Create a collection
+//
+// A group of articles, named per locale in `translations` (only the center's `locales`,
+// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+// collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+func (c *ClientWithResponses) CreateHelpCollectionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateHelpCollectionResponse, error) {
+	rsp, err := c.CreateHelpCollectionWithBody(ctx, centerId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpCollectionResponse(rsp)
+}
+
+// CreateHelpCollectionWithResponse Create a collection
+//
+// A group of articles, named per locale in `translations` (only the center's `locales`,
+// `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+// collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+// collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/collections (the `CreateHelpCollection` operationId).
+func (c *ClientWithResponses) CreateHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, params *CreateHelpCollectionParams, body CreateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateHelpCollectionResponse, error) {
+	rsp, err := c.CreateHelpCollection(ctx, centerId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateHelpCollectionResponse(rsp)
+}
+
+// DeleteHelpCollectionWithResponse Delete a collection
+//
+// Its articles stay, in no collection; its sub-collections become top-level collections.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/help-centers/{centerId}/collections/{collectionId} (the `DeleteHelpCollection` operationId).
+func (c *ClientWithResponses) DeleteHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *DeleteHelpCollectionParams, reqEditors ...RequestEditorFn) (*DeleteHelpCollectionResponse, error) {
+	rsp, err := c.DeleteHelpCollection(ctx, centerId, collectionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteHelpCollectionResponse(rsp)
+}
+
+// UpdateHelpCollectionWithBodyWithResponse Update a collection
+//
+// `translations` sets the name and description of the locales it names and keeps the others;
+// `remove_locales` removes translations. A collection with sub-collections cannot get a
+// parent (`400`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+func (c *ClientWithResponses) UpdateHelpCollectionWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateHelpCollectionResponse, error) {
+	rsp, err := c.UpdateHelpCollectionWithBody(ctx, centerId, collectionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpCollectionResponse(rsp)
+}
+
+// UpdateHelpCollectionWithResponse Update a collection
+//
+// `translations` sets the name and description of the locales it names and keeps the others;
+// `remove_locales` removes translations. A collection with sub-collections cannot get a
+// parent (`400`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/help-centers/{centerId}/collections/{collectionId} (the `UpdateHelpCollection` operationId).
+func (c *ClientWithResponses) UpdateHelpCollectionWithResponse(ctx context.Context, centerId HelpCenterId, collectionId HelpCollectionId, params *UpdateHelpCollectionParams, body UpdateHelpCollectionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateHelpCollectionResponse, error) {
+	rsp, err := c.UpdateHelpCollection(ctx, centerId, collectionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateHelpCollectionResponse(rsp)
+}
+
+// UploadHelpImageWithBodyWithResponse Upload an image for articles
+//
+// Stores the image as one of the workspace's e-mail images, with the same rules as
+// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+// the rate), and answers its public URL with the Markdown that shows it. An image no draft
+// uses and no published article showed is deleted a week after its upload.
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/images (the `UploadHelpImage` operationId).
+func (c *ClientWithResponses) UploadHelpImageWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *UploadHelpImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadHelpImageResponse, error) {
+	rsp, err := c.UploadHelpImageWithBody(ctx, centerId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadHelpImageResponse(rsp)
+}
+
+// PreviewHelpCenterWithResponse Preview a help center page
+//
+// A page of the center as visitors see it, also while the center or the article is
+// unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+// (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+// draft instead of the published copy). `locale` defaults to the center's default locale. It
+// is sent with `Cache-Control: no-store` and its links point to the public URLs.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/preview (the `PreviewHelpCenter` operationId).
+func (c *ClientWithResponses) PreviewHelpCenterWithResponse(ctx context.Context, centerId HelpCenterId, params *PreviewHelpCenterParams, reqEditors ...RequestEditorFn) (*PreviewHelpCenterResponse, error) {
+	rsp, err := c.PreviewHelpCenter(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewHelpCenterResponse(rsp)
+}
+
+// RenderHelpMarkdownWithBodyWithResponse Render Markdown as an article
+//
+// The editor's preview: the HTML a body would publish as, with the same rules for images.
+// 60 renders a minute per caller (`429 rate_limited`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+func (c *ClientWithResponses) RenderHelpMarkdownWithBodyWithResponse(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderHelpMarkdownResponse, error) {
+	rsp, err := c.RenderHelpMarkdownWithBody(ctx, centerId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderHelpMarkdownResponse(rsp)
+}
+
+// RenderHelpMarkdownWithResponse Render Markdown as an article
+//
+// The editor's preview: the HTML a body would publish as, with the same rules for images.
+// 60 renders a minute per caller (`429 rate_limited`).
+//
+// Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/help-centers/{centerId}/render (the `RenderHelpMarkdown` operationId).
+func (c *ClientWithResponses) RenderHelpMarkdownWithResponse(ctx context.Context, centerId HelpCenterId, params *RenderHelpMarkdownParams, body RenderHelpMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderHelpMarkdownResponse, error) {
+	rsp, err := c.RenderHelpMarkdown(ctx, centerId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderHelpMarkdownResponse(rsp)
+}
+
+// GetHelpReportWithResponse A help center's report
+//
+// Counters of the last `days` UTC days, today included: views (approximate: one per address,
+// article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+// conversations started from an article and times an article was sent as a card, per article;
+// searches, and the searches that found nothing by their normalized query. Counts reach the
+// report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+// as `(scrubbed)`.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/report (the `GetHelpReport` operationId).
+func (c *ClientWithResponses) GetHelpReportWithResponse(ctx context.Context, centerId HelpCenterId, params *GetHelpReportParams, reqEditors ...RequestEditorFn) (*GetHelpReportResponse, error) {
+	rsp, err := c.GetHelpReport(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetHelpReportResponse(rsp)
+}
+
+// SearchHelpArticlesWithResponse Search a center's articles
+//
+// The ranking the widget and the public pages use, over published translations in `locale`
+// (the center's default locale when absent) and, when that locale has fewer than 3 published
+// articles, the default locale too. `drafts=true` searches the drafts instead, also of
+// translations never published. `q` is normalized and cut to 8 words of at most 50
+// characters; a query left empty is refused with `400 query_empty`. Members' searches are
+// not counted in the report.
+//
+// Scope: `help:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/help-centers/{centerId}/search (the `SearchHelpArticles` operationId).
+func (c *ClientWithResponses) SearchHelpArticlesWithResponse(ctx context.Context, centerId HelpCenterId, params *SearchHelpArticlesParams, reqEditors ...RequestEditorFn) (*SearchHelpArticlesResponse, error) {
+	rsp, err := c.SearchHelpArticles(ctx, centerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSearchHelpArticlesResponse(rsp)
 }
 
 // GetHomeWithResponse Everything the workspace has today, in one answer
@@ -105164,6 +114049,315 @@ func ParseGetClientDiscussionResponse(rsp *http.Response) (*GetClientDiscussionR
 			headers.CacheControl = &value
 		}
 		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetClientHelpResponse parses an HTTP response from a GetClientHelpWithResponse call
+func ParseGetClientHelpResponse(rsp *http.Response) (*GetClientHelpResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientHelpResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientHelp
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientHelpArticleResponse parses an HTTP response from a GetClientHelpArticleWithResponse call
+func ParseGetClientHelpArticleResponse(rsp *http.Response) (*GetClientHelpArticleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientHelpArticleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientHelpArticle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClientHelpReactionResponse parses an HTTP response from a CreateClientHelpReactionWithResponse call
+func ParseCreateClientHelpReactionResponse(rsp *http.Response) (*CreateClientHelpReactionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClientHelpReactionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientHelpCollectionResponse parses an HTTP response from a GetClientHelpCollectionWithResponse call
+func ParseGetClientHelpCollectionResponse(rsp *http.Response) (*GetClientHelpCollectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientHelpCollectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientHelpCollectionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSearchClientHelpResponse parses an HTTP response from a SearchClientHelpWithResponse call
+func ParseSearchClientHelpResponse(rsp *http.Response) (*SearchClientHelpResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SearchClientHelpResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientHelpSearchResults
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClientHelpSearchClickResponse parses an HTTP response from a CreateClientHelpSearchClickWithResponse call
+func ParseCreateClientHelpSearchClickResponse(rsp *http.Response) (*CreateClientHelpSearchClickResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClientHelpSearchClickResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
 	}
 
 	return response, nil
@@ -115433,6 +124627,1375 @@ func ParseCreateFeedbackResponse(rsp *http.Response) (*CreateFeedbackResponse, e
 	return response, nil
 }
 
+// ParseListHelpCentersResponse parses an HTTP response from a ListHelpCentersWithResponse call
+func ParseListHelpCentersResponse(rsp *http.Response) (*ListHelpCentersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListHelpCentersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpCenterList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateHelpCenterResponse parses an HTTP response from a CreateHelpCenterWithResponse call
+func ParseCreateHelpCenterResponse(rsp *http.Response) (*CreateHelpCenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateHelpCenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpCenter
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteHelpCenterResponse parses an HTTP response from a DeleteHelpCenterWithResponse call
+func ParseDeleteHelpCenterResponse(rsp *http.Response) (*DeleteHelpCenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteHelpCenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetHelpCenterResponse parses an HTTP response from a GetHelpCenterWithResponse call
+func ParseGetHelpCenterResponse(rsp *http.Response) (*GetHelpCenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetHelpCenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpCenter
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateHelpCenterResponse parses an HTTP response from a UpdateHelpCenterWithResponse call
+func ParseUpdateHelpCenterResponse(rsp *http.Response) (*UpdateHelpCenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateHelpCenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpCenter
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListHelpArticlesResponse parses an HTTP response from a ListHelpArticlesWithResponse call
+func ParseListHelpArticlesResponse(rsp *http.Response) (*ListHelpArticlesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListHelpArticlesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticlePage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateHelpArticleResponse parses an HTTP response from a CreateHelpArticleWithResponse call
+func ParseCreateHelpArticleResponse(rsp *http.Response) (*CreateHelpArticleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateHelpArticleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpArticle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteHelpArticleResponse parses an HTTP response from a DeleteHelpArticleWithResponse call
+func ParseDeleteHelpArticleResponse(rsp *http.Response) (*DeleteHelpArticleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteHelpArticleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetHelpArticleResponse parses an HTTP response from a GetHelpArticleWithResponse call
+func ParseGetHelpArticleResponse(rsp *http.Response) (*GetHelpArticleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetHelpArticleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateHelpArticleResponse parses an HTTP response from a UpdateHelpArticleWithResponse call
+func ParseUpdateHelpArticleResponse(rsp *http.Response) (*UpdateHelpArticleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateHelpArticleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteHelpArticleTranslationResponse parses an HTTP response from a DeleteHelpArticleTranslationWithResponse call
+func ParseDeleteHelpArticleTranslationResponse(rsp *http.Response) (*DeleteHelpArticleTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteHelpArticleTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePutHelpArticleTranslationResponse parses an HTTP response from a PutHelpArticleTranslationWithResponse call
+func ParsePutHelpArticleTranslationResponse(rsp *http.Response) (*PutHelpArticleTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PutHelpArticleTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticleTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpArticleTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest HelpConflictProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePublishHelpArticleTranslationResponse parses an HTTP response from a PublishHelpArticleTranslationWithResponse call
+func ParsePublishHelpArticleTranslationResponse(rsp *http.Response) (*PublishHelpArticleTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PublishHelpArticleTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticleTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest HelpConflictProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListHelpArticleRevisionsResponse parses an HTTP response from a ListHelpArticleRevisionsWithResponse call
+func ParseListHelpArticleRevisionsResponse(rsp *http.Response) (*ListHelpArticleRevisionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListHelpArticleRevisionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticleRevisionList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreHelpArticleRevisionResponse parses an HTTP response from a RestoreHelpArticleRevisionWithResponse call
+func ParseRestoreHelpArticleRevisionResponse(rsp *http.Response) (*RestoreHelpArticleRevisionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreHelpArticleRevisionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticleTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest HelpConflictProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnpublishHelpArticleTranslationResponse parses an HTTP response from a UnpublishHelpArticleTranslationWithResponse call
+func ParseUnpublishHelpArticleTranslationResponse(rsp *http.Response) (*UnpublishHelpArticleTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnpublishHelpArticleTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpArticleTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListHelpCollectionsResponse parses an HTTP response from a ListHelpCollectionsWithResponse call
+func ParseListHelpCollectionsResponse(rsp *http.Response) (*ListHelpCollectionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListHelpCollectionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpCollectionList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateHelpCollectionResponse parses an HTTP response from a CreateHelpCollectionWithResponse call
+func ParseCreateHelpCollectionResponse(rsp *http.Response) (*CreateHelpCollectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateHelpCollectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpCollection
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteHelpCollectionResponse parses an HTTP response from a DeleteHelpCollectionWithResponse call
+func ParseDeleteHelpCollectionResponse(rsp *http.Response) (*DeleteHelpCollectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteHelpCollectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateHelpCollectionResponse parses an HTTP response from a UpdateHelpCollectionWithResponse call
+func ParseUpdateHelpCollectionResponse(rsp *http.Response) (*UpdateHelpCollectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateHelpCollectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpCollection
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUploadHelpImageResponse parses an HTTP response from a UploadHelpImageWithResponse call
+func ParseUploadHelpImageResponse(rsp *http.Response) (*UploadHelpImageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UploadHelpImageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON415 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewHelpCenterResponse parses an HTTP response from a PreviewHelpCenterWithResponse call
+func ParsePreviewHelpCenterResponse(rsp *http.Response) (*PreviewHelpCenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewHelpCenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRenderHelpMarkdownResponse parses an HTTP response from a RenderHelpMarkdownWithResponse call
+func ParseRenderHelpMarkdownResponse(rsp *http.Response) (*RenderHelpMarkdownResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RenderHelpMarkdownResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpRendered
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetHelpReportResponse parses an HTTP response from a GetHelpReportWithResponse call
+func ParseGetHelpReportResponse(rsp *http.Response) (*GetHelpReportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetHelpReportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpReport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSearchHelpArticlesResponse parses an HTTP response from a SearchHelpArticlesWithResponse call
+func ParseSearchHelpArticlesResponse(rsp *http.Response) (*SearchHelpArticlesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SearchHelpArticlesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpSearchResults
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetHomeResponse parses an HTTP response from a GetHomeWithResponse call
 func ParseGetHomeResponse(rsp *http.Response) (*GetHomeResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -123391,6 +133954,21 @@ type WebhookInitiatorInterface interface {
 
 	WebhookFeedbackCreated(ctx context.Context, targetURL string, params *WebhookFeedbackCreatedParams, body WebhookFeedbackCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookHelpArticleDeletedWithBody fires the help.article.deleted webhook with any body
+	WebhookHelpArticleDeletedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticleDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookHelpArticleDeleted(ctx context.Context, targetURL string, params *WebhookHelpArticleDeletedParams, body WebhookHelpArticleDeletedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookHelpArticlePublishedWithBody fires the help.article.published webhook with any body
+	WebhookHelpArticlePublishedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticlePublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookHelpArticlePublished(ctx context.Context, targetURL string, params *WebhookHelpArticlePublishedParams, body WebhookHelpArticlePublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookHelpArticleUnpublishedWithBody fires the help.article.unpublished webhook with any body
+	WebhookHelpArticleUnpublishedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticleUnpublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookHelpArticleUnpublished(ctx context.Context, targetURL string, params *WebhookHelpArticleUnpublishedParams, body WebhookHelpArticleUnpublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookMessageCreatedWithBody fires the message.created webhook with any body
 	WebhookMessageCreatedWithBody(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -123787,6 +134365,78 @@ func (p *WebhookInitiator) WebhookFeedbackCreatedWithBody(ctx context.Context, t
 
 func (p *WebhookInitiator) WebhookFeedbackCreated(ctx context.Context, targetURL string, params *WebhookFeedbackCreatedParams, body WebhookFeedbackCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookFeedbackCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticleDeletedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticleDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticleDeletedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticleDeleted(ctx context.Context, targetURL string, params *WebhookHelpArticleDeletedParams, body WebhookHelpArticleDeletedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticleDeletedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticlePublishedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticlePublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticlePublishedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticlePublished(ctx context.Context, targetURL string, params *WebhookHelpArticlePublishedParams, body WebhookHelpArticlePublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticlePublishedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticleUnpublishedWithBody(ctx context.Context, targetURL string, params *WebhookHelpArticleUnpublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticleUnpublishedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookHelpArticleUnpublished(ctx context.Context, targetURL string, params *WebhookHelpArticleUnpublishedParams, body WebhookHelpArticleUnpublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookHelpArticleUnpublishedWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -124880,6 +135530,189 @@ func NewWebhookFeedbackCreatedWebhookRequest(targetURL string, params *WebhookFe
 
 // NewWebhookFeedbackCreatedWebhookRequestWithBody builds a POST request for the feedback.created webhook with any body
 func NewWebhookFeedbackCreatedWebhookRequestWithBody(targetURL string, params *WebhookFeedbackCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookHelpArticleDeletedWebhookRequest builds a application/json POST request for the help.article.deleted webhook
+func NewWebhookHelpArticleDeletedWebhookRequest(targetURL string, params *WebhookHelpArticleDeletedParams, body WebhookHelpArticleDeletedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookHelpArticleDeletedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookHelpArticleDeletedWebhookRequestWithBody builds a POST request for the help.article.deleted webhook with any body
+func NewWebhookHelpArticleDeletedWebhookRequestWithBody(targetURL string, params *WebhookHelpArticleDeletedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookHelpArticlePublishedWebhookRequest builds a application/json POST request for the help.article.published webhook
+func NewWebhookHelpArticlePublishedWebhookRequest(targetURL string, params *WebhookHelpArticlePublishedParams, body WebhookHelpArticlePublishedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookHelpArticlePublishedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookHelpArticlePublishedWebhookRequestWithBody builds a POST request for the help.article.published webhook with any body
+func NewWebhookHelpArticlePublishedWebhookRequestWithBody(targetURL string, params *WebhookHelpArticlePublishedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookHelpArticleUnpublishedWebhookRequest builds a application/json POST request for the help.article.unpublished webhook
+func NewWebhookHelpArticleUnpublishedWebhookRequest(targetURL string, params *WebhookHelpArticleUnpublishedParams, body WebhookHelpArticleUnpublishedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookHelpArticleUnpublishedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookHelpArticleUnpublishedWebhookRequestWithBody builds a POST request for the help.article.unpublished webhook with any body
+func NewWebhookHelpArticleUnpublishedWebhookRequestWithBody(targetURL string, params *WebhookHelpArticleUnpublishedParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

@@ -51,6 +51,7 @@ var webhookEventTypes = []oas.WebhookEventType{
 	oas.WebhookEventTypeBroadcastUpdated, oas.WebhookEventTypeAnalyticsAlert,
 	oas.WebhookEventTypeStatusComponentUpdated, oas.WebhookEventTypeStatusIncidentCreated, oas.WebhookEventTypeStatusIncidentUpdated,
 	oas.WebhookEventTypeStatusIncidentResolved,
+	oas.WebhookEventTypeHelpArticlePublished, oas.WebhookEventTypeHelpArticleUnpublished, oas.WebhookEventTypeHelpArticleDeleted,
 }
 
 func webhookSecretContext(workspaceID, endpointID uuid.UUID) []byte {
@@ -454,7 +455,8 @@ func webhookSource(e pendingEvent) bool {
 		realtime.DraftCreated, realtime.DraftUpdated, realtime.DraftDeleted,
 		eventDiscussionCreated, eventDiscussionPostCreated, eventDiscussionAnswered, eventDiscussionUpdated,
 		eventSubscriptionCreated, eventSubscriptionUpdated, eventBroadcastUpdated, eventAnalyticsAlert,
-		statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved, statusEventMonitorDown, statusEventMonitorUp:
+		statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved, statusEventMonitorDown, statusEventMonitorUp,
+		helpEventPublished, helpEventUnpublish, helpEventDeleted:
 		return true
 	case realtime.ContactDeleted:
 		return e.deleted != nil
@@ -712,7 +714,7 @@ func (s *Server) webhookPayloads(ctx context.Context, q *store.Queries, ev store
 		}
 		inbox := d.Broadcast.InboxId
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, &inbox, oas.WebhookBroadcastData{Broadcast: d.Broadcast, PreviousState: d.PreviousState})}}, []uuid.UUID{inbox}, nil
-	case statusEventComponent, statusEventMonitorDown, statusEventMonitorUp:
+	case statusEventComponent, statusEventMonitorDown, statusEventMonitorUp, helpEventPublished, helpEventUnpublish, helpEventDeleted:
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, ev.InboxID, json.RawMessage(ev.Payload))}}, []uuid.UUID{*ev.InboxID}, nil
 	case statusEventCreated, statusEventUpdated, statusEventResolved:
 		var d oas.StatusIncidentEventData

@@ -20,6 +20,11 @@ import (
 
 func (c *client) uploadImage(name, contentType string, data []byte) response {
 	c.h.t.Helper()
+	return c.uploadImageTo("/v1/email-images", name, contentType, data)
+}
+
+func (c *client) uploadImageTo(path, name, contentType string, data []byte) response {
+	c.h.t.Helper()
 	var buf bytes.Buffer
 	w := multipart.NewWriter(&buf)
 	hdr := textproto.MIMEHeader{}
@@ -28,7 +33,7 @@ func (c *client) uploadImage(name, contentType string, data []byte) response {
 	pw, _ := w.CreatePart(hdr)
 	_, _ = pw.Write(data)
 	_ = w.Close()
-	req, _ := http.NewRequest("POST", c.h.url+"/v1/email-images", &buf)
+	req, _ := http.NewRequest("POST", c.h.url+path, &buf)
 	req.Header.Set("Content-Type", w.FormDataContentType())
 	req.Header.Set("X-Forwarded-For", c.ip)
 	if c.bearer != "" {

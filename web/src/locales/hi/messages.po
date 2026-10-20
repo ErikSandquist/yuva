@@ -968,6 +968,18 @@ msgstr "फ़ाइल की सामग्री उसके प्रक�
 msgid "A former teammate"
 msgstr "एक पूर्व टीममेट"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "सहायता केंद्र का एक लेख हटा दिया गया"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "सहायता केंद्र का एक लेख प्रकाशित किया गया"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "सहायता केंद्र का एक लेख अप्रकाशित किया गया"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "कॉन्टैक्ट का बाद का संदेश, जब किसी को असाइन न किया गया हो।"
@@ -4161,6 +4173,10 @@ msgstr "विवरण संपादित करें"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "विवरण संपादित करें ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "सहायता केंद्र के संग्रह और लेखों के ड्राफ़्ट संपादित करें"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "प्रकाशित करें ({publishKey})"
 msgid "Publish an incident"
 msgstr "घटना प्रकाशित करें"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "सहायता केंद्र के लेख प्रकाशित और अप्रकाशित करें"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "अभी प्रकाशित करें"
@@ -9199,6 +9219,10 @@ msgstr "कॉन्टैक्ट पढ़ें"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "बातचीत, संदेश, लेबल और कैन्ड रिप्लाई पढ़ें"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "सहायता केंद्र, संग्रह और लेख पढ़ें"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

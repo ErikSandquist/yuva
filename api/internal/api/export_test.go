@@ -1,9 +1,12 @@
 package api
 
 import (
+	"context"
 	"fmt"
 	"time"
 	"uuid"
+
+	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 func (s *Server) FillRateLimiter(now time.Time) {
@@ -32,4 +35,16 @@ func SetStatusClaimBudget(n int32) (restore func()) {
 	old := claimBudget
 	claimBudget = n
 	return func() { claimBudget = old }
+}
+
+func (s *Server) CleanWorkspaceImages(ctx context.Context, ws uuid.UUID) error {
+	return s.cleanUnusedImages(ctx, ws)
+}
+
+func (s *Server) CountHelpView(ws, center, article uuid.UUID, locale string) {
+	s.countHelpArticle(store.HelpCenter{WorkspaceID: ws, ID: center}, article, locale, helpArticleCount{views: 1})
+}
+
+func (s *Server) CountHelpSearch(ws, center uuid.UUID, locale, query string, found bool) {
+	s.countHelpSearch(store.HelpCenter{WorkspaceID: ws, ID: center}, locale, query, found)
 }

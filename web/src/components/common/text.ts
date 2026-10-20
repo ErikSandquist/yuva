@@ -58,6 +58,9 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "status.incident.resolved",
   "status.monitor.down",
   "status.monitor.up",
+  "help.article.published",
+  "help.article.unpublished",
+  "help.article.deleted",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -85,6 +88,9 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "analytics:manage",
   "status:read",
   "status:manage",
+  "help:read",
+  "help:write",
+  "help:publish",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export type ApiKeyPreset = "read" | "support" | "everything" | "custom"
@@ -185,6 +191,9 @@ export function useEnumText() {
       "status.incident.resolved": t`An incident was resolved or maintenance completed`,
       "status.monitor.down": t`A status monitor went down`,
       "status.monitor.up": t`A status monitor recovered`,
+      "help.article.published": t`A help center article was published`,
+      "help.article.unpublished": t`A help center article was unpublished`,
+      "help.article.deleted": t`A help center article was deleted`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -212,6 +221,9 @@ export function useEnumText() {
       "analytics:manage": t`Manage analytics properties, their keys and their data`,
       "status:read": t`Read status pages, components and incidents`,
       "status:manage": t`Manage status pages, set component states and run incidents`,
+      "help:read": t`Read help centers, collections and articles`,
+      "help:write": t`Edit help center collections and article drafts`,
+      "help:publish": t`Publish and unpublish help center articles`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,

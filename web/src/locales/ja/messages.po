@@ -968,6 +968,18 @@ msgstr "ファイルの内容が種類と一致しません。ファイルを確
 msgid "A former teammate"
 msgstr "以前のチームメンバー"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "ヘルプセンターの記事が削除されました"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "ヘルプセンターの記事が公開されました"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "ヘルプセンターの記事が非公開になりました"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "担当者がいない間に、連絡先から後続のメッセージがあったとき。"
@@ -4161,6 +4173,10 @@ msgstr "詳細を編集"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "詳細を編集（{editKey}）"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "ヘルプセンターのコレクションと記事の下書きを編集"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "公開（{publishKey}）"
 msgid "Publish an incident"
 msgstr "インシデントを公開"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "ヘルプセンターの記事を公開・非公開にする"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "今すぐ公開"
@@ -9199,6 +9219,10 @@ msgstr "連絡先を読み取り"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "会話、メッセージ、ラベル、定型返信を読み取り"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "ヘルプセンター、コレクション、記事を閲覧"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

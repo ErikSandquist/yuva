@@ -968,6 +968,18 @@ msgstr "ഫയലിന്റെ ഉള്ളടക്കം അതിന്റ�
 msgid "A former teammate"
 msgstr "ഒരു മുൻ ടീം അംഗം"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "സഹായ കേന്ദ്രത്തിലെ ഒരു ലേഖനം ഇല്ലാതാക്കി"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "സഹായ കേന്ദ്രത്തിലെ ഒരു ലേഖനം പ്രസിദ്ധീകരിച്ചു"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "സഹായ കേന്ദ്രത്തിലെ ഒരു ലേഖനത്തിന്റെ പ്രസിദ്ധീകരണം പിൻവലിച്ചു"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "ആർക്കും നൽകാത്തപ്പോൾ കോൺടാക്റ്റിൽ നിന്നുള്ള പിന്നീടുള്ള സന്ദേശം."
@@ -4161,6 +4173,10 @@ msgstr "വിശദാംശങ്ങൾ എഡിറ്റ് ചെയ്യ�
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "വിശദാംശങ്ങൾ എഡിറ്റ് ചെയ്യുക ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "സഹായ കേന്ദ്രത്തിലെ ശേഖരങ്ങളും ലേഖന കരടുകളും എഡിറ്റ് ചെയ്യുക"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "പ്രസിദ്ധീകരിക്കുക ({publishKey})"
 msgid "Publish an incident"
 msgstr "സംഭവം പ്രസിദ്ധീകരിക്കുക"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "സഹായ കേന്ദ്രത്തിലെ ലേഖനങ്ങൾ പ്രസിദ്ധീകരിക്കുകയും പിൻവലിക്കുകയും ചെയ്യുക"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "ഇപ്പോൾ പ്രസിദ്ധീകരിക്കുക"
@@ -9199,6 +9219,10 @@ msgstr "കോൺടാക്റ്റുകൾ വായിക്കുക"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "സംഭാഷണങ്ങൾ, സന്ദേശങ്ങൾ, ലേബലുകൾ, തയ്യാറാക്കിയ മറുപടികൾ എന്നിവ വായിക്കുക"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "സഹായ കേന്ദ്രങ്ങൾ, ശേഖരങ്ങൾ, ലേഖനങ്ങൾ എന്നിവ വായിക്കുക"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

@@ -104,6 +104,13 @@ type Config struct {
 	StatusCanaryURLs  []string
 	StatusCanariesOff bool
 
+	// HelpURL is the origin public help centers are named from (YUVA_HELP_URL); empty means
+	// <PublicURL>/help. Help is YUVA_HELP: off removes help centers. HelpMaxArticles caps a
+	// workspace's help articles (YUVA_HELP_MAX_ARTICLES; 500 with open signup); 0 is no limit.
+	HelpURL         string
+	Help            bool
+	HelpMaxArticles int
+
 	StatusDomains      string
 	StatusCNAME        string
 	StatusDomainLimit  int
@@ -401,6 +408,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadStatusDomains(public.Hostname()); err != nil {
 		return c, err
 	}
+	if err := c.loadHelp(public); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -462,6 +472,34 @@ func (c *Config) loadStatusDomains(publicHost string) error {
 	var err error
 	if c.StatusDomainLimit, err = strconv.Atoi(env("YUVA_STATUS_DOMAIN_LIMIT", def)); err != nil || c.StatusDomainLimit < 0 {
 		return errors.New("YUVA_STATUS_DOMAIN_LIMIT must be a number of domains, 0 for no limit")
+	}
+	return nil
+}
+
+func (c *Config) loadHelp(public *url.URL) error {
+	switch strings.ToLower(env("YUVA_HELP", "on")) {
+	case "on":
+		c.Help = true
+	case "off":
+	default:
+		return errors.New("YUVA_HELP must be on or off")
+	}
+	if c.HelpURL = strings.TrimRight(env("YUVA_HELP_URL", ""), "/"); c.HelpURL != "" {
+		u, err := url.Parse(c.HelpURL)
+		if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" || u.Path != "" || u.RawQuery != "" {
+			return fmt.Errorf("YUVA_HELP_URL must be an origin such as https://help.example.com, got %q", c.HelpURL)
+		}
+		if strings.EqualFold(u.Host, public.Host) {
+			return errors.New("YUVA_HELP_URL must name another host than YUVA_PUBLIC_URL; leave it unset for <YUVA_PUBLIC_URL>/help")
+		}
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "500"
+	}
+	var err error
+	if c.HelpMaxArticles, err = strconv.Atoi(env("YUVA_HELP_MAX_ARTICLES", def)); err != nil || c.HelpMaxArticles < 0 {
+		return errors.New("YUVA_HELP_MAX_ARTICLES must be a number of articles, 0 for no limit")
 	}
 	return nil
 }

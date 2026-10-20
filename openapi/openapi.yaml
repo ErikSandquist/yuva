@@ -332,6 +332,43 @@ tags:
       OAuth tokens need `status:read` or `status:manage`; no `status:*` scope is added to keys made
       before they existed, and a key made without naming its scopes holds `status:read` but not
       `status:manage`.
+  - name: help
+    description: |
+      Help centers: support articles a workspace writes in Yuva, at most one center per inbox, with
+      collections (one level of sub-collections) and articles in the center's `locales`. An article
+      has one translation per locale; a translation has a working draft (`title`, `body` in
+      Markdown, `keywords`, `slug`, `version`) and, once published, a frozen published copy rendered
+      to HTML. A published center is shown at the server's help URL (`YUVA_HELP_URL/{slug}`, or
+      `<public URL>/help/{slug}` when that is unset) and answers widgets under
+      `/client/v1/channels/{channel_key}/help`; an unpublished center or translation answers `404`
+      there and is seen only through `previewHelpCenter`.
+
+      Drafts are saved with `base_version`, the `version` the editor loaded; a stale one is refused
+      with `409 version_conflict` carrying the translation as it is now. Saves keep a revision at
+      most every 10 minutes per author, publishing and restoring always keep one, and the newest 50
+      per translation are kept. Another member's open editor learns of a save from
+      `help.article.updated` on `/v1/realtime`.
+
+      Markdown has GFM tables, strikethrough, autolinks, heading anchors and fenced code; raw HTML
+      is dropped. Images stay only when they are this workspace's uploads (`uploadHelpImage`, the
+      `/i/` URLs of its e-mail images); any other image becomes a link.
+
+      Search is Postgres full-text search in the language of each locale (`simple` for languages
+      without one) with `İ` and `ı` folded to `i`: every word must match and the last one may be
+      the start of a word; when nothing matches, any word may, and the answer says `partial`.
+
+      Agents with access to the center's inbox read everything and write drafts, translations and
+      collections. Owners and admins also create, configure and delete centers, and publish,
+      unpublish and delete published articles and translations; with the center's
+      `agents_may_publish` on, agents with access to the inbox may publish, unpublish and delete
+      too. API keys need `help:read`, `help:write` or `help:publish`; no `help:*` scope is added to
+      keys made before they existed, and a key made without naming its scopes holds `help:read` and
+      `help:write` but not `help:publish`. An OAuth token never changes what the public sees: it
+      cannot create, change or delete a center, publish, unpublish, or delete a published article
+      or translation (`403 member_session_required`), and `help:publish` is not offered to OAuth
+      clients. A key limited to inboxes
+      sees the centers of those inboxes; a center the caller cannot see answers `404`. A server
+      with `YUVA_HELP=off` answers `404` on every help endpoint.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -5781,7 +5818,8 @@ paths:
       summary: Delete an e-mail image
       description: |
         Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-        not archived uses the image. An image that went out in a sent broadcast needs
+        not archived uses the image, and naming the articles in `used_by.help_articles` while a help
+        article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
         `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
         image. The public URL stops working at once.
 
@@ -10774,6 +10812,902 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/help-centers:
+    get:
+      operationId: listHelpCenters
+      summary: List help centers
+      description: |
+        The centers of the inboxes the caller can see, oldest first.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          description: Only the center of this inbox.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The centers.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenterList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createHelpCenter
+      summary: Create a help center
+      description: |
+        A center for an inbox, which has at most one (`409 help_center_exists`). `slug` names it in
+        its URL, is unique across the server, current and former slugs alike (`409 slug_taken`), and
+        cannot be one of the reserved words (`400`). `default_locale` defaults to the inbox's and
+        `locales` to the default locale alone; `locales` must hold `default_locale`. A new center is
+        unpublished unless `published` is `true`. `chat_channel_id` names a `chat` channel of the
+        same inbox, `analytics_property_id` a property of the workspace.
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCenterCreate"
+      responses:
+        "201":
+          description: The center.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenter"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}:
+    get:
+      operationId: getHelpCenter
+      summary: A help center
+      description: |
+        With its counts and public `url`.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      responses:
+        "200":
+          description: The center.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenter"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateHelpCenter
+      summary: Update a help center
+      description: |
+        Changes the given fields; `null` clears a link, logo, colour, chat channel or analytics
+        property. `published: false` takes the center and every article off the web (`404`) at once.
+        Changing `slug` keeps the old one reserved for this center, and its public addresses
+        redirect to the new one, for 90 days; a center keeps its 10 newest former slugs, and its
+        slug changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales`
+        while an article has a translation in it (`409 locale_in_use`).
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCenterUpdate"
+      responses:
+        "200":
+          description: The updated center.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenter"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteHelpCenter
+      summary: Delete a help center
+      description: |
+        The center with its collections, articles, translations, revisions and counters. Its
+        images stay e-mail images of the workspace and are swept like any unused one.
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `help:publish`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/preview:
+    get:
+      operationId: previewHelpCenter
+      summary: Preview a help center page
+      description: |
+        A page of the center as visitors see it, also while the center or the article is
+        unpublished, for a sandboxed frame: the home page (`view=home`), a collection
+        (`view=collection&id=`) or an article (`view=article&id=`, with `draft=true` the working
+        draft instead of the published copy). `locale` defaults to the center's default locale. It
+        is sent with `Cache-Control: no-store` and its links point to the public URLs.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - name: view
+          in: query
+          schema:
+            type: string
+            enum: [home, collection, article]
+            default: home
+        - name: id
+          in: query
+          description: The collection or article, for `view=collection` and `view=article`.
+          schema:
+            type: string
+            format: uuid
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+        - name: draft
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: The rendered page.
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/collections:
+    get:
+      operationId: listHelpCollections
+      summary: List a center's collections
+      description: |
+        Top-level collections by `position`, each followed by its sub-collections, with their
+        translations and the number of articles in each.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      responses:
+        "200":
+          description: The collections.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCollectionList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createHelpCollection
+      summary: Create a collection
+      description: |
+        A group of articles, named per locale in `translations` (only the center's `locales`,
+        `400 locale_not_offered` otherwise). `parent_id` makes it a sub-collection of a top-level
+        collection; a sub-collection cannot have sub-collections (`400`). A center has at most 200
+        collections.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCollectionCreate"
+      responses:
+        "201":
+          description: The collection.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCollection"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/collections/{collectionId}:
+    patch:
+      operationId: updateHelpCollection
+      summary: Update a collection
+      description: |
+        `translations` sets the name and description of the locales it names and keeps the others;
+        `remove_locales` removes translations. A collection with sub-collections cannot get a
+        parent (`400`).
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpCollectionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCollectionUpdate"
+      responses:
+        "200":
+          description: The updated collection.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCollection"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteHelpCollection
+      summary: Delete a collection
+      description: |
+        Its articles stay, in no collection; its sub-collections become top-level collections.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpCollectionId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles:
+    get:
+      operationId: listHelpArticles
+      summary: List a center's articles
+      description: |
+        By `position`, then `number`, with a summary of each translation. `collection_id` keeps the
+        articles of one collection. `state` keeps the articles whose translation in `locale` (the
+        center's default locale when absent) is a `draft` (never published, or unpublished),
+        `published` (no change since), `changed` (published, with a draft that differs) or
+        `missing` (no translation in that locale). `q` matches the words of the titles of every
+        translation, drafts included.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - name: collection_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+        - name: state
+          in: query
+          schema:
+            type: string
+            enum: [draft, published, changed, missing]
+        - name: q
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of articles.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticlePage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createHelpArticle
+      summary: Create an article
+      description: |
+        An article with its first translation, a draft in `locale` (one of the center's `locales`,
+        `400 locale_not_offered` otherwise). `slug` defaults to one made from the title. A
+        workspace has at most `YUVA_HELP_MAX_ARTICLES` articles (`422 hosted_limit`).
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticleCreate"
+      responses:
+        "201":
+          description: The article.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticle"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles/{articleId}:
+    get:
+      operationId: getHelpArticle
+      summary: An article with its translations
+      description: |
+        Every translation with its draft and its published copy.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+      responses:
+        "200":
+          description: The article.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticle"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateHelpArticle
+      summary: Move an article or change its pages
+      description: |
+        Its collection (`null` for none), its position and the page `paths` where the widget
+        suggests it: up to 20 path patterns of at most 200 characters starting with `/`, where a
+        trailing `*` matches any rest (`/billing/*`).
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticleUpdate"
+      responses:
+        "200":
+          description: The article.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticle"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteHelpArticle
+      summary: Delete an article
+      description: |
+        With every translation, revision and counter, and sends `help.article.deleted`. An article
+        with a published translation can be deleted only by those who may publish
+        (`403 forbidden`), and API keys also need `help:publish`.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}:
+    put:
+      operationId: putHelpArticleTranslation
+      summary: Save a translation's draft
+      description: |
+        Writes the working draft of the translation in `locale`, one of the center's `locales`
+        (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+        translation that does not exist yet; any other is refused with `409 version_conflict`,
+        which carries the translation as it is now in `translation`. A save moves `version` by one,
+        keeps a `save` revision at most every 10 minutes per author, and tells other open editors
+        with `help.article.updated` on `/v1/realtime`. The published copy does not change until the
+        translation is published again. Images of the body stay only when they are this
+        workspace's uploads.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticleTranslationWrite"
+      responses:
+        "200":
+          description: The saved translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleTranslation"
+        "201":
+          description: The new translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleTranslation"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/HelpConflictProblem"
+    delete:
+      operationId: deleteHelpArticleTranslation
+      summary: Delete a translation
+      description: |
+        With its revisions, and sends `help.article.deleted` naming the locale. The last
+        translation of an article cannot be deleted (`409 last_translation`); delete the article
+        instead. A published translation can be deleted only by those who may publish
+        (`403 forbidden`), and API keys also need `help:publish`.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/publish:
+    post:
+      operationId: publishHelpArticleTranslation
+      summary: Publish a translation
+      description: |
+        Freezes the draft as the published copy, renders it to HTML once, keeps a `publish`
+        revision and sends `help.article.published`. With `base_version`, a draft saved since is
+        refused with `409 version_conflict`. The article is public once its center is published.
+        Publishing an unchanged published translation changes nothing.
+
+        Owners, admins and API keys; agents with access to the center's inbox when the center's
+        `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+        (`403 member_session_required`). Scope: `help:publish`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticlePublish"
+      responses:
+        "200":
+          description: The published translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleTranslation"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/HelpConflictProblem"
+  /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/unpublish:
+    post:
+      operationId: unpublishHelpArticleTranslation
+      summary: Unpublish a translation
+      description: |
+        Takes the translation off the web (`404`) and sends `help.article.unpublished`; its draft
+        and the last published text, as a revision, stay. Unpublishing a draft changes nothing.
+
+        Who may publish, as for `publishHelpArticleTranslation`. Scope: `help:publish`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+      responses:
+        "200":
+          description: The translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleTranslation"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions:
+    get:
+      operationId: listHelpArticleRevisions
+      summary: List a translation's revisions
+      description: |
+        Newest first, at most 50: `save` (at most one per 10 minutes per author), `publish` and
+        `restore`, each with its title, body and keywords.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+      responses:
+        "200":
+          description: The revisions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleRevisionList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/articles/{articleId}/translations/{locale}/revisions/{revisionId}/restore:
+    post:
+      operationId: restoreHelpArticleRevision
+      summary: Restore a revision into the draft
+      description: |
+        Saves the revision's title, body and keywords as the draft (a save like `PUT`, with the
+        same `base_version` check) and keeps a `restore` revision. The published copy does not
+        change.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/HelpLocale"
+        - $ref: "#/components/parameters/HelpRevisionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticleRestore"
+      responses:
+        "200":
+          description: The translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpArticleTranslation"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/HelpConflictProblem"
+  /v1/help-centers/{centerId}/render:
+    post:
+      operationId: renderHelpMarkdown
+      summary: Render Markdown as an article
+      description: |
+        The editor's preview: the HTML a body would publish as, with the same rules for images.
+        60 renders a minute per caller (`429 rate_limited`).
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpMarkdown"
+      responses:
+        "200":
+          description: The HTML.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpRendered"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/images:
+    post:
+      operationId: uploadHelpImage
+      summary: Upload an image for articles
+      description: |
+        Stores the image as one of the workspace's e-mail images, with the same rules as
+        `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+        the rate), and answers its public URL with the Markdown that shows it. An image no draft
+        uses and no published article showed is deleted a week after its upload.
+
+        Agents with access to the center's inbox, owners, admins and API keys. Scope: `help:write`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/EmailImageUpload"
+      responses:
+        "200":
+          description: The same image was already uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpImage"
+        "201":
+          description: The image.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpImage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/search:
+    get:
+      operationId: searchHelpArticles
+      summary: Search a center's articles
+      description: |
+        The ranking the widget and the public pages use, over published translations in `locale`
+        (the center's default locale when absent) and, when that locale has fewer than 3 published
+        articles, the default locale too. `drafts=true` searches the drafts instead, also of
+        translations never published. `q` is normalized and cut to 8 words of at most 50
+        characters; a query left empty is refused with `400 query_empty`. Members' searches are
+        not counted in the report.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+        - name: drafts
+          in: query
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          description: 1 to 20; 10 by default.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 20
+      responses:
+        "200":
+          description: The best matches, best first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpSearchResults"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "503":
+          $ref: "#/components/responses/Problem"
+  /v1/help-centers/{centerId}/report:
+    get:
+      operationId: getHelpReport
+      summary: A help center's report
+      description: |
+        Counters of the last `days` UTC days, today included: views (approximate: one per address,
+        article and hour, and answers a CDN served are not seen), "Was this helpful?" answers,
+        conversations started from an article and times an article was sent as a card, per article;
+        searches, and the searches that found nothing by their normalized query. Counts reach the
+        report within a minute. Queries shaped like an e-mail address, a URL or a number are counted
+        as `(scrubbed)`.
+
+        Scope: `help:read`.
+      tags: [help]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/HelpCenterId"
+        - $ref: "#/components/parameters/DocsDays"
+      responses:
+        "200":
+          description: The report.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpReport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /client/v1/session:
     post:
       operationId: createClientSession
@@ -11124,6 +12058,219 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ClientSubscriptionAccepted"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help:
+    get:
+      operationId: getClientHelp
+      summary: The inbox's help center
+      description: |
+        The published help center of the inbox of a `chat` or `app` channel, without a session: the
+        center in the served locale, its collections that have published articles there,
+        `suggested` articles whose `paths` match the path of `page` (at most 5) and the `popular`
+        ones of the last 30 days (at most 5). The served locale is `locale` when the center offers
+        it, else its base language, else the center's default locale. Nothing is created.
+
+        Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+        `404 help_off` when the inbox has no published center. Sent with
+        `Cache-Control: public, max-age=60`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+        - $ref: "#/components/parameters/ClientHelpLocale"
+        - name: page
+          in: query
+          description: The page the widget is shown on, an absolute http(s) URL.
+          schema:
+            type: string
+            maxLength: 2000
+      responses:
+        "200":
+          description: The center.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientHelp"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help/search:
+    get:
+      operationId: searchClientHelp
+      summary: Search the help center
+      description: |
+        Published articles that match `q`, best first, in the served locale and, when it has fewer
+        than 3 published articles, the default locale too; each result names its `locale`. Every
+        word must match and the last may be the start of a word; when nothing matches, any word
+        may, and `partial` is true. `highlights` mark the matched words in `title` and `excerpt`,
+        which are plain text. `400 query_empty` when nothing is left of `q` after normalizing.
+
+        Send `final=true` once the visitor settled on the query (Enter, a result opened, or 1.5
+        seconds without typing); only those are counted in the report. 30 searches a minute per
+        address and channel, and 1,200 per center (`429 rate_limited` with `Retry-After`). Sent with
+        `Cache-Control: public, max-age=60`. `404 help_off` without a published center.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+        - $ref: "#/components/parameters/ClientHelpLocale"
+        - name: limit
+          in: query
+          description: 1 to 10; 5 by default.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 10
+        - name: final
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: The best matches.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientHelpSearchResults"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+        "503":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help/collections/{collectionId}:
+    get:
+      operationId: getClientHelpCollection
+      summary: A help collection
+      description: |
+        A collection with its sub-collections and its published articles in the served locale, by
+        position. `404` for a collection with no published article in that locale. Sent with
+        `Cache-Control: public, max-age=60`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+        - $ref: "#/components/parameters/HelpCollectionId"
+        - $ref: "#/components/parameters/ClientHelpLocale"
+      responses:
+        "200":
+          description: The collection.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientHelpCollectionDetail"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help/articles/{articleId}:
+    get:
+      operationId: getClientHelpArticle
+      summary: A help article
+      description: |
+        The published article in the served locale, or in the center's default locale with
+        `fallback: true` when it has no published translation there, with up to 3 `related`
+        articles of its collection. Counts one view per address, article and hour. `404` for an
+        unpublished article. Sent with `Cache-Control: public, max-age=60`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+        - $ref: "#/components/parameters/HelpArticleId"
+        - $ref: "#/components/parameters/ClientHelpLocale"
+      responses:
+        "200":
+          description: The article.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientHelpArticle"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help/articles/{articleId}/reactions:
+    post:
+      operationId: createClientHelpReaction
+      summary: Answer "Was this helpful?"
+      description: |
+        Counts one `up` or `down` for the article's translation in `locale`, without a session and
+        without storing anything about the visitor. A visitor who changes their mind sends the new
+        `rating` with the earlier one as `previous`, which moves the count; the same `rating` as
+        `previous` changes nothing. `search` is the query that led to the article, if any. Rate
+        limited per address and per channel (`429 rate_limited`). Sent with
+        `Cache-Control: no-store`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+        - $ref: "#/components/parameters/HelpArticleId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientHelpReaction"
+      responses:
+        "204":
+          description: Counted.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/help/searches/click:
+    post:
+      operationId: createClientHelpSearchClick
+      summary: Count an opened search result
+      description: |
+        Counts a result opened from the search for `q`, for the report's clicks; nothing about the
+        visitor is stored. 60 a minute per address (`429 rate_limited`). Sent with
+        `Cache-Control: no-store`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientHelpChannelKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientHelpSearchClick"
+      responses:
+        "204":
+          description: Counted.
         "400":
           $ref: "#/components/responses/Problem"
         "403":
@@ -13273,6 +14420,68 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  help.article.published:
+    post:
+      operationId: webhookHelpArticlePublished
+      summary: A help article translation was published
+      description: |
+        A translation's draft became its published copy. It is public when the center is
+        published. Endpoints of an inbox get the articles of that inbox's center.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookHelpArticlePayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  help.article.unpublished:
+    post:
+      operationId: webhookHelpArticleUnpublished
+      summary: A help article translation was unpublished
+      description: The translation is no longer on the web; its draft stays.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookHelpArticlePayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  help.article.deleted:
+    post:
+      operationId: webhookHelpArticleDeleted
+      summary: A help article or one of its translations was deleted
+      description: "`locale` names the deleted translation; absent when the whole article was deleted."
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookHelpArticlePayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -13777,6 +14986,55 @@ components:
       schema:
         type: string
         enum: ["1", "true", "0", "false"]
+    HelpCenterId:
+      name: centerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    HelpCollectionId:
+      name: collectionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    HelpArticleId:
+      name: articleId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    HelpLocale:
+      name: locale
+      in: path
+      required: true
+      description: One of the center's `locales`.
+      schema:
+        $ref: "#/components/schemas/LanguageTag"
+    HelpRevisionId:
+      name: revisionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ClientHelpChannelKey:
+      name: channel_key
+      in: path
+      required: true
+      description: The public key of a `chat` or `app` channel of the center's inbox.
+      schema:
+        type: string
+        maxLength: 200
+    ClientHelpLocale:
+      name: locale
+      in: query
+      description: The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale.
+      schema:
+        $ref: "#/components/schemas/LanguageTag"
   responses:
     Problem:
       description: An error.
@@ -13802,6 +15060,12 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/EmailDesignProblem"
+    HelpConflictProblem:
+      description: The translation was saved since; `translation` is the translation as it is now.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/HelpConflictProblem"
     IngressRejection:
       description: The message is refused; `reason` is shown to the sender.
       content:
@@ -14195,8 +15459,15 @@ components:
         - `status:manage`: set component states, open, change and resolve incidents and their
           updates; create, change and delete pages, groups and components (owners and admins).
           Never implied: a key made without naming its scopes does not hold it.
+        - `help:read`: help centers, their collections, articles, translations, revisions,
+          previews, search and report.
+        - `help:write`: create and change collections and articles, save, restore and delete draft
+          translations, render Markdown, upload images.
+        - `help:publish`: create, configure and delete help centers; publish and unpublish
+          translations, delete published ones. API keys only, and never implied: a key made without
+          naming its scopes does not hold it, and OAuth clients are not offered it.
 
-        `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*` and `status:*` are never added to keys made before they existed.
+        `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -14223,6 +15494,9 @@ components:
         - analytics:manage
         - status:read
         - status:manage
+        - help:read
+        - help:write
+        - help:publish
     BotAvatarUrl:
       type: string
       format: uri
@@ -15581,7 +16855,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved, status.monitor.down, status.monitor.up]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved, status.monitor.down, status.monitor.up, help.article.published, help.article.unpublished, help.article.deleted]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -16018,6 +17292,10 @@ components:
         page:
           $ref: "#/components/schemas/SourcePage"
           description: The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+        help_article_id:
+          type: string
+          format: uuid
+          description: The help article the contact read just before starting the conversation from it; absent otherwise.
         channel_id:
           type: string
           format: uuid
@@ -16933,6 +18211,11 @@ components:
         imported_author:
           $ref: "#/components/schemas/ImportedAuthor"
           description: An imported outgoing message whose sender is not mapped to a member; absent otherwise.
+        cards:
+          type: array
+          description: Help articles sent with the message; absent when none were.
+          items:
+            $ref: "#/components/schemas/MessageCard"
         created_at:
           type: string
           format: date-time
@@ -17079,6 +18362,18 @@ components:
           items:
             type: string
             format: uuid
+        article_ids:
+          type: array
+          maxItems: 3
+          uniqueItems: true
+          description: |
+            Outgoing messages only: help articles of the inbox's center to send as cards. Each must
+            have a published translation (`400 validation_failed` otherwise); the card takes the
+            contact's locale, else the inbox's, else the center's default. The body gets each
+            article's title and URL as its last lines.
+          items:
+            type: string
+            format: uuid
     MessageCreateMultipart:
       type: object
       required: [kind]
@@ -17104,6 +18399,13 @@ components:
           type: array
           maxItems: 50
           description: Notes only; repeat the field once per member id.
+          items:
+            type: string
+            format: uuid
+        article_ids:
+          type: array
+          maxItems: 3
+          description: Outgoing messages only; repeat the field once per article id.
           items:
             type: string
             format: uuid
@@ -19223,6 +20525,7 @@ components:
         - $ref: "#/components/schemas/StatusComponentEvent"
         - $ref: "#/components/schemas/StatusIncidentEvent"
         - $ref: "#/components/schemas/StatusMonitorEvent"
+        - $ref: "#/components/schemas/HelpArticleEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -19258,6 +20561,9 @@ components:
           status.incident.resolved: "#/components/schemas/StatusIncidentEvent"
           status.monitor.down: "#/components/schemas/StatusMonitorEvent"
           status.monitor.up: "#/components/schemas/StatusMonitorEvent"
+          help.article.published: "#/components/schemas/HelpArticleEvent"
+          help.article.unpublished: "#/components/schemas/HelpArticleEvent"
+          help.article.deleted: "#/components/schemas/HelpArticleEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -19311,6 +20617,8 @@ components:
         - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/StatusNoticeEvent"
         - $ref: "#/components/schemas/StatusPageEvent"
+        - $ref: "#/components/schemas/HelpArticleEvent"
+        - $ref: "#/components/schemas/HelpArticleSignal"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
         - $ref: "#/components/schemas/TypingEvent"
@@ -19359,6 +20667,10 @@ components:
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           status_notice.updated: "#/components/schemas/StatusNoticeEvent"
           status.page.updated: "#/components/schemas/StatusPageEvent"
+          help.article.published: "#/components/schemas/HelpArticleEvent"
+          help.article.unpublished: "#/components/schemas/HelpArticleEvent"
+          help.article.deleted: "#/components/schemas/HelpArticleEvent"
+          help.article.updated: "#/components/schemas/HelpArticleSignal"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"
           typing: "#/components/schemas/TypingEvent"
@@ -22370,6 +23682,12 @@ components:
           description: |
             Absent unless the inbox has a published status page. Show a line while `open` is not
             empty; an `inbox.updated` frame brings every change.
+        help:
+          $ref: "#/components/schemas/ClientInboxHelp"
+          description: |
+            Absent unless the inbox has a published help center (and on a server with
+            `YUVA_HELP=off`); show the Help tile and the Home search only then. An `inbox.updated`
+            frame brings every change.
     ClientContact:
       type: object
       required: [id, name, identified]
@@ -22604,6 +23922,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ClientAttachment"
+        cards:
+          type: array
+          description: |
+            Help articles sent with the message, to show as cards that open the article; absent when
+            none were. The body ends with their titles and URLs either way.
+          items:
+            $ref: "#/components/schemas/MessageCard"
         created_at:
           type: string
           format: date-time
@@ -22669,6 +23994,10 @@ components:
           type: string
           maxLength: 300
           description: The page's title; ignored without a kept `page_url`.
+        help_article_id:
+          type: string
+          format: uuid
+          description: The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
     ClientConversationCreateMultipart:
       type: object
       properties:
@@ -22690,6 +24019,10 @@ components:
           type: string
           maxLength: 300
           description: The page's title; ignored without a kept `page_url`.
+        help_article_id:
+          type: string
+          format: uuid
+          description: The help article the visitor read just before writing; kept only when it is a published article of the inbox's center, dropped otherwise.
         files:
           type: array
           maxItems: 10
@@ -28279,6 +29612,24 @@ components:
                 format: uuid
               name:
                 type: string
+        help_articles:
+          type: array
+          description: Help articles whose draft, published copy or kept revision shows the image; absent when none do.
+          items:
+            type: object
+            required: [id, center_id, number, title]
+            properties:
+              id:
+                type: string
+                format: uuid
+              center_id:
+                type: string
+                format: uuid
+              number:
+                type: integer
+                format: int32
+              title:
+                type: string
     EmailImageProblem:
       allOf:
         - $ref: "#/components/schemas/Problem"
@@ -28357,6 +29708,1140 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/EmailTemplateImage"
+    HelpCenterSlug:
+      type: string
+      description: "`a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server."
+      pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+      minLength: 3
+      maxLength: 48
+      examples: [acme]
+    HelpCenterCounts:
+      type: object
+      required: [collections, articles, published_articles]
+      properties:
+        collections:
+          type: integer
+          format: int32
+        articles:
+          type: integer
+          format: int32
+        published_articles:
+          type: integer
+          format: int32
+          description: Articles with at least one published translation.
+    HelpCenter:
+      type: object
+      required: [id, inbox_id, name, description, slug, url, default_locale, locales, agents_may_publish, published, can_publish, counts, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          description: Shown on the center's home page.
+        slug:
+          $ref: "#/components/schemas/HelpCenterSlug"
+        url:
+          type: string
+          description: The public home page, at the server's help URL.
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          description: The locales articles may be written and published in; the default locale is one of them.
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        logo_url:
+          type: string
+        accent_color:
+          $ref: "#/components/schemas/StatusColor"
+        site_url:
+          type: string
+        chat_channel_id:
+          type: string
+          format: uuid
+          description: The `chat` channel whose chat the public pages offer under "Still need help?".
+        analytics_property_id:
+          type: string
+          format: uuid
+          description: The analytics property the public pages count cookieless page views in.
+        agents_may_publish:
+          type: boolean
+          description: Agents with access to the inbox may publish, unpublish and delete published articles.
+        published:
+          type: boolean
+        can_publish:
+          type: boolean
+          description: The caller may publish and unpublish this center's articles.
+        counts:
+          $ref: "#/components/schemas/HelpCenterCounts"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    HelpCenterList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpCenter"
+    HelpCenterCreate:
+      type: object
+      required: [inbox_id, name, slug]
+      properties:
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/HelpCenterSlug"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        logo_url:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: An `https` image URL.
+        accent_color:
+          $ref: "#/components/schemas/StatusColor"
+        site_url:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: An `http(s)` URL of the product.
+        chat_channel_id:
+          type: string
+          format: uuid
+        analytics_property_id:
+          type: string
+          format: uuid
+        agents_may_publish:
+          type: boolean
+          description: Default `false`.
+        published:
+          type: boolean
+          description: Default `false`.
+    HelpCenterUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/HelpCenterSlug"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        logo_url:
+          type: [string, "null"]
+          format: uri
+          maxLength: 2000
+        accent_color:
+          type: [string, "null"]
+          pattern: "^#[0-9a-fA-F]{6}$"
+        site_url:
+          type: [string, "null"]
+          format: uri
+          maxLength: 2000
+        chat_channel_id:
+          type: [string, "null"]
+          format: uuid
+        analytics_property_id:
+          type: [string, "null"]
+          format: uuid
+        agents_may_publish:
+          type: boolean
+        published:
+          type: boolean
+    HelpIcon:
+      type: string
+      description: One of a fixed set of icons a collection shows.
+      enum: [book, rocket, settings, billing, user, team, shield, lock, plug, code, chat, mail, bell, chart, globe, mobile, star, help]
+      x-enum-varnames: [HelpIconBook, HelpIconRocket, HelpIconSettings, HelpIconBilling, HelpIconUser, HelpIconTeam, HelpIconShield, HelpIconLock, HelpIconPlug, HelpIconCode, HelpIconChat, HelpIconMail, HelpIconBell, HelpIconChart, HelpIconGlobe, HelpIconMobile, HelpIconStar, HelpIconHelp]
+    HelpCollectionTranslation:
+      type: object
+      required: [name, description, slug]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+          description: Made from the name; the collection's URL is `/{locale}/collections/{number}-{slug}`.
+    HelpCollectionTranslationInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+    HelpCollection:
+      type: object
+      required: [id, center_id, number, position, translations, article_count, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        center_id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+          description: The top-level collection this one is in; absent for a top-level collection.
+        number:
+          type: integer
+          format: int32
+          description: The collection's number in its center's URLs.
+        icon:
+          $ref: "#/components/schemas/HelpIcon"
+        position:
+          type: integer
+          format: int32
+        translations:
+          type: object
+          description: The name of the collection per locale.
+          additionalProperties:
+            $ref: "#/components/schemas/HelpCollectionTranslation"
+        article_count:
+          type: integer
+          format: int32
+          description: Articles directly in the collection.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    HelpCollectionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpCollection"
+    HelpCollectionCreate:
+      type: object
+      required: [translations]
+      properties:
+        translations:
+          type: object
+          minProperties: 1
+          maxProperties: 20
+          additionalProperties:
+            $ref: "#/components/schemas/HelpCollectionTranslationInput"
+        parent_id:
+          type: string
+          format: uuid
+        icon:
+          $ref: "#/components/schemas/HelpIcon"
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+    HelpCollectionUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        translations:
+          type: object
+          maxProperties: 20
+          additionalProperties:
+            $ref: "#/components/schemas/HelpCollectionTranslationInput"
+        remove_locales:
+          type: array
+          maxItems: 20
+          description: Locales whose translation is removed; at least one translation stays (`400`).
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        parent_id:
+          type: [string, "null"]
+          format: uuid
+          description: "`null` makes it a top-level collection."
+        icon:
+          type: [string, "null"]
+          maxLength: 40
+          description: A `HelpIcon` name, `null` for none.
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+    HelpTranslationState:
+      type: string
+      description: |
+        `draft`: never published, or unpublished. `published`: the published copy is the draft.
+        `changed`: published, with a draft saved since that differs.
+      enum: [draft, published, changed]
+      x-enum-varnames: [HelpStateDraft, HelpStatePublished, HelpStateChanged]
+    HelpArticleTranslationSummary:
+      type: object
+      required: [locale, title, slug, state, version, outdated, updated_at]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          description: The draft's title.
+        slug:
+          type: string
+        state:
+          $ref: "#/components/schemas/HelpTranslationState"
+        version:
+          type: integer
+          format: int32
+        outdated:
+          type: boolean
+          description: The default locale's translation was published after this translation was last saved; always false in the default locale.
+        published_at:
+          type: string
+          format: date-time
+          description: Absent unless published.
+        url:
+          type: string
+          description: The public page; absent unless published.
+        updated_at:
+          type: string
+          format: date-time
+    HelpArticleSummary:
+      type: object
+      required: [id, center_id, number, position, paths, translations, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        center_id:
+          type: string
+          format: uuid
+        collection_id:
+          type: string
+          format: uuid
+          description: Absent for an article in no collection.
+        number:
+          type: integer
+          format: int32
+          description: The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+        position:
+          type: integer
+          format: int32
+        paths:
+          type: array
+          items:
+            type: string
+        translations:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpArticleTranslationSummary"
+        created_by_member_id:
+          type: string
+          format: uuid
+        created_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    HelpArticlePage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpArticleSummary"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    HelpPublishedCopy:
+      type: object
+      required: [title, body, keywords, slug, html, excerpt, published_at]
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        keywords:
+          type: string
+        slug:
+          type: string
+        html:
+          type: string
+          description: The body rendered at publish.
+        excerpt:
+          type: string
+          description: The start of the rendered body as plain text.
+        published_at:
+          type: string
+          format: date-time
+        published_by_member_id:
+          type: string
+          format: uuid
+        published_by_api_key_id:
+          type: string
+          format: uuid
+    HelpArticleTranslation:
+      type: object
+      required: [article_id, locale, title, body, keywords, slug, version, state, outdated, created_at, updated_at]
+      properties:
+        article_id:
+          type: string
+          format: uuid
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          description: The draft's title.
+        body:
+          type: string
+          description: The draft, Markdown.
+        keywords:
+          type: string
+          description: More words the article is found by, such as synonyms.
+        slug:
+          type: string
+        version:
+          type: integer
+          format: int32
+          description: Moves with every save; send it as `base_version`.
+        state:
+          $ref: "#/components/schemas/HelpTranslationState"
+        outdated:
+          type: boolean
+          description: The default locale's translation was published after this translation was last saved; always false in the default locale.
+        published:
+          $ref: "#/components/schemas/HelpPublishedCopy"
+          description: The published copy; absent unless published.
+        url:
+          type: string
+          description: The public page; absent unless published.
+        updated_by_member_id:
+          type: string
+          format: uuid
+        updated_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          description: When the draft was last saved.
+    HelpArticle:
+      type: object
+      required: [id, center_id, number, position, paths, translations, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        center_id:
+          type: string
+          format: uuid
+        collection_id:
+          type: string
+          format: uuid
+          description: Absent for an article in no collection.
+        number:
+          type: integer
+          format: int32
+          description: The article's number in its center's URLs, `/{locale}/articles/{number}-{slug}`.
+        position:
+          type: integer
+          format: int32
+        paths:
+          type: array
+          items:
+            type: string
+        translations:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpArticleTranslation"
+        created_by_member_id:
+          type: string
+          format: uuid
+        created_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    HelpArticleCreate:
+      type: object
+      required: [locale, title]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          maxLength: 100000
+          description: Markdown.
+        keywords:
+          type: string
+          maxLength: 500
+        slug:
+          $ref: "#/components/schemas/Slug"
+        collection_id:
+          type: string
+          format: uuid
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+        paths:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 200
+    HelpArticleUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        collection_id:
+          type: [string, "null"]
+          format: uuid
+        position:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+        paths:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 200
+    HelpArticleTranslationWrite:
+      type: object
+      required: [base_version, title]
+      properties:
+        base_version:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The `version` the editor loaded; `0` for a new translation.
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          maxLength: 100000
+          description: Markdown; empty when absent.
+        keywords:
+          type: string
+          maxLength: 500
+        slug:
+          $ref: "#/components/schemas/Slug"
+          description: Made from the title when absent.
+    HelpArticlePublish:
+      type: object
+      properties:
+        base_version:
+          type: integer
+          format: int32
+          minimum: 1
+          description: The `version` the caller reviewed; a draft saved since is refused with `409 version_conflict`.
+    HelpRevisionKind:
+      type: string
+      enum: [save, publish, restore]
+      x-enum-varnames: [HelpRevisionSave, HelpRevisionPublish, HelpRevisionRestore]
+    HelpArticleRevision:
+      type: object
+      required: [id, locale, kind, title, body, keywords, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        kind:
+          $ref: "#/components/schemas/HelpRevisionKind"
+        title:
+          type: string
+        body:
+          type: string
+        keywords:
+          type: string
+        author_member_id:
+          type: string
+          format: uuid
+        author_api_key_id:
+          type: string
+          format: uuid
+        via:
+          type: string
+          description: The OAuth client that wrote it, when one did.
+        created_at:
+          type: string
+          format: date-time
+    HelpArticleRevisionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpArticleRevision"
+    HelpArticleRestore:
+      type: object
+      required: [base_version]
+      properties:
+        base_version:
+          type: integer
+          format: int32
+          minimum: 1
+    HelpMarkdown:
+      type: object
+      required: [body]
+      properties:
+        body:
+          type: string
+          maxLength: 100000
+    HelpRendered:
+      type: object
+      required: [html]
+      properties:
+        html:
+          type: string
+    HelpImage:
+      type: object
+      required: [id, url, markdown, width, height]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The e-mail image.
+        url:
+          type: string
+          format: uri
+        markdown:
+          type: string
+          description: The Markdown that shows the image, its file name as the alternative text.
+          examples: ["![invoice.png](https://yuva.example.com/i/abcdefghijklmnopqrstuvwxyz)"]
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+    HelpHighlight:
+      type: object
+      description: A matched word, by offsets in UTF-16 code units into `title` or `excerpt`.
+      required: [field, start, end]
+      properties:
+        field:
+          type: string
+          enum: [title, excerpt]
+          x-enum-varnames: [HelpHighlightTitle, HelpHighlightExcerpt]
+        start:
+          type: integer
+          format: int32
+        end:
+          type: integer
+          format: int32
+    HelpSearchResult:
+      type: object
+      required: [article_id, number, locale, title, excerpt, state, highlights]
+      properties:
+        article_id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+        excerpt:
+          type: string
+          description: Plain text.
+        collection_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/HelpTranslationState"
+        url:
+          type: string
+          description: The public page; absent unless published.
+        highlights:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpHighlight"
+    HelpSearchResults:
+      type: object
+      required: [items, partial]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpSearchResult"
+        partial:
+          type: boolean
+          description: No article had every word; these have some of them.
+    HelpReportArticle:
+      type: object
+      required: [article_id, number, title, views, helpful_up, helpful_down, conversations, sent]
+      properties:
+        article_id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        title:
+          type: string
+          description: The title in the center's default locale, else in another locale.
+        views:
+          type: integer
+          format: int64
+        helpful_up:
+          type: integer
+          format: int64
+        helpful_down:
+          type: integer
+          format: int64
+        conversations:
+          type: integer
+          format: int64
+          description: Conversations started from the article.
+        sent:
+          type: integer
+          format: int64
+          description: Times members sent it as a card.
+    HelpReportQuery:
+      type: object
+      required: [query, locale, searches]
+      properties:
+        query:
+          type: string
+          description: The normalized query, or `(scrubbed)`. Written by visitors.
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        searches:
+          type: integer
+          format: int64
+    HelpReport:
+      type: object
+      required: [days, views, searches, no_result_searches, clicks, top_articles, no_result_queries, most_down]
+      properties:
+        days:
+          type: integer
+          format: int32
+        views:
+          type: integer
+          format: int64
+        searches:
+          type: integer
+          format: int64
+        no_result_searches:
+          type: integer
+          format: int64
+        clicks:
+          type: integer
+          format: int64
+          description: Results opened from a search.
+        top_articles:
+          type: array
+          description: Most viewed first, at most 20.
+          items:
+            $ref: "#/components/schemas/HelpReportArticle"
+        no_result_queries:
+          type: array
+          description: Searches that found nothing, most frequent first, at most 50.
+          items:
+            $ref: "#/components/schemas/HelpReportQuery"
+        most_down:
+          type: array
+          description: Articles with the most "no" answers, at most 10.
+          items:
+            $ref: "#/components/schemas/HelpReportArticle"
+    HelpConflictProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            translation:
+              $ref: "#/components/schemas/HelpArticleTranslation"
+              description: "`version_conflict` only: the translation as it is now."
+    HelpArticleEventData:
+      type: object
+      required: [center_id, article_id, number]
+      properties:
+        center_id:
+          type: string
+          format: uuid
+        article_id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The translation; absent when a whole article was deleted.
+        title:
+          type: string
+          description: The published title (published and unpublished only).
+        url:
+          type: string
+          description: The public page (published only).
+    HelpArticleEvent:
+      type: object
+      description: |
+        `help.article.published`, `help.article.unpublished`, `help.article.deleted`: a translation
+        was published or unpublished, or an article or one of its translations was deleted.
+        Delivered to callers who hold `help:read` and can see the center's inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [help.article.published, help.article.unpublished, help.article.deleted]
+          x-enum-varnames: [HelpArticlePublishedEvent, HelpArticleUnpublishedEvent, HelpArticleDeletedEvent]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/HelpArticleEventData"
+    WebhookHelpArticlePayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/HelpArticleEventData"
+    HelpArticleSignal:
+      type: object
+      description: |
+        `help.article.updated`, on `/v1/realtime` only: a translation's draft was saved, so an
+        editor open on an older `version` can say it changed elsewhere. Not stored, no id, never
+        replayed. Reaches whoever holds `help:read` and sees the center's inbox.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [help.article.updated]
+          x-enum-varnames: [HelpArticleUpdated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          type: object
+          required: [center_id, article_id, locale, version]
+          properties:
+            center_id:
+              type: string
+              format: uuid
+            article_id:
+              type: string
+              format: uuid
+            locale:
+              $ref: "#/components/schemas/LanguageTag"
+            version:
+              type: integer
+              format: int32
+            member_id:
+              type: string
+              format: uuid
+              description: The member who saved; absent for API keys.
+    MessageCard:
+      type: object
+      description: |
+        A help article sent with the message, as it was when it was sent. The message's body ends
+        with the article's URL, so clients that show no cards lose nothing.
+      required: [kind, article_id, locale, title, excerpt, url]
+      properties:
+        kind:
+          type: string
+          enum: [article]
+          x-enum-varnames: [MessageCardArticle]
+        article_id:
+          type: string
+          format: uuid
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+        excerpt:
+          type: string
+        url:
+          type: string
+    ClientInboxHelp:
+      type: object
+      description: The inbox's published help center.
+      required: [url, locales, default_locale]
+      properties:
+        url:
+          type: string
+          description: The center's public home page.
+        locales:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+    ClientHelpCenter:
+      type: object
+      required: [name, description, locale, locales, default_locale, url]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The locale served.
+        locales:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        url:
+          type: string
+          description: The public home page in the served locale.
+        logo_url:
+          type: string
+        accent_color:
+          $ref: "#/components/schemas/StatusColor"
+    ClientHelpCollection:
+      type: object
+      required: [id, number, name, description, article_count, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        parent_id:
+          type: string
+          format: uuid
+        icon:
+          $ref: "#/components/schemas/HelpIcon"
+        name:
+          type: string
+        description:
+          type: string
+        article_count:
+          type: integer
+          format: int32
+          description: Published articles in the served locale.
+        url:
+          type: string
+    ClientHelpCollectionRef:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ClientHelpArticleSummary:
+      type: object
+      required: [id, number, locale, title, excerpt, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+        excerpt:
+          type: string
+          description: Plain text.
+        url:
+          type: string
+        collection:
+          $ref: "#/components/schemas/ClientHelpCollectionRef"
+    ClientHelp:
+      type: object
+      required: [center, collections, suggested, popular]
+      properties:
+        center:
+          $ref: "#/components/schemas/ClientHelpCenter"
+        collections:
+          type: array
+          description: Top-level collections by position, each followed by its sub-collections.
+          items:
+            $ref: "#/components/schemas/ClientHelpCollection"
+        suggested:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientHelpArticleSummary"
+        popular:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientHelpArticleSummary"
+    ClientHelpCollectionDetail:
+      type: object
+      required: [collection, collections, articles]
+      properties:
+        collection:
+          $ref: "#/components/schemas/ClientHelpCollection"
+        collections:
+          type: array
+          description: Its sub-collections.
+          items:
+            $ref: "#/components/schemas/ClientHelpCollection"
+        articles:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientHelpArticleSummary"
+    ClientHelpArticle:
+      type: object
+      required: [id, number, locale, fallback, title, body_html, updated_at, url, related]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The locale served.
+        fallback:
+          type: boolean
+          description: The article has no published translation in the requested locale; this is the default locale's.
+        title:
+          type: string
+        body_html:
+          type: string
+          description: Sanitized HTML.
+        updated_at:
+          type: string
+          format: date-time
+          description: When this translation was last published.
+        url:
+          type: string
+        collection:
+          $ref: "#/components/schemas/ClientHelpCollectionRef"
+        related:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientHelpArticleSummary"
+    ClientHelpSearchResult:
+      allOf:
+        - $ref: "#/components/schemas/ClientHelpArticleSummary"
+        - type: object
+          required: [highlights]
+          properties:
+            highlights:
+              type: array
+              items:
+                $ref: "#/components/schemas/HelpHighlight"
+    ClientHelpSearchResults:
+      type: object
+      required: [items, partial]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientHelpSearchResult"
+        partial:
+          type: boolean
+          description: No article had every word; these have some of them.
+    ClientHelpReaction:
+      type: object
+      required: [rating, locale]
+      properties:
+        rating:
+          $ref: "#/components/schemas/PageRating"
+        previous:
+          $ref: "#/components/schemas/PageRating"
+          description: The visitor's earlier answer for this article, which this one replaces.
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The locale of the translation the visitor read.
+        search:
+          type: string
+          maxLength: 200
+          description: The query that led to the article.
+    ClientHelpSearchClick:
+      type: object
+      required: [q, locale, article_id]
+      properties:
+        q:
+          type: string
+          minLength: 1
+          maxLength: 200
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        article_id:
+          type: string
+          format: uuid
     HostedLimit:
       type: string
       description: |
@@ -28365,8 +30850,9 @@ components:
         the workspace already runs as many migrations at a time as the server allows;
         `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
         allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
-      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES, YUVA_MIGRATION_UPLOAD_MAX_BYTES]
-      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes, LimitMigrationUploadMaxBytes]
+        `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES, YUVA_MIGRATION_UPLOAD_MAX_BYTES, YUVA_HELP_MAX_ARTICLES]
+      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes, LimitMigrationUploadMaxBytes, LimitHelpMaxArticles]
     Problem:
       type: object
       description: An RFC 9457 problem document.

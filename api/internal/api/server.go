@@ -79,6 +79,8 @@ type Server struct {
 	status            StatusSettings
 	statusCache       *statusCache
 	statusDomainCache *statusDomainCache
+	help              HelpSettings
+	helpCounts        *helpCounters
 	canaries          canaryGuard
 	started           time.Time
 	sesCaller         atomic.Pointer[string]
@@ -139,6 +141,7 @@ type Deps struct {
 	Analytics           AnalyticsSettings
 	SES                 SESSettings
 	Status              StatusSettings
+	Help                HelpSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -268,6 +271,7 @@ func New(d Deps) *Server {
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
 		status: d.Status, statusCache: newStatusCache(), statusDomainCache: newStatusDomainCache(), started: now(),
+		help: d.Help, helpCounts: newHelpCounters(),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()

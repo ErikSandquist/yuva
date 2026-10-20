@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -126,37 +127,13 @@ func (s *Server) UploadEmailImage(ctx context.Context, req oas.UploadEmailImageR
 	if err := s.rateLimit(rateCheck{"email-image-upload:" + p.workspaceID.String(), limitImageUpload}); err != nil {
 		return nil, err
 	}
-	var data []byte
-	var filename string
-	for {
-		part, err := req.Body.NextPart()
-		if errors.Is(err, io.EOF) {
-			break
-		}
-		if err != nil {
-			return nil, uploadError(err)
-		}
-		if part.FormName() != "file" {
-			return nil, errValidation("unknown form field " + part.FormName())
-		}
-		if data != nil {
-			return nil, errValidation("send one file")
-		}
-		data, err = io.ReadAll(io.LimitReader(part, images.MaxUploadBytes+1))
-		if err != nil {
-			return nil, uploadError(err)
-		}
-		if len(data) > images.MaxUploadBytes {
-			return nil, errImageFileTooBig
-		}
-		filename = part.FileName()
-	}
-	if len(data) == 0 {
-		return nil, errValidation("file is required")
+	data, filename, err := readImageUpload(req.Body)
+	if err != nil {
+		return nil, err
 	}
 	var row store.EmailImage
 	var created bool
-	err := s.st.InTx(ctx, func(q *store.Queries) error {
+	err = s.st.InTx(ctx, func(q *store.Queries) error {
 		var err error
 		row, created, err = s.storeEmailImage(ctx, q, p, data, filename)
 		return err
@@ -168,6 +145,38 @@ func (s *Server) UploadEmailImage(ctx context.Context, req oas.UploadEmailImageR
 		return oas.UploadEmailImage201JSONResponse(s.emailImageBody(row)), nil
 	}
 	return oas.UploadEmailImage200JSONResponse(s.emailImageBody(row)), nil
+}
+
+func readImageUpload(body *multipart.Reader) ([]byte, string, error) {
+	var data []byte
+	var filename string
+	for {
+		part, err := body.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			return nil, "", uploadError(err)
+		}
+		if part.FormName() != "file" {
+			return nil, "", errValidation("unknown form field " + part.FormName())
+		}
+		if data != nil {
+			return nil, "", errValidation("send one file")
+		}
+		data, err = io.ReadAll(io.LimitReader(part, images.MaxUploadBytes+1))
+		if err != nil {
+			return nil, "", uploadError(err)
+		}
+		if len(data) > images.MaxUploadBytes {
+			return nil, "", errImageFileTooBig
+		}
+		filename = part.FileName()
+	}
+	if len(data) == 0 {
+		return nil, "", errValidation("file is required")
+	}
+	return data, filename, nil
 }
 
 func (s *Server) ListEmailImages(ctx context.Context, req oas.ListEmailImagesRequestObject) (oas.ListEmailImagesResponseObject, error) {
@@ -218,13 +227,25 @@ func (s *Server) DeleteEmailImage(ctx context.Context, req oas.DeleteEmailImageR
 		if err != nil {
 			return err
 		}
-		if len(users) > 0 {
+		articles, err := q.ListHelpArticlesUsingImage(ctx, store.ListHelpArticlesUsingImageParams{WorkspaceID: p.workspaceID, ImageID: img.ID})
+		if err != nil {
+			return err
+		}
+		if len(users) > 0 || len(articles) > 0 {
 			designs := make([]map[string]any, len(users))
 			for i, u := range users {
 				designs[i] = map[string]any{"id": u.ID, "name": u.Name}
 			}
-			e := problem(http.StatusConflict, "image_in_use", "designs use this image; take it out of them first")
-			e.Extra = map[string]any{"used_by": map[string]any{"designs": designs}}
+			usedBy := map[string]any{"designs": designs}
+			if len(articles) > 0 {
+				help := make([]map[string]any, len(articles))
+				for i, a := range articles {
+					help[i] = map[string]any{"id": a.ID, "center_id": a.CenterID, "number": a.Number, "title": a.Title}
+				}
+				usedBy["help_articles"] = help
+			}
+			e := problem(http.StatusConflict, "image_in_use", "designs or help articles use this image; take it out of them first")
+			e.Extra = map[string]any{"used_by": usedBy}
 			return e
 		}
 		if img.SentAt != nil && !boolOr(req.Params.Force, false) {
@@ -338,8 +359,7 @@ func (s *Server) assetVersion() string {
 	return s.version
 }
 
-// CleanUnusedImages deletes, in every workspace, the images no design refers to and no broadcast
-// sent, a week after upload.
+// An upload no design, help article, kept revision or sent broadcast uses is deleted after a week.
 func (s *Server) CleanUnusedImages(ctx context.Context) error {
 	ids, err := s.st.ListWorkspaceIDs(ctx)
 	if err != nil {

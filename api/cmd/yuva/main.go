@@ -269,6 +269,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		Status: api.StatusSettings{URL: cfg.StatusURL, HomeOff: !cfg.StatusHome, HomePage: cfg.StatusHomePage, Monitors: cfg.StatusMonitors, NoticesOff: !cfg.StatusNotices, NoticesDaily: cfg.StatusNoticesDaily, MaxSubscribers: cfg.StatusMaxSubscribers,
 			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, CanariesOff: cfg.StatusCanariesOff, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen,
 			Domains: cfg.StatusDomains, CNAME: cfg.StatusCNAME, DomainLimit: cfg.StatusDomainLimit, Cloudflare: cloudflareClient(cfg)},
+		Help: api.HelpSettings{URL: cfg.HelpURL, Off: !cfg.Help, MaxArticles: cfg.HelpMaxArticles},
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")
@@ -326,6 +327,11 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		srv.RunAnalytics(flushCtx)
 		close(flushed)
 	}()
+	helpFlushed := make(chan struct{})
+	go func() {
+		srv.RunHelpCounters(flushCtx)
+		close(helpFlushed)
+	}()
 	go func() {
 		<-ctx.Done()
 		hub.StopAll(realtime.ReasonRestart)
@@ -339,6 +345,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		return err
 	}
 	<-flushed
+	<-helpFlushed
 	return nil
 }
 

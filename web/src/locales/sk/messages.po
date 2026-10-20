@@ -968,6 +968,18 @@ msgstr "Obsah súboru nezodpovedá jeho typu. Skontrolujte súbor a skúste to z
 msgid "A former teammate"
 msgstr "Bývalý člen tímu"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "Článok centra pomoci bol odstránený"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "Článok centra pomoci bol uverejnený"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "Uverejnenie článku centra pomoci bolo zrušené"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Neskoršia správa od kontaktu, keď nie je nikto pridelený."
@@ -4161,6 +4173,10 @@ msgstr "Upraviť podrobnosti"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Upraviť podrobnosti ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Úprava kolekcií centra pomoci a konceptov článkov"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Zverejniť ({publishKey})"
 msgid "Publish an incident"
 msgstr "Zverejniť incident"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Uverejňovanie a rušenie uverejnenia článkov centra pomoci"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Zverejniť hneď"
@@ -9199,6 +9219,10 @@ msgstr "Čítať kontakty"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Čítať konverzácie, správy, štítky a pripravené odpovede"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Čítanie centier pomoci, kolekcií a článkov"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

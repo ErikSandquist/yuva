@@ -968,6 +968,18 @@ msgstr "A file's content does not match its type. Check the file and try again."
 msgid "A former teammate"
 msgstr "A former teammate"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "A help center article was deleted"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "A help center article was published"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "A help center article was unpublished"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "A later message from the contact while nobody is assigned."
@@ -4161,6 +4173,10 @@ msgstr "Edit details"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Edit details ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Edit help center collections and article drafts"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Publish ({publishKey})"
 msgid "Publish an incident"
 msgstr "Publish an incident"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Publish and unpublish help center articles"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publish now"
@@ -9199,6 +9219,10 @@ msgstr "Read contacts"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Read conversations, messages, labels and canned replies"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Read help centers, collections and articles"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

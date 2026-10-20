@@ -968,6 +968,18 @@ msgstr "محتوى الملف لا يطابق نوعه. تحقق من الملف
 msgid "A former teammate"
 msgstr "زميل سابق"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "تم حذف مقال من مركز المساعدة"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "تم نشر مقال في مركز المساعدة"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "تم إلغاء نشر مقال في مركز المساعدة"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "رسالة لاحقة من جهة الاتصال بينما لا أحد مُسنَد إليه."
@@ -4161,6 +4173,10 @@ msgstr "تعديل التفاصيل"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "تعديل التفاصيل ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "تحرير مجموعات مركز المساعدة ومسودات المقالات"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "نشر ({publishKey})"
 msgid "Publish an incident"
 msgstr "نشر حادثة"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "نشر مقالات مركز المساعدة وإلغاء نشرها"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "انشر الآن"
@@ -9199,6 +9219,10 @@ msgstr "قراءة جهات الاتصال"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "قراءة المحادثات والرسائل والوسوم والردود الجاهزة"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "قراءة مراكز المساعدة والمجموعات والمقالات"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

@@ -13,10 +13,11 @@ var allScopes = []oas.ApiKeyScope{
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
 	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage,
 	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage, oas.StatusRead, oas.StatusManage,
+	oas.HelpRead, oas.HelpWrite, oas.HelpPublish,
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
-var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage}
+var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage, oas.HelpPublish}
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage, oas.AnalyticsManage}
 
@@ -289,6 +290,32 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UnlinkStatusIncidentConversation":   {oas.StatusManage, oas.ConversationsRead},
 	"ReplyToStatusIncidentConversations": {oas.StatusManage, oas.MessagesWrite},
 	"ListConversationIncidents":          {oas.ConversationsRead, oas.StatusRead},
+
+	"ListHelpCenters":                 {oas.HelpRead},
+	"GetHelpCenter":                   {oas.HelpRead},
+	"PreviewHelpCenter":               {oas.HelpRead},
+	"ListHelpCollections":             {oas.HelpRead},
+	"ListHelpArticles":                {oas.HelpRead},
+	"GetHelpArticle":                  {oas.HelpRead},
+	"ListHelpArticleRevisions":        {oas.HelpRead},
+	"SearchHelpArticles":              {oas.HelpRead},
+	"GetHelpReport":                   {oas.HelpRead},
+	"CreateHelpCollection":            {oas.HelpWrite},
+	"UpdateHelpCollection":            {oas.HelpWrite},
+	"DeleteHelpCollection":            {oas.HelpWrite},
+	"CreateHelpArticle":               {oas.HelpWrite},
+	"UpdateHelpArticle":               {oas.HelpWrite},
+	"DeleteHelpArticle":               {oas.HelpWrite},
+	"PutHelpArticleTranslation":       {oas.HelpWrite},
+	"DeleteHelpArticleTranslation":    {oas.HelpWrite},
+	"RestoreHelpArticleRevision":      {oas.HelpWrite},
+	"RenderHelpMarkdown":              {oas.HelpWrite},
+	"UploadHelpImage":                 {oas.HelpWrite},
+	"CreateHelpCenter":                {oas.HelpPublish},
+	"UpdateHelpCenter":                {oas.HelpPublish},
+	"DeleteHelpCenter":                {oas.HelpPublish},
+	"PublishHelpArticleTranslation":   {oas.HelpPublish},
+	"UnpublishHelpArticleTranslation": {oas.HelpPublish},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

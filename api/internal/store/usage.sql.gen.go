@@ -69,7 +69,7 @@ func (q *Queries) AddUsage(ctx context.Context, arg AddUsageParams) error {
 }
 
 const listUsage = `-- name: ListUsage :many
-SELECT workspace_id, month, conversations, messages, attachment_bytes, broadcast_recipients, imported_conversations, imported_messages, imported_bytes, analytics_events, analytics_limit_reached_at, status_notices FROM usage_counters WHERE workspace_id = $1 ORDER BY month DESC LIMIT 24
+SELECT workspace_id, month, conversations, messages, attachment_bytes, broadcast_recipients, imported_conversations, imported_messages, imported_bytes, analytics_events, analytics_limit_reached_at, status_notices, help_searches FROM usage_counters WHERE workspace_id = $1 ORDER BY month DESC LIMIT 24
 `
 
 func (q *Queries) ListUsage(ctx context.Context, workspaceID uuid.UUID) ([]UsageCounter, error) {
@@ -94,6 +94,7 @@ func (q *Queries) ListUsage(ctx context.Context, workspaceID uuid.UUID) ([]Usage
 			&i.AnalyticsEvents,
 			&i.AnalyticsLimitReachedAt,
 			&i.StatusNotices,
+			&i.HelpSearches,
 		); err != nil {
 			return nil, err
 		}

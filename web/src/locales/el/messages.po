@@ -968,6 +968,18 @@ msgstr "Το περιεχόμενο ενός αρχείου δεν ταιριά�
 msgid "A former teammate"
 msgstr "Πρώην συνάδελφος"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "Ένα άρθρο του κέντρου βοήθειας διαγράφηκε"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "Ένα άρθρο του κέντρου βοήθειας δημοσιεύτηκε"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "Ένα άρθρο του κέντρου βοήθειας καταργήθηκε από τη δημοσίευση"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Ένα μεταγενέστερο μήνυμα από την επαφή ενώ δεν έχει ανατεθεί σε κανέναν."
@@ -4161,6 +4173,10 @@ msgstr "Επεξεργασία λεπτομερειών"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Επεξεργασία λεπτομερειών ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Επεξεργασία συλλογών κέντρου βοήθειας και πρόχειρων άρθρων"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Δημοσίευση ({publishKey})"
 msgid "Publish an incident"
 msgstr "Δημοσίευση περιστατικού"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Δημοσίευση και κατάργηση δημοσίευσης άρθρων κέντρου βοήθειας"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Δημοσίευση τώρα"
@@ -9199,6 +9219,10 @@ msgstr "Ανάγνωση επαφών"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Ανάγνωση συνομιλιών, μηνυμάτων, ετικετών και έτοιμων απαντήσεων"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Ανάγνωση κέντρων βοήθειας, συλλογών και άρθρων"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

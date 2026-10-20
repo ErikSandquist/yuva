@@ -968,6 +968,18 @@ msgstr "El contingut d'un fitxer no coincideix amb el seu tipus. Comprova el fit
 msgid "A former teammate"
 msgstr "Un antic company"
 
+#: src/components/common/text.ts
+msgid "A help center article was deleted"
+msgstr "S'ha eliminat un article del centre d'ajuda"
+
+#: src/components/common/text.ts
+msgid "A help center article was published"
+msgstr "S'ha publicat un article del centre d'ajuda"
+
+#: src/components/common/text.ts
+msgid "A help center article was unpublished"
+msgstr "S'ha despublicat un article del centre d'ajuda"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Un missatge posterior del contacte mentre ningú no està assignat."
@@ -4161,6 +4173,10 @@ msgstr "Edita els detalls"
 #: src/features/status/IncidentPane.tsx
 msgid "Edit details ({editKey})"
 msgstr "Edita els detalls ({editKey})"
+
+#: src/components/common/text.ts
+msgid "Edit help center collections and article drafts"
+msgstr "Edita les col·leccions del centre d'ajuda i els esborranys dels articles"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -9037,6 +9053,10 @@ msgstr "Publica ({publishKey})"
 msgid "Publish an incident"
 msgstr "Publica un incident"
 
+#: src/components/common/text.ts
+msgid "Publish and unpublish help center articles"
+msgstr "Publica i despublica articles del centre d'ajuda"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publica ara"
@@ -9199,6 +9219,10 @@ msgstr "Llegeix contactes"
 #: src/components/common/text.ts
 msgid "Read conversations, messages, labels and canned replies"
 msgstr "Llegeix converses, missatges, etiquetes i respostes predefinides"
+
+#: src/components/common/text.ts
+msgid "Read help centers, collections and articles"
+msgstr "Llegeix centres d'ajuda, col·leccions i articles"
 
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"

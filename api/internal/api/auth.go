@@ -92,6 +92,13 @@ var operationAccess = map[string]access{
 	"GetSharedAnalyticsRealtime": accessPublic,
 	"GetClientStatusPage":        accessPublic,
 
+	"GetClientHelp":               accessPublic,
+	"SearchClientHelp":            accessPublic,
+	"GetClientHelpCollection":     accessPublic,
+	"GetClientHelpArticle":        accessPublic,
+	"CreateClientHelpReaction":    accessPublic,
+	"CreateClientHelpSearchClick": accessPublic,
+
 	"CreateClientDiscussion":       accessDiscussant,
 	"CreateClientDiscussionPost":   accessDiscussant,
 	"AcceptClientDiscussionAnswer": accessDiscussant,

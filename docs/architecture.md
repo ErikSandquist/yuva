@@ -2472,8 +2472,8 @@ and the searches that found nothing say which article to write next.
 - **Scopes and access.** `help:read`, `help:write` and `help:publish` are API key scopes. The first
   two go to keys made after M20 without named scopes; `help:publish` is not implied and must be named
   (like `status:manage`); no existing key gains any. Key inbox limits and OAuth narrowing apply as
-  everywhere, and a center of another inbox answers `404`. The consent page does not offer
-  `help:publish` to agents.
+  everywhere, and a center of another inbox answers `404`. No OAuth client is offered
+  `help:publish`, and OAuth tokens cannot create, change or delete a center.
 - **Public pages.** Rendered by the server with `html/template`, no JavaScript needed, in the style of
   status pages and sharing their fonts, CSP builder and cache with them: `/help/{slug}` (or under
   `YUVA_HELP_URL`, an origin served by the same server, as `YUVA_STATUS_URL` works), then
