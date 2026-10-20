@@ -60,6 +60,7 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | Ein veröffentlichter Vorfall oder eine Wartung wurde veröffentlicht, geändert oder gelöst bzw. abgeschlossen | `incident`, `page`, `change`, `update` |
 | `status.monitor.down`, `status.monitor.up` | Ein Monitor ist ausgefallen oder hat sich erholt | `monitor`, `page`, `incident_id` |
 | `help.article.published`, `help.article.unpublished`, `help.article.deleted` | Die Übersetzung eines Artikels eines [Hilfecenters](help-center.md) wurde veröffentlicht, zurückgezogen oder gelöscht (ein ganzer Artikel, wenn `locale` fehlt) | `center_id`, `article_id`, `number`, `locale`; bei Veröffentlichung `title` und `url` |
+| `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted` | Ein [Neuigkeiten](whats-new.md)-Eintrag wurde veröffentlicht (auch planmäßig oder wenn eine veröffentlichte Übersetzung ersetzt wurde), zurückgezogen, oder ein veröffentlichter Eintrag wurde gelöscht | `changelog` (`id`, `name`, `url`), `entry` (`id`, `number`, `labels`, `published_at`, `translations` mit `locale`, `title`, `url`) |
 | `discussion.stage_changed` | Eine Idee der [Roadmap](roadmap-board.md) wurde in eine andere Phase verschoben | `discussion`, `from`, `to`, `linked` (mit der Idee verknüpftes Feedback) |
 
 Jeder Body hat `type`, `timestamp` (wann es passiert ist), `workspace_id`, `inbox_id` (nicht bei

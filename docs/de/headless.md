@@ -124,6 +124,9 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `roadmap:read` | [Roadmap-Boards](roadmap-board.md): Boards, Phasenverlauf, das Ergebnis einer Antwort an verknüpftes Feedback |
 | `roadmap:write` | Boards anlegen, ändern und löschen, Feedback mit Ideen verknüpfen, an verknüpftes Feedback antworten. Ideen zu lesen und zu verknüpfen braucht zusätzlich `conversations:read`. |
 | `roadmap:stage` | Die Phase einer Idee verschieben, was den Fortschritt ihres verknüpften Feedbacks setzt. In keinem anderen Scope enthalten: Nennen Sie ihn ausdrücklich. |
+| `changelog:read` | [Neuigkeiten](whats-new.md): Changelogs, Einträge mit Entwürfen, Vorschau |
+| `changelog:write` | Einträge und Übersetzungen schreiben, Bilder hochladen |
+| `changelog:publish` | Changelogs anlegen, ändern und löschen; veröffentlichte Einträge veröffentlichen, planen, zurückziehen und löschen. In keinem anderen Scope enthalten: nennen Sie ihn ausdrücklich. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Schlüssel

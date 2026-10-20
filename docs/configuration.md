@@ -177,6 +177,15 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_ROADMAP` | `on` | `off` removes roadmap boards: their endpoints and public pages answer `404`, and the widget shows no Roadmap app. |
 | `YUVA_ROADMAP_MAX_IDEAS` | `2000` when `YUVA_SIGNUP=open`, else `0` | Most ideas one workspace may have; `0` is no limit. Beyond it, starting one answers `422 hosted_limit`. |
 
+## What's new
+
+[What's new changelogs](whats-new.md).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_WHATS_NEW` | `on` | `off` removes What's new: its endpoints and public pages answer `404`, and the widget shows no What's new app. |
+| `YUVA_CHANGELOG_MAX_ENTRIES` | `1000` when `YUVA_SIGNUP=open`, else `0` | Most What's new entries one workspace may have; `0` is no limit. Beyond it, creating one answers `422 hosted_limit`. |
+
 ## Analytics
 
 [Counting your websites](analytics.md).

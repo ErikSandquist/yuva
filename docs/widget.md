@@ -51,7 +51,7 @@ shown. **Help center** appears when the inbox has a published [help center](help
 with a search field on Home: it shows the articles that fit the page the visitor is on, the popular
 ones and the collections, opens articles inside the panel with "Was this helpful?" and ends with a
 "Message us" button. A conversation started after reading an article records it, and an article your
-team sends in a reply opens in the same app. **Roadmap** appears when the inbox has a public [roadmap board](roadmap-board.md): ideas by stage and votes, an idea with its replies, and Suggest an idea. Voting and suggesting need a sign-in, which opens the reader window unless the visitor has an identity token.
+team sends in a reply opens in the same app. **Roadmap** appears when the inbox has a public [roadmap board](roadmap-board.md): ideas by stage and votes, an idea with its replies, and Suggest an idea. Voting and suggesting need a sign-in, which opens the reader window unless the visitor has an identity token. **What's new** appears when the inbox has a published [What's new](whats-new.md) changelog with an entry: a tile with the unread count, then the entries newest first with labels, date, picture and text.
 
 When nobody is available and the channel asks for an e-mail address, the thread asks for one. After
 the visitor saves it, the thread says a confirmation link went out (with Change address and Send
@@ -116,7 +116,7 @@ The widget speaks 47 languages: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, 
 | `unread`, `yuva-unread` event | Replies not yet seen; the event has `detail.count`. |
 | `setIdentityToken(fn)`, `signOut()` | Signed-in users, as above. |
 | `rate(conversationId, "good" \| "bad", comment?)` | Rates a closed conversation; `409 already_rated` or `rating_unavailable` when it cannot. |
-| `openApp(kind, params?)` | Opens the panel on an app: `"help"` (`{ article }` or `{ query }`), `"feedback"`, `"status"`, `"subscribe"` or `"roadmap"` (`{ idea }` opens that idea). |
+| `openApp(kind, params?)` | Opens the panel on an app: `"help"` (`{ article }` or `{ query }`), `"feedback"`, `"status"`, `"subscribe"` `"roadmap"` (`{ idea }` opens that idea) or `"whats-new"` (`{ entry }` opens that entry). |
 
 ### Channel settings
 
@@ -127,6 +127,7 @@ The widget speaks 47 languages: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, 
 | Ask for e-mail (`ask_email_offline`) | Ask for an address when nobody is available. Unread replies are mailed after `YUVA_CHAT_EMAIL_DELAY` (default 5 minutes). Needs an e-mail channel in the inbox. |
 | Greeting (`greeting`) | Shown before the first message. |
 | Launcher (`launcher`) | `position` and `color` (`#rrggbb`). |
+| Announce updates (`announce_updates`) | Off by default. The launcher shows the number of unread [What's new](whats-new.md#4-in-the-widget) entries while no messages are unread. |
 
 Over the API: `POST /v1/inboxes/{inboxId}/channels` with `kind: "chat"` and a `chat` object, as an
 owner or admin.

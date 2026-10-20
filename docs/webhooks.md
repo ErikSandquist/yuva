@@ -58,6 +58,7 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | A published incident or maintenance was published, changed, or resolved or completed | `incident`, `page`, `change`, `update` |
 | `status.monitor.down`, `status.monitor.up` | A monitor failed or recovered | `monitor`, `page`, `incident_id` |
 | `help.article.published`, `help.article.unpublished`, `help.article.deleted` | A [help center](help-center.md) article translation was published, unpublished, or deleted (a whole article when `locale` is absent) | `center_id`, `article_id`, `number`, `locale`, `title` and `url` when published |
+| `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted` | A [What's new](whats-new.md) entry was published (also on schedule, or when a published translation was replaced), unpublished, or a published entry deleted | `changelog` (`id`, `name`, `url`), `entry` (`id`, `number`, `labels`, `published_at`, `translations` with `locale`, `title`, `url`) |
 | `discussion.stage_changed` | A [roadmap](roadmap-board.md) idea was moved to another stage | `discussion`, `from`, `to`, `linked` (feedback linked to the idea) |
 
 Every body has `type`, `timestamp` (when it happened), `workspace_id`, `inbox_id` (not on contact

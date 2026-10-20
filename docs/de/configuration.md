@@ -179,6 +179,15 @@ Einstellung nennt.
 | `YUVA_ROADMAP` | `on` | `off` entfernt Roadmap-Boards: ihre Endpunkte und öffentlichen Seiten antworten mit `404`, und das Widget zeigt keine Roadmap-App. |
 | `YUVA_ROADMAP_MAX_IDEAS` | `2000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl der Ideen, die ein Workspace haben darf; `0` ist unbegrenzt. Darüber antwortet das Anlegen einer Idee mit `422 hosted_limit`. |
 
+## Neuigkeiten
+
+[Neuigkeiten-Changelogs](whats-new.md).
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_WHATS_NEW` | `on` | `off` entfernt Neuigkeiten: ihre Endpunkte und öffentlichen Seiten antworten mit `404`, und das Widget zeigt keine Neuigkeiten-App. |
+| `YUVA_CHANGELOG_MAX_ENTRIES` | `1000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl an Neuigkeiten-Einträgen je Workspace; `0` heißt unbegrenzt. Darüber antwortet das Anlegen mit `422 hosted_limit`. |
+
 ## Analytics
 
 [Ihre Websites zählen](analytics.md).

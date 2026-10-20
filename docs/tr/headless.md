@@ -122,6 +122,9 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `roadmap:read` | [Yol haritası panoları](roadmap-board.md): panolar, aşama geçmişi, bağlı geri bildirimlere yanıtın sonucu |
 | `roadmap:write` | Pano oluşturma, değiştirme ve silme, geri bildirimleri fikirlere bağlama, bağlı geri bildirimlere yanıt. Fikirleri okumak ve bağlamak ayrıca `conversations:read` ister. |
 | `roadmap:stage` | Bir fikrin aşamasını taşıma; bağlı geri bildirimlerinin ilerlemesini atar. Başka hiçbir yetkiye dahil değildir: adıyla verin. |
+| `changelog:read` | [Yenilikler](whats-new.md): değişiklik günlükleri, taslaklı kayıtlar, önizleme |
+| `changelog:write` | Kayıt ve çeviri yazma, görsel yükleme |
+| `changelog:publish` | Değişiklik günlüğü oluşturma, değiştirme ve silme; yayındaki kayıtları yayınlama, zamanlama, yayından kaldırma ve silme. Başka hiçbir yetkiye dahil değildir: adıyla verin. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

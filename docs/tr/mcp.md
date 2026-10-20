@@ -167,6 +167,10 @@ Ayrıca `confirm_linked` ister; bu, `get_roadmap_idea`'nın o aşama için göst
 gördüğünüz bağlı geri bildirim sayısıdır. Başka bir sayı `409 confirm_mismatch` verir ve hiçbir şey taşınmaz.
 Hiçbir araç fikir oluşturmaz, düzenlemez, denetlemez ya da bağlı geri bildirimlere yanıt göndermez.
 
+## Yenilikleri bir asistanla kullanın
+
+`changelog:read` ve `changelog:write` yetkileriyle bir asistan bir [Yenilikler](whats-new.md) değişiklik günlüğünü okuyabilir ve kayıtları taslak olarak yazabilir. `draft_release_notes` prompt'una commit başlıklarınızı veya sürüm notlarınızı verin (Yuva kendisi hiçbir şey getirmez); müşterinin fark edeceği her değişiklik için yeni, iyileştirildi ya da düzeltildi etiketli bir kayıt taslağı hazırlar. Bir asistan bir kaydı asla yayınlamaz, zamanlamaz, yayından kaldırmaz ya da e-postayla göndermez ve zamanlanmış bir kaydı değiştiremez: taslakları bir üye okur ve Yuva'da yayınlar.
+
 ## Başvuru
 
 ### Araçlar
@@ -199,6 +203,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `move_idea_stage` (yalnızca `roadmap:stage` adıyla verildiğinde; `confirm_linked` ister) | `roadmap:stage` |
 | `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
 | `draft_help_article`, `update_help_article_draft` (yalnızca taslak, `base_version` ile; `locale` bir çeviri yazar) | `help:write` |
+| `list_whats_new_entries`, `get_whats_new_entry` | `changelog:read` |
+| `draft_whats_new_entry`, `update_whats_new_draft` (yalnızca taslak, `base_version` ile; `locale` bir çeviri yazar) | `changelog:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
@@ -216,8 +222,8 @@ Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini gi
 
 | Tür | Öğeler |
 |---|---|
-| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile), `yuva://help-center/{id}` (`help:read` ile), `yuva://roadmap/{board_id}` (bir pano ve en çok oy alan fikirleri; `roadmap:read` ve `conversations:read` ile); abonelikler değişiklikleri izler. |
-| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile), `write_help_article` (merkez, isteğe bağlı konuşma ya da konu, dil; `help:write` ile), `help_gaps_review` (merkez, isteğe bağlı gün sayısı; `help:read` ile), `link_feedback_to_ideas` (isteğe bağlı gelen kutusu ve pano; `roadmap:write`, `roadmap:read` ve `conversations:read` ile). |
+| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile), `yuva://help-center/{id}` (`help:read` ile), `yuva://roadmap/{board_id}` (bir pano ve en çok oy alan fikirleri; `roadmap:read` ve `conversations:read` ile), `yuva://changelog/{id}` (bir değişiklik günlüğü ve en yeni kayıtları; `changelog:read` ile); abonelikler değişiklikleri izler. |
+| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile), `write_help_article` (merkez, isteğe bağlı konuşma ya da konu, dil; `help:write` ile), `help_gaps_review` (merkez, isteğe bağlı gün sayısı; `help:read` ile), `link_feedback_to_ideas` (isteğe bağlı gelen kutusu ve pano; `roadmap:write`, `roadmap:read` ve `conversations:read` ile), `draft_release_notes` (yazılacak notlar, isteğe bağlı değişiklik günlüğü ve dil; `changelog:write` ile). |
 
 ### Güvenlik ve sınırlar
 

@@ -60,6 +60,7 @@ göre sıralayın.
 | `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | Yayınlanmış bir olay ya da bakım yayınlandı, değişti veya çözüldü ya da tamamlandı | `incident`, `page`, `change`, `update` |
 | `status.monitor.down`, `status.monitor.up` | Bir monitör düştü ya da düzeldi | `monitor`, `page`, `incident_id` |
 | `help.article.published`, `help.article.unpublished`, `help.article.deleted` | Bir [yardım merkezi](help-center.md) makale çevirisi yayınlandı, yayından kaldırıldı ya da silindi (`locale` yoksa makalenin tamamı) | `center_id`, `article_id`, `number`, `locale`; yayınlandığında `title` ve `url` |
+| `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted` | Bir [Yenilikler](whats-new.md) kaydı yayınlandı (zamanlamayla ya da yayındaki bir çeviri değiştirildiğinde de), yayından kaldırıldı ya da yayındaki bir kayıt silindi | `changelog` (`id`, `name`, `url`), `entry` (`id`, `number`, `labels`, `published_at`, `translations`: `locale`, `title`, `url`) |
 | `discussion.stage_changed` | Bir [yol haritası](roadmap-board.md) fikri başka bir aşamaya taşındı | `discussion`, `from`, `to`, `linked` (fikre bağlı geri bildirim sayısı) |
 
 Her gövdede `type`, `timestamp` (olayın zamanı), `workspace_id`, `inbox_id` (kişi olaylarında yok)

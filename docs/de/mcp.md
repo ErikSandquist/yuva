@@ -171,6 +171,10 @@ Feedbacks, die `get_roadmap_idea` für diese Phase zeigte (`would_change`) und d
 Zahl antwortet mit `409 confirm_mismatch`, und nichts wird verschoben. Kein Werkzeug legt Ideen an, bearbeitet oder
 moderiert sie oder sendet eine Antwort an verknüpftes Feedback.
 
+## Neuigkeiten aus einem Assistenten
+
+Mit `changelog:read` und `changelog:write` kann ein Assistent einen [Neuigkeiten](whats-new.md)-Changelog lesen und Einträge als Entwürfe schreiben. Geben Sie dem Prompt `draft_release_notes` Ihre Commit-Titel oder Release Notes (Yuva ruft selbst nichts ab); er entwirft für jede Änderung, die ein Kunde bemerkt, einen Eintrag mit dem Label new, improved oder fixed. Ein Assistent veröffentlicht, plant, zieht zurück oder versendet einen Eintrag nie per E-Mail und kann einen geplanten nicht ändern: Die Entwürfe liest ein Mitglied und veröffentlicht sie in Yuva.
+
 ## Referenz
 
 ### Tools
@@ -203,6 +207,8 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `move_idea_stage` (nur wenn `roadmap:stage` ausdrücklich genannt ist; braucht `confirm_linked`) | `roadmap:stage` |
 | `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
 | `draft_help_article`, `update_help_article_draft` (nur Entwürfe, mit `base_version`; eine `locale` schreibt eine Übersetzung) | `help:write` |
+| `list_whats_new_entries`, `get_whats_new_entry` | `changelog:read` |
+| `draft_whats_new_entry`, `update_whats_new_draft` (nur Entwürfe, mit `base_version`; eine `locale` schreibt eine Übersetzung) | `changelog:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
@@ -220,8 +226,8 @@ Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kan
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`), `yuva://help-center/{id}` (mit `help:read`), `yuva://roadmap/{board_id}` (ein Board mit seinen beliebtesten Ideen; mit `roadmap:read` und `conversations:read`); Abonnements folgen Änderungen. |
-| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `write_help_article` (Center, optional Unterhaltung oder Thema, Sprache; mit `help:write`), `help_gaps_review` (Center, optional Tage; mit `help:read`), `link_feedback_to_ideas` (optional Posteingang und Board; mit `roadmap:write`, `roadmap:read` und `conversations:read`). |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`), `yuva://help-center/{id}` (mit `help:read`), `yuva://roadmap/{board_id}` (ein Board mit seinen beliebtesten Ideen; mit `roadmap:read` und `conversations:read`), `yuva://changelog/{id}` (ein Changelog mit seinen neuesten Einträgen; mit `changelog:read`); Abonnements folgen Änderungen. |
+| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `write_help_article` (Center, optional Unterhaltung oder Thema, Sprache; mit `help:write`), `help_gaps_review` (Center, optional Tage; mit `help:read`), `link_feedback_to_ideas` (optional Posteingang und Board; mit `roadmap:write`, `roadmap:read` und `conversations:read`), `draft_release_notes` (Notizen als Vorlage, optional Changelog und Sprache; mit `changelog:write`). |
 
 ### Sicherheit und Grenzen
 

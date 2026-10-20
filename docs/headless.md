@@ -119,6 +119,9 @@ A call without the needed scope answers `403 insufficient_scope`.
 | `roadmap:read` | [Roadmap boards](roadmap-board.md): boards, stage history, what became of a reply to linked feedback |
 | `roadmap:write` | Create, change and delete boards, link feedback to ideas, reply to linked feedback. Linking and reading ideas also need `conversations:read`. |
 | `roadmap:stage` | Move an idea's stage, which sets the progress of its linked feedback. Not included in any other scope: name it. |
+| `changelog:read` | [What's new](whats-new.md): changelogs, entries with drafts, preview |
+| `changelog:write` | Write entries and translations, upload images |
+| `changelog:publish` | Create, change and delete changelogs; publish, schedule, unpublish and delete published entries. Not included in any other scope: name it. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Keys

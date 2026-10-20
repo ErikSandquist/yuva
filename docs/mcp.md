@@ -162,6 +162,10 @@ key or grant that names the scope `roadmap:stage`, which no other scope implies.
 stage, which you have seen; any other number answers `409 confirm_mismatch` and nothing moves. No tool
 creates, edits or moderates ideas or sends a reply to linked feedback.
 
+## What's new from an assistant
+
+With the `changelog:read` and `changelog:write` scopes an assistant can read a [What's new](whats-new.md) changelog and write entries as drafts. Give the `draft_release_notes` prompt your commit subjects or release notes (Yuva fetches nothing itself) and it drafts one entry per change a customer would notice, labelled new, improved or fixed. An assistant never publishes, schedules, unpublishes or mails an entry, and cannot change a scheduled one: a member reads the drafts and publishes them in Yuva.
+
 ## Reference
 
 ### Tools
@@ -194,6 +198,8 @@ answers `insufficient_scope` with the scope to grant.
 | `move_idea_stage` (only when `roadmap:stage` is named; needs `confirm_linked`) | `roadmap:stage` |
 | `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
 | `draft_help_article`, `update_help_article_draft` (drafts only, with `base_version`; a `locale` writes a translation) | `help:write` |
+| `list_whats_new_entries`, `get_whats_new_entry` | `changelog:read` |
+| `draft_whats_new_entry`, `update_whats_new_draft` (drafts only, with `base_version`; a `locale` writes a translation) | `changelog:write` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
@@ -211,8 +217,8 @@ With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail 
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`), `yuva://help-center/{id}` (with `help:read`), `yuva://roadmap/{board_id}` (a board with its top ideas; with `roadmap:read` and `conversations:read`); subscriptions follow changes. |
-| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `write_help_article` (center, optional conversation or topic, locale; with `help:write`), `help_gaps_review` (center, optional days; with `help:read`), `link_feedback_to_ideas` (optional inbox and board; with `roadmap:write`, `roadmap:read` and `conversations:read`). |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`), `yuva://help-center/{id}` (with `help:read`), `yuva://roadmap/{board_id}` (a board with its top ideas; with `roadmap:read` and `conversations:read`), `yuva://changelog/{id}` (a changelog with its newest entries; with `changelog:read`); subscriptions follow changes. |
+| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `write_help_article` (center, optional conversation or topic, locale; with `help:write`), `help_gaps_review` (center, optional days; with `help:read`), `link_feedback_to_ideas` (optional inbox and board; with `roadmap:write`, `roadmap:read` and `conversations:read`), `draft_release_notes` (notes to write from, optional changelog and locale; with `changelog:write`). |
 
 ### Safety and limits
 
