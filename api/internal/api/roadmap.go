@@ -128,7 +128,7 @@ func (f *roadmapBoardFields) check(ctx context.Context, q *store.Queries, ws, in
 	if f.description, err = trimmed(f.description, 0, 1000, "description"); err != nil {
 		return err
 	}
-	if err := validStatusSlug(f.slug); err != nil {
+	if err := validPublicSlug(f.slug); err != nil {
 		return err
 	}
 	if !oas.RoadmapSuggestions(f.suggestions).Valid() {

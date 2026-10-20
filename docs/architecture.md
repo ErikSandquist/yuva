@@ -2808,6 +2808,20 @@ posts, votes, follows, moderation, reader accounts, rendering and notifications 
     board's channel, and changing the board's channel moves its ideas.
   - **Moving feedback.** Moving a conversation to another inbox unlinks it from its idea, since a
     board belongs to one inbox; its progress stays.
+- **As built (step 3).** `/roadmap/{slug}` and `/roadmap/{slug}/ideas/{id}` use the status page shell with
+  the roadmap word map (`roadmap_words.go`, en, tr, de, English fallback). The page's language is the
+  inbox's, `?lang=` picks another. Routes are always registered and answer the plain `404` when
+  `YUVA_ROADMAP=off`. A private board, an unknown slug and a former slug of a private board answer
+  the same `404`; an unpublished idea, one of another board and a bad id too. Pages are cached per
+  board, view, idea and language on `changed_at` for 60 seconds and rate limited to 120 a minute
+  per address. Vote and Suggest are buttons that only the page script reveals. The page sends no
+  analytics yet (neither do status or help pages), so `analytics_property_id` is stored only.
+  `GET /v1/roadmap-boards/{id}/preview` renders the board or a published idea without the chat
+  element, also while private. MCP: `list_roadmap_ideas`, `get_roadmap_idea`, `link_feedback_to_idea`,
+  `unlink_feedback_from_idea`, `move_idea_stage` (listed only to a key or grant that names
+  `roadmap:stage`, and it answers `409 confirm_mismatch` unless `confirm_linked` equals the
+  `would_change` count for that stage), resource `yuva://roadmap/{board_id}`, prompt
+  `link_feedback_to_ideas`; `list_feedback` takes `without_idea`. Idea text is under `customer_content`.
 - **Not in M21.** Merging duplicate ideas, a `<yuva-roadmap>` web component, the roadmap in the Swift and
   Kotlin SDKs, own domains, and private boards visible to signed-in customers.
 - **Order of work.**

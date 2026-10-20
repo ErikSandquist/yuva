@@ -103,7 +103,7 @@ func statusUniqueConflict(err error) error {
 	return err
 }
 
-func validStatusSlug(slug string) error {
+func validPublicSlug(slug string) error {
 	if len(slug) < 3 || len(slug) > 48 || !statusSlugPattern.MatchString(slug) {
 		return errValidation("slug must be 3 to 48 lowercase letters, digits and single dashes")
 	}
@@ -221,7 +221,7 @@ func (f *statusPageFields) check() error {
 	if f.description, err = trimmed(f.description, 0, 1000, "description"); err != nil {
 		return err
 	}
-	if err := validStatusSlug(f.slug); err != nil {
+	if err := validPublicSlug(f.slug); err != nil {
 		return err
 	}
 	if len(f.locale) > 35 || !languagePattern.MatchString(f.locale) {

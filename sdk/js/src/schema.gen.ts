@@ -2663,6 +2663,31 @@ export interface paths {
         patch: operations["updateRoadmapBoard"];
         trace?: never;
     };
+    "/v1/roadmap-boards/{boardId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview a roadmap board page
+         * @description A page of the board as visitors see it, also while the board is private, for a sandboxed
+         *     frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+         *     page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+         *     `Cache-Control: no-store` and its links point to the public URLs.
+         *
+         *     Scope: `roadmap:read`.
+         */
+        get: operations["previewRoadmapBoard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/discussions/{discussionId}/stage": {
         parameters: {
             query?: never;
@@ -24106,6 +24131,40 @@ export interface operations {
             404: components["responses"]["Problem"];
             409: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
+        };
+    };
+    previewRoadmapBoard: {
+        parameters: {
+            query?: {
+                view?: "home" | "idea";
+                /** @description The idea, for `view=idea`. */
+                id?: string;
+                locale?: components["schemas"]["LanguageTag"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                boardId: components["parameters"]["RoadmapBoardId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rendered page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     moveIdeaStage: {

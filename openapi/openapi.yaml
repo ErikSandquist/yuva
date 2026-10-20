@@ -4841,6 +4841,53 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/roadmap-boards/{boardId}/preview:
+    get:
+      operationId: previewRoadmapBoard
+      summary: Preview a roadmap board page
+      description: |
+        A page of the board as visitors see it, also while the board is private, for a sandboxed
+        frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+        page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+        `Cache-Control: no-store` and its links point to the public URLs.
+
+        Scope: `roadmap:read`.
+      tags: [roadmap]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/RoadmapBoardId"
+        - name: view
+          in: query
+          schema:
+            type: string
+            enum: [home, idea]
+            x-enum-varnames: [PreviewRoadmapBoardViewHome, PreviewRoadmapBoardViewIdea]
+            default: home
+        - name: id
+          in: query
+          description: The idea, for `view=idea`.
+          schema:
+            type: string
+            format: uuid
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+      responses:
+        "200":
+          description: The rendered page.
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/discussions/{discussionId}/stage:
     post:
       operationId: moveIdeaStage

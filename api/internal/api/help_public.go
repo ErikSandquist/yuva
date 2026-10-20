@@ -118,23 +118,9 @@ func (s *Server) publicHelpCenter(w http.ResponseWriter, r *http.Request) (store
 		helpGone(w, "en")
 		return store.HelpCenter{}, false
 	}
-	post := r.Method == http.MethodPost
 	rest := strings.TrimPrefix(r.URL.Path, helpPathPrefix+slug)
 	redirect := func(c store.HelpCenter, permanent bool) {
-		target := s.helpURL(c.Slug, rest)
-		if r.URL.RawQuery != "" {
-			target += "?" + r.URL.RawQuery
-		}
-		code := http.StatusFound
-		switch {
-		case permanent && post:
-			code = http.StatusPermanentRedirect
-		case permanent:
-			code = http.StatusMovedPermanently
-		case post:
-			code = http.StatusTemporaryRedirect
-		}
-		http.Redirect(w, r, target, code)
+		redirectPublic(w, r, s.helpURL(c.Slug, rest), permanent)
 	}
 	if s.help.URL != "" && ctx.Value(helpHostKey{}) == nil {
 		redirect(store.HelpCenter{Slug: slug}, false)

@@ -182,3 +182,33 @@ UPDATE discussions SET channel_id = @channel_id WHERE workspace_id = @workspace_
 
 -- name: UnlinkConversationIdea :exec
 DELETE FROM roadmap_idea_conversations WHERE workspace_id = @workspace_id AND conversation_id = @conversation_id;
+
+-- name: FindRoadmapBoardBySlug :one
+-- The documented exception: a public page is found by its slug before its workspace is known.
+SELECT b.* FROM roadmap_boards b JOIN workspaces w ON w.id = b.workspace_id AND w.deleted_at IS NULL WHERE b.slug = @slug;
+
+-- name: FindRoadmapBoardByFormerSlug :one
+-- The documented exception: a public page is found by a former slug before its workspace is known.
+SELECT b.* FROM roadmap_board_slugs s
+JOIN roadmap_boards b ON b.workspace_id = s.workspace_id AND b.id = s.board_id
+JOIN workspaces w ON w.id = b.workspace_id AND w.deleted_at IS NULL
+WHERE s.slug = @slug;
+
+-- name: ListPublicIdeas :many
+SELECT d.id, d.title, d.stage::text AS stage, d.vote_count, d.reply_count, d.created_at, d.stage_changed_at, o.body
+FROM discussions d
+JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
+WHERE d.workspace_id = @workspace_id AND d.board_id = @board_id AND d.kind = 'idea' AND d.state = 'published'
+  AND d.stage = @stage::text AND o.deleted_at IS NULL
+  AND (sqlc.narg(since)::timestamptz IS NULL OR coalesce(d.stage_changed_at, d.created_at) >= sqlc.narg(since)::timestamptz)
+ORDER BY d.vote_count DESC, d.created_at DESC, d.id DESC
+LIMIT @lim;
+
+-- name: CountPublicIdeas :one
+SELECT count(*)::int FROM discussions
+WHERE workspace_id = @workspace_id AND board_id = @board_id AND kind = 'idea' AND state = 'published' AND stage = @stage::text;
+
+-- name: CountIdeaLinksToChange :one
+SELECT count(*)::int FROM roadmap_idea_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = @workspace_id AND l.idea_id = @idea_id AND c.feedback_progress IS DISTINCT FROM @progress::text;

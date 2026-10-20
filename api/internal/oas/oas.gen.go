@@ -6119,6 +6119,24 @@ func (e GetMailingListGrowthParamsDays) Valid() bool {
 	}
 }
 
+// Defines values for PreviewRoadmapBoardParamsView.
+const (
+	PreviewRoadmapBoardViewHome PreviewRoadmapBoardParamsView = "home"
+	PreviewRoadmapBoardViewIdea PreviewRoadmapBoardParamsView = "idea"
+)
+
+// Valid indicates whether the value is a known member of the PreviewRoadmapBoardParamsView enum.
+func (e PreviewRoadmapBoardParamsView) Valid() bool {
+	switch e {
+	case PreviewRoadmapBoardViewHome:
+		return true
+	case PreviewRoadmapBoardViewIdea:
+		return true
+	default:
+		return false
+	}
+}
+
 // AccountDeletion defines model for AccountDeletion.
 type AccountDeletion struct {
 	// Email The person's e-mail address (case is ignored); anything else is refused with `400 confirmation_mismatch`.
@@ -20913,6 +20931,21 @@ type UpdateRoadmapBoardParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// PreviewRoadmapBoardParams defines parameters for PreviewRoadmapBoard.
+type PreviewRoadmapBoardParams struct {
+	View *PreviewRoadmapBoardParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The idea, for `view=idea`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewRoadmapBoardParamsView defines parameters for PreviewRoadmapBoard.
+type PreviewRoadmapBoardParamsView string
+
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -26822,6 +26855,9 @@ type ServerInterface interface {
 	// UpdateRoadmapBoard Update a roadmap board
 	// (PATCH /v1/roadmap-boards/{boardId})
 	UpdateRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params UpdateRoadmapBoardParams)
+	// PreviewRoadmapBoard Preview a roadmap board page
+	// (GET /v1/roadmap-boards/{boardId}/preview)
+	PreviewRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params PreviewRoadmapBoardParams)
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(w http.ResponseWriter, r *http.Request, params GetStatsParams)
@@ -45613,6 +45649,95 @@ func (siw *ServerInterfaceWrapper) UpdateRoadmapBoard(w http.ResponseWriter, r *
 	handler.ServeHTTP(w, r)
 }
 
+// PreviewRoadmapBoard operation middleware
+func (siw *ServerInterfaceWrapper) PreviewRoadmapBoard(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "boardId" -------------
+	var boardId RoadmapBoardId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "boardId", r.PathValue("boardId"), &boardId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "boardId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PreviewRoadmapBoardParams
+
+	// ------------- Optional query parameter "view" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "view", r.URL.Query(), &params.View, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "view"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "view", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "id", r.URL.Query(), &params.Id, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewRoadmapBoard(w, r, boardId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetStats operation middleware
 func (siw *ServerInterfaceWrapper) GetStats(w http.ResponseWriter, r *http.Request) {
 
@@ -49454,6 +49579,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.DeleteRoadmapBoard)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.GetRoadmapBoard)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.UpdateRoadmapBoard)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}/preview", wrapper.PreviewRoadmapBoard)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussions/{discussionId}/stage", wrapper.MoveIdeaStage)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussions/{discussionId}/stage-changes", wrapper.ListIdeaStageChanges)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussions/{discussionId}/conversations/{conversationId}", wrapper.UnlinkIdeaConversation)
@@ -78941,6 +79067,93 @@ func (response UpdateRoadmapBoard429ApplicationProblemPlusJSONResponse) VisitUpd
 	return err
 }
 
+type PreviewRoadmapBoardRequestObject struct {
+	BoardId RoadmapBoardId `json:"boardId"`
+	Params  PreviewRoadmapBoardParams
+}
+
+type PreviewRoadmapBoardResponseObject interface {
+	VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error
+}
+
+type PreviewRoadmapBoard200TexthtmlResponse struct {
+	Body          io.Reader
+	ContentLength int64
+}
+
+func (response PreviewRoadmapBoard200TexthtmlResponse) VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/html")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type PreviewRoadmapBoard400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PreviewRoadmapBoard400ApplicationProblemPlusJSONResponse) VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewRoadmapBoard401ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewRoadmapBoard401ApplicationProblemPlusJSONResponse) VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewRoadmapBoard403ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewRoadmapBoard403ApplicationProblemPlusJSONResponse) VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewRoadmapBoard404ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewRoadmapBoard404ApplicationProblemPlusJSONResponse) VisitPreviewRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetStatsRequestObject struct {
 	Params GetStatsParams
 }
@@ -84278,6 +84491,9 @@ type StrictServerInterface interface {
 	// UpdateRoadmapBoard Update a roadmap board
 	// (PATCH /v1/roadmap-boards/{boardId})
 	UpdateRoadmapBoard(ctx context.Context, request UpdateRoadmapBoardRequestObject) (UpdateRoadmapBoardResponseObject, error)
+	// PreviewRoadmapBoard Preview a roadmap board page
+	// (GET /v1/roadmap-boards/{boardId}/preview)
+	PreviewRoadmapBoard(ctx context.Context, request PreviewRoadmapBoardRequestObject) (PreviewRoadmapBoardResponseObject, error)
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(ctx context.Context, request GetStatsRequestObject) (GetStatsResponseObject, error)
@@ -94422,6 +94638,33 @@ func (sh *strictHandler) UpdateRoadmapBoard(w http.ResponseWriter, r *http.Reque
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateRoadmapBoardResponseObject); ok {
 		if err := validResponse.VisitUpdateRoadmapBoardResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PreviewRoadmapBoard operation middleware
+func (sh *strictHandler) PreviewRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params PreviewRoadmapBoardParams) {
+	var request PreviewRoadmapBoardRequestObject
+
+	request.BoardId = boardId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PreviewRoadmapBoard(ctx, request.(PreviewRoadmapBoardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PreviewRoadmapBoard")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PreviewRoadmapBoardResponseObject); ok {
+		if err := validResponse.VisitPreviewRoadmapBoardResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

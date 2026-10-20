@@ -115,6 +115,25 @@ func (q *Queries) CountIdeaLinksByIdeas(ctx context.Context, arg CountIdeaLinksB
 	return items, nil
 }
 
+const countIdeaLinksToChange = `-- name: CountIdeaLinksToChange :one
+SELECT count(*)::int FROM roadmap_idea_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = $1 AND l.idea_id = $2 AND c.feedback_progress IS DISTINCT FROM $3::text
+`
+
+type CountIdeaLinksToChangeParams struct {
+	WorkspaceID uuid.UUID
+	IdeaID      uuid.UUID
+	Progress    string
+}
+
+func (q *Queries) CountIdeaLinksToChange(ctx context.Context, arg CountIdeaLinksToChangeParams) (int32, error) {
+	row := q.db.QueryRow(ctx, countIdeaLinksToChange, arg.WorkspaceID, arg.IdeaID, arg.Progress)
+	var column_1 int32
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
 const countPendingBoardIdeas = `-- name: CountPendingBoardIdeas :one
 SELECT count(*)::int FROM discussions WHERE workspace_id = $1 AND board_id = $2 AND kind = 'idea' AND state = 'pending'
 `
@@ -126,6 +145,24 @@ type CountPendingBoardIdeasParams struct {
 
 func (q *Queries) CountPendingBoardIdeas(ctx context.Context, arg CountPendingBoardIdeasParams) (int32, error) {
 	row := q.db.QueryRow(ctx, countPendingBoardIdeas, arg.WorkspaceID, arg.BoardID)
+	var column_1 int32
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const countPublicIdeas = `-- name: CountPublicIdeas :one
+SELECT count(*)::int FROM discussions
+WHERE workspace_id = $1 AND board_id = $2 AND kind = 'idea' AND state = 'published' AND stage = $3::text
+`
+
+type CountPublicIdeasParams struct {
+	WorkspaceID uuid.UUID
+	BoardID     *uuid.UUID
+	Stage       string
+}
+
+func (q *Queries) CountPublicIdeas(ctx context.Context, arg CountPublicIdeasParams) (int32, error) {
+	row := q.db.QueryRow(ctx, countPublicIdeas, arg.WorkspaceID, arg.BoardID, arg.Stage)
 	var column_1 int32
 	err := row.Scan(&column_1)
 	return column_1, err
@@ -327,6 +364,61 @@ func (q *Queries) DeleteRoadmapBoard(ctx context.Context, arg DeleteRoadmapBoard
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const findRoadmapBoardByFormerSlug = `-- name: FindRoadmapBoardByFormerSlug :one
+SELECT b.id, b.workspace_id, b.inbox_id, b.channel_id, b.name, b.description, b.slug, b.public, b.suggestions, b.analytics_property_id, b.changed_at, b.created_at, b.updated_at FROM roadmap_board_slugs s
+JOIN roadmap_boards b ON b.workspace_id = s.workspace_id AND b.id = s.board_id
+JOIN workspaces w ON w.id = b.workspace_id AND w.deleted_at IS NULL
+WHERE s.slug = $1
+`
+
+// The documented exception: a public page is found by a former slug before its workspace is known.
+func (q *Queries) FindRoadmapBoardByFormerSlug(ctx context.Context, slug string) (RoadmapBoard, error) {
+	row := q.db.QueryRow(ctx, findRoadmapBoardByFormerSlug, slug)
+	var i RoadmapBoard
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.Public,
+		&i.Suggestions,
+		&i.AnalyticsPropertyID,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const findRoadmapBoardBySlug = `-- name: FindRoadmapBoardBySlug :one
+SELECT b.id, b.workspace_id, b.inbox_id, b.channel_id, b.name, b.description, b.slug, b.public, b.suggestions, b.analytics_property_id, b.changed_at, b.created_at, b.updated_at FROM roadmap_boards b JOIN workspaces w ON w.id = b.workspace_id AND w.deleted_at IS NULL WHERE b.slug = $1
+`
+
+// The documented exception: a public page is found by its slug before its workspace is known.
+func (q *Queries) FindRoadmapBoardBySlug(ctx context.Context, slug string) (RoadmapBoard, error) {
+	row := q.db.QueryRow(ctx, findRoadmapBoardBySlug, slug)
+	var i RoadmapBoard
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.Public,
+		&i.Suggestions,
+		&i.AnalyticsPropertyID,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
 }
 
 const finishRoadmapStageChange = `-- name: FinishRoadmapStageChange :exec
@@ -729,6 +821,71 @@ func (q *Queries) ListIdeaReplyTargets(ctx context.Context, arg ListIdeaReplyTar
 			return nil, err
 		}
 		items = append(items, id)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicIdeas = `-- name: ListPublicIdeas :many
+SELECT d.id, d.title, d.stage::text AS stage, d.vote_count, d.reply_count, d.created_at, d.stage_changed_at, o.body
+FROM discussions d
+JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
+WHERE d.workspace_id = $1 AND d.board_id = $2 AND d.kind = 'idea' AND d.state = 'published'
+  AND d.stage = $3::text AND o.deleted_at IS NULL
+  AND ($4::timestamptz IS NULL OR coalesce(d.stage_changed_at, d.created_at) >= $4::timestamptz)
+ORDER BY d.vote_count DESC, d.created_at DESC, d.id DESC
+LIMIT $5
+`
+
+type ListPublicIdeasParams struct {
+	WorkspaceID uuid.UUID
+	BoardID     *uuid.UUID
+	Stage       string
+	Since       *time.Time
+	Lim         int32
+}
+
+type ListPublicIdeasRow struct {
+	ID             uuid.UUID
+	Title          string
+	Stage          string
+	VoteCount      int32
+	ReplyCount     int32
+	CreatedAt      time.Time
+	StageChangedAt *time.Time
+	Body           string
+}
+
+func (q *Queries) ListPublicIdeas(ctx context.Context, arg ListPublicIdeasParams) ([]ListPublicIdeasRow, error) {
+	rows, err := q.db.Query(ctx, listPublicIdeas,
+		arg.WorkspaceID,
+		arg.BoardID,
+		arg.Stage,
+		arg.Since,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPublicIdeasRow
+	for rows.Next() {
+		var i ListPublicIdeasRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Stage,
+			&i.VoteCount,
+			&i.ReplyCount,
+			&i.CreatedAt,
+			&i.StageChangedAt,
+			&i.Body,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err

@@ -65,6 +65,12 @@ func addMCPResources(srv *mcp.Server, c *mcpCall) {
 			Description: "A help center with its collections and the titles of its articles per language; updated when an article is published, unpublished or deleted or a draft is saved.",
 		}, c.readResource)
 	}
+	if mayReadRoadmapResource(c.p) {
+		srv.AddResourceTemplate(&mcp.ResourceTemplate{
+			Name: "roadmap", Title: "Roadmap board", URITemplate: mcpRoadmapPrefix + "{id}", MIMEType: mcpJSON,
+			Description: "A roadmap board with its counts per stage and its top ideas by votes; updated when ideas or stages change." + customerContentRule,
+		}, c.readResource)
+	}
 	if mayReadBroadcastResource(c.p) {
 		srv.AddResourceTemplate(&mcp.ResourceTemplate{
 			Name: "broadcast", Title: "Broadcast", URITemplate: mcpBroadcastPrefix + "{id}", MIMEType: mcpJSON,
@@ -102,7 +108,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix, mcpHelpPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix, mcpHelpPrefix, mcpRoadmapPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -159,6 +165,11 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, errInsufficientScope(oas.HelpRead)
 		}
 		return c.helpCenterResource(ctx, id)
+	case mcpRoadmapPrefix:
+		if !mayReadRoadmapResource(c.p) {
+			return nil, errInsufficientScope(oas.RoadmapRead)
+		}
+		return c.roadmapResource(ctx, id)
 	case mcpMigrationPrefix:
 		t, _ := mcpToolNamed("get_migration")
 		if err := t.refusal(c.p); err != nil {
@@ -325,6 +336,9 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 	}
 	if center, ok := helpEventCenter(e); ok {
 		uris = append(uris, mcpHelpPrefix+center.String())
+	}
+	if board, ok := roadmapEventBoard(e); ok {
+		uris = append(uris, mcpRoadmapPrefix+board.String())
 	}
 	if e.Type == realtime.ContactUpdated || e.Type == realtime.ContactDeleted {
 		var ct struct {

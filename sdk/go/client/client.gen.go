@@ -6165,6 +6165,24 @@ func (e GetMailingListGrowthParamsDays) Valid() bool {
 	}
 }
 
+// Defines values for PreviewRoadmapBoardParamsView.
+const (
+	PreviewRoadmapBoardViewHome PreviewRoadmapBoardParamsView = "home"
+	PreviewRoadmapBoardViewIdea PreviewRoadmapBoardParamsView = "idea"
+)
+
+// Valid indicates whether the value is a known member of the PreviewRoadmapBoardParamsView enum.
+func (e PreviewRoadmapBoardParamsView) Valid() bool {
+	switch e {
+	case PreviewRoadmapBoardViewHome:
+		return true
+	case PreviewRoadmapBoardViewIdea:
+		return true
+	default:
+		return false
+	}
+}
+
 // AccountDeletion defines model for AccountDeletion.
 type AccountDeletion struct {
 	// Email The person's e-mail address (case is ignored); anything else is refused with `400 confirmation_mismatch`.
@@ -20982,6 +21000,21 @@ type UpdateRoadmapBoardParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// PreviewRoadmapBoardParams defines parameters for PreviewRoadmapBoard.
+type PreviewRoadmapBoardParams struct {
+	View *PreviewRoadmapBoardParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The idea, for `view=idea`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewRoadmapBoardParamsView defines parameters for PreviewRoadmapBoard.
+type PreviewRoadmapBoardParamsView string
+
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -32569,6 +32602,18 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
 	UpdateRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewRoadmapBoard Preview a roadmap board page
+	//
+	// A page of the board as visitors see it, also while the board is private, for a sandboxed
+	// frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+	// page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+	// `Cache-Control: no-store` and its links point to the public URLs.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Corresponds with GET /v1/roadmap-boards/{boardId}/preview (the `PreviewRoadmapBoard` operationId).
+	PreviewRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *PreviewRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetStats Team activity since a moment
 	//
@@ -44778,6 +44823,28 @@ func (c *Client) UpdateRoadmapBoardWithBody(ctx context.Context, boardId Roadmap
 // Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
 func (c *Client) UpdateRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateRoadmapBoardRequest(c.Server, boardId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PreviewRoadmapBoard Preview a roadmap board page
+//
+// A page of the board as visitors see it, also while the board is private, for a sandboxed
+// frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+// page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+// `Cache-Control: no-store` and its links point to the public URLs.
+//
+// Scope: `roadmap:read`.
+//
+// Corresponds with GET /v1/roadmap-boards/{boardId}/preview (the `PreviewRoadmapBoard` operationId).
+func (c *Client) PreviewRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *PreviewRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewRoadmapBoardRequest(c.Server, boardId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -67576,6 +67643,106 @@ func NewUpdateRoadmapBoardRequestWithBody(server string, boardId RoadmapBoardId,
 	return req, nil
 }
 
+// NewPreviewRoadmapBoardRequest constructs an http.Request for the PreviewRoadmapBoard method
+func NewPreviewRoadmapBoardRequest(server string, boardId RoadmapBoardId, params *PreviewRoadmapBoardParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "boardId", boardId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards/%s/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.View != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "view", *params.View, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Id != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "id", *params.Id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetStatsRequest constructs an http.Request for the GetStats method
 func NewGetStatsRequest(server string, params *GetStatsParams) (*http.Request, error) {
 	var err error
@@ -78417,6 +78584,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
 	UpdateRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRoadmapBoardResponse, error)
+
+	// PreviewRoadmapBoardWithResponse Preview a roadmap board page
+	//
+	// A page of the board as visitors see it, also while the board is private, for a sandboxed
+	// frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+	// page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+	// `Cache-Control: no-store` and its links point to the public URLs.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/roadmap-boards/{boardId}/preview (the `PreviewRoadmapBoard` operationId).
+	PreviewRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *PreviewRoadmapBoardParams, reqEditors ...RequestEditorFn) (*PreviewRoadmapBoardResponse, error)
 
 	// GetStatsWithResponse Team activity since a moment
 	//
@@ -102491,6 +102672,68 @@ func (r UpdateRoadmapBoardResponse) ContentType() string {
 	return ""
 }
 
+type PreviewRoadmapBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PreviewRoadmapBoardResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PreviewRoadmapBoardResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PreviewRoadmapBoardResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PreviewRoadmapBoardResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r PreviewRoadmapBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewRoadmapBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewRoadmapBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewRoadmapBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetStatsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -115993,6 +116236,26 @@ func (c *ClientWithResponses) UpdateRoadmapBoardWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseUpdateRoadmapBoardResponse(rsp)
+}
+
+// PreviewRoadmapBoardWithResponse Preview a roadmap board page
+//
+// A page of the board as visitors see it, also while the board is private, for a sandboxed
+// frame: the board (`view=home`) or an idea (`view=idea&id=`, which must be published). The
+// page has no chat element. `locale` defaults to the inbox's default locale. It is sent with
+// `Cache-Control: no-store` and its links point to the public URLs.
+//
+// Scope: `roadmap:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/roadmap-boards/{boardId}/preview (the `PreviewRoadmapBoard` operationId).
+func (c *ClientWithResponses) PreviewRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *PreviewRoadmapBoardParams, reqEditors ...RequestEditorFn) (*PreviewRoadmapBoardResponse, error) {
+	rsp, err := c.PreviewRoadmapBoard(ctx, boardId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewRoadmapBoardResponse(rsp)
 }
 
 // GetStatsWithResponse Team activity since a moment
@@ -135693,6 +135956,53 @@ func ParseUpdateRoadmapBoardResponse(rsp *http.Response) (*UpdateRoadmapBoardRes
 			return nil, err
 		}
 		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewRoadmapBoardResponse parses an HTTP response from a PreviewRoadmapBoardWithResponse call
+func ParsePreviewRoadmapBoardResponse(rsp *http.Response) (*PreviewRoadmapBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewRoadmapBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 

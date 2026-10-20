@@ -111,6 +111,24 @@ func (c *publicCache) forget(page uuid.UUID) {
 	}
 }
 
+// redirectPublic sends a visitor to target, keeping the query; permanent moves keep the method of a POST.
+func redirectPublic(w http.ResponseWriter, r *http.Request, target string, permanent bool) {
+	if r.URL.RawQuery != "" {
+		target += "?" + r.URL.RawQuery
+	}
+	post := r.Method == http.MethodPost
+	code := http.StatusFound
+	switch {
+	case permanent && post:
+		code = http.StatusPermanentRedirect
+	case permanent:
+		code = http.StatusMovedPermanently
+	case post:
+		code = http.StatusTemporaryRedirect
+	}
+	http.Redirect(w, r, target, code)
+}
+
 func publicScriptHash(script string) string {
 	h := sha256.Sum256([]byte(script))
 	return base64.StdEncoding.EncodeToString(h[:])

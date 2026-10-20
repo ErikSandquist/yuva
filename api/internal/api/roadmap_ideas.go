@@ -42,6 +42,11 @@ func stageProgress(stage string) string {
 	return ""
 }
 
+type confirmLinkedKeyType struct{}
+
+// confirmLinkedKey carries the count of linked feedback the caller was shown; the move checks it inside its transaction.
+var confirmLinkedKey confirmLinkedKeyType
+
 type ideaProgressKeyType struct{}
 
 var ideaProgressKey ideaProgressKeyType
@@ -147,6 +152,17 @@ func (s *Server) MoveIdeaStage(ctx context.Context, req oas.MoveIdeaStageRequest
 		linked, err := q.CountIdeaLinks(ctx, store.CountIdeaLinksParams{WorkspaceID: p.workspaceID, IdeaID: t.d.ID})
 		if err != nil {
 			return err
+		}
+		if confirm, ok := ctx.Value(confirmLinkedKey).(int32); ok {
+			var want int32
+			if progress := stageProgress(to); progress != "" {
+				if want, err = q.CountIdeaLinksToChange(ctx, store.CountIdeaLinksToChangeParams{WorkspaceID: p.workspaceID, IdeaID: t.d.ID, Progress: progress}); err != nil {
+					return err
+				}
+			}
+			if confirm != want {
+				return errConfirmMismatch(to, want)
+			}
 		}
 		var commentID *uuid.UUID
 		if comment != "" {

@@ -319,6 +319,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 
 	"ListRoadmapBoards":        {oas.RoadmapRead},
 	"GetRoadmapBoard":          {oas.RoadmapRead},
+	"PreviewRoadmapBoard":      {oas.RoadmapRead},
 	"CreateRoadmapBoard":       {oas.RoadmapWrite},
 	"UpdateRoadmapBoard":       {oas.RoadmapWrite},
 	"DeleteRoadmapBoard":       {oas.RoadmapWrite},

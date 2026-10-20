@@ -137,12 +137,13 @@ type searchConversationsIn struct {
 }
 
 type listFeedbackIn struct {
-	Query    string     `json:"query,omitempty" jsonschema:"full-text search"`
-	InboxID  *uuid.UUID `json:"inbox_id,omitempty"`
-	Category string     `json:"category,omitempty"`
-	Status   string     `json:"status,omitempty"`
-	Cursor   string     `json:"cursor,omitempty"`
-	Limit    int32      `json:"limit,omitempty" jsonschema:"1 to 100, default 25"`
+	WithoutIdea bool       `json:"without_idea,omitempty" jsonschema:"true lists only feedback that is not linked to a roadmap idea"`
+	Query       string     `json:"query,omitempty" jsonschema:"full-text search"`
+	InboxID     *uuid.UUID `json:"inbox_id,omitempty"`
+	Category    string     `json:"category,omitempty"`
+	Status      string     `json:"status,omitempty"`
+	Cursor      string     `json:"cursor,omitempty"`
+	Limit       int32      `json:"limit,omitempty" jsonschema:"1 to 100, default 25"`
 }
 
 func optString[T ~string](v string) *T {
@@ -585,8 +586,12 @@ var mcpTools = append([]mcpTool{
 		mcpTool{ops: []string{"ListConversations"}},
 		func(ctx context.Context, c *mcpCall, in listFeedbackIn) (mcpPage[mcpConversation], error) {
 			kinds := []oas.ConversationKind{oas.ConversationKindFeedback}
+			var noIdea *oas.ListConversationsParamsIdea
+			if in.WithoutIdea {
+				noIdea = new(oas.ListConversationsParamsIdeaNone)
+			}
 			return c.listConversations(ctx, oas.ListConversationsParams{
-				Kind: &kinds, InboxId: in.InboxID, Category: optString[oas.FeedbackCategory](in.Category),
+				Kind: &kinds, Idea: noIdea, InboxId: in.InboxID, Category: optString[oas.FeedbackCategory](in.Category),
 				Status: optList(optString[oas.ConversationStatus](in.Status)), Q: optString[string](in.Query),
 				Cursor: optString[string](in.Cursor), Limit: optLimit(in.Limit),
 			})
@@ -725,4 +730,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpInitTools)...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpRoadmapTools, mcpInitTools)...)
