@@ -1,0 +1,36 @@
+---
+import { shadcnHref } from "@/lib/shadcn"
+import type { Locale } from "@/lib/routes"
+
+interface Props {
+  locale: Locale
+  label: string
+  slug: string
+  groups: { key: string; title: string; items: { slug: string; title: string }[] }[]
+}
+
+const { locale, label, slug, groups } = Astro.props
+const link =
+  "relative flex w-full items-center py-1.5 ps-5 pe-5 text-[13px] leading-5 text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink aria-[current=page]:bg-brand-wash aria-[current=page]:font-medium aria-[current=page]:text-brand aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0 aria-[current=page]:before:start-0 aria-[current=page]:before:w-0.5 aria-[current=page]:before:bg-signal"
+---
+
+<nav class="py-2" aria-label={label}>
+  {groups.map((g) => (
+    <section class="pb-2">
+      <h2 class="px-5 py-2 text-xs font-medium tracking-wide text-ink-faint uppercase">{g.title}</h2>
+      <ul>
+        {g.items.map((i) => (
+          <li>
+            <a
+              class={link}
+              href={shadcnHref(locale, i.slug ? `${i.slug}/` : "")}
+              aria-current={i.slug === slug ? "page" : undefined}
+            >
+              {i.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</nav>

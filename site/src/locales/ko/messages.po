@@ -88,6 +88,10 @@ msgstr "알림은 취소할 수 있도록 60초간 대기하며, 같은 인시�
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "페이지는 게시하기 전까지 비공개이며, 그 전에 팀이 패널에서 미리 볼 수 있습니다."
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "이미 shadcn/ui를 사용하는 프로젝트(React 및 Tailwind CSS 포함)."
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "제품 상태를 알리는 공개 페이지입니다. 지원과 같은 받은편지함에 있습니다. 점검이 최신 상태로 유지하고 구독자는 이메일로 알게 됩니다."
@@ -104,6 +108,10 @@ msgstr "샘플 상태 페이지: 전체 상태, 진행 중인 인시던트, 최�
 msgid "A small open-source Worker"
 msgstr "작은 오픈 소스 Worker"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "Yuva 채팅 채널과 그 공개 키(yuva_pk_…)."
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "Yuva 상태 페이지는 제품이 작동하는지 보여 줍니다. 지원 받은편지함에 있으므로 채팅 위젯과 앱이 진행 중인 인시던트를 보여 주고, 한 번의 답장이 그에 관해 글을 보낸 모든 사람에게 전달됩니다."
@@ -111,6 +119,10 @@ msgstr "Yuva 상태 페이지는 제품이 작동하는지 보여 줍니다. 지
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "채택된 답변"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "컴포넌트를 표시할 모든 오리진(사이트와 개발 서버)을 허용된 오리진으로 추가하세요."
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "프로젝트의 .cursor/mcp.json에 다음을 추가하세요."
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "프로젝트의 .vscode/mcp.json에 다음을 추가하세요."
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "첫 항목 추가"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "웹사이트로 돌아가기"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "무언가 발송되기 전에"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "블록"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "Cloudflare, Cloudflare 로고, Cloudflare Workers는 미국 및 기타 �
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "Cloudflare® Email Routing이 지원 주소로 오는 메일을 받고, 오픈 소스 Yuva Email Worker가 각 메시지에 서명하여 Yuva에 전달합니다. 메시지는 공유 받은 편지함에 팀이 답하는 대화로 도착합니다."
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "코드"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "색상"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "변경 사항 비교"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "구성 요소"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "shadcn/ui 컴포넌트"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "이름이 포함된 로고를 SVG로 복사"
 msgid "Copy SVG"
 msgstr "SVG 복사"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "채널의 공개 키를 복사하세요. 비밀이 아닙니다."
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "다크"
 msgid "Dark theme"
 msgstr "다크 테마"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "기본값"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "성능 저하"
@@ -528,6 +565,10 @@ msgstr "삭제"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "전달률"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "의존성"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "모든 채널이 하나의 목록으로 모입니다. 팀은 채팅 형�
 msgid "Every endpoint, to try."
 msgstr "모든 엔드포인트를 직접 시도해 보세요."
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "레지스트리의 모든 항목을 사이드바처럼 묶었습니다."
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "모든 레이블에는 영어 기본값이 있습니다. 바꾸거나 번역하려면 labels 객체의 일부를 전달하세요."
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "Yuva의 모든 부분에는 타입이 지정된 계약과 문서화된 작은 연동이 있습니다."
@@ -784,6 +833,10 @@ msgstr "어두운 배경용입니다."
 msgid "For developers"
 msgstr "개발자용"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "토론을 쓰려면 채널의 토론 모드를 moderated 또는 open으로 설정하세요. 구독 양식을 쓰려면 공개 메일링 리스트를 추가하세요."
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "투자자용"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "갤러리"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "시작하기"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "모든 제품의 사용자가 당신에게 연락할 수 있게 하세요."
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "키와 Yuva 서버 주소를 컴포넌트에 전달하세요. 예를 들어 환경 변수로 전달할 수 있습니다."
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "안녕하세요! 본인과 생각하고 계신 내용을 조금 알려 �
 #: src/copy/status.ts
 msgid "History"
 msgstr "기록"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "훅"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "조사 중"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Cloudflare 대시보드에서 도메인 → Email → Email Routing을 열고 활성화하세요. Cloudflare가 MX와 SPF 레코드를 추가합니다."
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "Yuva 패널에서 설정, 받은 편지함, 채널을 차례로 열고 채팅 채널을 추가하세요."
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "Yuva에서 설정 → 해당 받은 편지함 → 채널 → 이메일을 열고 지원 주소를 추가하세요. 서버에 시크릿을 설정하고 다시 시작하세요."
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "잉크"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "채팅 블록을 설치한 다음 렌더링하세요."
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "설치"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "이 항목을 설치하면 다음도 함께 추가됩니다."
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "소개"
@@ -1032,6 +1110,10 @@ msgstr "인증서는 자동으로 발급되고 갱신됩니다. Caddy 같은 온
 msgid "It does the rest with you."
 msgstr "나머지는 당신과 함께 처리합니다."
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "항목"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "로고는 있는 그대로 사용하세요. 모양, 비율, 색상을 바꾸지 마세요."
@@ -1039,6 +1121,14 @@ msgstr "로고는 있는 그대로 사용하세요. 모양, 비율, 색상을 �
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "비공개 내부 배포에서는 수정 여부와 관계없이 이름을 유지할 수 있습니다."
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "레이블"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "레이블"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "설정할 것이 없습니다"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "알림은 받은편지함 자체의 이메일 채널을 통해 해당 주소로 발송되며, 목록의 사람들은 뉴스레터와 분리되어 관리됩니다."
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "npm 패키지"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "모든 대화의"
@@ -1477,6 +1571,10 @@ msgstr "메일을 가져오는 다른 방법"
 msgid "Other ways to reach us"
 msgstr "연락하는 다른 방법"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "다른 Yuva 항목"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "전체 상태"
@@ -1484,6 +1582,10 @@ msgstr "전체 상태"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "개요"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "패키지 관리자"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "보도와 브랜드"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "미리보기"
 
@@ -1593,6 +1696,14 @@ msgstr "제품 둘러보기"
 msgid "Project"
 msgstr "프로젝트"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "수정한 버전을 Yuva라는 이름으로 게시하는 것 — 포크의 이름을 바꾸세요."
@@ -1616,6 +1727,10 @@ msgstr "평가"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "Yuva를 만드는 사람들에게 연락하세요."
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "실시간 채팅, 문서 페이지 토론, 메일링 리스트 가입을 위한 React 컴포넌트로, shadcn/ui 프로젝트에 복사됩니다."
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "요청 본문"
 msgid "required"
 msgstr "필수"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "요구 사항"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "교체하세요"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "RSS 피드"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "shadcn 프로젝트에서 실행하세요. 파일이 여러분의 코드로 복사됩니다."
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "서버와 패널은 AGPL-3.0, SDK와 API 계약은 MIT입니다."
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "몇 단계로 설정하기"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "채널 설정"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "Yuva가 웹훅 엔드포인트로 보내는 이벤트와 각 이벤트�
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "어시스턴트가 처음 Yuva를 사용할 때 브라우저에서 로그인을 위해 Yuva가 열립니다."
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "레이블 목록은 {title} 페이지에 있습니다."
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "이 줄은 인시던트와 함께 나타났다 사라집니다."
@@ -2095,6 +2226,10 @@ msgstr "모바일 앱에서 보낸 피드백이 표시된 패널: 앱 버전, �
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Yuva가 웹훅 엔드포인트로 보내는 페이로드."
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "미리보기는 샘플 데이터로 동작합니다. 네트워크도 채널도 필요 없습니다."
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "글, 연동, 앱 목록에 바로 쓸 수 있는 Yuva 로고, 색상, �
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva 메시징 패널: 이메일, 실시간 채팅, 앱의 대화를 하나의 목록으로 모으고, 대화를 채팅으로 열어 팀 메모와 팀원이 보내도록 어시스턴트가 작성한 답변을 보여줍니다."
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "Yuva 레지스트리는 shadcn CLI가 프로젝트에 복사하는 컴포넌트와 훅의 모음입니다. 여러분의 테마를 사용하고, useyuva 클라이언트로 Yuva와 통신하며, 자유롭게 수정할 수 있습니다."
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "구독자의 선택"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "Yuva 체험하기"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "유형"
 
@@ -2219,6 +2359,10 @@ msgstr "Routing rules에서 각 지원 주소를 Worker yuva-edge로 보내세�
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "가동률"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "사용법"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "Cloudflare용 Yuva Email Worker"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "Yuva는 수신 주소의 이메일 채널을 찾아 In-Reply-To와 References로 메시지를 해당 대화에 이어 붙입니다. 그 밖의 경우에는 새 대화가 시작됩니다. 답장이 오면 대화가 다시 열립니다."
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "shadcn/ui용 Yuva"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

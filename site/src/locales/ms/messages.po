@@ -88,6 +88,10 @@ msgstr "Pemberitahuan menunggu 60 saat supaya anda boleh membatalkannya, dan pem
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "Halaman kekal peribadi sehingga anda menerbitkannya, dan pasukan anda melihat pratontonnya di panel sebelum itu."
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "Projek yang sudah menggunakan shadcn/ui, dengan React dan Tailwind CSS."
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "Halaman awam tentang keadaan produk anda, dalam peti masuk yang sama dengan sokongan anda. Semakan memastikannya terkini dan pelanggan langganan tahu melalui e-mel."
@@ -104,6 +108,10 @@ msgstr "Contoh halaman status: status keseluruhan, satu insiden terbuka dan empa
 msgid "A small open-source Worker"
 msgstr "Worker sumber terbuka yang kecil"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "Saluran sembang Yuva dan kunci awamnya (yuva_pk_…)."
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "Halaman status Yuva menunjukkan sama ada produk anda berfungsi. Ia berada dalam peti masuk sokongan anda, jadi widget sembang dan aplikasi memaparkan insiden terbuka, dan satu balasan sampai kepada semua yang menulis tentangnya."
@@ -111,6 +119,10 @@ msgstr "Halaman status Yuva menunjukkan sama ada produk anda berfungsi. Ia berad
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Jawapan diterima"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "Tambah setiap origin yang akan memaparkan komponen sebagai origin yang dibenarkan: tapak anda dan pelayan pembangunan anda."
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "Tambahkan ini pada .cursor/mcp.json dalam projek anda:"
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "Tambahkan ini pada .vscode/mcp.json dalam projek anda:"
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "Tambah item pertama anda"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "Kembali ke laman web"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "sebelum apa-apa dihantar"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "Blok"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "Cloudflare, logo Cloudflare dan Cloudflare Workers ialah tanda dagangan 
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "Cloudflare® Email Routing menerima mel untuk alamat sokongan anda, dan Yuva Email Worker sumber terbuka menyerahkan setiap mesej kepada Yuva, bertandatangan. Ia masuk ke peti masuk kongsi anda sebagai perbualan yang dijawab oleh pasukan anda."
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "Kod"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "Warna"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "Bandingkan perubahan"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "Komponen"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "Komponen daripada shadcn/ui"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "Salin logo dengan nama sebagai SVG"
 msgid "Copy SVG"
 msgstr "Salin SVG"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "Salin kunci awam saluran. Ia bukan rahsia."
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "Gelap"
 msgid "Dark theme"
 msgstr "Tema gelap"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "Lalai"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "Prestasi merosot"
@@ -528,6 +565,10 @@ msgstr "Padam"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "Kebolehhantaran"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "Kebergantungan"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "Setiap saluran masuk ke satu senarai. Pasukan anda menjawab daripada sat
 msgid "Every endpoint, to try."
 msgstr "Setiap titik akhir, untuk dicuba."
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "Semua item dalam pendaftar, dikumpulkan seperti bar sisi."
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "Setiap label mempunyai lalai bahasa Inggeris. Beri objek labels separa untuk menukar atau menterjemahkannya."
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "Setiap bahagian Yuva mempunyai kontrak bertaip dan integrasi kecil yang didokumenkan."
@@ -784,6 +833,10 @@ msgstr "Untuk latar belakang gelap."
 msgid "For developers"
 msgstr "Untuk pembangun"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "Untuk perbincangan, tetapkan mod perbincangan saluran kepada moderated atau open. Untuk borang langganan, tambah senarai mel awam."
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "Untuk pelabur"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "Galeri"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "Mulakan"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "Beri pengguna setiap produk cara untuk menghubungi anda."
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "Beri kunci dan alamat pelayan Yuva anda kepada komponen, contohnya dalam persekitaran:"
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "Helo! Ceritakan sedikit tentang diri anda dan apa yang anda fikirkan."
 #: src/copy/status.ts
 msgid "History"
 msgstr "Sejarah"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "Hook"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "Sedang disiasat"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Dalam papan pemuka Cloudflare, buka domain anda → Email → Email Routing dan dayakannya. Cloudflare menambah rekod MX dan SPF-nya."
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "Dalam panel Yuva, buka Tetapan, peti masuk anda, Saluran, dan tambah saluran sembang."
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "Dalam Yuva, buka Tetapan → peti masuk anda → Saluran → E-mel dan tambah alamat sokongan. Tetapkan rahsia pada pelayan dan mulakan semula:"
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "Dakwat"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "Pasang blok sembang, kemudian paparkannya:"
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "Pemasangan"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "Memasang item ini turut menambah yang berikut."
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "Pengenalan"
@@ -1032,6 +1110,10 @@ msgstr "Sijil dikeluarkan dan diperbaharui secara automatik, oleh proksi atas pe
 msgid "It does the rest with you."
 msgstr "Selebihnya ia lakukan bersama anda."
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "Item"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "Biarkan logo seperti sedia ada: jangan ubah bentuk, perkadaran atau warnanya."
@@ -1039,6 +1121,14 @@ msgstr "Biarkan logo seperti sedia ada: jangan ubah bentuk, perkadaran atau warn
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "mengekalkan nama dalam pelaksanaan dalaman persendirian, diubah suai atau tidak."
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "Label"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "Label"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "Tiada apa untuk disediakan"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "Pemberitahuan dihantar melalui saluran e-mel milik peti masuk anda, dari alamatnya, dan orang dalam senarai diasingkan daripada surat berita anda."
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "Pakej npm"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "bagi setiap perbualan"
@@ -1477,6 +1571,10 @@ msgstr "Cara lain membawa masuk mel"
 msgid "Other ways to reach us"
 msgstr "Cara lain menghubungi kami"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "Item Yuva lain"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "Status keseluruhan"
@@ -1484,6 +1582,10 @@ msgstr "Status keseluruhan"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Gambaran keseluruhan"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "Pengurus pakej"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "Akhbar dan jenama"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "Pratonton"
 
@@ -1593,6 +1696,14 @@ msgstr "Lawatan produk"
 msgid "Project"
 msgstr "Projek"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "menerbitkan versi yang diubah suai di bawah nama Yuva — namakan semula fork anda;"
@@ -1616,6 +1727,10 @@ msgstr "Penilaian"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "Hubungi orang di sebalik Yuva."
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "Komponen React untuk sembang langsung, perbincangan halaman dokumentasi dan pendaftaran senarai mel, disalin ke projek shadcn/ui anda."
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "Badan permintaan"
 msgid "required"
 msgstr "diperlukan"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "Keperluan"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "Putarkannya"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "Suapan RSS"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "Jalankan ini dalam projek shadcn. Fail disalin ke kod anda sendiri."
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "Pelayan dan panel di bawah AGPL-3.0, SDK dan kontrak API di bawah MIT."
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "Sediakan dalam beberapa langkah"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "Sediakan saluran"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "Peristiwa yang dihantar Yuva ke titik akhir webhook anda dan muatan seti
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Kali pertama pembantu menggunakan Yuva, pelayar anda membuka Yuva untuk log masuk."
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "Label disenaraikan di {title}."
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "Baris itu muncul dan hilang bersama insiden."
@@ -2095,6 +2226,10 @@ msgstr "Panel dengan maklum balas yang dihantar dari aplikasi mudah alih: lapora
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Muatan yang dihantar Yuva ke titik akhir webhook anda."
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "Pratonton berjalan dengan data contoh. Ia tidak memerlukan rangkaian atau saluran."
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "Logo, warna dan fon Yuva, sedia untuk artikel, integrasi dan penyenaraia
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Panel pemesejan Yuva: perbualan daripada e-mel, sembang langsung dan aplikasi dalam satu senarai, dan satu perbualan dibuka sebagai sembang, dengan nota pasukan dan balasan yang disediakan pembantu untuk dihantar rakan sepasukan."
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "Pendaftar Yuva ialah set komponen dan hook yang disalin oleh CLI shadcn ke projek anda. Ia menggunakan tema anda, berhubung dengan Yuva melalui klien useyuva dan anda bebas menyuntingnya."
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "Pilihan mereka"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "Cuba Yuva"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "Jenis"
 
@@ -2219,6 +2359,10 @@ msgstr "Di bawah Routing rules, hantar setiap alamat sokongan ke Worker yuva-edg
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "masa operasi"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "Penggunaan"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "Yuva Email Worker untuk Cloudflare"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "Yuva mencari saluran e-mel untuk alamat penerima dan mengutaskan mesej mengikut In-Reply-To dan References ke dalam perbualan yang dimilikinya. Selain itu akan memulakan perbualan baharu. Balasan membuka semula perbualan."
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "Yuva untuk shadcn/ui"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

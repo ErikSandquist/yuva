@@ -88,6 +88,10 @@ msgstr "通知會等待 60 秒，方便你撤銷；同一事件的通知會保�
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "頁面在你發佈之前維持私人狀態，你的團隊可先在面板中預覽。"
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "一個已在使用 shadcn/ui 的專案，具備 React 和 Tailwind CSS。"
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "一個公開頁面，呈現你產品的狀態，與你的支援在同一個收件匣。檢查讓它保持最新，訂閱者透過電子郵件得知。"
@@ -104,6 +108,10 @@ msgstr "範例狀態頁：整體狀態、一個進行中的事件，以及四個
 msgid "A small open-source Worker"
 msgstr "一個小巧的開源 Worker"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "一個 Yuva 聊天頻道及其公開金鑰（yuva_pk_…）。"
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "Yuva 狀態頁顯示你的產品是否正常運作。它位於你的支援收件匣中，因此聊天小工具與應用程式會顯示進行中的事件，一次回覆即可送達所有就此來信的人。"
@@ -111,6 +119,10 @@ msgstr "Yuva 狀態頁顯示你的產品是否正常運作。它位於你的支�
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "已採納的回答"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "把每個會顯示這些元件的來源（你的網站和開發伺服器）加入為允許的來源。"
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "將下列內容加入專案中的 .cursor/mcp.json："
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "將下列內容加入專案中的 .vscode/mcp.json："
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "新增你的第一個項目"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "回到網站"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "在任何內容寄出之前"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "區塊"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "Cloudflare、Cloudflare 標誌與 Cloudflare Workers 是 Cloudflare, Inc
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "Cloudflare® Email Routing 接收你支援信箱的郵件，開源的 Yuva Email Worker 為每封郵件簽章後交給 Yuva。它會以一則由你的團隊回覆的對話，出現在共用收件匣裡。"
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "程式碼"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "顏色"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "比較變更"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "元件"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "來自 shadcn/ui 的元件"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "將含名稱的標誌複製為 SVG"
 msgid "Copy SVG"
 msgstr "複製 SVG"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "複製頻道的公開金鑰。它不是機密。"
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "深色"
 msgid "Dark theme"
 msgstr "深色主題"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "預設值"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "效能下降"
@@ -528,6 +565,10 @@ msgstr "刪除"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "送達率"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "相依套件"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "所有頻道匯入同一個清單。你的團隊在一個聊天式檢視
 msgid "Every endpoint, to try."
 msgstr "每個端點，都可以試用。"
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "登錄庫中的所有項目，依側邊欄方式分組。"
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "每個標籤都有英文預設值。傳入部分 labels 物件即可修改或翻譯。"
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "Yuva 的每個部分都有型別化的契約與一個小而有文件的整合。"
@@ -784,6 +833,10 @@ msgstr "適用於深色背景。"
 msgid "For developers"
 msgstr "給開發人員"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "若要使用討論，請把頻道的討論模式設為 moderated 或 open。若要使用訂閱表單，請新增一個公開郵寄清單。"
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "致投資人"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "圖庫"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "開始使用"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "讓每個產品的使用者都有聯絡你的方式。"
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "把金鑰和你的 Yuva 伺服器位址交給元件，例如透過環境變數："
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "你好！請簡單介紹一下你自己，以及你的想法。"
 #: src/copy/status.ts
 msgid "History"
 msgstr "歷史"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "Hooks"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "調查中"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "在 Cloudflare 控制台中，開啟你的網域 → Email → Email Routing 並啟用。Cloudflare 會加入它的 MX 與 SPF 記錄。"
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "在 Yuva 面板中依序開啟設定、你的收件匣、頻道，然後新增一個聊天頻道。"
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "在 Yuva 中，開啟設定 → 你的收件匣 → 頻道 → 郵件，加入支援信箱。在伺服器上設定一組密鑰並重新啟動："
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "墨色"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "安裝聊天區塊，然後渲染它："
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "安裝"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "安裝此項目時還會加入以下內容。"
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "簡介"
@@ -1032,6 +1110,10 @@ msgstr "憑證會自動簽發與續期，由 Caddy 之類的隨需代理或 Clou
 msgid "It does the rest with you."
 msgstr "剩下的它與你一起完成。"
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "項目"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "保持標誌原樣：不要改變它的形狀、比例或顏色。"
@@ -1039,6 +1121,14 @@ msgstr "保持標誌原樣：不要改變它的形狀、比例或顏色。"
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "在私有的內部部署中保留名稱，無論是否經過修改。"
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "標籤"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "標籤"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "無需設定"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "通知會透過你收件匣自己的電子郵件管道、以其位址寄出，名單中的人與你的電子報互相分開。"
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "npm 套件"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "的每個對話"
@@ -1477,6 +1571,10 @@ msgstr "其他遷入郵件的方式"
 msgid "Other ways to reach us"
 msgstr "其他聯絡我們的方式"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "其他 Yuva 項目"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "整體狀態"
@@ -1484,6 +1582,10 @@ msgstr "整體狀態"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "總覽"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "套件管理員"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "媒體與品牌"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "預覽"
 
@@ -1593,6 +1696,14 @@ msgstr "產品導覽"
 msgid "Project"
 msgstr "專案"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "以 Yuva 之名發布修改後的版本——請為你的 fork 重新命名；"
@@ -1616,6 +1727,10 @@ msgstr "評分"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "聯絡 Yuva 背後的人。"
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "用於即時聊天、文件頁面討論與郵寄清單訂閱的 React 元件，會複製到你的 shadcn/ui 專案中。"
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "請求本文"
 msgid "required"
 msgstr "必填"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "需求"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "輪替它"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "RSS 訂閱"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "在 shadcn 專案中執行。檔案會複製到你自己的程式碼裡。"
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "伺服器與面板採用 AGPL-3.0，SDK 與 API 契約採用 MIT。"
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "幾步即可完成設定"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "設定頻道"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "Yuva 傳送到你的 Webhook 端點的事件，以及每個事件的負�
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "助理第一次使用 Yuva 時，瀏覽器會開啟 Yuva 供你登入。"
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "標籤列在 {title} 頁面。"
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "這一行會隨事件出現與消失。"
@@ -2095,6 +2226,10 @@ msgstr "顯示從行動應用程式傳來的意見回饋的面板：對話清單
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Yuva 傳送到你的 Webhook 端點的負載。"
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "預覽使用範例資料執行，不需要網路，也不需要頻道。"
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "Yuva 的標誌、顏色與字型，可直接用於文章、整合與應�
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva 訊息面板：來自郵件、即時聊天與應用程式的對話匯在一個清單中，其中一則對話以聊天形式開啟，附有團隊備註與一則助理起草、供同事寄出的回覆。"
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "Yuva 登錄庫是一組元件和 hooks，由 shadcn CLI 複製到你的專案中。它們使用你的主題，透過 useyuva 用戶端與 Yuva 通訊，你可以自由修改。"
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "他們的選擇"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "試用 Yuva"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "類型"
 
@@ -2219,6 +2359,10 @@ msgstr "在 Routing rules 下，把每個支援信箱傳送到名為 yuva-edge �
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "可用率"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "用法"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "適用於 Cloudflare 的 Yuva Email Worker"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "Yuva 根據收件位址找到郵件頻道，並依 In-Reply-To 與 References 把郵件歸入它所屬的對話。其他情況會開啟新對話。回覆會重新開啟對話。"
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "適用於 shadcn/ui 的 Yuva"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

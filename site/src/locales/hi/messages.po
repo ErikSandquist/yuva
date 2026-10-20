@@ -88,6 +88,10 @@ msgstr "सूचना 60 सेकंड रुकती है ताकि �
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "पेज आपके प्रकाशित करने तक निजी रहता है, और आपकी टीम उससे पहले पैनल में उसका पूर्वावलोकन देखती है।"
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "एक प्रोजेक्ट जो पहले से shadcn/ui इस्तेमाल करता हो, React और Tailwind CSS के साथ।"
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "आपके उत्पादों की स्थिति का सार्वजनिक पेज, उसी इनबॉक्स में जहाँ आपका सपोर्ट है। जाँचें उसे अद्यतन रखती हैं और सब्सक्राइबर ई-मेल से जान जाते हैं।"
@@ -104,6 +108,10 @@ msgstr "नमूना स्टेटस पेज: समग्र स्थ�
 msgid "A small open-source Worker"
 msgstr "एक छोटा ओपन-सोर्स Worker"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "एक Yuva चैट चैनल और उसकी सार्वजनिक कुंजी (yuva_pk_…)।"
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "Yuva का स्टेटस पेज बताता है कि आपका उत्पाद चल रहा है या नहीं। वह आपके सपोर्ट इनबॉक्स में रहता है, इसलिए चैट विजेट और ऐप्स खुली घटना दिखाते हैं, और एक जवाब उन सभी तक पहुँचता है जिन्होंने उसके बारे में लिखा।"
@@ -111,6 +119,10 @@ msgstr "Yuva का स्टेटस पेज बताता है कि �
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "स्वीकृत उत्तर"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "हर उस origin को अनुमत origin के रूप में जोड़ें जो कंपोनेंट दिखाएगा: आपकी साइट और आपका डेवलपमेंट सर्वर।"
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "अपने प्रोजेक्ट की .cursor/mcp.json मे�
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "अपने प्रोजेक्ट की .vscode/mcp.json में यह जोड़ें:"
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "अपना पहला आइटम जोड़ें"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "वेबसाइट पर वापस जाएँ"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "कुछ भी भेजे जाने से पहले"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "ब्लॉक"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "Cloudflare, Cloudflare लोगो और Cloudflare Workers संय�
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "Cloudflare® Email Routing आपके सपोर्ट पतों का मेल प्राप्त करता है, और ओपन-सोर्स Yuva Email Worker हर संदेश पर हस्ताक्षर करके Yuva को सौंपता है। वह आपके साझा इनबॉक्स में एक बातचीत के रूप में आता है, जिसका जवाब आपकी टीम देती है।"
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "कोड"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "रंग"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "बदलावों की तुलना करें"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "घटक"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "shadcn/ui के कंपोनेंट"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "नाम सहित लोगो को SVG के रूप मे�
 msgid "Copy SVG"
 msgstr "SVG कॉपी करें"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "चैनल की सार्वजनिक कुंजी कॉपी करें। यह गोपनीय नहीं है।"
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "डार्क"
 msgid "Dark theme"
 msgstr "डार्क थीम"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "डिफ़ॉल्ट"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "घटी हुई परफ़ॉर्मेंस"
@@ -528,6 +565,10 @@ msgstr "हटाएँ"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "डिलीवरेबिलिटी"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "निर्भरताएँ"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "हर चैनल एक सूची में आता है। �
 msgid "Every endpoint, to try."
 msgstr "हर एंडपॉइंट, आज़माने के लिए।"
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "रजिस्ट्री के सभी आइटम, साइडबार की तरह समूहबद्ध।"
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "हर लेबल का अंग्रेज़ी डिफ़ॉल्ट है। उन्हें बदलने या अनुवाद करने के लिए labels ऑब्जेक्ट का एक हिस्सा दें।"
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "Yuva के हर हिस्से का एक टाइप्ड अनुबंध और एक छोटा, दस्तावेज़ीकृत इंटीग्रेशन है।"
@@ -784,6 +833,10 @@ msgstr "डार्क बैकग्राउंड के लिए।"
 msgid "For developers"
 msgstr "डेवलपर्स के लिए"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "चर्चाओं के लिए चैनल का चर्चा मोड moderated या open रखें। सब्सक्राइब फ़ॉर्म के लिए एक सार्वजनिक मेलिंग लिस्ट जोड़ें।"
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "निवेशकों के लिए"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "गैलरी"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "शुरू करें"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "हर प्रोडक्ट के उपयोगकर्ताओं को आप तक पहुँचने का तरीका दें।"
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "कुंजी और अपने Yuva सर्वर का पता कंपोनेंट को दें, जैसे एनवायरनमेंट में:"
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "नमस्ते! अपने बारे में और आपक
 #: src/copy/status.ts
 msgid "History"
 msgstr "इतिहास"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "Hooks"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "जाँच जारी है"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Cloudflare डैशबोर्ड में अपना डोमेन → Email → Email Routing खोलें और उसे चालू करें। Cloudflare अपने MX और SPF रिकॉर्ड जोड़ देता है।"
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "Yuva पैनल में सेटिंग, अपना इनबॉक्स, चैनल खोलें और एक चैट चैनल जोड़ें।"
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "Yuva में सेटिंग → आपका इनबॉक्स → चैनल → ईमेल खोलें और सपोर्ट पता जोड़ें। सर्वर पर एक सीक्रेट सेट करें और उसे रीस्टार्ट करें:"
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "स्याही"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "चैट ब्लॉक इंस्टॉल करें, फिर उसे रेंडर करें:"
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "इंस्टॉलेशन"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "इस आइटम को इंस्टॉल करने से नीचे दिए गए भी जुड़ जाते हैं।"
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "परिचय"
@@ -1032,6 +1110,10 @@ msgstr "प्रमाणपत्र अपने आप जारी और �
 msgid "It does the rest with you."
 msgstr "बाकी वह आपके साथ मिलकर करता है।"
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "आइटम"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "लोगो को जैसा है वैसा रखें: उसका आकार, अनुपात या रंग न बदलें।"
@@ -1039,6 +1121,14 @@ msgstr "लोगो को जैसा है वैसा रखें: उ�
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "नाम को निजी, आंतरिक डिप्लॉयमेंट में रखें, संशोधित हो या नहीं।"
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "लेबल"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "लेबल"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "कुछ सेट करने की ज़रूरत नहीं"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "सूचनाएँ आपके इनबॉक्स के अपने ई-मेल चैनल से, उसके पते से जाती हैं, और सूची के लोग आपके न्यूज़लेटरों से अलग रखे जाते हैं।"
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "npm पैकेज"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "हर बातचीत का"
@@ -1477,6 +1571,10 @@ msgstr "मेल लाने के दूसरे तरीके"
 msgid "Other ways to reach us"
 msgstr "हमसे संपर्क करने के दूसरे तरीके"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "Yuva के अन्य आइटम"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "समग्र स्थिति"
@@ -1484,6 +1582,10 @@ msgstr "समग्र स्थिति"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "अवलोकन"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "पैकेज मैनेजर"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "प्रेस और ब्रांड"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "प्रीव्यू"
 
@@ -1593,6 +1696,14 @@ msgstr "प्रोडक्ट टूर"
 msgid "Project"
 msgstr "प्रोजेक्ट"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "Yuva नाम के तहत संशोधित संस्करण प्रकाशित करना — अपने फ़ोर्क का नाम बदलें;"
@@ -1616,6 +1727,10 @@ msgstr "रेटिंग"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "Yuva के पीछे के लोगों तक पहुँचें।"
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "लाइव चैट, डॉक्यूमेंटेशन पेज की चर्चाओं और मेलिंग लिस्ट साइन-अप के लिए React कंपोनेंट, जो आपके shadcn/ui प्रोजेक्ट में कॉपी हो जाते हैं।"
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "अनुरोध की बॉडी"
 msgid "required"
 msgstr "ज़रूरी"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "आवश्यकताएँ"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "इसे बदलें"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "RSS फ़ीड"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "इसे किसी shadcn प्रोजेक्ट में चलाएँ। फ़ाइलें आपके अपने कोड में कॉपी हो जाती हैं।"
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "सर्वर और पैनल AGPL-3.0 के तहत, SDK औ�
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "कुछ ही चरणों में सेट अप करें"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "चैनल सेट करें"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "वे इवेंट जो Yuva आपके वेबहुक ए�
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "सहायक जब पहली बार Yuva का उपयोग करता है, तो साइन इन के लिए आपका ब्राउज़र Yuva खोलता है।"
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "लेबल {title} पेज पर सूचीबद्ध हैं।"
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "यह पंक्ति घटना के साथ दिखती और गायब हो जाती है।"
@@ -2095,6 +2226,10 @@ msgstr "मोबाइल ऐप से भेजे गए फ़ीडबै�
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "वे पेलोड जो Yuva आपके वेबहुक एंडपॉइंट पर भेजता है।"
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "प्रिव्यू नमूना डेटा पर चलता है। इसे न नेटवर्क चाहिए, न चैनल।"
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "Yuva का लोगो, रंग और टाइपफ़ेस, ल
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva मैसेजिंग पैनल: ईमेल, लाइव चैट और ऐप की बातचीत एक सूची में, और एक बातचीत चैट के रूप में खुली, टीम के नोट और सहायक द्वारा किसी साथी के भेजने के लिए ड्राफ़्ट किए गए जवाब के साथ।"
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "Yuva रजिस्ट्री कंपोनेंट और hooks का एक सेट है जिसे shadcn CLI आपके प्रोजेक्ट में कॉपी करता है। ये आपकी थीम इस्तेमाल करते हैं, useyuva क्लाइंट के ज़रिए Yuva से बात करते हैं, और इन्हें बदलना आपके हाथ में है।"
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "उनका चुनाव"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "Yuva आज़माएँ"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "प्रकार"
 
@@ -2219,6 +2359,10 @@ msgstr "Routing rules के तहत हर सपोर्ट पते क�
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "उपलब्धता"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "उपयोग"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "Cloudflare के लिए Yuva Email Worker"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "Yuva प्राप्तकर्ता के पते का ईमेल चैनल खोजता है और संदेश को In-Reply-To और References के ज़रिए उस बातचीत में थ्रेड करता है जिसका वह हिस्सा है। बाकी सब कुछ नई बातचीत शुरू करता है। जवाब बातचीत को फिर से खोलता है।"
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "shadcn/ui के लिए Yuva"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

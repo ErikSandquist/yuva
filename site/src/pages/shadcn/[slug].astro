@@ -1,0 +1,10 @@
+---
+import { items } from "@/lib/shadcn"
+import ShadcnItemView from "@/views/ShadcnItemView.astro"
+
+export const getStaticPaths = () => items().map((item) => ({ params: { slug: item.name }, props: { item } }))
+
+const { item } = Astro.props
+---
+
+<ShadcnItemView locale="en" item={item} />

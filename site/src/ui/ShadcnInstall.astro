@@ -1,0 +1,25 @@
+---
+import { shadcnCopy } from "@/copy/shadcn"
+import { i18nFor } from "@/i18n"
+import type { Locale } from "@/lib/routes"
+import { installCommands } from "@/lib/shadcn"
+import ShadcnCode from "@/ui/ShadcnCode.astro"
+import ShadcnTabs from "@/ui/ShadcnTabs.astro"
+
+interface Props {
+  locale: Locale
+  name: string
+}
+
+const { locale, name } = Astro.props
+const t = shadcnCopy(i18nFor(locale))
+const commands = installCommands(name)
+---
+
+<ShadcnTabs label={t.packageManager} tabs={commands.map((c) => ({ id: c.id, label: c.id }))} sync>
+  {commands.map((c) => (
+    <div slot={c.id} class="mt-3">
+      <ShadcnCode locale={locale} code={c.command} lang="sh" name="Shell" />
+    </div>
+  ))}
+</ShadcnTabs>

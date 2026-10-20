@@ -27,3 +27,11 @@ is used in text with the attribution statement on the Cloudflare e-mail page.
 Amazon SES and Amazon S3 (AWS marks are not in `simple-icons` and AWS requires a licence for its
 logos), Postmark (no mark in `simple-icons`), and APNs (Apple does not allow third parties to use the
 Apple logo) are shown as names only.
+
+## shadcn/ui components in the registry previews
+
+`src/shadcn/ui/*.tsx` and `src/shadcn/utils.ts` are the shadcn/ui components (style `base-nova`) that the
+previews under `/shadcn` render, written by the shadcn CLI from the shadcn/ui registry
+(https://github.com/shadcn-ui/ui), MIT License, Copyright (c) 2023 shadcn. `checkbox.tsx` has its icon
+placeholder replaced by the `lucide-react` check icon. The licence text is in
+`examples/shadcn-next/THIRD_PARTY_NOTICES.md`.

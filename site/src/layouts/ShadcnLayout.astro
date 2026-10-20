@@ -1,0 +1,210 @@
+---
+import { docsCopy } from "@/copy/docs"
+import { headerCopy } from "@/copy/header"
+import { shadcnCopy } from "@/copy/shadcn"
+import { i18nFor } from "@/i18n"
+import Base from "@/layouts/Base.astro"
+import { appUrl, docsRoot, home, links, type Locale } from "@/lib/routes"
+import { byGroup, groupOrder, shadcnHref, shadcnPaths } from "@/lib/shadcn"
+import Cross from "@/ui/Cross.astro"
+import GitHubIcon from "@/ui/GitHubIcon.astro"
+import LangMenu from "@/ui/LangMenu.astro"
+import Logo from "@/ui/Logo.astro"
+import ShadcnNav from "@/ui/ShadcnNav.astro"
+import ThemeToggle from "@/ui/ThemeToggle.astro"
+
+type Heading = { id: string; text: string }
+
+interface Props {
+  locale: Locale
+  title: string
+  description: string
+  slug: string
+  headings?: Heading[]
+}
+
+const { locale, title, description, slug, headings = [] } = Astro.props
+const i18n = i18nFor(locale)
+const t = shadcnCopy(i18n)
+const d = docsCopy(i18n)
+const h = headerCopy(i18n, locale)
+const groups = [
+  { key: "start", title: t.groups.start, items: [{ slug: "", title: d.introduction }] },
+  ...groupOrder.map((g) => ({
+    key: g,
+    title: t.groups[g],
+    items: byGroup(g).map((i) => ({ slug: i.name, title: i.title })),
+  })),
+]
+const flat = groups.flatMap((g) => g.items)
+const at = flat.findIndex((i) => i.slug === slug)
+const prev = flat[at - 1]
+const next = flat[at + 1]
+const rel = slug ? `${slug}/` : ""
+const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 text-[13px] text-ink-faint"
+---
+
+<Base locale={locale} title={`${title} · ${t.suffix}`} description={description} paths={shadcnPaths(rel)} bare>
+  <header class="sticky top-0 z-50 border-b border-rule before:absolute before:inset-0 before:-z-10 before:bg-paper/90 before:backdrop-blur-lg">
+    <div class="flex h-14 items-stretch">
+      <div class="relative flex shrink-0 items-center px-4 lg:w-64 lg:border-e lg:border-rule lg:px-5">
+        <a class="flex shrink-0 items-center gap-2" href={shadcnHref(locale)}>
+          <Logo size={24} />
+          <span class="font-semibold tracking-tight">Yuva</span>
+          <span class="rounded-md bg-paper-deep px-1.5 py-0.5 text-xs font-medium text-ink-soft">shadcn</span>
+        </a>
+        <Cross class="-end-[6px] -bottom-[6px] hidden lg:block" />
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-4 px-4 lg:px-5">
+        <a class="hidden text-sm text-ink-soft hover:text-ink sm:block" href={docsRoot(locale)}>
+          {d.docs}
+        </a>
+        <a class="hidden text-sm text-ink-soft hover:text-ink lg:block" href={home[locale]}>
+          {d.backToSite} ↗
+        </a>
+        <ThemeToggle locale={locale} class="hidden md:inline-flex" />
+        <LangMenu locale={locale} paths={shadcnPaths(rel)} class="hidden md:block" />
+        <a
+          class="hidden size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink md:grid"
+          href={links.repo}
+          aria-label="GitHub"
+        >
+          <GitHubIcon size={18} />
+        </a>
+        <a
+          class="hidden h-9 items-center rounded-full bg-signal px-4 text-sm font-medium text-white hover:bg-signal/90 md:inline-flex"
+          href={appUrl(locale, { signup: "1" })}
+        >
+          {h.startFree}
+        </a>
+      </div>
+    </div>
+  </header>
+  <div class="grid grid-cols-1 lg:grid-cols-[16rem_minmax(0,1fr)] xl:grid-cols-[16rem_minmax(0,1fr)_15rem]">
+    <aside class="hidden border-e border-rule lg:block">
+      <div class="sticky top-14 flex h-[calc(100svh-3.5rem)] flex-col">
+        <div class:list={[strip, "pe-3"]}>
+          <span class="font-medium text-ink-soft">{t.title}</span>
+          <Cross class="-end-[6px] -bottom-[6px]" />
+        </div>
+        <div class="flex-1 overflow-y-auto overscroll-contain">
+          <ShadcnNav locale={locale} label={t.title} slug={slug} groups={groups} />
+        </div>
+      </div>
+    </aside>
+
+    <div class="min-w-0">
+      <details class="group relative border-b border-rule lg:hidden">
+        <summary class="flex h-11 cursor-pointer list-none items-center gap-2.5 px-5 text-sm font-medium [&::-webkit-details-marker]:hidden">
+          <span class="flex-1 truncate">{title}</span>
+          <span class="text-xs text-ink-faint">{d.menu}</span>
+        </summary>
+        <div class="absolute inset-x-0 top-full z-40 max-h-[70svh] overflow-y-auto border-b border-rule bg-paper shadow-paper">
+          <ShadcnNav locale={locale} label={t.title} slug={slug} groups={groups} />
+        </div>
+      </details>
+
+      <div class:list={[strip, "hidden lg:flex"]}>
+        <span>{t.title}</span>
+        {slug && <span aria-hidden="true">/</span>}
+        {slug && <span class="truncate font-medium text-ink-soft">{title}</span>}
+        <Cross class="-end-[6px] -bottom-[6px] hidden xl:block" />
+      </div>
+
+      <main class="mx-auto max-w-3xl min-w-0 px-5 py-10 sm:px-8 lg:px-12 lg:py-14">
+        <h1 class="text-[clamp(2.25rem,1.6rem+2vw,3rem)] leading-[1.06] font-semibold tracking-[-0.035em]">{title}</h1>
+        <p class="mt-4 text-lg leading-relaxed text-ink-soft">{description}</p>
+        <article class="docs-content shadcn-doc mt-10" data-copy={d.copy} data-copied={d.copied}>
+          <slot />
+        </article>
+      </main>
+
+      <div class="relative grid grid-cols-2 border-y border-rule text-sm">
+        <Cross class="-start-[6px] -top-[6px] hidden lg:block" />
+        <Cross class="-end-[6px] -top-[6px] hidden xl:block" />
+        {prev ? (
+          <a
+            class="block border-e border-rule p-5 hover:bg-paper-deep sm:px-8"
+            href={shadcnHref(locale, prev.slug ? `${prev.slug}/` : "")}
+          >
+            <span class="block text-xs text-ink-faint">← {d.previous}</span>
+            <span class="mt-1 block font-medium text-ink-soft">{prev.title}</span>
+          </a>
+        ) : (
+          <span class="border-e border-rule"></span>
+        )}
+        {next && (
+          <a class="block p-5 text-end hover:bg-paper-deep sm:px-8" href={shadcnHref(locale, `${next.slug}/`)}>
+            <span class="block text-xs text-ink-faint">{d.next} →</span>
+            <span class="mt-1 block font-medium text-brand">{next.title}</span>
+          </a>
+        )}
+      </div>
+    </div>
+
+    <aside class="hidden border-s border-rule xl:block">
+      <div class="sticky top-14">
+        <div class:list={[strip, "ps-5"]}>
+          <span class="font-medium text-ink-soft">{d.onThisPage}</span>
+        </div>
+        {headings.length > 1 && (
+          <nav class="max-h-[calc(100svh-6.25rem)] overflow-y-auto overscroll-contain py-2" aria-label={d.onThisPage}>
+            <ol>
+              {headings.map((x) => (
+                <li>
+                  <a
+                    class="block py-1.5 ps-5 pe-5 text-[13px] leading-5 text-ink-soft hover:bg-paper-deep hover:text-ink"
+                    href={`#${x.id}`}
+                  >
+                    {x.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<script>
+  const syncKey = "yuva:shadcn-pm"
+  const stored = () => {
+    try {
+      return localStorage.getItem(syncKey)
+    } catch {
+      return null
+    }
+  }
+  const select = (root: HTMLElement, value: string) => {
+    for (const tab of root.querySelectorAll<HTMLElement>("[data-tab]"))
+      tab.setAttribute("aria-selected", String(tab.dataset.tab === value))
+    for (const panel of root.querySelectorAll<HTMLElement>("[data-panel]")) panel.hidden = panel.dataset.panel !== value
+  }
+  const roots = [...document.querySelectorAll<HTMLElement>("[data-tabs]")]
+  for (const root of roots) {
+    const saved = root.dataset.sync ? stored() : null
+    if (saved && root.querySelector(`[data-tab="${saved}"]`)) select(root, saved)
+    root.addEventListener("click", (event) => {
+      const tab = (event.target as Element).closest<HTMLElement>("[data-tab]")
+      if (!tab || !root.contains(tab)) return
+      const value = tab.dataset.tab!
+      select(root, value)
+      if (!root.dataset.sync) return
+      try {
+        localStorage.setItem(syncKey, value)
+      } catch {}
+      for (const other of roots) if (other !== root && other.dataset.sync) select(other, value)
+    })
+  }
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy-code]")) {
+    const label = button.textContent
+    button.addEventListener("click", async () => {
+      const text = button.closest("[data-code]")?.querySelector("pre")?.innerText ?? ""
+      await navigator.clipboard.writeText(text)
+      button.textContent = document.querySelector<HTMLElement>(".docs-content")?.dataset.copied ?? "Copied"
+      setTimeout(() => (button.textContent = label), 1400)
+    })
+  }
+</script>

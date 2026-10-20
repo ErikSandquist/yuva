@@ -1,0 +1,9 @@
+---
+import ShadcnHomeView from "@/views/ShadcnHomeView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<ShadcnHomeView locale={locale} />

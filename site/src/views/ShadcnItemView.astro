@@ -1,0 +1,174 @@
+---
+import { shadcnCopy } from "@/copy/shadcn"
+import { i18nFor } from "@/i18n"
+import ShadcnLayout from "@/layouts/ShadcnLayout.astro"
+import type { Locale } from "@/lib/routes"
+import { items, labelRows, propTables, shadcnHref, SHADCN_DOCS, type Item } from "@/lib/shadcn"
+import ShadcnCode from "@/ui/ShadcnCode.astro"
+import ShadcnInstall from "@/ui/ShadcnInstall.astro"
+import ShadcnPreview from "@/ui/ShadcnPreview.astro"
+
+interface Props {
+  locale: Locale
+  item: Item
+}
+
+const { locale, item } = Astro.props
+const t = shadcnCopy(i18nFor(locale))
+const tables = propTables(item.name)
+const labels = labelRows(item.name)
+const owner = labels && labels.owner !== item.name ? items().find((i) => i.name === labels.owner) : undefined
+const hasDependencies = item.shadcn.length + item.yuva.length + item.dependencies.length > 0
+const headings = [
+  { id: "installation", text: t.installation },
+  { id: "usage", text: t.usage },
+  ...(tables.length ? [{ id: "props", text: t.props }] : []),
+  ...(labels ? [{ id: "labels", text: t.labels }] : []),
+  ...(hasDependencies ? [{ id: "dependencies", text: t.dependencies }] : []),
+]
+const cell = "font-mono text-[0.8rem] break-words whitespace-normal"
+const title = (name: string) => items().find((i) => i.name === name)?.title ?? name
+---
+
+<ShadcnLayout locale={locale} title={item.title} description={item.description} slug={item.name} headings={headings}>
+  <ShadcnPreview locale={locale} name={item.name} example={item.example} />
+  <div class="docs-body">
+    <h2 id="installation">{t.installation}</h2>
+    <p class="mb-4 text-ink-soft">{t.installLead}</p>
+    <ShadcnInstall locale={locale} name={item.name} />
+
+    <h2 id="usage">{t.usage}</h2>
+    <ShadcnCode locale={locale} code={item.usage} />
+
+    {tables.length > 0 && (
+      <>
+        <h2 id="props">{t.props}</h2>
+        {tables.map((table) => (
+          <>
+            <h3 id={table.id}>
+              <code>{table.title}</code>
+            </h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>{t.prop}</th>
+                  <th>{t.type}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {table.rows.map((row) => (
+                  <tr>
+                    <td>
+                      <code>
+                        {row.name}
+                        {row.optional ? "?" : ""}
+                      </code>
+                    </td>
+                    <td>
+                      <code class={cell}>{row.type}</code>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        ))}
+      </>
+    )}
+
+    {labels && (
+      <>
+        <h2 id="labels">{t.labels}</h2>
+        {owner ? (
+          <p>
+            <a class="text-brand underline-offset-4 hover:underline" href={shadcnHref(locale, `${owner.name}/#labels`)}>
+              {t.labelsOn(owner.title)}
+            </a>
+          </p>
+        ) : (
+          <>
+            <p class="mb-4 text-ink-soft">{t.labelsLead}</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>{t.label}</th>
+                  <th>{t.default}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {labels.rows.map((row) => (
+                  <tr>
+                    <td>
+                      <code>{row.key}</code>
+                    </td>
+                    <td>
+                      <code class={cell}>{row.value}</code>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </>
+    )}
+
+    {hasDependencies && (
+      <>
+        <h2 id="dependencies">{t.dependencies}</h2>
+        <p class="mb-4 text-ink-soft">{t.dependenciesLead}</p>
+        {item.shadcn.length > 0 && (
+          <>
+            <h3>{t.shadcnComponents}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {item.shadcn.map((name) => (
+                <li>
+                  <a
+                    class="inline-flex h-8 items-center rounded-full border border-rule px-3 font-mono text-[0.8rem] hover:bg-paper-deep"
+                    href={`${SHADCN_DOCS}${name}`}
+                  >
+                    {name} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {item.yuva.length > 0 && (
+          <>
+            <h3>{t.yuvaItems}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {item.yuva.map((name) => (
+                <li>
+                  <a
+                    class="inline-flex h-8 items-center rounded-full border border-rule px-3 text-[0.8rem] hover:bg-paper-deep"
+                    href={shadcnHref(locale, `${name}/`)}
+                  >
+                    {title(name)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {item.dependencies.length > 0 && (
+          <>
+            <h3>{t.packages}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {item.dependencies.map((name) => (
+                <li>
+                  <a
+                    class="inline-flex h-8 items-center rounded-full border border-rule px-3 font-mono text-[0.8rem] hover:bg-paper-deep"
+                    href={`https://www.npmjs.com/package/${name}`}
+                  >
+                    {name} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </>
+    )}
+  </div>
+</ShadcnLayout>

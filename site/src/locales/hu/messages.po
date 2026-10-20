@@ -88,6 +88,10 @@ msgstr "Az értesítés 60 másodpercet vár, hogy visszavonhassa, az egy incide
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "Az oldal addig privát, amíg közzé nem teszi, és a csapata előtte előnézetben látja a panelben."
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "Egy projekt, amely már használ shadcn/ui-t, Reacttel és Tailwind CSS-sel."
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "Nyilvános oldal a termékei állapotáról, ugyanabban a postaládában, mint a támogatása. Az ellenőrzések naprakészen tartják, az előfizetők pedig e-mailben értesülnek."
@@ -104,6 +108,10 @@ msgstr "Minta állapotoldal: az általános állapot, egy nyitott incidens és n
 msgid "A small open-source Worker"
 msgstr "Egy kicsi, nyílt forráskódú Worker"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "Egy Yuva csevegőcsatorna és a nyilvános kulcsa (yuva_pk_…)."
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "A Yuva állapotoldala megmutatja, működik-e a terméke. A támogatási postaládájában él, így a csevegő widget és az alkalmazások megjelenítik a nyitott incidenst, és egy válasz mindenkit elér, aki írt róla."
@@ -111,6 +119,10 @@ msgstr "A Yuva állapotoldala megmutatja, működik-e a terméke. A támogatási
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Elfogadott válasz"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "Add hozzá engedélyezett originként mindazokat, amelyek megjelenítik a komponenseket: a webhelyedet és a fejlesztői szerveredet."
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "Add hozzá ezt a projekted .cursor/mcp.json fájljához:"
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "Add hozzá ezt a projekted .vscode/mcp.json fájljához:"
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "Add hozzá az első elemedet"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "Vissza a weboldalra"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "mielőtt bármi elmenne"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "Blokkok"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "A Cloudflare, a Cloudflare logó és a Cloudflare Workers a Cloudflare, 
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "A Cloudflare® Email Routing fogadja a támogatási címeid levelezését, a nyílt forráskódú Yuva Email Worker pedig aláírva adja át az egyes üzeneteket a Yuvának. Megosztott postaládádban beszélgetésként jelenik meg, amelyre a csapatod válaszol."
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "Kód"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "Színek"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "Változások összehasonlítása"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "Összetevők"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "A shadcn/ui komponensei"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "Logó másolása névvel, SVG-ként"
 msgid "Copy SVG"
 msgstr "SVG másolása"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "Másold ki a csatorna nyilvános kulcsát. Nem titok."
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "Sötét"
 msgid "Dark theme"
 msgstr "Sötét téma"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "Alapértelmezett"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "Csökkent teljesítmény"
@@ -528,6 +565,10 @@ msgstr "Törlés"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "Kézbesíthetőség"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "Függőségek"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "Minden csatorna egy listába érkezik. A csapatod egyetlen, csevegőszer
 msgid "Every endpoint, to try."
 msgstr "Minden végpont, kipróbálásra."
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "A regiszter összes eleme, az oldalsáv szerint csoportosítva."
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "Minden címkének van angol alapértéke. Add át a labels objektum egy részét, ha módosítani vagy fordítani szeretnéd őket."
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "A Yuva minden része típusos szerződéssel és kis, dokumentált integrációval rendelkezik."
@@ -784,6 +833,10 @@ msgstr "Sötét háttérhez."
 msgid "For developers"
 msgstr "Fejlesztőknek"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "Beszélgetésekhez állítsd a csatorna beszélgetési módját moderated vagy open értékre. A feliratkozó űrlaphoz adj hozzá egy nyilvános levelezőlistát."
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "Befektetőknek"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "Galéria"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "Kezdés"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "Adj minden termék felhasználójának módot arra, hogy elérjen téged."
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "Add át a kulcsot és a Yuva-szervered címét a komponenseknek, például a környezetben:"
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "Szia! Mesélj egy kicsit magadról és arról, mi jár a fejedben."
 #: src/copy/status.ts
 msgid "History"
 msgstr "Előzmények"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "Hooks"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "Vizsgálat alatt"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "A Cloudflare irányítópultján nyisd meg a domainedet → Email → Email Routing, és kapcsold be. A Cloudflare hozzáadja a saját MX- és SPF-rekordjait."
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "A Yuva panelen nyisd meg a Beállítások, a postaládád és a Csatornák részt, és adj hozzá egy csevegőcsatornát."
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "A Yuvában nyisd meg a Beállítások → a postaládád → Csatornák → E-mail menüpontot, és add hozzá a támogatási címet. Állíts be egy titkot a szerveren, és indítsd újra:"
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "Tinta"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "Telepítsd a csevegőblokkot, majd rendereld:"
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "Telepítés"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "Az elem telepítése a következőket is hozzáadja."
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "Bevezetés"
@@ -1032,6 +1110,10 @@ msgstr "A tanúsítványokat automatikusan kiállítja és megújítja egy igén
 msgid "It does the rest with you."
 msgstr "A többit veled együtt elvégzi."
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "Elemek"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "Hagyd a logót úgy, ahogy van: ne változtasd meg az alakját, arányait vagy színeit."
@@ -1039,6 +1121,14 @@ msgstr "Hagyd a logót úgy, ahogy van: ne változtasd meg az alakját, arányai
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "a nevet magán, belső telepítésben megtartani, módosítva vagy anélkül."
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "Címke"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "Címkék"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "Nincs mit beállítani"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "Az értesítések a postaládája saját e-mail-csatornáján mennek ki, annak címéről, a lista tagjait pedig elkülönítve kezeljük a hírleveleitől."
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "npm-csomagok"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "minden beszélgetésről"
@@ -1477,6 +1571,10 @@ msgstr "További módok levelek behozatalára"
 msgid "Other ways to reach us"
 msgstr "További módok az elérésünkre"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "További Yuva-elemek"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "Általános állapot"
@@ -1484,6 +1582,10 @@ msgstr "Általános állapot"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Áttekintés"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "Csomagkezelő"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "Sajtó és arculat"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "Előnézet"
 
@@ -1593,6 +1696,14 @@ msgstr "Termékbemutató"
 msgid "Project"
 msgstr "Projekt"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "módosított verziót közzétenni a Yuva név alatt — nevezd át a forkodat;"
@@ -1616,6 +1727,10 @@ msgstr "Értékelések"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "Érd el a Yuva mögött álló embereket."
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "React-komponensek élő csevegéshez, dokumentációs oldalak beszélgetéseihez és levelezőlistákra feliratkozáshoz, a shadcn/ui-projektedbe másolva."
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "Kérés törzse"
 msgid "required"
 msgstr "kötelező"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "Követelmények"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "Cseréld le"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "RSS-hírcsatorna"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "Futtasd ezt egy shadcn-projektben. A fájlok a saját kódodba másolódnak."
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "A szerver és a panel AGPL-3.0, az SDK-k és az API-szerződés MIT."
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "Állítsd be néhány lépésben"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "Csatorna beállítása"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "Az események, amelyeket a Yuva a webhook-végpontjaidra küld, és mind
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Amikor az asszisztens először használja a Yuvát, a böngésződ megnyitja a Yuvát a bejelentkezéshez."
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "A címkék a(z) {title} oldalon vannak felsorolva."
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "A sor megjelenik és eltűnik az incidenssel."
@@ -2095,6 +2226,10 @@ msgstr "A panel mobilalkalmazásból küldött visszajelzésekkel: hibajelentés
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Az adattartalmak, amelyeket a Yuva a webhook-végpontjaidra küld."
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "Az előnézet mintaadatokon fut. Nem kell hozzá hálózat vagy csatorna."
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "A Yuva logója, színei és betűtípusa, cikkekhez, integrációkhoz é
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "A Yuva üzenetküldő panelje: e-mailes, élő chates és alkalmazásos beszélgetések egy listában, és egy chatként megnyitott beszélgetés csapatjegyzettel és egy asszisztens által megfogalmazott válasszal, amelyet egy csapattárs küld el."
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "A Yuva-regiszter komponensek és hookok készlete, amelyeket a shadcn CLI a projektedbe másol. A te témádat használják, a useyuva klienssel beszélnek a Yuvával, és szabadon szerkesztheted őket."
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "Az ő választásuk"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "Próbáld ki a Yuvát"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "Típus"
 
@@ -2219,6 +2359,10 @@ msgstr "A Routing rules alatt irányítsd minden támogatási címet a yuva-edge
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "elérhetőség"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "Használat"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "Yuva Email Worker a Cloudflare-hez"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "A Yuva megkeresi a címzett címéhez tartozó e-mail-csatornát, és az In-Reply-To és a References alapján abba a beszélgetésbe fűzi az üzenetet, amelyhez tartozik. Minden más új beszélgetést indít. A válasz újra megnyitja a beszélgetést."
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "Yuva a shadcn/ui-hoz"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

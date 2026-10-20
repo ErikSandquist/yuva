@@ -88,6 +88,10 @@ msgstr "Một thông báo chờ 60 giây để bạn có thể hoàn tác, và c
 msgid "A page stays private until you publish it, and your team previews it in the panel before that."
 msgstr "Trang vẫn ở chế độ riêng tư cho đến khi bạn xuất bản, và nhóm của bạn xem trước trong bảng điều khiển trước đó."
 
+#: src/copy/shadcn.ts
+msgid "A project that already uses shadcn/ui, with React and Tailwind CSS."
+msgstr "Một dự án đã dùng shadcn/ui, với React và Tailwind CSS."
+
 #: src/copy/home.ts
 msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
 msgstr "Một trang công khai về tình trạng sản phẩm của bạn, trong cùng hộp thư với bộ phận hỗ trợ. Các lần kiểm tra giữ trang luôn cập nhật và người đăng ký biết qua e-mail."
@@ -104,6 +108,10 @@ msgstr "Trang trạng thái mẫu: trạng thái chung, một sự cố đang m�
 msgid "A small open-source Worker"
 msgstr "Một Worker mã nguồn mở nhỏ gọn"
 
+#: src/copy/shadcn.ts
+msgid "A Yuva chat channel and its public key (yuva_pk_…)."
+msgstr "Một kênh chat Yuva và khóa công khai của nó (yuva_pk_…)."
+
 #: src/copy/status.ts
 msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
 msgstr "Trang trạng thái Yuva cho biết sản phẩm của bạn có hoạt động không. Nó nằm trong hộp thư hỗ trợ của bạn, nên widget chat và ứng dụng hiện sự cố đang mở, và một phản hồi đến tất cả những người đã viết về nó."
@@ -111,6 +119,10 @@ msgstr "Trang trạng thái Yuva cho biết sản phẩm của bạn có hoạt 
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Câu trả lời được chấp nhận"
+
+#: src/copy/shadcn.ts
+msgid "Add every origin that will show the components as an allowed origin: your site and your development server."
+msgstr "Thêm mọi origin sẽ hiển thị các thành phần làm origin được phép: trang web và máy chủ phát triển của bạn."
 
 #: src/copy/status.ts
 msgid "Add it for a second row with each component's state."
@@ -131,6 +143,10 @@ msgstr "Thêm đoạn này vào .cursor/mcp.json trong dự án của bạn:"
 #: src/copy/ai.ts
 msgid "Add this to .vscode/mcp.json in your project:"
 msgstr "Thêm đoạn này vào .vscode/mcp.json trong dự án của bạn:"
+
+#: src/copy/shadcn.ts
+msgid "Add your first item"
+msgstr "Thêm mục đầu tiên của bạn"
 
 #: src/copy/ai.ts
 msgid "Add Yuva in your terminal:"
@@ -267,6 +283,10 @@ msgstr "Quay lại trang web"
 #: src/copy/home.ts
 msgid "before anything is sent"
 msgstr "trước khi bất cứ thứ gì được gửi đi"
+
+#: src/copy/shadcn.ts
+msgid "Blocks"
+msgstr "Khối"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -405,6 +425,10 @@ msgstr "Cloudflare, logo Cloudflare và Cloudflare Workers là nhãn hiệu và/
 msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 msgstr "Cloudflare® Email Routing nhận thư gửi đến các địa chỉ hỗ trợ của bạn, và Yuva Email Worker mã nguồn mở chuyển từng thư cho Yuva, kèm chữ ký. Thư đến hộp thư chung của bạn dưới dạng một cuộc trò chuyện mà nhóm bạn trả lời."
 
+#: src/copy/shadcn.ts
+msgid "Code"
+msgstr "Mã"
+
 #: src/copy/brand.ts
 msgid "Colours"
 msgstr "Màu sắc"
@@ -418,9 +442,14 @@ msgid "Compare changes"
 msgstr "So sánh thay đổi"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 #: src/copy/status.ts
 msgid "Components"
 msgstr "Thành phần"
+
+#: src/copy/shadcn.ts
+msgid "Components from shadcn/ui"
+msgstr "Thành phần của shadcn/ui"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -495,6 +524,10 @@ msgstr "Sao chép logo kèm tên dạng SVG"
 msgid "Copy SVG"
 msgstr "Sao chép SVG"
 
+#: src/copy/shadcn.ts
+msgid "Copy the channel's public key. It is not a secret."
+msgstr "Sao chép khóa công khai của kênh. Nó không phải bí mật."
+
 #: src/copy/home.ts
 #: src/copy/pages.ts
 #: src/copy/status.ts
@@ -517,6 +550,10 @@ msgstr "Tối"
 msgid "Dark theme"
 msgstr "Giao diện tối"
 
+#: src/copy/shadcn.ts
+msgid "Default"
+msgstr "Mặc định"
+
 #: src/copy/status.ts
 msgid "Degraded performance"
 msgstr "Hiệu năng suy giảm"
@@ -528,6 +565,10 @@ msgstr "Xóa"
 #: src/copy/home.ts
 msgid "Deliverability"
 msgstr "Khả năng gửi thư"
+
+#: src/copy/shadcn.ts
+msgid "Dependencies"
+msgstr "Phụ thuộc"
 
 #: src/copy/cloudflare-email.ts
 msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
@@ -716,6 +757,14 @@ msgstr "Mọi kênh đổ về một danh sách. Nhóm của bạn trả lời t
 msgid "Every endpoint, to try."
 msgstr "Mọi endpoint, để thử."
 
+#: src/copy/shadcn.ts
+msgid "Every item in the registry, grouped like the sidebar."
+msgstr "Mọi mục trong registry, nhóm như thanh bên."
+
+#: src/copy/shadcn.ts
+msgid "Every label has an English default. Pass a partial labels object to change or translate them."
+msgstr "Mỗi nhãn có mặc định tiếng Anh. Truyền một đối tượng labels một phần để đổi hoặc dịch chúng."
+
 #: src/copy/home.ts
 msgid "Every part of Yuva has a typed contract and a small, documented integration."
 msgstr "Mỗi phần của Yuva có một hợp đồng định kiểu và một tích hợp nhỏ gọn có tài liệu."
@@ -784,6 +833,10 @@ msgstr "Dành cho nền tối."
 msgid "For developers"
 msgstr "Dành cho nhà phát triển"
 
+#: src/copy/shadcn.ts
+msgid "For discussions, set the channel's discussions mode to moderated or open. For the subscribe form, add a public mailing list."
+msgstr "Với thảo luận, đặt chế độ thảo luận của kênh thành moderated hoặc open. Với biểu mẫu đăng ký, thêm một danh sách thư công khai."
+
 #: src/copy/contact.ts
 msgid "For investors"
 msgstr "Dành cho nhà đầu tư"
@@ -837,12 +890,17 @@ msgid "Gallery"
 msgstr "Thư viện"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Get started"
 msgstr "Bắt đầu"
 
 #: src/copy/home.ts
 msgid "Give every product's users a way to reach you."
 msgstr "Cho người dùng của mọi sản phẩm một cách để liên hệ với bạn."
+
+#: src/copy/shadcn.ts
+msgid "Give the key and the address of your Yuva server to the components, for example in the environment:"
+msgstr "Đưa khóa và địa chỉ máy chủ Yuva của bạn cho các thành phần, ví dụ trong biến môi trường:"
 
 #: src/copy/brand.ts
 msgid "Glow"
@@ -888,6 +946,10 @@ msgstr "Xin chào! Hãy kể đôi chút về bạn và điều bạn đang ngh�
 #: src/copy/status.ts
 msgid "History"
 msgstr "Lịch sử"
+
+#: src/copy/shadcn.ts
+msgid "Hooks"
+msgstr "Hook"
 
 #: src/copy/home.ts
 msgid "Hosted"
@@ -977,6 +1039,10 @@ msgstr "Đang điều tra"
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Trong bảng điều khiển Cloudflare, mở tên miền của bạn → Email → Email Routing và bật nó lên. Cloudflare thêm các bản ghi MX và SPF của nó."
 
+#: src/copy/shadcn.ts
+msgid "In the Yuva panel, open Settings, your inbox, Channels, and add a chat channel."
+msgstr "Trong bảng điều khiển Yuva, mở Cài đặt, hộp thư của bạn, Kênh, rồi thêm một kênh chat."
+
 #: src/copy/cloudflare-email.ts
 msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 msgstr "Trong Yuva, mở Cài đặt → hộp thư của bạn → Kênh → Email và thêm địa chỉ hỗ trợ. Đặt một khóa bí mật trên máy chủ và khởi động lại nó:"
@@ -1012,6 +1078,18 @@ msgstr "HTTP"
 msgid "Ink"
 msgstr "Mực"
 
+#: src/copy/shadcn.ts
+msgid "Install the chat block, then render it:"
+msgstr "Cài khối chat, rồi hiển thị nó:"
+
+#: src/copy/shadcn.ts
+msgid "Installation"
+msgstr "Cài đặt"
+
+#: src/copy/shadcn.ts
+msgid "Installing this item also adds the following."
+msgstr "Cài mục này cũng sẽ thêm các mục sau."
+
 #: src/copy/docs.ts
 msgid "Introduction"
 msgstr "Giới thiệu"
@@ -1032,6 +1110,10 @@ msgstr "Chứng chỉ được cấp và gia hạn tự động, bởi một pro
 msgid "It does the rest with you."
 msgstr "Phần còn lại nó làm cùng bạn."
 
+#: src/copy/shadcn.ts
+msgid "Items"
+msgstr "Mục"
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "Giữ nguyên logo: không thay đổi hình dạng, tỷ lệ hay màu sắc."
@@ -1039,6 +1121,14 @@ msgstr "Giữ nguyên logo: không thay đổi hình dạng, tỷ lệ hay màu 
 #: src/copy/brand.ts
 msgid "keep the name in a private, internal deployment, modified or not."
 msgstr "giữ tên trong một bản triển khai nội bộ riêng tư, dù có chỉnh sửa hay không."
+
+#: src/copy/shadcn.ts
+msgid "Label"
+msgstr "Nhãn"
+
+#: src/copy/shadcn.ts
+msgid "Labels"
+msgstr "Nhãn"
 
 #: src/copy/home.ts
 msgid "Labels and canned replies"
@@ -1306,6 +1396,10 @@ msgstr "Không cần thiết lập gì"
 msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
 msgstr "Thông báo được gửi qua kênh e-mail riêng của hộp thư bạn, từ địa chỉ của nó, và những người trong danh sách được tách biệt khỏi bản tin của bạn."
 
+#: src/copy/shadcn.ts
+msgid "npm packages"
+msgstr "Gói npm"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "của mọi cuộc trò chuyện"
@@ -1477,6 +1571,10 @@ msgstr "Những cách khác để mang thư sang"
 msgid "Other ways to reach us"
 msgstr "Những cách khác để liên hệ với chúng tôi"
 
+#: src/copy/shadcn.ts
+msgid "Other Yuva items"
+msgstr "Các mục Yuva khác"
+
 #: src/copy/status.ts
 msgid "Overall state"
 msgstr "Trạng thái chung"
@@ -1484,6 +1582,10 @@ msgstr "Trạng thái chung"
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Tổng quan"
+
+#: src/copy/shadcn.ts
+msgid "Package manager"
+msgstr "Trình quản lý gói"
 
 #: src/pages/404.astro
 msgid "Page not found"
@@ -1546,6 +1648,7 @@ msgid "Press and brand"
 msgstr "Báo chí và thương hiệu"
 
 #: src/copy/home.ts
+#: src/copy/shadcn.ts
 msgid "Preview"
 msgstr "Xem trước"
 
@@ -1593,6 +1696,14 @@ msgstr "Tham quan sản phẩm"
 msgid "Project"
 msgstr "Dự án"
 
+#: src/copy/shadcn.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/copy/shadcn.ts
+msgid "Props"
+msgstr "Props"
+
 #: src/copy/brand.ts
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "phát hành một phiên bản đã chỉnh sửa dưới tên Yuva — hãy đổi tên bản fork của bạn;"
@@ -1616,6 +1727,10 @@ msgstr "Đánh giá"
 #: src/copy/header.ts
 msgid "Reach the people behind Yuva."
 msgstr "Liên hệ với những người đứng sau Yuva."
+
+#: src/copy/shadcn.ts
+msgid "React components for live chat, documentation page discussions and mailing list sign-up, copied into your shadcn/ui project."
+msgstr "Các thành phần React cho chat trực tiếp, thảo luận trên trang tài liệu và đăng ký danh sách thư, được sao chép vào dự án shadcn/ui của bạn."
 
 #: src/copy/contact.ts
 msgid "Read LICENSING.md"
@@ -1739,6 +1854,10 @@ msgstr "Nội dung yêu cầu"
 msgid "required"
 msgstr "bắt buộc"
 
+#: src/copy/shadcn.ts
+msgid "Requirements"
+msgstr "Yêu cầu"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -1770,6 +1889,10 @@ msgstr "Hãy xoay khóa"
 #: src/copy/pages.ts
 msgid "RSS feed"
 msgstr "Nguồn cấp RSS"
+
+#: src/copy/shadcn.ts
+msgid "Run this in a shadcn project. The files are copied into your own code."
+msgstr "Chạy lệnh này trong một dự án shadcn. Các tệp được sao chép vào mã của bạn."
 
 #: src/copy/brand.ts
 msgid "say that your product uses, integrates with or is built on Yuva;"
@@ -1872,6 +1995,10 @@ msgstr "Máy chủ và bảng điều khiển theo AGPL-3.0, SDK và hợp đồ
 #: src/copy/cloudflare-email.ts
 msgid "Set it up in a few steps"
 msgstr "Thiết lập chỉ trong vài bước"
+
+#: src/copy/shadcn.ts
+msgid "Set up a channel"
+msgstr "Thiết lập kênh"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -2068,6 +2195,10 @@ msgstr "Các sự kiện Yuva gửi đến endpoint webhook của bạn và payl
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Lần đầu trợ lý dùng Yuva, trình duyệt của bạn mở Yuva để đăng nhập."
 
+#: src/copy/shadcn.ts
+msgid "The labels are listed on {title}."
+msgstr "Các nhãn được liệt kê ở {title}."
+
 #: src/copy/status.ts
 msgid "The line appears and goes away with the incident."
 msgstr "Dòng này xuất hiện và biến mất cùng sự cố."
@@ -2095,6 +2226,10 @@ msgstr "Bảng điều khiển với phản hồi gửi từ ứng dụng di đ�
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Các payload Yuva gửi đến endpoint webhook của bạn."
+
+#: src/copy/shadcn.ts
+msgid "The preview runs on sample data. It needs no network and no channel."
+msgstr "Bản xem trước chạy trên dữ liệu mẫu. Không cần mạng hay kênh."
 
 #: src/copy/status.ts
 msgid "The public page"
@@ -2148,6 +2283,10 @@ msgstr "Logo, màu sắc và phông chữ của Yuva, sẵn sàng cho bài viế
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Bảng nhắn tin của Yuva: các cuộc trò chuyện từ email, chat trực tiếp và ứng dụng trong một danh sách, và một cuộc trò chuyện mở dạng chat, với ghi chú của nhóm và một câu trả lời trợ lý đã soạn để đồng nghiệp gửi."
 
+#: src/copy/shadcn.ts
+msgid "The Yuva registry is a set of components and hooks that the shadcn CLI copies into your project. They use your theme and talk to Yuva through the useyuva client, and they are yours to edit."
+msgstr "Registry của Yuva là một bộ thành phần và hook mà CLI shadcn sao chép vào dự án của bạn. Chúng dùng giao diện của bạn, trò chuyện với Yuva qua máy khách useyuva, và bạn tự do chỉnh sửa."
+
 #: src/copy/status.ts
 msgid "Their choice"
 msgstr "Lựa chọn của họ"
@@ -2197,6 +2336,7 @@ msgid "Try Yuva"
 msgstr "Dùng thử Yuva"
 
 #: src/copy/docs.ts
+#: src/copy/shadcn.ts
 msgid "Type"
 msgstr "Kiểu"
 
@@ -2219,6 +2359,10 @@ msgstr "Trong Routing rules, gửi mỗi địa chỉ hỗ trợ đến Worker y
 #: src/copy/status.ts
 msgid "uptime"
 msgstr "thời gian hoạt động"
+
+#: src/copy/shadcn.ts
+msgid "Usage"
+msgstr "Cách dùng"
 
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
@@ -2491,6 +2635,10 @@ msgstr "Yuva Email Worker cho Cloudflare"
 #: src/copy/cloudflare-email.ts
 msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 msgstr "Yuva tìm kênh email theo địa chỉ người nhận và gom thư theo In-Reply-To và References vào cuộc trò chuyện mà nó thuộc về. Mọi trường hợp khác bắt đầu một cuộc trò chuyện mới. Một câu trả lời mở lại cuộc trò chuyện."
+
+#: src/copy/shadcn.ts
+msgid "Yuva for shadcn/ui"
+msgstr "Yuva cho shadcn/ui"
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."

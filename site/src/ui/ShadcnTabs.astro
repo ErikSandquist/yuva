@@ -1,0 +1,31 @@
+---
+interface Props {
+  tabs: { id: string; label: string }[]
+  label: string
+  sync?: boolean
+  class?: string
+}
+
+const { tabs, label, sync = false, class: className } = Astro.props
+---
+
+<div data-tabs data-sync={sync ? "pm" : undefined} class={className}>
+  <div role="tablist" aria-label={label} class="flex gap-1 border-b border-rule">
+    {tabs.map((tab, i) => (
+      <button
+        type="button"
+        role="tab"
+        data-tab={tab.id}
+        aria-selected={String(i === 0)}
+        class="relative -mb-px h-9 px-3 text-sm text-ink-soft hover:text-ink aria-selected:font-medium aria-selected:text-ink aria-selected:after:absolute aria-selected:after:inset-x-0 aria-selected:after:bottom-0 aria-selected:after:h-0.5 aria-selected:after:bg-signal"
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+  {tabs.map((tab, i) => (
+    <div role="tabpanel" data-panel={tab.id} hidden={i !== 0}>
+      <slot name={tab.id} />
+    </div>
+  ))}
+</div>

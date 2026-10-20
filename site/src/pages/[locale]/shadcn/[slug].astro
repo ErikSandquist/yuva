@@ -1,0 +1,15 @@
+---
+import { defaultLocale, locales, type Locale } from "@/lib/routes"
+import { items, type Item } from "@/lib/shadcn"
+import ShadcnItemView from "@/views/ShadcnItemView.astro"
+
+export const getStaticPaths = () =>
+  locales
+    .filter((locale) => locale !== defaultLocale)
+    .flatMap((locale) => items().map((item) => ({ params: { locale, slug: item.name }, props: { item } })))
+
+const { locale } = Astro.params as { locale: Locale }
+const { item } = Astro.props as { item: Item }
+---
+
+<ShadcnItemView locale={locale} item={item} />

@@ -1,0 +1,85 @@
+---
+import { shadcnCopy } from "@/copy/shadcn"
+import { i18nFor } from "@/i18n"
+import ShadcnLayout from "@/layouts/ShadcnLayout.astro"
+import type { Locale } from "@/lib/routes"
+import { byGroup, groupOrder, shadcnHref } from "@/lib/shadcn"
+import ShadcnCode from "@/ui/ShadcnCode.astro"
+import ShadcnInstall from "@/ui/ShadcnInstall.astro"
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const t = shadcnCopy(i18nFor(locale))
+const i = t.intro
+const env = `NEXT_PUBLIC_YUVA_SERVER=https://support.example.com
+NEXT_PUBLIC_YUVA_CHANNEL=yuva_pk_xxxxxxxxxxxxxxxx`
+const first = `import { YuvaChat } from "@/components/yuva-chat"
+
+export function Support() {
+  return (
+    <YuvaChat
+      server={process.env.NEXT_PUBLIC_YUVA_SERVER}
+      channel={process.env.NEXT_PUBLIC_YUVA_CHANNEL}
+    />
+  )
+}`
+const headings = [
+  { id: "requirements", text: i.requirements },
+  { id: "channel", text: i.channel },
+  { id: "first", text: i.first },
+  { id: "items", text: i.items },
+]
+---
+
+<ShadcnLayout locale={locale} title={t.title} description={i.description} slug="" headings={headings}>
+  <div class="docs-body">
+    <p>{i.lead}</p>
+
+    <h2 id="requirements">{i.requirements}</h2>
+    <ul class="list-disc ps-6">
+      <li>{i.requireProject}</li>
+      <li>{i.requireChannel}</li>
+    </ul>
+
+    <h2 id="channel">{i.channel}</h2>
+    <ol class="list-decimal space-y-2 ps-6">
+      <li>{i.step1}</li>
+      <li>{i.step2}</li>
+      <li>{i.step3}</li>
+      <li>{i.step4}</li>
+    </ol>
+    <p class="mt-6 mb-4">{i.env}</p>
+    <ShadcnCode locale={locale} code={env} lang="sh" name=".env.local" />
+
+    <h2 id="first">{i.first}</h2>
+    <p class="mb-4">{i.firstLead}</p>
+    <ShadcnInstall locale={locale} name="yuva-chat" />
+    <div class="mt-4">
+      <ShadcnCode locale={locale} code={first} />
+    </div>
+
+    <h2 id="items">{i.items}</h2>
+    <p class="mb-6">{i.itemsLead}</p>
+    {groupOrder.map((g) => (
+      <>
+        <h3>{t.groups[g]}</h3>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {byGroup(g).map((item) => (
+            <li>
+              <a
+                class="block h-full rounded-xl border border-rule p-4 hover:bg-paper-deep"
+                href={shadcnHref(locale, `${item.name}/`)}
+              >
+                <span class="block font-medium">{item.title}</span>
+                <span class="mt-1 block font-mono text-xs text-ink-faint">{item.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+  </div>
+</ShadcnLayout>

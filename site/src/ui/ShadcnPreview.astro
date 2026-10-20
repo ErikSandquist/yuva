@@ -1,0 +1,65 @@
+---
+import { shadcnCopy } from "@/copy/shadcn"
+import { i18nFor } from "@/i18n"
+import type { Locale } from "@/lib/routes"
+import {
+  UseYuvaChatPreview,
+  YuvaChatComposerPreview,
+  YuvaChatConversationsPreview,
+  YuvaChatPreview,
+  YuvaChatThreadPreview,
+} from "@/shadcn/previews/chat"
+import {
+  UseYuvaDiscussionsPreview,
+  YuvaDiscussionComposerPreview,
+  YuvaDiscussionListPreview,
+  YuvaDiscussionsPreview,
+  YuvaDiscussionThreadPreview,
+  YuvaPageFeedbackPreview,
+} from "@/shadcn/previews/discussions"
+import { UseYuvaSubscribePreview, YuvaSubscribePreview } from "@/shadcn/previews/subscribe"
+import ShadcnCode from "@/ui/ShadcnCode.astro"
+import ShadcnTabs from "@/ui/ShadcnTabs.astro"
+
+interface Props {
+  locale: Locale
+  name: string
+  example: string
+}
+
+const { locale, name, example } = Astro.props
+const t = shadcnCopy(i18nFor(locale))
+---
+
+<ShadcnTabs
+  label={t.preview}
+  tabs={[
+    { id: "preview", label: t.preview },
+    { id: "code", label: t.code },
+  ]}
+>
+  <div slot="preview" class="mt-3">
+    <div
+      class="shadcn-theme flex min-h-80 items-center justify-center overflow-x-auto bg-background p-4 text-foreground sm:p-8"
+      style="background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 16px 16px;"
+    >
+      {name === "yuva-chat" && <YuvaChatPreview client:visible />}
+      {name === "yuva-chat-thread" && <YuvaChatThreadPreview client:visible />}
+      {name === "yuva-chat-composer" && <YuvaChatComposerPreview client:visible />}
+      {name === "yuva-chat-conversations" && <YuvaChatConversationsPreview client:visible />}
+      {name === "use-yuva-chat" && <UseYuvaChatPreview client:visible />}
+      {name === "yuva-discussions" && <YuvaDiscussionsPreview client:visible />}
+      {name === "yuva-discussion-list" && <YuvaDiscussionListPreview client:visible />}
+      {name === "yuva-discussion-thread" && <YuvaDiscussionThreadPreview client:visible />}
+      {name === "yuva-discussion-composer" && <YuvaDiscussionComposerPreview client:visible />}
+      {name === "yuva-page-feedback" && <YuvaPageFeedbackPreview client:visible />}
+      {name === "use-yuva-discussions" && <UseYuvaDiscussionsPreview client:visible />}
+      {name === "yuva-subscribe" && <YuvaSubscribePreview client:visible />}
+      {name === "use-yuva-subscribe" && <UseYuvaSubscribePreview client:visible />}
+    </div>
+    <p class="mt-2 text-xs text-ink-faint">{t.previewNote}</p>
+  </div>
+  <div slot="code" class="mt-3">
+    <ShadcnCode locale={locale} code={example} plain />
+  </div>
+</ShadcnTabs>

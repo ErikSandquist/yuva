@@ -1,0 +1,31 @@
+---
+import { Code } from "astro:components"
+import { docsCopy } from "@/copy/docs"
+import { i18nFor } from "@/i18n"
+import type { Locale } from "@/lib/routes"
+
+interface Props {
+  locale: Locale
+  code: string
+  lang?: string
+  name?: string
+  plain?: boolean
+}
+
+const { locale, code, lang = "tsx", name, plain = false } = Astro.props
+const d = docsCopy(i18nFor(locale))
+---
+
+<div data-code class:list={["overflow-hidden bg-paper-deep", plain ? "" : "rounded-xl border border-rule"]}>
+  <div class="flex items-center justify-between border-b border-rule px-4 py-2 text-xs text-ink-faint">
+    <span>{name ?? lang}</span>
+    <button
+      type="button"
+      data-copy-code
+      class="rounded-md px-2 py-1 font-medium text-ink-soft hover:bg-rule hover:text-ink"
+    >
+      {d.copy}
+    </button>
+  </div>
+  <Code code={code} lang={lang} themes={{ light: "github-light", dark: "github-dark" }} />
+</div>

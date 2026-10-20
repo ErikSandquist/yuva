@@ -1,0 +1,484 @@
+import fs from "node:fs"
+import path from "node:path"
+import ts from "typescript"
+import { localized, prefix, type Locale } from "./routes"
+
+export const REGISTRY_URL = "https://useyuva.com/r/"
+export const SHADCN_DOCS = "https://ui.shadcn.com/docs/components/"
+const source = path.resolve("../sdk/shadcn/registry/yuva")
+
+export const shadcnRoot = (locale: Locale) => `${prefix(locale)}/shadcn/`
+export const shadcnHref = (locale: Locale, rel = "") => `${shadcnRoot(locale)}${rel}`
+export const shadcnPaths = (rel = "") => localized(`/shadcn/${rel}`)
+
+export type Group = "blocks" | "components" | "hooks"
+export type Row = { name: string; type: string; optional: boolean }
+export type LabelRow = { key: string; value: string }
+export type Table = { id: string; title: string; rows: Row[] }
+
+type Spec = {
+  props?: { id: string; file: string; interface: string }[]
+  labels?: { file: string; interface: string; defaults: string; only?: RegExp }
+  labelsFrom?: string
+  usage: string
+  example: string
+}
+
+const chatEnv = `server={process.env.NEXT_PUBLIC_YUVA_SERVER}
+      channel={process.env.NEXT_PUBLIC_YUVA_CHANNEL}`
+const chatLabels = {
+  file: "lib/yuva-chat-utils.ts",
+  interface: "YuvaChatLabels",
+  defaults: "defaultYuvaChatLabels",
+}
+const discussionLabels = {
+  file: "lib/yuva-utils.ts",
+  interface: "YuvaDiscussionsLabels",
+  defaults: "defaultYuvaDiscussionsLabels",
+}
+const provider = (inner: string) => `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+
+export function Docs({ children }: { children: React.ReactNode }) {
+  return (
+    <YuvaDiscussionsProvider
+      server={process.env.NEXT_PUBLIC_YUVA_SERVER}
+      channel={process.env.NEXT_PUBLIC_YUVA_CHANNEL}
+    >
+      ${inner}
+    </YuvaDiscussionsProvider>
+  )
+}`
+
+export const specs: Record<string, Spec> = {
+  "yuva-chat": {
+    props: [{ id: "props", file: "components/yuva-chat.tsx", interface: "YuvaChatProps" }],
+    labels: chatLabels,
+    usage: `import { YuvaChat } from "@/components/yuva-chat"
+
+<YuvaChat server={server} channel={channel} />`,
+    example: `import { YuvaChat } from "@/components/yuva-chat"
+
+export function Support() {
+  return (
+    <YuvaChat
+      ${chatEnv}
+      className="h-[34rem]"
+    />
+  )
+}`,
+  },
+  "yuva-chat-thread": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-chat-thread.tsx",
+        interface: "YuvaChatThreadProps",
+      },
+    ],
+    labelsFrom: "yuva-chat",
+    usage: `import { YuvaChatThread } from "@/components/yuva-chat-thread"
+
+<YuvaChatThread chat={chat} />`,
+    example: `import { YuvaChatThread } from "@/components/yuva-chat-thread"
+import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+export function Thread({ id }: { id: string }) {
+  const chat = useYuvaChat({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+  const { loading, open } = chat
+
+  React.useEffect(() => {
+    if (!loading) void open(id)
+  }, [loading, open, id])
+
+  return (
+    <div className="flex h-96 flex-col rounded-xl border">
+      <YuvaChatThread chat={chat} />
+    </div>
+  )
+}`,
+  },
+  "yuva-chat-composer": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-chat-composer.tsx",
+        interface: "YuvaChatComposerProps",
+      },
+    ],
+    labelsFrom: "yuva-chat",
+    usage: `import { YuvaChatComposer } from "@/components/yuva-chat-composer"
+
+<YuvaChatComposer chat={chat} />`,
+    example: `import { YuvaChatComposer } from "@/components/yuva-chat-composer"
+import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+export function Composer() {
+  const chat = useYuvaChat({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+  return <YuvaChatComposer chat={chat} />
+}`,
+  },
+  "yuva-chat-conversations": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-chat-conversations.tsx",
+        interface: "YuvaChatConversationsProps",
+      },
+    ],
+    labelsFrom: "yuva-chat",
+    usage: `import { YuvaChatConversations } from "@/components/yuva-chat-conversations"
+
+<YuvaChatConversations chat={chat} onOpen={(id) => setView("thread")} />`,
+    example: `import { YuvaChatConversations } from "@/components/yuva-chat-conversations"
+import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+export function Conversations() {
+  const chat = useYuvaChat({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+  return <YuvaChatConversations chat={chat} />
+}`,
+  },
+  "use-yuva-chat": {
+    props: [
+      { id: "options", file: "hooks/use-yuva-chat.tsx", interface: "UseYuvaChatOptions" },
+      { id: "returns", file: "hooks/use-yuva-chat.tsx", interface: "YuvaChatState" },
+    ],
+    usage: `import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+const chat = useYuvaChat({ server, channel })`,
+    example: `import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+export function Inbox() {
+  const chat = useYuvaChat({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+
+  return (
+    <ul>
+      {chat.conversations.map((conversation) => (
+        <li key={conversation.id}>
+          <button onClick={() => void chat.open(conversation.id)}>{conversation.subject}</button>
+        </li>
+      ))}
+    </ul>
+  )
+}`,
+  },
+  "yuva-discussions": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-discussions.tsx",
+        interface: "YuvaDiscussionsProps",
+      },
+    ],
+    labels: discussionLabels,
+    usage: `import { YuvaDiscussions } from "@/components/yuva-discussions"
+
+<YuvaDiscussions server={server} channel={channel} />`,
+    example: `import { YuvaDiscussions } from "@/components/yuva-discussions"
+
+export function PageDiscussions({ title }: { title: string }) {
+  return (
+    <YuvaDiscussions
+      ${chatEnv}
+      pageTitle={title}
+    />
+  )
+}`,
+  },
+  "yuva-discussion-list": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-discussion-list.tsx",
+        interface: "YuvaDiscussionListProps",
+      },
+    ],
+    labelsFrom: "yuva-discussions",
+    usage: `import { YuvaDiscussionList } from "@/components/yuva-discussion-list"
+
+<YuvaDiscussionList page={page} onSelect={(discussion) => setId(discussion.id)} />`,
+    example: provider(
+      `<YuvaDiscussionList page="/docs/getting-started" onSelect={(discussion) => console.log(discussion.id)} />`
+    ).replace(
+      "import { YuvaDiscussionsProvider }",
+      'import { YuvaDiscussionList } from "@/components/yuva-discussion-list"\nimport { YuvaDiscussionsProvider }'
+    ),
+  },
+  "yuva-discussion-thread": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-discussion-thread.tsx",
+        interface: "YuvaDiscussionThreadProps",
+      },
+    ],
+    labelsFrom: "yuva-discussions",
+    usage: `import { YuvaDiscussionThread } from "@/components/yuva-discussion-thread"
+
+<YuvaDiscussionThread id={id} onBack={() => setId(null)} />`,
+    example: provider(`<YuvaDiscussionThread id={id} />`).replace(
+      "import { YuvaDiscussionsProvider }",
+      'import { YuvaDiscussionThread } from "@/components/yuva-discussion-thread"\nimport { YuvaDiscussionsProvider }'
+    ),
+  },
+  "yuva-discussion-composer": {
+    props: [
+      {
+        id: "composer",
+        file: "components/yuva-discussion-composer.tsx",
+        interface: "YuvaDiscussionComposerProps",
+      },
+      {
+        id: "sign-in",
+        file: "components/yuva-discussion-composer.tsx",
+        interface: "YuvaSignInProps",
+      },
+    ],
+    labelsFrom: "yuva-discussions",
+    usage: `import { YuvaDiscussionComposer } from "@/components/yuva-discussion-composer"
+
+<YuvaDiscussionComposer withTitle onSubmit={async ({ title, body }) => {}} />`,
+    example: provider(
+      `<YuvaDiscussionComposer withTitle onSubmit={async ({ title, body }) => save(title, body)} />`
+    ).replace(
+      "import { YuvaDiscussionsProvider }",
+      'import { YuvaDiscussionComposer } from "@/components/yuva-discussion-composer"\nimport { YuvaDiscussionsProvider }'
+    ),
+  },
+  "yuva-page-feedback": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-page-feedback.tsx",
+        interface: "YuvaPageFeedbackProps",
+      },
+    ],
+    labels: { ...discussionLabels, only: /^feedback/ },
+    usage: `import { YuvaPageFeedback } from "@/components/yuva-page-feedback"
+
+<YuvaPageFeedback />`,
+    example: provider(`<YuvaPageFeedback pageTitle="Getting started" />`).replace(
+      "import { YuvaDiscussionsProvider }",
+      'import { YuvaPageFeedback } from "@/components/yuva-page-feedback"\nimport { YuvaDiscussionsProvider }'
+    ),
+  },
+  "use-yuva-discussions": {
+    props: [
+      {
+        id: "provider",
+        file: "hooks/use-yuva-discussions.tsx",
+        interface: "YuvaDiscussionsProviderProps",
+      },
+      { id: "list", file: "hooks/use-yuva-discussions.tsx", interface: "DiscussionsResult" },
+      { id: "one", file: "hooks/use-yuva-discussions.tsx", interface: "DiscussionResult" },
+      { id: "reader", file: "hooks/use-yuva-discussions.tsx", interface: "YuvaReaderState" },
+    ],
+    labels: discussionLabels,
+    usage: `import { useDiscussions, YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+
+const { discussions, loading } = useDiscussions(page, "top")`,
+    example: `import { useDiscussions, YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+
+function Titles() {
+  const { discussions, loading } = useDiscussions("/docs/getting-started", "top")
+  if (loading) return null
+  return (
+    <ul>
+      {discussions.map((discussion) => (
+        <li key={discussion.id}>{discussion.title}</li>
+      ))}
+    </ul>
+  )
+}
+
+export function Docs() {
+  return (
+    <YuvaDiscussionsProvider
+      ${chatEnv}
+    >
+      <Titles />
+    </YuvaDiscussionsProvider>
+  )
+}`,
+  },
+  "yuva-subscribe": {
+    props: [{ id: "props", file: "components/yuva-subscribe.tsx", interface: "YuvaSubscribeProps" }],
+    labels: {
+      file: "components/yuva-subscribe.tsx",
+      interface: "YuvaSubscribeLabels",
+      defaults: "defaultYuvaSubscribeLabels",
+    },
+    usage: `import { YuvaSubscribe } from "@/components/yuva-subscribe"
+
+<YuvaSubscribe server={server} channel={channel} />`,
+    example: `import { YuvaSubscribe } from "@/components/yuva-subscribe"
+
+export function Newsletter() {
+  return (
+    <YuvaSubscribe
+      ${chatEnv}
+      name="optional"
+      privacyUrl="/privacy"
+    />
+  )
+}`,
+  },
+  "use-yuva-subscribe": {
+    props: [
+      { id: "options", file: "hooks/use-yuva-subscribe.tsx", interface: "UseYuvaSubscribeOptions" },
+      { id: "returns", file: "hooks/use-yuva-subscribe.tsx", interface: "YuvaSubscribeState" },
+    ],
+    usage: `import { useYuvaSubscribe } from "@/hooks/use-yuva-subscribe"
+
+const { lists, states, subscribe, setSubscribed } = useYuvaSubscribe({ server, channel })`,
+    example: `import { useYuvaSubscribe } from "@/hooks/use-yuva-subscribe"
+
+export function Lists() {
+  const { lists, states, setSubscribed } = useYuvaSubscribe({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+
+  return (
+    <ul>
+      {lists.map((list) => (
+        <li key={list.id}>
+          {list.name}
+          <button onClick={() => void setSubscribed(list.id, states[list.id] !== "subscribed", "I agree")}>
+            {states[list.id] === "subscribed" ? "Unsubscribe" : "Subscribe"}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}`,
+  },
+}
+
+export type Item = {
+  name: string
+  group: Group
+  title: string
+  description: string
+  dependencies: string[]
+  shadcn: string[]
+  yuva: string[]
+  files: string[]
+  usage: string
+  example: string
+}
+
+type RegistryItem = {
+  name: string
+  type: string
+  title: string
+  description: string
+  dependencies?: string[]
+  registryDependencies?: string[]
+  files: { path: string }[]
+}
+
+const groupOf = (type: string): Group =>
+  type === "registry:block" ? "blocks" : type === "registry:hook" ? "hooks" : "components"
+export const groupOrder: Group[] = ["blocks", "components", "hooks"]
+
+const order = Object.keys(specs)
+let cachedItems: Item[] | undefined
+
+export function items(): Item[] {
+  cachedItems ??= (
+    JSON.parse(fs.readFileSync(path.resolve("../sdk/shadcn/registry.json"), "utf8")).items as RegistryItem[]
+  )
+    .map((entry) => {
+      const spec = specs[entry.name]
+      if (!spec) throw new Error(`shadcn: no docs for registry item ${entry.name}`)
+      const deps = entry.registryDependencies ?? []
+      return {
+        name: entry.name,
+        group: groupOf(entry.type),
+        title: entry.title,
+        description: entry.description,
+        dependencies: entry.dependencies ?? [],
+        shadcn: deps.filter((d) => !d.startsWith("http")),
+        yuva: deps.filter((d) => d.startsWith(REGISTRY_URL)).map((d) => d.slice(REGISTRY_URL.length, -".json".length)),
+        files: entry.files.map((f) => f.path.replace(/^registry\/yuva\//, "")),
+        usage: spec.usage,
+        example: spec.example,
+      }
+    })
+    .sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name))
+  return cachedItems
+}
+
+export const byGroup = (group: Group) => items().filter((i) => i.group === group)
+export const installCommands = (name: string) => {
+  const url = `${REGISTRY_URL}${name}.json`
+  return [
+    { id: "npm", command: `npx shadcn@latest add ${url}` },
+    { id: "pnpm", command: `pnpm dlx shadcn@latest add ${url}` },
+    { id: "yarn", command: `yarn dlx shadcn@latest add ${url}` },
+    { id: "bun", command: `bunx --bun shadcn@latest add ${url}` },
+  ]
+}
+
+const parsed = new Map<string, ts.SourceFile>()
+function parse(file: string) {
+  let sf = parsed.get(file)
+  if (!sf) {
+    const full = path.join(source, file)
+    sf = ts.createSourceFile(full, fs.readFileSync(full, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+    parsed.set(file, sf)
+  }
+  return sf
+}
+
+function interfaceOf(file: string, name: string) {
+  const found = parse(file).statements.find(
+    (s): s is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(s) && s.name.text === name
+  )
+  if (!found) throw new Error(`shadcn: ${name} not found in ${file}`)
+  return found
+}
+
+const squash = (text: string) => text.replace(/\s+/g, " ").trim()
+
+export function propTables(name: string): Table[] {
+  return (specs[name]?.props ?? []).map(({ id, file, interface: iface }) => ({
+    id,
+    title: iface,
+    rows: interfaceOf(file, iface)
+      .members.filter(
+        (m): m is ts.PropertySignature | ts.MethodSignature => ts.isPropertySignature(m) || ts.isMethodSignature(m)
+      )
+      .map((m) => {
+        const key = m.name.getText()
+        const type = ts.isMethodSignature(m)
+          ? `${m.typeParameters ? `<${m.typeParameters.map((t) => t.getText()).join(", ")}>` : ""}(${m.parameters.map((p) => p.getText()).join(", ")}) => ${m.type?.getText() ?? "void"}`
+          : (m.type?.getText() ?? "unknown")
+        return { name: key, type: squash(type), optional: !!m.questionToken }
+      }),
+  }))
+}
+
+export function labelRows(name: string): { owner: string; rows: LabelRow[] } | null {
+  const spec = specs[name]
+  const owner = spec?.labels ? name : spec?.labelsFrom
+  const labels = owner ? specs[owner]?.labels : undefined
+  if (!owner || !labels) return null
+  const decl = parse(labels.file)
+    .statements.flatMap((s) => (ts.isVariableStatement(s) ? s.declarationList.declarations : []))
+    .find((d) => d.name.getText() === labels.defaults)
+  const object = decl?.initializer
+  if (!object || !ts.isObjectLiteralExpression(object)) throw new Error(`shadcn: ${labels.defaults} not found`)
+  const rows = object.properties
+    .filter((p): p is ts.PropertyAssignment => ts.isPropertyAssignment(p))
+    .map((p) => ({ key: p.name.getText(), value: squash(p.initializer.getText()) }))
+    .filter((r) => !labels.only || labels.only.test(r.key))
+  return { owner, rows }
+}
