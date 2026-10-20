@@ -394,3 +394,36 @@ on a server behind Cloudflare with the custom hostname active; an unverified or 
 from the check and is not (or no longer) a custom hostname.
 
 Status: done, issue #100; verified on 2026-10-19 at `9290284`: behind Caddy on demand, and on useyuva.com with a Cloudflare custom hostname and certificate active.
+
+## M20 — Help center
+
+Status: planned; decisions in `architecture.md` › Help center (M20).
+
+- Help centers per inbox with collections and articles written in Markdown in the panel, drafts,
+  revisions, publishing and translations per locale; scopes `help:read`, `help:write`,
+  `help:publish`; owners and admins publish, agents write drafts, and the center setting
+  `agents_may_publish` lets agents publish; events and webhook types; MCP tools that search and
+  draft and never publish.
+- Public help pages rendered by the server at `/help/{slug}` (or `YUVA_HELP_URL`) with search,
+  collections, articles, "Was this helpful?", hreflang and a sitemap; en, tr, de words; cache and
+  rate limits. Own domains are a later step, as are help-article imports from Zendesk and Help Scout.
+- Postgres full-text search per language with prefix matching, shared by the pages, the widget, the
+  panel and MCP.
+- `/client/v1/channels/{key}/help*`: Home search and a Help app in `<yuva-chat>` with best matches for
+  the page, collections, the article view and "Was this helpful?"; shadcn registry items.
+- Article cards: members send an article in a conversation; chat and app show a card, e-mail a link.
+- A Help report: top articles, helpful share, conversations started from an article, searches with no
+  result.
+
+Accept: an owner creates a help center for an inbox, a member writes an article in English with an
+image, saves a draft and cannot publish it, an owner publishes it, then a Turkish translation is added
+and published; signed out, `/help/{slug}/en/` and `/help/{slug}/tr/` show it with hreflang links, and
+a search for a word in it and for the first letters of a word in it finds it in each language; an
+unpublished article answers 404; with `agents_may_publish` on, an agent publishes; on a test page
+`<yuva-chat>` shows Home search and the Help tile, finds the article, opens it, counts a "yes", and a
+visitor who then writes from the article starts a conversation that the panel shows with the article
+and that the report counts; a member sends the article in a chat conversation and in an e-mail
+conversation, and the widget shows a card and the mail a link; a search with no result appears in the
+report the next minute without the visitor's address or any id; Claude Code drafts an article through
+MCP and cannot publish it; an agent of another inbox and another workspace see none of it in the
+panel, the API or MCP; 31 searches in a minute from one address get `429`.

@@ -16,13 +16,14 @@ database.
 - Typed everywhere: OpenAPI 3.1 is the contract; clients are generated from it.
 - Ready to be hosted for others: every row belongs to a workspace and usage is counted from day one.
 
-Not goals: a CRM, a marketing automation suite (journeys, A/B tests, lead scoring), a public knowledge base, social-media channels
+Not goals: a CRM, a marketing automation suite (journeys, A/B tests, lead scoring), social-media channels
 (WhatsApp, Instagram, …). They may come later; the model must not block them. Yuva does not host
-documentation, but it collects feedback and questions on the documentation sites products already
+product documentation, but it collects feedback and questions on the documentation sites products already
 have (see "Documentation pages"). Since M13 it sends broadcasts (newsletters, announcements) to
 contacts who subscribed, and replies to them land in the inbox (see "Broadcasts and e-mail designs").
 Since M15 it measures the workspace's own websites and apps without cookies, for the team and in
-aggregate with support (see "Analytics").
+aggregate with support (see "Analytics"). Since M20 it hosts help centers, the support
+articles of a product next to the documentation on its own site (see "Help center").
 
 ## Concepts
 
@@ -2392,6 +2393,147 @@ incident before a customer writes, and the conversations an outage brings are an
   `status_notice_deliveries.header_message_id`, unique across the server. Everything after those lookups is scoped by the workspace
   they returned.
 
+### Help center (M20)
+
+A workspace answers common questions once, in writing, where customers look first: a public help
+center per product with collections and articles in several languages, searched from a page, from the
+widget's Home and from the inbox's composer. Yuva hosts these support articles; product documentation
+stays on the products' own sites (see "Documentation pages"). Being the support inbox is the point:
+a visitor finds the answer before writing, a member sends an article as a card instead of retyping it,
+and the searches that found nothing say which article to write next.
+
+- **Concepts.** A *help center* belongs to an inbox (one per inbox at most) and has a public slug, the
+  locales it publishes and `published`. A *collection* groups articles, with one level of
+  sub-collections at most. An *article* belongs to one collection or none and has one *translation* per
+  locale; a translation has a working draft and, once published, a frozen published copy. A *card* is
+  an article sent in a conversation.
+- **Tables.** Every table carries `workspace_id` with composite foreign keys `(workspace_id, x_id)`.
+  - `help_centers`: `inbox_id` (unique per workspace), name, description, `slug` (unique across the
+    server, `a-z0-9-`, 3-48, the reserved words of status pages), `default_locale`, `locales` (1-20),
+    logo, accent colour, site link, `chat_channel_id` (the chat the public pages embed under "Still
+    need help?"), `analytics_property_id`, `agents_may_publish` (default false), `published`, and
+    `changed_at`, moved by every change the public side shows (the cache key). `help_center_slugs`
+    keeps former slugs, which answer `301` as with status pages.
+  - `help_collections` (center, `parent_id`, a per-center `number` for URLs, a fixed-set `icon`,
+    `position`) and `help_collection_translations` (locale, name, description, slug). A collection with
+    no published article in a locale is hidden in that locale.
+  - `help_articles` (center, collection, per-center `number`, `position`, up to 20 `paths` patterns
+    such as `/billing/*` where the widget suggests it, creator) and `help_article_translations` keyed
+    by `(article, locale)`: draft `title` (3-200), `body` (Markdown, 100,000 characters), `keywords`
+    and `slug`; `version` (writes carry `base_version`, `409 version_conflict`); the `email_images`
+    the draft uses; the frozen `published_*` copy with `published_html` rendered once at publish and an
+    excerpt; `has_unpublished_changes`; and a `search` tsvector generated from the published copy with
+    the configuration of the locale (title weight A, keywords B, body C, `İ`/`ı` folded).
+  - `help_article_revisions`: snapshots of title, body and keywords (kind `save`, at most one per 10
+    minutes per author, `publish`, `restore`), the newest 50 per article and locale are kept.
+  - `help_article_daily` (views, helpful up and down, conversations started, times sent as a card)
+    and `help_search_daily` (normalized query, searches, searches without result, clicks): counters
+    per day, without any visitor data; 25 months and 90 days.
+  - `messages.help_cards` (up to 3 snapshots taken at send time) and `conversations.help_article_id`
+    (the article read just before the conversation was started from it).
+- **Writing and publishing.** Agents with access to the inbox write drafts, collections and
+  translations. Publishing, unpublishing, deleting a published article and the center's settings are
+  for owners and admins, unless the center's `agents_may_publish` is on, which lets agents with
+  inbox access publish too. MCP and OAuth tokens never publish, whatever the setting. A save needs
+  `base_version`; another member's open editor is told by a realtime-only signal that the article
+  changed elsewhere. Publishing freezes the draft, renders it, moves `changed_at` and stores an event
+  (`help.article.published`, `.unpublished`, `.deleted`, also webhook types). Translations exist only
+  in the center's locales. The editor shows the default-locale text beside the one being translated,
+  marks translations that are older than the default and lists the missing ones; Yuva runs no
+  translation model.
+- **Endpoints.** Tag `help`. Members, under `/v1/help-centers`: centers (list, create, update, delete,
+  a preview rendered for a sandboxed frame), collections, articles (list with filters for collection,
+  locale and state `draft`, `published`, `changed` or `missing`), `PUT` and `DELETE` of a translation,
+  `publish` and `unpublish`, revisions with restore into the draft, a Markdown render for the editor,
+  image upload into `email_images` (same rules and size cap), search (with drafts for members) and a
+  report (7, 30 or 90 days: top articles, helpful share, conversations started, searches, queries
+  without result, articles with most "no"). `POST /v1/conversations/{id}/messages` takes
+  `article_ids` (up to 3 published articles). The client side, for `chat` and `app` channel keys under
+  `/client/v1/channels/{channel_key}/help`: the center with collections, best matches for the page
+  and popular articles; `search`; collections; articles (with the locale actually served, falling back
+  to the default, and related articles); `reactions`; and `searches/click`. Browsers need an allowed
+  origin; nothing creates a contact; `404 help_off` without a published center. `ClientInbox.help`
+  (`url`, `locales`, `default_locale`) is present only with a published center, and the Help tile and
+  the Home search show only then. `ClientMessage.cards` carries article cards, and
+  `ClientConversationCreate.help_article_id` is kept only for a published article of the inbox's
+  center and dropped silently otherwise.
+- **Scopes and access.** `help:read`, `help:write` and `help:publish` are API key scopes. The first
+  two go to keys made after M20 without named scopes; `help:publish` is not implied and must be named
+  (like `status:manage`); no existing key gains any. Key inbox limits and OAuth narrowing apply as
+  everywhere, and a center of another inbox answers `404`. The consent page does not offer
+  `help:publish` to agents.
+- **Public pages.** Rendered by the server with `html/template`, no JavaScript needed, in the style of
+  status pages and sharing their fonts, CSP builder and cache with them: `/help/{slug}` (or under
+  `YUVA_HELP_URL`, an origin served by the same server, as `YUVA_STATUS_URL` works), then
+  `/{locale}/`, `/{locale}/collections/{number}-{slug}`, `/{locale}/articles/{number}-{slug}`,
+  `/{locale}/search?q=` and `/sitemap.xml`. A wrong slug in a URL answers `301` to the canonical one,
+  so a rename needs no slug history. There is no redirect from `Accept-Language`; every page has
+  `hreflang` alternates for its published translations, a canonical link, Open Graph tags and JSON-LD
+  `Article` and `BreadcrumbList`. An unpublished center or article answers `404` with the plain text
+  of status pages. "Was this helpful?" is two POST buttons that work without JavaScript. With a
+  `chat_channel_id` the page embeds `<yuva-chat>` under "Still need help?", and a conversation started
+  there carries the article.
+  Own domains (`help.example.com`) are not part of M20: generalising the status custom-domain machinery
+  (CNAME and TXT checks, the on-demand certificate check, Cloudflare custom hostnames) is a later step.
+- **Rendering.** One goldmark instance for members' content: GFM tables, strikethrough, autolinks,
+  heading ids (anchors and a table of contents from h2 and h3), fenced code without highlighting; raw
+  HTML is dropped. Images stay only when their URL is this server's `/i/{token}` of the same
+  workspace, else they become links. A bluemonday policy based on the discussions' one adds heading
+  ids, `loading="lazy"` on images and `rel="noopener"` on outside links. HTML is rendered once at
+  publish and stored.
+- **Search.** Postgres full-text search per language, shared by the pages, the widget, the panel and
+  MCP. The query is normalized, cut to 8 words of at most 50 characters and built as a `tsquery`
+  from parameters, never concatenated: every word ANDed and the last one a prefix for type-ahead;
+  when nothing matches it is tried again with OR and the results are marked `partial`. Ranking is
+  `ts_rank_cd` with the weights, a bonus for an exact title prefix and views over 30 days as a
+  tie-break. Highlights are word offsets computed on title and excerpt as plain text, never HTML.
+  The requested locale is searched, and the default locale too when the requested one has fewer than
+  3 published articles. A search runs with a 500 ms statement timeout on a partial GIN index of
+  published rows. Only a final search (Enter, a result opened, or 1.5 seconds without typing) is
+  counted; counts are buffered in process and flushed every minute, so a search never writes in its
+  request.
+- **Languages.** The panel's help screens have their own Lingui catalog, `help`, in every panel
+  language; the widget's Help app uses the existing `apps` catalog. Server pages have a word map per
+  language like status pages, complete in en, tr and de, with English as the fallback. The widget
+  picks its locale from the center's `locales` (exact, then base language, else the default); a page
+  uses the locale in its path.
+- **Caching.** An in-process cache per center, view, locale, id and query, keyed on `changed_at` with
+  a 5 minute TTL and a cap of 5,000 entries. Pages: `public, max-age=60, stale-while-revalidate=300,
+  stale-if-error=86400` with an `ETag`; client JSON `public, max-age=60`; reactions and clicks
+  `no-store`. Views are counted before the cache lookup, so cached answers count; answers served by
+  a CDN do not, and the report says views are approximate.
+- **Abuse limits.** Public pages 120 per minute per address; client search 30 per minute per address
+  and channel and 1,200 per minute per center (`429` with `Retry-After`); one counted view per
+  address, article and hour; reactions as `page-ratings` (per address and channel, `previous` moves the
+  count); search clicks 60 per minute per address; the editor preview 60 per minute per caller; at
+  most 3 cards per message; queries at most 200 characters. `YUVA_HELP_MAX_ARTICLES` caps articles
+  per workspace (unset: 500 with `YUVA_SIGNUP=open`, else no limit). `YUVA_HELP=off` removes the
+  feature: its routes answer `404` and the client inbox has no `help`. `usage_counters.help_searches`
+  counts searches per workspace and month.
+- **Cards.** The composer's Help button and `/` palette search articles; picking one adds a chip and
+  sending posts `article_ids`. The server checks each article is published, picks the locale (the
+  contact's, else the inbox's, else the center default), stores the snapshot in `messages.help_cards`
+  and counts `sent`. Chat and app get `cards` and the widget opens the article inside its Help app;
+  clients that do not know `cards` show the message body, whose last line is the URL. E-mail gets
+  "Title - URL" in the text part and a bordered block in the shared layout in the HTML part, without
+  tracking. A later unpublish leaves old messages readable; the link then shows the center's `404`
+  text.
+- **MCP.** Yuva's own shapes as for status pages. Article text written by members is not
+  `customer_content`; visitors' search queries are. Tools: `list_help_centers`, `search_help_articles`,
+  `get_help_article`, `help_search_gaps` (read-only; queries without result and articles with most
+  "no"), `draft_help_article` and `update_help_article_draft` (drafts only, `base_version`, a
+  `locale` lets an assistant write a translation draft; the result says a member publishes it in
+  Yuva), and `draft_reply` takes `article_ids`. Resource `yuva://help-center/{id}`; prompts
+  `write_help_article` and `help_gaps_review`. No tool publishes.
+- **Analytics.** A center with an `analytics_property_id` sends cookieless page views exactly as
+  status pages do; `analytics_daily_support` then counts conversations started on help pages next to
+  their views, with no new analytics table. Searches without result and conversations per article
+  are Yuva counters, not analytics events: they work without a property and never hold a visitor
+  hash. Whether the widget's Help app sends a `help_article_view` event to a linked property is
+  decided with the analytics architect before the widget step.
+- **Not in M20.** Own domains for help centers, and importing help articles from Zendesk or Help
+  Scout in "Moving to Yuva".
+
 ### Storage
 
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
@@ -2451,6 +2593,11 @@ now; per-channel limits can narrow them later.
 - Status page subscribers (M19) are subscriptions of a status list and follow the list rules above
   (pending ones after 30 days with the contacts only they created, unsubscribed ones after 3 years);
   notice deliveries and their addresses go after 90 days, the notice keeps its counts.
+- Help center (M20) counters hold no visitor data: `help_article_daily` counts views, ratings,
+  conversations and cards per article and day, and `help_search_daily` counts searches per normalized
+  query and day (kept 90 days; queries shaped like an e-mail address, a URL or a number are stored as
+  `(scrubbed)`), with no address, cookie, session or id. Articles and their revisions are the
+  workspace's content: workspace deletion takes them, and retention days do not apply.
 - Nothing is sent to third parties except what a channel is configured to send (SMTP, webhooks);
   the monthly GeoIP download from DB-IP fetches a file and sends nothing about anyone.
 
@@ -2485,6 +2632,10 @@ now; per-channel limits can narrow them later.
     in one query, and the notice sweep the due notices of every workspace), and an SES notification finds a notice delivery by
     `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is
     scoped by the workspace they returned.
+  - Help centers (M20): a public help page finds its center by `help_centers.slug` or a former slug in
+    `help_center_slugs`, both unique across the server (availability is checked against current and
+    former slugs of every workspace); everything after that lookup is scoped by the workspace it
+    returned. The in-process counter flush writes per workspace. No other exception.
   - The person-level identity tables `people`, `sessions`, `login_codes`, `passkeys`,
     `webauthn_ceremonies` and `push_subscriptions` (a browser's subscription follows the person
     into every workspace; the send job finds it by its id). A person signs in once and can be a member of several workspaces, so
