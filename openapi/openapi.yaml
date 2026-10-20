@@ -19545,9 +19545,10 @@ components:
           type: string
         rating:
           $ref: "#/components/schemas/PageRating"
+          description: The visitor's rating of the page the feedback follows.
         score:
           $ref: "#/components/schemas/FeedbackScore"
-          description: The visitor's rating of the page the feedback follows.
+          description: 1 (worst) to 5 (best), optional.
     FeedbackFields:
       type: object
       properties:

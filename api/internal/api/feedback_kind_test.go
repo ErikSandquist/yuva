@@ -268,22 +268,27 @@ func TestFeedbackScore(t *testing.T) {
 	scored := cs.expect(http.StatusCreated, "POST", "/client/v1/feedback", map[string]any{"category": "praise", "body": "great", "score": 4}).body["conversation"].(map[string]any)["id"].(string)
 	plain := cs.expect(http.StatusCreated, "POST", "/client/v1/feedback", map[string]any{"category": "bug", "body": "broken"}).body["conversation"].(map[string]any)["id"].(string)
 
-	var buf bytes.Buffer
-	mw := multipart.NewWriter(&buf)
-	for k, v := range map[string]string{"category": "idea", "body": "form", "score": "9"} {
-		_ = mw.WriteField(k, v)
+	form := func(score string) int {
+		var buf bytes.Buffer
+		mw := multipart.NewWriter(&buf)
+		for k, v := range map[string]string{"category": "idea", "body": "form", "score": score} {
+			_ = mw.WriteField(k, v)
+		}
+		_ = mw.Close()
+		req, _ := http.NewRequest("POST", h.url+"/client/v1/feedback", &buf)
+		req.Header.Set("Content-Type", mw.FormDataContentType())
+		req.Header.Set("Authorization", "Bearer "+cs.token)
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Body.Close()
+		return res.StatusCode
 	}
-	_ = mw.Close()
-	req, _ := http.NewRequest("POST", h.url+"/client/v1/feedback", &buf)
-	req.Header.Set("Content-Type", mw.FormDataContentType())
-	req.Header.Set("Authorization", "Bearer "+cs.token)
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res.Body.Close()
-	if res.StatusCode != http.StatusBadRequest {
-		t.Fatalf("multipart score 9: %d", res.StatusCode)
+	for score, want := range map[string]int{"9": http.StatusBadRequest, "0": http.StatusBadRequest, "x": http.StatusBadRequest, " 4 ": http.StatusCreated, "+3": http.StatusCreated} {
+		if got := form(score); got != want {
+			t.Fatalf("multipart score %q: %d, want %d", score, got, want)
+		}
 	}
 
 	score := func(c *client, id string) any {

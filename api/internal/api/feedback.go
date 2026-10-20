@@ -93,6 +93,22 @@ func emailsReplies(c store.Conversation, channelKind string) bool {
 	return false
 }
 
+func checkScore(n int64) error {
+	if n < 1 || n > 5 {
+		return errValidation("score must be an integer from 1 to 5")
+	}
+	return nil
+}
+
+func parseScore(v string) (*int32, error) {
+	n, err := strconv.ParseInt(strings.TrimSpace(v), 10, 32)
+	if err != nil {
+		return nil, errValidation("score must be an integer from 1 to 5")
+	}
+	n32 := int32(n)
+	return &n32, nil
+}
+
 func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientFeedbackRequestObject) (oas.CreateClientFeedbackResponseObject, error) {
 	cp := contactFrom(ctx)
 	if cp.kind != string(oas.ChannelKindApp) && cp.kind != string(oas.ChannelKindChat) {
@@ -144,13 +160,10 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 			page.rating = &r
 		}
 		if v, ok := in.extra["score"]; ok && strings.TrimSpace(v) != "" {
-			n, err := strconv.ParseInt(strings.TrimSpace(v), 10, 32)
-			if err != nil {
+			if score, err = parseScore(v); err != nil {
 				in.close()
-				return nil, errValidation("score must be an integer from 1 to 5")
+				return nil, err
 			}
-			n32 := int32(n)
-			score = &n32
 		}
 		if v, ok := in.extra["allow_email"]; ok {
 			if allowEmail, err = strconv.ParseBool(v); err != nil {
@@ -186,8 +199,8 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 		return nil, err
 	}
 	if score != nil {
-		if *score < 1 || *score > 5 {
-			return nil, errValidation("score must be an integer from 1 to 5")
+		if err := checkScore(int64(*score)); err != nil {
+			return nil, err
 		}
 		fb.Score = score
 	}

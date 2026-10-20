@@ -12009,8 +12009,9 @@ export interface components {
             /** @description Feedback sent from a documentation page; the URL without query and fragment. */
             page_url?: string;
             page_title?: string;
-            rating?: components["schemas"]["PageRating"];
             /** @description The visitor's rating of the page the feedback follows. */
+            rating?: components["schemas"]["PageRating"];
+            /** @description 1 (worst) to 5 (best), optional. */
             score?: components["schemas"]["FeedbackScore"];
         };
         FeedbackFields: {

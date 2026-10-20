@@ -11427,9 +11427,11 @@ type Feedback struct {
 
 	// Progress Set by a member with `PATCH /v1/conversations/{id}`; absent when nobody set it.
 	Progress *FeedbackProgress `json:"progress,omitempty"`
-	Rating   *PageRating       `json:"rating,omitempty"`
 
-	// Score The visitor's rating of the page the feedback follows.
+	// Rating The visitor's rating of the page the feedback follows.
+	Rating *PageRating `json:"rating,omitempty"`
+
+	// Score 1 (worst) to 5 (best), optional.
 	Score *FeedbackScore `json:"score,omitempty"`
 
 	// Screen The app screen or route the feedback was sent from.
