@@ -131,6 +131,8 @@ Zum Einbetten der Seite nehmen Sie einen `iframe`; um den Zustand anderswo zu ze
 curl -s https://support.example.com/client/v1/status/acme
 ```
 
+Die Inbox-Einstellungen, die ein Widget oder eine App lädt, tragen den Slug der verknüpften Seite als `status.slug`; so kann ein Client dieses JSON, auch auf einer eigenen Domain, abrufen, ohne den Slug vorher zu kennen.
+
 ## 5. Monitore: Heartbeat und Push
 
 Ein Monitor setzt den Zustand einer Komponente, ohne dass jemand Hand anlegt. Fügen Sie einen im Tab Monitore

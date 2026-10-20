@@ -158,7 +158,8 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | Tools | Scope |
 |---|---|
 | `get_setup_state`, `report_yuva_issue` | keiner; jede Verbindung |
-| `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts`, `list_feedback` | `conversations:read` |
+| `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts` | `conversations:read` |
+| `list_feedback` (mit `feedback_score`, 1 bis 5, wenn der Kontakt eine Bewertung gab) | `conversations:read` |
 | `list_inboxes` | `inboxes:read` |
 | `get_contact`, `lookup_contact` | `contacts:read` |
 | `draft_reply` | `messages:write` |

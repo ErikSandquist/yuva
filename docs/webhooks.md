@@ -42,7 +42,7 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `conversation.updated` | Status, assignee, priority, labels, subject or spam flag changed, or it moved | `conversation`, `contact` |
 | `conversation.rated` | The contact rated it (`conversation.rating`) | `conversation`, `contact` |
 | `message.created` | A message from or to the contact; notes if enabled | `message`, `conversation`, `contact` |
-| `feedback.created` | Feedback from an app or `POST /v1/feedback` | `message`, `conversation`, `contact` |
+| `feedback.created` | Feedback from an app or `POST /v1/feedback`; app feedback may carry `feedback.score`, 1 to 5 | `message`, `conversation`, `contact` |
 | `contact.updated` | A contact changed | `contact` |
 | `contact.deleted` | A contact was deleted, or merged (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | A [draft](headless.md#a-bot-that-answers-with-drafts) changed; sending it emits `message.created` | `message`, `conversation`, `contact` |

@@ -44,7 +44,7 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `conversation.updated` | Status, Zuständige, Priorität, Labels, Betreff oder Spam-Markierung haben sich geändert, oder sie wurde verschoben | `conversation`, `contact` |
 | `conversation.rated` | Der Kontakt hat sie bewertet (`conversation.rating`) | `conversation`, `contact` |
 | `message.created` | Eine Nachricht vom oder an den Kontakt; Notizen, wenn aktiviert | `message`, `conversation`, `contact` |
-| `feedback.created` | Feedback aus einer App oder über `POST /v1/feedback` | `message`, `conversation`, `contact` |
+| `feedback.created` | Feedback aus einer App oder über `POST /v1/feedback`; Feedback aus einer App kann `feedback.score` (1 bis 5) tragen | `message`, `conversation`, `contact` |
 | `contact.updated` | Ein Kontakt hat sich geändert | `contact` |
 | `contact.deleted` | Ein Kontakt wurde gelöscht oder zusammengeführt (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Ein [Entwurf](headless.md#ein-bot-der-antworten-entwirft) hat sich geändert; wird er gesendet, folgt `message.created` | `message`, `conversation`, `contact` |

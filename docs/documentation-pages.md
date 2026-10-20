@@ -294,7 +294,7 @@ channel's launcher colour; to use your own, set it with `!important`.
 | Endpoint | Used for |
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Count a rating. |
-| `POST /client/v1/feedback` | Send feedback with `page_url`, `page_title`, `rating`. |
+| `POST /client/v1/feedback` | Send feedback with `page_url`, `page_title`, `rating` and an optional `score` from 1 to 5. |
 | `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | A page's threads (cached for a minute without a token). |
 | `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | A thread with its replies. |
 | `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Start a thread, reply. |

@@ -299,7 +299,7 @@ renginden gelir; kendi renginizi kullanmak için `!important` ile atayın.
 | Uç nokta | Kullanıldığı yer |
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Bir değerlendirmeyi sayar. |
-| `POST /client/v1/feedback` | `page_url`, `page_title`, `rating` ile geri bildirim gönderir. |
+| `POST /client/v1/feedback` | `page_url`, `page_title`, `rating` ve isteğe bağlı, 1 ile 5 arasında bir `score` ile geri bildirim gönderir. |
 | `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | Bir sayfanın başlıkları (token olmadan bir dakika önbelleğe alınır). |
 | `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | Yanıtlarıyla bir başlık. |
 | `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Başlık açar, yanıt yazar. |

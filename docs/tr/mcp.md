@@ -156,7 +156,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | Araçlar | Yetki |
 |---|---|
 | `get_setup_state`, `report_yuva_issue` | yok; her bağlantı |
-| `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts`, `list_feedback` | `conversations:read` |
+| `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts` | `conversations:read` |
+| `list_feedback` (kişi verdiyse `feedback_score`, 1 ile 5, ile) | `conversations:read` |
 | `list_inboxes` | `inboxes:read` |
 | `get_contact`, `lookup_contact` | `contacts:read` |
 | `draft_reply` | `messages:write` |

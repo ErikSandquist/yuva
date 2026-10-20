@@ -127,6 +127,8 @@ To embed the page, put it in an `iframe`; to show its state elsewhere, use the b
 curl -s https://support.example.com/client/v1/status/acme
 ```
 
+The inbox settings a widget or app loads carry the linked page's slug as `status.slug`, so a client can fetch this JSON, also on a custom domain, without knowing the slug beforehand.
+
 ## 5. Heartbeat and push monitors
 
 A monitor sets a component's state without anyone's hand. Add one on the Monitors tab (owners and

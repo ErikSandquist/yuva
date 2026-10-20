@@ -129,6 +129,8 @@ Sayfayı gömmek için bir `iframe` kullanın; durumu başka yerde göstermek i�
 curl -s https://support.example.com/client/v1/status/acme
 ```
 
+Bir widget ya da uygulamanın yüklediği gelen kutusu ayarları, bağlı sayfanın slug değerini `status.slug` olarak taşır; istemci bu JSON'u, özel alan adında da, slug'ı önceden bilmeden alabilir.
+
 ## 5. Heartbeat ve push monitörleri
 
 Monitör, bir bileşenin durumunu kimse elini sürmeden ayarlar. Monitörler sekmesinde ekleyin (sahipler ve

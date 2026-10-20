@@ -305,7 +305,7 @@ kommt von der Launcher-Farbe des Kanals; für eine eigene setzen Sie sie mit `!i
 | Endpunkt | Verwendet für |
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Eine Bewertung zählen. |
-| `POST /client/v1/feedback` | Feedback mit `page_url`, `page_title`, `rating` senden. |
+| `POST /client/v1/feedback` | Feedback mit `page_url`, `page_title`, `rating` und einem optionalen `score` von 1 bis 5 senden. |
 | `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | Die Threads einer Seite (ohne Token eine Minute gecacht). |
 | `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | Ein Thread mit seinen Antworten. |
 | `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Einen Thread eröffnen, antworten. |

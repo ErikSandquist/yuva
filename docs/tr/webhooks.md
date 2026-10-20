@@ -44,7 +44,7 @@ göre sıralayın.
 | `conversation.updated` | Durum, atanan kişi, öncelik, etiketler, konu ya da spam işareti değişti veya konuşma taşındı | `conversation`, `contact` |
 | `conversation.rated` | Kişi konuşmayı değerlendirdi (`conversation.rating`) | `conversation`, `contact` |
 | `message.created` | Kişiden gelen ya da kişiye giden bir mesaj; açıksa notlar da | `message`, `conversation`, `contact` |
-| `feedback.created` | Bir uygulamadan ya da `POST /v1/feedback` ile gelen geri bildirim | `message`, `conversation`, `contact` |
+| `feedback.created` | Bir uygulamadan ya da `POST /v1/feedback` ile gelen geri bildirim; uygulamadan gelende `feedback.score` (1 ile 5) olabilir | `message`, `conversation`, `contact` |
 | `contact.updated` | Bir kişi değişti | `contact` |
 | `contact.deleted` | Bir kişi silindi ya da birleştirildi (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Bir [taslak](headless.md#taslakla-yanıtlayan-bot) değişti; gönderilmesi `message.created` üretir | `message`, `conversation`, `contact` |
