@@ -750,6 +750,17 @@ body is the members' replies) and push payloads stay text.
 loaded by one script tag. Two layouts: a floating launcher for websites, and `embedded` for an
 inline thread inside a product's own panel.
 
+- The panel is the "lined" design: rules 20px in from each side with a "+" where section rules meet
+  them, numbered mono section labels, Geist and Geist Mono when the host page loads them (else the
+  system fonts; the widget never fetches fonts), the channel's colour as accent, `prefers-color-scheme`
+  for light and dark. It opens on Home (availability, the latest conversation, a button for a new
+  message); a thread follows shadcn's message and bubble patterns. The e-mail confirmation card reads
+  `email_confirmation` on the client contact and the `contact.updated` frame: `sent` (until
+  `expires_at`, then it asks for the address again), `undeliverable` (an inline field to fix the
+  address) and `confirmed` (a quiet line).
+- Each panel language is its own content-hashed chunk (`/widget/yuva-panel-<locale>-<hash>.js`), so
+  `/yuva-chat.js` carries no catalog and a visitor downloads one.
+
 - The server hosts the widget scripts itself at `/yuva.js`, `/yuva-chat.js` and `/yuva-docs.js` (cached
   five minutes, ETag). What a script loads on first use (the discussion thread, composer and preview of
   `/yuva-docs.js`) is a content-hashed chunk at `/widget/<name>-<hash>.js`, cached as immutable; a

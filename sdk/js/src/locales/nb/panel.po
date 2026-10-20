@@ -8,10 +8,19 @@ msgstr ""
 "Language: nb\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} nye"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} skriver…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} ble med i samtalen"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Alle samtaler"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Legg ved filer"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Vedlegg"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Tilbake"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Dårlig"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Endre adresse"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "Chatten er ikke tilgjengelig akkurat nå."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Sjekk innboksen din"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Kommentar"
 msgid "Completed"
 msgstr "Fullført"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Fortsett"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Samtale"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Samtalen er avsluttet"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "E-postadresse"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Skriv inn en gyldig e-postadresse."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "Bra"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Hvordan kan vi hjelpe?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "Pågår"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "Undersøker"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "Gå til siste"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "Ikke sendt."
 msgid "Online"
 msgstr "Pålogget"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "Drevet av {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Kobler til igjen…"
@@ -135,6 +186,10 @@ msgstr "Kobler til igjen…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "Fjern {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Svar når også {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Send"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Send på nytt"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Send oss en melding"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Send oss en melding, så svarer vi her."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Hopp over"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Ta et skjermbilde"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Snakk med oss"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Takk for tilbakemeldingen"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Takk! Vi sender deg en e-post på {known} hvis du er borte når vi svarer."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Adressen tar ikke imot e-post. Sjekk for skrivefeil."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "Filen er for stor."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Denne filtypen godtas ikke."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "for å sende"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Skriver…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "Laster opp…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Svarer vanligvis innen {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "Vi kunne ikke nå {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "Vi har sendt en lenke til {address}. Åpne den, så når svarene deg også på e-post."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Vi har sendt den på nytt."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Du ser ut til å være frakoblet."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Du:"
 

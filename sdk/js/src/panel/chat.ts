@@ -1,6 +1,5 @@
-import { setupI18n, type I18n, type MessageDescriptor } from "@lingui/core"
+import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
-import { catalogs } from "../catalogs/panel"
 import { messages as en } from "../locales/en/panel"
 import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types"
 import {
@@ -15,14 +14,45 @@ import {
 } from "../client/api"
 import { createYuvaClient, randomId, type YuvaClient } from "../client/client"
 import { addStyles } from "../styles"
+import {
+  authorKey,
+  byActivity,
+  byCreated,
+  dayLabel,
+  el,
+  fileKind,
+  fileSize,
+  iconButton,
+  initialsOf,
+  isImage,
+  sameDay,
+  textButton,
+  time,
+} from "./helpers"
+import { canCapture, captureScreen } from "./capture"
+import { buildHome } from "./home"
+import { icons } from "./icons"
 import { styles } from "./styles"
 import { richText } from "./text"
+
+declare const YUVA_PANEL_LOCALES: string | undefined
+
+const loadMessages = (locale: string): Promise<Messages> =>
+  typeof YUVA_PANEL_LOCALES === "string"
+    ? import(/* @vite-ignore */ new URL(localeFile(YUVA_PANEL_LOCALES, locale), import.meta.url).href)
+        .then((module: { messages: Messages }) => module.messages)
+        .catch(() => en)
+    : import("../catalogs/panel").then((module) => module.catalogs[locale] ?? en)
+
+const localeFile = (map: string, locale: string): string =>
+  (JSON.parse(map) as Record<string, string>)[locale] ?? "about:blank"
 
 const impactRank = { none: 0, minor: 1, major: 2, critical: 3 }
 const maxFiles = 10
 const groupGap = 5 * 60_000
+const maxTimer = 2 ** 31 - 1
 
-type View = { kind: "list" } | { kind: "thread"; id: string | null }
+type View = { kind: "home" } | { kind: "list" } | { kind: "thread"; id: string | null }
 
 interface Pending {
   client_id: string
@@ -45,42 +75,9 @@ interface Thread {
   loading: boolean
 }
 
-const icons = {
-  close: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`,
-  back: `<svg class="flip" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>`,
-  attach: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5l-8.3 8.3a5 5 0 01-7-7L13 4.5a3.3 3.3 0 014.7 4.7l-8.3 8.3a1.7 1.7 0 01-2.4-2.4L14.5 7.6"/></svg>`,
-  send: `<svg class="flip" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4l17.5-7.5a1 1 0 000-1.8L3.4 3.6a1 1 0 00-1.4 1.2L4.5 12l-2.5 7.2a1 1 0 001.4 1.2zM4.5 12h7"/></svg>`,
-  file: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6v18h12V7z M14 3v4h4"/></svg>`,
-}
+type Entry = { kind: "message"; message: ClientMessage } | { kind: "pending"; pending: Pending }
 
-function el<K extends keyof HTMLElementTagNameMap>(
-  tag: K,
-  className?: string,
-  text?: string
-): HTMLElementTagNameMap[K] {
-  const element = document.createElement(tag)
-  if (className) element.className = className
-  if (text !== undefined) element.textContent = text
-  return element
-}
-
-function iconButton(icon: string, label: string, onClick: () => void, className = "icon"): HTMLButtonElement {
-  const button = el("button", className)
-  button.type = "button"
-  button.innerHTML = icon
-  button.setAttribute("aria-label", label)
-  button.title = label
-  button.addEventListener("click", onClick)
-  return button
-}
-
-const time = (value: string) => Date.parse(value)
-const byCreated = (a: ClientMessage, b: ClientMessage) => time(a.created_at) - time(b.created_at)
-const byActivity = (a: ClientConversation, b: ClientConversation) =>
-  time(b.last_message_at ?? b.created_at) - time(a.last_message_at ?? a.created_at)
-const authorKey = (m: ClientMessage) =>
-  m.author.type === "contact" ? "contact" : `${m.author.type}:${m.author.name ?? ""}`
-const isImage = (a: ClientAttachment) => /^image\/(png|jpeg|gif|webp)$/.test(a.content_type)
+type EmailMode = "sent" | "bad" | "ask" | "confirmed" | "saved"
 
 export class Chat implements PanelController {
   #host: PanelHost
@@ -107,26 +104,37 @@ export class Chat implements PanelController {
   #avatars = new Map<string, boolean>()
   #emailSaved = false
   #emailError = ""
+  #emailNote = ""
+  #emailEditing = false
+  #emailBusy = false
+  #emailKey = ""
+  #emailTimer: ReturnType<typeof setTimeout> | null = null
   #connectedBefore = false
   #ratings = new Map<string, RatingDraft>()
   #rateCard = el("div", "card rate")
   #rateComment = el("textarea")
   #rateKey = ""
   #rateFor: string | null = null
+  #missed = 0
+  #loaded = ""
+  ready: Promise<void>
 
   #header = el("header", "header")
   #banner = el("div", "banner")
   #body = el("div", "body")
   #scroll = el("div", "scroll")
   #notice = el("div", "notice")
-  #email = el("div", "card")
-  #emailInput = el("input")
-  #composer = el("div", "composer")
+  #email = el("div", "")
+  #emailInput = el("input", "field")
+  #composer = el("div", "sec composer")
   #chips = el("div", "chips")
   #textarea = el("textarea")
   #fileInput = el("input")
   #sendButton: HTMLButtonElement
   #attachButton: HTMLButtonElement
+  #shotButton: HTMLButtonElement
+  #jump = el("button", "jump")
+  #hint = el("span", "hintkey")
   #live = el("div", "sr")
   #scrollThread: string | null | undefined
   #atEnd = true
@@ -147,14 +155,23 @@ export class Chat implements PanelController {
       if (renewed) void this.#reload()
       else if (!this.#beginning) void this.#client.connect().catch(() => undefined)
     })
-    this.#setLocale()
+    this.ready = this.#setLocale()
     this.#live.setAttribute("aria-live", "polite")
+    this.#scroll.setAttribute("role", "log")
     this.#scroll.addEventListener("scroll", () => {
       this.#atEnd = this.#scroll.scrollHeight - this.#scroll.scrollTop - this.#scroll.clientHeight < 48
+      if (this.#atEnd) this.#missed = 0
+      this.#syncJump()
       if (this.#scroll.scrollTop < 60 && this.#view?.kind === "thread" && this.#view.id)
         void this.#loadMessages(this.#view.id, true)
     })
-    this.#textarea.rows = 1
+    this.#jump.type = "button"
+    this.#jump.addEventListener("click", () => {
+      this.#missed = 0
+      this.#scrollToEnd()
+      this.#syncJump()
+    })
+    this.#textarea.rows = 2
     this.#textarea.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
         event.preventDefault()
@@ -179,15 +196,26 @@ export class Chat implements PanelController {
       this.#addFiles(Array.from(this.#fileInput.files ?? []))
       this.#fileInput.value = ""
     })
-    this.#attachButton = iconButton(icons.attach, "", () => this.#fileInput.click())
-    this.#sendButton = iconButton(icons.send, "", () => void this.#send(), "icon send")
-    const form = el("form")
-    form.addEventListener("submit", (event) => {
+    this.#attachButton = iconButton(icons.attach, "", () => this.#fileInput.click(), "icon tool")
+    this.#shotButton = iconButton(icons.shot, "", () => void this.#capture(), "icon tool")
+    this.#shotButton.hidden = !canCapture()
+    this.#sendButton = iconButton(icons.send, "", () => void this.#send(), "send")
+    const tools = el("div", "tools")
+    tools.append(
+      this.#attachButton,
+      this.#shotButton,
+      el("span", "grow"),
+      this.#hint,
+      this.#sendButton,
+      this.#fileInput
+    )
+    const box = el("form", "box")
+    box.addEventListener("submit", (event) => {
       event.preventDefault()
       void this.#send()
     })
-    form.append(this.#attachButton, this.#textarea, this.#sendButton, this.#fileInput)
-    this.#composer.append(this.#chips, form)
+    box.append(this.#chips, this.#textarea, tools)
+    this.#composer.append(this.#jump, box)
 
     this.#emailInput.type = "email"
     this.#emailInput.required = true
@@ -198,13 +226,18 @@ export class Chat implements PanelController {
 
     document.addEventListener("visibilitychange", this.#onVisible)
     window.addEventListener("online", this.#onVisible)
-    this.#renderAll()
-    void this.#start()
+    void this.ready.then(() => {
+      this.#renderAll()
+      void this.#start()
+    })
   }
 
   update(): void {
-    this.#setLocale()
-    this.#renderAll()
+    void this.#setLocale().then(() => {
+      this.#emailKey = ""
+      this.#rateKey = ""
+      this.#renderAll()
+    })
   }
 
   opened(): void {
@@ -213,16 +246,18 @@ export class Chat implements PanelController {
       void this.#start()
       return
     }
-    if (this.#phase === "ready")
+    if (this.#phase === "ready") {
       void (this.#client.token
         ? this.#refreshSession()
         : this.#preview()
             .then(() => this.#render())
             .catch(() => undefined))
+    }
     this.#render()
     this.#scrollToEnd()
     this.#markRead()
-    if (this.#host.config().layout === "launcher") this.#textarea.focus({ preventScroll: true })
+    if (this.#host.config().layout === "launcher" && this.#view?.kind === "thread")
+      this.#textarea.focus({ preventScroll: true })
   }
 
   closed(): void {
@@ -245,6 +280,7 @@ export class Chat implements PanelController {
   destroy(): void {
     this.#client.reset()
     this.#stopTyping()
+    if (this.#emailTimer) clearTimeout(this.#emailTimer)
     document.removeEventListener("visibilitychange", this.#onVisible)
     window.removeEventListener("online", this.#onVisible)
     for (const url of this.#blobs.values()) URL.revokeObjectURL(url)
@@ -263,7 +299,11 @@ export class Chat implements PanelController {
     this.#ratings.clear()
     this.#rateKey = ""
     this.#view = null
+    this.#emailSaved = false
+    this.#emailEditing = false
+    this.#emailKey = ""
     this.#connectedBefore = false
+    this.#missed = 0
     this.#host.setUnread(0)
   }
 
@@ -274,9 +314,14 @@ export class Chat implements PanelController {
     void this.#refreshInbox()
   }
 
-  #setLocale(): void {
+  async #setLocale(): Promise<void> {
     const { locale } = this.#host.config()
-    this.#i18n = setupI18n({ locale, messages: { [locale]: catalogs[locale] ?? en } })
+    this.#i18n ??= setupI18n({ locale: "en", messages: { en } })
+    if (this.#loaded === locale) return
+    const messages = await loadMessages(locale)
+    if (locale !== this.#host.config().locale) return
+    this.#i18n = setupI18n({ locale, messages: { [locale]: messages } })
+    this.#loaded = locale
   }
 
   #t(descriptor: MessageDescriptor): string {
@@ -295,11 +340,7 @@ export class Chat implements PanelController {
         if (!this.#inbox?.chat.allow_anonymous) throw new ApiError(403, "anonymous_not_allowed")
       }
       this.#phase = "ready"
-      if (!this.#view) {
-        const list = this.#sorted()
-        this.#view = list.length > 1 ? { kind: "list" } : { kind: "thread", id: list[0]?.id ?? null }
-        if (this.#view.kind === "thread" && this.#view.id) await this.#loadMessages(this.#view.id)
-      }
+      this.#view ??= { kind: "home" }
       this.#render()
       this.#scrollToEnd()
       this.#markRead()
@@ -365,15 +406,20 @@ export class Chat implements PanelController {
     this.#notice.className = `notice impact-${shown.impact}`
     this.#notice.replaceChildren(
       text,
-      iconButton(icons.close, this.#t(msg`Dismiss`), () => {
-        if (!channel) return
-        const stored = readStored(channel)
-        writeStored(channel, {
-          ...stored,
-          dismissed_status: { ...stored.dismissed_status, [shown.id]: shown.updated_at },
-        })
-        this.#render()
-      })
+      iconButton(
+        icons.closeSmall,
+        this.#t(msg`Dismiss`),
+        () => {
+          if (!channel) return
+          const stored = readStored(channel)
+          writeStored(channel, {
+            ...stored,
+            dismissed_status: { ...stored.dismissed_status, [shown.id]: shown.updated_at },
+          })
+          this.#render()
+        },
+        "icon sm"
+      )
     )
   }
 
@@ -479,6 +525,9 @@ export class Chat implements PanelController {
             .catch(() => undefined)
         break
       }
+      case "contact.updated":
+        this.#contact = message.data
+        break
       case "resync_required":
         void this.#reload()
         return
@@ -488,7 +537,7 @@ export class Chat implements PanelController {
       case "conversation.created":
         if (!this.#conversations.has(message.data.id)) this.#conversations.set(message.data.id, message.data)
         if (this.#view?.kind === "thread" && this.#view.id === null && this.#conversations.size > 1) {
-          this.#view = this.#pending.some((p) => p.conversation === null) ? this.#view : { kind: "list" }
+          this.#view = this.#pending.some((p) => p.conversation === null) ? this.#view : { kind: "home" }
         }
         this.#syncUnread()
         break
@@ -564,6 +613,7 @@ export class Chat implements PanelController {
         if (typing) clearTimeout(typing.timer)
         this.#typing.delete(id)
         this.#announce(message)
+        if (!this.#atEnd && this.#visibleThread() === id) this.#missed++
       }
     }
     this.#syncUnread()
@@ -605,11 +655,16 @@ export class Chat implements PanelController {
     this.#textarea.focus()
   }
 
+  async #capture(): Promise<void> {
+    const file = await captureScreen(this.#host.panel)
+    if (file) this.#addFiles([file])
+  }
+
   #autosize(): void {
     this.#textarea.style.blockSize = ""
     if (this.#textarea.value === "") return
     this.#textarea.style.blockSize = "auto"
-    this.#textarea.style.blockSize = `${Math.max(38, Math.min(this.#textarea.scrollHeight, 140))}px`
+    this.#textarea.style.blockSize = `${Math.max(44, Math.min(this.#textarea.scrollHeight, 140))}px`
   }
 
   #syncSend(): void {
@@ -726,21 +781,31 @@ export class Chat implements PanelController {
     }
   }
 
-  async #saveEmail(): Promise<void> {
-    const email = this.#emailInput.value.trim()
-    if (!email || !this.#emailInput.checkValidity()) {
+  async #saveEmail(address?: string): Promise<void> {
+    const email = (address ?? this.#emailInput.value).trim()
+    if (!email || (address === undefined && !this.#emailInput.checkValidity())) {
       this.#emailError = this.#t(msg`Enter a valid e-mail address.`)
       this.#renderEmail()
       return
     }
+    if (this.#emailBusy) return
+    this.#emailBusy = true
     try {
       this.#contact = await this.#client.setEmail(email)
       this.#emailSaved = true
+      this.#emailEditing = false
       this.#emailError = ""
-    } catch {
-      this.#emailError = this.#t(msg`Could not save your e-mail address. Try again.`)
+      this.#emailNote = address === undefined ? "" : this.#t(msg`We sent it again.`)
+    } catch (error) {
+      this.#emailError =
+        error instanceof ApiError && error.status === 429
+          ? this.#t(msg`Too many attempts. Wait a moment and try again.`)
+          : this.#t(msg`Could not save your e-mail address. Try again.`)
+    } finally {
+      this.#emailBusy = false
     }
     this.#renderEmail()
+    this.#render()
   }
 
   #attachmentUrl(attachment: ClientAttachment): Promise<string> {
@@ -780,10 +845,22 @@ export class Chat implements PanelController {
 
   #scrollToEnd(): void {
     this.#atEnd = true
+    this.#missed = 0
     this.#scroll.scrollTop = this.#scroll.scrollHeight
     requestAnimationFrame(() => {
       if (this.#atEnd) this.#scroll.scrollTop = this.#scroll.scrollHeight
     })
+  }
+
+  #syncJump(): void {
+    const show = !this.#atEnd && this.#view?.kind === "thread"
+    this.#jump.hidden = !show
+    if (!show) return
+    this.#jump.setAttribute("aria-label", this.#t(msg`Jump to latest`))
+    const count = this.#missed
+    this.#jump.replaceChildren()
+    this.#jump.insertAdjacentHTML("beforeend", icons.down)
+    this.#jump.append(count > 0 ? this.#t(msg`${count} new`) : this.#t(msg`Jump to latest`))
   }
 
   #renderAll(): void {
@@ -791,13 +868,27 @@ export class Chat implements PanelController {
     this.#textarea.setAttribute("aria-label", this.#t(msg`Message`))
     this.#attachButton.setAttribute("aria-label", this.#t(msg`Attach files`))
     this.#attachButton.title = this.#t(msg`Attach files`)
+    this.#shotButton.setAttribute("aria-label", this.#t(msg`Take a screenshot`))
+    this.#shotButton.title = this.#t(msg`Take a screenshot`)
     this.#sendButton.setAttribute("aria-label", this.#t(msg`Send`))
     this.#sendButton.title = this.#t(msg`Send`)
+    this.#hint.replaceChildren(el("kbd", "", this.#t(msg`Enter`)), this.#t(msg`to send`))
     this.#emailInput.placeholder = this.#t(msg`you@example.com`)
     this.#emailInput.setAttribute("aria-label", this.#t(msg`E-mail address`))
+    this.#scroll.setAttribute("aria-label", this.#t(msg`Conversation`))
     this.#syncSend()
     this.#renderChips()
     this.#render()
+  }
+
+  #go(view: View): void {
+    this.#stopTyping()
+    this.#view = view
+    this.#render()
+    if (view.kind === "thread") {
+      this.#scrollToEnd()
+      this.#textarea.focus({ preventScroll: true })
+    }
   }
 
   #render(): void {
@@ -816,9 +907,7 @@ export class Chat implements PanelController {
       if (this.#phase === "loading") center.append(el("p", "hint", this.#t(msg`Loading…`)))
       else {
         center.append(el("p", "empty", this.#errorText()))
-        const retry = el("button", "primary", this.#t(msg`Try again`))
-        retry.type = "button"
-        retry.addEventListener("click", () => {
+        const retry = textButton(this.#t(msg`Try again`), "primary", () => {
           this.#starting = null
           void this.#start()
         })
@@ -828,8 +917,11 @@ export class Chat implements PanelController {
       return
     }
     this.#renderNotice()
-    if (this.#view?.kind === "list") this.#renderList()
+    const view = this.#view ?? { kind: "home" }
+    if (view.kind === "home") this.#renderHome()
+    else if (view.kind === "list") this.#renderList()
     else this.#renderThread()
+    this.#syncJump()
   }
 
   #errorText(): string {
@@ -847,46 +939,59 @@ export class Chat implements PanelController {
     }
   }
 
+  #presenceLine(inbox: ClientInbox): Node[] {
+    const live = inbox.mode === "live" && inbox.open_now && inbox.presence?.available
+    if (live) return [el("span", "", this.#t(msg`Online`))]
+    if (!inbox.open_now || inbox.mode === "live") return [el("span", "", this.#t(msg`We're away right now`))]
+    return [el("span", "", this.#replyTime(inbox.expected_reply_minutes))]
+  }
+
   #renderHeader(): void {
     const { layout } = this.#host.config()
     const inbox = this.#inbox
+    const view = this.#phase === "ready" ? (this.#view ?? { kind: "home" }) : ({ kind: "home" } as View)
     const children: Node[] = []
-    const view = this.#view
-    if (
-      this.#phase === "ready" &&
-      view?.kind === "thread" &&
-      (this.#conversations.size > 1 || (view.id === null && this.#conversations.size > 0))
-    ) {
-      children.push(
-        iconButton(icons.back, this.#t(msg`All conversations`), () => {
-          this.#stopTyping()
-          this.#view = { kind: "list" }
-          this.#render()
-        })
-      )
-    }
-    const heading = el("div", "heading")
-    heading.append(el("h2", "title", inbox?.name || this.#t(msg`Messages`)))
-    if (inbox) {
-      const status = el("div", "status")
-      const live = inbox.mode === "live" && inbox.open_now && inbox.presence?.available
-      if (live) {
-        const avatars = el("div", "avatars")
-        for (const member of inbox.presence?.members.slice(0, 3) ?? []) {
-          const avatar = el("span", "avatar", member.initials || "•")
-          avatar.title = member.name
-          avatars.append(avatar)
-        }
-        status.append(avatars, el("span", "dot"), el("span", "", this.#t(msg`Online`)))
-      } else if (!inbox.open_now || inbox.mode === "live") {
-        status.append(el("span", "dot away"), el("span", "", this.#t(msg`We're away right now`)))
+    const close = layout === "launcher" ? iconButton(icons.close, this.#t(msg`Close`), () => this.#host.close()) : null
+    if (view.kind === "home") {
+      this.#header.className = "header home"
+      const brand = el("div", "headbrand")
+      const mark = el("span", "mark")
+      const logo = inbox?.branding.logo_url
+      if (logo && /^https?:/i.test(logo)) {
+        const img = el("img")
+        img.alt = ""
+        img.referrerPolicy = "no-referrer"
+        img.addEventListener("error", () => mark.replaceChildren((inbox?.name || "Y").slice(0, 1)))
+        img.src = logo
+        mark.append(img)
+      } else mark.textContent = (inbox?.name || "Y").slice(0, 1)
+      brand.append(mark, el("h2", "title", inbox?.name || this.#t(msg`Messages`)))
+      children.push(brand)
+    } else {
+      this.#header.className = "header"
+      children.push(iconButton(icons.back, this.#t(msg`Back`), () => this.#go({ kind: "home" })))
+      if (view.kind === "thread" && inbox) {
+        const who = el("div", "who")
+        const live = inbox.mode === "live" && inbox.open_now && inbox.presence?.available
+        const first = live ? inbox.presence?.members[0] : undefined
+        who.append(
+          el("span", "avatar lg", first?.initials || (inbox.name || "").slice(0, 2)),
+          el("span", live ? "dot" : "dot away")
+        )
+        who.querySelector(".dot")?.setAttribute("aria-hidden", "true")
+        const heading = el("div", "heading")
+        heading.append(el("h2", "title", inbox.name || this.#t(msg`Messages`)))
+        const status = el("div", "status")
+        status.append(...this.#presenceLine(inbox))
+        heading.append(status)
+        children.push(who, heading)
       } else {
-        status.append(el("span", "", this.#replyTime(inbox.expected_reply_minutes)))
+        const heading = el("div", "heading")
+        heading.append(el("h2", "title", this.#t(msg`All conversations`)))
+        children.push(heading)
       }
-      heading.append(status)
     }
-    children.push(heading)
-    if (layout === "launcher") children.push(iconButton(icons.close, this.#t(msg`Close`), () => this.#host.close()))
+    if (close) children.push(close)
     this.#header.replaceChildren(...children)
   }
 
@@ -906,6 +1011,23 @@ export class Chat implements PanelController {
   #renderBanner(): void {
     this.#banner.hidden = !this.#reconnecting
     this.#banner.textContent = this.#t(msg`Reconnecting…`)
+  }
+
+  #renderHome(): void {
+    this.#scrollThread = undefined
+    const inbox = this.#inbox
+    if (!inbox) return
+    const home = buildHome({
+      inbox,
+      conversations: this.#sorted(),
+      locale: this.#host.config().locale,
+      t: (descriptor) => this.#t(descriptor),
+      notice: this.#notice,
+      openConversation: (id) => void this.#openThread(id),
+      allConversations: () => this.#go({ kind: "list" }),
+      newConversation: () => this.#go({ kind: "thread", id: null }),
+    })
+    this.#body.replaceChildren(home)
   }
 
   #renderList(): void {
@@ -945,22 +1067,21 @@ export class Chat implements PanelController {
       item.append(button)
       list.append(item)
     }
+    const page = el("div", "page")
+    page.append(this.#notice, list)
     if (this.#conversationCursor) {
-      const more = el("button", "link", this.#t(msg`Show older conversations`))
-      more.type = "button"
+      const more = textButton(
+        this.#t(msg`Show older conversations`),
+        "link soft",
+        () => void this.#loadConversations(true).then(() => this.#render())
+      )
       more.style.margin = "8px auto"
-      more.style.display = "block"
-      more.addEventListener("click", () => void this.#loadConversations(true).then(() => this.#render()))
-      list.append(more)
+      page.append(more)
     }
-    const start = el("button", "primary", this.#t(msg`New conversation`))
-    start.type = "button"
-    start.addEventListener("click", () => {
-      this.#view = { kind: "thread", id: null }
-      this.#render()
-      this.#textarea.focus()
-    })
-    this.#body.replaceChildren(this.#notice, list, start)
+    const start = textButton(this.#t(msg`New conversation`), "primary", () => this.#go({ kind: "thread", id: null }))
+    start.style.margin = "16px 32px"
+    page.append(el("div", "fill"), start)
+    this.#body.replaceChildren(page)
   }
 
   async #openThread(id: string): Promise<void> {
@@ -973,8 +1094,8 @@ export class Chat implements PanelController {
     this.#markRead()
   }
 
-  #avatar(author: ClientMessage["author"]): HTMLSpanElement {
-    const avatar = el("span", "avatar", author.initials || "")
+  #avatar(author: { name?: string; initials?: string; avatar_url?: string }): HTMLSpanElement {
+    const avatar = el("span", "avatar", author.initials || initialsOf(author.name ?? ""))
     const url = author.avatar_url
     const state = url ? this.#avatars.get(url) : false
     if (!url || state === false) return avatar
@@ -999,11 +1120,13 @@ export class Chat implements PanelController {
     const view = this.#view
     if (view?.kind !== "thread") return
     const id = view.id
+    const { locale } = this.#host.config()
     const sameThread = this.#scrollThread === id
     const atEnd = this.#atEnd
     const thread = id ? this.#threads.get(id) : undefined
     const messages = thread?.messages ?? []
     const pending = this.#pending.filter((p) => p.conversation === id)
+    const conversation = id ? this.#conversations.get(id) : undefined
     const nodes: Node[] = []
     const greeting = this.#inbox?.chat.greeting
     if (!thread || thread.complete) {
@@ -1021,104 +1144,179 @@ export class Chat implements PanelController {
       }
     } else if (thread.loading) nodes.push(el("p", "hint", this.#t(msg`Loading…`)))
 
-    messages.forEach((message, i) => {
-      const previous = messages[i - 1]
-      const next = messages[i + 1] ?? (pending.length > 0 ? null : undefined)
-      const mine = message.author.type === "contact"
-      const starts =
-        !previous ||
-        authorKey(previous) !== authorKey(message) ||
-        time(message.created_at) - time(previous.created_at) > groupGap
-      const ends =
-        next === undefined ||
-        (next === null
-          ? !mine
-          : authorKey(next) !== authorKey(message) || time(next.created_at) - time(message.created_at) > groupGap)
-      if (!mine && starts && message.author.name) nodes.push(el("div", "author", message.author.name))
-      const row = el("div", `row ${mine ? "mine" : "theirs"}${starts && i > 0 ? " group-gap" : ""}`)
-      if (!mine) {
-        const avatar = this.#avatar(message.author)
-        if (!ends) avatar.style.visibility = "hidden"
-        row.append(avatar)
+    const entries: Entry[] = [
+      ...messages.map((message): Entry => ({ kind: "message", message })),
+      ...pending.map((item): Entry => ({ kind: "pending", pending: item })),
+    ]
+    const known = new Set<string>()
+    let lastDay = ""
+    let group: { mine: boolean; key: string; at: string; node: HTMLElement; stack: HTMLElement } | null = null
+    const flush = (last: boolean) => {
+      if (!group) return
+      const { node, stack, mine, at } = group
+      const meta = this.#groupMeta(entries, last, mine, at, id)
+      if (meta) {
+        if (!mine) meta.classList.add("theirs-meta")
+        stack.append(meta)
       }
-      const bubble = el("div", "bubble")
-      bubble.dir = "auto"
-      bubble.title = new Date(message.created_at).toLocaleString(this.#host.config().locale)
-      if (message.body.trim()) bubble.append(richText(message.body))
-      if (message.attachments.length > 0) bubble.append(this.#renderAttachments(message.attachments))
-      row.append(bubble)
-      nodes.push(row)
-      if (ends) {
-        let meta = this.#formatTime(message.created_at)
-        if (mine && i === messages.length - 1 && pending.length === 0) {
-          const readAt = id ? this.#conversations.get(id)?.last_read_by_member_at : undefined
-          const seen = readAt && time(readAt) >= time(message.created_at)
-          meta += ` · ${seen ? this.#t(msg`Seen`) : this.#t(msg`Sent`)}`
+      nodes.push(node)
+      group = null
+    }
+
+    entries.forEach((entry, i) => {
+      const message = entry.kind === "message" ? entry.message : null
+      const created = message?.created_at ?? ""
+      const mine = !message || message.author.type === "contact"
+      const key = message ? authorKey(message) : "contact"
+      if (message && created && !sameDay(created, lastDay || "1970-01-01")) {
+        flush(false)
+        nodes.push(el("div", "day", dayLabel(locale, created)))
+        lastDay = created
+      }
+      if (message && !mine && message.author.type === "member" && message.author.name) {
+        const name = message.author.name
+        if (!known.has(name)) {
+          known.add(name)
+          if (thread?.complete && i > 0) {
+            flush(false)
+            const line = el("div", "sys")
+            line.insertAdjacentHTML("beforeend", icons.person)
+            line.append(this.#t(msg`${name} joined the conversation`))
+            nodes.push(line)
+          }
         }
-        const line = el("div", "meta", meta)
-        if (!mine) line.style.alignSelf = "flex-start"
-        if (!mine) line.style.marginInlineStart = "36px"
-        nodes.push(line)
+      }
+      const startsGroup = !group || group.key !== key || (message && time(created) - time(group.at) > groupGap) || false
+      if (startsGroup) {
+        flush(false)
+        const node = el("div", mine ? "group mine" : "row theirs")
+        const stack = mine ? node : el("div", "stack")
+        if (!mine && message) {
+          const avatar = this.#avatar(message.author)
+          avatar.style.marginBlockEnd = "22px"
+          node.append(avatar, stack)
+          if (message.author.name) stack.append(el("div", "author", message.author.name))
+        }
+        group = { mine, key, at: created || new Date().toISOString(), node, stack }
+      }
+      if (!group) return
+      if (message) {
+        group.at = created
+        if (message.body.trim()) {
+          const bubble = el("div", "bubble")
+          bubble.dir = "auto"
+          bubble.title = new Date(created).toLocaleString(locale)
+          bubble.append(richText(message.body))
+          group.stack.append(bubble)
+        }
+        if (message.attachments.length > 0) group.stack.append(this.#renderAttachments(message.attachments, mine))
+      } else if (entry.kind === "pending") {
+        const item = entry.pending
+        if (item.body) {
+          const bubble = el("div", "bubble")
+          bubble.dir = "auto"
+          bubble.append(richText(item.body))
+          group.stack.append(bubble)
+        }
+        if (item.files.length > 0) {
+          const files = el("div", "files")
+          for (const file of item.files) files.append(this.#pendingFile(file, item))
+          group.stack.append(files)
+        }
       }
     })
+    flush(true)
 
-    const conversation = id ? this.#conversations.get(id) : undefined
     if (conversation?.kind === "feedback" && conversation.status === "closed")
       nodes.push(el("p", "hint resolved", this.#t(msg`Resolved`)))
+    else if (conversation?.status === "closed" && messages.length > 0) {
+      const line = el("div", "sys")
+      line.insertAdjacentHTML("beforeend", icons.check)
+      line.append(this.#t(msg`Conversation closed`))
+      nodes.push(line)
+    }
     const rate = conversation ? this.#renderRating(conversation) : null
     if (rate) nodes.push(rate)
 
-    pending.forEach((item, i) => {
-      const row = el(
-        "div",
-        `row mine${i === 0 && messages.length > 0 && messages[messages.length - 1]?.author.type !== "contact" ? " group-gap" : ""}`
-      )
-      const bubble = el("div", "bubble")
-      bubble.dir = "auto"
-      if (item.body) bubble.append(richText(item.body))
-      if (item.files.length > 0) {
-        const files = el("div", "files")
-        for (const file of item.files) files.append(el("span", "file", file.name || "image"))
-        bubble.append(files)
-      }
-      row.append(bubble)
-      nodes.push(row)
-      if (item.state === "failed") {
-        const line = el("div", "meta failed", `${this.#t(msg`Not sent.`)} `)
-        const retry = el("button", "link", this.#t(msg`Retry`))
-        retry.type = "button"
-        retry.addEventListener("click", () => void this.#deliver(item))
-        line.append(retry)
-        nodes.push(line)
-      } else if (item.state === "refused") {
-        const reason =
-          item.status === 413 ? this.#t(msg`The file is too large.`) : this.#t(msg`This file type is not accepted.`)
-        nodes.push(el("div", "meta failed", `${this.#t(msg`Not sent.`)} ${reason}`))
-      } else if (i === pending.length - 1) nodes.push(el("div", "meta", this.#t(msg`Sending…`)))
-    })
+    this.#renderEmail()
+    if (!this.#email.hidden) nodes.push(this.#email)
 
     const typing = id ? this.#typing.get(id) : undefined
     if (typing) {
       const line = el("div", "typing")
-      line.append(el("i"), el("i"), el("i"))
+      line.setAttribute("role", "status")
       const name = typing.name
-      line.append(el("span", "", name ? this.#t(msg`${name} is typing…`) : this.#t(msg`Typing…`)))
+      const dots = el("div", "dots")
+      dots.append(el("i"), el("i"), el("i"))
+      line.append(
+        this.#avatar({ name }),
+        dots,
+        el("span", "sr", name ? this.#t(msg`${name} is typing…`) : this.#t(msg`Typing…`))
+      )
       nodes.push(line)
     }
 
     const root = this.#scroll.getRootNode() as Document | ShadowRoot
-    const focused = root.activeElement === this.#rateComment
+    const focused = root.activeElement === this.#rateComment || root.activeElement === this.#emailInput
+    const active = root.activeElement
     const { selectionStart, selectionEnd } = this.#rateComment
     this.#scroll.replaceChildren(...nodes)
-    if (focused && this.#rateComment.isConnected) {
-      this.#rateComment.focus({ preventScroll: true })
-      this.#rateComment.setSelectionRange(selectionStart, selectionEnd)
+    if (focused && active instanceof HTMLElement && active.isConnected) {
+      active.focus({ preventScroll: true })
+      if (active === this.#rateComment) this.#rateComment.setSelectionRange(selectionStart, selectionEnd)
     }
-    this.#renderEmail()
-    if (this.#body.firstChild !== this.#scroll)
-      this.#body.replaceChildren(this.#scroll, this.#notice, this.#email, this.#composer)
+    if (this.#body.firstChild !== this.#scroll) this.#body.replaceChildren(this.#scroll, this.#notice, this.#composer)
     this.#scrollThread = id
     if (!sameThread || atEnd) this.#scrollToEnd()
+  }
+
+  #groupMeta(entries: Entry[], last: boolean, mine: boolean, at: string, id: string | null): HTMLElement | null {
+    const tail = entries[entries.length - 1]
+    if (!mine) return el("div", "meta", this.#formatTime(at))
+    if (last && tail?.kind === "pending") {
+      const item = tail.pending
+      if (item.state === "failed") {
+        const line = el("div", "meta failed", `${this.#t(msg`Not sent.`)} `)
+        line.append(textButton(this.#t(msg`Retry`), "link", () => void this.#deliver(item)))
+        return line
+      }
+      if (item.state === "refused") {
+        const reason =
+          item.status === 413 ? this.#t(msg`The file is too large.`) : this.#t(msg`This file type is not accepted.`)
+        return el("div", "meta failed", `${this.#t(msg`Not sent.`)} ${reason}`)
+      }
+      return el("div", "meta", this.#t(msg`Sending…`))
+    }
+    const meta = el("div", "meta", this.#formatTime(at))
+    if (last && tail?.kind === "message") {
+      const readAt = id ? this.#conversations.get(id)?.last_read_by_member_at : undefined
+      const seen = !!readAt && time(readAt) >= time(tail.message.created_at)
+      meta.textContent = `${seen ? this.#t(msg`Seen`) : this.#t(msg`Sent`)} ${this.#formatTime(at)}`
+      if (seen) {
+        meta.classList.add("seen")
+        meta.insertAdjacentHTML("beforeend", icons.seen)
+      }
+    }
+    return meta
+  }
+
+  #pendingFile(file: File, item: Pending): HTMLElement {
+    const failed = item.state !== "sending"
+    const card = el("div", failed ? "att bad" : "att busy")
+    const thumb = el("span", "thumb")
+    thumb.innerHTML = icons.file
+    const info = el("span", "info")
+    const { locale } = this.#host.config()
+    info.append(
+      el("span", "name", file.name || "image"),
+      el(
+        "span",
+        "sub",
+        failed ? this.#t(msg`Not sent.`) : this.#t(msg`Uploading…`) + " · " + fileSize(locale, file.size)
+      )
+    )
+    card.append(thumb, info)
+    return card
   }
 
   #renderRating(conversation: ClientConversation): HTMLElement | null {
@@ -1178,11 +1376,12 @@ export class Chat implements PanelController {
     return card
   }
 
-  #renderAttachments(attachments: ClientAttachment[]): HTMLElement {
+  #renderAttachments(attachments: ClientAttachment[], mine: boolean): HTMLElement {
     const files = el("div", "files")
+    const { locale } = this.#host.config()
     for (const attachment of attachments) {
       if (isImage(attachment)) {
-        const img = el("img")
+        const img = el("img", "preview")
         img.alt = attachment.filename
         const cached = this.#blobs.get(attachment.id)
         if (cached) img.src = cached
@@ -1198,14 +1397,27 @@ export class Chat implements PanelController {
         img.addEventListener("click", () => void this.#download(attachment))
         files.append(img)
       } else {
-        const button = el("button", "file")
-        button.type = "button"
-        button.innerHTML = icons.file
-        button.append(el("span", "", attachment.filename))
-        button.addEventListener("click", () => void this.#download(attachment))
-        files.append(button)
+        const card = el("button", "att")
+        card.type = "button"
+        const thumb = el("span", "thumb")
+        thumb.innerHTML = icons.file
+        const info = el("span", "info")
+        info.append(
+          el("span", "name", attachment.filename),
+          el(
+            "span",
+            "sub",
+            [fileKind(attachment.filename, attachment.content_type), fileSize(locale, attachment.size)]
+              .filter(Boolean)
+              .join(" · ")
+          )
+        )
+        card.append(thumb, info)
+        card.addEventListener("click", () => void this.#download(attachment))
+        files.append(card)
       }
     }
+    if (!mine) files.style.alignItems = "flex-start"
     return files
   }
 
@@ -1213,55 +1425,149 @@ export class Chat implements PanelController {
     return new Intl.DateTimeFormat(this.#host.config().locale, { timeStyle: "short" }).format(new Date(value))
   }
 
-  #renderEmail(): void {
+  #emailMode(): EmailMode | null {
     const contact = this.#contact
-    const chat = this.#inbox?.chat
-    const id = this.#view?.kind === "thread" ? this.#view.id : null
-    const sent = id !== null || this.#pending.length > 0
-    const known = contact?.email || contact?.typed_email
-    const show = !!chat?.ask_email_offline && this.#nobodyAvailable() && sent && (!known || this.#emailSaved)
-    this.#email.hidden = !show
-    if (!show) return
-    if (known && this.#emailSaved) {
-      this.#email.replaceChildren(
-        el("p", "", this.#t(msg`Thanks! We'll e-mail you at ${known} if you're gone when we reply.`))
-      )
+    const view = this.#view
+    if (view?.kind !== "thread") return null
+    const sent = view.id !== null || this.#pending.length > 0
+    if (!sent) return null
+    const confirmation = contact?.email_confirmation
+    const live =
+      confirmation?.state === "sent" && (!confirmation.expires_at || Date.parse(confirmation.expires_at) > Date.now())
+    if (confirmation?.state === "undeliverable" && !this.#emailEditing) return "bad"
+    if (live && !this.#emailEditing) return "sent"
+    if (confirmation?.state === "confirmed" && !this.#emailEditing) return "confirmed"
+    const verified = !!contact?.email
+    if (this.#emailEditing || (confirmation?.state === "sent" && !verified)) return "ask"
+    if (this.#emailSaved && (verified || contact?.typed_email)) return "saved"
+    if (this.#inbox?.chat.ask_email_offline && this.#nobodyAvailable() && !verified) return "ask"
+    return null
+  }
+
+  #renderEmail(): void {
+    const mode = this.#emailMode()
+    this.#email.hidden = !mode
+    if (this.#emailTimer) clearTimeout(this.#emailTimer)
+    this.#emailTimer = null
+    if (!mode) {
+      this.#emailKey = ""
       return
     }
-    if (this.#email.querySelector("form")) {
-      const error = this.#email.querySelector(".error")
-      if (error) error.textContent = this.#emailError
-      else if (this.#emailError) this.#email.append(el("p", "error", this.#emailError))
-      return
+    const confirmation = this.#contact?.email_confirmation
+    const address = confirmation?.email ?? this.#contact?.typed_email ?? this.#contact?.email ?? ""
+    if (mode === "sent" && confirmation?.expires_at) {
+      const wait = Math.min(Date.parse(confirmation.expires_at) - Date.now() + 100, maxTimer)
+      this.#emailTimer = setTimeout(() => this.#render(), Math.max(wait, 0))
     }
-    const form = el("form")
-    form.noValidate = true
-    form.addEventListener("submit", (event) => {
-      event.preventDefault()
-      void this.#saveEmail()
-    })
-    const save = el("button", "", this.#t(msg`Save`))
-    save.type = "submit"
-    form.append(this.#emailInput, save)
-    this.#email.replaceChildren(
-      el("p", "", this.#t(msg`Nobody is available right now. Leave your e-mail and we'll send the reply there too.`)),
-      form
+    const key = [mode, address, this.#emailError, this.#emailNote, this.#emailBusy, this.#host.config().locale].join(
+      "|"
     )
-    if (this.#emailError) this.#email.append(el("p", "error", this.#emailError))
+    if (key === this.#emailKey) return
+    if (this.#emailKey.split("|")[0] !== mode) this.#emailInput.value = mode === "bad" || mode === "ask" ? address : ""
+    this.#emailKey = key
+
+    const note = () => (this.#emailNote ? [el("span", "soft", this.#emailNote)] : [])
+    const failure = () => (this.#emailError ? [el("p", "error", this.#emailError)] : [])
+    const form = () => {
+      const f = el("form", "inline-form")
+      f.noValidate = true
+      f.addEventListener("submit", (event) => {
+        event.preventDefault()
+        void this.#saveEmail()
+      })
+      const save = el("button", "btn", this.#t(msg`Save`))
+      save.type = "submit"
+      save.disabled = this.#emailBusy
+      f.append(this.#emailInput, save)
+      return f
+    }
+    const strong = (text: string) => el("b", "", text)
+
+    if (mode === "sent") {
+      this.#email.className = "mail"
+      this.#email.innerHTML = icons.mail
+      const text = el("div", "text")
+      const soft = el("span", "soft")
+      const marker = "\u0001"
+      const sentTo = ((address) => this.#t(msg`We sent a link to ${address}. Open it so replies reach you by e-mail.`))(
+        marker
+      )
+      const [before = "", after = ""] = sentTo.split(marker)
+      soft.append(before, strong(address), after)
+      const acts = el("div", "acts")
+      acts.append(
+        textButton(this.#t(msg`Change address`), "link brand", () => {
+          this.#emailEditing = true
+          this.#emailError = ""
+          this.#emailNote = ""
+          this.#render()
+          this.#emailInput.focus()
+        }),
+        textButton(this.#t(msg`Send again`), "link soft", () => void this.#saveEmail(address))
+      )
+      text.append(el("b", "", this.#t(msg`Check your inbox`)), soft, acts, ...note(), ...failure())
+      this.#email.append(text)
+    } else if (mode === "bad") {
+      this.#email.className = "mail bad"
+      const head = el("div", "head")
+      head.insertAdjacentHTML("beforeend", icons.alert)
+      head.append(this.#t(msg`We couldn't reach ${address}`))
+      this.#email.replaceChildren(
+        head,
+        el("span", "soft", this.#t(msg`That address doesn't accept mail. Check it for a typo.`)),
+        form(),
+        ...failure()
+      )
+    } else if (mode === "confirmed") {
+      this.#email.className = "mail ok"
+      this.#email.innerHTML = icons.check
+      this.#email.append(this.#t(msg`Replies will also reach ${address}`))
+    } else if (mode === "saved") {
+      this.#email.className = "mail ok"
+      this.#email.innerHTML = icons.check
+      const known = address
+      this.#email.append(this.#t(msg`Thanks! We'll e-mail you at ${known} if you're gone when we reply.`))
+    } else {
+      this.#email.className = "card"
+      const cancel = this.#emailEditing
+        ? [
+            textButton(this.#t(msg`Cancel`), "link soft", () => {
+              this.#emailEditing = false
+              this.#emailError = ""
+              this.#render()
+            }),
+          ]
+        : []
+      this.#email.replaceChildren(
+        el("p", "", this.#t(msg`Nobody is available right now. Leave your e-mail and we'll send the reply there too.`)),
+        form(),
+        ...failure(),
+        ...cancel
+      )
+    }
   }
 
   #renderChips(): void {
+    const { locale } = this.#host.config()
     this.#chips.hidden = this.#files.length === 0
     this.#chips.replaceChildren(
       ...this.#files.map((file, index) => {
         const chip = el("span", "chip")
+        chip.insertAdjacentHTML("beforeend", icons.file)
+        const two = el("span", "two")
+        two.append(el("b", "", file.name || "image"), el("span", "", fileSize(locale, file.size)))
         chip.append(
-          el("span", "", file.name || "image"),
-          iconButton(icons.close, this.#t(msg`Remove ${file.name}`), () => {
-            this.#files = this.#files.filter((_, i) => i !== index)
-            this.#renderChips()
-            this.#syncSend()
-          })
+          two,
+          iconButton(
+            icons.closeSmall,
+            this.#t(msg`Remove ${file.name}`),
+            () => {
+              this.#files = this.#files.filter((_, i) => i !== index)
+              this.#renderChips()
+              this.#syncSend()
+            },
+            "icon sm"
+          )
         )
         return chip
       })

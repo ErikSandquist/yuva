@@ -8,10 +8,19 @@ msgstr ""
 "Language: tr\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} yeni"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} yazıyor…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} konuşmaya katıldı"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Tüm konuşmalar"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Dosya ekle"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Ek"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Geri"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Kötü"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Adresi değiştir"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "Sohbet şu anda kullanılamıyor."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Gelen kutunuzu kontrol edin"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Yorum"
 msgid "Completed"
 msgstr "Tamamlandı"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Devam et"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Konuşma"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Konuşma kapatıldı"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "E-posta adresi"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Geçerli bir e-posta adresi girin."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "İyi"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Size nasıl yardımcı olabiliriz?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "Devam ediyor"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "İnceleniyor"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "En sona git"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "Gönderilemedi."
 msgid "Online"
 msgstr "Çevrimiçi"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "{brand} tarafından desteklenmektedir"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Yeniden bağlanıyor…"
@@ -135,6 +186,10 @@ msgstr "Yeniden bağlanıyor…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "{0} kaldır"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Yanıtlar {address} adresine de ulaşacak"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Gönder"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Tekrar gönder"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Bize mesaj gönderin"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Bize bir mesaj gönderin, yanıtımız burada görünecek."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Geç"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Ekran görüntüsü al"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Bizimle konuşun"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Geri bildiriminiz için teşekkürler"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Teşekkürler! Yanıtladığımızda burada değilseniz {known} adresine e-posta göndereceğiz."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Bu adres e-posta kabul etmiyor. Yazım hatası olup olmadığını kontrol edin."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "Dosya çok büyük."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Bu dosya türü kabul edilmiyor."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "göndermek için"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Yazıyor…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "Yükleniyor…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Genellikle {duration} içinde yanıt verir"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "{address} adresine ulaşamadık"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "{address} adresine bir bağlantı gönderdik. Yanıtların size e-postayla da ulaşması için bağlantıyı açın."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Tekrar gönderdik."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Çevrimdışı görünüyorsunuz."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Siz:"
 

@@ -8,10 +8,19 @@ msgstr ""
 "Language: he\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} חדשות"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} מקליד…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} הצטרף/ה לשיחה"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "כל השיחות"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "צירוף קבצים"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "קובץ מצורף"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "חזרה"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "גרוע"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "ביטול"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "שינוי כתובת"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "הצ׳אט אינו זמין כרגע."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "בדקו את תיבת הדואר הנכנס"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "תגובה"
 msgid "Completed"
 msgstr "הושלם"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "המשך"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "שיחה"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "השיחה נסגרה"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "כתובת אימייל"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "הזינו כתובת אימייל תקינה."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "טוב"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "איך נוכל לעזור?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "בתהליך"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "בבדיקה"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "מעבר לאחרונה"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "לא נשלחה."
 msgid "Online"
 msgstr "מחובר"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "מופעל על ידי {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "מתחבר מחדש…"
@@ -135,6 +186,10 @@ msgstr "מתחבר מחדש…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "הסרת {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "תשובות יגיעו גם אל {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "שליחה"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "שליחה חוזרת"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "שלחו לנו הודעה"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "שלחו לנו הודעה ונענה כאן."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "דילוג"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "צילום מסך"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "דברו איתנו"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "תודה על המשוב"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "תודה! נשלח אימייל אל {known} אם לא תהיו כאן כשנענה."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "הכתובת הזו לא מקבלת דואר. בדקו אם יש טעות הקלדה."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "הקובץ גדול מדי."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "סוג הקובץ הזה אינו מתקבל."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "לשליחה"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "מקליד…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "מעלה…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "בדרך כלל עונה תוך {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "לא הצלחנו להגיע אל {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "שלחנו קישור אל {address}. פתחו אותו כדי שהתשובות יגיעו אליכם גם במייל."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "שלחנו שוב."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "נראה שאתם לא מחוברים לאינטרנט."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "את/ה:"
 

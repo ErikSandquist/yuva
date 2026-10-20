@@ -8,10 +8,19 @@ msgstr ""
 "Language: zh-Hant\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} 則新訊息"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} 正在輸入…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} 加入了對話"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "所有對話"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "新增附件"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "附件"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "返回"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "差"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "取消"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "變更地址"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "聊天目前無法使用。"
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "請查看你的收件匣"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "留言"
 msgid "Completed"
 msgstr "已完成"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "繼續"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "對話"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "對話已關閉"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "電子郵件地址"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "請輸入有效的電子郵件地址。"
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "好"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "有什麼可以幫你？"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "進行中"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "調查中"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "跳至最新"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "未傳送。"
 msgid "Online"
 msgstr "線上"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "由 {brand} 提供技術支援"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "正在重新連線…"
@@ -135,6 +186,10 @@ msgstr "正在重新連線…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "移除 {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "回覆也會寄到 {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "傳送"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "重新傳送"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "傳訊息給我們"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "傳訊息給我們,我們會在這裡回覆。"
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "略過"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "擷取螢幕畫面"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "聯絡我們"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "感謝您的意見回饋"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "謝謝!如果我們回覆時您不在,我們會寄電子郵件到 {known}。"
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "此地址不接收郵件，請檢查是否有拼字錯誤。"
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "檔案過大。"
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "不支援此檔案類型。"
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "傳送"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "正在輸入…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "上傳中…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "通常會在 {duration} 內回覆"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "無法送達 {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "我們已將連結寄到 {address}。開啟連結，回覆也會透過電子郵件寄給你。"
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "我們已重新傳送。"
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "您似乎已離線。"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "您:"
 

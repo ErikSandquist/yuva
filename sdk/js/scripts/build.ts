@@ -1,4 +1,4 @@
-import { rm } from "node:fs/promises"
+import { readdir, rm } from "node:fs/promises"
 import { linguiMacro } from "./lingui-plugin"
 import pkg from "../package.json"
 
@@ -11,7 +11,7 @@ function check(result: Bun.BuildOutput): void {
   process.exit(1)
 }
 
-async function chunk(entry: string, name: string): Promise<string> {
+async function chunk(entry: string, name: string, extra: Record<string, string> = {}): Promise<string> {
   const result = await Bun.build({
     entrypoints: [entry],
     outdir: "dist/widget",
@@ -19,7 +19,7 @@ async function chunk(entry: string, name: string): Promise<string> {
     target: "browser",
     minify: true,
     naming: `${name}-[hash].[ext]`,
-    define: { "process.env.NODE_ENV": '"production"' },
+    define: { "process.env.NODE_ENV": '"production"', ...extra },
     plugins: [linguiMacro],
   })
   check(result)
@@ -29,10 +29,16 @@ async function chunk(entry: string, name: string): Promise<string> {
 const thread = await chunk("src/docs/thread.ts", "yuva-docs-thread")
 const subscribeClient = await chunk("src/subscribe/client.ts", "yuva-subscribe-client")
 
+const panelLocales: Record<string, string> = {}
+for (const locale of await readdir("src/locales")) {
+  const key = locale.toLowerCase()
+  panelLocales[key] = await chunk(`src/locales/${locale}/panel.ts`, `yuva-panel-${key}`)
+}
 const define = {
   "process.env.NODE_ENV": '"production"',
   YUVA_DOCS_THREAD: JSON.stringify(thread),
   YUVA_SUBSCRIBE_CLIENT: JSON.stringify(subscribeClient),
+  YUVA_PANEL_LOCALES: JSON.stringify(JSON.stringify(panelLocales)),
 }
 
 const scripts = [

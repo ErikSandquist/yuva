@@ -8,10 +8,19 @@ msgstr ""
 "Language: it\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} nuovi"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} sta scrivendo…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} si è unito alla conversazione"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Tutte le conversazioni"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Allega file"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Allegato"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Indietro"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Male"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Annulla"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Cambia indirizzo"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "La chat non è disponibile al momento."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Controlla la tua posta in arrivo"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Commento"
 msgid "Completed"
 msgstr "Completato"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Continua"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Conversazione"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Conversazione chiusa"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "Indirizzo e-mail"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Invio"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Inserisci un indirizzo e-mail valido."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "Bene"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Come possiamo aiutarti?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "In corso"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "In analisi"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "Vai all'ultimo"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "Non inviato."
 msgid "Online"
 msgstr "Online"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "Offerto da {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Riconnessione…"
@@ -135,6 +186,10 @@ msgstr "Riconnessione…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "Rimuovi {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Le risposte arriveranno anche a {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Invia"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Invia di nuovo"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Scrivici un messaggio"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Mandaci un messaggio e ti risponderemo qui."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Salta"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Fai uno screenshot"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Parla con noi"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Grazie per il tuo feedback"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Grazie! Ti scriveremo a {known} se non ci sei quando rispondiamo."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Questo indirizzo non accetta posta. Controlla che non ci siano errori di battitura."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "Il file è troppo grande."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Questo tipo di file non è accettato."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "per inviare"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Sta scrivendo…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "Caricamento…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Di solito risponde entro {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "Non siamo riusciti a raggiungere {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "Abbiamo inviato un link a {address}. Aprilo perché le risposte ti arrivino anche via e-mail."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Lo abbiamo inviato di nuovo."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Sembra che tu sia offline."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Tu:"
 

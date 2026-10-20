@@ -8,10 +8,19 @@ msgstr ""
 "Language: id\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} baru"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} sedang mengetik…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} bergabung ke percakapan"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Semua percakapan"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Lampirkan file"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Lampiran"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Kembali"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Buruk"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Ubah alamat"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "Obrolan tidak tersedia saat ini."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Periksa kotak masuk Anda"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Komentar"
 msgid "Completed"
 msgstr "Selesai"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Lanjutkan"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Percakapan"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Percakapan ditutup"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "Alamat e-mail"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Masukkan alamat e-mail yang valid."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "Baik"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Apa yang bisa kami bantu?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "Sedang berlangsung"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "Sedang diselidiki"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "Ke terbaru"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "Tidak terkirim."
 msgid "Online"
 msgstr "Online"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "Didukung oleh {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Menyambung kembali…"
@@ -135,6 +186,10 @@ msgstr "Menyambung kembali…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "Hapus {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Balasan juga akan sampai ke {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Kirim"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Kirim ulang"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Kirim pesan kepada kami"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Kirim pesan kepada kami dan kami akan membalas di sini."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Lewati"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Ambil tangkapan layar"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Bicara dengan kami"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Terima kasih atas masukan Anda"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Terima kasih! Kami akan mengirim e-mail ke {known} jika Anda tidak ada saat kami membalas."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Alamat ini tidak menerima surel. Periksa apakah ada salah ketik."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "File terlalu besar."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Jenis file ini tidak diterima."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "untuk mengirim"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Sedang mengetik…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "Mengunggah…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Biasanya membalas dalam {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "Kami tidak dapat menjangkau {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "Kami mengirim tautan ke {address}. Buka agar balasan juga sampai lewat e-mail."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Kami sudah mengirim ulang."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Anda tampaknya sedang offline."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Anda:"
 

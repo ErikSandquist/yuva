@@ -8,10 +8,19 @@ msgstr ""
 "Language: ta\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} புதியவை"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} தட்டச்சு செய்கிறார்…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} உரையாடலில் இணைந்தார்"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "அனைத்து உரையாடல்களும்"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "கோப்புகளை இணை"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "இணைப்பு"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "பின்செல்"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "மோசம்"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "முகவரியை மாற்று"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "அரட்டை தற்போது கிடைக்கவில்லை."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "உங்கள் இன்பாக்ஸைப் பாருங்கள்"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "கருத்து"
 msgid "Completed"
 msgstr "முடிந்தது"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "தொடர்க"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "உரையாடல்"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "உரையாடல் மூடப்பட்டது"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "மின்னஞ்சல் முகவரி"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "நன்று"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "நாங்கள் எப்படி உதவலாம்?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "நடைபெறுகிறது"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "ஆராயப்படுகிறது"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "சமீபத்தியதற்குச் செல்"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "அனுப்பப்படவில்லை."
 msgid "Online"
 msgstr "ஆன்லைன்"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "{brand} வழங்கும் சேவை"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "மீண்டும் இணைக்கிறது…"
@@ -135,6 +186,10 @@ msgstr "மீண்டும் இணைக்கிறது…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "{0} ஐ அகற்று"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "பதில்கள் {address} முகவரிக்கும் வரும்"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "அனுப்பு"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "மீண்டும் அனுப்பு"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "எங்களுக்குச் செய்தி அனுப்புங்கள்"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "எங்களுக்குச் செய்தி அனுப்புங்கள், இங்கேயே பதிலளிப்போம்."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "தவிர்"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "திரைப்பிடிப்பு எடு"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "எங்களிடம் பேசுங்கள்"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "உங்கள் கருத்துக்கு நன்றி"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "நன்றி! நாங்கள் பதிலளிக்கும்போது நீங்கள் இல்லையெனில் {known} முகவரிக்கு மின்னஞ்சல் அனுப்புவோம்."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "இந்த முகவரி அஞ்சலை ஏற்கவில்லை. எழுத்துப் பிழை உள்ளதா எனப் பாருங்கள்."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "கோப்பு மிகப் பெரியது."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "இந்தக் கோப்பு வகை ஏற்கப்படாது."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "அனுப்ப"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "தட்டச்சு செய்கிறார்…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "பதிவேற்றப்படுகிறது…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "பொதுவாக {duration} இல் பதிலளிப்பார்"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "{address} முகவரியை அடைய முடியவில்லை"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "{address} முகவரிக்கு ஒரு இணைப்பை அனுப்பினோம். பதில்கள் மின்னஞ்சலிலும் வர அதைத் திறக்கவும்."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "மீண்டும் அனுப்பினோம்."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "நீங்கள்:"
 

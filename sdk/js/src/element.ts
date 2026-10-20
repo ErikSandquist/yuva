@@ -23,31 +23,47 @@ const styles = `
   --yuva-accent: #2563eb;
   --yuva-on-accent: #ffffff;
   --yuva-bg: #ffffff;
-  --yuva-fg: #111827;
-  --yuva-muted: #6b7280;
-  --yuva-border: #e5e7eb;
-  --yuva-soft: #f3f4f6;
+  --yuva-deep: #f7f7f8;
+  --yuva-fg: #0b0b0f;
+  --yuva-muted: #52525b;
+  --yuva-faint: #71717a;
+  --yuva-border: #ececef;
+  --yuva-strong: #d4d4d8;
+  --yuva-ok: #15803d;
+  --yuva-warn: #d97706;
+  --yuva-info: #2563eb;
   --yuva-danger: #dc2626;
+  --yuva-brand: var(--yuva-accent);
+  --yuva-wash: color-mix(in srgb, var(--yuva-accent) 9%, var(--yuva-bg));
   --yuva-shadow: 0 12px 40px rgb(15 23 42 / 0.18);
+  --yuva-font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --yuva-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: light;
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 2147483000;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 15px;
+  font-family: var(--yuva-font);
+  font-size: 14px;
   line-height: 1.45;
   color: var(--yuva-fg);
 }
 :host([position="left"]) { right: auto; left: 20px; }
 @media (prefers-color-scheme: dark) {
   :host {
-    --yuva-bg: #1c1f24;
-    --yuva-fg: #f3f4f6;
-    --yuva-muted: #9ca3af;
-    --yuva-border: #30343b;
-    --yuva-soft: #2a2e35;
+    --yuva-bg: #09090b;
+    --yuva-deep: #121216;
+    --yuva-fg: #fafafa;
+    --yuva-muted: #a1a1aa;
+    --yuva-faint: #8a8a93;
+    --yuva-border: #1f1f23;
+    --yuva-strong: #3a3a41;
+    --yuva-ok: #4ade80;
+    --yuva-warn: #facc15;
+    --yuva-info: #60a5fa;
     --yuva-danger: #f87171;
+    --yuva-brand: color-mix(in srgb, var(--yuva-accent) 60%, #ffffff);
+    --yuva-wash: color-mix(in srgb, var(--yuva-accent) 18%, var(--yuva-bg));
     --yuva-shadow: 0 12px 40px rgb(0 0 0 / 0.5);
     color-scheme: dark;
   }
@@ -98,15 +114,16 @@ const styles = `
   box-sizing: border-box;
   background: var(--yuva-bg);
   border: 1px solid var(--yuva-border);
-  border-radius: 16px;
+  border-radius: 12px;
+  position: relative;
 }
 .panel[hidden] { display: none; }
 :host(:not([layout="embedded"])) .panel {
   position: absolute;
   bottom: 72px;
   right: 0;
-  inline-size: min(380px, calc(100vw - 32px));
-  block-size: min(600px, calc(100vh - 112px));
+  inline-size: min(400px, calc(100vw - 32px));
+  block-size: min(720px, calc(100vh - 112px));
   box-shadow: var(--yuva-shadow);
 }
 :host([position="left"]:not([layout="embedded"])) .panel { right: auto; left: 0; }
@@ -288,23 +305,28 @@ export class YuvaChatElement extends HTMLElement {
   }
 
   #ensureController(): Promise<PanelController> {
-    this.#controller ??= YuvaChatElement.loadPanel().then(({ mount }) =>
-      mount({
-        panel: this.#panel,
-        config: () => this.#config(),
-        identityToken: async () =>
-          this.#identity ? ((await this.#identity()) ?? null) : this.getAttribute("identity-token"),
-        isOpen: () => this.#open,
-        close: () => this.close(),
-        setUnread: (count) => {
-          this.#unread = count
-          this.#syncLauncher()
-          this.dispatchEvent(new CustomEvent("yuva-unread", { detail: { count } }))
-        },
-        setLauncher: (style) => this.#applyLauncher(style),
-        refused: () => this.#refuse(),
+    this.#controller ??= YuvaChatElement.loadPanel()
+      .then(({ mount }) =>
+        mount({
+          panel: this.#panel,
+          config: () => this.#config(),
+          identityToken: async () =>
+            this.#identity ? ((await this.#identity()) ?? null) : this.getAttribute("identity-token"),
+          isOpen: () => this.#open,
+          close: () => this.close(),
+          setUnread: (count) => {
+            this.#unread = count
+            this.#syncLauncher()
+            this.dispatchEvent(new CustomEvent("yuva-unread", { detail: { count } }))
+          },
+          setLauncher: (style) => this.#applyLauncher(style),
+          refused: () => this.#refuse(),
+        })
+      )
+      .then(async (controller) => {
+        await controller.ready
+        return controller
       })
-    )
     return this.#controller
   }
 

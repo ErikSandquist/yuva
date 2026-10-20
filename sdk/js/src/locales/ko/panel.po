@@ -8,10 +8,19 @@ msgstr ""
 "Language: ko\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "새 메시지 {count}개"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} 님이 입력 중…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name}님이 대화에 참여했습니다"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "모든 대화"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "파일 첨부"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "첨부 파일"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "뒤로"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "나쁨"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "취소"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "주소 변경"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "지금은 채팅을 사용할 수 없습니다."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "받은편지함을 확인하세요"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "댓글"
 msgid "Completed"
 msgstr "완료"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "계속"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "대화"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "대화가 종료되었습니다"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "이메일 주소"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "올바른 이메일 주소를 입력해 주세요."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "좋음"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "무엇을 도와드릴까요?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "진행 중"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "조사 중"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "최신으로 이동"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "전송되지 않았습니다."
 msgid "Online"
 msgstr "온라인"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "{brand} 제공"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "다시 연결 중…"
@@ -135,6 +186,10 @@ msgstr "다시 연결 중…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "{0} 삭제"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "답변이 {address}로도 전달됩니다"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "보내기"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "다시 보내기"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "메시지 보내기"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "메시지를 보내 주시면 여기에서 답변해 드리겠습니다."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "건너뛰기"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "스크린샷 찍기"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "문의하기"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "의견 감사합니다"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "감사합니다! 답변 드릴 때 자리에 계시지 않으면 {known}(으)로 이메일을 보내 드리겠습니다."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "이 주소는 메일을 받지 않습니다. 오타가 없는지 확인하세요."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "파일이 너무 큽니다."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "이 파일 형식은 허용되지 않습니다."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "로 전송"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "입력 중…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "업로드 중…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "보통 {duration} 이내에 답변합니다"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "{address}에 연결하지 못했습니다"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "{address}로 링크를 보냈습니다. 답변을 이메일로도 받으려면 링크를 열어 주세요."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "다시 보냈습니다."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "오프라인 상태인 것 같습니다."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "나:"
 

@@ -34,6 +34,20 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 
 Return `null` for anonymous visitors. Call it again after sign-in, and `signOut()` after sign-out.
 
+## What visitors see
+
+The panel opens on a home screen: who is available, the latest conversation to continue and a button
+to write a message. A conversation shows day separators, "joined" and "closed" lines, attachment
+cards (uploading, failed and sent), a typing indicator, "Seen" under the last message the team has
+read, and a jump-to-latest button with the unread count when a visitor has scrolled up. The composer
+takes files, pasted images and, where the browser allows it, a screenshot of the page.
+
+When nobody is available and the channel asks for an e-mail address, the thread asks for one. After
+the visitor saves it, the thread says a confirmation link went out (with Change address and Send
+again), asks again when the address bounced or the link ran out after 24 hours, and shows a quiet
+line once it is confirmed. The panel follows `prefers-color-scheme`, uses the channel's launcher
+colour as its accent and the page's Geist font when it has one, else the system font.
+
 ## What the widget stores
 
 The widget keeps its session in your page's `localStorage`, so a visitor's conversation survives a

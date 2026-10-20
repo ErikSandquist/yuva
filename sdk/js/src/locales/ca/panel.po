@@ -8,10 +8,19 @@ msgstr ""
 "Language: ca\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} nous"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} està escrivint…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} s'ha unit a la conversa"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Totes les converses"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Adjunta fitxers"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Adjunt"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Enrere"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Malament"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Canvia l'adreça"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "El xat no està disponible ara mateix."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Revisa la safata d'entrada"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Comentari"
 msgid "Completed"
 msgstr "Completat"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Continua"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Conversa"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Conversa tancada"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "Adreça electrònica"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Introdueix una adreça electrònica vàlida."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "Bé"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Com et podem ajudar?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "En curs"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "Investigant"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "Ves a l'últim"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "No enviat."
 msgid "Online"
 msgstr "En línia"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "Amb la tecnologia de {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Reconnectant…"
@@ -135,6 +186,10 @@ msgstr "Reconnectant…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "Elimina {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Les respostes també arribaran a {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Envia"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Torna a enviar"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Envia'ns un missatge"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Envia'ns un missatge i et respondrem aquí."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Omet"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Fes una captura de pantalla"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Parla amb nosaltres"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Gràcies pels teus comentaris"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Gràcies! T'enviarem un correu a {known} si no hi ets quan et responguem."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Aquesta adreça no accepta correu. Comprova que no hi hagi errors."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "El fitxer és massa gran."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Aquest tipus de fitxer no s'accepta."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "per enviar"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Escrivint…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "S'està pujant…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Sol respondre en {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "No hem pogut arribar a {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "Hem enviat un enllaç a {address}. Obre'l perquè les respostes també t'arribin per correu."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Ho hem tornat a enviar."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Sembla que no tens connexió."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Tu:"
 

@@ -34,6 +34,11 @@ function mount(attributes: Record<string, string>): YuvaChatElement {
 const shadow = (element: YuvaChatElement) => element.shadowRoot!
 const panel = (element: YuvaChatElement) => shadow(element).querySelector<HTMLElement>(".panel")!
 const launcher = (element: YuvaChatElement) => shadow(element).querySelector<HTMLButtonElement>(".launcher")
+const compose = async (element: YuvaChatElement) => {
+  await until(() => panel(element).querySelector(".home .primary") !== null)
+  panel(element).querySelector<HTMLButtonElement>(".home .primary")!.click()
+  await until(() => panel(element).querySelector("textarea") !== null)
+}
 const until = async (condition: () => boolean) => {
   for (let i = 0; i < 50 && !condition(); i++) await new Promise((resolve) => setTimeout(resolve, 5))
 }
@@ -248,7 +253,7 @@ describe("<yuva-chat> realtime", () => {
 
     const element = mount({ layout: "embedded", channel: "pk_test", server: "http://yuva.test", locale: "en" })
     const textarea = () => panel(element).querySelector<HTMLTextAreaElement>("textarea")
-    await until(() => textarea() !== null)
+    await compose(element)
     expect(requests).not.toContain("POST /client/v1/session")
     expect(sockets).toHaveLength(0)
 
@@ -315,7 +320,7 @@ describe("<yuva-chat> realtime", () => {
     try {
       const element = mount({ layout: "embedded", channel: "pk_test", server: "http://yuva.test", locale: "en" })
       const textarea = () => panel(element).querySelector<HTMLTextAreaElement>("textarea")
-      await until(() => textarea() !== null)
+      await compose(element)
       textarea()!.value = "Hello"
       textarea()!.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }))
       await until(() => sent.length > 0)
@@ -367,7 +372,7 @@ describe("<yuva-chat> realtime", () => {
         })
       )
       const element = mount({ layout: "embedded", channel: "pk_test", server: "http://yuva.test", locale: "en" })
-      await until(() => panel(element).querySelector("textarea") !== null)
+      await until(() => panel(element).querySelector(".home") !== null)
       return element
     }
 

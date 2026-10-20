@@ -44,6 +44,7 @@ export interface PanelHost {
 }
 
 export interface PanelController {
+  ready: Promise<void>
   update(): void
   opened(): void
   closed(): void

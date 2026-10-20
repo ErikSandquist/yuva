@@ -37,6 +37,23 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 Geben Sie für anonyme Besucher `null` zurück. Rufen Sie die Methode nach der Anmeldung erneut auf und
 nach der Abmeldung `signOut()`.
 
+## Was Besucher sehen
+
+Das Panel öffnet mit einem Startbildschirm: wer erreichbar ist, die letzte Unterhaltung zum
+Weitermachen und eine Schaltfläche für eine neue Nachricht. Eine Unterhaltung zeigt Tagestrenner,
+Zeilen wie "ist beigetreten" und "geschlossen", Anhangskarten (wird hochgeladen, fehlgeschlagen,
+gesendet), eine Tippanzeige, "Gelesen" unter der letzten vom Team gelesenen Nachricht und eine
+Schaltfläche "Zur neuesten Nachricht" mit der Zahl ungelesener Nachrichten, wenn ein Besucher nach
+oben gescrollt hat. Das Eingabefeld nimmt Dateien, eingefügte Bilder und, wo der Browser es erlaubt,
+einen Screenshot der Seite entgegen.
+
+Ist niemand erreichbar und fragt der Kanal nach einer E-Mail-Adresse, bittet die Unterhaltung darum.
+Nach dem Speichern sagt sie, dass ein Bestätigungslink verschickt wurde (mit Adresse ändern und
+Erneut senden), fragt erneut, wenn die Adresse unzustellbar war oder der Link nach 24 Stunden
+ablief, und zeigt nach der Bestätigung eine unauffällige Zeile. Das Panel folgt
+`prefers-color-scheme`, nutzt die Launcher-Farbe des Kanals als Akzent und die Geist-Schrift der
+Seite, falls vorhanden, sonst die Systemschrift.
+
 ## Was das Widget speichert
 
 Das Widget hält seine Sitzung im `localStorage` Ihrer Seite, damit die Unterhaltung eines Besuchers

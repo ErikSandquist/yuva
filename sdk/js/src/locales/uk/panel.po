@@ -8,10 +8,19 @@ msgstr ""
 "Language: uk\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} нових"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} друкує…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} приєднався(-лася) до розмови"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "Усі розмови"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "Прикріпити файли"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "Вкладення"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "Назад"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "Погано"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "Змінити адресу"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "Чат зараз недоступний."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "Перевірте вхідні"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "Коментар"
 msgid "Completed"
 msgstr "Завершено"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "Продовжити"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "Розмова"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "Розмову закрито"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "Електронна адреса"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Введіть дійсну електронну адресу."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "Добре"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "Чим ми можемо допомогти?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "Триває"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "Досліджуємо"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "До останнього"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "Не надіслано."
 msgid "Online"
 msgstr "Онлайн"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "Працює на {brand}"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "Повторне підключення…"
@@ -135,6 +186,10 @@ msgstr "Повторне підключення…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "Видалити {0}"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "Відповіді надходитимуть і на {address}"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "Надіслати"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "Надіслати ще раз"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "Напишіть нам"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "Напишіть нам, і ми відповімо тут."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "Пропустити"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "Зробити знімок екрана"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "Поговоріть із нами"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "Дякуємо за відгук"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "Дякуємо! Якщо вас не буде на місці, коли ми відповімо, ми напишемо на {known}."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "Ця адреса не приймає пошту. Перевірте, чи немає друкарської помилки."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "Файл завеликий."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "Цей тип файлу не приймається."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "щоб надіслати"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "Друкує…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "Завантаження…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "Зазвичай відповідає за {duration}"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "Не вдалося зв'язатися з {address}"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "Ми надіслали посилання на {address}. Відкрийте його, щоб відповіді надходили й на e-mail."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "Ми надіслали ще раз."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "Схоже, ви офлайн."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "Ви:"
 

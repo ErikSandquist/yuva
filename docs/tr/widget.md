@@ -35,6 +35,21 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 Anonim ziyaretçiler için `null` döndürün. Giriş yapıldıktan sonra yeniden çağırın, çıkış yapıldıktan
 sonra `signOut()` çağırın.
 
+## Ziyaretçi neler görür
+
+Panel bir ana ekranla açılır: kimlerin çevrimiçi olduğu, devam edilecek son konuşma ve yeni mesaj
+yazma düğmesi. Konuşmada gün ayırıcıları, "katıldı" ve "kapatıldı" satırları, ek kartları
+(yükleniyor, başarısız ve gönderildi), yazıyor göstergesi, ekibin okuduğu son mesajın altında "Görüldü"
+ve ziyaretçi yukarı kaydırdığında okunmamış sayısını gösteren "en sona git" düğmesi bulunur. Mesaj
+kutusu dosyaları, yapıştırılan görselleri ve tarayıcı izin veriyorsa sayfanın ekran görüntüsünü kabul
+eder.
+
+Kimse çevrimiçi değilse ve kanal e-posta adresi istiyorsa konuşma bir adres ister. Ziyaretçi adresi
+kaydedince konuşma onay bağlantısının gönderildiğini söyler (Adresi değiştir ve Tekrar gönder ile),
+adres geri döndüğünde ya da bağlantı 24 saat sonra geçersiz olduğunda yeniden adres ister, onaylanınca
+sessiz bir satır gösterir. Panel `prefers-color-scheme` değerini izler, vurgu rengi olarak kanalın
+başlatıcı rengini kullanır; sayfada Geist yazı tipi varsa onu, yoksa sistem yazı tipini kullanır.
+
 ## Widget neleri saklar
 
 Widget oturumunu sayfanızın `localStorage` alanında tutar; böylece ziyaretçinin konuşması sayfa

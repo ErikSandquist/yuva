@@ -8,10 +8,19 @@ msgstr ""
 "Language: te\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} కొత్తవి"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} టైప్ చేస్తున్నారు…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} సంభాషణలో చేరారు"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "అన్ని సంభాషణలు"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "ఫైళ్లను జోడించండి"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "జోడింపు"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "వెనుకకు"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "చెడు"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "చిరునామా మార్చండి"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "చాట్ ప్రస్తుతం అందుబాటులో లేదు."
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "మీ ఇన్‌బాక్స్ చూడండి"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "వ్యాఖ్య"
 msgid "Completed"
 msgstr "పూర్తయింది"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "కొనసాగించండి"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "సంభాషణ"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "సంభాషణ మూసివేయబడింది"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "ఇమెయిల్ చిరునామా"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "చెల్లుబాటు అయ్యే ఇమెయిల్ చిరునామా నమోదు చేయండి."
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "బాగుంది"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "మేము ఎలా సహాయం చేయగలం?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "కొనసాగుతోంది"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "పరిశీలిస్తున్నాము"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "తాజాదానికి వెళ్లండి"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "పంపలేదు."
 msgid "Online"
 msgstr "ఆన్‌లైన్"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "{brand} అందిస్తోంది"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "మళ్లీ కనెక్ట్ అవుతోంది…"
@@ -135,6 +186,10 @@ msgstr "మళ్లీ కనెక్ట్ అవుతోంది…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "{0} తొలగించండి"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "సమాధానాలు {address} కు కూడా చేరతాయి"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "పంపండి"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "మళ్లీ పంపండి"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "మాకు సందేశం పంపండి"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "మాకు సందేశం పంపండి, మేము ఇక్కడే సమాధానం ఇస్తాము."
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "దాటవేయండి"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "స్క్రీన్‌షాట్ తీయండి"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "మాతో మాట్లాడండి"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "మీ అభిప్రాయానికి ధన్యవాదాలు"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "ధన్యవాదాలు! మేము సమాధానం ఇచ్చేటప్పుడు మీరు లేకపోతే {known} కు ఇమెయిల్ చేస్తాము."
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "ఈ చిరునామా మెయిల్ స్వీకరించదు. అక్షర దోషం ఉందేమో చూడండి."
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "ఫైల్ చాలా పెద్దది."
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "ఈ రకం ఫైల్ అంగీకరించబడదు."
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "పంపడానికి"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "టైప్ చేస్తున్నారు…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "అప్‌లోడ్ అవుతోంది…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "సాధారణంగా {duration} లో సమాధానం ఇస్తారు"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "మేము {address} ను చేరుకోలేకపోయాం"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "మేము {address} కు లింక్ పంపాము. సమాధానాలు ఇమెయిల్ ద్వారా కూడా రావడానికి దాన్ని తెరవండి."
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "మేము మళ్లీ పంపాము."
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "మీరు ఆఫ్‌లైన్‌లో ఉన్నట్లు కనిపిస్తోంది."
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "మీరు:"
 

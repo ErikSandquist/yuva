@@ -8,10 +8,19 @@ msgstr ""
 "Language: hi\n"
 
 #: src/panel/chat.ts
+msgid "{count} new"
+msgstr "{count} नए"
+
+#: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} लिख रहे हैं…"
 
 #: src/panel/chat.ts
+msgid "{name} joined the conversation"
+msgstr "{name} बातचीत में शामिल हुए"
+
+#: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "All conversations"
 msgstr "सभी बातचीत"
 
@@ -24,16 +33,33 @@ msgid "Attach files"
 msgstr "फ़ाइलें जोड़ें"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Attachment"
 msgstr "अटैचमेंट"
+
+#: src/panel/chat.ts
+msgid "Back"
+msgstr "वापस"
 
 #: src/panel/chat.ts
 msgid "Bad"
 msgstr "खराब"
 
 #: src/panel/chat.ts
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: src/panel/chat.ts
+msgid "Change address"
+msgstr "पता बदलें"
+
+#: src/panel/chat.ts
 msgid "Chat is not available right now."
 msgstr "चैट अभी उपलब्ध नहीं है।"
+
+#: src/panel/chat.ts
+msgid "Check your inbox"
+msgstr "अपना इनबॉक्स देखें"
 
 #: src/panel/chat.ts
 msgid "Close"
@@ -47,9 +73,18 @@ msgstr "टिप्पणी"
 msgid "Completed"
 msgstr "पूरा हुआ"
 
+#: src/panel/home.ts
+msgid "Continue"
+msgstr "जारी रखें"
+
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "Conversation"
 msgstr "बातचीत"
+
+#: src/panel/chat.ts
+msgid "Conversation closed"
+msgstr "बातचीत बंद हो गई"
 
 #: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
@@ -68,12 +103,20 @@ msgid "E-mail address"
 msgstr "ईमेल पता"
 
 #: src/panel/chat.ts
+msgid "Enter"
+msgstr "Enter"
+
+#: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "सही ईमेल पता दर्ज करें।"
 
 #: src/panel/chat.ts
 msgid "Good"
 msgstr "अच्छा"
+
+#: src/panel/home.ts
+msgid "How can we help?"
+msgstr "हम कैसे मदद कर सकते हैं?"
 
 #: src/panel/chat.ts
 msgid "How did we do?"
@@ -90,6 +133,10 @@ msgstr "जारी है"
 #: src/panel/chat.ts
 msgid "Investigating"
 msgstr "जाँच जारी है"
+
+#: src/panel/chat.ts
+msgid "Jump to latest"
+msgstr "सबसे नए पर जाएँ"
 
 #: src/panel/chat.ts
 msgid "Loading…"
@@ -127,6 +174,10 @@ msgstr "भेजा नहीं गया।"
 msgid "Online"
 msgstr "ऑनलाइन"
 
+#: src/panel/home.ts
+msgid "Powered by {brand}"
+msgstr "{brand} द्वारा संचालित"
+
 #: src/panel/chat.ts
 msgid "Reconnecting…"
 msgstr "फिर से कनेक्ट हो रहा है…"
@@ -135,6 +186,10 @@ msgstr "फिर से कनेक्ट हो रहा है…"
 #: src/panel/chat.ts
 msgid "Remove {0}"
 msgstr "{0} हटाएँ"
+
+#: src/panel/chat.ts
+msgid "Replies will also reach {address}"
+msgstr "जवाब {address} पर भी पहुँचेंगे"
 
 #: src/panel/chat.ts
 msgid "Resolved"
@@ -161,6 +216,14 @@ msgid "Send"
 msgstr "भेजें"
 
 #: src/panel/chat.ts
+msgid "Send again"
+msgstr "फिर से भेजें"
+
+#: src/panel/home.ts
+msgid "Send us a message"
+msgstr "हमें संदेश भेजें"
+
+#: src/panel/chat.ts
 msgid "Send us a message and we will reply here."
 msgstr "हमें संदेश भेजें, हम यहीं जवाब देंगे।"
 
@@ -185,6 +248,14 @@ msgid "Skip"
 msgstr "छोड़ें"
 
 #: src/panel/chat.ts
+msgid "Take a screenshot"
+msgstr "स्क्रीनशॉट लें"
+
+#: src/panel/home.ts
+msgid "Talk to us"
+msgstr "हमसे बात करें"
+
+#: src/panel/chat.ts
 msgid "Thanks for your feedback"
 msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद"
 
@@ -193,12 +264,20 @@ msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
 msgstr "धन्यवाद! हमारे जवाब देने पर आप न हों तो हम {known} पर ईमेल करेंगे।"
 
 #: src/panel/chat.ts
+msgid "That address doesn't accept mail. Check it for a typo."
+msgstr "यह पता मेल स्वीकार नहीं करता। वर्तनी की गलती जाँचें।"
+
+#: src/panel/chat.ts
 msgid "The file is too large."
 msgstr "फ़ाइल बहुत बड़ी है।"
 
 #: src/panel/chat.ts
 msgid "This file type is not accepted."
 msgstr "इस प्रकार की फ़ाइल स्वीकार नहीं है।"
+
+#: src/panel/chat.ts
+msgid "to send"
+msgstr "भेजने के लिए"
 
 #: src/panel/chat.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -213,8 +292,24 @@ msgid "Typing…"
 msgstr "लिख रहे हैं…"
 
 #: src/panel/chat.ts
+msgid "Uploading…"
+msgstr "अपलोड हो रहा है…"
+
+#: src/panel/chat.ts
 msgid "Usually replies in {duration}"
 msgstr "आमतौर पर {duration} में जवाब देते हैं"
+
+#: src/panel/chat.ts
+msgid "We couldn't reach {address}"
+msgstr "हम {address} तक नहीं पहुँच सके"
+
+#: src/panel/chat.ts
+msgid "We sent a link to {address}. Open it so replies reach you by e-mail."
+msgstr "हमने {address} पर एक लिंक भेजा है। इसे खोलें ताकि जवाब आपको ईमेल से भी मिलें।"
+
+#: src/panel/chat.ts
+msgid "We sent it again."
+msgstr "हमने इसे फिर से भेज दिया।"
 
 #: src/panel/chat.ts
 msgid "We'll reply as soon as we can"
@@ -233,6 +328,7 @@ msgid "You seem to be offline."
 msgstr "लगता है आप ऑफ़लाइन हैं।"
 
 #: src/panel/chat.ts
+#: src/panel/home.ts
 msgid "You:"
 msgstr "आप:"
 
