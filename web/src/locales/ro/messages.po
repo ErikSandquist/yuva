@@ -2588,6 +2588,10 @@ msgstr "Modifică, șterge și îmbină contacte"
 msgid "Change, move and bulk-update conversations"
 msgstr "Modifică, mută și actualizează în masă conversații"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Setările jurnalului de modificări"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Modificări făcute în {provider}: niciuna"
@@ -3421,6 +3425,10 @@ msgstr "Creează pagină de stare ({newKey})"
 msgid "Create the board"
 msgstr "Creează panoul"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Creează jurnalul de modificări"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Creează canalul de e-mail"
@@ -3648,6 +3656,10 @@ msgstr "Șterge articolul"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Șterge ciorna"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Șterge intrarea"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Introdu numele de utilizator SMTP din consola SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Introdu e-mailul tău de serviciu și îți trimitem un cod. Fără parolă; același cod te conectează și mai târziu."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Intrări"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "E-mailul încă ajunge la {provider}, dar nu este încă trimis la Yuva.
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "E-mailul care între timp încă ajunge la {provider} este citit la fiecare două minute, deci nu se pierde nimic."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Trimite intrarea abonaților prin e-mail"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Trimite-le o confirmare"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Navighează prin mesajele în masă"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Parcurge intrările"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Parcurge ideile"
 
@@ -7063,6 +7087,10 @@ msgstr "Discuție nouă"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "discuții noi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Intrare nouă"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Deschide discuția"
 msgid "Open the endpoint"
 msgstr "Deschide endpointul"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Deschide intrarea"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Deschide articolul de ajutor"
@@ -8440,6 +8472,10 @@ msgstr "Deschide setările paginii"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Deschide panoul public"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Deschide jurnalul de modificări public"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Pagina de preferințe"
 msgid "Preparing"
 msgstr "Se pregătește"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Publică și depublică articole din centrul de ajutor"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publică acum"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Publică sau retrage jurnalul de modificări"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Programează"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Programează și trimite mesaje în masă, când spațiul de lucru lasă cheile și asistenții să le trimită"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Programează intrarea"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Arată culorile alese de expeditor, pe alb"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Arată ecranul conversației"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Afișează numărul de noutăți pe butonul de chat"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Numele de utilizator este adresa ta iCloud fără @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Vizitatorul a tastat {0} în chat și nu l-a confirmat încă. Acest răspuns a venit de la acea adresă, deci s-ar putea să nu fie de la vizitator."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Numărul de noutăți apare pe butonul de chat cât timp nu există mesaje necitite. Pagina de start a widgetului îl arată mereu."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Spațiul de lucru nu poate trimite deocamdată mesaje în masă."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Retrage ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Retrage intrarea sau anulează programarea"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Retrage publicarea traducerii"
 
@@ -13963,6 +14020,18 @@ msgstr "Ce va pleca"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Ce scrii des"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Noutăți"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Intrare de noutăți"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

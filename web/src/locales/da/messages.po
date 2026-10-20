@@ -2588,6 +2588,10 @@ msgstr "Ændre, slette og flette kontakter"
 msgid "Change, move and bulk-update conversations"
 msgstr "Ændre, flytte og masseopdatere samtaler"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Indstillinger for ændringsloggen"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Ændringer foretaget i {provider}: ingen"
@@ -3421,6 +3425,10 @@ msgstr "Opret statusside ({newKey})"
 msgid "Create the board"
 msgstr "Opret tavlen"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Opret ændringsloggen"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Opret e-mailkanalen"
@@ -3648,6 +3656,10 @@ msgstr "Slet artiklen"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Slet kladden"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Slet indlægget"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Indtast SMTP-brugernavnet fra SES-konsollen."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Indtast din arbejdsmail, så sender vi dig en kode. Ingen adgangskode; den samme kode logger dig ind senere."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Indlæg"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Mail når stadig {provider}, men sendes endnu ikke til Yuva."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Mail, der imens stadig når {provider}, læses hvert andet minut, så intet går tabt."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Send indlægget til abonnenter på mail"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Send dem en bekræftelsesmail"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Gå gennem udsendelserne"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Gå gennem indlæggene"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Gå gennem idéerne"
 
@@ -7063,6 +7087,10 @@ msgstr "Ny diskussion"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nye diskussioner"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Nyt indlæg"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Åbn diskussionen"
 msgid "Open the endpoint"
 msgstr "Åbn endpointet"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Åbn indlægget"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Åbn hjælpeartiklen"
@@ -8440,6 +8472,10 @@ msgstr "Åbn sidens indstillinger"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Åbn den offentlige tavle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Åbn den offentlige ændringslog"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Indstillingsside"
 msgid "Preparing"
 msgstr "Forbereder"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Udgiv og afpublicer hjælpecenterartikler"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Udgiv nu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Udgiv eller træk ændringsloggen tilbage"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Planlæg"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Planlæg og send udsendelser, når arbejdsområdet lader nøgler og assistenter sende dem"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Planlæg indlægget"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Vis de farver, afsenderen valgte, på hvid"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Vis samtaleskærmen"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Vis antallet af nyheder på chatknappen"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Brugernavnet er din iCloud-adresse uden @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Den besøgende skrev {0} i chatten og har ikke bekræftet den endnu. Dette svar kom fra den adresse, så det er måske ikke fra den besøgende."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Antallet af nyheder vises på chatknappen, så længe der ikke er ulæste beskeder. Widgettens startside viser det altid."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Arbejdsområdet må ikke sende udsendelser for nu."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Træk tilbage ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Træk indlægget tilbage eller fjern planlægningen"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Fjern udgivelsen af oversættelsen"
 
@@ -13963,6 +14020,18 @@ msgstr "Hvad der vil gå ud"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Hvad du ofte skriver"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Nyheder"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Nyhedsindlæg"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

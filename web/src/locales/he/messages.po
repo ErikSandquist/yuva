@@ -2588,6 +2588,10 @@ msgstr "שינוי, מחיקה ומיזוג של אנשי קשר"
 msgid "Change, move and bulk-update conversations"
 msgstr "שינוי, העברה ועדכון המוני של שיחות"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "הגדרות יומן השינויים"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "שינויים שנעשו ב-{provider}: אין"
@@ -3421,6 +3425,10 @@ msgstr "יצירת דף סטטוס ({newKey})"
 msgid "Create the board"
 msgstr "יצירת הלוח"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "יצירת יומן השינויים"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "יצירת ערוץ האימייל"
@@ -3648,6 +3656,10 @@ msgstr "מחיקת המאמר"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "מחיקת הטיוטה"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "מחיקת הרשומה"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "הזן את שם משתמש ה-SMTP ממסוף SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "הזן את אימייל העבודה שלך ונשלח לך קוד. בלי סיסמה; אותו קוד מכניס אותך גם בהמשך."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "רשומות"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "הדואר עדיין מגיע אל {provider} אבל עדיין לא נ
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "דואר שעדיין מגיע אל {provider} בינתיים נקרא כל שתי דקות, כך שדבר לא הולך לאיבוד."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "שליחת הרשומה למנויים בדוא״ל"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "שלח להם אימייל אישור"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "מעבר בין השליחות ההמוניות"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "מעבר בין הרשומות"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "מעבר בין הרעיונות"
 
@@ -7063,6 +7087,10 @@ msgstr "דיון חדש"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "דיונים חדשים"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "רשומה חדשה"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "פתיחת הדיון"
 msgid "Open the endpoint"
 msgstr "פתיחת נקודת הקצה"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "פתיחת הרשומה"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "פתיחת מאמר העזרה"
@@ -8440,6 +8472,10 @@ msgstr "פתיחת הגדרות הדף"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "פתיחת הלוח הציבורי"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "פתיחת יומן השינויים הציבורי"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "דף העדפות"
 msgid "Preparing"
 msgstr "מכין"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "פרסום וביטול פרסום של מאמרים במרכז העזר
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "פרסום עכשיו"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "פרסום או ביטול פרסום של יומן השינויים"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "תזמון"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "תזמון ושליחה של שליחות המוניות, כשסביבת העבודה מאפשרת למפתחות ולעוזרים לשלוח אותן"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "תזמון הרשומה"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "הצג את הצבעים שהשולח בחר, על לבן"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "הצגת מסך השיחה"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "הצגת מספר החידושים בכפתור הצ׳אט"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "שם המשתמש הוא כתובת ה-iCloud שלך בלי @icloud.com.
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "המבקר הקליד {0} בצ׳אט ועדיין לא אישר אותה. התשובה הזאת הגיעה מהכתובת הזאת, ולכן ייתכן שאינה מהמבקר."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "מספר החידושים מופיע בכפתור הצ׳אט כל עוד אין הודעות שלא נקראו. דף הבית של הווידג׳ט תמיד מציג אותו."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "סביבת העבודה אינה רשאית לשלוח שליחות המוניות כרגע."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "ביטול פרסום ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "ביטול פרסום או ביטול תזמון של הרשומה"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "ביטול פרסום התרגום"
 
@@ -13963,6 +14020,18 @@ msgstr "מה ייצא"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "מה שאתה כותב לעתים קרובות"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "מה חדש"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "רשומת מה חדש"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

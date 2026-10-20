@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "Опубліковано записів: {published} із {total}"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Від 3 до 48 літер, цифр і дефісів. Унікальний на цьому сервері."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "У журналі змін може бути не більше 50 запланованих записів."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "Учасник, який може публікувати, змінює мітки опублікованого запису."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Адреса"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Закінчення адреси"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Агенти можуть публікувати"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Усі мітки"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Аналітична властивість"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "Інший журнал змін використовує цю адресу зараз або використовував раніше."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Будь-який стан"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Щонайменше 3 символи."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Змінити"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Змінити час"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Журнал змін"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Вибрати зображення"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Рахує перегляди сторінок журналу змін без файлів cookie."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Створити журнал змін"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Створити чернетку розсилки"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Створити запис"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Видалити «{changelogName}»?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Видалити журнал змін"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Видалити запис"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Видалити переклад {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Видалити цей запис?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Видалити цей переклад"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Видалити переклад"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Видаляє журнал змін разом із записами та перекладами. Публічна адреса перестане працювати. Розсилки, створені з його записів, залишаються."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Опис"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Чернетка"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Чернетку надіслано. Опублікувати її може власник або адміністратор."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Записи"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "Записи та переклади видаляються разом із ним."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Записи можна писати й публікувати цими мовами. Відвідувачі бачать свою мову, якщо вона є."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Усі переклади видаляються. Розсилки, створені з нього, залишаються."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Виправлено"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Покращено"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "У нього не було тексту основною мовою."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "Його чернетка видаляється. Інші мови залишаються."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Залишити мою версію"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Мітка"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Мітки"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Мова"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Мови"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Списки"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Завантажити ще"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Надіслати підписникам поштою"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Надіслано підписникам"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Основна мова"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Ще"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Ім'я"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Нове"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Новий запис"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Журналу змін ще немає. Його створюють власники й адміністратори."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Записів ще немає. Розкажіть клієнтам, що змінилося в останній версії."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Жоден запис не підходить."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Немає скриньки, для якої можна показати журнал змін."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Немає"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "не написано"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Вимкнено: агенти пишуть чернетки й надсилають їх на перевірку, а публікують власники й адміністратори. Увімкнено: публікують, плануют і знімають з публікації також агенти з доступом до скриньки."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Це можуть робити лише власники й адміністратори."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Оригінал"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Вихідний текст ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "застаріло"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Застаріло"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Частина вебадреси цього перекладу. Якщо порожньо, створюється із заголовка."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Виберіть час протягом наступного року у вашому часовому поясі, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Виберіть до 10 списків цієї скриньки."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Зображення"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Попередній перегляд"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Попередній перегляд ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Попередній перегляд ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Попередній перегляд запису"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Публічна адреса"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Опублікувати"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Опублікувати ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Опублікувати"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Опублікована"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "Запланована публікація не вдалася."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Видалити"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Зберегти зараз"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Збережено"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "Збереження…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Запланувати"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Запланувати цей запис"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Заплановано"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Заплановано: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Надіслати через"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Налаштування"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Показати"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Показується під назвою на головній сторінці."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Показується, якщо в запису немає перекладу мовою відвідувача."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Показується разом із записом на сторінці, у віджеті та в листі."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Хтось зберіг цей переклад, поки ви його редагували."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Почніть із заголовка. Текст ви напишете потім, і він лишиться чернеткою, доки його не опублікують."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Стан"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Надіслати чернетку"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Надіслати чернетку ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Розкажіть клієнтам {inboxName}, що нового, покращено й виправлено. Він лишається неопублікованим, доки ви його не опублікуєте."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Розкажіть клієнтам, що нового, покращено й виправлено: на публічній сторінці, у віджеті чату та поштою. Виберіть журнал змін скриньки, щоб писати записи."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Текст"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "Адреса відповідає «не знайдено», доки ви не опублікуєте журнал змін."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "Ключ API, який його запланував, більше не може публікувати."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "Ключ API, який його запланував, відкликано."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "Журнал змін розміщений за адресою {address}. Стара адреса й надалі перенаправлятиме, якщо ви її зміните."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "Запис зникне з публічної сторінки, зі стрічки та з віджета. Чернетки залишаться, і ви зможете опублікувати його знову."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "У цей час запис стане публічним сам. До того часу змінювати його можуть лише учасники, які можуть публікувати."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "Для цього запису основною мовою ще немає тексту."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "Учасник, який його запланував, можливо, більше не може публікувати."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "Сторінка такою, якою її побачать відвідувачі, разом із чернетками. Це бачить лише ваша команда."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Заголовок має містити щонайменше 3 символи"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Цей запис заплановано. Його опублікує учасник, який може публікувати."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "У цієї скриньки вже є журнал змін."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "У цієї скриньки ще немає списку розсилки. Створіть його в розділі «Розсилки»."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "Це єдиний текст запису. Видаліть натомість увесь запис."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Створює із запису чернетку розсилки й відкриває її. Нічого не надсилається, доки ви її не перевірите й не надішлете або не заплануєте."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "У цьому робочому просторі стільки записів, скільки дозволяє сервер. Спершу видаліть старі."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Назва"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Переклад видалено"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Зняти з публікації"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Зняти з публікації ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Зняти цей запис з публікації?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Не опублікована"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Неопубліковані зміни"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Не опубліковано, бачить лише ваша команда"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Незбережені зміни"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Скасувати планування"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Використовуйте від 3 до 48 літер, цифр і внутрішніх дефісів."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Використати їхню версію"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Перегляд"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Відкрити журнал змін"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Новини"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Хто може публікувати"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Писати"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Перш ніж публікувати, напишіть запис основною мовою."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Напишіть у Markdown, що змінилося…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Ваш часовий пояс, {zone}. Це {utc} UTC."

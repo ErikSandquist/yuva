@@ -2588,6 +2588,10 @@ msgstr "Ubah, padam dan gabung kenalan"
 msgid "Change, move and bulk-update conversations"
 msgstr "Ubah, alih dan kemas kini pukal perbualan"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Tetapan changelog"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Perubahan yang dibuat pada {provider}: tiada"
@@ -3421,6 +3425,10 @@ msgstr "Cipta halaman status ({newKey})"
 msgid "Create the board"
 msgstr "Cipta papan"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Cipta changelog"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Cipta saluran e-mel"
@@ -3648,6 +3656,10 @@ msgstr "Padam artikel"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Padam draf"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Padam entri"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Masukkan nama pengguna SMTP daripada konsol SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Masukkan e-mel kerja anda dan kami hantar kod. Tanpa kata laluan; kod yang sama melog masuk anda kemudian."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Entri"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Mel masih sampai ke {provider} tetapi belum dihantar ke Yuva."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Mel yang masih sampai ke {provider} dalam pada itu dibaca setiap dua minit, jadi tiada apa hilang."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Hantar entri kepada pelanggan melalui e-mel"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Hantar mel pengesahan kepada mereka"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Bergerak antara siaran"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Bergerak antara entri"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Layari idea"
 
@@ -7063,6 +7087,10 @@ msgstr "Perbincangan baharu"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "perbincangan baharu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Entri baharu"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Buka perbincangan"
 msgid "Open the endpoint"
 msgstr "Buka titik akhir"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Buka entri"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Buka artikel bantuan"
@@ -8440,6 +8472,10 @@ msgstr "Buka tetapan halaman"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Buka papan awam"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Buka changelog awam"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Halaman keutamaan"
 msgid "Preparing"
 msgstr "Menyediakan"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Terbitkan dan nyahterbitkan artikel pusat bantuan"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Terbitkan sekarang"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Terbitkan atau tarik balik changelog"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Jadualkan"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Jadualkan dan hantar siaran, apabila ruang kerja membenarkan kunci dan pembantu menghantarnya"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Jadualkan entri"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Tunjuk warna yang dipilih penghantar, di atas putih"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Tunjuk skrin perbualan"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Tunjukkan bilangan kemas kini baharu pada butang sembang"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Nama pengguna ialah alamat iCloud anda tanpa @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Pelawat menaip {0} dalam sembang dan belum mengesahkannya. Balasan ini datang dari alamat itu, jadi mungkin bukan daripada pelawat."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Bilangan perkara baharu muncul pada butang sembang selagi tiada mesej yang belum dibaca. Laman utama widget sentiasa menunjukkannya."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Ruang kerja tidak boleh menghantar siaran buat masa ini."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Tarik balik ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Tarik balik atau batalkan jadual entri"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Batalkan penerbitan terjemahan"
 
@@ -13963,6 +14020,18 @@ msgstr "Apa yang akan keluar"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Apa yang sering anda tulis"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Yang baharu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Entri yang baharu"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

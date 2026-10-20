@@ -106,6 +106,7 @@ function useItems(open: boolean): Item[] {
     go(t`Status`, "/status", keyLabel(SHORTCUTS.status))
     go(t`Help`, "/knowledge", keyLabel(SHORTCUTS.helpCenter))
     go(t`Roadmap`, "/board", keyLabel(SHORTCUTS.roadmap))
+    go(t`What’s new`, "/updates", keyLabel(SHORTCUTS.updates))
     if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")

@@ -201,6 +201,27 @@ export function DiscussionsFields({ f, set }: Pick<Props, "f" | "set">) {
   )
 }
 
+export function UpdatesFields({ f, set }: Pick<Props, "f" | "set">) {
+  const { t } = useLingui()
+  return (
+    <ToggleRow
+      title={<Trans>Show the number of new updates on the chat button</Trans>}
+      hint={
+        <Trans>
+          The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it.
+        </Trans>
+      }
+    >
+      <Switch
+        checked={f.announceUpdates}
+        onCheckedChange={(announceUpdates) => set({ announceUpdates })}
+        aria-label={t`Show the number of new updates on the chat button`}
+        data-testid="chat-announce-updates"
+      />
+    </ToggleRow>
+  )
+}
+
 export function ChatFields(p: Props) {
   return (
     <FormBlock title={<Trans>Web chat</Trans>}>
@@ -208,6 +229,7 @@ export function ChatFields(p: Props) {
       <VisitorsFields {...p} />
       <LookFields {...p} />
       <DiscussionsFields {...p} />
+      <UpdatesFields {...p} />
     </FormBlock>
   )
 }

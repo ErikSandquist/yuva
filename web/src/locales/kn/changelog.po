@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: kn\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "{total} ರಲ್ಲಿ {published} ನಮೂದುಗಳು ಪ್ರಕಟವಾಗಿವೆ"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಅಂಕೆಗಳು ಮತ್ತು ಹೈಫನ್‌ಗಳು. ಈ ಸರ್ವರ್‌ನಲ್ಲಿ ಅನನ್ಯ."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "ಒಂದು ಚೇಂಜ್‌ಲಾಗ್‌ನಲ್ಲಿ ಗರಿಷ್ಠ 50 ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ ನಮೂದುಗಳಿರಬಹುದು."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "ಪ್ರಕಟಿಸಬಲ್ಲ ಸದಸ್ಯರು ಪ್ರಕಟಿತ ನಮೂದಿನ ಲೇಬಲ್‌ಗಳನ್ನು ಬದಲಾಯಿಸುತ್ತಾರೆ."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "ವಿಳಾಸ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "ವಿಳಾಸದ ಕೊನೆ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "ಏಜೆಂಟ್‌ಗಳು ಪ್ರಕಟಿಸಬಹುದು"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "ಎಲ್ಲಾ ಲೇಬಲ್‌ಗಳು"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "ಅನಾಲಿಟಿಕ್ಸ್ ಗುಣ"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "ಬೇರೊಂದು ಚೇಂಜ್‌ಲಾಗ್ ಈ ವಿಳಾಸವನ್ನು ಈಗ ಅಥವಾ ಮೊದಲು ಬಳಸುತ್ತದೆ."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "ಯಾವುದೇ ಸ್ಥಿತಿ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳು."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "ರದ್ದುಗೊಳಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "ಬದಲಾಯಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "ಸಮಯ ಬದಲಾಯಿಸಿ"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "ಚಿತ್ರ ಆಯ್ಕೆಮಾಡಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "ಕುಕೀಗಳಿಲ್ಲದೆ ಚೇಂಜ್‌ಲಾಗ್‌ನ ಪುಟ ವೀಕ್ಷಣೆಗಳನ್ನು ಎಣಿಸುತ್ತದೆ."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ರಚಿಸಿ"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ನ ಡ್ರಾಫ್ಟ್ ರಚಿಸಿ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "ನಮೂದು ರಚಿಸಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "ಅಳಿಸಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "{changelogName} ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ಅಳಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "ನಮೂದು ಅಳಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} ಅನುವಾದ ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "ಈ ನಮೂದನ್ನು ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "ಈ ಅನುವಾದ ಅಳಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "ಅನುವಾದ ಅಳಿಸಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ಅನ್ನು ಅದರ ನಮೂದುಗಳು ಮತ್ತು ಅನುವಾದಗಳೊಂದಿಗೆ ಅಳಿಸುತ್ತದೆ. ಸಾರ್ವಜನಿಕ ವಿಳಾಸ ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ. ಅದರ ನಮೂದುಗಳಿಂದ ಮಾಡಿದ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳು ಉಳಿಯುತ್ತವೆ."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "ವಿವರಣೆ"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "ಡ್ರಾಫ್ಟ್"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "ಕರಡು ಸಲ್ಲಿಸಲಾಗಿದೆ. ಮಾಲೀಕರು ಅಥವಾ ನಿರ್ವಾಹಕರು ಅದನ್ನು ಪ್ರಕಟಿಸಬಹುದು."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "ನಮೂದುಗಳು"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "ನಮೂದುಗಳು ಮತ್ತು ಅನುವಾದಗಳು ಅದರೊಂದಿಗೆ ಅಳಿಸಲ್ಪಡುತ್ತವೆ."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "ಈ ಭಾಷೆಗಳಲ್ಲಿ ನಮೂದುಗಳನ್ನು ಬರೆಯಬಹುದು ಮತ್ತು ಪ್ರಕಟಿಸಬಹುದು. ಸಂದರ್ಶಕರು ತಮ್ಮ ಭಾಷೆಯನ್ನು ನೋಡುತ್ತಾರೆ, ಇದ್ದರೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "ಎಲ್ಲಾ ಅನುವಾದಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಅದರಿಂದ ಮಾಡಿದ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳು ಉಳಿಯುತ್ತವೆ."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "ಸರಿಪಡಿಸಲಾಗಿದೆ"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "ಸುಧಾರಿಸಲಾಗಿದೆ"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "ಮುಖ್ಯ ಭಾಷೆಯಲ್ಲಿ ಇದಕ್ಕೆ ಪಠ್ಯ ಇರಲಿಲ್ಲ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "ಇದರ ಡ್ರಾಫ್ಟ್ ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ಇತರ ಭಾಷೆಗಳು ಉಳಿಯುತ್ತವೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "ನನ್ನದನ್ನು ಉಳಿಸಿ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "ಲೇಬಲ್"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "ಲೇಬಲ್‌ಗಳು"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "ಭಾಷೆ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "ಭಾಷೆಗಳು"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "ಪಟ್ಟಿಗಳು"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "ಇನ್ನಷ್ಟು ಲೋಡ್ ಮಾಡಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "ಚಂದಾದಾರರಿಗೆ ಇಮೇಲ್ ಮೂಲಕ ಕಳುಹಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "ಚಂದಾದಾರರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "ಮುಖ್ಯ ಭಾಷೆ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "ಇನ್ನಷ್ಟು"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "ಹೆಸರು"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "ಹೊಸ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "ಹೊಸ ನಮೂದು"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "ಇನ್ನೂ ಚೇಂಜ್‌ಲಾಗ್ ಇಲ್ಲ. ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಅದನ್ನು ರಚಿಸುತ್ತಾರೆ."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "ಇನ್ನೂ ನಮೂದುಗಳಿಲ್ಲ. ನಿಮ್ಮ ಇತ್ತೀಚಿನ ಬಿಡುಗಡೆಯಲ್ಲಿ ಏನು ಬದಲಾಯಿತು ಎಂದು ನಿಮ್ಮ ಗ್ರಾಹಕರಿಗೆ ತಿಳಿಸಿ."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "ಯಾವುದೇ ನಮೂದು ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ತೋರಿಸಬಹುದಾದ ಇನ್‌ಬಾಕ್ಸ್ ಇಲ್ಲ."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "ಯಾವುದೂ ಇಲ್ಲ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "ಬರೆದಿಲ್ಲ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "ಆಫ್: ಏಜೆಂಟ್‌ಗಳು ಡ್ರಾಫ್ಟ್ ಬರೆದು ಸಲ್ಲಿಸುತ್ತಾರೆ, ಮತ್ತು ಮಾಲೀಕರು ಹಾಗೂ ನಿರ್ವಾಹಕರು ಪ್ರಕಟಿಸುತ್ತಾರೆ. ಆನ್: ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಪ್ರವೇಶವಿರುವ ಏಜೆಂಟ್‌ಗಳೂ ಪ್ರಕಟಿಸುತ್ತಾರೆ, ಶೆಡ್ಯೂಲ್ ಮಾಡುತ್ತಾರೆ ಮತ್ತು ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳುತ್ತಾರೆ."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "ಇದನ್ನು ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಮಾತ್ರ ಮಾಡಬಹುದು."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "ಮೂಲ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "ಮೂಲ ಪಠ್ಯ ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "ಹಳೆಯದು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "ಹಳೆಯದು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "ಈ ಅನುವಾದದ ವೆಬ್ ವಿಳಾಸದ ಭಾಗ. ಖಾಲಿ ಇದ್ದರೆ ಶೀರ್ಷಿಕೆಯಿಂದ ರಚಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "ಮುಂದಿನ ಒಂದು ವರ್ಷದಲ್ಲಿ ಒಂದು ಸಮಯ ಆರಿಸಿ, ನಿಮ್ಮ ಸಮಯ ವಲಯ, {zone}, ದಲ್ಲಿ."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ನ ಗರಿಷ್ಠ 10 ಪಟ್ಟಿಗಳನ್ನು ಆರಿಸಿ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "ಚಿತ್ರ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "ಪೂರ್ವವೀಕ್ಷಣೆ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "ಮುನ್ನೋಟ ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "ಮುನ್ನೋಟ ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "ನಮೂದಿನ ಪೂರ್ವವೀಕ್ಷಣೆ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "ಸಾರ್ವಜನಿಕ ವಿಳಾಸ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "ಪ್ರಕಟಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "ಪ್ರಕಟಿಸಿ ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "ಪ್ರಕಟಿಸುವ ದಿನಾಂಕ"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "ಪ್ರಕಟಿತ"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ ಪ್ರಕಟಣೆ ವಿಫಲವಾಯಿತು."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "ತೆಗೆದುಹಾಕಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "ಈಗಲೇ ಉಳಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "ಉಳಿಸಲಾಗಿದೆ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "ಉಳಿಸಲಾಗುತ್ತಿದೆ…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "ಶೆಡ್ಯೂಲ್"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "ಈ ನಮೂದನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "ಶೆಡ್ಯೂಲ್ ಮಾಡಲಾಗಿದೆ"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ್ದು: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "ಇದರ ಮೂಲಕ ಕಳುಹಿಸಿ"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "ತೋರಿಸಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "ಮುಖಪುಟದಲ್ಲಿ ಹೆಸರಿನ ಕೆಳಗೆ ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "ನಮೂದಿಗೆ ಸಂದರ್ಶಕರ ಭಾಷೆಯಲ್ಲಿ ಅನುವಾದ ಇಲ್ಲದಿದ್ದಾಗ ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "ನಮೂದಿನ ಜೊತೆಗೆ ಪುಟ, ವಿಜೆಟ್ ಮತ್ತು ಇಮೇಲ್‌ನಲ್ಲಿ ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "ನೀವು ಸಂಪಾದಿಸುತ್ತಿದ್ದಾಗ ಯಾರೋ ಈ ಅನುವಾದವನ್ನು ಉಳಿಸಿದರು."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "ಶೀರ್ಷಿಕೆಯಿಂದ ಪ್ರಾರಂಭಿಸಿ. ಪಠ್ಯವನ್ನು ನಂತರ ಬರೆಯುತ್ತೀರಿ, ಪ್ರಕಟವಾಗುವವರೆಗೆ ಅದು ಕರಡಾಗಿರುತ್ತದೆ."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "ಸ್ಥಿತಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "ಕರಡು ಸಲ್ಲಿಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "ಕರಡು ಸಲ್ಲಿಸಿ ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "{inboxName} ಗ್ರಾಹಕರಿಗೆ ಏನು ಹೊಸದು, ಏನು ಸುಧಾರಿಸಿದೆ ಮತ್ತು ಏನು ಸರಿಪಡಿಸಲಾಗಿದೆ ಎಂದು ತಿಳಿಸಿ. ನೀವು ಪ್ರಕಟಿಸುವವರೆಗೆ ಇದು ಪ್ರಕಟವಾಗದೆ ಉಳಿಯುತ್ತದೆ."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "ನಿಮ್ಮ ಗ್ರಾಹಕರಿಗೆ ಏನು ಹೊಸದು, ಏನು ಸುಧಾರಿಸಿದೆ ಮತ್ತು ಏನು ಸರಿಪಡಿಸಲಾಗಿದೆ ಎಂದು ಸಾರ್ವಜನಿಕ ಪುಟದಲ್ಲಿ, ಚಾಟ್ ವಿಜೆಟ್‌ನಲ್ಲಿ ಮತ್ತು ಇಮೇಲ್ ಮೂಲಕ ತಿಳಿಸಿ. ನಮೂದುಗಳನ್ನು ಬರೆಯಲು ಒಂದು ಇನ್‌ಬಾಕ್ಸ್‌ನ ಚೇಂಜ್‌ಲಾಗ್ ಆರಿಸಿ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "ಪಠ್ಯ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "ನೀವು ಚೇಂಜ್‌ಲಾಗ್ ಪ್ರಕಟಿಸುವವರೆಗೆ ವಿಳಾಸ “ಸಿಗಲಿಲ್ಲ” ಎಂದು ಉತ್ತರಿಸುತ್ತದೆ."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "ಇದನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ API ಕೀ ಇನ್ನು ಪ್ರಕಟಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "ಇದನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ API ಕೀ ಅನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ {address} ನಲ್ಲಿ ಇದೆ. ವಿಳಾಸ ಬದಲಾಯಿಸಿದರೆ ಹಳೆಯ ವಿಳಾಸ ಮರುನಿರ್ದೇಶಿಸುತ್ತಲೇ ಇರುತ್ತದೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "ನಮೂದು ಸಾರ್ವಜನಿಕ ಪುಟ, ಫೀಡ್ ಮತ್ತು ವಿಜೆಟ್‌ನಿಂದ ಮಾಯವಾಗುತ್ತದೆ. ಡ್ರಾಫ್ಟ್‌ಗಳು ಉಳಿಯುತ್ತವೆ, ಮತ್ತು ನೀವು ಅದನ್ನು ಮತ್ತೆ ಪ್ರಕಟಿಸಬಹುದು."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "ನಮೂದು ಈ ಸಮಯದಲ್ಲಿ ತಾನಾಗಿಯೇ ಸಾರ್ವಜನಿಕವಾಗುತ್ತದೆ. ಅಲ್ಲಿಯವರೆಗೆ ಪ್ರಕಟಿಸಬಲ್ಲ ಸದಸ್ಯರು ಮಾತ್ರ ಅದನ್ನು ಬದಲಾಯಿಸಬಹುದು."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "ಮುಖ್ಯ ಭಾಷೆಯಲ್ಲಿ ಈ ನಮೂದಿಗೆ ಇನ್ನೂ ಪಠ್ಯ ಇಲ್ಲ."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "ಇದನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿದ ಸದಸ್ಯರು ಇನ್ನು ಪ್ರಕಟಿಸಲು ಸಾಧ್ಯವಾಗದಿರಬಹುದು."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "ಸಂದರ್ಶಕರು ನೋಡುವಂತೆ ಪುಟ, ಡ್ರಾಫ್ಟ್‌ಗಳೊಂದಿಗೆ. ಇದನ್ನು ನಿಮ್ಮ ತಂಡ ಮಾತ್ರ ನೋಡುತ್ತದೆ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "ಶೀರ್ಷಿಕೆಗೆ ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳು ಬೇಕು"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "ಈ ನಮೂದು ಶೆಡ್ಯೂಲ್ ಆಗಿದೆ. ಪ್ರಕಟಿಸಬಲ್ಲ ಸದಸ್ಯರು ಅದನ್ನು ಪ್ರಕಟಿಸುತ್ತಾರೆ."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಈಗಾಗಲೇ ಚೇಂಜ್‌ಲಾಗ್ ಇದೆ."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಇನ್ನೂ ಮೇಲಿಂಗ್ ಪಟ್ಟಿ ಇಲ್ಲ. ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ರಚಿಸಿ."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "ಇದು ನಮೂದಿನ ಏಕೈಕ ಪಠ್ಯ. ಬದಲಿಗೆ ನಮೂದನ್ನು ಅಳಿಸಿ."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "ನಮೂದಿನಿಂದ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ನ ಡ್ರಾಫ್ಟ್ ರಚಿಸಿ ಅದನ್ನು ತೆರೆಯುತ್ತದೆ. ನೀವು ಪರಿಶೀಲಿಸಿ ಕಳುಹಿಸುವವರೆಗೆ ಅಥವಾ ಶೆಡ್ಯೂಲ್ ಮಾಡುವವರೆಗೆ ಏನೂ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "ಈ ವರ್ಕ್‌ಸ್ಪೇಸ್‌ನಲ್ಲಿ ಸರ್ವರ್ ಅನುಮತಿಸುವಷ್ಟು ನಮೂದುಗಳಿವೆ. ಮೊದಲು ಹಳೆಯವನ್ನು ಅಳಿಸಿ."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "ಶೀರ್ಷಿಕೆ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "ಅನುವಾದ ಅಳಿಸಲಾಗಿದೆ"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "ಈ ನಮೂದಿನ ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಬೇಕೇ?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "ಪ್ರಕಟವಾಗಿಲ್ಲ"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "ಪ್ರಕಟವಾಗದ ಬದಲಾವಣೆಗಳು"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "ಪ್ರಕಟವಾಗಿಲ್ಲ, ನಿಮ್ಮ ತಂಡ ಮಾತ್ರ ನೋಡಬಹುದು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "ಉಳಿಸದ ಬದಲಾವಣೆಗಳು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "ಶೆಡ್ಯೂಲ್ ರದ್ದುಮಾಡಿ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಅಂಕೆಗಳು ಮತ್ತು ಒಳಗಿನ ಹೈಫನ್‌ಗಳನ್ನು ಬಳಸಿ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "ಅವರ ಆವೃತ್ತಿಯನ್ನು ಬಳಸಿ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "ನೋಡಿ"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ನೋಡಿ"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "ಹೊಸದೇನಿದೆ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "ಯಾರು ಪ್ರಕಟಿಸಬಹುದು"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "ಬರೆಯಿರಿ"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "ಪ್ರಕಟಿಸುವ ಮೊದಲು ನಮೂದನ್ನು ಮುಖ್ಯ ಭಾಷೆಯಲ್ಲಿ ಬರೆಯಿರಿ."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Markdown ನಲ್ಲಿ ಏನು ಬದಲಾಯಿತು ಎಂದು ಬರೆಯಿರಿ…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "ನಿಮ್ಮ ಸಮಯ ವಲಯ, {zone}. ಅದು {utc} UTC."

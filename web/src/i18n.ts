@@ -3,7 +3,7 @@ import { i18n, type Messages } from "@lingui/core"
 import { localeCodes, rtlLocales } from "@/localeList"
 
 export type Locale = (typeof localeCodes)[number]
-export type Catalog = "messages" | "analytics" | "designs" | "help" | "roadmap"
+export type Catalog = "messages" | "analytics" | "designs" | "help" | "roadmap" | "changelog"
 
 type Loader = () => Promise<{ messages: Messages }>
 
@@ -13,6 +13,7 @@ const loaders: Record<Catalog, Record<string, Loader>> = {
   designs: import.meta.glob<{ messages: Messages }>("./locales/*/designs.po"),
   help: import.meta.glob<{ messages: Messages }>("./locales/*/help.po"),
   roadmap: import.meta.glob<{ messages: Messages }>("./locales/*/roadmap.po"),
+  changelog: import.meta.glob<{ messages: Messages }>("./locales/*/changelog.po"),
 }
 
 const nativeOverrides: Record<string, string> = { id: "Bahasa Indonesia", or: "ଓଡ଼ିଆ" }

@@ -2588,6 +2588,10 @@ msgstr "連絡先の変更、削除、統合"
 msgid "Change, move and bulk-update conversations"
 msgstr "会話の変更、移動、一括更新"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "更新履歴の設定"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider} への変更: なし"
@@ -3421,6 +3425,10 @@ msgstr "ステータスページを作成（{newKey}）"
 msgid "Create the board"
 msgstr "ボードを作成"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "更新履歴を作成"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "メールチャネルを作成"
@@ -3648,6 +3656,10 @@ msgstr "記事を削除"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "下書きを削除"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "エントリを削除"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES コンソールの SMTP ユーザー名を入力してください�
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "仕事用のメールアドレスを入力すると、コードをお送りします。パスワードは不要で、後からも同じコードでサインインできます。"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "エントリ"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "メールは引き続き {provider} に届きますが、まだ Yuva に
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "その間に {provider} に届くメールは 2 分ごとに読み取られるため、何も失われません。"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "エントリを登録者にメールで送信"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "確認メールを送る"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "一斉配信を移動"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "エントリを移動"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "アイデア間を移動"
 
@@ -7063,6 +7087,10 @@ msgstr "新しいディスカッション"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "新しいディスカッション"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "新しいエントリ"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "ディスカッションを開く"
 msgid "Open the endpoint"
 msgstr "エンドポイントを開く"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "エントリを開く"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "ヘルプ記事を開く"
@@ -8440,6 +8472,10 @@ msgstr "ページの設定を開く"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "公開ボードを開く"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "公開中の更新履歴を開く"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "配信設定ページ"
 msgid "Preparing"
 msgstr "準備中"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "ヘルプセンターの記事を公開・非公開にする"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "今すぐ公開"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "更新履歴を公開または非公開にする"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "予約"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "ワークスペースがキーとアシスタントによる送信を許可している場合に、一斉配信を予約・送信"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "エントリを予約"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "送信者が選んだ色を白の上に表示"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "会話画面を表示"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "チャットボタンに新着情報の件数を表示"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "ユーザー名は、iCloud アドレスから @icloud.com を除いた�
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "訪問者はチャットに {0} と入力しましたが、まだ確認されていません。この返信はそのアドレスから届いたため、訪問者本人からではない可能性があります。"
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "未読メッセージがない間、チャットボタンに新着情報の件数が表示されます。ウィジェットのホームには常に表示されます。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "現在ワークスペースでは一斉配信を送信できません。"
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "非公開にする（{publishKey}）"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "エントリを非公開にする、または予約を取り消す"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "翻訳を非公開にする"
 
@@ -13963,6 +14020,18 @@ msgstr "送信されるもの"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "よく書く内容"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "新着情報"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "新着情報のエントリ"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

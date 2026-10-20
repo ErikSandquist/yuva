@@ -2588,6 +2588,10 @@ msgstr "연락처 변경, 삭제, 병합"
 msgid "Change, move and bulk-update conversations"
 msgstr "대화 변경, 이동, 일괄 업데이트"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "변경 내역 설정"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider}에 가한 변경: 없음"
@@ -3421,6 +3425,10 @@ msgstr "상태 페이지 만들기({newKey})"
 msgid "Create the board"
 msgstr "보드 만들기"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "변경 내역 만들기"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "이메일 채널 만들기"
@@ -3648,6 +3656,10 @@ msgstr "문서 삭제"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "초안 삭제"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "항목 삭제"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES 콘솔의 SMTP 사용자 이름을 입력하세요."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "업무용 이메일을 입력하면 코드를 보내 드립니다. 비밀번호는 없고, 나중에도 같은 코드로 로그인합니다."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "항목"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "메일은 아직 {provider}에 도착하며 Yuva로는 보내지지 않�
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "그동안 {provider}에 도착하는 메일은 2분마다 읽으므로 아무것도 유실되지 않습니다."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "항목을 구독자에게 이메일로 보내기"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "확인 메일 보내기"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "일괄 발송 사이 이동"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "항목 사이 이동"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "아이디어 사이 이동"
 
@@ -7063,6 +7087,10 @@ msgstr "새 토론"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "새 토론"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "새 항목"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "토론 열기"
 msgid "Open the endpoint"
 msgstr "엔드포인트 열기"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "항목 열기"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "도움말 문서 열기"
@@ -8440,6 +8472,10 @@ msgstr "페이지 설정 열기"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "공개 보드 열기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "공개 변경 내역 열기"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "수신 설정 페이지"
 msgid "Preparing"
 msgstr "준비 중"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "도움말 센터 문서 게시 및 게시 취소"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "지금 게시"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "변경 내역 게시 또는 게시 취소"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "예약"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "워크스페이스가 키와 어시스턴트의 발송을 허용하는 경우 일괄 발송 예약 및 발송"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "항목 예약"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "보낸 사람이 고른 색상을 흰색 위에 표시"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "대화 화면 표시"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "채팅 버튼에 새 소식 수 표시"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "사용자 이름은 iCloud 주소에서 @icloud.com을 뺀 것입니다.
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "방문자가 채팅에 {0}을(를) 입력했지만 아직 확인되지 않았습니다. 이 답장은 그 주소에서 온 것이므로 방문자가 보낸 것이 아닐 수 있습니다."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "읽지 않은 메시지가 없는 동안 채팅 버튼에 새 소식 수가 표시됩니다. 위젯 홈에는 항상 표시됩니다."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "워크스페이스가 현재 일괄 발송을 보낼 수 없습니다."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "게시 취소({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "항목 게시 취소 또는 예약 취소"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "번역 게시 취소"
 
@@ -13963,6 +14020,18 @@ msgstr "발송될 것"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "자주 쓰는 말"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "새 소식"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "새 소식 항목"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

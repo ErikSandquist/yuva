@@ -2588,6 +2588,10 @@ msgstr "Muuta, poista ja yhdistä kontakteja"
 msgid "Change, move and bulk-update conversations"
 msgstr "Muuta, siirrä ja päivitä keskusteluja joukkona"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Muutoslokin asetukset"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Palveluun {provider} tehdyt muutokset: ei yhtään"
@@ -3421,6 +3425,10 @@ msgstr "Luo tilasivu ({newKey})"
 msgid "Create the board"
 msgstr "Luo taulu"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Luo muutosloki"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Luo sähköpostikanava"
@@ -3648,6 +3656,10 @@ msgstr "Poista artikkeli"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Poista luonnos"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Poista merkintä"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Anna SMTP-käyttäjätunnus SES-konsolista."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Anna työsähköpostisi, niin lähetämme sinulle koodin. Ei salasanaa; sama koodi kirjaa sinut sisään myöhemminkin."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Merkinnät"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Posti saapuu yhä palveluun {provider}, mutta sitä ei vielä lähetetä
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Posti, joka sillä välin vielä saapuu palveluun {provider}, luetaan kahden minuutin välein, joten mitään ei katoa."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Lähetä merkintä tilaajille sähköpostilla"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Lähetä heille vahvistus"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Liiku joukkolähetysten läpi"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Siirry merkintöjen välillä"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Liiku ideoiden välillä"
 
@@ -7063,6 +7087,10 @@ msgstr "Uusi keskustelu"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "uutta keskustelua"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Uusi merkintä"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Avaa keskustelu"
 msgid "Open the endpoint"
 msgstr "Avaa päätepiste"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Avaa merkintä"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Avaa ohjeartikkeli"
@@ -8440,6 +8472,10 @@ msgstr "Avaa sivun asetukset"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Avaa julkinen taulu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Avaa julkinen muutosloki"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Asetussivu"
 msgid "Preparing"
 msgstr "Valmistellaan"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Julkaise ja peruuta ohjekeskuksen artikkelien julkaisu"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Julkaise nyt"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Julkaise muutosloki tai poista se julkaisusta"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Ajasta"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Ajasta ja lähetä joukkolähetyksiä, kun työtila sallii avainten ja avustajien lähettää ne"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Ajasta merkintä"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Näytä lähettäjän valitsemat värit valkoisella"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Näytä keskusteluruutu"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Näytä uutuuksien määrä chat-painikkeessa"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Käyttäjätunnus on iCloud-osoitteesi ilman @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Kävijä kirjoitti {0} chattiin eikä ole vielä vahvistanut sitä. Tämä vastaus tuli kyseisestä osoitteesta, joten se ei välttämättä ole kävijältä."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Uutuuksien määrä näkyy chat-painikkeessa, kun lukemattomia viestejä ei ole. Widgetin etusivu näyttää sen aina."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Työtila ei saa toistaiseksi lähettää joukkolähetyksiä."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Poista julkaisusta ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Poista merkintä julkaisusta tai peruuta ajastus"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Poista käännöksen julkaisu"
 
@@ -13963,6 +14020,18 @@ msgstr "Mitä lähtee"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Mitä kirjoitat usein"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Uutta"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Uutta-merkintä"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "{published} daripada {total} entri diterbitkan"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 hingga 48 huruf, nombor dan tanda sempang. Unik pada pelayan ini."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "Satu changelog boleh memuatkan paling banyak 50 entri yang dijadualkan."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "Ahli yang boleh menerbitkan menukar label entri yang telah diterbitkan."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Alamat"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Hujung alamat"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Ejen boleh menerbitkan"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Semua label"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Sifat analitik"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "Changelog lain menggunakan alamat ini, sekarang atau sebelum ini."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Mana-mana status"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Sekurang-kurangnya 3 aksara."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Tukar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Tukar masa"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Changelog"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Pilih imej"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Mengira paparan halaman changelog tanpa kuki."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Cipta changelog"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Cipta draf siaran"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Cipta entri"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Padam"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Padam {changelogName}?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Padam changelog"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Padam entri"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Padam terjemahan {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Padam entri ini?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Padam terjemahan ini"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Padam terjemahan"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Memadam changelog beserta entri dan terjemahannya. Alamat awam berhenti berfungsi. Siaran yang dibuat daripada entrinya kekal."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Penerangan"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Draf"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Draf dihantar. Pemilik atau pentadbir boleh menerbitkannya."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Entri"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "Entri dan terjemahan turut dipadam."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Entri boleh ditulis dan diterbitkan dalam bahasa ini. Pelawat melihat bahasa mereka sendiri jika ada."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Semua terjemahan dipadam. Siaran yang dibuat daripadanya kekal."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Dibetulkan"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Dipertingkat"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "Ia tiada teks dalam bahasa utama."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "Drafnya dipadam. Bahasa lain kekal."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Kekalkan saya"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Label"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Label"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Bahasa"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Senarai"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Muatkan lagi"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Hantar kepada pelanggan melalui e-mel"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Dihantar kepada pelanggan"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Bahasa utama"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Lagi"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Nama"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Baharu"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Entri baharu"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Belum ada changelog. Pemilik dan pentadbir yang mencipta."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Belum ada entri. Beritahu pelanggan anda apa yang berubah dalam keluaran terkini anda."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Tiada entri yang sepadan."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Tiada peti masuk untuk memaparkan changelog."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Tiada"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "belum ditulis"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Mati: ejen menulis draf dan menghantarnya, manakala pemilik dan pentadbir menerbitkan. Hidup: ejen yang mempunyai akses ke peti masuk turut menerbitkan, menjadualkan dan menarik balik."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Hanya pemilik dan pentadbir boleh melakukannya."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Asal"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Teks asal ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "ketinggalan zaman"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Ketinggalan zaman"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Sebahagian daripada alamat web terjemahan ini. Dibuat daripada tajuk jika kosong."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Pilih masa dalam setahun akan datang, dalam zon waktu anda, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Pilih sehingga 10 senarai peti masuk ini."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Imej"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Pratonton"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Pratonton ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Pratonton ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Pratonton entri"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Alamat awam"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Terbitkan"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Terbitkan ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Terbitkan pada"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Diterbitkan"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "Penerbitan berjadual gagal."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Alih keluar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Simpan sekarang"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Disimpan"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "Menyimpan…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Jadualkan"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Jadualkan entri ini"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Dijadualkan"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Dijadualkan: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Hantar melalui"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Tetapan"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Tunjuk"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Dipaparkan di bawah nama pada halaman utama."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Dipaparkan apabila entri tiada terjemahan dalam bahasa pelawat."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Dipaparkan bersama entri pada halaman, dalam widget dan dalam e-mel."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Seseorang menyimpan terjemahan ini semasa anda menyuntingnya."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Mulakan dengan tajuk. Anda menulis teksnya selepas itu, dan ia kekal sebagai draf sehingga diterbitkan."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Keadaan"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Hantar draf"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Hantar draf ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Beritahu pelanggan {inboxName} apa yang baharu, dipertingkat dan dibetulkan. Ia kekal belum diterbitkan sehingga anda menerbitkannya."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Beritahu pelanggan anda apa yang baharu, dipertingkat dan dibetulkan, pada halaman awam, dalam widget sembang dan melalui e-mel. Pilih changelog sesebuah peti masuk untuk menulis entri."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Teks"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "Alamat menjawab “tidak ditemui” sehingga anda menerbitkan changelog."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "Kunci API yang menjadualkannya tidak lagi boleh menerbitkan."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "Kunci API yang menjadualkannya telah dibatalkan."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "Changelog berada di {address}. Alamat lama terus mengubah hala jika anda menukarnya."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "Entri hilang daripada halaman awam, suapan dan widget. Draf kekal, dan anda boleh menerbitkannya semula."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "Entri menjadi awam dengan sendirinya pada masa ini. Sehingga itu hanya ahli yang boleh menerbitkan dapat mengubahnya."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "Bahasa utama belum mempunyai teks untuk entri ini."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "Ahli yang menjadualkannya mungkin tidak lagi boleh menerbitkan."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "Halaman seperti yang dilihat pelawat, termasuk draf. Hanya pasukan anda yang melihat ini."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Tajuk memerlukan sekurang-kurangnya 3 aksara"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Entri ini dijadualkan. Ahli yang boleh menerbitkan menguruskannya."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "Peti masuk ini sudah mempunyai changelog."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "Peti masuk ini belum mempunyai senarai mel. Cipta satu dalam Siaran."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "Ini satu-satunya teks entri. Padam entri sebaliknya."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Mencipta draf siaran daripada entri dan membukanya. Tiada apa dihantar sehingga anda menyemaknya dan menghantar atau menjadualkannya."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "Ruang kerja ini sudah mempunyai entri sebanyak yang dibenarkan pelayan. Padam yang lama dahulu."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Tajuk"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Terjemahan dipadam"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Tarik balik"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Tarik balik ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Tarik balik entri ini?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Belum diterbitkan"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Perubahan belum diterbitkan"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Belum diterbitkan, hanya pasukan anda yang melihatnya"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Perubahan belum disimpan"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Batalkan jadual"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Gunakan 3 hingga 48 huruf, nombor dan tanda sempang di dalam."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Gunakan versi mereka"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Lihat"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Lihat changelog"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Yang baharu"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Siapa boleh menerbitkan"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Tulis"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Tulis entri dalam bahasa utama sebelum menerbitkan."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Tulis dalam Markdown apa yang berubah…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Zon waktu anda, {zone}. Itu {utc} UTC."

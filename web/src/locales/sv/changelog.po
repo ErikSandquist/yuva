@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sv\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "{published} av {total} inlägg publicerade"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 till 48 bokstäver, siffror och bindestreck. Unik på den här servern."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "En ändringslogg kan innehålla högst 50 schemalagda inlägg."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "En medlem som får publicera ändrar etiketterna på ett publicerat inlägg."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Adress"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Adressens slut"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agenter får publicera"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Alla etiketter"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analysegenskap"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "En annan ändringslogg använder den här adressen, nu eller tidigare."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Valfri status"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Minst 3 tecken."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Ändra"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Ändra tiden"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Ändringslogg"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Välj en bild"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Räknar sidvisningar för ändringsloggen utan cookies."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Skapa ändringslogg"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Skapa utkast till utskick"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Skapa inlägg"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Radera"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Ta bort {changelogName}?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Ta bort ändringsloggen"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Ta bort inlägget"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Radera översättningen {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Ta bort det här inlägget?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Radera den här översättningen"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Radera översättning"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Tar bort ändringsloggen med dess inlägg och översättningar. Den publika adressen slutar fungera. Utskick som gjorts från inläggen finns kvar."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Beskrivning"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Utkast"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Utkastet skickades in. En ägare eller admin kan publicera det."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Inlägg"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "Inlägg och översättningar tas bort med den."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Inlägg kan skrivas och publiceras på dessa språk. Besökare ser sitt eget när det finns."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Alla översättningar tas bort. Utskick som gjorts från det finns kvar."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Åtgärdat"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Förbättrat"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "Det hade ingen text på huvudspråket."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "Utkastet tas bort. De andra språken finns kvar."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Behåll min"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Etikett"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Etiketter"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Språk"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Språk"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Listor"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Ladda fler"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Skicka till prenumeranterna med e-post"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Skickat till prenumeranterna"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Huvudspråk"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Mer"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Namn"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Ny"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Nytt inlägg"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Ingen ändringslogg än. Ägare och administratörer skapar den."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Inga inlägg än. Berätta för dina kunder vad som ändrades i din senaste version."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Inget inlägg matchar."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Ingen inkorg att visa en ändringslogg för."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Inga"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "inte skriven"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Av: agenter skriver utkast och skickar in dem, ägare och administratörer publicerar. På: agenter med åtkomst till inkorgen publicerar, schemalägger och drar också tillbaka."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Bara ägare och admins kan göra det här."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Original"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Originaltext ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "inaktuell"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Inaktuell"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Del av den här översättningens webbadress. Skapas av rubriken när den är tom."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Välj en tidpunkt under det kommande året, i din tidszon, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Välj upp till 10 listor i den här inkorgen."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Bild"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Förhandsvisning"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Förhandsgranskning ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Förhandsgranska ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Förhandsvisning av inlägget"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Offentlig adress"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Publicera"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publicera ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Publicera den"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Publicerad"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "Den schemalagda publiceringen misslyckades."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Ta bort"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Spara nu"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Sparad"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "Sparar…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Schemalägg"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Schemalägg det här inlägget"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Schemalagd"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Schemalagda: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Skicka via"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Inställningar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Visa"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Visas under namnet på startsidan."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Visas när ett inlägg saknar översättning på besökarens språk."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Visas med inlägget på sidan, i widgeten och i e-postmeddelandet."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Någon sparade den här översättningen medan du redigerade."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Börja med en rubrik. Texten skriver du sedan, och den förblir ett utkast tills den publiceras."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Tillstånd"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Skicka in utkast"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Skicka in utkast ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Berätta för kunderna i {inboxName} vad som är nytt, förbättrat och åtgärdat. Den förblir opublicerad tills du publicerar den."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Berätta för dina kunder vad som är nytt, förbättrat och åtgärdat, på en publik sida, i chattwidgeten och med e-post. Välj en inkorgs ändringslogg för att skriva inlägg."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Text"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "Adressen svarar ”hittades inte” tills du publicerar ändringsloggen."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "API-nyckeln som schemalade det får inte längre publicera."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "API-nyckeln som schemalade det har återkallats."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "Ändringsloggen finns på {address}. Den gamla adressen fortsätter att omdirigera om du ändrar den."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "Inlägget försvinner från den publika sidan, flödet och widgeten. Utkasten finns kvar och du kan publicera det igen."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "Inlägget blir publikt av sig självt vid den tidpunkten. Fram till dess kan bara medlemmar som får publicera ändra det."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "Huvudspråket har ännu ingen text för det här inlägget."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "Medlemmen som schemalade det kanske inte längre får publicera."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "Sidan som besökare skulle se den, med utkast. Bara ditt team ser detta."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Rubriken behöver minst 3 tecken"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Det här inlägget är schemalagt. En medlem som får publicera gör det."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "Den här inkorgen har redan en ändringslogg."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "Den här inkorgen har ingen sändlista än. Skapa en under Utskick."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "Det här är inläggets enda text. Ta bort inlägget i stället."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Skapar ett utkast till utskick från inlägget och öppnar det. Inget skickas förrän du har granskat det och skickat eller schemalagt det."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "Den här arbetsytan har så många inlägg som servern tillåter. Ta bort gamla först."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Titel"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Översättningen raderades"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Dra tillbaka"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Dra tillbaka ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Dra tillbaka det här inlägget?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Opublicerad"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Opublicerade ändringar"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Opublicerad, bara ditt team ser den"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Osparade ändringar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Avschemalägg"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Använd 3 till 48 bokstäver, siffror och inre bindestreck."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Använd deras version"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Visa"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Visa ändringsloggen"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Nyheter"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Vem får publicera"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Skriv"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Skriv inlägget på huvudspråket innan du publicerar."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Skriv i Markdown vad som ändrats…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Din tidszon, {zone}. Det är {utc} UTC."

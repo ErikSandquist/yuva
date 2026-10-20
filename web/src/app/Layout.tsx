@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils"
 
 const HelpColumn = lazy(() => import("@/features/help/HelpColumn"))
 const RoadmapColumn = lazy(() => import("@/features/roadmap/RoadmapColumn"))
+const ChangelogColumn = lazy(() => import("@/features/changelog/ChangelogColumn"))
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
 function LeftColumn({ keepList }: { keepList: boolean }) {
@@ -54,6 +55,11 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
       {section === "board" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <RoadmapColumn />
+        </Suspense>
+      )}
+      {section === "updates" && (
+        <Suspense fallback={<div className="flex-1 bg-background" />}>
+          <ChangelogColumn />
         </Suspense>
       )}
       {section === "analytics" && (

@@ -2588,6 +2588,10 @@ msgstr "Kişileri değiştirme, silme ve birleştirme"
 msgid "Change, move and bulk-update conversations"
 msgstr "Konuşmaları değiştirme, taşıma ve toplu güncelleme"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Değişiklik günlüğü ayarları"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider} içinde yapılan değişiklik: yok"
@@ -3421,6 +3425,10 @@ msgstr "Durum sayfası oluştur ({newKey})"
 msgid "Create the board"
 msgstr "Panoyu oluştur"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Değişiklik günlüğünü oluştur"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "E-posta kanalını oluştur"
@@ -3648,6 +3656,10 @@ msgstr "Makaleyi sil"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Taslağı sil"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Kaydı sil"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES konsolundaki SMTP kullanıcı adını girin."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "İş e-posta adresinizi yazın, size bir kod gönderelim. Parola yok; sonraki girişlerde de aynı şekilde kodla girersiniz."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Kayıtlar"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "E-postalar hâlâ {provider} hesabına ulaşıyor ama henüz Yuva'ya gö
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Bu sırada hâlâ {provider} hesabına ulaşan e-postalar iki dakikada bir okunur; hiçbir şey kaybolmaz."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Kaydı abonelere e-postayla gönder"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Onay e-postası gönder"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Bültenler arasında gezin"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Kayıtlar arasında gez"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Fikirler arasında gez"
 
@@ -7063,6 +7087,10 @@ msgstr "Yeni tartışma"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "yeni tartışma"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Yeni kayıt"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Tartışmayı aç"
 msgid "Open the endpoint"
 msgstr "Uç noktayı aç"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Kaydı aç"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Yardım makalesini aç"
@@ -8440,6 +8472,10 @@ msgstr "Sayfa ayarlarını aç"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Herkese açık panoyu aç"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Herkese açık değişiklik günlüğünü aç"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Tercih sayfası"
 msgid "Preparing"
 msgstr "Hazırlanıyor"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Yardım merkezi makalelerini yayımla ve yayından kaldır"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Şimdi yayınla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Değişiklik günlüğünü yayımla veya yayından kaldır"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Zamanla"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Çalışma alanı anahtarların ve asistanların göndermesine izin veriyorsa bültenleri planlama ve gönderme"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Kaydı zamanla"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Gönderenin seçtiği renkleri beyaz zeminde göster"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Konuşma ekranını gösterin"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Sohbet düğmesinde yeni güncelleme sayısını göster"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Kullanıcı adı, iCloud adresinizin @icloud.com olmadan halidir."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Ziyaretçi sohbette {0} adresini yazdı ama henüz doğrulamadı. Bu yanıt o adresten geldi; ziyaretçiden gelmemiş olabilir."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Okunmamış mesaj yokken Yenilikler sayısı sohbet düğmesinde görünür. Widget’ın Ana sayfası her zaman gösterir."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Çalışma alanı şimdilik bülten gönderemez."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Yayından kaldır ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Kaydı yayından kaldır veya zamanlamayı kaldır"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Çeviriyi yayından kaldır"
 
@@ -13963,6 +14020,18 @@ msgstr "Ne gönderilecek"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Sık yazdıkların"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Yenilikler"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Yenilikler kaydı"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

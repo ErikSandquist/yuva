@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "نُشر {published} من {total} إدخالاً"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "من 3 إلى 48 حرفًا وأرقامًا وشرطات. فريد على هذا الخادم."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "يمكن أن يحتوي سجل التغييرات على 50 إدخالاً مجدولاً كحد أقصى."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "عضو يمكنه النشر يغيّر وسوم إدخال منشور."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "العنوان"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "نهاية العنوان"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "يمكن للوكلاء النشر"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "كل الوسوم"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "خاصية التحليلات"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "سجل تغييرات آخر يستخدم هذا العنوان الآن أو سابقاً."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "أي حالة"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "3 أحرف على الأقل."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "تغيير"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "تغيير الوقت"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "سجل التغييرات"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "اختيار صورة"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "يحسب مشاهدات صفحات سجل التغييرات دون ملفات تعريف الارتباط."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "إنشاء سجل تغييرات"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "إنشاء مسودة رسالة جماعية"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "إنشاء إدخال"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "حذف"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "هل تريد حذف {changelogName}؟"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "حذف سجل التغييرات"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "حذف الإدخال"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "حذف ترجمة {name}؟"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "هل تريد حذف هذا الإدخال؟"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "حذف هذه الترجمة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "حذف الترجمة"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "يحذف سجل التغييرات مع إدخالاته وترجماته. يتوقف العنوان العام عن العمل. تبقى الرسائل الجماعية المنشأة من إدخالاته."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "الوصف"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "مسودة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "تم إرسال المسودة. يمكن للمالك أو المسؤول نشرها."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "الإدخالات"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "تُحذف الإدخالات والترجمات معه."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "يمكن كتابة الإدخالات ونشرها بهذه اللغات. يرى الزوار لغتهم إن وُجدت."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "تُحذف كل الترجمات. تبقى الرسائل الجماعية المنشأة منه."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "تم الإصلاح"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "تم التحسين"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "لم يكن له نص باللغة الرئيسية."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "تُحذف مسودته. تبقى اللغات الأخرى."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "الإبقاء على نسختي"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "الوسم"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "الوسوم"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "اللغة"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "اللغات"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "القوائم"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "تحميل المزيد"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "إرسال إلى المشتركين بالبريد"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "أُرسل إلى المشتركين"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "اللغة الرئيسية"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "المزيد"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "الاسم"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "جديد"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "إدخال جديد"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "لا يوجد سجل تغييرات بعد. ينشئه المالكون والمشرفون."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "لا توجد إدخالات بعد. أخبر عملاءك بما تغيّر في إصدارك الأخير."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "لا يوجد إدخال مطابق."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "لا يوجد صندوق وارد لعرض سجل تغييرات له."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "بلا"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "لم تُكتب"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "معطّل: يكتب الوكلاء مسودات ويرسلونها، وينشر المالكون والمشرفون. مفعّل: ينشر الوكلاء الذين لهم وصول إلى الصندوق ويجدولون ويسحبون أيضاً."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "المالكون والمسؤولون فقط يمكنهم فعل ذلك."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "الأصلي"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "النص الأصلي ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "قديمة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "قديمة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "جزء من عنوان الويب لهذه الترجمة. يُنشأ من العنوان إذا كان فارغًا."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "اختر وقتاً خلال السنة القادمة، بمنطقتك الزمنية، {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "اختر حتى 10 قوائم من هذا الصندوق."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "صورة"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "معاينة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "معاينة ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "معاينة ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "معاينة الإدخال"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "العنوان العام"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "نشر"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "نشر ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "النشر في"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "منشورة"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "فشل النشر المجدول."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "إزالة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "حفظ الآن"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "تم الحفظ"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "جارٍ الحفظ…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "جدولة"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "جدولة هذا الإدخال"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "مجدولة"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "مجدولة: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "الإرسال عبر"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "إظهار"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "يظهر تحت الاسم في الصفحة الرئيسية."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "يظهر عندما لا يكون للإدخال ترجمة بلغة الزائر."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "يظهر مع الإدخال في الصفحة وفي الأداة وفي البريد."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "حفظ شخص ما هذه الترجمة أثناء تعديلك لها."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "ابدأ بعنوان. تكتب النص بعد ذلك، ويبقى مسودة حتى يُنشر."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "الحالة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "إرسال المسودة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "إرسال المسودة ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "أخبر عملاء {inboxName} بما هو جديد ومحسّن ومُصلَح. يبقى غير منشور حتى تنشره."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "أخبر عملاءك بما هو جديد ومحسّن ومُصلَح، في صفحة عامة وفي أداة الدردشة وبالبريد. اختر سجل تغييرات صندوق لكتابة الإدخالات."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "النص"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "يردّ العنوان بـ«غير موجود» حتى تنشر سجل التغييرات."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "لم يعد مفتاح API الذي جدوله قادراً على النشر."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "أُلغي مفتاح API الذي جدوله."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "سجل التغييرات على العنوان {address}. يستمر العنوان القديم في إعادة التوجيه إذا غيّرته."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "يختفي الإدخال من الصفحة العامة والخلاصة والأداة. تبقى المسودات ويمكنك نشره مرة أخرى."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "يصبح الإدخال عاماً من تلقاء نفسه في هذا الوقت. حتى ذلك الحين لا يغيّره إلا الأعضاء الذين يمكنهم النشر."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "لا يوجد بعد نص لهذا الإدخال في اللغة الرئيسية."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "قد لا يستطيع العضو الذي جدوله النشر بعد الآن."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "الصفحة كما سيراها الزوار، مع المسودات. فريقك فقط يرى هذا."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "يحتاج العنوان إلى 3 أحرف على الأقل"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "هذا الإدخال مجدول. ينشره عضو يمكنه النشر."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "لهذا الصندوق سجل تغييرات بالفعل."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "لا توجد قائمة بريدية لهذا الصندوق بعد. أنشئ واحدة ضمن الرسائل الجماعية."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "هذا هو النص الوحيد للإدخال. احذف الإدخال بدلاً من ذلك."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "ينشئ من الإدخال مسودة رسالة جماعية ويفتحها. لا يُرسل شيء حتى تراجعها وترسلها أو تجدولها."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "في مساحة العمل هذه عدد الإدخالات الذي يسمح به الخادم. احذف القديمة أولاً."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "العنوان"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "تم حذف الترجمة"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "إلغاء النشر"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "إلغاء النشر ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "هل تريد إلغاء نشر هذا الإدخال؟"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "غير منشورة"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "تغييرات غير منشورة"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "غير منشور، فريقك فقط يراه"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "تغييرات غير محفوظة"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "إلغاء الجدولة"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "استخدم من 3 إلى 48 حرفًا وأرقامًا وشرطات داخلية."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "استخدام نسختهم"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "عرض"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "عرض سجل التغييرات"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "ما الجديد"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "من يمكنه النشر"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "كتابة"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "اكتب الإدخال باللغة الرئيسية قبل النشر."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "اكتب بصيغة Markdown ما الذي تغيّر…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "منطقتك الزمنية، {zone}. أي {utc} UTC."

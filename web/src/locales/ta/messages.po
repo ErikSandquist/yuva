@@ -2588,6 +2588,10 @@ msgstr "தொடர்புகளை மாற்று, நீக்கு, �
 msgid "Change, move and bulk-update conversations"
 msgstr "உரையாடல்களை மாற்று, நகர்த்து, மொத்தமாகப் புதுப்பி"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "மாற்றப் பதிவு அமைப்புகள்"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider}-இல் செய்த மாற்றங்கள்: இல்லை"
@@ -3421,6 +3425,10 @@ msgstr "நிலைப் பக்கத்தை உருவாக்கு 
 msgid "Create the board"
 msgstr "பலகையை உருவாக்கு"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "மாற்றப் பதிவை உருவாக்கு"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "மின்னஞ்சல் சேனலை உருவாக்கு"
@@ -3648,6 +3656,10 @@ msgstr "கட்டுரையை நீக்கு"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "வரைவை நீக்கு"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "உள்ளீட்டை நீக்கு"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES கன்சோலிலிருந்து SMTP பயனர் �
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "உங்கள் பணி மின்னஞ்சலை உள்ளிடுங்கள், நாங்கள் குறியீட்டை அனுப்புவோம். கடவுச்சொல் இல்லை; பின்னரும் அதே குறியீடு உங்களை உள்நுழைக்கும்."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "உள்ளீடுகள்"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "அஞ்சல் இன்னும் {provider}-ஐ அடைகி�
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "அதற்கிடையில் {provider}-ஐ அடையும் அஞ்சல் ஒவ்வொரு இரண்டு நிமிடத்துக்கும் படிக்கப்படும்; எனவே எதுவும் இழக்கப்படாது."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "உள்ளீட்டைச் சந்தாதாரர்களுக்கு மின்னஞ்சலில் அனுப்பு"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "அவர்களுக்கு உறுதிப்படுத்தல் அஞ்சல் அனுப்பு"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "ஒளிபரப்புகளில் நகருங்கள்"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "உள்ளீடுகளுக்கு இடையே செல்"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "யோசனைகளுக்கு இடையே செல்"
 
@@ -7063,6 +7087,10 @@ msgstr "புதிய விவாதம்"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "புதிய விவாதங்கள்"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "புதிய உள்ளீடு"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "விவாதத்தைத் திற"
 msgid "Open the endpoint"
 msgstr "முனையைத் திற"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "உள்ளீட்டைத் திற"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "உதவிக் கட்டுரையைத் திற"
@@ -8440,6 +8472,10 @@ msgstr "பக்க அமைப்புகளைத் திற"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "பொதுப் பலகையைத் திற"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "பொது மாற்றப் பதிவைத் திற"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "விருப்பப் பக்கம்"
 msgid "Preparing"
 msgstr "தயாரிக்கிறது"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "உதவி மையக் கட்டுரைகளை வெளி
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "இப்போதே வெளியிடு"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "மாற்றப் பதிவை வெளியிடு அல்லது அதன் வெளியீட்டைத் திரும்பப் பெறு"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "திட்டமிடு"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "பணியிடம் விசைகளும் உதவியாளர்களும் அனுப்ப அனுமதிக்கும்போது, ஒளிபரப்புகளைத் திட்டமிட்டு அனுப்பு"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "உள்ளீட்டைத் திட்டமிடு"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "அனுப்புநர் தேர்ந்த வண்ணங்�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "உரையாடல் திரையைக் காட்டு"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "அரட்டைப் பொத்தானில் புதிய புதுப்பிப்புகளின் எண்ணிக்கையைக் காட்டு"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "பயனர் பெயர் என்பது @icloud.com இல்
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "பார்வையாளர் அரட்டையில் {0} எனத் தட்டச்சு செய்தார், இன்னும் உறுதிப்படுத்தவில்லை. இந்தப் பதில் அந்த முகவரியிலிருந்து வந்தது; எனவே இது பார்வையாளரிடமிருந்து அல்லாமல் இருக்கலாம்."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "படிக்காத செய்திகள் இல்லாதவரை அரட்டைப் பொத்தானில் புதிய புதுப்பிப்புகளின் எண்ணிக்கை தெரியும். விட்ஜெட்டின் முகப்பு அதை எப்போதும் காட்டும்."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "பணியிடம் இப்போதைக்கு ஒளிபரப்புகளை அனுப்பக் கூடாது."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "வெளியீட்டைத் திரும்பப் பெறு ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "உள்ளீட்டின் வெளியீட்டைத் திரும்பப் பெறு அல்லது திட்டத்தை ரத்து செய்"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "மொழிபெயர்ப்பின் வெளியீட்டை நீக்கு"
 
@@ -13963,6 +14020,18 @@ msgstr "செல்லவிருப்பது"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "நீங்கள் அடிக்கடி எழுதுவது"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "புதியவை என்ன"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "புதியவை என்ன உள்ளீடு"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

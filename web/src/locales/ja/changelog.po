@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "{total}件中{published}件のエントリを公開済み"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "英数字とハイフンで3〜48文字。このサーバー内で一意です。"
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "1つの更新履歴に予約できるエントリは最大50件です。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "公開できるメンバーが、公開済みエントリのラベルを変更します。"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "アドレス"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "アドレスの末尾"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "エージェントによる公開を許可"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "すべてのラベル"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "アナリティクスのプロパティ"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "別の更新履歴がこのアドレスを現在使っているか、以前使っていました。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "すべての状態"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "3 文字以上。"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "変更"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "時刻を変更"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "更新履歴"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "画像を選択"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Cookieを使わずに更新履歴のページビューを数えます。"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "更新履歴を作成"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "一斉配信のドラフトを作成"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "エントリを作成"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "削除"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "{changelogName}を削除しますか？"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "更新履歴を削除"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "エントリを削除"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} の翻訳を削除しますか?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "このエントリを削除しますか？"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "この翻訳を削除"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "翻訳を削除"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "更新履歴をエントリと翻訳ごと削除します。公開アドレスは使えなくなります。エントリから作成した一斉配信は残ります。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "説明"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "ドラフト"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "下書きを提出しました。オーナーまたは管理者が公開できます。"
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "エントリ"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "エントリと翻訳も一緒に削除されます。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "エントリはこれらの言語で書いて公開できます。訪問者には、あればその人の言語が表示されます。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "すべての翻訳が削除されます。このエントリから作成した一斉配信は残ります。"
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "修正"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "改善"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "メイン言語のテキストがありませんでした。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "ドラフトは削除されます。ほかの言語は残ります。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "自分の分を残す"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "ラベル"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "ラベル"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "言語"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "言語"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "リスト"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "さらに読み込む"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "登録者にメールで送信"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "登録者に送信済み"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "メイン言語"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "その他"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "名前"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "新規"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "新しいエントリ"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "更新履歴はまだありません。オーナーと管理者が作成します。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "エントリはまだありません。最新リリースで何が変わったかをお客様に伝えましょう。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "一致するエントリはありません。"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "更新履歴を表示できる受信トレイがありません。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "なし"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "未作成"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "オフ: エージェントはドラフトを書いて提出し、オーナーと管理者が公開します。オン: 受信トレイにアクセスできるエージェントも公開、予約、非公開化ができます。"
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "これを行えるのはオーナーと管理者だけです。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "元のメール"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "原文 ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "古い"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "古い"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "この翻訳のウェブアドレスの一部。空の場合はタイトルから作られます。"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "今後1年以内の日時を選んでください。お使いのタイムゾーン（{zone}）で指定します。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "この受信トレイのリストを最大10件まで選んでください。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "画像"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "プレビュー"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "プレビュー ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "プレビュー（{previewKey}）"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "エントリのプレビュー"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "公開アドレス"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "公開"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "公開（{publishKey}）"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "公開日時"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "公開中"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "予約公開に失敗しました。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "削除"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "今すぐ保存"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "保存しました"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "保存中…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "予約"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "このエントリを予約"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "予約済み"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "予約済み: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "送信元"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "表示"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "ホームページの名前の下に表示されます。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "エントリに訪問者の言語の翻訳がないときに表示されます。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "エントリと一緒に、ページ、ウィジェット、メールに表示されます。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "編集中に誰かがこの翻訳を保存しました。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "まずタイトルから始めましょう。本文は次に書き、公開されるまで下書きのままです。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "状態"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "下書きを提出"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "下書きを提出 ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "{inboxName}のお客様に、新機能、改善、修正を伝えましょう。公開するまで非公開のままです。"
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "新機能、改善、修正を、公開ページ、チャットウィジェット、メールでお客様に伝えましょう。エントリを書くには、受信トレイの更新履歴を選んでください。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "テキスト"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "更新履歴を公開するまで、アドレスは「見つかりません」と応答します。"
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "予約したAPIキーには、もう公開する権限がありません。"
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "予約したAPIキーは失効しました。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "更新履歴のアドレスは{address}です。アドレスを変更しても、古いアドレスは転送され続けます。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "エントリは公開ページ、フィード、ウィジェットから消えます。ドラフトは残るので、再び公開できます。"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "この日時になると、エントリは自動的に公開されます。それまでは、公開できるメンバーだけが変更できます。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "このエントリには、メイン言語のテキストがまだありません。"
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "予約したメンバーは、もう公開できないかもしれません。"
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "訪問者に表示されるとおりのページです。ドラフトも含まれます。表示されるのはチームだけです。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "タイトルは 3 文字以上必要です"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "このエントリは予約済みです。公開できるメンバーが公開します。"
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "この受信トレイには、すでに更新履歴があります。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "この受信トレイには、まだメーリングリストがありません。一斉配信で作成してください。"
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "これはエントリ唯一のテキストです。代わりにエントリを削除してください。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "エントリから一斉配信のドラフトを作成して開きます。内容を確認して送信または予約するまで、何も送信されません。"
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "このワークスペースには、サーバーが許可する数のエントリがあります。先に古いものを削除してください。"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "タイトル"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "翻訳を削除しました"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "非公開にする"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "非公開にする（{publishKey}）"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "このエントリを非公開にしますか？"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "非公開"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "未公開の変更"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "非公開です。チームだけが見られます"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "未保存の変更"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "予約を取り消す"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "英数字と内側のハイフンで3〜48文字にしてください。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "相手の版を使う"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "表示"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "更新履歴を見る"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "新着情報"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "公開できる人"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "書く"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "公開する前に、メイン言語でエントリを書いてください。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "変更内容をMarkdownで書きます…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "あなたのタイムゾーン {zone}。UTC {utc} です。"

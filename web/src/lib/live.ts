@@ -679,6 +679,16 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       void qc.invalidateQueries({ queryKey: keys.helpArticle(ctx.ws, event.data.center_id, event.data.article_id) })
       void qc.invalidateQueries({ queryKey: ["ws", ctx.ws, "help", "articles", event.data.center_id] })
       return
+    case "changelog.entry.published":
+    case "changelog.entry.unpublished":
+    case "changelog.entry.deleted":
+      void qc.invalidateQueries({ queryKey: keys.changelog(ctx.ws) })
+      return
+    case "changelog.entry.updated":
+      void qc.invalidateQueries({ queryKey: keys.changelogEntry(ctx.ws, event.data.changelog_id, event.data.entry_id) })
+      void qc.invalidateQueries({ queryKey: ["ws", ctx.ws, "changelog", "entries", event.data.changelog_id] })
+      void qc.invalidateQueries({ queryKey: keys.changelogs(ctx.ws) })
+      return
     case "status_notice.updated": {
       const n = event.data
       const key = keys.statusNotices(ctx.ws, n.page_id, n.incident_id)

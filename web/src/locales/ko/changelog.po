@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ko\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "항목 {total}개 중 {published}개 게시됨"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "영문자, 숫자, 하이픈 3~48자. 이 서버에서 고유해야 합니다."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "변경 내역 하나에는 예약된 항목을 최대 50개까지 둘 수 있습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "게시 권한이 있는 멤버가 게시된 항목의 레이블을 바꿉니다."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "주소"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "주소 끝부분"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "상담원이 게시할 수 있음"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "모든 레이블"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "분석 속성"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "다른 변경 내역이 이 주소를 지금 쓰고 있거나 전에 썼습니다."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "모든 상태"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "3자 이상."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "취소"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "변경"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "시간 변경"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "변경 내역"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "이미지 선택"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "쿠키 없이 변경 내역의 페이지 조회수를 집계합니다."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "변경 내역 만들기"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "일괄 발송 초안 만들기"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "항목 만들기"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "삭제"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "{changelogName}을(를) 삭제할까요?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "변경 내역 삭제"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "항목 삭제"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} 번역을 삭제할까요?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "이 항목을 삭제할까요?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "이 번역 삭제"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "번역 삭제"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "변경 내역을 항목과 번역까지 삭제합니다. 공개 주소는 더 이상 작동하지 않습니다. 항목으로 만든 일괄 발송은 남습니다."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "설명"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "초안"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "초안을 제출했습니다. 소유자 또는 관리자가 게시할 수 있습니다."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "항목"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "항목과 번역도 함께 삭제됩니다."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "이 언어들로 항목을 쓰고 게시할 수 있습니다. 방문자에게는 있으면 자신의 언어가 보입니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "모든 번역이 삭제됩니다. 이 항목으로 만든 일괄 발송은 남습니다."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "수정됨"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "개선됨"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "기본 언어 텍스트가 없었습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "초안이 삭제됩니다. 다른 언어는 남습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "내 것 유지"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "레이블"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "레이블"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "언어"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "언어"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "리스트"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "더 보기"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "구독자에게 이메일로 보내기"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "구독자에게 보냄"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "기본 언어"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "더 보기"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "이름"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "새로 만들기"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "새 항목"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "아직 변경 내역이 없습니다. 소유자와 관리자가 만듭니다."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "아직 항목이 없습니다. 최신 릴리스에서 무엇이 바뀌었는지 고객에게 알려 주세요."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "일치하는 항목이 없습니다."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "변경 내역을 보여 줄 받은편지함이 없습니다."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "없음"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "작성 안 됨"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "끔: 에이전트는 초안을 써서 제출하고, 소유자와 관리자가 게시합니다. 켬: 받은편지함에 접근할 수 있는 에이전트도 게시, 예약, 게시 취소를 할 수 있습니다."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "소유자와 관리자만 할 수 있습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "원본"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "원문 텍스트 ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "오래됨"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "오래됨"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "이 번역의 웹 주소 일부입니다. 비어 있으면 제목으로 만듭니다."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "앞으로 1년 안의 시간을 고르세요. 사용 중인 시간대({zone}) 기준입니다."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "이 받은편지함의 목록을 최대 10개까지 고르세요."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "이미지"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "미리 보기"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "미리보기 ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "미리보기({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "항목 미리 보기"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "공개 주소"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "게시"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "게시({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "게시 일시"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "게시됨"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "예약 게시에 실패했습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "제거"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "지금 저장"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "저장됨"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "저장 중…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "예약"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "이 항목 예약"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "예약됨"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "예약됨: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "발송 경로"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "설정"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "보기"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "홈페이지의 이름 아래에 표시됩니다."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "항목에 방문자 언어 번역이 없을 때 표시됩니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "항목과 함께 페이지, 위젯, 이메일에 표시됩니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "편집하는 동안 누군가 이 번역을 저장했습니다."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "제목으로 시작하세요. 본문은 그다음에 쓰며, 게시되기 전까지 초안으로 유지됩니다."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "상태"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "초안 제출"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "초안 제출 ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "{inboxName}의 고객에게 새로운 기능, 개선, 수정 사항을 알려 주세요. 게시하기 전까지는 게시되지 않은 상태로 남습니다."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "새로운 기능, 개선, 수정 사항을 공개 페이지, 채팅 위젯, 이메일로 고객에게 알려 주세요. 항목을 쓰려면 받은편지함의 변경 내역을 고르세요."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "텍스트"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "변경 내역을 게시하기 전까지 주소는 “찾을 수 없음”으로 응답합니다."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "이 항목을 예약한 API 키는 더 이상 게시할 수 없습니다."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "이 항목을 예약한 API 키가 취소되었습니다."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "변경 내역은 {address}에 있습니다. 주소를 바꿔도 이전 주소는 계속 리디렉션됩니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "항목이 공개 페이지, 피드, 위젯에서 사라집니다. 초안은 남으므로 다시 게시할 수 있습니다."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "이 시간이 되면 항목이 자동으로 공개됩니다. 그때까지는 게시 권한이 있는 멤버만 바꿀 수 있습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "이 항목의 기본 언어 텍스트가 아직 없습니다."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "예약한 멤버가 더 이상 게시할 수 없을 수 있습니다."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "방문자에게 보이는 그대로의 페이지입니다. 초안도 포함됩니다. 팀만 볼 수 있습니다."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "제목은 3자 이상이어야 합니다"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "이 항목은 예약되어 있습니다. 게시 권한이 있는 멤버가 게시합니다."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "이 받은편지함에는 이미 변경 내역이 있습니다."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "이 받은편지함에는 아직 메일링 리스트가 없습니다. 일괄 발송에서 만드세요."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "항목의 유일한 텍스트입니다. 대신 항목을 삭제하세요."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "항목으로 일괄 발송 초안을 만들어 엽니다. 검토한 뒤 발송하거나 예약하기 전까지는 아무것도 보내지 않습니다."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "이 워크스페이스에는 서버가 허용하는 만큼의 항목이 있습니다. 먼저 오래된 항목을 삭제하세요."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "제목"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "번역을 삭제했습니다"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "게시 취소"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "게시 취소({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "이 항목의 게시를 취소할까요?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "게시 안 됨"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "게시되지 않은 변경 사항"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "게시 안 됨, 팀만 볼 수 있음"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "저장하지 않은 변경 사항"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "예약 취소"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "영문자, 숫자, 중간의 하이픈 3~48자를 사용하세요."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "상대방 버전 사용"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "보기"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "변경 내역 보기"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "새 소식"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "게시할 수 있는 사람"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "작성"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "게시하기 전에 기본 언어로 항목을 쓰세요."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "바뀐 내용을 Markdown으로 쓰세요…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "내 시간대 {zone}. UTC {utc}입니다."

@@ -2588,6 +2588,10 @@ msgstr "Αλλαγή, διαγραφή και συγχώνευση επαφών"
 msgid "Change, move and bulk-update conversations"
 msgstr "Αλλαγή, μετακίνηση και μαζική ενημέρωση συνομιλιών"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Ρυθμίσεις του αρχείου αλλαγών"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Αλλαγές στο {provider}: καμία"
@@ -3421,6 +3425,10 @@ msgstr "Δημιουργία σελίδας κατάστασης ({newKey})"
 msgid "Create the board"
 msgstr "Δημιουργία πίνακα"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Δημιουργία του αρχείου αλλαγών"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Δημιουργία καναλιού e-mail"
@@ -3648,6 +3656,10 @@ msgstr "Διαγραφή του άρθρου"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Διαγραφή του πρόχειρου"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Διαγραφή της καταχώρισης"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Εισαγάγετε το όνομα χρήστη SMTP από την κ�
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Εισαγάγετε το e-mail εργασίας σας και σας στέλνουμε έναν κωδικό. Χωρίς κωδικό πρόσβασης· ο ίδιος κωδικός σάς συνδέει και αργότερα."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Καταχωρίσεις"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Η αλληλογραφία φτάνει ακόμη στο {provider} α
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Η αλληλογραφία που στο μεταξύ φτάνει ακόμη στο {provider} διαβάζεται κάθε δύο λεπτά, οπότε τίποτα δεν χάνεται."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Αποστολή της καταχώρισης στους συνδρομητές με email"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Αποστολή e-mail επιβεβαίωσης"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Μετακίνηση στις μαζικές αποστολές"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Μετακίνηση στις καταχωρίσεις"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Μετακίνηση στις ιδέες"
 
@@ -7063,6 +7087,10 @@ msgstr "Νέα συζήτηση"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "νέες συζητήσεις"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Νέα καταχώριση"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Άνοιγμα της συζήτησης"
 msgid "Open the endpoint"
 msgstr "Άνοιγμα του endpoint"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Άνοιγμα της καταχώρισης"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Άνοιγμα του άρθρου βοήθειας"
@@ -8440,6 +8472,10 @@ msgstr "Άνοιγμα των ρυθμίσεων της σελίδας"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Άνοιγμα δημόσιου πίνακα"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Άνοιγμα του δημόσιου αρχείου αλλαγών"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Σελίδα προτιμήσεων"
 msgid "Preparing"
 msgstr "Προετοιμασία"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Δημοσίευση και κατάργηση δημοσίευσης ά
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Δημοσίευση τώρα"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Δημοσίευση ή απόσυρση του αρχείου αλλαγών"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Προγραμματισμός"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Προγραμματισμός και αποστολή μαζικών αποστολών, όταν ο χώρος εργασίας αφήνει κλειδιά και βοηθούς να τις στέλνουν"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Προγραμματισμός της καταχώρισης"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Εμφάνιση των χρωμάτων που επέλεξε ο απο
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Εμφάνιση της οθόνης συνομιλίας"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Εμφάνιση του αριθμού των νέων στο κουμπί της συνομιλίας"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Το όνομα χρήστη είναι η διεύθυνση iCloud σ�
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Ο επισκέπτης πληκτρολόγησε {0} στη συνομιλία και δεν το έχει επιβεβαιώσει ακόμη. Αυτή η απάντηση ήρθε από εκείνη τη διεύθυνση, οπότε μπορεί να μην είναι από τον επισκέπτη."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Ο αριθμός των νέων εμφανίζεται στο κουμπί συνομιλίας όσο δεν υπάρχουν μη αναγνωσμένα μηνύματα. Η αρχική του widget τον δείχνει πάντα."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Ο χώρος εργασίας δεν επιτρέπεται προς το παρόν να στέλνει μαζικές αποστολές."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Απόσυρση ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Απόσυρση ή ακύρωση προγραμματισμού της καταχώρισης"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Αποδημοσίευση της μετάφρασης"
 
@@ -13963,6 +14020,18 @@ msgstr "Τι θα φύγει"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Ό,τι γράφετε συχνά"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Τι νέο υπάρχει"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Καταχώριση νέων"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

@@ -41,6 +41,7 @@ export const SHORTCUTS = {
   status: "g s",
   helpCenter: "g k",
   roadmap: "g p",
+  updates: "g w",
   discussion: "P",
   incident: "i",
   article: "H",
@@ -128,6 +129,25 @@ export const ROADMAP_KEYS = {
   openPage: "o",
   publicBoard: "P",
   replyLinked: "A",
+} as const
+
+export const CHANGELOG_KEYS = {
+  entries: "1",
+  settings: "2",
+  create: "c",
+  newEntry: "n",
+  openPage: "o",
+  publish: "P",
+  preview: "v",
+} as const
+
+export const ENTRY_KEYS = {
+  schedule: "s",
+  unpublish: "u",
+  mail: "m",
+  remove: "X",
+  previous: "[",
+  next: "]",
 } as const
 
 export const DESIGNER_KEYS = {
@@ -332,6 +352,38 @@ export function ShortcutSheet({
       ],
     },
     {
+      title: t`What’s new`,
+      items: [
+        [["↑", "↓"], t`Move through the entries`],
+        [["↵"], t`Open the entry`],
+        [k(CHANGELOG_KEYS.entries), t`Entries`],
+        [k(CHANGELOG_KEYS.settings), t`Changelog settings`],
+        [k(CHANGELOG_KEYS.create), t`Create the changelog`],
+        [k(CHANGELOG_KEYS.newEntry), t`New entry`],
+        [k(CHANGELOG_KEYS.openPage), t`Open the public changelog`],
+        [k(CHANGELOG_KEYS.preview), t`Preview`],
+        [k(CHANGELOG_KEYS.publish), t`Publish or unpublish the changelog`],
+      ],
+    },
+    {
+      title: t`What’s new entry`,
+      items: [
+        [[mod, "S"], t`Save the draft now`],
+        [[mod, "↵"], t`Publish, or submit the draft`],
+        [k(ENTRY_KEYS.schedule), t`Schedule the entry`],
+        [k(ENTRY_KEYS.unpublish), t`Unpublish or unschedule the entry`],
+        [k(ENTRY_KEYS.mail), t`Mail the entry to subscribers`],
+        [k(ENTRY_KEYS.remove), t`Delete the entry`],
+        [[ENTRY_KEYS.previous, ENTRY_KEYS.next], t`Previous or next language`],
+        [[mod, "B"], t`Bold`],
+        [[mod, "I"], t`Italic`],
+        [[alt, "K"], t`Add a link`],
+        [[alt, "I"], t`Add an image`],
+        [[alt, "P"], t`Show or hide the preview`],
+        [[alt, "C"], t`Show or hide the original text beside a translation`],
+      ],
+    },
+    {
       title: t`E-mail designer`,
       items: [
         [[mod, "Z"], t`Undo`],
@@ -367,6 +419,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.status), t`Status`],
         [k(SHORTCUTS.helpCenter), t`Help`],
         [k(SHORTCUTS.roadmap), t`Roadmap`],
+        [k(SHORTCUTS.updates), t`What’s new`],
         [k(SHORTCUTS.analytics), t`Analytics`],
         [k(SHORTCUTS.assistants), t`Assistants`],
         [[mod, "K"], t`Everything`],

@@ -2588,6 +2588,10 @@ msgstr "Змінювати, видаляти й об'єднувати конта
 msgid "Change, move and bulk-update conversations"
 msgstr "Змінювати, переміщувати й масово оновлювати розмови"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Налаштування журналу змін"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Змін у {provider}: немає"
@@ -3421,6 +3425,10 @@ msgstr "Створити сторінку статусу ({newKey})"
 msgid "Create the board"
 msgstr "Створити дошку"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Створити журнал змін"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Створити поштовий канал"
@@ -3648,6 +3656,10 @@ msgstr "Видалити статтю"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Видалити чернетку"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Видалити запис"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Введіть ім'я користувача SMTP з консолі SES
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Введіть робочий e-mail, і ми надішлемо вам код. Без пароля; той самий код пізніше теж упустить вас."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Записи"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Пошта все ще надходить до {provider}, але пок
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Пошта, яка тим часом усе ще надходить до {provider}, читається кожні дві хвилини, тож нічого не втрачається."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Надіслати запис підписникам поштою"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Надіслати їм лист із підтвердженням"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Переміщуватися по розсилках"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Переходити між записами"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Переміщатися між ідеями"
 
@@ -7063,6 +7087,10 @@ msgstr "Нове обговорення"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "нові обговорення"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Новий запис"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Відкрити обговорення"
 msgid "Open the endpoint"
 msgstr "Відкрити ендпоїнт"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Відкрити запис"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Відкрити статтю довідки"
@@ -8440,6 +8472,10 @@ msgstr "Відкрити налаштування сторінки"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Відкрити публічну дошку"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Відкрити публічний журнал змін"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Сторінка вподобань"
 msgid "Preparing"
 msgstr "Підготовка"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Публікація та зняття з публікації стат�
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Опублікувати зараз"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Опублікувати журнал змін або зняти його з публікації"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Запланувати"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Планувати й надсилати розсилки, якщо робочий простір дозволяє це ключам і асистентам"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Запланувати запис"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Показувати кольори, вибрані відправник
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Показати екран розмови"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Показувати кількість новин на кнопці чату"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Ім'я користувача — ваша адреса iCloud без @
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Відвідувач ввів {0} у чаті й поки не підтвердив його. Ця відповідь прийшла з цієї адреси, тож вона може бути не від відвідувача."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Кількість новин показується на кнопці чату, поки немає непрочитаних повідомлень. На головній сторінці віджета вона видна завжди."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Робочому простору поки не можна надсилати розсилки."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Зняти з публікації ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Зняти запис з публікації або скасувати планування"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Зняти переклад з публікації"
 
@@ -13963,6 +14020,18 @@ msgstr "Що піде"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Те, що ви часто пишете"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Новини"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Запис новин"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

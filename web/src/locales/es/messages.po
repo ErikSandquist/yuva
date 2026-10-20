@@ -2588,6 +2588,10 @@ msgstr "Cambiar, eliminar y combinar contactos"
 msgid "Change, move and bulk-update conversations"
 msgstr "Cambiar, mover y actualizar conversaciones en bloque"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Ajustes del registro de cambios"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Cambios hechos en {provider}: ninguno"
@@ -3421,6 +3425,10 @@ msgstr "Crear página de estado ({newKey})"
 msgid "Create the board"
 msgstr "Crear el tablero"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Crear el registro de cambios"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Crear el canal de correo"
@@ -3648,6 +3656,10 @@ msgstr "Eliminar el artículo"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Eliminar el borrador"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Eliminar la entrada"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Introduce el nombre de usuario SMTP de la consola de SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Introduce tu correo de trabajo y te enviamos un código. Sin contraseña; el mismo código te permite entrar más adelante."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Entradas"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "El correo sigue llegando a {provider} pero aún no se envía a Yuva."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "El correo que mientras tanto siga llegando a {provider} se lee cada dos minutos, así que no se pierde nada."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Enviar la entrada por correo a los suscriptores"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Enviarles un correo de confirmación"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Moverse por los envíos"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Moverse por las entradas"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Moverse por las ideas"
 
@@ -7063,6 +7087,10 @@ msgstr "Nuevo debate"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "debates nuevos"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Nueva entrada"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Abrir el debate"
 msgid "Open the endpoint"
 msgstr "Abrir el endpoint"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Abrir la entrada"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Abrir el artículo de ayuda"
@@ -8440,6 +8472,10 @@ msgstr "Abrir los ajustes de la página"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Abrir el tablero público"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Abrir el registro de cambios público"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Página de preferencias"
 msgid "Preparing"
 msgstr "Preparando"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Publicar y despublicar artículos del centro de ayuda"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publicar ahora"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Publicar o despublicar el registro de cambios"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Programar"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Programar y enviar envíos, cuando el espacio de trabajo deja que las claves y los asistentes los envíen"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Programar la entrada"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Mostrar los colores que eligió el remitente, sobre blanco"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Mostrar la pantalla de conversación"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Mostrar el número de novedades en el botón del chat"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "El nombre de usuario es tu dirección de iCloud sin @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "El visitante escribió {0} en el chat y aún no lo confirmó. Esta respuesta vino de esa dirección, así que puede que no sea del visitante."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "El número de novedades aparece en el botón del chat mientras no haya mensajes sin leer. El inicio del widget siempre lo muestra."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "El espacio de trabajo no puede enviar envíos por ahora."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Despublicar ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Despublicar o desprogramar la entrada"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Despublicar la traducción"
 
@@ -13963,6 +14020,18 @@ msgstr "Qué saldrá"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Lo que escribes a menudo"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Novedades"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Entrada de novedades"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

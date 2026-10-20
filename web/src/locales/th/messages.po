@@ -2588,6 +2588,10 @@ msgstr "เปลี่ยน ลบ และรวมรายชื่อต�
 msgid "Change, move and bulk-update conversations"
 msgstr "เปลี่ยน ย้าย และอัปเดตการสนทนาจำนวนมาก"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "การตั้งค่าบันทึกการเปลี่ยนแปลง"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "การเปลี่ยนแปลงที่ทำกับ {provider}: ไม่มี"
@@ -3421,6 +3425,10 @@ msgstr "สร้างหน้าสถานะ ({newKey})"
 msgid "Create the board"
 msgstr "สร้างบอร์ด"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "สร้างบันทึกการเปลี่ยนแปลง"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "สร้างช่องทางอีเมล"
@@ -3648,6 +3656,10 @@ msgstr "ลบบทความ"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "ลบฉบับร่าง"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "ลบรายการ"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "ใส่ชื่อผู้ใช้ SMTP จากคอนโซล
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "ใส่อีเมลที่ทำงานของคุณแล้วเราจะส่งรหัสให้ ไม่ต้องใช้รหัสผ่าน รหัสเดียวกันนี้จะลงชื่อเข้าใช้ให้คุณในภายหลัง"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "รายการ"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "อีเมลยังมาถึง {provider} แต่ยังไ
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "อีเมลที่ยังมาถึง {provider} ในระหว่างนี้จะถูกอ่านทุกสองนาที จึงไม่มีอะไรสูญหาย"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "ส่งรายการให้ผู้สมัครรับทางอีเมล"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "ส่งอีเมลยืนยันให้พวกเขา"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "เลื่อนดูบรอดคาสต์"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "เลื่อนดูรายการ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "เลื่อนดูไอเดีย"
 
@@ -7063,6 +7087,10 @@ msgstr "กระทู้ใหม่"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "กระทู้ใหม่"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "รายการใหม่"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "เปิดกระทู้"
 msgid "Open the endpoint"
 msgstr "เปิดเอนด์พอยต์"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "เปิดรายการ"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "เปิดบทความช่วยเหลือ"
@@ -8440,6 +8472,10 @@ msgstr "เปิดการตั้งค่าหน้า"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "เปิดบอร์ดสาธารณะ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "เปิดบันทึกการเปลี่ยนแปลงสาธารณะ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "หน้าการตั้งค่า"
 msgid "Preparing"
 msgstr "กำลังเตรียม"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "เผยแพร่และยกเลิกการเผยแพ
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "เผยแพร่ทันที"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "เผยแพร่หรือยกเลิกการเผยแพร่บันทึกการเปลี่ยนแปลง"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "ตั้งเวลา"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "ตั้งเวลาและส่งบรอดคาสต์ เมื่อพื้นที่ทำงานให้คีย์และผู้ช่วยส่งได้"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "ตั้งเวลารายการ"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "แสดงสีที่ผู้ส่งเลือก บนพ�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "แสดงหน้าจอการสนทนา"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "แสดงจำนวนอัปเดตใหม่บนปุ่มแชต"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "ชื่อผู้ใช้คือที่อยู่ iCloud ข�
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "ผู้เข้าชมพิมพ์ {0} ในแชตและยังไม่ได้ยืนยัน การตอบกลับนี้มาจากที่อยู่นั้น จึงอาจไม่ได้มาจากผู้เข้าชม"
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "จำนวนอัปเดตใหม่จะแสดงบนปุ่มแชตตราบที่ไม่มีข้อความที่ยังไม่ได้อ่าน หน้าแรกของวิดเจ็ตแสดงเสมอ"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "พื้นที่ทำงานส่งบรอดคาสต์ไม่ได้ในขณะนี้"
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "ยกเลิกการเผยแพร่ ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "ยกเลิกการเผยแพร่หรือยกเลิกการตั้งเวลารายการ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "ยกเลิกการเผยแพร่คำแปล"
 
@@ -13963,6 +14020,18 @@ msgstr "สิ่งที่จะส่งออกไป"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "สิ่งที่คุณเขียนบ่อย"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "มีอะไรใหม่"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "รายการมีอะไรใหม่"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

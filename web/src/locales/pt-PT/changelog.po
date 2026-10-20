@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pt-PT\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "{published} de {total} entradas publicadas"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De 3 a 48 letras, números e hifens. É único neste servidor."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "Um changelog comporta no máximo 50 entradas agendadas."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "Um membro que pode publicar altera os etiquetas de uma entrada publicada."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Endereço"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Final do endereço"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agentes podem publicar"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Todos os etiquetas"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Propriedade de análise"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "Outro changelog usa este endereço, agora ou antes."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Qualquer estado"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Pelo menos 3 caracteres."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Alterar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Alterar o horário"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Changelog"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Escolher uma imagem"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Conta as visualizações das páginas do changelog sem cookies."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Criar changelog"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Criar rascunho de envio"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Criar entrada"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Eliminar {changelogName}?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Eliminar changelog"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Eliminar entrada"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Excluir a tradução {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Eliminar esta entrada?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Excluir esta tradução"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Excluir tradução"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Elimina o changelog com suas entradas e traduções. O endereço público deixa de funcionar. Os envios criados a partir das entradas permanecem."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Descrição"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Rascunho"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Rascunho enviado. Um proprietário ou administrador pode publicá-lo."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Entradas"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "As entradas e as traduções são eliminadas junto com ele."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "As entradas podem ser escritas e publicadas nestes idiomas. Os visitantes veem o próprio idioma quando existe."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Todas as traduções são eliminadas. Os envios criados a partir dela permanecem."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Corrigido"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Melhorado"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "Não tinha texto no idioma principal."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "O rascunho é eliminado. Os outros idiomas permanecem."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Manter o meu"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Etiqueta"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Etiquetas"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Idioma"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Idiomas"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Listas"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Carregar mais"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Enviar por e-mail aos subscritores"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Enviado aos subscritores"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Idioma principal"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Mais"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Nome"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Novo"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Nova entrada"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Ainda não há changelog. Proprietários e administradores o criam."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Ainda não há entradas. Conte aos seus clientes o que mudou na sua última versão."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Nenhuma entrada corresponde."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Nenhuma caixa de entrada para mostrar um changelog."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Nenhum"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "não escrito"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Desativado: os agentes escrevem rascunhos e os enviam, e proprietários e administradores publicam. Ativado: agentes com acesso à caixa de entrada também publicam, agendam e despublicam."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Somente proprietários e administradores podem fazer isso."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Original"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Texto original ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "desatualizado"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Desatualizado"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Parte do endereço web desta tradução. Criada a partir do título quando vazia."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Escolha um horário no próximo ano, no seu fuso horário, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Escolha até 10 listas desta caixa de entrada."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Imagem"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Visualização"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Pré-visualização ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Pré-visualizar ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Visualização da entrada"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Endereço público"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Publicar"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publicar ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Publicar em"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Publicada"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "A publicação agendada falhou."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Remover"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Salvar agora"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Guardado"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "A guardar…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Agendar"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Agendar esta entrada"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Agendado"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Agendadas: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Enviar por"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Configurações"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Mostrar"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Mostrado abaixo do nome na página inicial."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Mostrado quando uma entrada não tem tradução no idioma do visitante."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Mostrada com a entrada na página, no widget e no e-mail."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Alguém salvou esta tradução enquanto você editava."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Comece com um título. Você escreve o texto depois, e ele continua rascunho até ser publicado."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Estado"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Enviar rascunho"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Enviar rascunho ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Conte aos clientes de {inboxName} o que há de novo, melhorado e corrigido. Ele fica sem publicar até o publicar."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Conte aos seus clientes o que há de novo, melhorado e corrigido, em uma página pública, no widget de chat e por e-mail. Escolha o changelog de uma caixa de entrada para escrever entradas."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Texto"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "O endereço responde “não encontrado” até o publicar o changelog."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "A chave de API que a agendou não pode mais publicar."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "A chave de API que a agendou foi revogada."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "O changelog está em {address}. O endereço antigo continua redirecionando se você o alterar."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "A entrada some da página pública, do feed e do widget. Os rascunhos permanecem e você pode publicá-la de novo."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "A entrada se torna pública sozinha nesse horário. Até lá, só membros que podem publicar podem alterá-la."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "O idioma principal ainda não tem texto para esta entrada."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "O membro que a agendou pode não poder mais publicar."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "A página como os visitantes a veriam, com os rascunhos. Só a sua equipa vê isto."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "O título precisa de pelo menos 3 caracteres"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Esta entrada está agendada. Um membro que pode publicar cuida disso."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "Esta caixa de entrada já tem um changelog."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "Esta caixa de entrada ainda não tem lista de e-mails. Crie uma em Envios."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "Este é o único texto da entrada. Exclua a entrada em vez disso."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Cria um rascunho de envio a partir da entrada e o abre. Nada é enviado até você revisar e enviar ou agendar."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "Este espaço de trabalho tem tantas entradas quanto o servidor permite. Exclua as antigas primeiro."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Título"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Tradução excluída"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Despublicar"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Despublicar ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Despublicar esta entrada?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Não publicada"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Alterações não publicadas"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Não publicado, só a sua equipa vê"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Alterações não salvas"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Desagendar"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Use de 3 a 48 letras, números e hifens internos."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Usar a versão deles"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Ver"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Ver o changelog"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Novidades"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Quem pode publicar"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Escrever"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Escreva a entrada no idioma principal antes de publicar."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Escreva em Markdown o que mudou…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Seu fuso horário, {zone}. São {utc} UTC."

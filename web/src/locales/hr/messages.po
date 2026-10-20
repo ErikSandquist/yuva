@@ -2588,6 +2588,10 @@ msgstr "Mijenjaj, briši i spajaj kontakte"
 msgid "Change, move and bulk-update conversations"
 msgstr "Mijenjaj, premještaj i skupno ažuriraj razgovore"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Postavke dnevnika promjena"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Promjene učinjene kod {provider}: nema"
@@ -3421,6 +3425,10 @@ msgstr "Izradi stranicu statusa ({newKey})"
 msgid "Create the board"
 msgstr "Izradi ploču"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Izradi dnevnik promjena"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Izradi e-poštni kanal"
@@ -3648,6 +3656,10 @@ msgstr "Izbriši članak"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Izbriši skicu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Izbriši zapis"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Unesite SMTP korisničko ime iz SES konzole."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Unesite svoju poslovnu e-adresu i poslat ćemo vam kôd. Bez lozinke; isti kôd prijavljuje vas i poslije."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Zapisi"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Pošta i dalje stiže na {provider}, ali se još ne šalje u Yuvu."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Pošta koja u međuvremenu i dalje stiže na {provider} čita se svake dvije minute pa se ništa ne gubi."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Pošalji zapis pretplatnicima e-poštom"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Pošalji im potvrdu"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Kreći se kroz masovne poruke"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Kreći se po zapisima"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Kreći se kroz ideje"
 
@@ -7063,6 +7087,10 @@ msgstr "Nova rasprava"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nove rasprave"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Novi zapis"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Otvori raspravu"
 msgid "Open the endpoint"
 msgstr "Otvori krajnju točku"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Otvori zapis"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Otvori članak pomoći"
@@ -8440,6 +8472,10 @@ msgstr "Otvori postavke stranice"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Otvori javnu ploču"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Otvori javni dnevnik promjena"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Stranica postavki"
 msgid "Preparing"
 msgstr "Priprema"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Objavljivanje i povlačenje objave članaka centra za pomoć"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Objavi sada"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Objavi ili povuci dnevnik promjena"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Zakaži"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Zakaži i šalji masovne poruke kad radni prostor dopusti ključevima i asistentima da ih šalju"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Zakaži zapis"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Prikaži boje koje je pošiljatelj odabrao, na bijelom"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Prikaži zaslon razgovora"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Prikaži broj novosti na gumbu chata"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Korisničko ime je vaša iCloud adresa bez @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Posjetitelj je u chatu upisao {0} i još to nije potvrdio. Ovaj odgovor stigao je s te adrese pa možda nije od posjetitelja."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Broj novosti prikazuje se na gumbu chata dok nema nepročitanih poruka. Početni zaslon widgeta uvijek ga prikazuje."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Radni prostor za sada ne smije slati masovne poruke."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Povuci ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Povuci zapis ili poništi zakazivanje"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Povuci objavu prijevoda"
 
@@ -13963,6 +14020,18 @@ msgstr "Što će otići"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Što često pišete"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Novosti"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Zapis novosti"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

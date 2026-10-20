@@ -10,6 +10,7 @@ import {
   DiscussionsSection,
   LookSection,
   SitesSection,
+  UpdatesSection,
   VisitorsSection,
 } from "@/features/settings/channels/chat/ChatSections"
 import { DeliverabilityCard, DkimSection } from "@/features/settings/channels/email/Deliverability"
@@ -56,6 +57,7 @@ function useSections(ch: Channel) {
       ["visitors", t`Visitors`],
       ["look", t`Look`],
       ["discussions", t`Discussions`],
+      ["updates", t`What’s new`],
       ["install", t`Install`]
     )
   if (ch.kind === "app") items.push(["access", t`Access`], ["install", t`Install`])
@@ -87,6 +89,7 @@ function Sections({ ch }: { ch: Channel }) {
           <VisitorsSection channel={ch} />
           <LookSection channel={ch} />
           <DiscussionsSection channel={ch} />
+          <UpdatesSection channel={ch} />
           <ChatInstallSection channel={ch} />
         </>
       )}

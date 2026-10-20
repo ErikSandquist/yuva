@@ -2588,6 +2588,10 @@ msgstr "కాంటాక్ట్‌లను మార్చండి, తొ
 msgid "Change, move and bulk-update conversations"
 msgstr "సంభాషణలను మార్చండి, తరలించండి మరియు బల్క్‌గా అప్‌డేట్ చేయండి"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "చేంజ్‌లాగ్ సెట్టింగ్‌లు"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider} లో చేసిన మార్పులు: ఏవీ లేవు"
@@ -3421,6 +3425,10 @@ msgstr "స్టేటస్ పేజీని సృష్టించండ�
 msgid "Create the board"
 msgstr "బోర్డ్‌ను సృష్టించండి"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "చేంజ్‌లాగ్‌ను సృష్టించండి"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "ఇమెయిల్ ఛానెల్‌ను సృష్టించండి"
@@ -3648,6 +3656,10 @@ msgstr "కథనాన్ని తొలగించు"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "డ్రాఫ్ట్‌ను తొలగించండి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "ఎంట్రీని తొలగించండి"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES కన్సోల్ నుండి SMTP వినియోగద�
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "మీ వర్క్ ఇమెయిల్‌ను నమోదు చేయండి, మేము మీకు కోడ్ పంపుతాము. పాస్‌వర్డ్ లేదు; తర్వాత కూడా అదే కోడ్ మిమ్మల్ని సైన్ ఇన్ చేస్తుంది."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "ఎంట్రీలు"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "మెయిల్ ఇంకా {provider} కు చేరుతోం�
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "ఈలోగా {provider} కు చేరే మెయిల్ ప్రతి రెండు నిమిషాలకు చదవబడుతుంది, కాబట్టి ఏదీ కోల్పోదు."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "ఎంట్రీని సబ్‌స్క్రైబర్‌లకు ఇమెయిల్ ద్వారా పంపండి"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "వారికి నిర్ధారణ మెయిల్ చేయండి"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "బ్రాడ్‌కాస్ట్‌ల మధ్య కదలండి"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "ఎంట్రీల మధ్య ముందుకు వెనక్కు వెళ్లండి"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "ఆలోచనల మధ్య కదలండి"
 
@@ -7063,6 +7087,10 @@ msgstr "కొత్త చర్చ"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "కొత్త చర్చలు"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "కొత్త ఎంట్రీ"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "చర్చను తెరవండి"
 msgid "Open the endpoint"
 msgstr "ఎండ్‌పాయింట్‌ను తెరవండి"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "ఎంట్రీని తెరవండి"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "సహాయ కథనాన్ని తెరువు"
@@ -8440,6 +8472,10 @@ msgstr "పేజీ సెట్టింగ్‌లను తెరవండ�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "పబ్లిక్ బోర్డ్‌ను తెరవండి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "పబ్లిక్ చేంజ్‌లాగ్‌ను తెరవండి"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "ప్రాధాన్యత పేజీ"
 msgid "Preparing"
 msgstr "సిద్ధం చేస్తోంది"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "సహాయ కేంద్రం వ్యాసాలను ప్ర
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "ఇప్పుడే ప్రచురించండి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "చేంజ్‌లాగ్‌ను ప్రచురించండి లేదా దాని ప్రచురణను వెనక్కి తీసుకోండి"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "షెడ్యూల్ చేయండి"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "వర్క్‌స్పేస్ కీలు మరియు అసిస్టెంట్‌లను పంపనిచ్చినప్పుడు, బ్రాడ్‌కాస్ట్‌లను షెడ్యూల్ చేసి పంపండి"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "ఎంట్రీని షెడ్యూల్ చేయండి"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "పంపేవారు ఎంచుకున్న రంగులన�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "సంభాషణ స్క్రీన్‌ను చూపండి"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "చాట్ బటన్‌పై కొత్త అప్‌డేట్‌ల సంఖ్యను చూపండి"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "వినియోగదారు పేరు అంటే @icloud.com 
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "సందర్శకుడు చాట్‌లో {0} అని టైప్ చేశారు, ఇంకా నిర్ధారించలేదు. ఈ జవాబు ఆ చిరునామా నుండి వచ్చింది, కాబట్టి ఇది సందర్శకుడి నుండి కాకపోవచ్చు."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "చదవని సందేశాలు లేనంత వరకు చాట్ బటన్‌పై కొత్త అప్‌డేట్‌ల సంఖ్య కనిపిస్తుంది. విడ్జెట్ హోమ్ దాన్ని ఎప్పుడూ చూపిస్తుంది."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "వర్క్‌స్పేస్ ప్రస్తుతానికి బ్రాడ్‌కాస్ట్‌లను పంపకూడదు."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "ప్రచురణను వెనక్కి తీసుకోండి ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "ఎంట్రీ ప్రచురణను వెనక్కి తీసుకోండి లేదా షెడ్యూల్ రద్దు చేయండి"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "అనువాదం ప్రచురణ రద్దు చేయి"
 
@@ -13963,6 +14020,18 @@ msgstr "ఏమి వెళ్తుంది"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "మీరు తరచుగా రాసేది"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "కొత్తవి ఏమిటి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "కొత్తవి ఏమిటి ఎంట్రీ"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

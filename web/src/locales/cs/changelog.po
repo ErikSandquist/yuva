@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "Zveřejněno {published} ze {total} záznamů"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 až 48 písmen, číslic a spojovníků. Jedinečné na tomto serveru."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "Seznam změn může obsahovat nejvýše 50 naplánovaných záznamů."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "Člen, který smí zveřejňovat, mění štítky zveřejněného záznamu."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Adresa"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Konec adresy"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agenti smějí publikovat"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Všechny štítky"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analytická vlastnost"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "Jiný seznam změn používá tuto adresu teď nebo dříve."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Libovolný stav"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Alespoň 3 znaky."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Změnit"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Změnit čas"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Seznam změn"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Vybrat obrázek"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Počítá zobrazení stránek seznamu změn bez cookies."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Vytvořit seznam změn"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Vytvořit koncept hromadné zprávy"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Vytvořit záznam"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Smazat"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Smazat {changelogName}?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Smazat seznam změn"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Smazat záznam"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Smazat překlad {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Smazat tento záznam?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Smazat tento překlad"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Smazat překlad"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Smaže seznam změn se záznamy a překlady. Veřejná adresa přestane fungovat. Hromadné zprávy vytvořené z jeho záznamů zůstanou."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Popis"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Koncept"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Koncept odeslán. Publikovat ho může vlastník nebo správce."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Záznamy"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "Záznamy a překlady se smažou s ním."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Záznamy lze psát a zveřejňovat v těchto jazycích. Návštěvníci vidí svůj jazyk, pokud existuje."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Všechny překlady se smažou. Hromadné zprávy vytvořené z něj zůstanou."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Opraveno"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Vylepšeno"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "Neměl text v hlavním jazyce."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "Jeho koncept se smaže. Ostatní jazyky zůstanou."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Ponechat moji"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Štítek"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Štítky"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Jazyk"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Jazyky"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Skupiny"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Načíst další"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Poslat odběratelům e-mailem"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Odesláno odběratelům"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Hlavní jazyk"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Více"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Název"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Nové"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Nový záznam"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Zatím žádný seznam změn. Vytvářejí ho vlastníci a správci."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Zatím žádné záznamy. Řekněte zákazníkům, co se změnilo v poslední verzi."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Žádný záznam neodpovídá."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Žádná schránka, pro kterou by šel zobrazit seznam změn."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Žádné"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "nenapsáno"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Vypnuto: agenti píší koncepty a odesílají je, vlastníci a správci zveřejňují. Zapnuto: zveřejňují, plánují a stahují i agenti s přístupem ke schránce."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "To mohou udělat jen vlastníci a správci."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Originál"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Původní text ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "zastaralé"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Zastaralé"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Část webové adresy tohoto překladu. Je-li prázdná, vytvoří se z názvu."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Vyberte čas v příštím roce, ve svém časovém pásmu, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Vyberte nejvýše 10 seznamů této schránky."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Obrázek"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Náhled"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Náhled ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Náhled ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Náhled záznamu"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Veřejná adresa"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Zveřejnit"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Zveřejnit ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Zveřejnit"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Zveřejněná"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "Naplánované zveřejnění se nezdařilo."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Odebrat"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Uložit nyní"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Uloženo"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "Ukládá se…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Naplánovat"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Naplánovat tento záznam"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Naplánováno"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Naplánováno: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Odeslat přes"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Nastavení"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Zobrazit"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Zobrazí se pod názvem na domovské stránce."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Zobrazí se, když záznam nemá překlad v jazyce návštěvníka."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Zobrazí se se záznamem na stránce, ve widgetu a v e-mailu."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Někdo uložil tento překlad, zatímco jste ho upravovali."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Začněte názvem. Text napíšete potom a zůstane konceptem, dokud nebude publikován."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Stav"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Odeslat koncept"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Odeslat koncept ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Řekněte zákazníkům {inboxName}, co je nové, vylepšené a opravené. Zůstane nezveřejněný, dokud ho nezveřejníte."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Řekněte zákazníkům, co je nové, vylepšené a opravené, na veřejné stránce, v chatovém widgetu a e-mailem. Pro psaní záznamů vyberte seznam změn některé schránky."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Text"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "Adresa odpovídá „nenalezeno“, dokud seznam změn nezveřejníte."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "Klíč API, který ho naplánoval, už nesmí zveřejňovat."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "Klíč API, který ho naplánoval, byl zrušen."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "Seznam změn je na adrese {address}. Stará adresa po změně dál přesměrovává."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "Záznam zmizí z veřejné stránky, z kanálu i z widgetu. Koncepty zůstanou a můžete ho zveřejnit znovu."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "Záznam se v tento čas sám zveřejní. Do té doby ho mohou měnit jen členové, kteří smějí zveřejňovat."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "Hlavní jazyk zatím nemá text tohoto záznamu."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "Člen, který ho naplánoval, už možná nesmí zveřejňovat."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "Stránka tak, jak by ji viděli návštěvníci, včetně konceptů. Vidí to jen váš tým."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Název musí mít alespoň 3 znaky"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Tento záznam je naplánovaný. Zveřejní ho člen, který smí zveřejňovat."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "Tato schránka už seznam změn má."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "Tato schránka zatím nemá e-mailovou skupinu. Vytvořte ji v Hromadných zprávách."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "Je to jediný text záznamu. Smažte raději celý záznam."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Vytvoří ze záznamu koncept hromadné zprávy a otevře ho. Nic se neodešle, dokud ho nezkontrolujete a neodešlete nebo nenaplánujete."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "Tento pracovní prostor má tolik záznamů, kolik server dovoluje. Nejdřív smažte staré."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Název"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Překlad smazán"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Stáhnout"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Stáhnout ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Stáhnout tento záznam?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Nezveřejněná"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Nepublikované změny"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Nezveřejněno, vidí ho jen váš tým"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Neuložené změny"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Zrušit naplánování"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Použijte 3 až 48 písmen, číslic a vnitřních spojovníků."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Použít jejich verzi"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Zobrazit"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Zobrazit seznam změn"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Novinky"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Kdo může publikovat"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Psát"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Před zveřejněním napište záznam v hlavním jazyce."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "Napište v Markdownu, co se změnilo…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Vaše časové pásmo, {zone}. To je {utc} UTC."

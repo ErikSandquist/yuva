@@ -19,7 +19,15 @@ import type { HelpCenter, HelpCenterUpdate } from "@/lib/api"
 
 const COLOR_RE = /^#[0-9a-fA-F]{6}$/
 
-function Languages({ value, main, onChange }: { value: string[]; main: string; onChange: (value: string[]) => void }) {
+export function Languages({
+  value,
+  main,
+  onChange,
+}: {
+  value: string[]
+  main: string
+  onChange: (value: string[]) => void
+}) {
   const { t } = useLingui()
   const name = useLocaleName()
   const addable = Object.keys(panelLocales).filter((l) => !value.includes(l))

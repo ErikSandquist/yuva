@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "已發布 {published} / {total} 個項目"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 到 48 個字母、數字和連字號，在此伺服器上不可重複。"
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "一個更新日誌最多可以有 50 則已安排的項目。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "有發布權限的成員會更改已發布項目的標籤。"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "地址"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "位址結尾"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "客服可以發佈"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "所有標籤"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "分析屬性"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "另一個更新日誌正在使用或曾經使用這個位址。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "任何狀態"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "至少 3 個字元。"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "更改"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "更改時間"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "更新日誌"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "選擇圖片"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "不使用 Cookie 統計更新日誌的頁面瀏覽量。"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "建立更新日誌"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "建立群發草稿"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "建立項目"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "刪除"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "要刪除 {changelogName} 嗎？"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "刪除更新日誌"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "刪除項目"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "刪除 {name} 翻譯？"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "要刪除此項目嗎？"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "刪除此翻譯"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "刪除翻譯"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "刪除更新日誌及其項目和翻譯。公開位址將停止運作。由其項目建立的群發會保留。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "說明"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "草稿"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "草稿已提交。擁有者或管理員可以發佈。"
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "項目"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "項目和翻譯會一併刪除。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "項目可以用這些語言撰寫和發布。訪客會看到自己的語言（如果有）。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "所有翻譯都會刪除。由它建立的群發會保留。"
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "已修正"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "已改進"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "它沒有主要語言的文字。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "它的草稿會被刪除。其他語言會保留。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "保留我的"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "標籤"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "標籤"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "語言"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "語言"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "列表"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "載入更多"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "透過郵件傳送給訂閱者"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "已傳送給訂閱者"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "主要語言"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "更多"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "名稱"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "新"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "新項目"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "還沒有更新日誌。由擁有者和管理員建立。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "還沒有項目。告訴客戶最新版本有哪些變化。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "沒有符合的項目。"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "沒有可顯示更新日誌的收件匣。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "無"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "未撰寫"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "關閉：客服代理撰寫草稿並提交，由擁有者和管理員發布。開啟：有收件匣存取權限的客服代理也可以發布、安排和撤回。"
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "只有擁有者和管理員可以這樣做。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "原件"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "原文（{alt} C）"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "已過時"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "已過時"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "此翻譯網址的一部分。為空時會依標題產生。"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "請選擇未來一年內的時間，使用你的時區 {zone}。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "最多選擇此收件匣的 10 個列表。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "圖片"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "預覽"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "預覽（{alt} P）"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "預覽（{previewKey}）"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "項目預覽"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "公開網址"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "發布"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "發布（{publishKey}）"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "發布時間"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "已發布"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "依排程發布失敗。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "移除"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "立即儲存"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "已儲存"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "儲存中…"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "安排傳送"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "安排此項目"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "已安排"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "已安排：{scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "傳送管道"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "顯示"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "顯示在首頁的名稱下方。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "當項目沒有訪客所用語言的翻譯時顯示。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "與項目一起顯示在頁面、小工具和郵件中。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "你編輯時有人儲存了此翻譯。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "從標題開始。接著再寫內文，在發佈之前它一直是草稿。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "狀態"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "提交草稿"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "提交草稿（{publishKey}）"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "告訴 {inboxName} 的客戶有哪些新功能、改進和修正。在你發布之前，它會維持未發布狀態。"
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "透過公開頁面、聊天小工具和郵件，告訴客戶有哪些新功能、改進和修正。選擇某個收件匣的更新日誌來撰寫項目。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "文字"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "在你發布更新日誌之前，該位址會回應「找不到」。"
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "安排此項目的 API 金鑰已不再有發布權限。"
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "安排此項目的 API 金鑰已被撤銷。"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "更新日誌的位址是 {address}。更改位址後，舊位址會繼續重新導向。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "項目會從公開頁面、訂閱源和小工具中消失。草稿會保留，你可以再次發布。"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "項目會在這個時間自動公開。在此之前，只有有發布權限的成員可以更改。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "主要語言還沒有這個項目的文字。"
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "安排它的成員可能已不再有發布權限。"
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "訪客將看到的頁面樣子，包含草稿。只有你的團隊看得到。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "標題至少需要 3 個字元"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "此項目已安排。由有發布權限的成員來發布。"
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "此收件匣已經有更新日誌。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "此收件匣還沒有郵件列表。請在群發中建立一個。"
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "這是項目唯一的文字。請改為刪除該項目。"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "由項目建立群發草稿並開啟。在你檢查並傳送或安排之前，不會傳送任何內容。"
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "此工作區的項目數已達伺服器允許的上限。請先刪除舊項目。"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "標題"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "翻譯已刪除"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "取消發布"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "取消發布（{publishKey}）"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "要撤回此項目嗎？"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "未發布"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "未發佈的變更"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "未發布，只有你的團隊看得到"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "未儲存的變更"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "取消安排"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "使用 3 到 48 個字母、數字和中間的連字號。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "使用對方的版本"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "檢視"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "查看更新日誌"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "新動態"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "誰可以發佈"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "撰寫"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "發布之前，請先用主要語言撰寫項目。"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "用 Markdown 寫下有什麼變化…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "你的時區 {zone}。即 UTC {utc}。"

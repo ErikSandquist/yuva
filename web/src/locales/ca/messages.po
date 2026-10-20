@@ -2588,6 +2588,10 @@ msgstr "Canvia, elimina i fusiona contactes"
 msgid "Change, move and bulk-update conversations"
 msgstr "Canvia, mou i actualitza converses en bloc"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Configuració del registre de canvis"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Canvis fets a {provider}: cap"
@@ -3421,6 +3425,10 @@ msgstr "Crea una pàgina d’estat ({newKey})"
 msgid "Create the board"
 msgstr "Crea el tauler"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Crea el registre de canvis"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Crea el canal de correu"
@@ -3648,6 +3656,10 @@ msgstr "Elimina l’article"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Suprimeix l’esborrany"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Elimina l’entrada"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Introdueix el nom d'usuari SMTP de la consola de SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Introdueix el teu correu de feina i t'enviem un codi. Sense contrasenya; el mateix codi t'inicia la sessió més endavant."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Entrades"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "El correu encara arriba a {provider} però encara no s'envia a Yuva."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "El correu que mentrestant encara arriba a {provider} es llegeix cada dos minuts, de manera que no es perd res."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Envia l’entrada per correu als subscriptors"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Envia'ls una confirmació per correu"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Desplaça't pels enviaments massius"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Mou-te per les entrades"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Mou-te per les idees"
 
@@ -7063,6 +7087,10 @@ msgstr "Debat nou"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "debats nous"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Entrada nova"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Obre el debat"
 msgid "Open the endpoint"
 msgstr "Obre l'endpoint"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Obre l’entrada"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Obre l’article d’ajuda"
@@ -8440,6 +8472,10 @@ msgstr "Obre la configuració de la pàgina"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Obre el tauler públic"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Obre el registre de canvis públic"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Pàgina de preferències"
 msgid "Preparing"
 msgstr "Preparant"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Publica i despublica articles del centre d'ajuda"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Publica ara"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Publica o retira el registre de canvis"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Programa"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Programa i envia enviaments massius, quan l'espai de treball deixa que les claus i els assistents els enviïn"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Programa l’entrada"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Mostra els colors que ha triat el remitent, sobre blanc"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Mostra la pantalla de conversa"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Mostra el nombre de novetats al botó del xat"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "El nom d'usuari és la teva adreça d'iCloud sense @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "El visitant ha escrit {0} al xat i encara no l'ha confirmat. Aquesta resposta ha vingut d'aquesta adreça, de manera que pot no ser del visitant."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "El nombre de novetats apareix al botó del xat mentre no hi hagi missatges sense llegir. L’inici del widget sempre el mostra."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "L'espai de treball no pot enviar enviaments massius de moment."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Retira ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Retira l’entrada o desprograma-la"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Despublica la traducció"
 
@@ -13963,6 +14020,18 @@ msgstr "El que sortirà"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "El que escrius sovint"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Novetats"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Entrada de novetats"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

@@ -7,6 +7,7 @@ import {
   DiscussionsFields,
   LookFields,
   SitesFields,
+  UpdatesFields,
   VisitorsFields,
 } from "@/features/settings/channels/chat/ChatFields"
 import { ChatInstall } from "@/features/settings/channels/chat/ChatInstall"
@@ -132,6 +133,14 @@ export function DiscussionsSection({ channel }: { channel: Channel }) {
   return (
     <SwitchSection channel={channel} id="discussions" title={<Trans>Discussions</Trans>}>
       {({ f, set }) => <DiscussionsFields f={f} set={set} />}
+    </SwitchSection>
+  )
+}
+
+export function UpdatesSection({ channel }: { channel: Channel }) {
+  return (
+    <SwitchSection channel={channel} id="updates" title={<Trans>What’s new</Trans>}>
+      {({ f, set }) => <UpdatesFields f={f} set={set} />}
     </SwitchSection>
   )
 }

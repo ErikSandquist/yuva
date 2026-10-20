@@ -3031,7 +3031,7 @@ appear in help search. Writing, rendering and translating are M20's.
   `changelog`, in every panel language. The widget's app uses the `apps` catalog. The broadcast takes
   the template's words in the entry's locale.
 - **Panel.**
-  - **Navigation.** A What's new entry in the rail (`/whats-new`, shortcut `g w`) follows the inbox
+  - **Navigation.** A What's new entry in the rail (`/updates`, shortcut `g w`) follows the inbox
     filter: each visible inbox's changelog, or "Create" for owners and admins.
   - **The list.** Entries with state, labels, date and translation marks.
   - **The editor.** M20's Markdown editor and side-by-side translation, the label chips, an image picker

@@ -10,7 +10,13 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/messages",
       include: ["src"],
-      exclude: ["src/features/designs", "src/features/analytics", "src/features/help", "src/features/roadmap"],
+      exclude: [
+        "src/features/designs",
+        "src/features/analytics",
+        "src/features/help",
+        "src/features/roadmap",
+        "src/features/changelog",
+      ],
     },
     {
       path: "<rootDir>/src/locales/{locale}/analytics",
@@ -23,6 +29,10 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/roadmap",
       include: ["src/features/roadmap"],
+    },
+    {
+      path: "<rootDir>/src/locales/{locale}/changelog",
+      include: ["src/features/changelog"],
     },
     {
       path: "<rootDir>/src/locales/{locale}/designs",

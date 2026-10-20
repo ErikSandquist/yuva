@@ -1,4 +1,5 @@
 import type {
+  ChangelogLabel,
   BroadcastDeliveryState,
   ConversationQuery,
   DiscussionQuery,
@@ -30,7 +31,16 @@ export type HelpArticleFilters = {
 
 export type IdeaFilters = { board_id: string; stage?: IdeaStage; state?: DiscussionState; q?: string }
 
+export type ChangelogEntryFilters = { state?: "draft" | "scheduled" | "published" | "changed"; label?: ChangelogLabel }
+
 export const keys = {
+  changelog: (ws: string) => ["ws", ws, "changelog"] as const,
+  changelogs: (ws: string) => ["ws", ws, "changelog", "list"] as const,
+  changelogEntries: (ws: string, changelog: string, f: ChangelogEntryFilters) =>
+    ["ws", ws, "changelog", "entries", changelog, f] as const,
+  changelogEntry: (ws: string, changelog: string, id: string) =>
+    ["ws", ws, "changelog", "entry", changelog, id] as const,
+  changelogBroadcasts: (ws: string, inbox: string) => ["ws", ws, "changelog", "broadcasts", inbox] as const,
   roadmap: (ws: string) => ["ws", ws, "roadmap"] as const,
   roadmapBoards: (ws: string) => ["ws", ws, "roadmap", "boards"] as const,
   roadmapIdeas: (ws: string, f: IdeaFilters) => ["ws", ws, "roadmap", "ideas", f] as const,

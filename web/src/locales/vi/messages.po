@@ -2588,6 +2588,10 @@ msgstr "Thay đổi, xóa và gộp liên hệ"
 msgid "Change, move and bulk-update conversations"
 msgstr "Thay đổi, chuyển và cập nhật hàng loạt các cuộc trò chuyện"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Cài đặt nhật ký thay đổi"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Thay đổi đã thực hiện trên {provider}: không có"
@@ -3421,6 +3425,10 @@ msgstr "Tạo trang trạng thái ({newKey})"
 msgid "Create the board"
 msgstr "Tạo bảng"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Tạo nhật ký thay đổi"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Tạo kênh email"
@@ -3648,6 +3656,10 @@ msgstr "Xóa bài viết"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Xóa bản nháp"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Xóa mục"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Hãy nhập tên người dùng SMTP từ bảng điều khiển SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Nhập email công việc của bạn và chúng tôi sẽ gửi cho bạn một mã. Không cần mật khẩu; chính mã đó sẽ đăng nhập cho bạn sau này."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Mục"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Thư vẫn đến {provider} nhưng chưa được gửi tới Yuva."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Thư vẫn đến {provider} trong thời gian đó được đọc mỗi hai phút, nên không mất gì."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Gửi mục này qua email cho người đăng ký"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Gửi thư xác nhận cho họ"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Di chuyển giữa các thư hàng loạt"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Di chuyển giữa các mục"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Duyệt qua các ý tưởng"
 
@@ -7063,6 +7087,10 @@ msgstr "Thảo luận mới"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "thảo luận mới"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Mục mới"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Mở cuộc thảo luận"
 msgid "Open the endpoint"
 msgstr "Mở endpoint"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Mở mục"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Mở bài viết trợ giúp"
@@ -8440,6 +8472,10 @@ msgstr "Mở cài đặt trang"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Mở bảng công khai"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Mở nhật ký thay đổi công khai"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Trang tùy chọn"
 msgid "Preparing"
 msgstr "Đang chuẩn bị"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Xuất bản và hủy xuất bản bài viết của trung tâm trợ g
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Xuất bản ngay"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Xuất bản hoặc gỡ xuất bản nhật ký thay đổi"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Lên lịch"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Lên lịch và gửi thư hàng loạt, khi không gian làm việc cho phép khóa và trợ lý gửi"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Lên lịch cho mục"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Hiện màu người gửi đã chọn, trên nền trắng"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Hiện màn hình cuộc trò chuyện"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Hiện số cập nhật mới trên nút chat"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Tên người dùng là địa chỉ iCloud của bạn không có @iclo
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Khách đã gõ {0} trong chat và chưa xác nhận. Phản hồi này đến từ địa chỉ đó, nên có thể không phải từ khách."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Số cập nhật mới hiện trên nút chat khi không có tin nhắn chưa đọc. Trang chủ của widget luôn hiện số này."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Không gian làm việc hiện không được gửi thư hàng loạt."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Gỡ xuất bản ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Gỡ xuất bản hoặc hủy lịch của mục"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Hủy xuất bản bản dịch"
 
@@ -13963,6 +14020,18 @@ msgstr "Những gì sẽ được gửi đi"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Những gì bạn hay viết"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Có gì mới"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Mục có gì mới"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

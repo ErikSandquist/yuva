@@ -2588,6 +2588,10 @@ msgstr "Kontaktok módosítása, törlése és egyesítése"
 msgid "Change, move and bulk-update conversations"
 msgstr "Beszélgetések módosítása, áthelyezése és tömeges frissítése"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "A változásnapló beállításai"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "A(z) {provider} szolgáltatásban végrehajtott módosítások: nincs"
@@ -3421,6 +3425,10 @@ msgstr "Állapotoldal létrehozása ({newKey})"
 msgid "Create the board"
 msgstr "Tábla létrehozása"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "A változásnapló létrehozása"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "E-mail-csatorna létrehozása"
@@ -3648,6 +3656,10 @@ msgstr "A cikk törlése"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "A piszkozat törlése"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "A bejegyzés törlése"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Add meg az SMTP-felhasználónevet a SES-konzolból."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Add meg a munkahelyi e-mail-címed, és küldünk egy kódot. Jelszó nélkül; ugyanez a kód jelentkeztet be később is."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Bejegyzések"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "A levelek még mindig a(z) {provider} szolgáltatóhoz érkeznek, de mé
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "A közben még a(z) {provider} szolgáltatóhoz érkező leveleket kétpercenként olvassuk, így semmi sem vész el."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "A bejegyzés elküldése e-mailben a feliratkozóknak"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Megerősítő levél küldése nekik"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Mozgás a tömeges levelek között"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Lépkedés a bejegyzések között"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Lépkedés az ötletek között"
 
@@ -7063,6 +7087,10 @@ msgstr "Új vita"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "új viták"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Új bejegyzés"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Vita megnyitása"
 msgid "Open the endpoint"
 msgstr "Végpont megnyitása"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "A bejegyzés megnyitása"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "A súgócikk megnyitása"
@@ -8440,6 +8472,10 @@ msgstr "Az oldal beállításainak megnyitása"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Nyilvános tábla megnyitása"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "A nyilvános változásnapló megnyitása"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Beállítások oldal"
 msgid "Preparing"
 msgstr "Előkészítés"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Súgóközpont-cikkek közzététele és visszavonása"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Közzététel most"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "A változásnapló közzététele vagy visszavonása"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Ütemezés"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Tömeges levelek ütemezése és küldése, ha a munkaterület engedi a kulcsoknak és asszisztenseknek a küldést"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "A bejegyzés ütemezése"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "A feladó által választott színek megjelenítése fehéren"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "A beszélgetéskijelző megjelenítése"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Az újdonságok számának mutatása a csevegőgombon"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "A felhasználónév az iCloud-címed @icloud.com nélkül."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "A látogató ezt írta a csevegésben: {0}, de még nem erősítette meg. Ez a válasz arról a címről jött, így lehet, hogy nem a látogatótól származik."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Az újdonságok száma a csevegőgombon jelenik meg, amíg nincs olvasatlan üzenet. A widget kezdőlapja mindig mutatja."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "A munkaterület egyelőre nem küldhet tömeges leveleket."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Visszavonás ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "A bejegyzés visszavonása vagy az ütemezés törlése"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "A fordítás közzétételének visszavonása"
 
@@ -13963,6 +14020,18 @@ msgstr "Mi fog kimenni"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Amit gyakran írsz"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Újdonságok"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Újdonság-bejegyzés"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

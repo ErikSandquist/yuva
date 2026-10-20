@@ -2588,6 +2588,10 @@ msgstr "ಸಂಪರ್ಕಗಳನ್ನು ಬದಲಾಯಿಸಿ, ಅಳಿ
 msgid "Change, move and bulk-update conversations"
 msgstr "ಸಂಭಾಷಣೆಗಳನ್ನು ಬದಲಾಯಿಸಿ, ಸರಿಸಿ ಮತ್ತು ಬೃಹತ್ ನವೀಕರಣ ಮಾಡಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider} ನಲ್ಲಿ ಮಾಡಿದ ಬದಲಾವಣೆಗಳು: ಇಲ್ಲ"
@@ -3421,6 +3425,10 @@ msgstr "ಸ್ಥಿತಿ ಪುಟ ರಚಿಸಿ ({newKey})"
 msgid "Create the board"
 msgstr "ಬೋರ್ಡ್ ರಚಿಸಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ರಚಿಸಿ"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "ಇಮೇಲ್ ಚಾನೆಲ್ ರಚಿಸಿ"
@@ -3648,6 +3656,10 @@ msgstr "ಲೇಖನ ಅಳಿಸಿ"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "ಕರಡು ಅಳಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "ನಮೂದು ಅಳಿಸಿ"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES ಕನ್ಸೋಲ್‌ನಿಂದ SMTP ಬಳಕೆದಾರ ಹ�
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "ನಿಮ್ಮ ಕೆಲಸದ ಇಮೇಲ್ ನಮೂದಿಸಿ, ನಾವು ನಿಮಗೆ ಕೋಡ್ ಕಳುಹಿಸುತ್ತೇವೆ. ಪಾಸ್‌ವರ್ಡ್ ಇಲ್ಲ; ಅದೇ ಕೋಡ್ ನಂತರ ನಿಮ್ಮನ್ನು ಸೈನ್ ಇನ್ ಮಾಡುತ್ತದೆ."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "ನಮೂದುಗಳು"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "ಮೇಲ್ ಇನ್ನೂ {provider} ತಲುಪುತ್ತದೆ �
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "ಈ ನಡುವೆ ಇನ್ನೂ {provider} ತಲುಪುವ ಮೇಲ್ ಅನ್ನು ಪ್ರತಿ ಎರಡು ನಿಮಿಷಕ್ಕೆ ಓದಲಾಗುತ್ತದೆ, ಹಾಗಾಗಿ ಏನೂ ಕಳೆದುಹೋಗುವುದಿಲ್ಲ."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "ನಮೂದನ್ನು ಚಂದಾದಾರರಿಗೆ ಇಮೇಲ್ ಮೂಲಕ ಕಳುಹಿಸಿ"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "ಅವರಿಗೆ ದೃಢೀಕರಣ ಮೇಲ್ ಮಾಡಿ"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳ ನಡುವೆ ಚಲಿಸಿ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "ನಮೂದುಗಳಲ್ಲಿ ಮುಂದೆ-ಹಿಂದೆ ಹೋಗಿ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "ಐಡಿಯಾಗಳ ನಡುವೆ ಸಾಗಿ"
 
@@ -7063,6 +7087,10 @@ msgstr "ಹೊಸ ಚರ್ಚೆ"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "ಹೊಸ ಚರ್ಚೆಗಳು"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "ಹೊಸ ನಮೂದು"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "ಚರ್ಚೆ ತೆರೆಯಿರಿ"
 msgid "Open the endpoint"
 msgstr "ಎಂಡ್‌ಪಾಯಿಂಟ್ ತೆರೆಯಿರಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "ನಮೂದು ತೆರೆಯಿರಿ"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "ಸಹಾಯ ಲೇಖನ ತೆರೆಯಿರಿ"
@@ -8440,6 +8472,10 @@ msgstr "ಪುಟದ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರ�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "ಸಾರ್ವಜನಿಕ ಬೋರ್ಡ್ ತೆರೆಯಿರಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "ಸಾರ್ವಜನಿಕ ಚೇಂಜ್‌ಲಾಗ್ ತೆರೆಯಿರಿ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "ಆದ್ಯತೆ ಪುಟ"
 msgid "Preparing"
 msgstr "ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "ಸಹಾಯ ಕೇಂದ್ರದ ಲೇಖನಗಳನ್ನು ಪ್
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "ಈಗಲೇ ಪ್ರಕಟಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "ಚೇಂಜ್‌ಲಾಗ್ ಪ್ರಕಟಿಸಿ ಅಥವಾ ಅದರ ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "ಶೆಡ್ಯೂಲ್"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "ವರ್ಕ್‌ಸ್ಪೇಸ್ ಕೀಲಿಗಳು ಮತ್ತು ಸಹಾಯಕರಿಗೆ ಕಳುಹಿಸಲು ಬಿಟ್ಟಾಗ, ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿ ಕಳುಹಿಸಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "ನಮೂದನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿ"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "ಕಳುಹಿಸುವವರು ಆರಿಸಿದ ಬಣ್ಣಗಳ�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "ಸಂಭಾಷಣೆ ಪರದೆಯನ್ನು ತೋರಿಸಿ"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "ಚಾಟ್ ಬಟನ್‌ನಲ್ಲಿ ಹೊಸ ಅಪ್‌ಡೇಟ್‌ಗಳ ಸಂಖ್ಯೆಯನ್ನು ತೋರಿಸಿ"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "ಬಳಕೆದಾರ ಹೆಸರು @icloud.com ಇಲ್ಲದ ನಿ
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "ಸಂದರ್ಶಕರು ಚಾಟ್‌ನಲ್ಲಿ {0} ಎಂದು ಟೈಪ್ ಮಾಡಿದ್ದಾರೆ ಮತ್ತು ಇನ್ನೂ ದೃಢೀಕರಿಸಿಲ್ಲ. ಈ ಉತ್ತರ ಆ ವಿಳಾಸದಿಂದ ಬಂದಿತು, ಹಾಗಾಗಿ ಅದು ಸಂದರ್ಶಕರಿಂದ ಆಗಿಲ್ಲದಿರಬಹುದು."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "ಓದದ ಸಂದೇಶಗಳು ಇಲ್ಲದಿರುವವರೆಗೆ ಚಾಟ್ ಬಟನ್‌ನಲ್ಲಿ ಹೊಸ ಅಪ್‌ಡೇಟ್‌ಗಳ ಸಂಖ್ಯೆ ಕಾಣಿಸುತ್ತದೆ. ವಿಜೆಟ್‌ನ ಮುಖಪುಟ ಅದನ್ನು ಯಾವಾಗಲೂ ತೋರಿಸುತ್ತದೆ."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "ವರ್ಕ್‌ಸ್ಪೇಸ್ ಸದ್ಯಕ್ಕೆ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳನ್ನು ಕಳುಹಿಸುವಂತಿಲ್ಲ."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "ನಮೂದಿನ ಪ್ರಕಟಣೆ ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ ಅಥವಾ ಶೆಡ್ಯೂಲ್ ರದ್ದುಮಾಡಿ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "ಅನುವಾದದ ಪ್ರಕಟಣೆ ರದ್ದುಮಾಡಿ"
 
@@ -13963,6 +14020,18 @@ msgstr "ಏನು ಹೋಗುತ್ತದೆ"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "ನೀವು ಆಗಾಗ ಬರೆಯುವುದು"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "ಹೊಸದೇನಿದೆ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "ಹೊಸದೇನಿದೆ ನಮೂದು"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

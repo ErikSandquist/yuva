@@ -2588,6 +2588,10 @@ msgstr "कॉन्टॅक्ट बदला, हटवा आणि मर�
 msgid "Change, move and bulk-update conversations"
 msgstr "संभाषणे बदला, हलवा आणि बल्कमध्ये अपडेट करा"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "चेंजलॉग सेटिंग्ज"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "{provider} मध्ये केलेले बदल: नाही"
@@ -3421,6 +3425,10 @@ msgstr "स्टेटस पेज तयार करा ({newKey})"
 msgid "Create the board"
 msgstr "बोर्ड तयार करा"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "चेंजलॉग तयार करा"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "ई-मेल चॅनेल तयार करा"
@@ -3648,6 +3656,10 @@ msgstr "लेख हटवा"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "मसुदा हटवा"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "नोंद हटवा"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "SES कन्सोलमधून SMTP युजरनेम टाक�
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "तुमचा कामाचा ई-मेल टाका आणि आम्ही तुम्हाला कोड पाठवतो. पासवर्ड नाही; तोच कोड तुम्हाला नंतरही साइन इन करतो."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "नोंदी"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "मेल अजूनही {provider} पर्यंत पोहो�
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "दरम्यान अजूनही {provider} पर्यंत पोहोचणारा मेल दर दोन मिनिटांनी वाचला जातो, त्यामुळे काहीही हरवत नाही."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "नोंद सब्सक्रायबरना ईमेलने पाठवा"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "त्यांना पुष्टी मेल करा"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "ब्रॉडकास्टमधून फिरा"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "नोंदींमधून पुढे-मागे जा"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "कल्पनांमध्ये फिरा"
 
@@ -7063,6 +7087,10 @@ msgstr "नवीन चर्चा"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "नवीन चर्चा"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "नवी नोंद"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "चर्चा उघडा"
 msgid "Open the endpoint"
 msgstr "एंडपॉइंट उघडा"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "नोंद उघडा"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "मदत लेख उघडा"
@@ -8440,6 +8472,10 @@ msgstr "पेज सेटिंग्ज उघडा"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "सार्वजनिक बोर्ड उघडा"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "सार्वजनिक चेंजलॉग उघडा"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "प्रेफरन्स पेज"
 msgid "Preparing"
 msgstr "तयारी होत आहे"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "मदत केंद्रातील लेख प्रकाशि
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "आता प्रकाशित करा"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "चेंजलॉग प्रकाशित करा किंवा त्याचे प्रकाशन मागे घ्या"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "शेड्यूल करा"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "ब्रॉडकास्ट शेड्यूल करा आणि पाठवा, जेव्हा वर्कस्पेस की आणि असिस्टंटना पाठवू देते"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "नोंद शेड्यूल करा"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "प्रेषकाने निवडलेले रंग, पा�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "संभाषण स्क्रीन दाखवा"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "चॅट बटणावर नव्या अपडेटची संख्या दाखवा"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "युजरनेम म्हणजे तुमचा iCloud पत�
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "व्हिझिटरने चॅटमध्ये {0} टाइप केले आणि अजून पुष्टी केलेली नाही. हे उत्तर त्या पत्त्यावरून आले, म्हणून ते व्हिझिटरचे नसू शकते."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "न वाचलेले संदेश नसेपर्यंत चॅट बटणावर नव्या अपडेटची संख्या दिसते. विजेटचे होम ती नेहमी दाखवते."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "वर्कस्पेसला सध्या ब्रॉडकास्ट पाठवण्याची परवानगी नाही."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "प्रकाशन मागे घ्या ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "नोंदीचे प्रकाशन मागे घ्या किंवा शेड्यूल रद्द करा"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "भाषांतराचे प्रकाशन रद्द करा"
 
@@ -13963,6 +14020,18 @@ msgstr "काय जाईल"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "तुम्ही अनेकदा काय लिहिता"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "नवीन काय आहे"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "नवीन काय आहे नोंद"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

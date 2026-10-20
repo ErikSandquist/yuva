@@ -2588,6 +2588,10 @@ msgstr "更改、删除和合并联系人"
 msgid "Change, move and bulk-update conversations"
 msgstr "更改、移动和批量更新对话"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "更新日志设置"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "对 {provider} 所做的更改:无"
@@ -3421,6 +3425,10 @@ msgstr "创建状态页（{newKey}）"
 msgid "Create the board"
 msgstr "创建看板"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "创建更新日志"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "创建邮件渠道"
@@ -3648,6 +3656,10 @@ msgstr "删除文章"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "删除草稿"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "删除条目"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "输入 SES 控制台中的 SMTP 用户名。"
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "输入你的工作邮箱,我们会给你发一个验证码。无需密码;之后同样用验证码登录。"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "条目"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "邮件仍会到达 {provider},但尚未发送到 Yuva。"
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "在此期间仍到达 {provider} 的邮件会每两分钟读取一次,因此不会丢失任何内容。"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "通过邮件将条目发送给订阅者"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "给他们发确认邮件"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "在群发之间移动"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "在条目之间移动"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "在想法之间移动"
 
@@ -7063,6 +7087,10 @@ msgstr "新讨论"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "新讨论"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "新条目"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "打开讨论"
 msgid "Open the endpoint"
 msgstr "打开端点"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "打开条目"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "打开帮助文章"
@@ -8440,6 +8472,10 @@ msgstr "打开页面设置"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "打开公开看板"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "打开公开的更新日志"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "偏好设置页面"
 msgid "Preparing"
 msgstr "准备中"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "发布和取消发布帮助中心文章"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "立即发布"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "发布或撤回更新日志"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "安排发送"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "在工作区允许密钥和助手发送时,安排并发送群发"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "安排条目"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "在白色背景上显示发件人选择的颜色"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "显示对话界面"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "在聊天按钮上显示新动态数量"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "用户名是不带 @icloud.com 的 iCloud 地址。"
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "访客在聊天中输入了 {0},但尚未确认。这条回复来自该地址,因此可能不是访客本人发的。"
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "没有未读消息时，聊天按钮上会显示新动态数量。小组件的首页始终显示。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "工作区暂时不能发送群发。"
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "取消发布（{publishKey}）"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "撤回条目或取消安排"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "取消发布翻译"
 
@@ -13963,6 +14020,18 @@ msgstr "将要发出的内容"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "你常写的内容"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "新动态"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "新动态条目"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

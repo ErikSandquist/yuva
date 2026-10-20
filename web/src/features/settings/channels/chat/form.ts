@@ -20,6 +20,7 @@ export type ChatForm = {
   customColor: boolean
   color: string
   discussions: DiscussionMode
+  announceUpdates: boolean
   touched: boolean
 }
 
@@ -33,6 +34,7 @@ export function chatForm(c?: ChatChannel): ChatForm {
     customColor: !!c?.launcher.color,
     color: c?.launcher.color ?? DEFAULT_COLOR,
     discussions: c?.discussions ?? "moderated",
+    announceUpdates: c?.announce_updates ?? false,
     touched: false,
   }
 }
@@ -72,6 +74,7 @@ export function chatChannelInput(f: ChatForm): ChatInputResult {
       greeting: f.greeting.trim(),
       launcher: { position: f.position, ...(f.customColor ? { color: f.color.toLowerCase() } : {}) },
       discussions: f.discussions,
+      announce_updates: f.announceUpdates,
     },
   }
 }

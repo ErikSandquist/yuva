@@ -60,6 +60,11 @@ const HelpArticlePane = lazy(() => import("@/features/help/pages").then((m) => (
 const RoadmapHome = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.RoadmapHome })))
 const RoadmapIdeaRedirect = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.IdeaRedirect })))
 const RoadmapBoardPane = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.BoardPane })))
+const ChangelogHome = lazy(() => import("@/features/changelog/pages").then((m) => ({ default: m.ChangelogHome })))
+const ChangelogPane = lazy(() => import("@/features/changelog/pages").then((m) => ({ default: m.ChangelogPane })))
+const ChangelogEntryPane = lazy(() =>
+  import("@/features/changelog/pages").then((m) => ({ default: m.EntryEditorPage }))
+)
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 const SharePage = lazy(() => import("@/features/analytics/SharePage"))
 const AnalyticsSetup = lazy(() => import("@/features/analytics/NewProperty"))
@@ -231,6 +236,30 @@ export function AppRoutes() {
               }
             />
           ))}
+          <Route
+            path="updates"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChangelogHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="updates/:changelogId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChangelogPane />
+              </Suspense>
+            }
+          />
+          <Route
+            path="updates/:changelogId/entries/:entryId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChangelogEntryPane />
+              </Suspense>
+            }
+          />
           <Route
             path="analytics/*"
             element={

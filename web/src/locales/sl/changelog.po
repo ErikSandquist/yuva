@@ -1,0 +1,592 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 17:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sl\n"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "{published} of {total} entries published"
+msgstr "Objavljenih zapisov: {published} od {total}"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Od 3 do 48 črk, številk in vezajev. Edinstveno na tem strežniku."
+
+#: src/features/changelog/text.tsx
+msgid "A changelog holds at most 50 scheduled entries."
+msgstr "Dnevnik sprememb lahko vsebuje največ 50 načrtovanih zapisov."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "A member who may publish changes the labels of a published entry."
+msgstr "Član, ki sme objavljati, spremeni oznake objavljenega zapisa."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Address"
+msgstr "Naslov"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Address ending"
+msgstr "Konec naslova"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agenti lahko objavljajo"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "All labels"
+msgstr "Vse oznake"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analitična lastnost"
+
+#: src/features/changelog/text.tsx
+msgid "Another changelog already uses this address, now or before."
+msgstr "Drug dnevnik sprememb uporablja ta naslov zdaj ali ga je uporabljal prej."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Any state"
+msgstr "Katero koli stanje"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "At least 3 characters."
+msgstr "Vsaj 3 znaki."
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change"
+msgstr "Spremeni"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Change the time"
+msgstr "Spremeni čas"
+
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Changelog"
+msgstr "Dnevnik sprememb"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Choose a picture"
+msgstr "Izberi sliko"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Counts page views of the changelog without cookies."
+msgstr "Šteje oglede strani dnevnika sprememb brez piškotkov."
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Create changelog"
+msgstr "Ustvari dnevnik sprememb"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Create draft broadcast"
+msgstr "Ustvari osnutek množičnega sporočila"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Create entry"
+msgstr "Ustvari zapis"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete"
+msgstr "Izbriši"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete {changelogName}?"
+msgstr "Izbrišem {changelogName}?"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Delete changelog"
+msgstr "Izbriši dnevnik sprememb"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete entry"
+msgstr "Izbriši zapis"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Izbrisati prevod {name}?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this entry?"
+msgstr "Izbrišem ta zapis?"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete this translation"
+msgstr "Izbriši ta prevod"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Delete translation"
+msgstr "Izbriši prevod"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Deletes the changelog with its entries and translations. The public address stops working. Broadcasts made from its entries stay."
+msgstr "Izbriše dnevnik sprememb z zapisi in prevodi. Javni naslov preneha delovati. Množična sporočila, narejena iz njegovih zapisov, ostanejo."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Description"
+msgstr "Opis"
+
+#: src/features/changelog/text.tsx
+msgid "Draft"
+msgstr "Osnutek"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Osnutek oddan. Objavi ga lahko lastnik ali skrbnik."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries"
+msgstr "Zapisi"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries and translations are deleted with it."
+msgstr "Zapisi in prevodi se izbrišejo z njim."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Zapise je mogoče pisati in objavljati v teh jezikih. Obiskovalci vidijo svoj jezik, če obstaja."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Every translation is deleted. Broadcasts made from it stay."
+msgstr "Vsi prevodi se izbrišejo. Množična sporočila, narejena iz njega, ostanejo."
+
+#: src/features/changelog/text.tsx
+msgid "Fixed"
+msgstr "Popravljeno"
+
+#: src/features/changelog/text.tsx
+msgid "Improved"
+msgstr "Izboljšano"
+
+#: src/features/changelog/text.tsx
+msgid "It had no text in the main language."
+msgstr "Ni imel besedila v glavnem jeziku."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Its draft is deleted. The other languages stay."
+msgstr "Njegov osnutek se izbriše. Drugi jeziki ostanejo."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Keep mine"
+msgstr "Ohrani mojo"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Label"
+msgstr "Oznaka"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Labels"
+msgstr "Oznake"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Language"
+msgstr "Jezik"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Languages"
+msgstr "Jeziki"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Lists"
+msgstr "Seznami"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Load more"
+msgstr "Naloži več"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/MailDialog.tsx
+msgid "Mail this to subscribers"
+msgstr "Pošlji naročnikom po e-pošti"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Mailed to subscribers"
+msgstr "Poslano naročnikom"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Main language"
+msgstr "Glavni jezik"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "More"
+msgstr "Več"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Name"
+msgstr "Ime"
+
+#: src/features/changelog/text.tsx
+msgid "New"
+msgstr "Novo"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "New entry"
+msgstr "Nov zapis"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No changelog yet. Owners and admins create it."
+msgstr "Dnevnika sprememb še ni. Ustvarijo ga lastniki in skrbniki."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entries yet. Tell your customers what changed in your latest release."
+msgstr "Zapisov še ni. Povejte strankam, kaj se je spremenilo v zadnji različici."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No entry matches."
+msgstr "Noben zapis se ne ujema."
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "No inbox to show a changelog for."
+msgstr "Ni nabiralnika, za katerega bi lahko prikazali dnevnik sprememb."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "None"
+msgstr "Brez"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "not written"
+msgstr "ni napisano"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
+msgstr "Izklopljeno: agenti pišejo osnutke in jih oddajo, lastniki in skrbniki objavljajo. Vklopljeno: objavljajo, načrtujejo in umikajo tudi agenti z dostopom do nabiralnika."
+
+#: src/features/changelog/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "To lahko storijo samo lastniki in skrbniki."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original"
+msgstr "Izvirnik"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Izvirno besedilo ({alt} C)"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "out of date"
+msgstr "zastarelo"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Out of date"
+msgstr "Zastarelo"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Del spletnega naslova tega prevoda. Če je prazen, nastane iz naslova."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Pick a time in the next year, in your time zone, {zone}."
+msgstr "Izberite čas v naslednjem letu, v svojem časovnem pasu, {zone}."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Pick up to 10 lists of this inbox."
+msgstr "Izberite do 10 seznamov tega nabiralnika."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Picture"
+msgstr "Slika"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/PreviewDialog.tsx
+msgid "Preview"
+msgstr "Predogled"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Predogled ({alt} P)"
+
+#: src/features/changelog/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Predogled ({previewKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Preview of the entry"
+msgstr "Predogled zapisa"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Public address"
+msgstr "Javni naslov"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish"
+msgstr "Objavi"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Objavi ({publishKey})"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Publish on"
+msgstr "Objavi"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+#: src/features/changelog/text.tsx
+msgid "Published"
+msgstr "Objavljena"
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publishing on schedule failed."
+msgstr "Načrtovana objava ni uspela."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Remove"
+msgstr "Odstrani"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Save now"
+msgstr "Shrani zdaj"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/SettingsTab.tsx
+msgid "Saved"
+msgstr "Shranjeno"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Saving…"
+msgstr "Shranjevanje …"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule"
+msgstr "Načrtuj"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Schedule this entry"
+msgstr "Načrtuj ta zapis"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "Scheduled"
+msgstr "Načrtovano"
+
+#: src/features/changelog/ChangelogColumn.tsx
+msgid "Scheduled: {scheduled}"
+msgstr "Načrtovano: {scheduled}"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Send through"
+msgstr "Pošlji prek"
+
+#: src/features/changelog/pages.tsx
+msgid "Settings"
+msgstr "Nastavitve"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show"
+msgstr "Pokaži"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Prikazano pod imenom na domači strani."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Shown when an entry has no translation in the visitor’s language."
+msgstr "Prikaže se, ko zapis nima prevoda v jeziku obiskovalca."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Shown with the entry on the page, in the widget and in the mail."
+msgstr "Prikaže se z zapisom na strani, v pripomočku in v e-pošti."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Nekdo je shranil ta prevod, medtem ko ste ga urejali."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Začnite z naslovom. Besedilo napišete nato in ostane osnutek, dokler ni objavljeno."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "State"
+msgstr "Stanje"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft"
+msgstr "Oddaj osnutek"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Oddaj osnutek ({publishKey})"
+
+#: src/features/changelog/CreateChangelogDialog.tsx
+msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
+msgstr "Povejte strankam {inboxName}, kaj je novo, izboljšano in popravljeno. Ostane neobjavljen, dokler ga ne objavite."
+
+#: src/features/changelog/pages.tsx
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
+msgstr "Povejte strankam, kaj je novo, izboljšano in popravljeno, na javni strani, v pripomočku za klepet in po e-pošti. Za pisanje zapisov izberite dnevnik sprememb nabiralnika."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Text"
+msgstr "Besedilo"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the changelog."
+msgstr "Naslov odgovarja »ni najdeno«, dokler dnevnika sprememb ne objavite."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it can no longer publish."
+msgstr "Ključ API, ki ga je načrtoval, ne sme več objavljati."
+
+#: src/features/changelog/text.tsx
+msgid "The API key that scheduled it was revoked."
+msgstr "Ključ API, ki ga je načrtoval, je bil preklican."
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "The changelog is at {address}. The old address keeps redirecting if you change it."
+msgstr "Dnevnik sprememb je na naslovu {address}. Stari naslov še naprej preusmerja, če ga spremenite."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The entry disappears from the public page, the feed and the widget. The drafts stay, and you can publish it again."
+msgstr "Zapis izgine z javne strani, iz vira in iz pripomočka. Osnutki ostanejo in ga lahko znova objavite."
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "The entry goes public by itself at this time. Until then only members who may publish can change it."
+msgstr "Zapis postane javen sam ob tem času. Do takrat ga lahko spreminjajo samo člani, ki smejo objavljati."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The main language has no text for this entry yet."
+msgstr "Glavni jezik za ta zapis še nima besedila."
+
+#: src/features/changelog/text.tsx
+msgid "The member who scheduled it may no longer publish."
+msgstr "Član, ki ga je načrtoval, morda ne sme več objavljati."
+
+#: src/features/changelog/PreviewDialog.tsx
+msgid "The page as visitors would see it, drafts included. Only your team sees this."
+msgstr "Stran, kot bi jo videli obiskovalci, z osnutki. To vidi samo vaša ekipa."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Naslov mora imeti vsaj 3 znake"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/text.tsx
+msgid "This entry is scheduled. A member who may publish does it."
+msgstr "Ta zapis je načrtovan. Objavi ga član, ki sme objavljati."
+
+#: src/features/changelog/text.tsx
+msgid "This inbox already has a changelog."
+msgstr "Ta nabiralnik že ima dnevnik sprememb."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This inbox has no mailing list yet. Create one under Broadcasts."
+msgstr "Ta nabiralnik še nima poštnega seznama. Ustvarite ga v Množičnih sporočilih."
+
+#: src/features/changelog/text.tsx
+msgid "This is the entry’s only text. Delete the entry instead."
+msgstr "To je edino besedilo zapisa. Raje izbrišite zapis."
+
+#: src/features/changelog/MailDialog.tsx
+msgid "This makes a draft broadcast from the entry and opens it. Nothing is sent until you review it and send or schedule it."
+msgstr "Iz zapisa naredi osnutek množičnega sporočila in ga odpre. Nič se ne pošlje, dokler ga ne pregledate in pošljete ali načrtujete."
+
+#: src/features/changelog/text.tsx
+msgid "This workspace has as many entries as the server allows. Delete old ones first."
+msgstr "Ta delovni prostor ima toliko zapisov, kot jih strežnik dovoljuje. Najprej izbrišite stare."
+
+#: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Title"
+msgstr "Naslov"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Translation deleted"
+msgstr "Prevod izbrisan"
+
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "Unpublish"
+msgstr "Umakni"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Umakni ({publishKey})"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublish this entry?"
+msgstr "Umaknem ta zapis?"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unpublished"
+msgstr "Neobjavljena"
+
+#: src/features/changelog/text.tsx
+msgid "Unpublished changes"
+msgstr "Neobjavljene spremembe"
+
+#: src/features/changelog/pages.tsx
+msgid "Unpublished, only your team can see it"
+msgstr "Neobjavljeno, vidi ga samo vaša ekipa"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unsaved changes"
+msgstr "Neshranjene spremembe"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Unschedule"
+msgstr "Prekliči načrtovanje"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Uporabite od 3 do 48 črk, številk in notranjih vezajev."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Use their version"
+msgstr "Uporabi njihovo različico"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "View"
+msgstr "Poglej"
+
+#: src/features/changelog/pages.tsx
+msgid "View changelog"
+msgstr "Prikaži dnevnik sprememb"
+
+#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
+msgid "What’s new"
+msgstr "Novosti"
+
+#: src/features/changelog/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Kdo lahko objavlja"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write"
+msgstr "Piši"
+
+#: src/features/changelog/text.tsx
+msgid "Write the entry in the main language before publishing."
+msgstr "Pred objavo napišite zapis v glavnem jeziku."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Write what changed in Markdown…"
+msgstr "V Markdownu napišite, kaj se je spremenilo…"
+
+#: src/features/changelog/ScheduleDialog.tsx
+msgid "Your time zone, {zone}. That is {utc} UTC."
+msgstr "Vaš časovni pas, {zone}. To je {utc} UTC."

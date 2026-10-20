@@ -2588,6 +2588,10 @@ msgstr "Měnit, mazat a slučovat kontakty"
 msgid "Change, move and bulk-update conversations"
 msgstr "Měnit, přesouvat a hromadně aktualizovat konverzace"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Changelog settings"
+msgstr "Nastavení seznamu změn"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Changes made to {provider}: none"
 msgstr "Změny provedené u {provider}: žádné"
@@ -3421,6 +3425,10 @@ msgstr "Vytvořit stránku stavu ({newKey})"
 msgid "Create the board"
 msgstr "Vytvořit nástěnku"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the changelog"
+msgstr "Vytvořit seznam změn"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
 msgstr "Vytvořit e-mailový kanál"
@@ -3648,6 +3656,10 @@ msgstr "Smazat článek"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
 msgstr "Smazat koncept"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the entry"
+msgstr "Smazat záznam"
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
@@ -4363,6 +4375,10 @@ msgstr "Zadejte uživatelské jméno SMTP z konzole SES."
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Zadejte svůj pracovní e-mail a pošleme vám kód. Bez hesla; stejný kód vás přihlásí i příště."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Entries"
+msgstr "Záznamy"
 
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
@@ -6358,6 +6374,10 @@ msgstr "Pošta stále chodí k {provider}, ale zatím se neposílá do Yuvy."
 msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
 msgstr "Pošta, která mezitím stále chodí k {provider}, se čte každé dvě minuty, takže se nic neztratí."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mail the entry to subscribers"
+msgstr "Poslat záznam odběratelům e-mailem"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Poslat jim potvrzení"
@@ -6821,6 +6841,10 @@ msgid "Move through the broadcasts"
 msgstr "Procházet hromadné zprávy"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the entries"
+msgstr "Procházet záznamy"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the ideas"
 msgstr "Procházet nápady"
 
@@ -7063,6 +7087,10 @@ msgstr "Nová diskuse"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nové diskuse"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New entry"
+msgstr "Nový záznam"
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
@@ -8404,6 +8432,10 @@ msgstr "Otevřít diskusi"
 msgid "Open the endpoint"
 msgstr "Otevřít koncový bod"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the entry"
+msgstr "Otevřít záznam"
+
 #: src/features/conversation/messages/ArticleCards.tsx
 msgid "Open the help article"
 msgstr "Otevřít článek nápovědy"
@@ -8440,6 +8472,10 @@ msgstr "Otevřít nastavení stránky"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public board"
 msgstr "Otevřít veřejnou nástěnku"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public changelog"
+msgstr "Otevřít veřejný seznam změn"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9109,6 +9145,7 @@ msgstr "Stránka předvoleb"
 msgid "Preparing"
 msgstr "Připravuje se"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
@@ -9236,6 +9273,10 @@ msgstr "Publikování a rušení publikování článků nápovědy"
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Zveřejnit hned"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the changelog"
+msgstr "Zveřejnit nebo stáhnout seznam změn"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the help center"
@@ -10224,6 +10265,10 @@ msgstr "Naplánovat"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Plánovat a odesílat hromadné zprávy, když pracovní prostor dovolí klíčům a asistentům je odesílat"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Schedule the entry"
+msgstr "Naplánovat záznam"
+
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/status/text.tsx
@@ -10909,6 +10954,10 @@ msgstr "Zobrazit barvy zvolené odesílatelem, na bílé"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Zobrazit obrazovku konverzace"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Show the number of new updates on the chat button"
+msgstr "Zobrazovat počet novinek na tlačítku chatu"
 
 #: src/components/common/Wizard.tsx
 msgid "Show the preview"
@@ -12531,6 +12580,10 @@ msgstr "Uživatelské jméno je vaše adresa iCloud bez @icloud.com."
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "Návštěvník v chatu napsal {0} a zatím to nepotvrdil. Tato odpověď přišla z oné adresy, takže nemusí být od návštěvníka."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
+msgstr "Počet novinek se zobrazí na tlačítku chatu, dokud nejsou žádné nepřečtené zprávy. Domovská obrazovka widgetu ho ukazuje vždy."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Pracovní prostor zatím nesmí odesílat hromadné zprávy."
@@ -13333,6 +13386,10 @@ msgid "Unpublish ({publishKey})"
 msgstr "Stáhnout ({publishKey})"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish or unschedule the entry"
+msgstr "Stáhnout záznam nebo zrušit jeho naplánování"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish the translation"
 msgstr "Zrušit publikaci překladu"
 
@@ -13963,6 +14020,18 @@ msgstr "Co odejde"
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Co píšete často"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "What’s new"
+msgstr "Novinky"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "What’s new entry"
+msgstr "Záznam novinek"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "When"

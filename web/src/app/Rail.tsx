@@ -14,6 +14,7 @@ import {
   MessageSquareHeartIcon,
   MessagesSquareIcon,
   SettingsIcon,
+  SparklesIcon,
   UsersIcon,
 } from "lucide-react"
 import { useLocation, useNavigate } from "react-router"
@@ -84,6 +85,7 @@ function useEntries(): Entry[] {
     { key: "status", label: t`Status`, icon: ActivityIcon, shortcut: SHORTCUTS.status },
     { key: "knowledge", label: t`Help`, icon: LifeBuoyIcon, shortcut: SHORTCUTS.helpCenter },
     { key: "board", label: t`Roadmap`, icon: KanbanIcon, shortcut: SHORTCUTS.roadmap },
+    { key: "updates", label: t`What’s new`, icon: SparklesIcon, shortcut: SHORTCUTS.updates },
     { key: "analytics", label: t`Analytics`, icon: ChartLineIcon, shortcut: SHORTCUTS.analytics },
     {
       key: "assistants",
