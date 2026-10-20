@@ -18,3 +18,7 @@ msgstr "開啟聊天"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "開啟聊天,{count} 則未讀"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "開啟聊天，{count} 則更新"

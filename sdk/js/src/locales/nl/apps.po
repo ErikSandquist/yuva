@@ -33,6 +33,7 @@ msgstr "Bestanden bijvoegen"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Back"
 msgstr "Terug"
 
@@ -62,6 +63,7 @@ msgstr "Onderdelen"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Could not load this. Try again."
 msgstr "Laden mislukt. Probeer het opnieuw."
 
@@ -99,6 +101,10 @@ msgstr "E-mailadres"
 msgid "Enter a valid e-mail address."
 msgstr "Voer een geldig e-mailadres in."
 
+#: src/apps/whatsnew.ts
+msgid "Fixed"
+msgstr "Opgelost"
+
 #: src/apps/status.ts
 msgid "Get notified about incidents"
 msgstr "Meldingen over incidenten ontvangen"
@@ -135,6 +141,10 @@ msgstr "Ideeën"
 msgid "Identified"
 msgstr "Oorzaak gevonden"
 
+#: src/apps/whatsnew.ts
+msgid "Improved"
+msgstr "Verbeterd"
+
 #: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
@@ -153,12 +163,14 @@ msgid "Lists"
 msgstr "Lijsten"
 
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Load more"
 msgstr "Meer laden"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
+#: src/apps/whatsnew.ts
 msgid "Loading…"
 msgstr "Laden…"
 
@@ -178,6 +190,10 @@ msgstr "Stuur ons een bericht"
 msgid "Monitoring"
 msgstr "Wordt gevolgd"
 
+#: src/apps/whatsnew.ts
+msgid "New"
+msgstr "Nieuw"
+
 #: src/apps/help.ts
 msgid "No"
 msgstr "Nee"
@@ -193,6 +209,10 @@ msgstr "Geen openstaande incidenten."
 #: src/apps/roadmap.ts
 msgid "No replies yet."
 msgstr "Nog geen reacties."
+
+#: src/apps/whatsnew.ts
+msgid "No updates yet."
+msgstr "Nog geen nieuws."
 
 #: src/apps/feedback.ts
 msgid "Not good"
@@ -233,6 +253,10 @@ msgstr "Populaire artikelen"
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Compliment"
+
+#: src/apps/whatsnew.ts
+msgid "Read on the web"
+msgstr "Lees op het web"
 
 #: src/apps/help.ts
 msgid "Related articles"
@@ -371,8 +395,13 @@ msgstr "Te veel pogingen. Wacht even en probeer het opnieuw."
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Try again"
 msgstr "Opnieuw proberen"
+
+#: src/apps/whatsnew.ts
+msgid "Unread"
+msgstr "Ongelezen"
 
 #: src/apps/feedback.ts
 msgid "View feedback"

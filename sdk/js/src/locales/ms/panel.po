@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} baharu"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} kemas kini"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} sedang menaip…"
@@ -60,6 +64,10 @@ msgstr "Batal"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Tukar alamat"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Perubahan dan berita"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Kami akan membalas secepat mungkin"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Kami tiada buat masa ini"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Yang terbaharu"
 
 #: src/panel/chat.ts
 msgid "Write a message…"

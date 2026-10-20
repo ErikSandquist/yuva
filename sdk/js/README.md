@@ -62,7 +62,7 @@ Session:
 - `start()` opens a session, or resumes the stored one for the same identity. Every other call starts one when needed; a session that ended (`401`) is renewed once and the call retried.
 - `session` (contact, inbox settings, expiry), `token`, `refresh()`, `channelSettings()` (the inbox's public settings without a session).
 - `setIdentityToken(source)` switches identity; `reset()` forgets the session in memory; `signOut()` ends it on the server and in storage.
-- `openApp(kind, params)` opens the panel on an app: `"help"` (`{ article }`, `{ query }`), `"feedback"`, `"status"`, `"subscribe"` or `"roadmap"` (`{ idea }` opens that idea). The Roadmap tile and app appear only when the inbox has a public roadmap board; voting and suggesting open the reader sign-in popup unless `identity-token` is set.
+- `openApp(kind, params)` opens the panel on an app: `"help"` (`{ article }`, `{ query }`), `"feedback"`, `"status"`, `"subscribe"` `"roadmap"` (`{ idea }` opens that idea) or `"whats-new"` (`{ entry }` opens that entry). The Roadmap tile and app appear only when the inbox has a public roadmap board; voting and suggesting open the reader sign-in popup unless `identity-token` is set. The What's new tile and app appear only when the inbox has a published changelog with an entry; the visitor's read mark is kept in the browser, and the launcher shows the unread count when the channel's "announce updates" setting is on and no messages are unread. `whatsNew({ locale, cursor, limit })` and `whatsNewEntry(id)` read the feed; in React, `useWhatsNew({ locale })` returns `{ changelog, items, loading, error, hasMore, loadMore, reload }`.
 
 Conversations and messages:
 

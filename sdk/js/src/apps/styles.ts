@@ -107,5 +107,17 @@ export const styles = `
 .reply { display: flex; flex-direction: column; gap: 4px; padding-block: 10px; border-block-end: 1px solid var(--yuva-border); }
 .reply:last-of-type { border-block-end: 0; }
 .who-line { display: flex; align-items: center; gap: 8px; }
+.wn-list { padding-block-start: 0; }
+.wn-entry { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; inline-size: 100%; padding: 16px 0; border: 0; border-block-end: 1px solid var(--yuva-border); background: transparent; color: inherit; text-align: start; cursor: pointer; }
+.wn-entry b { font-size: 15px; font-weight: 500; overflow-wrap: anywhere; }
+.wn-entry:hover b { text-decoration: underline; }
+.wn-lede { font-size: 13px; color: var(--yuva-muted); overflow-wrap: anywhere; }
+.wn-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+.wn-meta .unread-dot { margin: 0; inline-size: 7px; block-size: 7px; }
+.wn-date { color: var(--yuva-faint); }
+.wn-label { padding: 2px 6px; border-radius: 4px; background: var(--yuva-deep); color: var(--yuva-fg); }
+.wn-label.new { background: var(--yuva-wash); color: var(--yuva-brand); }
+.wn-label.fixed { color: var(--yuva-muted); }
+.wn-image { display: block; max-inline-size: 100%; block-size: auto; border-radius: 10px; border: 1px solid var(--yuva-border); }
 .who-line b { font-weight: 500; }
 `

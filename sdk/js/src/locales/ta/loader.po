@@ -18,3 +18,7 @@ msgstr "அரட்டையைத் திற"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "அரட்டையைத் திற, {count} படிக்காதவை"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "அரட்டையைத் திற, {count} புதுப்பிப்புகள்"

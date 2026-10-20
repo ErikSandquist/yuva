@@ -18,3 +18,7 @@ msgstr "Mở trò chuyện"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "Mở trò chuyện, {count} chưa đọc"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "Mở trò chuyện, {count} cập nhật"

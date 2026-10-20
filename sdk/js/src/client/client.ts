@@ -23,6 +23,8 @@ import {
   type ClientHelpSearchResults,
   type ClientInbox,
   type ClientRoadmap,
+  type ClientWhatsNew,
+  type ClientWhatsNewEntry,
   type IdeaStage,
   type ClientMessage,
   type ClientMessagePage,
@@ -129,6 +131,10 @@ export interface IdeaListOptions extends Page {
   stage?: IdeaStage
   sort?: "top" | "new"
   q?: string
+}
+
+export interface WhatsNewOptions extends Page {
+  locale?: string
 }
 
 export interface IdeaInput {
@@ -508,6 +514,16 @@ export class YuvaClient {
 
   roadmap(): Promise<ClientRoadmap> {
     return this.#call(`/client/v1/channels/${encodeURIComponent(this.channel)}/roadmap`)
+  }
+
+  whatsNew(options: WhatsNewOptions = {}): Promise<ClientWhatsNew> {
+    return this.#call(`/client/v1/channels/${encodeURIComponent(this.channel)}/whats-new${query({ ...options })}`)
+  }
+
+  whatsNewEntry(id: string, options: HelpOptions = {}): Promise<ClientWhatsNewEntry> {
+    return this.#call(
+      `/client/v1/channels/${encodeURIComponent(this.channel)}/whats-new/${encodeURIComponent(id)}${query({ ...options })}`
+    )
   }
 
   listIdeas(options: IdeaListOptions = {}): Promise<DiscussionPage> {

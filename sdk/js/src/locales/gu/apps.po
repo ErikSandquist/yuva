@@ -33,6 +33,7 @@ msgstr "ફાઇલો જોડો"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Back"
 msgstr "પાછળ"
 
@@ -62,6 +63,7 @@ msgstr "ઘટકો"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Could not load this. Try again."
 msgstr "લોડ થઈ શક્યું નથી. ફરી પ્રયત્ન કરો."
 
@@ -99,6 +101,10 @@ msgstr "ઈમેલ સરનામું"
 msgid "Enter a valid e-mail address."
 msgstr "માન્ય ઈમેલ સરનામું દાખલ કરો."
 
+#: src/apps/whatsnew.ts
+msgid "Fixed"
+msgstr "સુધારેલ"
+
 #: src/apps/status.ts
 msgid "Get notified about incidents"
 msgstr "ઘટનાઓની સૂચના મેળવો"
@@ -135,6 +141,10 @@ msgstr "વિચારો"
 msgid "Identified"
 msgstr "કારણ ઓળખાયું"
 
+#: src/apps/whatsnew.ts
+msgid "Improved"
+msgstr "સુધારો"
+
 #: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
@@ -153,12 +163,14 @@ msgid "Lists"
 msgstr "યાદીઓ"
 
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Load more"
 msgstr "વધુ લોડ કરો"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
+#: src/apps/whatsnew.ts
 msgid "Loading…"
 msgstr "લોડ થઈ રહ્યું છે…"
 
@@ -178,6 +190,10 @@ msgstr "અમને સંદેશ મોકલો"
 msgid "Monitoring"
 msgstr "નિરીક્ષણ ચાલુ છે"
 
+#: src/apps/whatsnew.ts
+msgid "New"
+msgstr "નવું"
+
 #: src/apps/help.ts
 msgid "No"
 msgstr "ના"
@@ -193,6 +209,10 @@ msgstr "કોઈ ખુલ્લી ઘટના નથી."
 #: src/apps/roadmap.ts
 msgid "No replies yet."
 msgstr "હજી સુધી કોઈ જવાબ નથી."
+
+#: src/apps/whatsnew.ts
+msgid "No updates yet."
+msgstr "હજી કોઈ અપડેટ નથી."
 
 #: src/apps/feedback.ts
 msgid "Not good"
@@ -233,6 +253,10 @@ msgstr "લોકપ્રિય લેખો"
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "પ્રશંસા"
+
+#: src/apps/whatsnew.ts
+msgid "Read on the web"
+msgstr "વેબ પર વાંચો"
 
 #: src/apps/help.ts
 msgid "Related articles"
@@ -371,8 +395,13 @@ msgstr "ઘણા પ્રયાસો થયા. થોડી વાર રા
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Try again"
 msgstr "ફરી પ્રયાસ કરો"
+
+#: src/apps/whatsnew.ts
+msgid "Unread"
+msgstr "વાંચ્યા વગરનું"
 
 #: src/apps/feedback.ts
 msgid "View feedback"

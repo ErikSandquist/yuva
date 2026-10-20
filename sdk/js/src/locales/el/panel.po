@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} νέα"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} ενημερώσεις"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "Ο/Η {name} πληκτρολογεί…"
@@ -60,6 +64,10 @@ msgstr "Ακύρωση"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Αλλαγή διεύθυνσης"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Αλλαγές και νέα"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Θα απαντήσουμε το συντομότερο δυνατό"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Λείπουμε αυτή τη στιγμή"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Τι νέο υπάρχει"
 
 #: src/panel/chat.ts
 msgid "Write a message…"

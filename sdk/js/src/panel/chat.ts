@@ -41,6 +41,7 @@ import {
   time,
 } from "./helpers"
 import { canCapture, captureScreen } from "./capture"
+import { countUpdates } from "../updates"
 import { appTitle, buildHome } from "./home"
 import { icons } from "./icons"
 import { styles } from "./styles"
@@ -102,6 +103,8 @@ export class Chat implements PanelController {
   #i18n!: I18n
   #client: YuvaClient
   #inbox: ClientInbox | null = null
+  #updates = 0
+  #updatesKey = ""
   #contact: ClientContact | null = null
   #phase: "loading" | "ready" | "error" = "loading"
   #error = ""
@@ -340,6 +343,9 @@ export class Chat implements PanelController {
     this.#connectedBefore = false
     this.#missed = 0
     this.#host.setUnread(0)
+    this.#updates = 0
+    this.#updatesKey = ""
+    this.#host.setUpdates(0)
   }
 
   #onVisible = () => {
@@ -425,6 +431,30 @@ export class Chat implements PanelController {
     if (Object.keys(kept).length > 0) next.dismissed_status = kept
     else delete next.dismissed_status
     writeStored(channel, next)
+    this.#syncUpdates()
+  }
+
+  #syncUpdates(): void {
+    const { channel, server, locale } = this.#host.config()
+    const inbox = this.#inbox
+    if (!channel || !inbox?.whats_new) return this.#setUpdates(0)
+    const key = `${inbox.whats_new.latest_published_at}|${readStored(channel).whats_new_seen ?? ""}`
+    if (key === this.#updatesKey) return
+    this.#updatesKey = key
+    countUpdates(server, channel, inbox, locale)
+      .then((count) => {
+        if (key === this.#updatesKey) this.#setUpdates(count)
+      })
+      .catch(() => {
+        if (key === this.#updatesKey) this.#updatesKey = ""
+      })
+  }
+
+  #setUpdates(count: number): void {
+    if (count === this.#updates) return
+    this.#updates = count
+    this.#host.setUpdates(this.#inbox?.chat.announce_updates ? count : 0)
+    if (this.#view?.kind === "home") this.#render()
   }
 
   #renderNotice(): void {
@@ -982,6 +1012,7 @@ export class Chat implements PanelController {
           this.#upsertMessage(result.message, false)
         },
         viewConversation: (id) => void this.#openThread(id),
+        seenUpdates: () => this.#setUpdates(0),
       })
       if (load !== this.#appLoad) return handle.destroy()
       this.#app = { kind, handle }
@@ -1124,6 +1155,7 @@ export class Chat implements PanelController {
       inbox,
       conversations: this.#sorted(),
       mailingLists: this.#lists,
+      updates: this.#updates,
       locale: this.#host.config().locale,
       t: (descriptor) => this.#t(descriptor),
       notice: this.#notice,

@@ -18,3 +18,7 @@ msgstr "Άνοιγμα συνομιλίας"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "Άνοιγμα συνομιλίας, {count} μη αναγνωσμένα"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "Άνοιγμα συνομιλίας, {count} ενημερώσεις"

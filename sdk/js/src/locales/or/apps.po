@@ -33,6 +33,7 @@ msgstr "ଫାଇଲ୍ ସଂଲଗ୍ନ କରନ୍ତୁ"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Back"
 msgstr "ପଛକୁ"
 
@@ -62,6 +63,7 @@ msgstr "ଉପାଦାନ"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Could not load this. Try again."
 msgstr "ଲୋଡ୍ ହୋଇପାରିଲା ନାହିଁ। ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।"
 
@@ -99,6 +101,10 @@ msgstr "ଇମେଲ୍ ଠିକଣା"
 msgid "Enter a valid e-mail address."
 msgstr "ଏକ ବୈଧ ଇମେଲ୍ ଠିକଣା ଦିଅନ୍ତୁ।"
 
+#: src/apps/whatsnew.ts
+msgid "Fixed"
+msgstr "ସଂଶୋଧିତ"
+
 #: src/apps/status.ts
 msgid "Get notified about incidents"
 msgstr "ଘଟଣାର ସୂଚନା ପାଆନ୍ତୁ"
@@ -135,6 +141,10 @@ msgstr "ଧାରଣା"
 msgid "Identified"
 msgstr "କାରଣ ଚିହ୍ନଟ ହୋଇଛି"
 
+#: src/apps/whatsnew.ts
+msgid "Improved"
+msgstr "ଉନ୍ନତ"
+
 #: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
@@ -153,12 +163,14 @@ msgid "Lists"
 msgstr "ତାଲିକା"
 
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Load more"
 msgstr "ଅଧିକ ଲୋଡ୍ କରନ୍ତୁ"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
+#: src/apps/whatsnew.ts
 msgid "Loading…"
 msgstr "ଲୋଡ୍ ହେଉଛି…"
 
@@ -178,6 +190,10 @@ msgstr "ଆମକୁ ବାର୍ତ୍ତା ପଠାନ୍ତୁ"
 msgid "Monitoring"
 msgstr "ନଜର ରଖାଯାଉଛି"
 
+#: src/apps/whatsnew.ts
+msgid "New"
+msgstr "ନୂଆ"
+
 #: src/apps/help.ts
 msgid "No"
 msgstr "ନା"
@@ -193,6 +209,10 @@ msgstr "କୌଣସି ଖୋଲା ଘଟଣା ନାହିଁ।"
 #: src/apps/roadmap.ts
 msgid "No replies yet."
 msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଉତ୍ତର ନାହିଁ।"
+
+#: src/apps/whatsnew.ts
+msgid "No updates yet."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଅପଡେଟ୍ ନାହିଁ।"
 
 #: src/apps/feedback.ts
 msgid "Not good"
@@ -233,6 +253,10 @@ msgstr "ଲୋକପ୍ରିୟ ଲେଖା"
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "ପ୍ରଶଂସା"
+
+#: src/apps/whatsnew.ts
+msgid "Read on the web"
+msgstr "ୱେବ୍‌ରେ ପଢ଼ନ୍ତୁ"
 
 #: src/apps/help.ts
 msgid "Related articles"
@@ -371,8 +395,13 @@ msgstr "ବହୁତ ଥର ଚେଷ୍ଟା ହୋଇଛି। କିଛି �
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Try again"
 msgstr "ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"
+
+#: src/apps/whatsnew.ts
+msgid "Unread"
+msgstr "ଅପଠିତ"
 
 #: src/apps/feedback.ts
 msgid "View feedback"

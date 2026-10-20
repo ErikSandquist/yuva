@@ -9,6 +9,7 @@ export interface HomeData {
   inbox: ClientInbox
   conversations: ClientConversation[]
   mailingLists: boolean
+  updates: number
   locale: string
   t(descriptor: MessageDescriptor): string
   notice: HTMLElement
@@ -43,7 +44,9 @@ export function appTitle(kind: AppKind): MessageDescriptor {
         ? msg`Help center`
         : kind === "roadmap"
           ? msg`Roadmap`
-          : msg`Get updates`
+          : kind === "whats-new"
+            ? msg`What's new`
+            : msg`Get updates`
 }
 
 function section(label: string): HTMLElement {
@@ -112,7 +115,7 @@ export function buildHome(data: HomeData): HTMLElement {
   talk.append(send)
   page.append(talk)
 
-  const tiles: { app: AppKind; icon: string; title: string; text: string }[] = []
+  const tiles: { app: AppKind; icon: string; title: string; text: string; count?: number }[] = []
   if (inbox.help)
     tiles.push({ app: "help", icon: icons.book, title: t(msg`Help center`), text: t(msg`Guides and answers`) })
   if (inbox.feedback_categories.length > 0)
@@ -124,6 +127,14 @@ export function buildHome(data: HomeData): HTMLElement {
     })
   if (inbox.roadmap)
     tiles.push({ app: "roadmap", icon: icons.vote, title: t(msg`Roadmap`), text: t(msg`Vote on what comes next`) })
+  if (inbox.whats_new)
+    tiles.push({
+      app: "whats-new",
+      icon: icons.sparkle,
+      title: t(msg`What's new`),
+      text: t(msg`Changes and news`),
+      count: data.updates,
+    })
   if (data.mailingLists)
     tiles.push({ app: "subscribe", icon: icons.bell, title: t(msg`Get updates`), text: t(msg`News by e-mail`) })
   const status = inbox.status
@@ -134,7 +145,15 @@ export function buildHome(data: HomeData): HTMLElement {
       for (const tile of tiles) {
         const button = el("button", "tile")
         button.type = "button"
-        button.insertAdjacentHTML("beforeend", tile.icon)
+        if (tile.count) {
+          const top = el("span", "tile-top")
+          top.insertAdjacentHTML("beforeend", tile.icon)
+          const count = tile.count
+          const badge = el("span", "tile-count", count > 9 ? "9+" : String(count))
+          badge.setAttribute("aria-label", t(msg`${count} updates`))
+          top.append(badge)
+          button.append(top)
+        } else button.insertAdjacentHTML("beforeend", tile.icon)
         button.append(el("b", "", tile.title), el("span", "", tile.text))
         button.addEventListener("click", () => data.openApp(tile.app))
         grid.append(button)

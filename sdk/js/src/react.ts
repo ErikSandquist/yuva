@@ -11,7 +11,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react"
-import type { ClientConversation, ClientHelp, ClientMessage } from "./client/api"
+import type { ClientChangelog, ClientConversation, ClientHelp, ClientMessage, ClientWhatsNewEntry } from "./client/api"
 import type { Help, IdentityTokenSource, MessageInput, YuvaClient } from "./client/client"
 import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "./docs"
 import type { SubscribeDetail, SubscribeErrorDetail } from "./subscribe"
@@ -200,6 +200,65 @@ export function useHelp({ locale, page }: UseHelpOptions = {}): HelpResult {
   )
 
   return { ...state, reload: load, ...bound }
+}
+
+export interface WhatsNewResult {
+  changelog: ClientChangelog | null
+  items: ClientWhatsNewEntry[]
+  loading: boolean
+  error: unknown
+  hasMore: boolean
+  loadMore(): Promise<void>
+  reload(): Promise<void>
+}
+
+export function useWhatsNew({ locale }: { locale?: string } = {}): WhatsNewResult {
+  const client = useYuva()
+  const [state, setState] = useState<{
+    changelog: ClientChangelog | null
+    items: ClientWhatsNewEntry[]
+    cursor?: string
+    loading: boolean
+    error: unknown
+  }>({ changelog: null, items: [], loading: true, error: null })
+  const cursor = useRef<string | undefined>(undefined)
+
+  const fetchPage = useCallback(
+    async (more: boolean) => {
+      setState((s) => ({ ...s, loading: true }))
+      try {
+        const page = await client.whatsNew({ locale, cursor: more ? cursor.current : undefined })
+        cursor.current = page.next_cursor
+        setState((s) => ({
+          changelog: page.changelog,
+          items: more
+            ? [...s.items, ...page.items.filter((item) => !s.items.some((known) => known.id === item.id))]
+            : page.items,
+          cursor: page.next_cursor,
+          loading: false,
+          error: null,
+        }))
+      } catch (error) {
+        setState((s) => ({ ...s, loading: false, error }))
+      }
+    },
+    [client, locale]
+  )
+
+  useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- fetching from the client is syncing with an external system
+    void fetchPage(false)
+  }, [fetchPage])
+
+  return {
+    changelog: state.changelog,
+    items: state.items,
+    loading: state.loading,
+    error: state.error,
+    hasMore: state.cursor !== undefined,
+    loadMore: () => fetchPage(true),
+    reload: () => fetchPage(false),
+  }
 }
 
 export interface MessagesResult {

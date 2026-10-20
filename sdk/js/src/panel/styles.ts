@@ -159,6 +159,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .tile + .tile { border-inline-start: 1px solid var(--yuva-border); }
 .tile:only-child { grid-column: 1 / -1; }
 .tile svg { color: var(--yuva-brand); }
+.tile .tile-top { display: flex; align-items: center; justify-content: space-between; font-size: inherit; color: inherit; }
+.tile .tile-count { min-inline-size: 20px; padding: 1px 6px; border-radius: 10px; background: var(--yuva-brand); color: var(--yuva-on-accent); font-family: var(--yuva-mono); font-size: 11px; font-weight: 500; text-align: center; }
 .tile b { font-weight: 500; }
 .tile span { font-size: 12px; color: var(--yuva-muted); }
 .statusrow { display: flex; align-items: center; gap: 10px; inline-size: 100%; min-block-size: 44px; padding: 0 14px; border: 1px solid var(--yuva-border); border-radius: 12px; background: transparent; text-align: start; cursor: pointer; }

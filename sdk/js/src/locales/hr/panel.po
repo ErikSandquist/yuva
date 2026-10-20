@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} novih"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} novosti"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} tipka…"
@@ -60,6 +64,10 @@ msgstr "Odustani"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Promijeni adresu"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Promjene i vijesti"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Odgovorit ćemo čim budemo mogli"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Trenutačno nas nema"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Novosti"
 
 #: src/panel/chat.ts
 msgid "Write a message…"

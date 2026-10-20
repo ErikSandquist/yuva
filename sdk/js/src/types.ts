@@ -39,6 +39,7 @@ export interface PanelHost {
   isOpen(): boolean
   close(): void
   setUnread(count: number): void
+  setUpdates(count: number): void
   setLauncher(style: LauncherStyle): void
   refused(): void
 }
@@ -59,12 +60,13 @@ export interface PanelModule {
   mount(host: PanelHost): PanelController
 }
 
-export type AppKind = "feedback" | "status" | "subscribe" | "help" | "roadmap"
+export type AppKind = "feedback" | "status" | "subscribe" | "help" | "roadmap" | "whats-new"
 
 export interface AppParams {
   article?: string
   query?: string
   idea?: string
+  entry?: string
 }
 
 export interface AppContext {
@@ -79,6 +81,7 @@ export interface AppContext {
   ask(articleId?: string): void
   created(result: components["schemas"]["ClientConversationCreated"]): void
   viewConversation(id: string): void
+  seenUpdates(): void
 }
 
 export interface AppHandle {
@@ -95,6 +98,7 @@ export interface StoredState {
   session?: { token: string; expires_at: string; sub: string | null }
   launcher?: LauncherStyle
   dismissed_status?: Record<string, string>
+  whats_new_seen?: string
 }
 
 export function storageKey(channel: string): string {

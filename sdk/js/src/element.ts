@@ -3,6 +3,7 @@ import { msg } from "@lingui/core/macro"
 import { catalogFor, directionOf, resolveLocale, translatePlain } from "./i18n"
 import type { components } from "./schema.gen"
 import { addStyles } from "./styles"
+import { countUpdates } from "./updates"
 import {
   contrastOn,
   launcherOf,
@@ -165,6 +166,7 @@ export class YuvaChatElement extends HTMLElement {
   #messages: Messages = {}
   #open = false
   #unread = 0
+  #updates = 0
   #identity: IdentityTokenSource | null = null
   #refused = false
 
@@ -252,6 +254,14 @@ export class YuvaChatElement extends HTMLElement {
         const launcher = launcherOf(inbox)
         this.#applyLauncher(launcher)
         writeStored(channel, { ...readStored(channel), launcher })
+        if (inbox.chat.announce_updates)
+          countUpdates(this.server, channel, inbox, this.locale)
+            .then((count) => {
+              if (this.#controller || this.channel !== channel) return
+              this.#updates = count
+              this.#syncLauncher()
+            })
+            .catch(() => undefined)
       })
       .catch(() => undefined)
   }
@@ -327,6 +337,10 @@ export class YuvaChatElement extends HTMLElement {
             this.#syncLauncher()
             this.dispatchEvent(new CustomEvent("yuva-unread", { detail: { count } }))
           },
+          setUpdates: (count) => {
+            this.#updates = count
+            this.#syncLauncher()
+          },
           setLauncher: (style) => this.#applyLauncher(style),
           refused: () => this.#refuse(),
         })
@@ -397,15 +411,18 @@ export class YuvaChatElement extends HTMLElement {
     const launcher = this.#launcher
     const badge = this.#badge
     if (!launcher || !badge) return
-    const count = this.#unread
+    const unread = this.#unread
+    const count = unread > 0 ? unread : this.#updates
     launcher.setAttribute("aria-expanded", String(this.#open))
     launcher.setAttribute(
       "aria-label",
       this.#open
         ? translatePlain(this.#messages, msg`Close chat`)
-        : count > 0
+        : unread > 0
           ? translatePlain(this.#messages, msg`Open chat, ${count} unread`)
-          : translatePlain(this.#messages, msg`Open chat`)
+          : count > 0
+            ? translatePlain(this.#messages, msg`Open chat, ${count} updates`)
+            : translatePlain(this.#messages, msg`Open chat`)
     )
     launcher.innerHTML = this.#open ? closeIcon : chatIcon
     badge.textContent = count > 9 ? "9+" : String(count)

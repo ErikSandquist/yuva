@@ -33,6 +33,7 @@ msgstr "ഫയലുകൾ അറ്റാച്ച് ചെയ്യുക"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Back"
 msgstr "തിരികെ"
 
@@ -62,6 +63,7 @@ msgstr "ഘടകങ്ങൾ"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Could not load this. Try again."
 msgstr "ലോഡ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കുക."
 
@@ -99,6 +101,10 @@ msgstr "ഇമെയിൽ വിലാസം"
 msgid "Enter a valid e-mail address."
 msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക."
 
+#: src/apps/whatsnew.ts
+msgid "Fixed"
+msgstr "പരിഹരിച്ചു"
+
 #: src/apps/status.ts
 msgid "Get notified about incidents"
 msgstr "സംഭവങ്ങളെക്കുറിച്ച് അറിയിപ്പ് നേടുക"
@@ -135,6 +141,10 @@ msgstr "ആശയങ്ങൾ"
 msgid "Identified"
 msgstr "കാരണം കണ്ടെത്തി"
 
+#: src/apps/whatsnew.ts
+msgid "Improved"
+msgstr "മെച്ചപ്പെടുത്തി"
+
 #: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
@@ -153,12 +163,14 @@ msgid "Lists"
 msgstr "ലിസ്റ്റുകൾ"
 
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Load more"
 msgstr "കൂടുതൽ ലോഡ് ചെയ്യുക"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
+#: src/apps/whatsnew.ts
 msgid "Loading…"
 msgstr "ലോഡ് ചെയ്യുന്നു…"
 
@@ -178,6 +190,10 @@ msgstr "ഞങ്ങൾക്ക് സന്ദേശം അയയ്ക്ക�
 msgid "Monitoring"
 msgstr "നിരീക്ഷിക്കുന്നു"
 
+#: src/apps/whatsnew.ts
+msgid "New"
+msgstr "പുതിയത്"
+
 #: src/apps/help.ts
 msgid "No"
 msgstr "ഇല്ല"
@@ -193,6 +209,10 @@ msgstr "തുറന്ന സംഭവങ്ങളൊന്നുമില്�
 #: src/apps/roadmap.ts
 msgid "No replies yet."
 msgstr "ഇതുവരെ മറുപടികളൊന്നുമില്ല."
+
+#: src/apps/whatsnew.ts
+msgid "No updates yet."
+msgstr "ഇതുവരെ അപ്‌ഡേറ്റുകളൊന്നുമില്ല."
 
 #: src/apps/feedback.ts
 msgid "Not good"
@@ -233,6 +253,10 @@ msgstr "ജനപ്രിയ ലേഖനങ്ങൾ"
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "പ്രശംസ"
+
+#: src/apps/whatsnew.ts
+msgid "Read on the web"
+msgstr "വെബിൽ വായിക്കുക"
 
 #: src/apps/help.ts
 msgid "Related articles"
@@ -371,8 +395,13 @@ msgstr "വളരെയധികം ശ്രമങ്ങൾ. അൽപ്പം
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Try again"
 msgstr "വീണ്ടും ശ്രമിക്കൂ"
+
+#: src/apps/whatsnew.ts
+msgid "Unread"
+msgstr "വായിക്കാത്തത്"
 
 #: src/apps/feedback.ts
 msgid "View feedback"

@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} nya"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} uppdateringar"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} skriver…"
@@ -60,6 +64,10 @@ msgstr "Avbryt"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Ändra adress"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Ändringar och nyheter"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Vi svarar så snart vi kan"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Vi är borta just nu"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Nytt"
 
 #: src/panel/chat.ts
 msgid "Write a message…"

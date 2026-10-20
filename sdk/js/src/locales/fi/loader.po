@@ -18,3 +18,7 @@ msgstr "Avaa chat"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "Avaa chat, {count} lukematonta"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "Avaa chat, {count} päivitystä"

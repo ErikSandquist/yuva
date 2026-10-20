@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} mới"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} cập nhật"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} đang nhập…"
@@ -60,6 +64,10 @@ msgstr "Hủy"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Đổi địa chỉ"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Thay đổi và tin tức"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Chúng tôi sẽ trả lời sớm nhất có thể"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Hiện chúng tôi không có mặt"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Có gì mới"
 
 #: src/panel/chat.ts
 msgid "Write a message…"

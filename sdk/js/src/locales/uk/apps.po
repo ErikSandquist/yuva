@@ -33,6 +33,7 @@ msgstr "Прикріпити файли"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Back"
 msgstr "Назад"
 
@@ -62,6 +63,7 @@ msgstr "Компоненти"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Could not load this. Try again."
 msgstr "Не вдалося завантажити. Спробуйте ще раз."
 
@@ -99,6 +101,10 @@ msgstr "Електронна адреса"
 msgid "Enter a valid e-mail address."
 msgstr "Введіть дійсну електронну адресу."
 
+#: src/apps/whatsnew.ts
+msgid "Fixed"
+msgstr "Виправлено"
+
 #: src/apps/status.ts
 msgid "Get notified about incidents"
 msgstr "Отримувати сповіщення про інциденти"
@@ -135,6 +141,10 @@ msgstr "Ідеї"
 msgid "Identified"
 msgstr "Причину виявлено"
 
+#: src/apps/whatsnew.ts
+msgid "Improved"
+msgstr "Покращено"
+
 #: src/apps/roadmap.ts
 #: src/apps/status.ts
 msgid "In progress"
@@ -153,12 +163,14 @@ msgid "Lists"
 msgstr "Списки"
 
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Load more"
 msgstr "Завантажити ще"
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
 #: src/apps/subscribe.ts
+#: src/apps/whatsnew.ts
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -178,6 +190,10 @@ msgstr "Написати нам"
 msgid "Monitoring"
 msgstr "Спостерігаємо"
 
+#: src/apps/whatsnew.ts
+msgid "New"
+msgstr "Нове"
+
 #: src/apps/help.ts
 msgid "No"
 msgstr "Ні"
@@ -193,6 +209,10 @@ msgstr "Відкритих інцидентів немає."
 #: src/apps/roadmap.ts
 msgid "No replies yet."
 msgstr "Відповідей поки немає."
+
+#: src/apps/whatsnew.ts
+msgid "No updates yet."
+msgstr "Оновлень поки немає."
 
 #: src/apps/feedback.ts
 msgid "Not good"
@@ -233,6 +253,10 @@ msgstr "Популярні статті"
 #: src/apps/feedback.ts
 msgid "Praise"
 msgstr "Похвала"
+
+#: src/apps/whatsnew.ts
+msgid "Read on the web"
+msgstr "Читати на сайті"
 
 #: src/apps/help.ts
 msgid "Related articles"
@@ -371,8 +395,13 @@ msgstr "Забагато спроб. Зачекайте трохи й спроб
 
 #: src/apps/help.ts
 #: src/apps/roadmap.ts
+#: src/apps/whatsnew.ts
 msgid "Try again"
 msgstr "Повторити"
+
+#: src/apps/whatsnew.ts
+msgid "Unread"
+msgstr "Непрочитане"
 
 #: src/apps/feedback.ts
 msgid "View feedback"

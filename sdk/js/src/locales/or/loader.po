@@ -18,3 +18,7 @@ msgstr "ଚାଟ୍ ଖୋଲନ୍ତୁ"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "ଚାଟ୍ ଖୋଲନ୍ତୁ, {count} ଅପଠିତ"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "ଚାଟ୍ ଖୋଲନ୍ତୁ, {count}ଟି ଅପଡେଟ୍"

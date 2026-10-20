@@ -10,6 +10,7 @@ import { roadmapApp } from "./roadmap"
 import { statusApp } from "./status"
 import { styles } from "./styles"
 import { subscribeApp } from "./subscribe"
+import { whatsNewApp } from "./whatsnew"
 
 export type Translate = (descriptor: MessageDescriptor) => string
 
@@ -19,6 +20,7 @@ const apps = {
   roadmap: roadmapApp,
   status: statusApp,
   subscribe: subscribeApp,
+  "whats-new": whatsNewApp,
 }
 
 declare const YUVA_APPS_LOCALES: string | undefined

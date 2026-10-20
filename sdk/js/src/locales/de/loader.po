@@ -18,3 +18,7 @@ msgstr "Chat öffnen"
 #: src/element.ts
 msgid "Open chat, {count} unread"
 msgstr "Chat öffnen, {count} ungelesen"
+
+#: src/element.ts
+msgid "Open chat, {count} updates"
+msgstr "Chat öffnen, {count} Neuigkeiten"

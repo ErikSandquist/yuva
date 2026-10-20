@@ -11,6 +11,10 @@ msgstr ""
 msgid "{count} new"
 msgstr "{count} új"
 
+#: src/panel/home.ts
+msgid "{count} updates"
+msgstr "{count} újdonság"
+
 #: src/panel/chat.ts
 msgid "{name} is typing…"
 msgstr "{name} éppen ír…"
@@ -60,6 +64,10 @@ msgstr "Mégse"
 #: src/panel/chat.ts
 msgid "Change address"
 msgstr "Cím módosítása"
+
+#: src/panel/home.ts
+msgid "Changes and news"
+msgstr "Változások és hírek"
 
 #: src/panel/chat.ts
 msgid "Chat is not available right now."
@@ -386,6 +394,10 @@ msgstr "Amint tudunk, válaszolunk"
 #: src/panel/chat.ts
 msgid "We're away right now"
 msgstr "Jelenleg nem vagyunk elérhetők"
+
+#: src/panel/home.ts
+msgid "What's new"
+msgstr "Újdonságok"
 
 #: src/panel/chat.ts
 msgid "Write a message…"
