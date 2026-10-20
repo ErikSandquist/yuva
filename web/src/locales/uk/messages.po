@@ -1012,6 +1012,10 @@ msgstr "Учасник пізніше вручну задав стан комп�
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Поле злиття без запасного значення в деяких отримувачів буде порожнім. Задайте запасне значення."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "У повідомлення можна додати щонайбільше 3 статті."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Повідомлення додано"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Додайте контактну точку типу Webhook, вставте адресу вище, залиште метод POST і використайте контактну точку в політиці сповіщень. Спрацьовані сповіщення переводять монітор у збій, розв'язані відновлюють його."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Додати посилання"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Додати монітор"
 
@@ -1264,6 +1272,10 @@ msgstr "Додати сайт або застосунок"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Додати ресурс аналітики"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Додати зображення"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Надійшло на {address} напряму, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Надійшло через переспрямування, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Статті"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Як {name}, з {when}"
@@ -2216,6 +2232,10 @@ msgstr "Заблоковані контакти"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Тіло запиту"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Жирний"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME-запис"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Код"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Колекції"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Видалити підписку"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Видаліть застосунок, створений для Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Видалити статтю"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Привіт із налаштування"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Вітаю, я переношу скриньку {address} до Yuva, нашої скриньки підтримки. Наша організація Microsoft 365 дозволяє застосунки лише адміністратору. Будь ласка, відкрийте це посилання як адміністратор і підтвердьте, щоб Yuva міг читати скриньку через IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Довідка"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Довідка й відгуки"
@@ -5041,6 +5075,27 @@ msgstr "Довідка й відгуки"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Довідка й відгуки всередині вашого застосунку для iOS або Android"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Стаття довідки"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Статті довідки"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Центр довідки"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Налаштування центру довідки"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Звіт довідки"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Він діятиме від вашого імені, <0>{email}</0>, л
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Він більше не отримуватиме сповіщень."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Курсив"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Перемістити вибраний блок"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Перемістити вибрану колекцію"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Переміщатися статтями або колекціями"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Переміщуватися по розсилках"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Нові адреси, що отримують лист із підтвердженням"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Нова стаття"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Нова розсилка ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Нова готова відповідь"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Нова колекція"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Сторінок поки немає"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Запрошень в очікуванні немає."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Опублікованих статей не знайдено."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Відкрити налаштування"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Відкрити статтю або колекцію"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Відкрити розсилку"
 
@@ -8251,6 +8334,10 @@ msgstr "Відкрити обговорення"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Відкрити ендпоїнт"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Відкрити статтю довідки"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Відкрити наступну або попередню розмов
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Відкрити налаштування сторінки"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Відкрити публічний центр довідки"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Текст попереднього перегляду"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Попередній перегляд центру довідки"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Попередній перегляд сторінки"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Попередня або наступна мова"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Опублікувати зараз"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Опублікувати центр довідки або зняти з публікації"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Опублікувати сторінку або зняти з публікації"
 
@@ -9072,6 +9175,10 @@ msgstr "Опублікувати чернетку"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Опублікуйте цей запис TXT у DNS вашого домену:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Опублікувати або надіслати чернетку"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Віддалені зображення можуть повідомит�
 msgid "Remove"
 msgstr "Видалити"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Перевірте, потім надішліть або заплану�
 msgid "Review, then send or schedule ({key})"
 msgstr "Перевірте, потім надішліть або заплануйте ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Ревізії"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Збережіть і скопіюйте його ідентифікат
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Зберегти зараз і залишити версію"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Зберегти чернетку зараз"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Пошук емодзі (англійською)"
 msgid "Search feedback"
 msgstr "Пошук у відгуках"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Шукати статті довідки…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Пошук у завантажених повідомленнях"
@@ -10124,6 +10244,10 @@ msgstr "Пошук отримувачів"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Пошук підписників"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Шукати в статтях"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Надіслати сигнал"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Надіслати перевірку"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Надіслати статтю довідки"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Надіслати статтю довідки ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Показувати на сторінці"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Показати або приховати цитований текст"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Показати або сховати вихідний текст поруч із перекладом"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Показати або сховати попередній перегляд"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Зняти з публікації"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Зняти з публікації ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Зняти переклад з публікації"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

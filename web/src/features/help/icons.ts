@@ -1,0 +1,43 @@
+import {
+  BarChart3Icon,
+  BellIcon,
+  BookOpenIcon,
+  CircleHelpIcon,
+  CodeIcon,
+  CreditCardIcon,
+  GlobeIcon,
+  LockIcon,
+  MailIcon,
+  MessageCircleIcon,
+  PlugIcon,
+  RocketIcon,
+  SettingsIcon,
+  ShieldIcon,
+  SmartphoneIcon,
+  StarIcon,
+  UserIcon,
+  UsersIcon,
+} from "lucide-react"
+
+import type { HelpIcon } from "@/lib/api"
+
+export const ICON_COMPONENTS: Record<HelpIcon, typeof BookOpenIcon> = {
+  book: BookOpenIcon,
+  rocket: RocketIcon,
+  settings: SettingsIcon,
+  billing: CreditCardIcon,
+  user: UserIcon,
+  team: UsersIcon,
+  shield: ShieldIcon,
+  lock: LockIcon,
+  plug: PlugIcon,
+  code: CodeIcon,
+  chat: MessageCircleIcon,
+  mail: MailIcon,
+  bell: BellIcon,
+  chart: BarChart3Icon,
+  globe: GlobeIcon,
+  mobile: SmartphoneIcon,
+  star: StarIcon,
+  help: CircleHelpIcon,
+}

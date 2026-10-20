@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react"
 
 import { toast } from "@/components/common"
 import { useErrorText } from "@/components/common/text"
+import type { HelpPick } from "@/features/conversation/composer/ArticlePicker"
 import { useIsChat, useIsLive } from "@/features/conversation/liveness"
 import { patchConversation, postMessage } from "@/features/conversation/queries"
 import { api, unwrap, type Conversation, type ConversationUpdate, type Member, type Message } from "@/lib/api"
@@ -12,7 +13,7 @@ import { useSession } from "@/lib/session"
 import { newId } from "@/lib/utils"
 import { useLiveContext } from "@/lib/workspace"
 
-export type ReplyDraft = { body: string; mode: "message" | "note"; files: File[] }
+export type ReplyDraft = { body: string; mode: "message" | "note"; files: File[]; articles: HelpPick[] }
 
 const drafts = new Map<string, ReplyDraft>()
 const revisions = new Map<string, number>()
@@ -26,19 +27,24 @@ function subscribeDrafts(l: () => void) {
 }
 
 export function readDraft(id: string): ReplyDraft {
-  return drafts.get(id) ?? { body: "", mode: "message", files: [] }
+  return drafts.get(id) ?? { body: "", mode: "message", files: [], articles: [] }
 }
 
 export function writeDraft(id: string, d: ReplyDraft) {
   const before = drafts.get(id)?.body ?? ""
-  if (d.body === "" && d.files.length === 0 && d.mode === "message") drafts.delete(id)
+  if (d.body === "" && d.files.length === 0 && d.articles.length === 0 && d.mode === "message") drafts.delete(id)
   else drafts.set(id, d)
   if (before !== d.body) draftListeners.forEach((l) => l())
 }
 
-function restoreDraftOf(id: string, body: string, files: File[]) {
+function restoreDraftOf(id: string, body: string, files: File[], articles: HelpPick[] = []) {
   const now = readDraft(id)
-  writeDraft(id, { mode: "message", body: now.body || body, files: now.files.length ? now.files : files })
+  writeDraft(id, {
+    mode: "message",
+    body: now.body || body,
+    files: now.files.length ? now.files : files,
+    articles: now.articles.length ? now.articles : articles,
+  })
   revisions.set(id, (revisions.get(id) ?? 0) + 1)
   draftListeners.forEach((l) => l())
 }
@@ -142,7 +148,7 @@ function revertOf(c: Conversation): ConversationUpdate {
   return { status: c.status }
 }
 
-export type SendRequest = { body: string; files: File[]; close: boolean; suggestion?: Message }
+export type SendRequest = { body: string; files: File[]; close: boolean; suggestion?: Message; articles?: HelpPick[] }
 
 export function useConversationActions(c: Conversation, contactName: string) {
   const { t } = useLingui()
@@ -162,9 +168,13 @@ export function useConversationActions(c: Conversation, contactName: string) {
 
   const addMessage = (m: Message) => applyEvent(qc, ctx, { type: "message.created", data: m })
 
-  const deliver = async ({ body, files, suggestion }: SendRequest, clientId = newId(), onSent?: () => void) => {
+  const deliver = async (
+    { body, files, suggestion, articles = [] }: SendRequest,
+    clientId = newId(),
+    onSent?: () => void
+  ) => {
     let sent: Message
-    if (suggestion && files.length === 0) {
+    if (suggestion && files.length === 0 && articles.length === 0) {
       const path = { params: { path: { messageId: suggestion.id } } }
       if (body.trim() !== suggestion.body.trim())
         await unwrap(
@@ -172,17 +182,23 @@ export function useConversationActions(c: Conversation, contactName: string) {
         )
       sent = await unwrap(api.POST("/v1/messages/{messageId}/send", path))
     } else {
-      sent = await postMessage(c.id, { kind: "message", body: body.trim() || undefined, client_id: clientId, files })
+      sent = await postMessage(c.id, {
+        kind: "message",
+        body: body.trim() || undefined,
+        client_id: clientId,
+        files,
+        article_ids: articles.length ? articles.map((a) => a.id) : undefined,
+      })
     }
     addMessage(sent)
     onSent?.()
-    if (suggestion && files.length > 0)
+    if (suggestion && (files.length > 0 || articles.length > 0))
       await api
         .DELETE("/v1/messages/{messageId}", { params: { path: { messageId: suggestion.id } } })
         .catch(() => undefined)
   }
   const notSent = (req: SendRequest, err: unknown) => {
-    restoreDraftOf(c.id, req.body, req.files)
+    restoreDraftOf(c.id, req.body, req.files, req.articles)
     toast(t`Your reply to ${first} was not sent. ${errorText(err)}`)
   }
 
@@ -221,7 +237,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
       }).then(addMessage),
     send: (req: SendRequest): Promise<void> | undefined => {
       const { close } = req
-      writeDraft(c.id, { body: "", mode: "message", files: [] })
+      writeDraft(c.id, { body: "", mode: "message", files: [], articles: [] })
       if (live && !close) {
         return inLine(c.id, () => deliver(req)).catch((err) => {
           toast(t`Your reply to ${first} was not sent. ${errorText(err)}`)
@@ -251,7 +267,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
         files: req.files,
         close,
         clientId,
-        messageId: req.suggestion && req.files.length === 0 ? req.suggestion.id : undefined,
+        messageId: req.suggestion && req.files.length === 0 && !req.articles?.length ? req.suggestion.id : undefined,
       }
       const drop = () => {
         if (pending.get(c.id)?.some((p) => p.key === key))
@@ -281,7 +297,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
         () => {
           if (cancel(key)) {
             drop()
-            restoreDraftOf(c.id, req.body, req.files)
+            restoreDraftOf(c.id, req.body, req.files, req.articles)
           } else {
             patch(revertOf(c)).catch(failed)
           }

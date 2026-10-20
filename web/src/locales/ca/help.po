@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ca\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} de {total} articles publicats"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De 3 a 48 lletres, números i guions. És únic en aquest servidor."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Un excompany d’equip"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Un grup d’articles. Posa-li nom en cada idioma que publiques; amb un nom n’hi ha prou per començar."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Color d’èmfasi"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Ajuda d’Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Afegeix un idioma"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Afegeix una subcol·lecció"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Adreça"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Final de l’adreça"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Els agents poden publicar"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Totes les col·leccions"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Una clau d’API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Una imatge https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Propietat d’analítica"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Un altre centre d’ajuda fa servir aquesta adreça, ara o abans."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Respon una vegada les preguntes freqüents, per escrit. Tria el centre d’ajuda d’una safata per escriure articles, agrupar-los en col·leccions i veure què cerquen els clients."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Qualsevol estat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Article"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Article eliminat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Text de l’article"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Títol de l’article"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Visualitzacions d’articles"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Articles"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Els articles es poden escriure i publicar en aquests idiomes. Els visitants veuen el seu quan existeix."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Articles d’aquesta col·lecció"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Articles que responen les preguntes dels teus clients sobre {inboxName}. Continua sense publicar fins que el publiquis."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Articles que no han ajudat"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Almenys 3 caràcters."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Campana"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Facturació"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Negreta"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Llibre"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Llista amb punts"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Gràfic"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Xat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Canal de xat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Xats iniciats"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Codi"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Bloc de codi"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Col·lecció"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Col·leccions"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Les col·leccions, els articles, les revisions i els comptadors s’eliminen amb ell."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Compta les visualitzacions de pàgina del centre d’ajuda sense galetes."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Crea l’article"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Crea la col·lecció"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Crea un centre d’ajuda"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Crea un centre d’ajuda ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Elimina"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Vols eliminar {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Vols eliminar {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Elimina l’article"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Elimina la col·lecció"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Elimina el centre d’ajuda"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Vols eliminar la traducció {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Vols eliminar aquest article?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Elimina aquesta traducció"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Elimina la traducció"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Elimina el centre d’ajuda amb les seves col·leccions, articles, revisions i comptadors. L’adreça pública deixa de funcionar."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Descripció"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Esborrany"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Esborrany enviat. Un propietari o administrador el pot publicar."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Versions anteriors d’aquesta traducció. Restaurar-ne una substitueix l’esborrany; el text publicat es manté fins que publiquis."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Edita"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Edita la col·lecció"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Buit"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Cada cerca ha trobat alguna cosa."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "S’eliminen totes les traduccions, les seves revisions i els seus comptadors."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Format"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Primers passos"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Globus"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Agrupa els articles perquè els visitants puguin explorar. Una col·lecció pot contenir un nivell de subcol·leccions. Arrossega per canviar l’ordre."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Encapçalament"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Ajuda"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Centre d’ajuda"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Centre d’ajuda eliminat"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Centres d’ajuda"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Els centres d’ajuda estan desactivats en aquest servidor."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Útil"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Com restableixo la contrasenya?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Icona"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Imatge"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Dins de"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Cursiva"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Els seus articles es queden sense col·lecció. Les seves subcol·leccions passen a ser col·leccions de nivell superior."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "S’eliminen l’esborrany i les revisions. Els altres idiomes es mantenen."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Conserva la meva"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Idioma"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Idiomes"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Darrers {d} dies"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Enllaç"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Carrega’n més"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Cadenat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL del logotip"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Correu"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Principal"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Idioma principal"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Més"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Més per a {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Mou {name}. Arrossega, o prem Alt amb les fletxes."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Mou avall"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Mou amunt"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Nom"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Article nou"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Article nou ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Col·lecció nova"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Col·lecció nova ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Cap article ha rebut un «no» en aquest període."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Cap article coincideix."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "No s’ha llegit cap article en aquest període."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Encara no hi ha articles. Escriu la primera resposta que els teus clients pregunten sempre."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Sense col·lecció"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Encara no hi ha col·leccions. Els articles poden quedar-se sense."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Encara no hi ha versions anteriors."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Encara no hi ha centre d’ajuda. El creen els propietaris i administradors."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Cap safata per mostrar-hi un centre d’ajuda."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Cap"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "sense nom"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "sense redactar"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Sense redactar"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Llista numerada"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Desactivat: els agents escriuen esborranys i els envien, i els propietaris i administradors publiquen. Activat: els agents amb accés a la safata també publiquen i despublicen."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Una ruta per línia, com /billing/*. El giny de xat suggereix aquest article a les pàgines coincidents."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Només ho poden fer els propietaris i administradors."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Original"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Original en {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Text original ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Altres paraules que els visitants podrien escriure, com sinònims."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "desactualitzat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Desactualitzat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Part de l’adreça web d’aquesta traducció. Es crea a partir del títol si és buida."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Persona"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Telèfon"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Tria un color"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Endoll"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Previsualització"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Previsualització ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Previsualització ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Previsualització de {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Previsualització de l’article"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Adreça pública"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Publica"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publica ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Publicat"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Signe d’interrogació"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Cita"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Treu {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Informe"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Període de l’informe"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Restaura aquesta versió"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Restaurada"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Resultats oberts"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Revisions"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Revisions ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Coet"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Desa"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Desa ara"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Desat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "S’està desant…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Cerca als títols"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Cerca als títols ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Paraules de cerca"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Cerques"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Cerques sense resultat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Enviat"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Configuració"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Escut"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Mostra"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Es mostra sota el nom a la pàgina d’inici."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Es mostra quan un article no té traducció a l’idioma del visitant."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Enllaç del lloc"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Algú ha desat aquest article mentrestant."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Algú ha desat aquesta traducció mentre l’editaves."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Estrella"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Comença amb un títol. El text l’escriuràs després i continua sent un esborrany fins que es publiqui."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Estat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Envia l’esborrany"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Envia l’esborrany ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Suggereix a pàgines"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Equip"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "L’adreça respon «no trobat» fins que publiquis el centre d’ajuda."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "El centre d’ajuda tal com el veuen ara els visitants. Els esborranys queden exclosos."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "El centre d’ajuda no ofereix aquest idioma. Afegeix-lo primer a la configuració."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "El centre d’ajuda és a {address}. L’adreça antiga continua redirigint si la canvies."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "El centre d’ajuda no està publicat. Només el veu el teu equip."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "L’idioma principal encara no té text per a aquest article."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "La pàgina deixa de funcionar per als visitants. L’esborrany es manté i el pots tornar a publicar."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Les pàgines ofereixen aquest xat sota «Necessites més ajuda?»."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "El títol necessita almenys 3 caràcters"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Aquesta safata ja té un centre d’ajuda."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Aquesta és l’única traducció de l’article. Elimina l’article en lloc seu."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Aquest espai de treball té tants articles d’ajuda com permet el servidor. Elimina primer els antics."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Títol"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Massa sol·licituds. Espera un moment i torna-ho a provar."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Articles més llegits"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Nivell superior"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Traducció eliminada"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Escriu una paraula per cercar."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Despublica"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Despublica ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Vols despublicar aquesta traducció?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Sense publicar"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Canvis sense publicar"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Sense publicar, només el teu equip el pot previsualitzar"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Canvis sense desar"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Fes servir de 3 a 48 lletres, números i guions interiors."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Fes servir un color com #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Fes servir la seva versió"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Versió restaurada a l’esborrany"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Mostra"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Mostra el centre d’ajuda"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Visualitzacions"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "El que els visitants llegeixen i cerquen. Les visualitzacions són aproximades i les xifres arriben aquí en un minut."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Qui pot publicar"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Paraules que els visitants han escrit i no han trobat res. Un article nou per a cadascuna és la solució més ràpida."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Escriu"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Escriu la resposta en Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "El teu producte."

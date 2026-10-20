@@ -1012,6 +1012,10 @@ msgstr "ഒരു അംഗം പിന്നീട് ഘടകം കൈക�
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "ഫാൾബാക്ക് ഇല്ലാത്ത ഒരു മെർജ് ഫീൽഡ് ചില സ്വീകർത്താക്കൾക്ക് ശൂന്യമായിരിക്കും. അതിന് ഒരു ഫാൾബാക്ക് നൽകുക."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "ഒരു സന്ദേശത്തിൽ പരമാവധി 3 ലേഖനങ്ങൾ പോകാം."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "ഒരു സന്ദേശം ചേർത്തു"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Webhook തരത്തിലുള്ള ഒരു കോൺടാക്റ്റ് പോയിന്റ് ചേർക്കുക, മുകളിലെ വിലാസം ഒട്ടിക്കുക, മെത്തേഡ് POST ആയി നിലനിർത്തുക, അറിയിപ്പ് നയത്തിൽ ആ കോൺടാക്റ്റ് പോയിന്റ് ഉപയോഗിക്കുക. സജീവമായ അലേർട്ടുകൾ മോണിറ്ററിനെ പരാജയപ്പെടുത്തും, പരിഹരിച്ചവ അതിനെ വീണ്ടെടുക്കും."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "ലിങ്ക് ചേർക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "മോണിറ്റർ ചേർക്കുക"
 
@@ -1264,6 +1272,10 @@ msgstr "ഒരു വെബ്സൈറ്റോ ആപ്പോ ചേർക്
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "ഒരു അനലിറ്റിക്സ് പ്രോപ്പർട്ടി ചേർക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "ചിത്രം ചേർക്കുക"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "{address}-ൽ നേരിട്ട് എത്തി, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "ഫോർവേഡിംഗ് വഴി എത്തി, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "ലേഖനങ്ങൾ"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "{name} ആയി, {when} മുതൽ"
@@ -2216,6 +2232,10 @@ msgstr "തടഞ്ഞ കോൺടാക്റ്റുകൾ"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "ബോഡി"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "കട്ടിയുള്ളത്"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME റെക്കോർഡ്"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "കോഡ്"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "ശേഖരങ്ങൾ"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "സബ്സ്ക്രിപ്ഷൻ ഇല്ലാതാക്ക�
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "നിങ്ങൾ Yuva-യ്ക്കായി ഉണ്ടാക്കിയ ആപ്പ് ഇല്ലാതാക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "ലേഖനം ഇല്ലാതാക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "സെറ്റപ്പിൽ നിന്ന് ഹലോ"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "ഹലോ, ഞാൻ {address} മെയിൽബോക്സ് ഞങ്ങളുടെ സപ്പോർട്ട് ഇൻബോക്സായ Yuva-യിലേക്ക് മാറ്റുകയാണ്. ഞങ്ങളുടെ Microsoft 365 ഓർഗനൈസേഷൻ ആപ്പുകൾ അനുവദിക്കാൻ അഡ്മിനെ മാത്രമേ അനുവദിക്കുന്നുള്ളൂ. ദയവായി ഈ ലിങ്ക് അഡ്മിനായി തുറന്ന് അംഗീകരിക്കുക, അങ്ങനെ Yuva-യ്ക്ക് IMAP വഴി മെയിൽബോക്സ് വായിക്കാം: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "സഹായം"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "സഹായവും ഫീഡ്ബാക്കും"
@@ -5041,6 +5075,27 @@ msgstr "സഹായവും ഫീഡ്ബാക്കും"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "നിങ്ങളുടെ iOS അല്ലെങ്കിൽ Android ആപ്പിനുള്ളിൽ സഹായവും ഫീഡ്ബാക്കും"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "സഹായ ലേഖനം"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "സഹായ ലേഖനങ്ങൾ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "സഹായ കേന്ദ്രം"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "സഹായ കേന്ദ്രത്തിന്റെ ക്രമീകരണങ്ങൾ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "സഹായ റിപ്പോർട്ട്"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "ഇത് നിങ്ങൾ താഴെ അനുവദിക്കു
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "ഇതിന് ഇനി അറിയിപ്പുകൾ ലഭിക്കില്ല."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "ചരിഞ്ഞത്"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "തിരഞ്ഞെടുത്ത ബ്ലോക്ക് നീക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "തിരഞ്ഞെടുത്ത ശേഖരം നീക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "ലേഖനങ്ങൾക്കോ ശേഖരങ്ങൾക്കോ ഇടയിൽ നീങ്ങുക"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "ബ്രോഡ്കാസ്റ്റുകളിലൂടെ നീങ്ങുക"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "സ്ഥിരീകരണ മെയിൽ ലഭിക്കുന്ന പുതിയ വിലാസങ്ങൾ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "പുതിയ ലേഖനം"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "പുതിയ ബ്രോഡ്കാസ്റ്റ് ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "പുതിയ തയ്യാറാക്കിയ മറുപടി"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "പുതിയ ശേഖരം"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "ഇതുവരെ പേജുകളില്ല"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "തീർപ്പാക്കാത്ത ക്ഷണങ്ങളില്ല."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "പ്രസിദ്ധീകരിച്ച ലേഖനം കണ്ടെത്തിയില്ല."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "സെറ്റപ്പ് തുറക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "ലേഖനമോ ശേഖരമോ തുറക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "ബ്രോഡ്കാസ്റ്റ് തുറക്കുക"
 
@@ -8251,6 +8334,10 @@ msgstr "ചർച്ച തുറക്കുക"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "എൻഡ്‌പോയിന്റ് തുറക്കുക"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "സഹായ ലേഖനം തുറക്കുക"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "അടുത്തതോ മുമ്പത്തെയോ സംഭാ�
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "പേജ് ക്രമീകരണങ്ങൾ തുറക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "പൊതു സഹായ കേന്ദ്രം തുറക്കുക"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "പ്രിവ്യൂ ടെക്സ്റ്റ്"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "സഹായ കേന്ദ്രത്തിന്റെ പ്രിവ്യൂ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "പേജിന്റെ പ്രിവ്യൂ കാണുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "മുമ്പത്തെ അല്ലെങ്കിൽ അടുത്ത ഭാഷ"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "ഇപ്പോൾ പ്രസിദ്ധീകരിക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "സഹായ കേന്ദ്രം പ്രസിദ്ധീകരിക്കുക അല്ലെങ്കിൽ പ്രസിദ്ധീകരണം റദ്ദാക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "പേജ് പ്രസിദ്ധീകരിക്കുക അല്ലെങ്കിൽ പിൻവലിക്കുക"
 
@@ -9072,6 +9175,10 @@ msgstr "ഡ്രാഫ്റ്റ് പ്രസിദ്ധീകരിക�
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "ഈ TXT റെക്കോർഡ് നിങ്ങളുടെ ഡൊമെയ്‌നിന്റെ DNS-ൽ പ്രസിദ്ധീകരിക്കുക:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "പ്രസിദ്ധീകരിക്കുക, അല്ലെങ്കിൽ കരട് സമർപ്പിക്കുക"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "റിമോട്ട് ചിത്രങ്ങൾക്ക് നി�
 msgid "Remove"
 msgstr "നീക്കം ചെയ്യുക"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "അവലോകനം ചെയ്യുക, പിന്നെ അയ�
 msgid "Review, then send or schedule ({key})"
 msgstr "അവലോകനം ചെയ്യുക, പിന്നെ അയയ്ക്കുക അല്ലെങ്കിൽ ഷെഡ്യൂൾ ചെയ്യുക ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "പരിഷ്കരണങ്ങൾ"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "സേവ് ചെയ്ത് അതിന്റെ ഐഡന്റി
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "ഇപ്പോൾ സേവ് ചെയ്ത് ഒരു പതിപ്പ് സൂക്ഷിക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "കരട് ഇപ്പോൾ സംരക്ഷിക്കുക"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "ഇമോജി തിരയുക (ഇംഗ്ലീഷിൽ)"
 msgid "Search feedback"
 msgstr "Search feedback"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "സഹായ ലേഖനങ്ങൾ തിരയുക…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "ലോഡ് ചെയ്ത സന്ദേശങ്ങളിൽ തിരയുക"
@@ -10124,6 +10244,10 @@ msgstr "സ്വീകർത്താക്കളെ തിരയുക"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "സബ്സ്ക്രൈബർമാരെ തിരയുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "ലേഖനങ്ങളിൽ തിരയുക"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "സിഗ്നൽ അയയ്ക്കുക"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "ഒരു പരിശോധന അയയ്ക്കുക"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "സഹായ ലേഖനം അയയ്ക്കുക"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "സഹായ ലേഖനം അയയ്ക്കുക ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "പേജിൽ കാണിക്കുക"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "ഉദ്ധരിച്ച ടെക്സ്റ്റ് കാണിക്കുകയോ മറയ്ക്കുകയോ ചെയ്യുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "വിവർത്തനത്തിനരികെ മൂല വാചകം കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "പ്രിവ്യൂ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "പ്രസിദ്ധീകരണം പിൻവലിക്കു�
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "പ്രസിദ്ധീകരണം പിൻവലിക്കുക ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "വിവർത്തനത്തിന്റെ പ്രസിദ്ധീകരണം റദ്ദാക്കുക"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

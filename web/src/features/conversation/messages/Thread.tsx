@@ -31,6 +31,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import type { PendingReply } from "@/features/conversation/actions"
 import { FeedbackDetails, ScoreMark } from "@/features/conversation/Feedback"
+import { ArticleCards, withoutCardLines } from "@/features/conversation/messages/ArticleCards"
 import { Attachments } from "@/features/conversation/messages/Attachments"
 import { baseSubject, timeOf, useAuthorName, type ThreadContext } from "@/features/conversation/messages/context"
 import { DeliveryState } from "@/features/conversation/messages/DeliveryState"
@@ -228,6 +229,7 @@ function Line({ m, ctx, name, me, last }: { m: Message; ctx: ThreadContext; name
   const out = side !== "in"
   const align = out ? "end" : "start"
   const look = sideBubble[side]
+  const text = withoutCardLines(m.body, m.cards)
   return (
     <MessageFrame
       align={align}
@@ -240,16 +242,17 @@ function Line({ m, ctx, name, me, last }: { m: Message; ctx: ThreadContext; name
         <Face m={m} side={side} ctx={ctx} name={name} />
       </MessageAvatar>
       <MessageContent className="w-auto max-w-[80%] gap-1 phone:max-w-[88%]">
-        {m.body && (
+        {text && (
           <Bubble variant={look.variant} align={align} className={cn("max-w-full", look.className)}>
             <BubbleContent className={cn("rounded-2xl", last && tail(out), ctx.find?.current === m.id && hitRing)}>
               <div className="text-reading break-words whitespace-pre-wrap">
-                <Highlight text={m.body} query={ctx.find?.query} />
+                <Highlight text={text} query={ctx.find?.query} />
               </div>
             </BubbleContent>
           </Bubble>
         )}
         <Attachments items={m.attachments} outgoing={out} />
+        <ArticleCards items={m.cards} outgoing={out} />
         <Delivery m={m} />
         {last && <Meta m={m} side={side} ctx={ctx} name={name} />}
       </MessageContent>
@@ -344,6 +347,7 @@ function Mail({
           </BubbleContent>
         </Bubble>
         <Attachments items={mail.listed} outgoing={out} />
+        <ArticleCards items={m.cards} outgoing={out} />
         <Delivery m={m} />
         <MessageFooter className={footerClass}>
           <Time iso={m.created_at} className="me-1" />

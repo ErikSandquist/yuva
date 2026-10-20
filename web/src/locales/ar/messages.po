@@ -1012,6 +1012,10 @@ msgstr "قام عضو بضبط المكوّن يدويًا لاحقًا، لذل
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "الحقل الدمجي بلا قيمة بديلة سيكون فارغًا لدى بعض المستلمين. أعطه قيمة بديلة."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "تقبل الرسالة 3 مقالات على الأكثر."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "أُضيفت رسالة"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "أضف نقطة اتصال من نوع Webhook، والصق العنوان أعلاه، وأبقِ الطريقة POST، واستخدم نقطة الاتصال في سياسة إشعارات. التنبيهات المُفعّلة تُسقط المراقب، والمحلولة تعيده."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "إضافة رابط"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "إضافة مراقب"
 
@@ -1264,6 +1272,10 @@ msgstr "إضافة موقع أو تطبيق"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "إضافة موقع تحليلات"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "إضافة صورة"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "وصلت إلى {address} مباشرة، {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "وصلت عبر التحويل، {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "المقالات"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "باسم {name}، منذ {when}"
@@ -2216,6 +2232,10 @@ msgstr "جهات الاتصال المحظورة"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "المحتوى"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "عريض"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "سجل CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "الرمز"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "المجموعات"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "حذف الاشتراك"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "احذف التطبيق الذي أنشأته لـ Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "حذف المقالة"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "مرحبًا من الإعداد"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "مرحبًا، أنقل صندوق البريد {address} إلى Yuva، صندوق الدعم لدينا. تسمح مؤسسة Microsoft 365 لدينا للمسؤول وحده بالموافقة على التطبيقات. يرجى فتح هذا الرابط كمسؤول والموافقة، ليتمكن Yuva من قراءة صندوق البريد عبر IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "المساعدة"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "المساعدة والملاحظات"
@@ -5041,6 +5075,27 @@ msgstr "المساعدة والملاحظات"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "المساعدة والملاحظات داخل تطبيق iOS أو Android"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "مقالة مساعدة"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "مقالات المساعدة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "مركز المساعدة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "إعدادات مركز المساعدة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "تقرير المساعدة"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "سيعمل باسمك، <0>{email}</0>، بالصلاحيات التي �
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "لن يتلقى إشعارات بعد الآن."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "مائل"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "نقل الكتلة المحددة"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "نقل المجموعة المحددة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "التنقل بين المقالات أو المجموعات"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "التنقل بين الرسائل الجماعية"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "عناوين جديدة تتلقى رسالة تأكيد"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "مقالة جديدة"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "رسالة جماعية جديدة ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "رد جاهز جديد"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "مجموعة جديدة"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "لا صفحات بعد"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "لا دعوات معلّقة."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "لم يتم العثور على مقالة منشورة."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "فتح الإعداد"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "فتح المقالة أو المجموعة"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "فتح الرسالة الجماعية"
 
@@ -8251,6 +8334,10 @@ msgstr "فتح النقاش"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "فتح نقطة النهاية"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "فتح مقالة المساعدة"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "فتح المحادثة التالية أو السابقة"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "فتح إعدادات الصفحة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "فتح مركز المساعدة العام"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "نص المعاينة"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "معاينة مركز المساعدة"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "معاينة الصفحة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "اللغة السابقة أو التالية"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "انشر الآن"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "نشر مركز المساعدة أو إلغاء نشره"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "نشر الصفحة أو إلغاء نشرها"
 
@@ -9072,6 +9175,10 @@ msgstr "نشر المسودة"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "انشر سجل TXT هذا في DNS لنطاقك:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "نشر المسودة أو إرسالها"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "يمكن للصور البعيدة إخبار المرسِل بأنك ف
 msgid "Remove"
 msgstr "إزالة"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "راجع ثم أرسل أو جدول"
 msgid "Review, then send or schedule ({key})"
 msgstr "راجع ثم أرسل أو جدول ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "المراجعات"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "احفظه وانسخ معرّفه وسره، اللذين يعرضهم�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "حفظ الآن والاحتفاظ بنسخة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "حفظ المسودة الآن"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "البحث عن رمز تعبيري (بالإنجليزية)"
 msgid "Search feedback"
 msgstr "Search feedback"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "البحث في مقالات المساعدة…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "البحث في الرسائل المحمَّلة"
@@ -10124,6 +10244,10 @@ msgstr "البحث في المستلمين"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "البحث في المشتركين"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "البحث في المقالات"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "إرسال إشارة"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "إرسال فحص"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "إرسال مقالة مساعدة"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "إرسال مقالة مساعدة ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "إظهار في الصفحة"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "إظهار النص المقتبس أو إخفاؤه"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "إظهار النص الأصلي بجانب الترجمة أو إخفاؤه"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "إظهار المعاينة أو إخفاؤها"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "إلغاء النشر"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "إلغاء النشر ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "إلغاء نشر الترجمة"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

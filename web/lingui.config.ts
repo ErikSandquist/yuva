@@ -10,11 +10,15 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/messages",
       include: ["src"],
-      exclude: ["src/features/designs", "src/features/analytics"],
+      exclude: ["src/features/designs", "src/features/analytics", "src/features/help"],
     },
     {
       path: "<rootDir>/src/locales/{locale}/analytics",
       include: ["src/features/analytics"],
+    },
+    {
+      path: "<rootDir>/src/locales/{locale}/help",
+      include: ["src/features/help"],
     },
     {
       path: "<rootDir>/src/locales/{locale}/designs",

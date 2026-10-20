@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} / {total} artikkelia julkaistu"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3–48 kirjainta, numeroa ja tavuviivaa. Yksilöllinen tällä palvelimella."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Entinen tiimin jäsen"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Artikkeliryhmä. Nimeä se jokaisella julkaisemallasi kielellä; yksi nimi riittää alkuun."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Korostusväri"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acmen ohje"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Lisää kieli"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Lisää alikokoelma"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Osoite"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Osoitteen loppuosa"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Edustajat saavat julkaista"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Kaikki kokoelmat"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "API-avain"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "https-kuva."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analytiikkakohde"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Toinen ohjekeskus käyttää tätä osoitetta nyt tai aiemmin."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Vastaa usein kysyttyihin kysymyksiin kerran kirjallisesti. Valitse saapuneiden ohjekeskus, jotta voit kirjoittaa artikkeleita, ryhmitellä ne kokoelmiin ja nähdä, mitä asiakkaat hakevat."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Mikä tahansa tila"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Artikkeli"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Artikkeli poistettu"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Artikkelin teksti"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Artikkelin otsikko"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Artikkelien katselut"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Artikkelit"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Artikkeleita voi kirjoittaa ja julkaista näillä kielillä. Kävijät näkevät oman kielensä, jos se on olemassa."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Tämän kokoelman artikkelit"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Artikkeleita, jotka vastaavat asiakkaidesi kysymyksiin kohteesta {inboxName}. Se pysyy julkaisematta, kunnes julkaiset sen."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Artikkelit, jotka eivät auttaneet"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Vähintään 3 merkkiä."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Kello"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Laskutus"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Lihavointi"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Kirja"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Luettelo"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Kaavio"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Chat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Chat-kanava"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Aloitetut chatit"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Koodi"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Koodilohko"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Kokoelma"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Kokoelmat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Kokoelmat, artikkelit, versiot ja laskurit poistetaan sen mukana."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Laskee ohjekeskuksen sivunäytöt ilman evästeitä."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Luo artikkeli"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Luo kokoelma"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Luo ohjekeskus"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Luo ohjekeskus ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Poista"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Poistetaanko {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Poistetaanko {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Poista artikkeli"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Poista kokoelma"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Poista ohjekeskus"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Poistetaanko käännös {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Poistetaanko tämä artikkeli?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Poista tämä käännös"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Poista käännös"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Poistaa ohjekeskuksen kokoelmineen, artikkeleineen, versioineen ja laskureineen. Julkinen osoite lakkaa toimimasta."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Kuvaus"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Luonnos"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Luonnos lähetetty. Omistaja tai ylläpitäjä voi julkaista sen."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Tämän käännöksen aiemmat versiot. Palauttaminen korvaa luonnoksen; julkaistu teksti säilyy, kunnes julkaiset."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Muokkaa kokoelmaa"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Tyhjä"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Jokainen haku löysi jotakin."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Kaikki käännökset, niiden versiot ja laskurit poistetaan."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Muotoilu"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Aloitus"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Maapallo"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Ryhmittele artikkelit, jotta kävijät voivat selata. Kokoelmassa voi olla yksi taso alikokoelmia. Muuta järjestystä vetämällä."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Otsikko"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Ohje"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Ohjekeskus"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Ohjekeskus poistettu"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Ohjekeskukset"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Ohjekeskukset on poistettu käytöstä tällä palvelimella."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Hyödyllinen"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Miten nollaan salasanani?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Kuvake"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Kuva"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Sisällä"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Kursivointi"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Sen artikkelit jäävät ilman kokoelmaa. Sen alikokoelmista tulee ylimmän tason kokoelmia."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Sen luonnos ja versiot poistetaan. Muut kielet säilyvät."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Säilytä omani"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Kieli"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Kielet"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Viimeiset {d} päivää"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Linkki"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Lataa lisää"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Lukko"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "Logon URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Posti"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Pää"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Pääkieli"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Lisää"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Lisää kohteelle {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Siirrä {name}. Vedä tai paina Alt-näppäintä nuolinäppäimillä."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Siirrä alas"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Siirrä ylös"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Nimi"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Uusi artikkeli"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Uusi artikkeli ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Uusi kokoelma"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Uusi kokoelma ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Yksikään artikkeli ei saanut ”ei”-vastausta tänä aikana."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Mikään artikkeli ei täsmää."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "Yhtään artikkelia ei luettu tänä aikana."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Ei vielä artikkeleita. Kirjoita ensimmäinen vastaus, jota asiakkaasi kysyvät yhä uudelleen."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Ei kokoelmaa"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Ei vielä kokoelmia. Artikkelit voivat olla ilman kokoelmaa."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Ei vielä aiempia versioita."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Ei vielä ohjekeskusta. Omistajat ja ylläpitäjät luovat sen."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Ei saapuneita, joille ohjekeskus näytettäisiin."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Ei mitään"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "nimeämätön"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "kirjoittamatta"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Kirjoittamatta"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Numeroitu luettelo"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Pois: edustajat kirjoittavat luonnoksia ja lähettävät ne, omistajat ja ylläpitäjät julkaisevat. Päällä: myös edustajat, joilla on pääsy saapuneisiin, julkaisevat ja poistavat julkaisun."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Yksi polku riville, esimerkiksi /billing/*. Chat-widget ehdottaa tätä artikkelia vastaavilla sivuilla."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Vain omistajat ja ylläpitäjät voivat tehdä tämän."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Alkuperäinen"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Alkuperäinen kielellä {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Alkuperäinen teksti ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Muita sanoja, joita kävijät saattavat kirjoittaa, kuten synonyymejä."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "vanhentunut"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Vanhentunut"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Osa tämän käännöksen verkko-osoitetta. Muodostetaan otsikosta, jos tyhjä."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Henkilö"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Puhelin"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Valitse väri"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Pistoke"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Esikatselu ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Esikatselu ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Esikatselu: {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Artikkelin esikatselu"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Julkinen osoite"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Julkaise"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Julkaise ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Julkaistu"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Kysymysmerkki"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Lainaus"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Poista {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Raportti"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Raportin jakso"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Palauta tämä versio"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Palautettu"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Avatut tulokset"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Versiot"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Versiot ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Raketti"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Tallenna"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Tallenna nyt"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Tallennettu"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Tallennetaan…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Hae otsikoista"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Hae otsikoista ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Hakusanat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Haut"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Haut ilman tulosta"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Asetukset"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Kilpi"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Näytä"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Näytetään nimen alla etusivulla."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Näytetään, kun artikkelilla ei ole käännöstä kävijän kielellä."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Sivustolinkki"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Joku tallensi tämän artikkelin sillä välin."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Joku tallensi tämän käännöksen muokatessasi."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Tähti"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Aloita otsikolla. Kirjoitat tekstin seuraavaksi, ja se pysyy luonnoksena, kunnes se julkaistaan."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Tila"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Lähetä luonnos"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Lähetä luonnos ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Ehdota sivuilla"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Tiimi"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Osoite vastaa ”ei löytynyt”, kunnes julkaiset ohjekeskuksen."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Ohjekeskus sellaisena kuin kävijät sen nyt näkevät. Luonnokset on jätetty pois."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Ohjekeskus ei tarjoa tätä kieltä. Lisää se ensin asetuksissa."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Ohjekeskus on osoitteessa {address}. Vanha osoite ohjaa edelleen, jos muutat sitä."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Ohjekeskusta ei ole julkaistu. Vain tiimisi näkee tämän."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "Pääkielellä ei vielä ole tekstiä tälle artikkelille."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Sivu lakkaa toimimasta kävijöille. Luonnos säilyy, ja voit julkaista sen uudelleen."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Sivut tarjoavat tämän chatin kohdassa ”Tarvitsetko lisää apua?”."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Otsikossa on oltava vähintään 3 merkkiä"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Tällä saapuneiden kansiolla on jo ohjekeskus."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Tämä on artikkelin ainoa käännös. Poista sen sijaan artikkeli."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Tässä työtilassa on yhtä monta ohjeartikkelia kuin palvelin sallii. Poista ensin vanhoja."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Otsikko"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Liikaa pyyntöjä. Odota hetki ja yritä uudelleen."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Luetuimmat artikkelit"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Ylin taso"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Käännös poistettu"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Kirjoita hakusana."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Poista julkaisu"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Poista julkaisu ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Poistetaanko tämän käännöksen julkaisu?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Julkaisematon"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Julkaisemattomat muutokset"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Julkaisematon, vain tiimisi voi esikatsella"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Tallentamattomat muutokset"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Käytä 3–48 kirjainta, numeroa ja sisäisiä tavuviivoja."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Käytä väriä kuten #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Käytä heidän versiotaan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Versio palautettu luonnokseen"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Näytä"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Näytä ohjekeskus"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Katselut"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Mitä kävijät lukevat ja hakevat. Katselut ovat likimääräisiä, ja luvut päätyvät tälle sivulle minuutin kuluessa."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Kuka saa julkaista"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Sanat, joita kävijät kirjoittivat ja jotka eivät tuottaneet tulosta. Uusi artikkeli kutakin varten on nopein korjaus."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Kirjoita"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Kirjoita vastaus Markdownilla…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Tuotteesi."

@@ -19,7 +19,26 @@ export type GrowthDays = 30 | 90
 
 export type QueueFilters = { inbox_id?: string; site?: string; page?: string }
 
+export type HelpArticleFilters = {
+  collection_id?: string
+  locale?: string
+  state?: "draft" | "published" | "changed" | "missing"
+  q?: string
+}
+
 export const keys = {
+  help: (ws: string) => ["ws", ws, "help"] as const,
+  helpCenters: (ws: string) => ["ws", ws, "help", "centers"] as const,
+  helpCenter: (ws: string, id: string) => ["ws", ws, "help", "center", id] as const,
+  helpCollections: (ws: string, center: string) => ["ws", ws, "help", "collections", center] as const,
+  helpArticles: (ws: string, center: string, f: HelpArticleFilters) =>
+    ["ws", ws, "help", "articles", center, f] as const,
+  helpArticle: (ws: string, center: string, id: string) => ["ws", ws, "help", "article", center, id] as const,
+  helpRevisions: (ws: string, center: string, id: string, locale: string) =>
+    ["ws", ws, "help", "revisions", center, id, locale] as const,
+  helpReport: (ws: string, center: string, days: number) => ["ws", ws, "help", "report", center, days] as const,
+  helpSearch: (ws: string, center: string, q: string, locale: string) =>
+    ["ws", ws, "help", "search", center, q, locale] as const,
   analytics: (ws: string) => ["ws", ws, "analytics"] as const,
   analyticsProperties: (ws: string) => ["ws", ws, "analytics", "properties"] as const,
   analyticsProperty: (ws: string, id: string) => ["ws", ws, "analytics", "property", id] as const,

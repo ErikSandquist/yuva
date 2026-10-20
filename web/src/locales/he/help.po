@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} מתוך {total} מאמרים פורסמו"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 עד 48 אותיות, ספרות ומקפים. ייחודית בשרת הזה."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "חבר צוות לשעבר"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "קבוצת מאמרים. תנו לה שם בכל שפה שבה אתם מפרסמים; שם אחד מספיק להתחלה."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "צבע הדגשה"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "עזרה של Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "הוספת שפה"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "הוספת אוסף משנה"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "כתובת"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "סוף הכתובת"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "נציגים יכולים לפרסם"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "כל האוספים"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "מפתח API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "תמונת https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "נכס אנליטיקס"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "מרכז עזרה אחר משתמש בכתובת הזו, עכשיו או בעבר."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "ענו על שאלות נפוצות פעם אחת, בכתב. בחרו את מרכז העזרה של תיבה כדי לכתוב מאמרים, לקבץ אותם באוספים ולראות מה לקוחות מחפשים."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "כל מצב"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "מאמר"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "המאמר נמחק"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "טקסט המאמר"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "כותרת המאמר"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "צפיות במאמרים"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "מאמרים"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "אפשר לכתוב ולפרסם מאמרים בשפות האלה. מבקרים רואים את השפה שלהם כשהיא קיימת."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "מאמרים באוסף הזה"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "מאמרים שעונים על שאלות הלקוחות שלכם על {inboxName}. נשאר לא מפורסם עד שתפרסמו אותו."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "מאמרים שלא עזרו"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "לפחות 3 תווים."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "פעמון"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "חיוב"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "מודגש"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "ספר"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "רשימת תבליטים"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "ביטול"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "תרשים"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "צ׳אט"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "ערוץ צ׳אט"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "צ׳אטים שהתחילו"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "קוד"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "בלוק קוד"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "אוסף"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "אוספים"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "אוספים, מאמרים, גרסאות ומונים נמחקים איתו."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "סופר צפיות בדפי מרכז העזרה ללא עוגיות."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "יצירת מאמר"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "יצירת אוסף"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "יצירת מרכז עזרה"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "יצירת מרכז עזרה ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "מחיקה"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "למחוק את {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "למחוק את {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "מחיקת מאמר"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "מחיקת אוסף"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "מחיקת מרכז עזרה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "למחוק את התרגום {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "למחוק את המאמר הזה?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "מחיקת התרגום הזה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "מחיקת תרגום"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "מוחק את מרכז העזרה עם האוספים, המאמרים, הגרסאות והמונים שלו. הכתובת הציבורית מפסיקה לעבוד."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "תיאור"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "טיוטה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "הטיוטה נשלחה. בעלים או מנהל יכולים לפרסם אותה."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "גרסאות קודמות של התרגום הזה. שחזור גרסה מחליף את הטיוטה; הטקסט שפורסם נשאר עד שתפרסמו."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "עריכה"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "עריכת אוסף"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "ריק"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "כל חיפוש מצא משהו."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "כל התרגומים, הגרסאות והמונים שלהם נמחקים."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "עיצוב"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "תחילת עבודה"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "גלובוס"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "קבצו מאמרים כדי שמבקרים יוכלו לדפדף. אוסף יכול להכיל רמה אחת של אוספי משנה. גררו כדי לשנות סדר."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "כותרת"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "עזרה"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "מרכז עזרה"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "מרכז העזרה נמחק"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "מרכזי עזרה"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "מרכזי עזרה כבויים בשרת הזה."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "מועיל"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "איך מאפסים את הסיסמה?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "סמל"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "תמונה"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "בתוך"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "נטוי"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "המאמרים שלו נשארים בלי אוסף. אוספי המשנה שלו הופכים לאוספים ברמה העליונה."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "הטיוטה והגרסאות שלו נמחקות. שאר השפות נשארות."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "השאר את שלי"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "שפה"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "שפות"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "{d} הימים האחרונים"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "קישור"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "טעינת עוד"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "מנעול"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "כתובת URL של הלוגו"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "דואר"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "ראשי"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "שפה ראשית"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "עוד"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "עוד עבור {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "העברת {name}. גררו או הקישו Alt עם מקשי החצים."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "הזזה למטה"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "הזזה למעלה"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "שם"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "מאמר חדש"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "מאמר חדש ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "אוסף חדש"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "אוסף חדש ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "אף מאמר לא קיבל ״לא״ בתקופה הזו."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "אין מאמר תואם."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "לא נקרא אף מאמר בתקופה הזו."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "עדיין אין מאמרים. כתבו את התשובה הראשונה שהלקוחות שלכם שואלים שוב ושוב."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "בלי אוסף"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "עדיין אין אוספים. מאמרים יכולים להישאר בלי אוסף."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "עדיין אין גרסאות קודמות."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "עדיין אין מרכז עזרה. בעלים ומנהלים יוצרים אותו."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "אין תיבה שאפשר להציג עבורה מרכז עזרה."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "ללא"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "בלי שם"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "לא נכתב"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "לא נכתב"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "רשימה ממוספרת"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "כבוי: נציגים כותבים טיוטות ושולחים אותן, ובעלים ומנהלים מפרסמים. פעיל: גם נציגים עם גישה לתיבה מפרסמים ומבטלים פרסום."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "נתיב אחד בכל שורה, למשל /billing/*. ווידג׳ט הצ׳אט מציע את המאמר הזה בדפים תואמים."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "רק בעלים ומנהלים יכולים לעשות זאת."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "מקור"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "מקור ב{language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "הטקסט המקורי ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "מילים אחרות שמבקרים עשויים להקליד, כמו מילים נרדפות."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "לא עדכני"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "לא עדכני"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "חלק מכתובת האינטרנט של התרגום הזה. נוצר מהכותרת כשהוא ריק."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "אדם"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "טלפון"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "בחירת צבע"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "תקע"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "תצוגה מקדימה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "תצוגה מקדימה ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "תצוגה מקדימה ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "תצוגה מקדימה של {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "תצוגה מקדימה של המאמר"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "כתובת ציבורית"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "פרסום"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "פרסום ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "פורסם"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "סימן שאלה"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "ציטוט"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "הסרת {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "דוח"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "תקופת הדוח"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "שחזור הגרסה הזו"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "שוחזר"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "תוצאות שנפתחו"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "גרסאות"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "גרסאות ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "רקטה"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "שמירה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "שמירה עכשיו"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "נשמר"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "שומר…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "חיפוש בכותרות"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "חיפוש בכותרות ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "מילות חיפוש"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "חיפושים"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "חיפושים ללא תוצאה"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "נשלחו"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "הגדרות"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "מגן"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "הצגה"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "מוצג מתחת לשם בדף הבית."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "מוצג כשלמאמר אין תרגום בשפת המבקר."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "קישור לאתר"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "בינתיים מישהו שמר את המאמר הזה."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "מישהו שמר את התרגום הזה בזמן שערכתם אותו."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "כוכב"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "התחילו בכותרת. את הטקסט תכתבו אחר כך, והוא נשאר טיוטה עד שיפורסם."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "מצב"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "שליחת טיוטה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "שליחת טיוטה ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "הצעה בדפים"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "צוות"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "הכתובת עונה ״לא נמצא״ עד שתפרסמו את מרכז העזרה."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "מרכז העזרה כפי שמבקרים רואים אותו עכשיו. טיוטות לא נכללות."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "מרכז העזרה לא מציע את השפה הזו. הוסיפו אותה קודם בהגדרות."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "מרכז העזרה נמצא ב-{address}. הכתובת הישנה ממשיכה להפנות אם תשנו אותה."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "מרכז העזרה לא פורסם. רק הצוות שלכם רואה אותו."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "לשפה הראשית עדיין אין טקסט למאמר הזה."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "הדף מפסיק לעבוד עבור מבקרים. הטיוטה נשארת ואפשר לפרסם אותה שוב."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "הדפים מציעים את הצ׳אט הזה תחת ״עדיין צריכים עזרה?״."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "הכותרת צריכה להכיל לפחות 3 תווים"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "לתיבה הזו כבר יש מרכז עזרה."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "זה התרגום היחיד של המאמר. מחקו את המאמר במקום."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "בסביבת העבודה הזו יש מספר מאמרי עזרה כפי שהשרת מאפשר. מחקו קודם ישנים."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "כותרת"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "יותר מדי בקשות. המתינו רגע ונסו שוב."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "המאמרים הנקראים ביותר"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "רמה עליונה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "התרגום נמחק"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "הקלידו מילה לחיפוש."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "ביטול פרסום"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ביטול פרסום ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "לבטל את הפרסום של התרגום הזה?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "לא פורסם"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "שינויים שלא פורסמו"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "לא פורסם, רק הצוות שלכם יכול לראות תצוגה מקדימה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "שינויים שלא נשמרו"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "השתמשו ב-3 עד 48 אותיות, ספרות ומקפים פנימיים."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "השתמשו בצבע כמו #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "שימוש בגרסה שלהם"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "הגרסה שוחזרה לטיוטה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "צפייה"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "צפייה במרכז העזרה"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "צפיות"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "מה מבקרים קוראים ומחפשים. הצפיות משוערות, והמספרים מגיעים לדף הזה תוך דקה."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "מי יכול לפרסם"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "מילים שמבקרים הקלידו ולא מצאו כלום. מאמר חדש לכל אחת הוא התיקון המהיר ביותר."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "כתיבה"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "כתבו את התשובה ב-Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "המוצר שלכם."

@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: kn\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} ಲೇಖನಗಳಲ್ಲಿ {published} ಪ್ರಕಟವಾಗಿವೆ"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಸಂಖ್ಯೆಗಳು ಮತ್ತು ಹೈಫನ್‌ಗಳು. ಈ ಸರ್ವರ್‌ನಲ್ಲಿ ಅನನ್ಯ."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "ತಂಡದ ಮಾಜಿ ಸದಸ್ಯ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "ಲೇಖನಗಳ ಗುಂಪು. ನೀವು ಪ್ರಕಟಿಸುವ ಪ್ರತಿ ಭಾಷೆಯಲ್ಲಿ ಹೆಸರಿಡಿ; ಪ್ರಾರಂಭಿಸಲು ಒಂದು ಹೆಸರು ಸಾಕು."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "ಒತ್ತು ಬಣ್ಣ"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme ಸಹಾಯ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "ಭಾಷೆ ಸೇರಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "ಉಪ-ಸಂಗ್ರಹ ಸೇರಿಸಿ"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "ವಿಳಾಸ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "ವಿಳಾಸದ ಕೊನೆ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "ಏಜೆಂಟ್‌ಗಳು ಪ್ರಕಟಿಸಬಹುದು"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "ಎಲ್ಲಾ ಸಂಗ್ರಹಗಳು"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "ಒಂದು API ಕೀ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "ಒಂದು https ಚಿತ್ರ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "ಅನಾಲಿಟಿಕ್ಸ್ ಗುಣ"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "ಮತ್ತೊಂದು ಸಹಾಯ ಕೇಂದ್ರ ಈ ವಿಳಾಸವನ್ನು ಈಗ ಅಥವಾ ಮೊದಲು ಬಳಸುತ್ತದೆ."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳಿಗೆ ಒಮ್ಮೆ, ಲಿಖಿತವಾಗಿ ಉತ್ತರಿಸಿ. ಲೇಖನಗಳನ್ನು ಬರೆಯಲು, ಸಂಗ್ರಹಗಳಾಗಿ ಗುಂಪು ಮಾಡಲು ಮತ್ತು ಗ್ರಾಹಕರು ಏನು ಹುಡುಕುತ್ತಾರೆ ಎಂದು ನೋಡಲು ಒಂದು ಇನ್‌ಬಾಕ್ಸ್‌ನ ಸಹಾಯ ಕೇಂದ್ರವನ್ನು ಆರಿಸಿ."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "ಯಾವುದೇ ಸ್ಥಿತಿ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "ಲೇಖನ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "ಲೇಖನ ಅಳಿಸಲಾಗಿದೆ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "ಲೇಖನದ ಪಠ್ಯ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "ಲೇಖನ ವೀಕ್ಷಣೆಗಳು"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "ಲೇಖನಗಳು"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "ಈ ಭಾಷೆಗಳಲ್ಲಿ ಲೇಖನಗಳನ್ನು ಬರೆದು ಪ್ರಕಟಿಸಬಹುದು. ಸಂದರ್ಶಕರಿಗೆ ಅವರ ಭಾಷೆ ಇದ್ದರೆ ಕಾಣಿಸುತ್ತದೆ."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "ಈ ಸಂಗ್ರಹದ ಲೇಖನಗಳು"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "{inboxName} ಕುರಿತ ನಿಮ್ಮ ಗ್ರಾಹಕರ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸುವ ಲೇಖನಗಳು. ನೀವು ಪ್ರಕಟಿಸುವವರೆಗೆ ಇದು ಪ್ರಕಟವಾಗದೆ ಉಳಿಯುತ್ತದೆ."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "ಸಹಾಯ ಮಾಡದ ಲೇಖನಗಳು"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳು."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "ಗಂಟೆ"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "ಬಿಲ್ಲಿಂಗ್"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "ದಪ್ಪ"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "ಪುಸ್ತಕ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "ಬುಲೆಟ್ ಪಟ್ಟಿ"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "ಚಾರ್ಟ್"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "ಚಾಟ್"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "ಚಾಟ್ ಚಾನೆಲ್"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "ಪ್ರಾರಂಭವಾದ ಚಾಟ್‌ಗಳು"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "ಕೋಡ್"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "ಕೋಡ್ ಬ್ಲಾಕ್"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "ಸಂಗ್ರಹ"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "ಸಂಗ್ರಹಗಳು"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "ಸಂಗ್ರಹಗಳು, ಲೇಖನಗಳು, ಪರಿಷ್ಕರಣೆಗಳು ಮತ್ತು ಕೌಂಟರ್‌ಗಳು ಅದರೊಂದಿಗೆ ಅಳಿಸಲ್ಪಡುತ್ತವೆ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "ಕುಕೀಗಳಿಲ್ಲದೆ ಸಹಾಯ ಕೇಂದ್ರದ ಪುಟ ವೀಕ್ಷಣೆಗಳನ್ನು ಎಣಿಸುತ್ತದೆ."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "ಲೇಖನ ರಚಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "ಸಂಗ್ರಹ ರಚಿಸಿ"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ರಚಿಸಿ"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ರಚಿಸಿ ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "ಅಳಿಸಿ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "{centerName} ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "{name} ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "ಲೇಖನ ಅಳಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "ಸಂಗ್ರಹ ಅಳಿಸಿ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ಅಳಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} ಅನುವಾದ ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "ಈ ಲೇಖನ ಅಳಿಸಬೇಕೇ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "ಈ ಅನುವಾದ ಅಳಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "ಅನುವಾದ ಅಳಿಸಿ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "ಸಹಾಯ ಕೇಂದ್ರವನ್ನು ಅದರ ಸಂಗ್ರಹಗಳು, ಲೇಖನಗಳು, ಪರಿಷ್ಕರಣೆಗಳು ಮತ್ತು ಕೌಂಟರ್‌ಗಳೊಂದಿಗೆ ಅಳಿಸುತ್ತದೆ. ಸಾರ್ವಜನಿಕ ವಿಳಾಸ ಕೆಲಸ ಮಾಡುವುದು ನಿಲ್ಲುತ್ತದೆ."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "ವಿವರಣೆ"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "ಕರಡು"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "ಕರಡು ಸಲ್ಲಿಸಲಾಗಿದೆ. ಮಾಲೀಕರು ಅಥವಾ ನಿರ್ವಾಹಕರು ಅದನ್ನು ಪ್ರಕಟಿಸಬಹುದು."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "ಈ ಅನುವಾದದ ಹಿಂದಿನ ಆವೃತ್ತಿಗಳು. ಒಂದನ್ನು ಮರುಸ್ಥಾಪಿಸಿದರೆ ಕರಡು ಬದಲಾಗುತ್ತದೆ; ನೀವು ಪ್ರಕಟಿಸುವವರೆಗೆ ಪ್ರಕಟಿತ ಪಠ್ಯ ಉಳಿಯುತ್ತದೆ."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "ಸಂಪಾದಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "ಸಂಗ್ರಹ ಸಂಪಾದಿಸಿ"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "ಖಾಲಿ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "ಪ್ರತಿ ಹುಡುಕಾಟದಲ್ಲಿ ಏನೋ ಸಿಕ್ಕಿತು."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "ಎಲ್ಲಾ ಅನುವಾದಗಳು, ಅವುಗಳ ಪರಿಷ್ಕರಣೆಗಳು ಮತ್ತು ಕೌಂಟರ್‌ಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "ಫಾರ್ಮ್ಯಾಟಿಂಗ್"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "ಪ್ರಾರಂಭಿಸುವುದು"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "ಗ್ಲೋಬ್"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "ಸಂದರ್ಶಕರು ಬ್ರೌಸ್ ಮಾಡಲು ಅನುಕೂಲವಾಗುವಂತೆ ಲೇಖನಗಳನ್ನು ಗುಂಪು ಮಾಡಿ. ಒಂದು ಸಂಗ್ರಹದಲ್ಲಿ ಒಂದು ಹಂತದ ಉಪ-ಸಂಗ್ರಹಗಳು ಇರಬಹುದು. ಕ್ರಮ ಬದಲಿಸಲು ಎಳೆಯಿರಿ."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "ಶೀರ್ಷಿಕೆ"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "ಸಹಾಯ"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ಅಳಿಸಲಾಗಿದೆ"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರಗಳು"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "ಈ ಸರ್ವರ್‌ನಲ್ಲಿ ಸಹಾಯ ಕೇಂದ್ರಗಳು ಆಫ್ ಆಗಿವೆ."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "ಉಪಯುಕ್ತ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "ನನ್ನ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಹೇಗೆ ಮರುಹೊಂದಿಸಲಿ?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "ಐಕಾನ್"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "ಚಿತ್ರ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "ಒಳಗೆ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "ಓರೆ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "ಅದರ ಲೇಖನಗಳು ಸಂಗ್ರಹವಿಲ್ಲದೆ ಉಳಿಯುತ್ತವೆ. ಅದರ ಉಪ-ಸಂಗ್ರಹಗಳು ಉನ್ನತ ಮಟ್ಟದ ಸಂಗ್ರಹಗಳಾಗುತ್ತವೆ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "ಅದರ ಕರಡು ಮತ್ತು ಪರಿಷ್ಕರಣೆಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಇತರ ಭಾಷೆಗಳು ಉಳಿಯುತ್ತವೆ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "ನನ್ನದನ್ನು ಇರಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "ಭಾಷೆ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "ಭಾಷೆಗಳು"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "ಕಳೆದ {d} ದಿನಗಳು"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "ಲಿಂಕ್"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "ಇನ್ನಷ್ಟು ಲೋಡ್ ಮಾಡಿ"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "ಬೀಗ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "ಲೋಗೋ URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "ಮೇಲ್"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "ಮುಖ್ಯ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "ಮುಖ್ಯ ಭಾಷೆ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "ಇನ್ನಷ್ಟು"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name} ಗಾಗಿ ಇನ್ನಷ್ಟು"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} ಸರಿಸಿ. ಎಳೆಯಿರಿ, ಅಥವಾ ಬಾಣ ಕೀಗಳೊಂದಿಗೆ Alt ಒತ್ತಿರಿ."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "ಕೆಳಗೆ ಸರಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "ಮೇಲೆ ಸರಿಸಿ"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "ಹೆಸರು"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "ಹೊಸ ಲೇಖನ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "ಹೊಸ ಲೇಖನ ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "ಹೊಸ ಸಂಗ್ರಹ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "ಹೊಸ ಸಂಗ್ರಹ ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "ಈ ಅವಧಿಯಲ್ಲಿ ಯಾವುದೇ ಲೇಖನಕ್ಕೆ “ಇಲ್ಲ” ಸಿಗಲಿಲ್ಲ."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "ಯಾವುದೇ ಲೇಖನ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "ಈ ಅವಧಿಯಲ್ಲಿ ಯಾವುದೇ ಲೇಖನ ಓದಲ್ಪಟ್ಟಿಲ್ಲ."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "ಇನ್ನೂ ಲೇಖನಗಳಿಲ್ಲ. ನಿಮ್ಮ ಗ್ರಾಹಕರು ಪದೇ ಪದೇ ಕೇಳುವ ಮೊದಲ ಉತ್ತರವನ್ನು ಬರೆಯಿರಿ."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "ಸಂಗ್ರಹವಿಲ್ಲ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "ಇನ್ನೂ ಸಂಗ್ರಹಗಳಿಲ್ಲ. ಲೇಖನಗಳು ಸಂಗ್ರಹವಿಲ್ಲದೆ ಇರಬಹುದು."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "ಇನ್ನೂ ಹಿಂದಿನ ಆವೃತ್ತಿಗಳಿಲ್ಲ."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "ಇನ್ನೂ ಸಹಾಯ ಕೇಂದ್ರವಿಲ್ಲ. ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಅದನ್ನು ರಚಿಸುತ್ತಾರೆ."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "ಸಹಾಯ ಕೇಂದ್ರವನ್ನು ತೋರಿಸಲು ಇನ್‌ಬಾಕ್ಸ್ ಇಲ್ಲ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "ಯಾವುದೂ ಇಲ್ಲ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "ಹೆಸರಿಲ್ಲ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "ಬರೆದಿಲ್ಲ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "ಬರೆದಿಲ್ಲ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "ಸಂಖ್ಯೆಯ ಪಟ್ಟಿ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "ಆಫ್: ಏಜೆಂಟ್‌ಗಳು ಕರಡುಗಳನ್ನು ಬರೆದು ಸಲ್ಲಿಸುತ್ತಾರೆ, ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಪ್ರಕಟಿಸುತ್ತಾರೆ. ಆನ್: ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಪ್ರವೇಶವಿರುವ ಏಜೆಂಟ್‌ಗಳೂ ಪ್ರಕಟಿಸಬಹುದು ಮತ್ತು ಪ್ರಕಟಣೆ ರದ್ದುಮಾಡಬಹುದು."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪಾತ್, ಉದಾ. /billing/*. ಹೊಂದುವ ಪುಟಗಳಲ್ಲಿ ಚಾಟ್ ವಿಜೆಟ್ ಈ ಲೇಖನವನ್ನು ಸೂಚಿಸುತ್ತದೆ."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "ಇದನ್ನು ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಮಾತ್ರ ಮಾಡಬಹುದು."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "ಮೂಲ"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language} ನಲ್ಲಿ ಮೂಲ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "ಮೂಲ ಪಠ್ಯ ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "ಸಂದರ್ಶಕರು ಟೈಪ್ ಮಾಡಬಹುದಾದ ಇತರ ಪದಗಳು, ಉದಾ. ಸಮಾನಾರ್ಥಕಗಳು."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "ಹಳೆಯದು"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "ಹಳೆಯದು"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "ಈ ಅನುವಾದದ ವೆಬ್ ವಿಳಾಸದ ಭಾಗ. ಖಾಲಿ ಇದ್ದರೆ ಶೀರ್ಷಿಕೆಯಿಂದ ರಚಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "ವ್ಯಕ್ತಿ"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "ಫೋನ್"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "ಬಣ್ಣ ಆರಿಸಿ"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "ಪ್ಲಗ್"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "ಮುನ್ನೋಟ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "ಮುನ್ನೋಟ ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "ಮುನ್ನೋಟ ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} ಮುನ್ನೋಟ"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "ಲೇಖನದ ಮುನ್ನೋಟ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "ಸಾರ್ವಜನಿಕ ವಿಳಾಸ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "ಪ್ರಕಟಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "ಪ್ರಕಟಿಸಿ ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "ಪ್ರಕಟಿತ"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "ಪ್ರಶ್ನಾರ್ಥಕ ಚಿಹ್ನೆ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "ಉಲ್ಲೇಖ"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} ತೆಗೆದುಹಾಕಿ"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "ವರದಿ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "ವರದಿಯ ಅವಧಿ"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "ಈ ಆವೃತ್ತಿಯನ್ನು ಮರುಸ್ಥಾಪಿಸಿ"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "ತೆರೆದ ಫಲಿತಾಂಶಗಳು"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "ಪರಿಷ್ಕರಣೆಗಳು"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "ಪರಿಷ್ಕರಣೆಗಳು ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "ರಾಕೆಟ್"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "ಉಳಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "ಈಗಲೇ ಉಳಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "ಉಳಿಸಲಾಗಿದೆ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "ಉಳಿಸಲಾಗುತ್ತಿದೆ…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ಹುಡುಕಿ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ಹುಡುಕಿ ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "ಹುಡುಕಾಟ ಪದಗಳು"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "ಹುಡುಕಾಟಗಳು"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "ಫಲಿತಾಂಶವಿಲ್ಲದ ಹುಡುಕಾಟಗಳು"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "ಕಳುಹಿಸಿದ್ದು"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "ಗುರಾಣಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "ತೋರಿಸಿ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "ಮುಖಪುಟದಲ್ಲಿ ಹೆಸರಿನ ಕೆಳಗೆ ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "ಲೇಖನಕ್ಕೆ ಸಂದರ್ಶಕರ ಭಾಷೆಯಲ್ಲಿ ಅನುವಾದ ಇಲ್ಲದಿದ್ದಾಗ ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "ಸೈಟ್ ಲಿಂಕ್"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "ಈ ನಡುವೆ ಯಾರೋ ಈ ಲೇಖನವನ್ನು ಉಳಿಸಿದರು."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "ನೀವು ಸಂಪಾದಿಸುತ್ತಿದ್ದಾಗ ಯಾರೋ ಈ ಅನುವಾದವನ್ನು ಉಳಿಸಿದರು."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "ನಕ್ಷತ್ರ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "ಶೀರ್ಷಿಕೆಯಿಂದ ಪ್ರಾರಂಭಿಸಿ. ಪಠ್ಯವನ್ನು ನಂತರ ಬರೆಯುತ್ತೀರಿ, ಪ್ರಕಟವಾಗುವವರೆಗೆ ಅದು ಕರಡಾಗಿರುತ್ತದೆ."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "ಸ್ಥಿತಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "ಕರಡು ಸಲ್ಲಿಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "ಕರಡು ಸಲ್ಲಿಸಿ ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "ಪುಟಗಳಲ್ಲಿ ಸೂಚಿಸಿ"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "ತಂಡ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "ನೀವು ಸಹಾಯ ಕೇಂದ್ರವನ್ನು ಪ್ರಕಟಿಸುವವರೆಗೆ ವಿಳಾಸ “ಸಿಗಲಿಲ್ಲ” ಎಂದು ಉತ್ತರಿಸುತ್ತದೆ."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "ಸಂದರ್ಶಕರಿಗೆ ಈಗ ಕಾಣುವಂತೆ ಸಹಾಯ ಕೇಂದ್ರ. ಕರಡುಗಳನ್ನು ಬಿಡಲಾಗಿದೆ."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ಈ ಭಾಷೆಯನ್ನು ನೀಡುವುದಿಲ್ಲ. ಮೊದಲು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಸೇರಿಸಿ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ {address} ನಲ್ಲಿದೆ. ನೀವು ವಿಳಾಸ ಬದಲಿಸಿದರೆ ಹಳೆಯ ವಿಳಾಸ ಮರುನಿರ್ದೇಶಿಸುತ್ತಲೇ ಇರುತ್ತದೆ."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ಪ್ರಕಟವಾಗಿಲ್ಲ. ಇದನ್ನು ನಿಮ್ಮ ತಂಡ ಮಾತ್ರ ನೋಡುತ್ತದೆ."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "ಮುಖ್ಯ ಭಾಷೆಯಲ್ಲಿ ಈ ಲೇಖನಕ್ಕೆ ಇನ್ನೂ ಪಠ್ಯವಿಲ್ಲ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "ಪುಟವು ಸಂದರ್ಶಕರಿಗೆ ಕೆಲಸ ಮಾಡುವುದು ನಿಲ್ಲುತ್ತದೆ. ಕರಡು ಉಳಿಯುತ್ತದೆ, ಮತ್ತು ನೀವು ಅದನ್ನು ಮತ್ತೆ ಪ್ರಕಟಿಸಬಹುದು."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "ಪುಟಗಳು ಈ ಚಾಟ್ ಅನ್ನು “ಇನ್ನೂ ಸಹಾಯ ಬೇಕೇ?” ಅಡಿಯಲ್ಲಿ ನೀಡುತ್ತವೆ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "ಶೀರ್ಷಿಕೆಗೆ ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳು ಬೇಕು"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಈಗಾಗಲೇ ಸಹಾಯ ಕೇಂದ್ರವಿದೆ."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "ಇದು ಲೇಖನದ ಏಕೈಕ ಅನುವಾದ. ಬದಲಿಗೆ ಲೇಖನವನ್ನು ಅಳಿಸಿ."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "ಈ ಕಾರ್ಯಸ್ಥಳದಲ್ಲಿ ಸರ್ವರ್ ಅನುಮತಿಸುವಷ್ಟು ಸಹಾಯ ಲೇಖನಗಳಿವೆ. ಮೊದಲು ಹಳೆಯವನ್ನು ಅಳಿಸಿ."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "ಶೀರ್ಷಿಕೆ"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "ತುಂಬಾ ವಿನಂತಿಗಳು. ಸ್ವಲ್ಪ ಕಾಯಿರಿ ಮತ್ತು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "ಹೆಚ್ಚು ಓದಿದ ಲೇಖನಗಳು"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "ಉನ್ನತ ಮಟ್ಟ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "ಅನುವಾದ ಅಳಿಸಲಾಗಿದೆ"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "ಹುಡುಕಲು ಒಂದು ಪದವನ್ನು ಟೈಪ್ ಮಾಡಿ."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "ಪ್ರಕಟಣೆ ರದ್ದುಮಾಡಿ"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ಪ್ರಕಟಣೆ ರದ್ದುಮಾಡಿ ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "ಈ ಅನುವಾದದ ಪ್ರಕಟಣೆ ರದ್ದುಮಾಡಬೇಕೇ?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "ಪ್ರಕಟವಾಗಿಲ್ಲ"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "ಪ್ರಕಟವಾಗದ ಬದಲಾವಣೆಗಳು"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "ಪ್ರಕಟವಾಗಿಲ್ಲ, ನಿಮ್ಮ ತಂಡ ಮಾತ್ರ ಮುನ್ನೋಟ ನೋಡಬಹುದು"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "ಉಳಿಸದ ಬದಲಾವಣೆಗಳು"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಸಂಖ್ಯೆಗಳು ಮತ್ತು ನಡುವಿನ ಹೈಫನ್‌ಗಳನ್ನು ಬಳಸಿ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb ನಂತಹ ಬಣ್ಣವನ್ನು ಬಳಸಿ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "ಅವರ ಆವೃತ್ತಿಯನ್ನು ಬಳಸಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "ಆವೃತ್ತಿಯನ್ನು ಕರಡಿಗೆ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "ವೀಕ್ಷಿಸಿ"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ ವೀಕ್ಷಿಸಿ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "ವೀಕ್ಷಣೆಗಳು"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "ಸಂದರ್ಶಕರು ಏನು ಓದುತ್ತಾರೆ ಮತ್ತು ಹುಡುಕುತ್ತಾರೆ. ವೀಕ್ಷಣೆಗಳು ಅಂದಾಜು, ಮತ್ತು ಸಂಖ್ಯೆಗಳು ಒಂದು ನಿಮಿಷದಲ್ಲಿ ಈ ಪುಟ ತಲುಪುತ್ತವೆ."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "ಯಾರು ಪ್ರಕಟಿಸಬಹುದು"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "ಸಂದರ್ಶಕರು ಟೈಪ್ ಮಾಡಿ ಏನೂ ಸಿಗದ ಪದಗಳು. ಪ್ರತಿಯೊಂದಕ್ಕೂ ಹೊಸ ಲೇಖನ ವೇಗದ ಪರಿಹಾರ."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "ಬರೆಯಿರಿ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "ಉತ್ತರವನ್ನು Markdown ನಲ್ಲಿ ಬರೆಯಿರಿ…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "ನಿಮ್ಮ ಉತ್ಪನ್ನ."

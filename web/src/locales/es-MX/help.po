@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: es-MX\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} de {total} artículos publicados"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De 3 a 48 letras, números y guiones. Es único en este servidor."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Un excompañero"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Un grupo de artículos. Ponle nombre en cada idioma que publiques; basta un nombre para empezar."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Color de énfasis"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Ayuda de Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Añadir un idioma"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Añadir una subcolección"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Dirección"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Final de la dirección"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Los agentes pueden publicar"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Todas las colecciones"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Una clave de API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Una imagen https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Propiedad de analítica"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Otro centro de ayuda usa esta dirección, ahora o antes."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Responde una vez a las preguntas frecuentes, por escrito. Elige el centro de ayuda de una bandeja para escribir artículos, agruparlos en colecciones y ver qué buscan los clientes."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Cualquier estado"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Artículo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Artículo eliminado"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Texto del artículo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Título del artículo"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Vistas de artículos"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Artículos"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Los artículos se pueden escribir y publicar en estos idiomas. Los visitantes ven el suyo cuando existe."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Artículos de esta colección"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Artículos que responden a las preguntas de tus clientes sobre {inboxName}. Sigue sin publicarse hasta que lo publiques."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Artículos que no ayudaron"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Al menos 3 caracteres."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Campana"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Facturación"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Negrita"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Libro"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Lista con viñetas"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Gráfico"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Chat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Canal de chat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Chats iniciados"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Código"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Bloque de código"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Colección"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Colecciones"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Las colecciones, artículos, revisiones y contadores se eliminan con él."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Cuenta las vistas de página del centro de ayuda sin cookies."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Crear artículo"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Crear colección"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Crear centro de ayuda"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Crear centro de ayuda ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "¿Eliminar {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "¿Eliminar {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Eliminar artículo"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Eliminar colección"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Eliminar centro de ayuda"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "¿Eliminar la traducción {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "¿Eliminar este artículo?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Eliminar esta traducción"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Eliminar traducción"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Elimina el centro de ayuda con sus colecciones, artículos, revisiones y contadores. La dirección pública deja de funcionar."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Descripción"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Borrador"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Borrador enviado. Un propietario o administrador puede publicarlo."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Versiones anteriores de esta traducción. Restaurar una sustituye el borrador; el texto publicado se mantiene hasta que publiques."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Editar"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Editar colección"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Vacío"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Cada búsqueda encontró algo."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Se eliminan todas las traducciones, sus revisiones y sus contadores."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Formato"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Primeros pasos"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Globo"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Agrupa los artículos para que los visitantes puedan explorar. Una colección puede contener un nivel de subcolecciones. Arrastra para cambiar el orden."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Encabezado"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Ayuda"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Centro de ayuda"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Centro de ayuda eliminado"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Centros de ayuda"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Los centros de ayuda están desactivados en este servidor."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Útil"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "¿Cómo restablezco mi contraseña?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Icono"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Imagen"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Dentro de"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Cursiva"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Sus artículos se quedan sin colección. Sus subcolecciones pasan a ser colecciones de nivel superior."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Se eliminan su borrador y sus revisiones. Los demás idiomas se quedan."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Conservar la mía"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Idioma"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Idiomas"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Últimos {d} días"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Enlace"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Cargar más"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Candado"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL del logotipo"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Correo"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Principal"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Idioma principal"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Más"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Más para {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Mover {name}. Arrastra, o pulsa Alt con las flechas."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Bajar"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Subir"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Nombre"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Artículo nuevo"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Artículo nuevo ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Colección nueva"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Colección nueva ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Ningún artículo recibió un «no» en este periodo."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Ningún artículo coincide."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "No se leyó ningún artículo en este periodo."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Aún no hay artículos. Escribe la primera respuesta que tus clientes preguntan una y otra vez."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Sin colección"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Aún no hay colecciones. Los artículos pueden quedarse sin una."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Aún no hay versiones anteriores."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Aún no hay centro de ayuda. Lo crean los propietarios y administradores."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "No hay bandeja para la que mostrar un centro de ayuda."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Ninguno"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "sin nombre"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "sin redactar"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Sin redactar"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Lista numerada"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Desactivado: los agentes escriben borradores y los envían, y los propietarios y administradores publican. Activado: los agentes con acceso a la bandeja también publican y despublican."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Una ruta por línea, como /billing/*. El widget de chat sugiere este artículo en las páginas que coincidan."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Solo los propietarios y administradores pueden hacerlo."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Original"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Original en {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Texto original ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Otras palabras que los visitantes podrían escribir, como sinónimos."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "desactualizado"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Desactualizado"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Parte de la dirección web de esta traducción. Se crea a partir del título si está vacía."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Persona"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Teléfono"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Elige un color"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Enchufe"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Vista previa"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Vista previa ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Vista previa ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Vista previa de {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Vista previa del artículo"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Dirección pública"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Publicar"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publicar ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Publicado"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Signo de interrogación"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Cita"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Quitar {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Informe"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Periodo del informe"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Restaurar esta versión"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Restaurada"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Resultados abiertos"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Revisiones"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Revisiones ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Cohete"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Guardar"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Guardar ahora"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Guardado"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Guardando…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Buscar en los títulos"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Buscar en los títulos ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Palabras de búsqueda"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Búsquedas"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Búsquedas sin resultado"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Enviado"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Ajustes"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Escudo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Mostrar"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Se muestra bajo el nombre en la página de inicio."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Se muestra cuando un artículo no tiene traducción en el idioma del visitante."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Enlace del sitio"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Alguien guardó este artículo mientras tanto."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Alguien guardó esta traducción mientras la editabas."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Estrella"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Empieza con un título. El texto lo escribes después y sigue siendo un borrador hasta que se publica."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Estado"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Enviar borrador"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Enviar borrador ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Sugerir en páginas"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Equipo"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "La dirección responde «no encontrado» hasta que publiques el centro de ayuda."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "El centro de ayuda como lo ven ahora los visitantes. Los borradores no se incluyen."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "El centro de ayuda no ofrece este idioma. Añádelo primero en los ajustes."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "El centro de ayuda está en {address}. La dirección anterior sigue redirigiendo si la cambias."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "El centro de ayuda no está publicado. Solo tu equipo lo ve."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "El idioma principal aún no tiene texto para este artículo."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "La página deja de funcionar para los visitantes. El borrador se queda y puedes volver a publicarlo."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Las páginas ofrecen este chat bajo «¿Aún necesitas ayuda?»."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "El título necesita al menos 3 caracteres"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Esta bandeja ya tiene un centro de ayuda."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Es la única traducción del artículo. Elimina el artículo en su lugar."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Este espacio de trabajo tiene tantos artículos de ayuda como permite el servidor. Elimina antes los antiguos."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Título"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Demasiadas solicitudes. Espera un momento e inténtalo de nuevo."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Artículos más vistos"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Nivel superior"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Traducción eliminada"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Escribe una palabra para buscar."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Despublicar"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Despublicar ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "¿Despublicar esta traducción?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Sin publicar"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Cambios sin publicar"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Sin publicar, solo tu equipo puede verlo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Cambios sin guardar"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Usa de 3 a 48 letras, números y guiones intermedios."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Usa un color como #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Usar su versión"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Versión restaurada en el borrador"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Ver"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Ver centro de ayuda"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Vistas"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Lo que los visitantes leen y buscan. Las vistas son aproximadas y las cifras llegan aquí en un minuto."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Quién puede publicar"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Palabras que los visitantes escribieron y no encontraron nada. Un artículo nuevo para cada una es la solución más rápida."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Escribir"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Escribe la respuesta en Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Tu producto."

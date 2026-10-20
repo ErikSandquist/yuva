@@ -1012,6 +1012,10 @@ msgstr "有成员稍后手动设置了该组件，因此它保持成员设置的
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "没有备用值的合并字段对部分收件人会显示为空。请为它设置备用值。"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "一条消息最多可附 3 篇文章。"
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "添加了消息时"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "添加一个 Webhook 类型的联系点，粘贴上面的地址，保持 POST 方法，并在通知策略中使用该联系点。触发的告警会让监控失败，已解决的告警会让它恢复。"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "添加链接"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "添加监控"
 
@@ -1264,6 +1272,10 @@ msgstr "添加网站或应用"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "添加分析属性"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "添加图片"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "已直接到达 {address},{verifiedAt}。"
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "已通过转发到达,{verifiedAt}。"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "文章"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "作为 {name},自 {when}"
@@ -2216,6 +2232,10 @@ msgstr "已屏蔽的联系人"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "正文"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "粗体"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME 记录"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "代码"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "集合"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "删除订阅"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "删除你为 Yuva 创建的应用"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "删除文章"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "来自设置的问候"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "你好,我正在把邮箱 {address} 迁移到我们的客服收件箱 Yuva。我们的 Microsoft 365 组织只允许管理员批准应用。请以管理员身份打开此链接并接受,这样 Yuva 才能通过 IMAP 读取该邮箱:{url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "帮助"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "帮助与反馈"
@@ -5041,6 +5075,27 @@ msgstr "帮助与反馈"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "iOS 或 Android 应用内的帮助与反馈"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "帮助文章"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "帮助文章"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "帮助中心"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "帮助中心设置"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "帮助报告"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "它将以你(<0>{email}</0>)的身份运行,仅限你在下面允许的�
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "它将不再收到通知。"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "斜体"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "移动所选区块"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "移动所选集合"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "在文章或集合间移动"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "在群发之间移动"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "会收到确认邮件的新地址"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "新文章"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "新建群发({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "新建快捷回复"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "新集合"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "还没有页面"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "没有待处理的邀请。"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "未找到已发布的文章。"
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "打开设置"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "打开文章或集合"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "打开群发"
 
@@ -8251,6 +8334,10 @@ msgstr "打开讨论"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "打开端点"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "打开帮助文章"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "打开下一个或上一个对话"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "打开页面设置"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "打开公开的帮助中心"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "预览文字"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "预览帮助中心"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "预览页面"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "上一种或下一种语言"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "立即发布"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "发布或取消发布帮助中心"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "发布或取消发布页面"
 
@@ -9072,6 +9175,10 @@ msgstr "发布草稿"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "在你域名的 DNS 中发布此 TXT 记录:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "发布，或提交草稿"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "远程图片可能会让发件人知道你已打开邮件。"
 msgid "Remove"
 msgstr "移除"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "审核,然后发送或安排发送"
 msgid "Review, then send or schedule ({key})"
 msgstr "审核,然后发送或安排发送({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "修订"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "保存后复制其标识符和密钥,密钥在 Zendesk 中只显示一�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "立即保存并保留一个版本"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "立即保存草稿"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "搜索表情符号(英文)"
 msgid "Search feedback"
 msgstr "搜索反馈"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "搜索帮助文章…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "在已加载的消息中搜索"
@@ -10124,6 +10244,10 @@ msgstr "搜索收件人"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "搜索订阅者"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "搜索文章"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "发送心跳信号"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "发送检查"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "发送帮助文章"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "发送帮助文章（{articleKey}）"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "在页面上显示"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "显示或隐藏引用文字"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "在翻译旁显示或隐藏原文"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "显示或隐藏预览"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "取消发布"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "取消发布（{publishKey}）"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "取消发布翻译"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

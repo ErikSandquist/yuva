@@ -1012,6 +1012,10 @@ msgstr "ଜଣେ ସଦସ୍ୟ ପରେ ଘଟକକୁ ହାତରେ ସ�
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "ଫଲବ୍ୟାକ୍ ବିନା ମର୍ଜ୍ ଫିଲ୍ଡ କିଛି ପ୍ରାପକଙ୍କ ପାଇଁ ଖାଲି ରହିବ। ଏହାକୁ ଏକ ଫଲବ୍ୟାକ୍ ଦିଅନ୍ତୁ।"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "ଗୋଟିଏ ବାର୍ତ୍ତାରେ ସର୍ବାଧିକ 3 ପ୍ରବନ୍ଧ ଯାଇପାରେ।"
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "ଏକ ସଂଦେଶ ଯୋଡ଼ାଗଲା"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Webhook ପ୍ରକାରର ଏକ ଯୋଗାଯୋଗ ବିନ୍ଦୁ ଯୋଡ଼ନ୍ତୁ, ଉପରର ଠିକଣା ପେଷ୍ଟ କରନ୍ତୁ, ପଦ୍ଧତି POST ରଖନ୍ତୁ ଏବଂ ବିଜ୍ଞପ୍ତି ନୀତିରେ ଯୋଗାଯୋଗ ବିନ୍ଦୁ ବ୍ୟବହାର କରନ୍ତୁ। ସକ୍ରିୟ ଆଲର୍ଟ ମନିଟରକୁ ବିଫଳ କରେ, ସମାଧାନ ହୋଇଥିବା ଆଲର୍ଟ ଏହାକୁ ପୁନଃସ୍ଥାପନ କରେ।"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "ଲିଙ୍କ୍ ଯୋଡନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "ମନିଟର ଯୋଡ଼ନ୍ତୁ"
 
@@ -1264,6 +1272,10 @@ msgstr "ୱେବସାଇଟ୍ କିମ୍ବା ଆପ୍ ଯୋଡ଼ନ୍
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "ଏକ ଆନାଲିଟିକ୍ସ ପ୍ରପର୍ଟି ଯୋଡ଼ନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "ଚିତ୍ର ଯୋଡନ୍ତୁ"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "{verifiedAt} {address} କୁ ସିଧାସଳଖ ପହଞ୍ଚି�
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "{verifiedAt} ଫରୱାର୍ଡିଂ ଦ୍ୱାରା ପହଞ୍ଚିଲା।"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "ପ୍ରବନ୍ଧ"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "{name} ଭାବେ, {when} ଠାରୁ"
@@ -2216,6 +2232,10 @@ msgstr "ଅବରୋଧିତ ଯୋଗାଯୋଗ"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "ବଡି"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "ମୋଟା"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME ରେକର୍ଡ"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "କୋଡ୍"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "ସଂଗ୍ରହ"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "ସବ୍ସ୍କ୍ରିପସନ୍ ଡିଲିଟ୍ କରନ୍�
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "ଆପଣ Yuva ପାଇଁ ତିଆରି କରିଥିବା ଆପ୍ ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "ପ୍ରବନ୍ଧ ଡିଲିଟ୍ କରନ୍ତୁ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "ସେଟଅପ୍ରୁ ନମସ୍କାର"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "ନମସ୍କାର, ମୁଁ {address} ମେଲବକ୍ସ ଆମ ସପୋର୍ଟ ଇନବକ୍ସ Yuva କୁ ସ୍ଥାନାନ୍ତର କରୁଛି। ଆମ Microsoft 365 ସଂସ୍ଥା କେବଳ ଆଡମିନ୍ଙ୍କୁ ଆପ୍କୁ ଅନୁମତି ଦେବାକୁ ଦିଏ। ଦୟାକରି ଏହି ଲିଙ୍କ୍ ଆଡମିନ୍ ଭାବେ ଖୋଲି ଗ୍ରହଣ କରନ୍ତୁ, ଯେପରି Yuva IMAP ଉପରେ ମେଲବକ୍ସ ପଢ଼ିପାରିବ: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "ସହାୟତା"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "ସାହାଯ୍ୟ ଓ ମତାମତ"
@@ -5041,6 +5075,27 @@ msgstr "ସାହାଯ୍ୟ ଓ ମତାମତ"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "ଆପଣଙ୍କ iOS କିମ୍ବା Android ଆପ୍ ଭିତରେ ସାହାଯ୍ୟ ଓ ମତାମତ"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "ସହାୟତା କେନ୍ଦ୍ର"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "ସହାୟତା କେନ୍ଦ୍ର ସେଟିଂସ୍"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "ସହାୟତା ରିପୋର୍ଟ"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "ଏହା ଆପଣଙ୍କ ପରି, <0>{email}</0>, କେବଳ ତ
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "ଏହା ଆଉ ବିଜ୍ଞପ୍ତି ପାଇବ ନାହିଁ।"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "ତେଢ଼ା"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "ବଛା ବ୍ଲକ୍ ଘୁଞ୍ଚାନ୍ତୁ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "ବଛାଯାଇଥିବା ସଂଗ୍ରହ ଘୁଞ୍ଚାନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "ପ୍ରବନ୍ଧ କିମ୍ବା ସଂଗ୍ରହ ମଧ୍ୟରେ ଯାଆନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "ବ୍ରଡକାଷ୍ଟ ମଧ୍ୟରେ ଘୁଞ୍ଚନ୍ତୁ"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "ନିଶ୍ଚିତକରଣ ମେଲ୍ ପାଉଥିବା ନୂଆ ଠିକଣା"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "ନୂଆ ପ୍ରବନ୍ଧ"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "ନୂଆ ବ୍ରଡକାଷ୍ଟ ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "ନୂଆ ପ୍ରସ୍ତୁତ ଉତ୍ତର"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "ନୂଆ ସଂଗ୍ରହ"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "ଏପର୍ଯ୍ୟନ୍ତ ପୃଷ୍ଠା ନାହିଁ"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "ବାକି ଆମନ୍ତ୍ରଣ ନାହିଁ।"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "କୌଣସି ପ୍ରକାଶିତ ପ୍ରବନ୍ଧ ମିଳିଲା ନାହିଁ।"
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "ସେଟଅପ୍ ଖୋଲନ୍ତୁ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "ପ୍ରବନ୍ଧ କିମ୍ବା ସଂଗ୍ରହ ଖୋଲନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "ବ୍ରଡକାଷ୍ଟ ଖୋଲନ୍ତୁ"
 
@@ -8251,6 +8334,10 @@ msgstr "ଆଲୋଚନା ଖୋଲନ୍ତୁ"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "ଏଣ୍ଡପଏଣ୍ଟ ଖୋଲନ୍ତୁ"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ ଖୋଲନ୍ତୁ"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "ପରବର୍ତ୍ତୀ କିମ୍ବା ପୂର୍ବ କଥା
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "ପେଜ୍ ସେଟିଂସ୍ ଖୋଲନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "ସାର୍ବଜନୀନ ସହାୟତା କେନ୍ଦ୍ର ଖୋଲନ୍ତୁ"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "ପ୍ରିଭ୍ୟୁ ଟେକ୍ସଟ୍"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "ସହାୟତା କେନ୍ଦ୍ରର ପୂର୍ବାବଲୋକନ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "ପୃଷ୍ଠାର ପୂର୍ବାବଲୋକନ ଦେଖନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "ପୂର୍ବ କିମ୍ବା ପରବର୍ତ୍ତୀ ଭାଷା"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "ଏବେ ପ୍ରକାଶ କରନ୍ତୁ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "ସହାୟତା କେନ୍ଦ୍ର ପ୍ରକାଶ କରନ୍ତୁ କିମ୍ବା ପ୍ରକାଶନ ବାତିଲ୍ କରନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "ପୃଷ୍ଠା ପ୍ରକାଶ କରନ୍ତୁ କିମ୍ବା ଫେରାଇ ନିଅନ୍ତୁ"
 
@@ -9072,6 +9175,10 @@ msgstr "ଡ୍ରାଫ୍ଟ ପ୍ରକାଶ କରନ୍ତୁ"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "ଏହି TXT ରେକର୍ଡ ଆପଣଙ୍କ ଡୋମେନର DNS ରେ ପ୍ରକାଶ କରନ୍ତୁ:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "ପ୍ରକାଶ କରନ୍ତୁ, କିମ୍ବା ଖସଡ଼ା ଦାଖଲ କରନ୍ତୁ"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "ରିମୋଟ୍ ଇମେଜ୍ ପ୍ରେରକଙ୍କୁ ଜଣ
 msgid "Remove"
 msgstr "ହଟାନ୍ତୁ"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "ସମୀକ୍ଷା କରନ୍ତୁ, ତା'ପରେ ପଠାନ�
 msgid "Review, then send or schedule ({key})"
 msgstr "ସମୀକ୍ଷା କରନ୍ତୁ, ତା'ପରେ ପଠାନ୍ତୁ କିମ୍ବା ସିଡ୍ୟୁଲ୍ କରନ୍ତୁ ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "ସଂଶୋଧନ"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "ଏହାକୁ ସେଭ୍ କରି ଏହାର ଆଇଡେଣ୍�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "ବର୍ତ୍ତମାନ ସେଭ୍ କରି ଏକ ସଂସ୍କରଣ ରଖନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "ଖସଡ଼ା ବର୍ତ୍ତମାନ ସେଭ୍ କରନ୍ତୁ"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "ଇମୋଜି ସନ୍ଧାନ କରନ୍ତୁ (ଇଂରାଜ�
 msgid "Search feedback"
 msgstr "Search feedback"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ ଖୋଜନ୍ତୁ…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "ଲୋଡ୍ ହୋଇଥିବା ସଂଦେଶରେ ସନ୍ଧାନ କରନ୍ତୁ"
@@ -10124,6 +10244,10 @@ msgstr "ପ୍ରାପକ ସନ୍ଧାନ କରନ୍ତୁ"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "ସବ୍ସ୍କ୍ରାଇବର୍ ସନ୍ଧାନ କରନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "ପ୍ରବନ୍ଧରେ ଖୋଜନ୍ତୁ"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "ସଙ୍କେତ ପଠାନ୍ତୁ"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "ଏକ ଯାଞ୍ଚ ପଠାନ୍ତୁ"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ ପଠାନ୍ତୁ"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "ସହାୟତା ପ୍ରବନ୍ଧ ପଠାନ୍ତୁ ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "ପୃଷ୍ଠାରେ ଦେଖାନ୍ତୁ"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "ଉଦ୍ଧୃତ ଟେକ୍ସଟ୍ ଦେଖାନ୍ତୁ କିମ୍ବା ଲୁଚାନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "ଅନୁବାଦ ପାଖରେ ମୂଳ ପାଠ୍ୟ ଦେଖାନ୍ତୁ କିମ୍ବା ଲୁଚାନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "ପୂର୍ବାବଲୋକନ ଦେଖାନ୍ତୁ କିମ୍ବା ଲୁଚାନ୍ତୁ"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "ପ୍ରକାଶନ ଫେରାଇ ନିଅନ୍ତୁ"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "ପ୍ରକାଶନ ଫେରାଇ ନିଅନ୍ତୁ ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "ଅନୁବାଦର ପ୍ରକାଶନ ବାତିଲ୍ କରନ୍ତୁ"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

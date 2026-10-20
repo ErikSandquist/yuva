@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sl\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "Objavljenih {published} od {total} člankov"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Od 3 do 48 črk, številk in vezajev. Edinstven na tem strežniku."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Nekdanji član ekipe"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Skupina člankov. Poimenujte jo v vsakem jeziku, v katerem objavljate; za začetek zadošča eno ime."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Poudarna barva"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Pomoč Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Dodaj jezik"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Dodaj podzbirko"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Naslov"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Konec naslova"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agenti lahko objavljajo"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Vse zbirke"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Ključ API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Slika https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analitična lastnost"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Ta naslov že uporablja drug center za pomoč, zdaj ali prej."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Na pogosta vprašanja odgovorite enkrat, pisno. Izberite center za pomoč nabiralnika, da napišete članke, jih združite v zbirke in vidite, kaj iščejo stranke."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Katero koli stanje"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Članek"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Članek izbrisan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Besedilo članka"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Naslov članka"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Ogledi člankov"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Članki"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Članke je mogoče pisati in objavljati v teh jezikih. Obiskovalci vidijo svoj jezik, če obstaja."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Članki v tej zbirki"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Članki, ki odgovarjajo na vprašanja strank o {inboxName}. Ostane neobjavljen, dokler ga ne objavite."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Članki, ki niso pomagali"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Vsaj 3 znaki."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Zvonec"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Obračun"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Krepko"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Knjiga"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Alinejski seznam"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Graf"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Klepet"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Kanal klepeta"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Začeti klepeti"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Koda"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Blok kode"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Zbirka"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Zbirke"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Zbirke, članki, revizije in števci se izbrišejo z njim."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Šteje oglede strani centra za pomoč brez piškotkov."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Ustvari članek"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Ustvari zbirko"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Ustvari center za pomoč"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Ustvari center za pomoč ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Izbriši"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Izbrisati {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Izbrisati {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Izbriši članek"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Izbriši zbirko"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Izbriši center za pomoč"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Izbrisati prevod {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Izbrisati ta članek?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Izbriši ta prevod"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Izbriši prevod"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Izbriše center za pomoč z zbirkami, članki, revizijami in števci. Javni naslov preneha delovati."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Opis"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Osnutek"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Osnutek oddan. Objavi ga lahko lastnik ali skrbnik."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Prejšnje različice tega prevoda. Obnovitev ene nadomesti osnutek; objavljeno besedilo ostane, dokler ne objavite."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Uredi"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Uredi zbirko"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Prazno"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Vsako iskanje je nekaj našlo."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Vsi prevodi, njihove revizije in števci se izbrišejo."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Oblikovanje"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Začetek"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Globus"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Združite članke, da jih lahko obiskovalci brskajo. Zbirka lahko vsebuje eno raven podzbirk. Vrstni red spremenite z vlečenjem."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Naslov"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Pomoč"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Center za pomoč"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Center za pomoč izbrisan"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Centri za pomoč"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Centri za pomoč so na tem strežniku izklopljeni."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Koristno"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Kako ponastavim geslo?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Ikona"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Slika"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Znotraj"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Poševno"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Njeni članki ostanejo brez zbirke. Njene podzbirke postanejo zbirke najvišje ravni."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Njegov osnutek in revizije se izbrišejo. Drugi jeziki ostanejo."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Obdrži mojo"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Jezik"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Jeziki"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Zadnjih {d} dni"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Povezava"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Naloži več"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Ključavnica"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL logotipa"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Pošta"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Glavni"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Glavni jezik"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Več"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Več za {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Premakni {name}. Povlecite ali pritisnite Alt s puščicami."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Premakni navzdol"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Premakni navzgor"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Ime"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Nov članek"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Nov članek ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Nova zbirka"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Nova zbirka ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Noben članek v tem obdobju ni dobil »ne«."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Noben članek se ne ujema."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "V tem obdobju ni bil prebran noben članek."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Še ni člankov. Napišite prvi odgovor, o katerem vas stranke venomer sprašujejo."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Brez zbirke"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Še ni zbirk. Članki lahko ostanejo brez zbirke."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Še ni prejšnjih različic."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Še ni centra za pomoč. Ustvarijo ga lastniki in skrbniki."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Ni nabiralnika, za katerega bi prikazali center za pomoč."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Brez"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "brez imena"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "ni napisano"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Ni napisano"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Oštevilčen seznam"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Izklopljeno: agenti pišejo osnutke in jih oddajo, objavljajo lastniki in skrbniki. Vklopljeno: objavljajo in prekličejo objavo tudi agenti z dostopom do nabiralnika."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Ena pot na vrstico, na primer /billing/*. Gradnik klepeta predlaga ta članek na ustreznih straneh."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "To lahko storijo samo lastniki in skrbniki."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Izvirnik"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Izvirnik v jeziku {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Izvirno besedilo ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Druge besede, ki jih obiskovalci morda vtipkajo, na primer sopomenke."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "zastarelo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Zastarelo"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Del spletnega naslova tega prevoda. Če je prazen, nastane iz naslova."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Oseba"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Izberite barvo"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Vtič"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Predogled"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Predogled ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Predogled ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Predogled: {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Predogled članka"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Javni naslov"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Objavi"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Objavi ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Objavljeno"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Vprašaj"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Citat"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Odstrani {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Poročilo"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Obdobje poročila"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Obnovi to različico"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Obnovljeno"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Odprti rezultati"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Revizije"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Revizije ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Raketa"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Shrani"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Shrani zdaj"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Shranjeno"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Shranjevanje …"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Išči po naslovih"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Išči po naslovih ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Iskalne besede"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Iskanja"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Iskanja brez rezultata"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Poslano"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Nastavitve"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Ščit"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Pokaži"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Prikazano pod imenom na domači strani."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Prikazano, kadar članek nima prevoda v jeziku obiskovalca."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Povezava do spletnega mesta"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Medtem je nekdo shranil ta članek."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Nekdo je shranil ta prevod, medtem ko ste ga urejali."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Zvezda"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Začnite z naslovom. Besedilo napišete nato in ostane osnutek, dokler ni objavljeno."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Stanje"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Oddaj osnutek"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Oddaj osnutek ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Predlagaj na straneh"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Ekipa"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Naslov odgovarja »ni najdeno«, dokler ne objavite centra za pomoč."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Center za pomoč, kot ga zdaj vidijo obiskovalci. Osnutki so izpuščeni."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Center za pomoč ne ponuja tega jezika. Najprej ga dodajte v nastavitvah."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Center za pomoč je na naslovu {address}. Stari naslov še naprej preusmerja, če ga spremenite."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Center za pomoč ni objavljen. To vidi samo vaša ekipa."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "Glavni jezik za ta članek še nima besedila."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Stran za obiskovalce preneha delovati. Osnutek ostane in ga lahko znova objavite."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Strani ponujajo ta klepet pod »Še potrebujete pomoč?«."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Naslov mora imeti vsaj 3 znake"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Ta nabiralnik že ima center za pomoč."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "To je edini prevod članka. Raje izbrišite članek."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Ta delovni prostor ima toliko člankov pomoči, kolikor jih strežnik dovoljuje. Najprej izbrišite stare."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Naslov"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Preveč zahtev. Počakajte trenutek in poskusite znova."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Najbolj brani članki"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Najvišja raven"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Prevod izbrisan"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Vtipkajte besedo za iskanje."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Prekliči objavo"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Prekliči objavo ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Preklicati objavo tega prevoda?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Neobjavljeno"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Neobjavljene spremembe"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Neobjavljeno, predogled vidi samo vaša ekipa"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Neshranjene spremembe"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Uporabite od 3 do 48 črk, številk in notranjih vezajev."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Uporabite barvo, kot je #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Uporabi njihovo različico"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Različica obnovljena v osnutek"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Ogled"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Ogled centra za pomoč"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Ogledi"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Kaj obiskovalci berejo in iščejo. Ogledi so približni, številke pa pridejo sem v minuti."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Kdo lahko objavlja"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Besede, ki so jih obiskovalci vtipkali in niso našle ničesar. Nov članek za vsako je najhitrejša rešitev."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Piši"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Napišite odgovor v Markdownu …"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Vaš izdelek."

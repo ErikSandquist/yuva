@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} 件中 {published} 件の記事を公開済み"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3〜48 文字の英数字とハイフン。このサーバー内で一意です。"
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "元チームメンバー"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "記事のグループです。公開する各言語で名前を付けてください。最初は 1 つの名前で十分です。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "アクセントカラー"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme ヘルプ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "言語を追加"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "サブコレクションを追加"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "アドレス"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "アドレスの末尾"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "エージェントによる公開を許可"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "すべてのコレクション"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "API キー"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "https の画像。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "アナリティクスのプロパティ"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "別のヘルプセンターがこのアドレスを現在または過去に使用しています。"
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "よくある質問に一度だけ文章で答えましょう。受信トレイのヘルプセンターを選ぶと、記事を書き、コレクションにまとめ、顧客の検索内容を確認できます。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "すべての状態"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "記事"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "記事を削除しました"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "記事の本文"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "記事のタイトル"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "記事の閲覧数"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "記事"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "記事はこれらの言語で書いて公開できます。訪問者には、ある場合は自分の言語が表示されます。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "このコレクション内の記事"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "{inboxName} に関する顧客の質問に答える記事。公開するまでは非公開のままです。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "役に立たなかった記事"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "3 文字以上。"
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "ベル"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "請求"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "太字"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "本"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "箇条書き"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "グラフ"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "チャット"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "チャットチャンネル"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "開始されたチャット"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "コード"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "コードブロック"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "コレクション"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "コレクション"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "コレクション、記事、リビジョン、カウンターも一緒に削除されます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Cookie を使わずにヘルプセンターのページビューを数えます。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "記事を作成"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "コレクションを作成"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "ヘルプセンターを作成"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "ヘルプセンターを作成 ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "削除"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "{centerName} を削除しますか?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "{name} を削除しますか?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "記事を削除"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "コレクションを削除"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "ヘルプセンターを削除"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} の翻訳を削除しますか?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "この記事を削除しますか?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "この翻訳を削除"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "翻訳を削除"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "ヘルプセンターをコレクション、記事、リビジョン、カウンターとともに削除します。公開アドレスは使えなくなります。"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "説明"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "下書き"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "下書きを提出しました。オーナーまたは管理者が公開できます。"
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "この翻訳の以前のバージョン。復元すると下書きが置き換わります。公開済みのテキストは、公開し直すまで変わりません。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "編集"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "コレクションを編集"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "空"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "すべての検索で結果が見つかりました。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "すべての翻訳、そのリビジョンとカウンターが削除されます。"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "書式"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "はじめに"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "地球"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "訪問者が閲覧しやすいように記事をグループ化します。コレクションには 1 階層のサブコレクションを置けます。ドラッグして順序を変更します。"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "見出し"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "ヘルプ"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "ヘルプセンター"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "ヘルプセンターを削除しました"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "ヘルプセンター"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "このサーバーではヘルプセンターがオフになっています。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "役に立った"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "パスワードをリセットするには?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "アイコン"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "画像"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "親"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "斜体"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "記事はコレクションなしで残ります。サブコレクションはトップレベルのコレクションになります。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "下書きとリビジョンは削除されます。他の言語は残ります。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "自分の版を残す"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "言語"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "言語"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "過去 {d} 日間"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "リンク"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "さらに読み込む"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "鍵"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "ロゴ URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "メール"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "メイン"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "メイン言語"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "その他"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name} のその他の操作"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} を移動します。ドラッグするか、Alt とカーソルキーを押してください。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "下へ移動"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "上へ移動"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "名前"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "新しい記事"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "新しい記事 ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "新しいコレクション"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "新しいコレクション ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "この期間に「いいえ」を受けた記事はありません。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "一致する記事はありません。"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "この期間に読まれた記事はありません。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "まだ記事がありません。顧客が何度も尋ねる最初の回答を書きましょう。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "コレクションなし"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "まだコレクションがありません。記事はコレクションなしでも構いません。"
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "以前のバージョンはまだありません。"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "まだヘルプセンターがありません。オーナーと管理者が作成します。"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "ヘルプセンターを表示する受信トレイがありません。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "なし"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "名前なし"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "未作成"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "未作成"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "番号付きリスト"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "オフ: エージェントは下書きを書いて提出し、オーナーと管理者が公開します。オン: 受信トレイにアクセスできるエージェントも公開と非公開を行えます。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "1 行に 1 パス (例: /billing/*)。チャットウィジェットが一致するページでこの記事を提案します。"
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "これを行えるのはオーナーと管理者だけです。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "原文"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language}の原文"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "原文 ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "訪問者が入力しそうな他の言葉 (類義語など)。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "古い"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "古い"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "この翻訳のウェブアドレスの一部。空の場合はタイトルから作られます。"
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "人物"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "電話"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "色を選択"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "プラグ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "プレビュー"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "プレビュー ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "プレビュー ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} のプレビュー"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "記事のプレビュー"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "公開アドレス"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "公開"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "公開 ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "公開済み"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "クエスチョンマーク"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "引用"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} を削除"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "レポート"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "レポート期間"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "このバージョンを復元"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "復元"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "開かれた結果"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "リビジョン"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "リビジョン ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "ロケット"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "保存"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "今すぐ保存"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "保存しました"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "保存中…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "タイトルを検索"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "タイトルを検索 ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "検索ワード"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "検索"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "結果のない検索"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "送信数"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "シールド"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "表示"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "ホームページの名前の下に表示されます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "記事に訪問者の言語の翻訳がない場合に表示されます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "サイトのリンク"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "その間に誰かがこの記事を保存しました。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "編集中に誰かがこの翻訳を保存しました。"
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "星"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "まずタイトルから始めましょう。本文は次に書き、公開されるまで下書きのままです。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "状態"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "下書きを提出"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "下書きを提出 ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "ページで提案"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "チーム"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "ヘルプセンターを公開するまで、アドレスは「見つかりません」と応答します。"
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "訪問者に現在表示されるとおりのヘルプセンター。下書きは含まれません。"
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "ヘルプセンターはこの言語を提供していません。先に設定で追加してください。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "ヘルプセンターは {address} にあります。アドレスを変更しても、古いアドレスは転送され続けます。"
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "ヘルプセンターは公開されていません。表示されるのはチームだけです。"
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "メイン言語には、この記事のテキストがまだありません。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "ページは訪問者には使えなくなります。下書きは残り、再び公開できます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "ページでは「まだお困りですか?」の下にこのチャットが表示されます。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "タイトルは 3 文字以上必要です"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "この受信トレイにはすでにヘルプセンターがあります。"
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "これは記事の唯一の翻訳です。代わりに記事を削除してください。"
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "このワークスペースには、サーバーが許可する数のヘルプ記事があります。先に古い記事を削除してください。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "タイトル"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "リクエストが多すぎます。しばらく待ってからもう一度お試しください。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "人気の記事"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "トップレベル"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "翻訳を削除しました"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "検索する言葉を入力してください。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "非公開にする"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "非公開にする ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "この翻訳を非公開にしますか?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "未公開"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "未公開の変更"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "未公開。プレビューできるのはチームだけです"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "未保存の変更"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3〜48 文字の英数字と、途中のハイフンを使ってください。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb のような色を使ってください。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "相手の版を使う"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "バージョンを下書きに復元しました"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "表示"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "ヘルプセンターを表示"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "閲覧数"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "訪問者が読んだものと検索したもの。閲覧数は概算で、数は 1 分以内にこのページに反映されます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "公開できる人"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "訪問者が入力して何も見つからなかった言葉。それぞれに新しい記事を書くのが最も早い対処です。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "書く"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "回答を Markdown で書く…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "あなたの製品。"

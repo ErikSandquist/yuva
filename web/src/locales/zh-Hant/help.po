@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} 篇文章中已發佈 {published} 篇"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 到 48 個字母、數字和連字號。在此伺服器上唯一。"
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "前團隊成員"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "一組文章。請用你發佈的每種語言為它命名；起步時一個名稱就夠了。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "強調色"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme 說明"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "新增語言"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "新增子集合"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "位址"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "位址結尾"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "客服可以發佈"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "所有集合"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "API 金鑰"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "一張 https 圖片。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "分析屬性"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "另一個說明中心現在或曾經使用此位址。"
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "把常見問題只回答一次，寫成文字。選擇某個收件匣的說明中心，撰寫文章、依集合分組，並查看客戶在搜尋什麼。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "任何狀態"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "文章"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "文章已刪除"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "文章內文"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "文章標題"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "文章瀏覽次數"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "文章"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "文章可以用這些語言撰寫和發佈。訪客有自己的語言時會看到自己的語言。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "此集合中的文章"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "回答客戶關於 {inboxName} 問題的文章。在你發佈之前它維持未發佈。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "沒有幫助的文章"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "至少 3 個字元。"
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "鈴鐺"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "帳單"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "粗體"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "書"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "項目符號清單"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "圖表"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "聊天"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "聊天管道"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "已開始的聊天"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "程式碼"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "程式碼區塊"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "集合"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "集合"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "集合、文章、修訂和計數器會一併刪除。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "不使用 Cookie 統計說明中心的頁面瀏覽次數。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "建立文章"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "建立集合"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "建立說明中心"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "建立說明中心（{newKey}）"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "刪除"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "刪除 {centerName}？"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "刪除 {name}？"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "刪除文章"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "刪除集合"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "刪除說明中心"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "刪除 {name} 翻譯？"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "刪除這篇文章？"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "刪除此翻譯"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "刪除翻譯"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "刪除說明中心及其集合、文章、修訂和計數器。公開位址將停止運作。"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "說明"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "草稿"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "草稿已提交。擁有者或管理員可以發佈。"
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "此翻譯的早期版本。還原其中一個會取代草稿；已發佈的文字會保留到你再次發佈。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "編輯"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "編輯集合"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "空"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "每次搜尋都有結果。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "所有翻譯及其修訂和計數器都會刪除。"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "格式"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "開始使用"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "地球"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "將文章分組，方便訪客瀏覽。一個集合可以包含一層子集合。拖曳可變更順序。"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "標題"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "說明"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "說明中心"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "說明中心已刪除"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "說明中心"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "此伺服器已關閉說明中心。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "有幫助"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "如何重設密碼？"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "圖示"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "圖片"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "位於"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "斜體"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "其文章會保留，但不屬於任何集合。其子集合會變成頂層集合。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "其草稿和修訂會被刪除。其他語言保留。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "保留我的版本"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "語言"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "語言"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "最近 {d} 天"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "連結"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "載入更多"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "鎖"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "標誌 URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "郵件"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "主要"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "主要語言"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "更多"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name} 的更多操作"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "移動 {name}。拖曳，或按 Alt 加方向鍵。"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "下移"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "上移"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "名稱"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "新文章"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "新文章（{newKey}）"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "新集合"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "新集合（{newKey}）"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "此期間沒有文章收到「否」。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "沒有相符的文章。"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "此期間沒有文章被閱讀。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "還沒有文章。寫下客戶一再詢問的第一個答案吧。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "無集合"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "還沒有集合。文章可以不屬於任何集合。"
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "還沒有早期版本。"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "還沒有說明中心。由擁有者和管理員建立。"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "沒有可顯示說明中心的收件匣。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "無"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "未命名"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "未撰寫"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "未撰寫"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "編號清單"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "關閉：客服撰寫草稿並提交，由擁有者和管理員發佈。開啟：有權存取收件匣的客服也可以發佈和取消發佈。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "每行一個路徑，例如 /billing/*。聊天小工具會在相符的頁面上推薦這篇文章。"
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "只有擁有者和管理員可以這樣做。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "原文"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language}原文"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "原文（{alt} C）"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "訪客可能輸入的其他詞，例如同義詞。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "已過時"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "已過時"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "此翻譯網址的一部分。為空時會依標題產生。"
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "人物"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "手機"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "選擇顏色"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "插頭"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "預覽"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "預覽（{alt} P）"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "預覽（{previewKey}）"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} 的預覽"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "文章預覽"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "公開位址"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "發佈"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "發佈（{publishKey}）"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "已發佈"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "問號"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "引用"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "移除 {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "報告"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "報告期間"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "還原此版本"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "已還原"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "已開啟的結果"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "修訂"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "修訂（{alt} H）"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "火箭"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "儲存"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "立即儲存"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "已儲存"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "正在儲存…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "搜尋標題"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "搜尋標題（{findKey}）"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "搜尋詞"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "搜尋"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "無結果的搜尋"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "已傳送"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "盾牌"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "顯示"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "顯示在首頁的名稱下方。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "當文章沒有訪客語言的翻譯時顯示。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "網站連結"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "在此期間有人儲存了這篇文章。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "你編輯時有人儲存了此翻譯。"
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "星號"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "從標題開始。接著再寫內文，在發佈之前它一直是草稿。"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "狀態"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "提交草稿"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "提交草稿（{publishKey}）"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "在頁面上推薦"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "團隊"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "在你發佈說明中心之前，該位址會回應「找不到」。"
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "訪客現在看到的說明中心。不含草稿。"
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "說明中心不提供此語言。請先在設定中新增。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "說明中心位於 {address}。如果你變更位址，舊位址會繼續重新導向。"
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "說明中心尚未發佈。只有你的團隊看得到。"
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "主要語言尚無這篇文章的文字。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "該頁面將對訪客停止運作。草稿會保留，你可以再次發佈。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "頁面會在「還需要協助嗎？」下提供此聊天。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "標題至少需要 3 個字元"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "此收件匣已有說明中心。"
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "這是文章唯一的翻譯。請改為刪除文章。"
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "此工作區的說明文章數已達伺服器允許的上限。請先刪除舊文章。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "標題"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "要求過多。請稍候片刻後再試。"
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "熱門文章"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "頂層"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "翻譯已刪除"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "輸入要搜尋的詞。"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "取消發佈"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "取消發佈（{publishKey}）"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "取消發佈此翻譯？"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "未發佈"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "未發佈的變更"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "未發佈，只有你的團隊可以預覽"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "未儲存的變更"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "請使用 3 到 48 個字母、數字和中間的連字號。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "請使用類似 #2563eb 的顏色。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "使用對方的版本"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "版本已還原到草稿"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "檢視"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "檢視說明中心"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "瀏覽次數"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "訪客閱讀和搜尋的內容。瀏覽次數為近似值，數據會在一分鐘內到達此頁面。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "誰可以發佈"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "訪客輸入但沒有找到結果的詞。為每個詞寫一篇新文章是最快的解決辦法。"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "撰寫"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "用 Markdown 撰寫回答…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "你的產品。"

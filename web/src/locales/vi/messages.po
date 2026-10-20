@@ -1012,6 +1012,10 @@ msgstr "Một thành viên đã đặt thành phần bằng tay sau đó, nên n
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Trường hợp nhất không có giá trị dự phòng sẽ để trống với một số người nhận. Hãy đặt giá trị dự phòng cho nó."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Một tin nhắn nhận tối đa 3 bài viết."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Một tin nhắn đã được thêm"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Thêm một điểm liên hệ loại Webhook, dán địa chỉ ở trên, giữ phương thức POST và dùng điểm liên hệ đó trong chính sách thông báo. Cảnh báo đang kích hoạt làm trình giám sát ngừng, cảnh báo đã giải quyết khôi phục nó."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Thêm liên kết"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Thêm trình giám sát"
 
@@ -1264,6 +1272,10 @@ msgstr "Thêm trang web hoặc ứng dụng"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Thêm thuộc tính phân tích"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Thêm hình ảnh"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Đã đến thẳng {address}, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Đã đến qua chuyển tiếp, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Bài viết"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Là {name}, từ {when}"
@@ -2216,6 +2232,10 @@ msgstr "Liên hệ bị chặn"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Nội dung"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "In đậm"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "Bản ghi CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Mã"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Bộ sưu tập"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Xóa đăng ký"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Xóa ứng dụng bạn đã tạo cho Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Xóa bài viết"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Xin chào từ phần thiết lập"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Xin chào, tôi đang chuyển hộp thư {address} sang Yuva, hộp thư hỗ trợ của chúng tôi. Tổ chức Microsoft 365 của chúng tôi chỉ cho phép quản trị viên cấp quyền cho ứng dụng. Vui lòng mở liên kết này với tư cách quản trị viên và chấp nhận, để Yuva có thể đọc hộp thư qua IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Trợ giúp"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Trợ giúp và phản hồi"
@@ -5041,6 +5075,27 @@ msgstr "Trợ giúp và phản hồi"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Trợ giúp và phản hồi ngay trong ứng dụng iOS hoặc Android của bạn"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Bài viết trợ giúp"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Bài viết trợ giúp"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Trung tâm trợ giúp"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Cài đặt trung tâm trợ giúp"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Báo cáo trợ giúp"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Nó sẽ hành động với danh nghĩa bạn, <0>{email}</0>, chỉ v�
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Nó sẽ không còn nhận thông báo."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "In nghiêng"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Di chuyển khối đã chọn"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Di chuyển bộ sưu tập đã chọn"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Di chuyển qua các bài viết hoặc bộ sưu tập"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Di chuyển giữa các thư hàng loạt"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Địa chỉ mới nhận thư xác nhận"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Bài viết mới"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Thư hàng loạt mới ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Phản hồi mẫu mới"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Bộ sưu tập mới"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Chưa có trang"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Không có lời mời đang chờ."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Không tìm thấy bài viết đã xuất bản nào."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Mở thiết lập"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Mở bài viết hoặc bộ sưu tập"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Mở thư hàng loạt"
 
@@ -8251,6 +8334,10 @@ msgstr "Mở cuộc thảo luận"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Mở endpoint"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Mở bài viết trợ giúp"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Mở cuộc trò chuyện tiếp theo hoặc trước đó"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Mở cài đặt trang"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Mở trung tâm trợ giúp công khai"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Văn bản xem trước"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Xem trước trung tâm trợ giúp"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Xem trước trang"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Ngôn ngữ trước hoặc sau"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Xuất bản ngay"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Xuất bản hoặc hủy xuất bản trung tâm trợ giúp"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Xuất bản hoặc gỡ trang"
 
@@ -9072,6 +9175,10 @@ msgstr "Xuất bản bản nháp"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Đăng bản ghi TXT này vào DNS của tên miền bạn:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Xuất bản, hoặc gửi bản nháp"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Hình ảnh từ xa có thể cho người gửi biết bạn đã mở 
 msgid "Remove"
 msgstr "Gỡ"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Xem lại, rồi gửi hoặc lên lịch"
 msgid "Review, then send or schedule ({key})"
 msgstr "Xem lại, rồi gửi hoặc lên lịch ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Bản sửa đổi"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Lưu lại và sao chép định danh cùng secret, mà Zendesk chỉ hi
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Lưu ngay và giữ một phiên bản"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Lưu bản nháp ngay"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Tìm emoji (bằng tiếng Anh)"
 msgid "Search feedback"
 msgstr "Tìm trong góp ý"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Tìm bài viết trợ giúp…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Tìm trong các tin nhắn đã tải"
@@ -10124,6 +10244,10 @@ msgstr "Tìm người nhận"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Tìm người đăng ký"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Tìm trong các bài viết"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Gửi tín hiệu"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Gửi một lần kiểm tra"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Gửi một bài viết trợ giúp"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Gửi một bài viết trợ giúp ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Hiện trên trang"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Hiện hoặc ẩn văn bản trích dẫn"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Hiện hoặc ẩn văn bản gốc cạnh bản dịch"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Hiện hoặc ẩn bản xem trước"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Gỡ xuất bản"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Gỡ xuất bản ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Hủy xuất bản bản dịch"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

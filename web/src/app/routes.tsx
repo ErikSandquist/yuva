@@ -54,6 +54,9 @@ import { useSession } from "@/lib/session"
 
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
 const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
+const HelpHome = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.HelpHome })))
+const HelpCenterPane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.CenterPane })))
+const HelpArticlePane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.ArticleEditorPage })))
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 const SharePage = lazy(() => import("@/features/analytics/SharePage"))
 const AnalyticsSetup = lazy(() => import("@/features/analytics/NewProperty"))
@@ -174,6 +177,30 @@ export function AppRoutes() {
           <Route path="status-pages/:pageId" element={<StatusPagePane />} />
           <Route path="status-pages/:pageId/monitors" element={<StatusPagePane />} />
           <Route path="status-pages/:pageId/incidents/:incidentId" element={<IncidentPane />} />
+          <Route
+            path="knowledge"
+            element={
+              <Suspense fallback={<Loading />}>
+                <HelpHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="knowledge/:centerId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <HelpCenterPane />
+              </Suspense>
+            }
+          />
+          <Route
+            path="knowledge/:centerId/articles/:articleId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <HelpArticlePane />
+              </Suspense>
+            }
+          />
           <Route
             path="analytics/*"
             element={

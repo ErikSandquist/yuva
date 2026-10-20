@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} daripada {total} artikel diterbitkan"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 hingga 48 huruf, nombor dan tanda sempang. Unik pada pelayan ini."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Bekas ahli pasukan"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Satu kumpulan artikel. Namakannya dalam setiap bahasa yang anda terbitkan; satu nama sudah memadai untuk bermula."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Warna aksen"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Bantuan Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Tambah bahasa"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Tambah subkoleksi"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Alamat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Hujung alamat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Ejen boleh menerbitkan"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Semua koleksi"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Kunci API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Imej https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Sifat analitik"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Pusat bantuan lain menggunakan alamat ini, sekarang atau sebelum ini."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Jawab soalan lazim sekali sahaja, secara bertulis. Pilih pusat bantuan sesebuah peti masuk untuk menulis artikel, mengumpulkannya dalam koleksi dan melihat apa yang dicari pelanggan."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Mana-mana status"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Artikel"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Artikel dipadam"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Teks artikel"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Tajuk artikel"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Paparan artikel"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Artikel"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Artikel boleh ditulis dan diterbitkan dalam bahasa ini. Pengunjung melihat bahasa mereka sendiri jika ada."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Artikel dalam koleksi ini"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Artikel yang menjawab soalan pelanggan anda tentang {inboxName}. Ia kekal tidak diterbitkan sehingga anda menerbitkannya."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Artikel yang tidak membantu"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Sekurang-kurangnya 3 aksara."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Loceng"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Pengebilan"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Tebal"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Buku"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Senarai berpeluru"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Carta"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Sembang"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Saluran sembang"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Sembang yang dimulakan"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Kod"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Blok kod"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Koleksi"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Koleksi"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Koleksi, artikel, semakan dan pengira dipadam bersamanya."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Mengira paparan halaman pusat bantuan tanpa kuki."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Cipta artikel"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Cipta koleksi"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Cipta pusat bantuan"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Cipta pusat bantuan ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Padam"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Padam {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Padam {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Padam artikel"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Padam koleksi"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Padam pusat bantuan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Padam terjemahan {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Padam artikel ini?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Padam terjemahan ini"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Padam terjemahan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Memadam pusat bantuan beserta koleksi, artikel, semakan dan pengiranya. Alamat awam berhenti berfungsi."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Penerangan"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Draf"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Draf dihantar. Pemilik atau pentadbir boleh menerbitkannya."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Versi terdahulu terjemahan ini. Memulihkan satu versi menggantikan draf; teks yang diterbitkan kekal sehingga anda menerbitkan."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Sunting"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Sunting koleksi"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Kosong"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Setiap carian menemui sesuatu."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Semua terjemahan, semakannya dan pengiranya dipadam."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Pemformatan"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Bermula"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Glob"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Kumpulkan artikel supaya pengunjung boleh menyemak imbas. Satu koleksi boleh mengandungi satu peringkat subkoleksi. Seret untuk menukar susunan."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Tajuk"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Bantuan"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Pusat bantuan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Pusat bantuan dipadam"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Pusat bantuan"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Pusat bantuan dimatikan pada pelayan ini."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Berguna"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Bagaimanakah saya menetapkan semula kata laluan?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Ikon"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Imej"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Di dalam"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Condong"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Artikelnya kekal tanpa koleksi. Subkoleksinya menjadi koleksi peringkat atas."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Draf dan semakannya dipadam. Bahasa lain kekal."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Kekalkan versi saya"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Bahasa"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "{d} hari lepas"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Pautan"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Muat lagi"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Mangga"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL logo"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Mel"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Utama"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Bahasa utama"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Lagi"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Lagi untuk {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Alihkan {name}. Seret, atau tekan Alt dengan kekunci anak panah."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Alih ke bawah"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Alih ke atas"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Nama"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Artikel baharu"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Artikel baharu ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Koleksi baharu"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Koleksi baharu ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Tiada artikel mendapat “tidak” dalam tempoh ini."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Tiada artikel yang sepadan."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "Tiada artikel dibaca dalam tempoh ini."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Belum ada artikel. Tulis jawapan pertama yang sentiasa ditanya pelanggan anda."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Tiada koleksi"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Belum ada koleksi. Artikel boleh kekal tanpa koleksi."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Belum ada versi terdahulu."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Belum ada pusat bantuan. Pemilik dan pentadbir mencipta."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Tiada peti masuk untuk menunjukkan pusat bantuan."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Tiada"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "tiada nama"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "belum ditulis"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Belum ditulis"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Senarai bernombor"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Mati: ejen menulis draf dan menghantarnya, pemilik dan pentadbir menerbitkan. Hidup: ejen yang mempunyai akses ke peti masuk juga menerbitkan dan membatalkan penerbitan."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Satu laluan setiap baris, seperti /billing/*. Widget sembang mencadangkan artikel ini pada halaman yang sepadan."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Hanya pemilik dan pentadbir boleh melakukannya."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Asal"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Asal dalam {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Teks asal ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Perkataan lain yang mungkin ditaip pengunjung, seperti sinonim."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "ketinggalan zaman"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Ketinggalan zaman"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Sebahagian daripada alamat web terjemahan ini. Dibuat daripada tajuk jika kosong."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Orang"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Pilih warna"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Palam"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Pratonton"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Pratonton ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Pratonton ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Pratonton {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Pratonton artikel"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Alamat awam"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Terbitkan"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Terbitkan ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Diterbitkan"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Tanda soal"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Petikan"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Buang {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Laporan"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Tempoh laporan"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Pulihkan versi ini"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Dipulihkan"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Hasil dibuka"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Semakan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Semakan ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Roket"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Simpan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Simpan sekarang"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Disimpan"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Menyimpan…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Cari dalam tajuk"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Cari dalam tajuk ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Perkataan carian"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Carian"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Carian tanpa hasil"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Dihantar"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Tetapan"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Perisai"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Tunjukkan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Dipaparkan di bawah nama pada halaman utama."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Dipaparkan apabila artikel tiada terjemahan dalam bahasa pengunjung."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Pautan tapak"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Seseorang menyimpan artikel ini sementara itu."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Seseorang menyimpan terjemahan ini semasa anda menyuntingnya."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Bintang"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Mulakan dengan tajuk. Anda menulis teksnya selepas itu, dan ia kekal sebagai draf sehingga diterbitkan."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Status"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Hantar draf"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Hantar draf ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Cadangkan pada halaman"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Pasukan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Alamat menjawab “tidak ditemui” sehingga anda menerbitkan pusat bantuan."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Pusat bantuan seperti yang dilihat pengunjung sekarang. Draf ditinggalkan."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Pusat bantuan tidak menawarkan bahasa ini. Tambahkannya dahulu dalam tetapan."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Pusat bantuan berada di {address}. Alamat lama terus mengubah hala jika anda menukarnya."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Pusat bantuan belum diterbitkan. Hanya pasukan anda yang melihat ini."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "Bahasa utama belum mempunyai teks untuk artikel ini."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Halaman berhenti berfungsi untuk pengunjung. Draf kekal, dan anda boleh menerbitkannya semula."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Halaman menawarkan sembang ini di bawah “Masih perlukan bantuan?”."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Tajuk memerlukan sekurang-kurangnya 3 aksara"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Peti masuk ini sudah mempunyai pusat bantuan."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Ini satu-satunya terjemahan artikel. Padam artikelnya sahaja."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Ruang kerja ini mempunyai artikel bantuan sebanyak yang dibenarkan pelayan. Padam yang lama dahulu."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Tajuk"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Terlalu banyak permintaan. Tunggu sebentar dan cuba lagi."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Artikel teratas"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Peringkat atas"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Terjemahan dipadam"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Taip perkataan untuk dicari."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Batalkan penerbitan"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Batalkan penerbitan ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Batalkan penerbitan terjemahan ini?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Belum diterbitkan"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Perubahan belum diterbitkan"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Belum diterbitkan, hanya pasukan anda boleh melihat pratonton"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Perubahan belum disimpan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Gunakan 3 hingga 48 huruf, nombor dan tanda sempang di tengah."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Gunakan warna seperti #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Gunakan versi mereka"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Versi dipulihkan ke draf"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Lihat"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Lihat pusat bantuan"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Paparan"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Apa yang dibaca dan dicari pengunjung. Paparan adalah anggaran, dan angka sampai ke halaman ini dalam masa seminit."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Siapa boleh menerbitkan"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Perkataan yang ditaip pengunjung dan tidak menemui apa-apa. Artikel baharu untuk setiap satu ialah pembetulan terpantas."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Tulis"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Tulis jawapan dalam Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Produk anda."

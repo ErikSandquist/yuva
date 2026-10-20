@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "เผยแพร่แล้ว {published} จาก {total} บทความ"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "ตัวอักษร ตัวเลข และขีดกลาง 3 ถึง 48 ตัว ไม่ซ้ำกันบนเซิร์ฟเวอร์นี้"
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "อดีตสมาชิกทีม"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "กลุ่มของบทความ ตั้งชื่อในทุกภาษาที่คุณเผยแพร่ เริ่มต้นด้วยชื่อเดียวก็พอ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "สีเน้น"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "ความช่วยเหลือของ Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "เพิ่มภาษา"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "เพิ่มคอลเลกชันย่อย"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "ที่อยู่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "ส่วนท้ายของที่อยู่"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "เจ้าหน้าที่เผยแพร่ได้"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "คอลเลกชันทั้งหมด"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "คีย์ API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "รูปภาพ https"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "พร็อพเพอร์ตี้การวิเคราะห์"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "ศูนย์ช่วยเหลืออื่นใช้ที่อยู่นี้อยู่หรือเคยใช้"
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "ตอบคำถามที่พบบ่อยเพียงครั้งเดียวเป็นลายลักษณ์อักษร เลือกศูนย์ช่วยเหลือของกล่องจดหมายเพื่อเขียนบทความ จัดกลุ่มเป็นคอลเลกชัน และดูว่าลูกค้าค้นหาอะไร"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "สถานะใดก็ได้"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "บทความ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "ลบบทความแล้ว"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "เนื้อหาบทความ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "ชื่อบทความ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "จำนวนการดูบทความ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "บทความ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "เขียนและเผยแพร่บทความได้ในภาษาเหล่านี้ ผู้เข้าชมจะเห็นภาษาของตนเมื่อมี"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "บทความในคอลเลกชันนี้"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "บทความที่ตอบคำถามของลูกค้าเกี่ยวกับ {inboxName} จะยังไม่เผยแพร่จนกว่าคุณจะเผยแพร่"
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "บทความที่ไม่ช่วย"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "อย่างน้อย 3 ตัวอักษร"
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "กระดิ่ง"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "การเรียกเก็บเงิน"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "ตัวหนา"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "หนังสือ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "รายการแบบหัวข้อย่อย"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "แผนภูมิ"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "แชท"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "ช่องทางแชท"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "แชทที่เริ่มแล้ว"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "โค้ด"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "บล็อกโค้ด"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "คอลเลกชัน"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "คอลเลกชัน"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "คอลเลกชัน บทความ การแก้ไข และตัวนับจะถูกลบไปด้วย"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "นับการดูหน้าของศูนย์ช่วยเหลือโดยไม่ใช้คุกกี้"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "สร้างบทความ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "สร้างคอลเลกชัน"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "สร้างศูนย์ช่วยเหลือ"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "สร้างศูนย์ช่วยเหลือ ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "ลบ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "ลบ {centerName} หรือไม่"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "ลบ {name} หรือไม่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "ลบบทความ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "ลบคอลเลกชัน"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "ลบศูนย์ช่วยเหลือ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "ลบคำแปล {name} หรือไม่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "ลบบทความนี้หรือไม่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "ลบคำแปลนี้"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "ลบคำแปล"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "ลบศูนย์ช่วยเหลือพร้อมคอลเลกชัน บทความ การแก้ไข และตัวนับ ที่อยู่สาธารณะจะหยุดทำงาน"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "คำอธิบาย"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "ฉบับร่าง"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "ส่งฉบับร่างแล้ว เจ้าของหรือผู้ดูแลระบบสามารถเผยแพร่ได้"
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "เวอร์ชันก่อนหน้าของคำแปลนี้ การกู้คืนเวอร์ชันหนึ่งจะแทนที่ฉบับร่าง ข้อความที่เผยแพร่จะคงอยู่จนกว่าคุณจะเผยแพร่"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "แก้ไขคอลเลกชัน"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "ว่างเปล่า"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "ทุกการค้นหาพบผลลัพธ์"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "คำแปลทั้งหมด การแก้ไข และตัวนับของคำแปลจะถูกลบ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "การจัดรูปแบบ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "เริ่มต้นใช้งาน"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "ลูกโลก"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "จัดกลุ่มบทความให้ผู้เข้าชมเรียกดูได้ คอลเลกชันมีคอลเลกชันย่อยได้หนึ่งระดับ ลากเพื่อเปลี่ยนลำดับ"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "หัวเรื่อง"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "ความช่วยเหลือ"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "ศูนย์ช่วยเหลือ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "ลบศูนย์ช่วยเหลือแล้ว"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "ศูนย์ช่วยเหลือ"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "ศูนย์ช่วยเหลือปิดอยู่บนเซิร์ฟเวอร์นี้"
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "เป็นประโยชน์"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "ฉันจะรีเซ็ตรหัสผ่านได้อย่างไร"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "ไอคอน"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "รูปภาพ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "ภายใน"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "ตัวเอียง"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "บทความของคอลเลกชันจะอยู่โดยไม่มีคอลเลกชัน คอลเลกชันย่อยจะกลายเป็นคอลเลกชันระดับบนสุด"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "ฉบับร่างและการแก้ไขจะถูกลบ ภาษาอื่นยังอยู่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "เก็บของฉันไว้"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "ภาษา"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "ภาษา"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "{d} วันที่ผ่านมา"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "ลิงก์"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "โหลดเพิ่ม"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "แม่กุญแจ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL โลโก้"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "จดหมาย"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "หลัก"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "ภาษาหลัก"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "เพิ่มเติม"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "เพิ่มเติมสำหรับ {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "ย้าย {name} ลากหรือกด Alt พร้อมปุ่มลูกศร"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "ย้ายลง"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "ย้ายขึ้น"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "ชื่อ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "บทความใหม่"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "บทความใหม่ ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "คอลเลกชันใหม่"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "คอลเลกชันใหม่ ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "ไม่มีบทความใดได้รับ “ไม่” ในช่วงนี้"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "ไม่มีบทความที่ตรงกัน"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "ไม่มีบทความที่ถูกอ่านในช่วงนี้"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "ยังไม่มีบทความ เขียนคำตอบแรกที่ลูกค้าถามซ้ำแล้วซ้ำอีก"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "ไม่มีคอลเลกชัน"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "ยังไม่มีคอลเลกชัน บทความอยู่โดยไม่มีคอลเลกชันได้"
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "ยังไม่มีเวอร์ชันก่อนหน้า"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "ยังไม่มีศูนย์ช่วยเหลือ เจ้าของและผู้ดูแลระบบเป็นผู้สร้าง"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "ไม่มีกล่องจดหมายที่จะแสดงศูนย์ช่วยเหลือ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "ไม่มี"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "ไม่มีชื่อ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "ยังไม่ได้เขียน"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "ยังไม่ได้เขียน"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "รายการแบบมีหมายเลข"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "ปิด: เจ้าหน้าที่เขียนฉบับร่างแล้วส่ง เจ้าของและผู้ดูแลระบบเป็นผู้เผยแพร่ เปิด: เจ้าหน้าที่ที่เข้าถึงกล่องจดหมายได้ก็เผยแพร่และยกเลิกการเผยแพร่ได้เช่นกัน"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "หนึ่งพาธต่อบรรทัด เช่น /billing/* วิดเจ็ตแชทจะแนะนำบทความนี้ในหน้าที่ตรงกัน"
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "เฉพาะเจ้าของและผู้ดูแลระบบเท่านั้นที่ทำได้"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "ต้นฉบับ"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "ต้นฉบับภาษา{language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "ข้อความต้นฉบับ ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "คำอื่นที่ผู้เข้าชมอาจพิมพ์ เช่น คำพ้องความหมาย"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "ล้าสมัย"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "ล้าสมัย"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "ส่วนหนึ่งของที่อยู่เว็บของคำแปลนี้ สร้างจากชื่อเมื่อเว้นว่าง"
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "บุคคล"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "โทรศัพท์"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "เลือกสี"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "ปลั๊ก"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "ตัวอย่าง"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "ตัวอย่าง ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "ตัวอย่าง ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "ตัวอย่างของ {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "ตัวอย่างบทความ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "ที่อยู่สาธารณะ"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "เผยแพร่"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "เผยแพร่ ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "เผยแพร่แล้ว"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "เครื่องหมายคำถาม"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "การอ้างอิง"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "เอา {0} ออก"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "รายงาน"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "ช่วงเวลาของรายงาน"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "กู้คืนเวอร์ชันนี้"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "กู้คืนแล้ว"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "ผลลัพธ์ที่เปิด"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "การแก้ไข"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "การแก้ไข ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "จรวด"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "บันทึก"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "บันทึกตอนนี้"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "บันทึกแล้ว"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "กำลังบันทึก…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "ค้นหาในชื่อ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "ค้นหาในชื่อ ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "คำค้นหา"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "การค้นหา"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "การค้นหาที่ไม่มีผลลัพธ์"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "ส่งแล้ว"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "โล่"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "แสดง"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "แสดงใต้ชื่อบนหน้าแรก"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "แสดงเมื่อบทความไม่มีคำแปลในภาษาของผู้เข้าชม"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "ลิงก์ไซต์"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "มีคนบันทึกบทความนี้ไว้ระหว่างนั้น"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "มีคนบันทึกคำแปลนี้ขณะที่คุณกำลังแก้ไข"
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "ดาว"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "เริ่มจากชื่อ แล้วเขียนเนื้อหาต่อไป จะเป็นฉบับร่างจนกว่าจะเผยแพร่"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "สถานะ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "ส่งฉบับร่าง"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "ส่งฉบับร่าง ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "แนะนำในหน้า"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "ทีม"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "ที่อยู่จะตอบว่า “ไม่พบ” จนกว่าคุณจะเผยแพร่ศูนย์ช่วยเหลือ"
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "ศูนย์ช่วยเหลือตามที่ผู้เข้าชมเห็นตอนนี้ ไม่รวมฉบับร่าง"
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "ศูนย์ช่วยเหลือไม่มีภาษานี้ เพิ่มในการตั้งค่าก่อน"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "ศูนย์ช่วยเหลืออยู่ที่ {address} ที่อยู่เดิมจะยังเปลี่ยนเส้นทางต่อไปหากคุณเปลี่ยน"
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "ยังไม่ได้เผยแพร่ศูนย์ช่วยเหลือ มีเพียงทีมของคุณที่เห็น"
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "ภาษาหลักยังไม่มีข้อความสำหรับบทความนี้"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "หน้าจะหยุดทำงานสำหรับผู้เข้าชม ฉบับร่างยังอยู่และคุณเผยแพร่ใหม่ได้"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "หน้าต่าง ๆ เสนอแชทนี้ภายใต้ “ยังต้องการความช่วยเหลืออยู่ไหม”"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "ชื่อต้องมีอย่างน้อย 3 ตัวอักษร"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "กล่องจดหมายนี้มีศูนย์ช่วยเหลืออยู่แล้ว"
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "นี่เป็นคำแปลเดียวของบทความ ให้ลบบทความแทน"
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "พื้นที่ทำงานนี้มีบทความช่วยเหลือเท่าที่เซิร์ฟเวอร์อนุญาต ลบบทความเก่าก่อน"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "คำขอมากเกินไป รอสักครู่แล้วลองอีกครั้ง"
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "บทความยอดนิยม"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "ระดับบนสุด"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "ลบคำแปลแล้ว"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "พิมพ์คำที่จะค้นหา"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "ยกเลิกการเผยแพร่"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ยกเลิกการเผยแพร่ ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "ยกเลิกการเผยแพร่คำแปลนี้หรือไม่"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "ยังไม่เผยแพร่"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "การเปลี่ยนแปลงที่ยังไม่เผยแพร่"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "ยังไม่เผยแพร่ มีเพียงทีมของคุณที่ดูตัวอย่างได้"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "การเปลี่ยนแปลงที่ยังไม่บันทึก"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "ใช้ตัวอักษร ตัวเลข และขีดกลางภายใน 3 ถึง 48 ตัว"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "ใช้สีเช่น #2563eb"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "ใช้เวอร์ชันของเขา"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "กู้คืนเวอร์ชันไปยังฉบับร่างแล้ว"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "ดู"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "ดูศูนย์ช่วยเหลือ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "การดู"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "สิ่งที่ผู้เข้าชมอ่านและค้นหา จำนวนการดูเป็นค่าโดยประมาณ และตัวเลขจะมาถึงหน้านี้ภายในหนึ่งนาที"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "ใครเผยแพร่ได้"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "คำที่ผู้เข้าชมพิมพ์แล้วไม่พบอะไรเลย การเขียนบทความใหม่สำหรับแต่ละคำเป็นวิธีแก้ที่เร็วที่สุด"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "เขียน"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "เขียนคำตอบเป็น Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "ผลิตภัณฑ์ของคุณ"

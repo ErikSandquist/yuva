@@ -1012,6 +1012,10 @@ msgstr "Seorang ahli menetapkan komponen secara manual kemudian, jadi komponen k
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Medan gabung tanpa nilai ganti akan kosong bagi sesetengah penerima. Berikan nilai ganti."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Satu mesej menerima paling banyak 3 artikel."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Mesej ditambah"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Tambah titik hubungan berjenis Webhook, tampal alamat di atas, kekalkan kaedah POST dan gunakan titik hubungan itu dalam dasar pemberitahuan. Amaran yang dicetuskan menjatuhkan monitor, yang diselesaikan memulihkannya."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Tambah pautan"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Tambah monitor"
 
@@ -1264,6 +1272,10 @@ msgstr "Tambah tapak web atau apl"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Tambah properti analitik"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Tambah imej"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Tiba di {address} secara terus, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Tiba melalui pemajuan, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Artikel"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Sebagai {name}, sejak {when}"
@@ -2216,6 +2232,10 @@ msgstr "Kenalan disekat"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Badan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Tebal"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "Rekod CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kod"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Koleksi"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Padam langganan"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Padam apl yang anda cipta untuk Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Padam artikel"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Hello daripada persediaan"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Hello, saya memindahkan peti mel {address} ke Yuva, peti masuk sokongan kami. Organisasi Microsoft 365 kami hanya membenarkan pentadbir meluluskan apl. Sila buka pautan ini sebagai pentadbir dan terima, supaya Yuva boleh membaca peti mel melalui IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Bantuan"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Bantuan dan maklum balas"
@@ -5041,6 +5075,27 @@ msgstr "Bantuan dan maklum balas"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Bantuan dan maklum balas dalam apl iOS atau Android anda"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Artikel bantuan"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Artikel bantuan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Pusat bantuan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Tetapan pusat bantuan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Laporan bantuan"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Ia akan bertindak sebagai anda, <0>{email}</0>, dengan hanya akses yang 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Ia tidak lagi akan menerima pemberitahuan."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Condong"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Alihkan blok yang dipilih"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Alihkan koleksi yang dipilih"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Layari artikel atau koleksi"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Bergerak antara siaran"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Alamat baharu yang mendapat mel pengesahan"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Artikel baharu"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Siaran baharu ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Balasan siap sedia baharu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Koleksi baharu"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Belum ada halaman"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Tiada jemputan belum selesai."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Tiada artikel diterbitkan ditemui."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Buka persediaan"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Buka artikel atau koleksi"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Buka siaran"
 
@@ -8251,6 +8334,10 @@ msgstr "Buka perbincangan"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Buka titik akhir"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Buka artikel bantuan"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Buka perbualan seterusnya atau sebelumnya"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Buka tetapan halaman"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Buka pusat bantuan awam"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Teks pratonton"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Pratonton pusat bantuan"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Pratonton halaman"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Bahasa sebelumnya atau seterusnya"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Terbitkan sekarang"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Terbitkan atau batalkan penerbitan pusat bantuan"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Terbitkan atau tarik balik halaman"
 
@@ -9072,6 +9175,10 @@ msgstr "Terbitkan draf"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Terbitkan rekod TXT ini dalam DNS domain anda:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Terbitkan, atau hantar draf"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Imej jauh boleh memberitahu penghantar bahawa anda membuka mel."
 msgid "Remove"
 msgstr "Alih keluar"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Semak, kemudian hantar atau jadualkan"
 msgid "Review, then send or schedule ({key})"
 msgstr "Semak, kemudian hantar atau jadualkan ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Semakan"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Simpan dan salin pengecam serta rahsianya, yang ditunjukkan Zendesk seka
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Simpan sekarang dan kekalkan versi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Simpan draf sekarang"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Cari emoji (dalam bahasa Inggeris)"
 msgid "Search feedback"
 msgstr "Cari maklum balas"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Cari artikel bantuan…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Cari dalam mesej yang dimuatkan"
@@ -10124,6 +10244,10 @@ msgstr "Cari penerima"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Cari pelanggan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Cari dalam artikel"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Hantar isyarat"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Hantar semakan"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Hantar artikel bantuan"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Hantar artikel bantuan ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Tunjukkan pada halaman"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Tunjuk atau sembunyi teks petikan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Tunjukkan atau sembunyikan teks asal di sebelah terjemahan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Tunjukkan atau sembunyikan pratonton"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Tarik balik"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Tarik balik ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Batalkan penerbitan terjemahan"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

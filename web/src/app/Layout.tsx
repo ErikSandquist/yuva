@@ -18,6 +18,7 @@ import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
+const HelpColumn = lazy(() => import("@/features/help/HelpColumn"))
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
 function LeftColumn({ keepList }: { keepList: boolean }) {
@@ -44,6 +45,11 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
       {section === "docs" && <DocsColumn />}
       {section === "broadcasts" && <BroadcastsColumn />}
       {section === "status" && <StatusColumn />}
+      {section === "knowledge" && (
+        <Suspense fallback={<div className="flex-1 bg-background" />}>
+          <HelpColumn />
+        </Suspense>
+      )}
       {section === "analytics" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <AnalyticsColumn />

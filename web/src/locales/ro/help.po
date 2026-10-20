@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} din {total} articole publicate"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De la 3 la 48 de litere, cifre și cratime. Unică pe acest server."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Un fost coleg de echipă"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Un grup de articole. Denumește-l în fiecare limbă în care publici; un nume e suficient pentru început."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Culoare de accent"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Ajutor Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Adaugă o limbă"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Adaugă o subcolecție"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Adresă"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Sfârșitul adresei"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Agenții pot publica"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Toate colecțiile"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "O cheie API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "O imagine https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Proprietate de analiză"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Un alt centru de ajutor folosește această adresă, acum sau înainte."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Răspunde o dată la întrebările frecvente, în scris. Alege centrul de ajutor al unei căsuțe pentru a scrie articole, a le grupa în colecții și a vedea ce caută clienții."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Orice stare"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Articol"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Articol șters"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Textul articolului"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Titlul articolului"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Vizualizări de articole"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Articole"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Articolele pot fi scrise și publicate în aceste limbi. Vizitatorii o văd pe a lor când există."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Articole din această colecție"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Articole care răspund întrebărilor clienților tăi despre {inboxName}. Rămâne nepublicat până îl publici."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Articole care nu au ajutat"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Cel puțin 3 caractere."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Clopoțel"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Facturare"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Aldin"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Carte"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Listă cu buline"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Anulează"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Grafic"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Chat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Canal de chat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Chaturi începute"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Cod"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Bloc de cod"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Colecție"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Colecții"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Colecțiile, articolele, reviziile și contoarele se șterg odată cu el."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Numără vizualizările paginilor centrului de ajutor fără cookie-uri."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Creează articol"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Creează colecție"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Creează centru de ajutor"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Creează centru de ajutor ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Șterge"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Ștergi {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Ștergi {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Șterge articolul"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Șterge colecția"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Șterge centrul de ajutor"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Ștergi traducerea {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Ștergi acest articol?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Șterge această traducere"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Șterge traducerea"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Șterge centrul de ajutor cu colecțiile, articolele, reviziile și contoarele sale. Adresa publică nu mai funcționează."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Descriere"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Ciornă"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Ciornă trimisă. Un proprietar sau un administrator o poate publica."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Versiuni anterioare ale acestei traduceri. Restaurarea uneia înlocuiește ciorna; textul publicat rămâne până publici."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Editează"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Editează colecția"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Gol"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Fiecare căutare a găsit ceva."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Toate traducerile, reviziile și contoarele lor se șterg."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Formatare"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Primii pași"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Glob"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Grupează articolele ca vizitatorii să poată răsfoi. O colecție poate conține un nivel de subcolecții. Trage pentru a schimba ordinea."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Titlu"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Ajutor"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Centru de ajutor"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Centru de ajutor șters"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Centre de ajutor"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Centrele de ajutor sunt dezactivate pe acest server."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Util"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Cum îmi resetez parola?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Pictogramă"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Imagine"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "În interior"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Cursiv"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Articolele sale rămân fără colecție. Subcolecțiile sale devin colecții de nivel superior."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Ciorna și reviziile se șterg. Celelalte limbi rămân."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Păstrează-mi versiunea"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Limbă"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Limbi"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Ultimele {d} zile"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Link"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Încarcă mai multe"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Lacăt"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL-ul siglei"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Poștă"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Principală"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Limba principală"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Mai mult"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Mai mult pentru {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Mută {name}. Trage sau apasă Alt cu săgețile."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Mută în jos"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Mută în sus"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Nume"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Articol nou"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Articol nou ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Colecție nouă"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Colecție nouă ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Niciun articol nu a primit un „nu” în această perioadă."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Niciun articol nu se potrivește."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "Niciun articol nu a fost citit în această perioadă."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Încă nu există articole. Scrie primul răspuns pe care clienții tăi îl cer mereu."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Fără colecție"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Încă nu există colecții. Articolele pot rămâne fără colecție."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Încă nu există versiuni anterioare."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Încă nu există centru de ajutor. Proprietarii și administratorii îl creează."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Nicio căsuță pentru care să se afișeze un centru de ajutor."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Niciuna"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "fără nume"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "nescris"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Nescris"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Listă numerotată"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Dezactivat: agenții scriu ciorne și le trimit, iar proprietarii și administratorii publică. Activat: și agenții cu acces la căsuță publică și retrag publicarea."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "O cale pe rând, de exemplu /billing/*. Widgetul de chat sugerează acest articol pe paginile potrivite."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Doar proprietarii și administratorii pot face asta."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Original"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Original în {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Text original ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Alte cuvinte pe care le-ar putea scrie vizitatorii, cum ar fi sinonime."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "depășit"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Depășit"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Parte din adresa web a acestei traduceri. Se face din titlu când e goală."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Persoană"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Alege o culoare"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Ștecher"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Previzualizare ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Previzualizare ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Previzualizare {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Previzualizarea articolului"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Adresă publică"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Publică"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Publică ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Publicat"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Semn de întrebare"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Citat"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Elimină {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Raport"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Perioada raportului"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Restaurează această versiune"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Restaurată"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Rezultate deschise"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Revizii"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Revizii ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Rachetă"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Salvează"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Salvează acum"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Salvat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Se salvează…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Caută în titluri"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Caută în titluri ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Cuvinte de căutare"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Căutări"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Căutări fără rezultat"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Trimis"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Setări"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Scut"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Arată"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Afișat sub nume pe pagina principală."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Afișat când un articol nu are traducere în limba vizitatorului."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Link către site"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Între timp, cineva a salvat acest articol."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Cineva a salvat această traducere cât timp o editai."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Stea"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Începe cu un titlu. Textul îl scrii apoi și rămâne ciornă până se publică."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Stare"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Trimite ciorna"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Trimite ciorna ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Sugerează pe pagini"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Echipă"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Adresa răspunde „negăsit” până publici centrul de ajutor."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Centrul de ajutor așa cum îl văd acum vizitatorii. Ciornele sunt excluse."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Centrul de ajutor nu oferă această limbă. Adaug-o mai întâi în setări."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Centrul de ajutor este la {address}. Adresa veche continuă să redirecționeze dacă o schimbi."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Centrul de ajutor nu este publicat. Doar echipa ta vede asta."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "Limba principală nu are încă text pentru acest articol."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Pagina nu mai funcționează pentru vizitatori. Ciorna rămâne și o poți publica din nou."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Paginile oferă acest chat sub „Ai nevoie de ajutor?”."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Titlul are nevoie de cel puțin 3 caractere"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Această căsuță are deja un centru de ajutor."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Aceasta este singura traducere a articolului. Șterge articolul în schimb."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Acest spațiu de lucru are atâtea articole de ajutor câte permite serverul. Șterge mai întâi pe cele vechi."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Titlu"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Prea multe solicitări. Așteaptă puțin și încearcă din nou."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Cele mai citite articole"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Nivel superior"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Traducere ștearsă"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Scrie un cuvânt de căutat."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Retrage publicarea"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Retrage publicarea ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Retragi publicarea acestei traduceri?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Nepublicat"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Modificări nepublicate"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Nepublicat, doar echipa ta îl poate previzualiza"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Modificări nesalvate"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Folosește de la 3 la 48 de litere, cifre și cratime interioare."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Folosește o culoare ca #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Folosește versiunea lor"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Versiune restaurată în ciornă"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Vezi"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Vezi centrul de ajutor"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Vizualizări"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Ce citesc și ce caută vizitatorii. Vizualizările sunt aproximative, iar cifrele ajung aici într-un minut."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Cine poate publica"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Cuvinte scrise de vizitatori care nu au găsit nimic. Un articol nou pentru fiecare este cea mai rapidă soluție."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Scrie"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Scrie răspunsul în Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Produsul tău."

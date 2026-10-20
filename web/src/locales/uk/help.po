@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "Опубліковано статей: {published} з {total}"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Від 3 до 48 літер, цифр і дефісів. Унікальна на цьому сервері."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Колишній учасник команди"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Група статей. Назвіть її кожною мовою, якою публікуєте; для початку вистачить однієї назви."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Акцентний колір"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Довідка Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Додати мову"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Додати підколекцію"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Адреса"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Закінчення адреси"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Агенти можуть публікувати"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Усі колекції"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Ключ API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Зображення за https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Аналітична властивість"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Цю адресу вже використовує або використовував інший центр довідки."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Дайте відповідь на поширені запитання один раз, письмово. Виберіть центр довідки скриньки, щоб писати статті, збирати їх у колекції та бачити, що шукають клієнти."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Будь-який стан"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Стаття"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Статтю видалено"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Текст статті"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Заголовок статті"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Перегляди статей"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Статті"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Статті можна писати й публікувати цими мовами. Відвідувачі бачать свою мову, якщо вона є."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Статті в цій колекції"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Статті, що відповідають на запитання клієнтів про {inboxName}. Залишається неопублікованим, доки ви його не опублікуєте."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Статті, які не допомогли"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Щонайменше 3 символи."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Дзвоник"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Оплата"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Жирний"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Книга"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Маркований список"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Графік"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Чат"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Канал чату"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Розпочаті чати"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Код"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Блок коду"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Колекція"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Колекції"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Колекції, статті, ревізії та лічильники видаляються разом із ним."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Рахує перегляди сторінок центру довідки без cookie."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Створити статтю"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Створити колекцію"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Створити центр довідки"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Створити центр довідки ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Видалити {centerName}?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Видалити {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Видалити статтю"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Видалити колекцію"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Видалити центр довідки"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Видалити переклад {name}?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Видалити цю статтю?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Видалити цей переклад"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Видалити переклад"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Видаляє центр довідки разом із колекціями, статтями, ревізіями та лічильниками. Публічна адреса перестає працювати."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Опис"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Чернетка"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Чернетку надіслано. Опублікувати її може власник або адміністратор."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Попередні версії цього перекладу. Відновлення однієї замінює чернетку; опублікований текст лишається, доки ви не опублікуєте."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Редагувати"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Редагувати колекцію"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Порожньо"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Кожен пошук щось знайшов."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Усі переклади, їхні ревізії та лічильники видаляються."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Форматування"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Початок роботи"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Глобус"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Згрупуйте статті, щоб відвідувачі могли їх переглядати. Колекція може містити один рівень підколекцій. Перетягніть, щоб змінити порядок."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Заголовок"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Довідка"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Центр довідки"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Центр довідки видалено"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Центри довідки"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Центри довідки вимкнено на цьому сервері."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Корисно"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Як скинути пароль?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Значок"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Зображення"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Всередині"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Курсив"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Її статті залишаються без колекції. Її підколекції стають колекціями верхнього рівня."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Його чернетка й ревізії видаляються. Інші мови лишаються."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Залишити мою"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Мова"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Мови"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Останні {d} дн."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Посилання"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Завантажити ще"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Замок"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL логотипа"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Пошта"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Основний"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Основна мова"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Ще"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Ще для {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Перемістити {name}. Перетягніть або натисніть Alt зі стрілками."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Перемістити вниз"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Перемістити вгору"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Назва"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Нова стаття"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Нова стаття ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Нова колекція"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Нова колекція ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Жодна стаття не отримала «ні» за цей період."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Немає відповідних статей."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "За цей період не прочитано жодної статті."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Статей ще немає. Напишіть першу відповідь, про яку клієнти питають знову й знову."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Без колекції"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Колекцій ще немає. Статті можуть лишатися без колекції."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Попередніх версій ще немає."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Центру довідки ще немає. Його створюють власники й адміністратори."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Немає скриньки, для якої можна показати центр довідки."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Немає"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "без назви"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "не написано"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Не написано"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Нумерований список"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Вимк.: агенти пишуть чернетки й надсилають їх, публікують власники та адміністратори. Увімк.: публікують і знімають з публікації також агенти з доступом до скриньки."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Один шлях на рядок, наприклад /billing/*. Віджет чату пропонує цю статтю на відповідних сторінках."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Це можуть робити лише власники й адміністратори."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Оригінал"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Оригінал мовою: {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Вихідний текст ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Інші слова, які можуть ввести відвідувачі, наприклад синоніми."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "застаріло"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Застаріло"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Частина вебадреси цього перекладу. Якщо порожньо, створюється із заголовка."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Людина"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Телефон"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Виберіть колір"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Вилка"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Попередній перегляд"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Попередній перегляд ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Попередній перегляд ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Попередній перегляд: {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Попередній перегляд статті"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Публічна адреса"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Опублікувати"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Опублікувати ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Опубліковано"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Знак питання"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Цитата"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Прибрати {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Звіт"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Період звіту"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Відновити цю версію"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Відновлено"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Відкриті результати"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Ревізії"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Ревізії ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Ракета"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Зберегти зараз"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Збережено"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Збереження…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Шукати в заголовках"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Шукати в заголовках ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Слова для пошуку"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Пошуки"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Пошуки без результату"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Надіслано"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Налаштування"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Щит"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Показати"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Показується під назвою на головній сторінці."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Показується, коли стаття не має перекладу мовою відвідувача."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Посилання на сайт"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Тим часом хтось зберіг цю статтю."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Хтось зберіг цей переклад, поки ви його редагували."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Зірка"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Почніть із заголовка. Текст ви напишете потім, і він лишиться чернеткою, доки його не опублікують."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Стан"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Надіслати чернетку"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Надіслати чернетку ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Пропонувати на сторінках"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Команда"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Адреса відповідає «не знайдено», доки ви не опублікуєте центр довідки."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Центр довідки таким, яким його бачать відвідувачі зараз. Чернетки не включено."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Центр довідки не пропонує цю мову. Спершу додайте її в налаштуваннях."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Центр довідки за адресою {address}. Стара адреса й надалі перенаправляє, якщо ви її змінюєте."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Центр довідки не опубліковано. Це бачить лише ваша команда."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "В основної мови ще немає тексту для цієї статті."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Сторінка перестає працювати для відвідувачів. Чернетка лишається, і ви можете опублікувати її знову."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Сторінки пропонують цей чат під заголовком «Досі потрібна допомога?»."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Заголовок має містити щонайменше 3 символи"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Ця скринька вже має центр довідки."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Це єдиний переклад статті. Видаліть натомість статтю."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "У цьому робочому просторі стільки статей довідки, скільки дозволяє сервер. Спершу видаліть старі."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Забагато запитів. Зачекайте трохи й повторіть."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Найчитаніші статті"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Верхній рівень"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Переклад видалено"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Введіть слово для пошуку."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Зняти з публікації"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Зняти з публікації ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Зняти цей переклад з публікації?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Не опубліковано"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Неопубліковані зміни"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Не опубліковано, попередній перегляд доступний лише вашій команді"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Незбережені зміни"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Використайте від 3 до 48 літер, цифр і внутрішніх дефісів."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Використайте колір на кшталт #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Використати їхню версію"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Версію відновлено в чернетку"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Відкрити"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Відкрити центр довідки"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Перегляди"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Що відвідувачі читають і шукають. Перегляди приблизні, а цифри доходять сюди протягом хвилини."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Хто може публікувати"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Слова, які вводили відвідувачі й нічого не знайшли. Нова стаття для кожного — найшвидше рішення."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Писати"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Напишіть відповідь у Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Ваш продукт."

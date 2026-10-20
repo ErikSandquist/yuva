@@ -1012,6 +1012,10 @@ msgstr "Člen později nastavil komponentu ručně, takže zůstává tak, jak j
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Slučovací pole bez záložní hodnoty by bylo pro některé příjemce prázdné. Dejte mu záložní hodnotu."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Zpráva pojme nejvýše 3 články."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Zpráva byla přidána"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Přidejte kontaktní bod typu Webhook, vložte výše uvedenou adresu, ponechte metodu POST a použijte kontaktní bod v oznamovacích pravidlech. Spuštěné výstrahy monitor vyřadí, vyřešené ho obnoví."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Přidat odkaz"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Přidat monitor"
 
@@ -1264,6 +1272,10 @@ msgstr "Přidat web nebo aplikaci"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Přidat analytickou vlastnost"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Přidat obrázek"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Dorazilo přímo na {address}, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Dorazilo přes přeposílání, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Články"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Jako {name}, od {when}"
@@ -2216,6 +2232,10 @@ msgstr "Zablokované kontakty"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Tělo"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Tučně"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "Záznam CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kód"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Kolekce"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Smazat odběr"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Smažte aplikaci, kterou jste pro Yuvu vytvořili"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Smazat článek"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Pozdrav z nastavení"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Dobrý den, přesouvám schránku {address} do Yuvy, naší schránky podpory. Naše organizace Microsoft 365 dovoluje aplikace povolovat jen správci. Otevřete prosím tento odkaz jako správce a potvrďte, aby Yuva mohla schránku číst přes IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Nápověda"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Nápověda a zpětná vazba"
@@ -5041,6 +5075,27 @@ msgstr "Nápověda a zpětná vazba"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Nápověda a zpětná vazba uvnitř vaší aplikace pro iOS nebo Android"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Článek nápovědy"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Články nápovědy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Centrum nápovědy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Nastavení centra nápovědy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Report nápovědy"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Bude jednat jako vy, <0>{email}</0>, jen s přístupem, který níže po
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Už nebude dostávat oznámení."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Kurzíva"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Přesunout vybraný blok"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Přesunout vybranou kolekci"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Procházet články nebo kolekce"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Procházet hromadné zprávy"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Nové adresy, které dostanou potvrzovací zprávu"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Nový článek"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Nová hromadná zpráva ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Nová předpřipravená odpověď"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Nová kolekce"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Zatím žádné stránky"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Žádné čekající pozvánky."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Nenalezen žádný publikovaný článek."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Otevřít nastavení"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Otevřít článek nebo kolekci"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Otevřít hromadnou zprávu"
 
@@ -8251,6 +8334,10 @@ msgstr "Otevřít diskusi"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Otevřít koncový bod"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Otevřít článek nápovědy"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Otevřít další nebo předchozí konverzaci"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Otevřít nastavení stránky"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Otevřít veřejné centrum nápovědy"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Text náhledu"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Náhled centra nápovědy"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Zobrazit náhled stránky"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Předchozí nebo další jazyk"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Zveřejnit hned"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Publikovat nebo zrušit publikaci centra nápovědy"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Zveřejnit stránku nebo ji stáhnout"
 
@@ -9072,6 +9175,10 @@ msgstr "Zveřejnit koncept"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Zveřejněte tento záznam TXT v DNS své domény:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Publikovat, nebo odeslat koncept"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Vzdálené obrázky mohou odesílateli prozradit, že jste zprávu otev�
 msgid "Remove"
 msgstr "Odebrat"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Zkontrolujte, pak odešlete nebo naplánujte"
 msgid "Review, then send or schedule ({key})"
 msgstr "Zkontrolujte, pak odešlete nebo naplánujte ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Revize"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Uložte ji a zkopírujte její identifikátor a tajný klíč, které Ze
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Uložit hned a ponechat verzi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Uložit koncept nyní"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Hledat emoji (anglicky)"
 msgid "Search feedback"
 msgstr "Hledat ve zpětné vazbě"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Hledat články nápovědy…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Hledat v načtených zprávách"
@@ -10124,6 +10244,10 @@ msgstr "Hledat příjemce"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Hledat odběratele"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Hledat v článcích"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Poslat signál"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Odeslat kontrolu"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Odeslat článek nápovědy"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Odeslat článek nápovědy ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Zobrazit na stránce"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Zobrazit nebo skrýt citovaný text"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Zobrazit nebo skrýt původní text vedle překladu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Zobrazit nebo skrýt náhled"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Stáhnout"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Stáhnout ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Zrušit publikaci překladu"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

@@ -1012,6 +1012,10 @@ msgstr "Bir üye bileşeni sonradan elle ayarladı, bu yüzden onun bıraktığ�
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Yedek metni olmayan bir birleştirme alanı bazı alıcılarda boş kalacak. Bir yedek metin ekleyin."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Bir mesaja en fazla 3 makale eklenebilir."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Bir mesaj eklendi"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Webhook türünde bir iletişim noktası ekleyin, yukarıdaki adresi yapıştırın, yöntemi POST olarak bırakın ve iletişim noktasını bir bildirim politikasında kullanın. Tetiklenen uyarılar monitörü düşürür, çözülenler düzeltir."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Bağlantı ekle"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Monitör ekle"
 
@@ -1264,6 +1272,10 @@ msgstr "Web sitesi ya da uygulama ekle"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Analitik mülkü ekle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Görsel ekle"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Doğrudan {address} adresine ulaştı, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Yönlendirme ile ulaştı, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Makaleler"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "{name} olarak, {when} tarihinden beri"
@@ -2216,6 +2232,10 @@ msgstr "Engellenmiş kişiler"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Gövde"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Kalın"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME kaydı"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kod"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Koleksiyonlar"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Aboneliği sil"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Yuva için oluşturduğunuz uygulamayı silin"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Makaleyi sil"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Kurulumdan merhaba"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Merhaba, {address} posta kutusunu destek gelen kutumuz Yuva'ya taşıyorum. Microsoft 365 kuruluşumuzda uygulamalara yalnızca bir yönetici izin verebiliyor. Yuva'nın posta kutusunu IMAP üzerinden okuyabilmesi için lütfen bu bağlantıyı yönetici olarak açıp onaylayın: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Yardım"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Yardım ve geri bildirim"
@@ -5041,6 +5075,27 @@ msgstr "Yardım ve geri bildirim"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "iOS ya da Android uygulamanızın içinde yardım ve geri bildirim"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Yardım makalesi"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Yardım makaleleri"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Yardım merkezi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Yardım merkezi ayarları"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Yardım raporu"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Sizin adınıza, <0>{email}</0> olarak, yalnızca aşağıda izin verdi�
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Bu cihaz artık bildirim almayacak."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "İtalik"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Seçili bloğu taşı"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Seçili koleksiyonu taşı"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Makaleler veya koleksiyonlar arasında gezin"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Bültenler arasında gezin"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Onay e-postası alacak yeni adresler"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Yeni makale"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Yeni bülten ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Yeni hazır yanıt"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Yeni koleksiyon"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Henüz sayfa yok"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Bekleyen davet yok."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Yayımlanmış makale bulunamadı."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Kurulumu aç"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Makaleyi veya koleksiyonu aç"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Bülteni aç"
 
@@ -8251,6 +8334,10 @@ msgstr "Tartışmayı aç"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Uç noktayı aç"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Yardım makalesini aç"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Sonraki ya da önceki konuşmayı aç"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Sayfa ayarlarını aç"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Herkese açık yardım merkezini aç"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Önizleme metni"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Yardım merkezini önizle"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Sayfayı önizle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Önceki veya sonraki dil"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Şimdi yayınla"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Yardım merkezini yayımla veya yayından kaldır"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Sayfayı yayınla ya da yayından kaldır"
 
@@ -9072,6 +9175,10 @@ msgstr "Taslağı yayınla"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Alan adınızın DNS'ine bu TXT kaydını ekleyin:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Yayımla veya taslağı gönder"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Uzak görseller, postayı açtığınızı gönderene bildirebilir."
 msgid "Remove"
 msgstr "Kaldır"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Gözden geçir, sonra gönder ya da zamanla"
 msgid "Review, then send or schedule ({key})"
 msgstr "Gözden geçir, sonra gönder ya da zamanla ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Revizyonlar"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Kaydedin; kimliği ve Zendesk'in yalnızca bir kez gösterdiği gizli an
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Şimdi kaydet ve sürüm sakla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Taslağı şimdi kaydet"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Emoji ara (İngilizce)"
 msgid "Search feedback"
 msgstr "Geri bildirimlerde ara"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Yardım makalelerinde ara…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Yüklenen mesajlarda ara"
@@ -10124,6 +10244,10 @@ msgstr "Alıcılarda ara"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Abonelerde ara"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Makalelerde ara"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Sinyal gönder"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Denetim gönder"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Yardım makalesi gönder"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Yardım makalesi gönder ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Sayfada göster"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Alıntıyı göster ya da gizle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Çeviri yanında orijinal metni göster veya gizle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Önizlemeyi göster veya gizle"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Yayından kaldır"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Yayından kaldır ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Çeviriyi yayından kaldır"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

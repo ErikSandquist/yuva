@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "تم نشر {published} من أصل {total} مقالة"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "من 3 إلى 48 حرفًا وأرقامًا وواصلات. فريد على هذا الخادم."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "عضو سابق في الفريق"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "مجموعة من المقالات. سمّها بكل لغة تنشر بها؛ يكفي اسم واحد للبدء."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "لون التمييز"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "مساعدة Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "إضافة لغة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "إضافة مجموعة فرعية"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "العنوان"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "نهاية العنوان"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "يمكن للوكلاء النشر"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "كل المجموعات"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "مفتاح API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "صورة https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "خاصية التحليلات"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "يستخدم مركز مساعدة آخر هذا العنوان الآن أو سابقًا."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "أجب عن الأسئلة الشائعة مرة واحدة كتابةً. اختر مركز مساعدة صندوق وارد لكتابة المقالات وتجميعها في مجموعات ومعرفة ما يبحث عنه العملاء."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "أي حالة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "مقالة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "تم حذف المقالة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "نص المقالة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "عنوان المقالة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "مشاهدات المقالات"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "المقالات"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "يمكن كتابة المقالات ونشرها بهذه اللغات. يرى الزوار لغتهم عند توفرها."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "المقالات في هذه المجموعة"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "مقالات تجيب عن أسئلة عملائك حول {inboxName}. يبقى غير منشور حتى تنشره."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "مقالات لم تفد"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "3 أحرف على الأقل."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "جرس"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "الفوترة"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "عريض"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "كتاب"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "قائمة نقطية"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "مخطط"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "محادثة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "قناة محادثة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "محادثات بدأت"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "رمز"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "كتلة رمز"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "مجموعة"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "المجموعات"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "تُحذف المجموعات والمقالات والمراجعات والعدادات معه."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "يحسب مشاهدات صفحات مركز المساعدة دون ملفات تعريف الارتباط."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "إنشاء مقالة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "إنشاء مجموعة"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "إنشاء مركز مساعدة"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "إنشاء مركز مساعدة ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "حذف"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "حذف {centerName}؟"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "حذف {name}؟"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "حذف المقالة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "حذف المجموعة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "حذف مركز المساعدة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "حذف ترجمة {name}؟"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "حذف هذه المقالة؟"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "حذف هذه الترجمة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "حذف الترجمة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "يحذف مركز المساعدة مع مجموعاته ومقالاته ومراجعاته وعداداته. يتوقف العنوان العام عن العمل."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "الوصف"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "مسودة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "تم إرسال المسودة. يمكن للمالك أو المسؤول نشرها."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "إصدارات سابقة من هذه الترجمة. استعادة إصدار تستبدل المسودة؛ يبقى النص المنشور حتى تنشر."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "تعديل"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "تعديل المجموعة"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "فارغ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "وجد كل بحث شيئًا."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "تُحذف كل الترجمات ومراجعاتها وعداداتها."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "التنسيق"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "البدء"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "كرة أرضية"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "جمّع المقالات ليتصفحها الزوار. يمكن أن تحتوي المجموعة على مستوى واحد من المجموعات الفرعية. اسحب لتغيير الترتيب."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "عنوان رئيسي"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "المساعدة"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "مركز المساعدة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "تم حذف مركز المساعدة"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "مراكز المساعدة"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "مراكز المساعدة متوقفة على هذا الخادم."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "مفيد"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "كيف أعيد تعيين كلمة المرور؟"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "أيقونة"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "صورة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "داخل"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "مائل"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "تبقى مقالاتها بلا مجموعة. تصبح مجموعاتها الفرعية مجموعات من المستوى الأعلى."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "تُحذف مسودتها ومراجعاتها. تبقى اللغات الأخرى."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "الاحتفاظ بنسختي"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "اللغة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "اللغات"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "آخر {d} يومًا"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "رابط"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "تحميل المزيد"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "قفل"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "عنوان URL للشعار"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "بريد"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "رئيسية"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "اللغة الرئيسية"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "المزيد"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "المزيد لـ {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "انقل {name}. اسحب أو اضغط Alt مع مفاتيح الأسهم."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "نقل لأسفل"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "نقل لأعلى"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "الاسم"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "مقالة جديدة"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "مقالة جديدة ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "مجموعة جديدة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "مجموعة جديدة ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "لم تحصل أي مقالة على «لا» في هذه الفترة."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "لا توجد مقالة مطابقة."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "لم تُقرأ أي مقالة في هذه الفترة."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "لا توجد مقالات بعد. اكتب أول إجابة يسأل عنها عملاؤك باستمرار."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "بلا مجموعة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "لا توجد مجموعات بعد. يمكن أن تبقى المقالات بلا مجموعة."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "لا توجد إصدارات سابقة بعد."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "لا يوجد مركز مساعدة بعد. ينشئه المالكون والمسؤولون."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "لا يوجد صندوق وارد لعرض مركز مساعدة له."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "لا شيء"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "بلا اسم"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "لم تُكتب"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "لم تُكتب"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "قائمة مرقمة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "متوقف: يكتب الوكلاء المسودات ويرسلونها، وينشر المالكون والمسؤولون. قيد التشغيل: ينشر الوكلاء الذين لديهم صلاحية الوصول إلى صندوق الوارد ويلغون النشر أيضًا."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "مسار واحد في كل سطر، مثل /billing/*. يقترح ودجت المحادثة هذه المقالة في الصفحات المطابقة."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "المالكون والمسؤولون فقط يمكنهم فعل ذلك."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "الأصل"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "الأصل بلغة {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "النص الأصلي ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "كلمات أخرى قد يكتبها الزوار، مثل المرادفات."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "قديمة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "قديمة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "جزء من عنوان الويب لهذه الترجمة. يُنشأ من العنوان إذا كان فارغًا."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "شخص"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "هاتف"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "اختر لونًا"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "قابس"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "معاينة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "معاينة ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "معاينة ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "معاينة {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "معاينة المقالة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "العنوان العام"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "نشر"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "نشر ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "منشورة"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "علامة استفهام"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "اقتباس"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "إزالة {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "التقرير"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "فترة التقرير"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "استعادة هذا الإصدار"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "تمت الاستعادة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "نتائج مفتوحة"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "المراجعات"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "المراجعات ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "صاروخ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "حفظ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "حفظ الآن"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "تم الحفظ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "جارٍ الحفظ…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "البحث في العناوين"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "البحث في العناوين ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "كلمات البحث"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "عمليات البحث"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "عمليات بحث بلا نتيجة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "المُرسَل"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "درع"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "إظهار"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "يظهر تحت الاسم في الصفحة الرئيسية."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "يظهر عندما لا تكون للمقالة ترجمة بلغة الزائر."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "رابط الموقع"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "حفظ شخص ما هذه المقالة في هذه الأثناء."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "حفظ شخص ما هذه الترجمة أثناء تعديلك لها."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "نجمة"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "ابدأ بعنوان. تكتب النص بعد ذلك، ويبقى مسودة حتى يُنشر."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "الحالة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "إرسال المسودة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "إرسال المسودة ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "اقتراح في الصفحات"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "الفريق"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "يردّ العنوان بـ«غير موجود» حتى تنشر مركز المساعدة."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "مركز المساعدة كما يراه الزوار الآن. المسودات مستبعدة."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "لا يوفر مركز المساعدة هذه اللغة. أضفها في الإعدادات أولًا."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "مركز المساعدة على {address}. يستمر العنوان القديم في إعادة التوجيه إذا غيّرته."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "مركز المساعدة غير منشور. فريقك وحده يرى هذا."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "ليس للغة الرئيسية نص لهذه المقالة بعد."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "تتوقف الصفحة عن العمل للزوار. تبقى المسودة ويمكنك نشرها مرة أخرى."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "تعرض الصفحات هذه المحادثة تحت «هل ما زلت بحاجة إلى مساعدة؟»."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "يحتاج العنوان إلى 3 أحرف على الأقل"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "لهذا الصندوق الوارد مركز مساعدة بالفعل."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "هذه هي الترجمة الوحيدة للمقالة. احذف المقالة بدلًا من ذلك."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "لدى مساحة العمل هذه عدد مقالات المساعدة الذي يسمح به الخادم. احذف القديمة أولًا."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "العنوان"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "طلبات كثيرة جدًا. انتظر لحظة وحاول مرة أخرى."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "أكثر المقالات قراءة"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "المستوى الأعلى"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "تم حذف الترجمة"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "اكتب كلمة للبحث عنها."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "إلغاء النشر"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "إلغاء النشر ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "إلغاء نشر هذه الترجمة؟"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "غير منشورة"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "تغييرات غير منشورة"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "غير منشور، فريقك وحده يمكنه المعاينة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "تغييرات غير محفوظة"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "استخدم من 3 إلى 48 حرفًا وأرقامًا وواصلات داخلية."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "استخدم لونًا مثل #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "استخدام نسختهم"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "تمت استعادة الإصدار إلى المسودة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "عرض"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "عرض مركز المساعدة"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "المشاهدات"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "ما يقرؤه الزوار ويبحثون عنه. المشاهدات تقريبية، وتصل الأرقام إلى هذه الصفحة خلال دقيقة."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "من يمكنه النشر"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "كلمات كتبها الزوار ولم تجد شيئًا. مقالة جديدة لكل منها هي أسرع حل."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "كتابة"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "اكتب الإجابة بصيغة Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "منتجك."

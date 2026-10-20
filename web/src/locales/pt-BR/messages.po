@@ -1012,6 +1012,10 @@ msgstr "Um membro definiu o componente manualmente depois, então ele permanece 
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Um campo de mesclagem sem valor alternativo ficaria vazio para alguns destinatários. Dê a ele um valor alternativo."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Uma mensagem aceita no máximo 3 artigos."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Uma mensagem foi adicionada"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Adicione um ponto de contato do tipo Webhook, cole o endereço acima, mantenha o método POST e use o ponto de contato em uma política de notificação. Alertas disparados derrubam o monitor e os resolvidos o recuperam."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Adicionar um link"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Adicionar monitor"
 
@@ -1264,6 +1272,10 @@ msgstr "Adicionar um site ou app"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Adicionar uma propriedade de analytics"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Adicionar uma imagem"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Chegou diretamente em {address}, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Chegou por encaminhamento, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Artigos"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Como {name}, desde {when}"
@@ -2216,6 +2232,10 @@ msgstr "Contatos bloqueados"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Corpo"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Negrito"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "Registro CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Código"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Coleções"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Excluir inscrição"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Exclua o app que você criou para o Yuva"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Excluir o artigo"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Olá da configuração"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Olá, estou migrando a caixa {address} para o Yuva, nossa caixa de suporte. Nossa organização do Microsoft 365 só permite que um administrador autorize apps. Abra este link como administrador e aceite, para que o Yuva possa ler a caixa por IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Ajuda"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Ajuda e feedback"
@@ -5041,6 +5075,27 @@ msgstr "Ajuda e feedback"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Ajuda e feedback dentro do seu app iOS ou Android"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Artigo de ajuda"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Artigos de ajuda"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Central de ajuda"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Configurações da central de ajuda"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Relatório de ajuda"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Ele vai agir como você, <0>{email}</0>, apenas com o acesso que você p
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Ele não vai mais receber notificações."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Itálico"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Mover o bloco selecionado"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Mover a coleção selecionada"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Percorrer os artigos ou coleções"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Percorrer os envios"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Novos endereços que recebem um e-mail de confirmação"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Novo artigo"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Novo envio ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Nova resposta pronta"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Nova coleção"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Ainda não há páginas"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Nenhum convite pendente."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Nenhum artigo publicado encontrado."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Abrir configuração"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Abrir o artigo ou a coleção"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Abrir o envio"
 
@@ -8251,6 +8334,10 @@ msgstr "Abrir a discussão"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Abrir o endpoint"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Abrir o artigo de ajuda"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Abrir a conversa seguinte ou anterior"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Abrir as configurações da página"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Abrir a central de ajuda pública"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Texto de pré-visualização"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Pré-visualizar a central de ajuda"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Pré-visualizar a página"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Idioma anterior ou seguinte"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Publicar agora"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Publicar ou despublicar a central de ajuda"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Publicar ou despublicar a página"
 
@@ -9072,6 +9175,10 @@ msgstr "Publicar o rascunho"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Publique este registro TXT no DNS do seu domínio:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Publicar ou enviar o rascunho"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Imagens remotas podem avisar o remetente de que você abriu o e-mail."
 msgid "Remove"
 msgstr "Remover"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Revise, depois envie ou agende"
 msgid "Review, then send or schedule ({key})"
 msgstr "Revise, depois envie ou agende ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Revisões"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Salve e copie o identificador e o segredo, que o Zendesk mostra só uma 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Salvar agora e manter uma versão"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Salvar o rascunho agora"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Buscar emoji (em inglês)"
 msgid "Search feedback"
 msgstr "Buscar feedback"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Pesquisar artigos de ajuda…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Buscar nas mensagens carregadas"
@@ -10124,6 +10244,10 @@ msgstr "Buscar destinatários"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Buscar inscritos"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Pesquisar nos artigos"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Enviar um sinal"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Enviar uma verificação"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Enviar um artigo de ajuda"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Enviar um artigo de ajuda ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Mostrar na página"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Mostrar ou ocultar o texto citado"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Mostrar ou ocultar o texto original ao lado de uma tradução"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Mostrar ou ocultar a pré-visualização"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Despublicar"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Despublicar ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Despublicar a tradução"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

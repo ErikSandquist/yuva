@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: el\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{published} από {total} άρθρα δημοσιευμένα"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 έως 48 γράμματα, αριθμοί και παύλες. Μοναδική σε αυτόν τον διακομιστή."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Πρώην μέλος της ομάδας"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Μια ομάδα άρθρων. Δώστε της όνομα σε κάθε γλώσσα που δημοσιεύετε· ένα όνομα αρκεί για αρχή."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Χρώμα έμφασης"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Βοήθεια Acme"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Προσθήκη γλώσσας"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Προσθήκη υποσυλλογής"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "Τέλος διεύθυνσης"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Οι πράκτορες μπορούν να δημοσιεύουν"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Όλες οι συλλογές"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "Ένα κλειδί API"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Μια εικόνα https."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Ιδιότητα analytics"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Άλλο κέντρο βοήθειας χρησιμοποιεί αυτή τη διεύθυνση, τώρα ή παλιότερα."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Απαντήστε στις συχνές ερωτήσεις μία φορά, γραπτά. Επιλέξτε το κέντρο βοήθειας ενός εισερχομένων για να γράψετε άρθρα, να τα ομαδοποιήσετε σε συλλογές και να δείτε τι αναζητούν οι πελάτες."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Οποιαδήποτε κατάσταση"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Άρθρο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "Το άρθρο διαγράφηκε"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "Κείμενο άρθρου"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "Τίτλος άρθρου"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Προβολές άρθρων"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Άρθρα"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "Τα άρθρα μπορούν να γραφτούν και να δημοσιευτούν σε αυτές τις γλώσσες. Οι επισκέπτες βλέπουν τη δική τους όταν υπάρχει."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Άρθρα σε αυτή τη συλλογή"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Άρθρα που απαντούν στις ερωτήσεις των πελατών σας για το {inboxName}. Παραμένει αδημοσίευτο μέχρι να το δημοσιεύσετε."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Άρθρα που δεν βοήθησαν"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Τουλάχιστον 3 χαρακτήρες."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Καμπανάκι"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Χρέωση"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Έντονα"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Βιβλίο"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Λίστα με κουκκίδες"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Γράφημα"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Συνομιλία"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Κανάλι συνομιλίας"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Συνομιλίες που ξεκίνησαν"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Κώδικας"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Μπλοκ κώδικα"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Συλλογή"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Συλλογές"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "Οι συλλογές, τα άρθρα, οι αναθεωρήσεις και οι μετρητές διαγράφονται μαζί του."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Μετρά τις προβολές σελίδων του κέντρου βοήθειας χωρίς cookies."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Δημιουργία άρθρου"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Δημιουργία συλλογής"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Δημιουργία κέντρου βοήθειας"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Δημιουργία κέντρου βοήθειας ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Διαγραφή του {centerName};"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Διαγραφή του {name};"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Διαγραφή άρθρου"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Διαγραφή συλλογής"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Διαγραφή κέντρου βοήθειας"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Διαγραφή της μετάφρασης {name};"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Διαγραφή αυτού του άρθρου;"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Διαγραφή αυτής της μετάφρασης"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Διαγραφή μετάφρασης"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Διαγράφει το κέντρο βοήθειας με τις συλλογές, τα άρθρα, τις αναθεωρήσεις και τους μετρητές του. Η δημόσια διεύθυνση παύει να λειτουργεί."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Πρόχειρο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "Το πρόχειρο υποβλήθηκε. Ένας ιδιοκτήτης ή διαχειριστής μπορεί να το δημοσιεύσει."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "Προηγούμενες εκδόσεις αυτής της μετάφρασης. Η επαναφορά μιας αντικαθιστά το πρόχειρο· το δημοσιευμένο κείμενο μένει μέχρι να δημοσιεύσετε."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Επεξεργασία συλλογής"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Κενό"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Κάθε αναζήτηση βρήκε κάτι."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Όλες οι μεταφράσεις, οι αναθεωρήσεις και οι μετρητές τους διαγράφονται."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Μορφοποίηση"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Ξεκινώντας"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Υδρόγειος"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Ομαδοποιήστε τα άρθρα ώστε οι επισκέπτες να τα περιηγούνται. Μια συλλογή μπορεί να έχει ένα επίπεδο υποσυλλογών. Σύρετε για να αλλάξετε τη σειρά."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Επικεφαλίδα"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Κέντρο βοήθειας"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Το κέντρο βοήθειας διαγράφηκε"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Κέντρα βοήθειας"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "Τα κέντρα βοήθειας είναι απενεργοποιημένα σε αυτόν τον διακομιστή."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Χρήσιμο"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Πώς επαναφέρω τον κωδικό μου;"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Εικονίδιο"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Εικόνα"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Μέσα σε"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Πλάγια"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "Τα άρθρα της μένουν χωρίς συλλογή. Οι υποσυλλογές της γίνονται συλλογές ανώτατου επιπέδου."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "Το πρόχειρο και οι αναθεωρήσεις της διαγράφονται. Οι άλλες γλώσσες μένουν."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Κράτηση της δικής μου"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Γλώσσες"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Τελευταίες {d} ημέρες"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Σύνδεσμος"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Φόρτωση περισσότερων"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Λουκέτο"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "URL λογοτύπου"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Αλληλογραφία"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Κύρια"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Κύρια γλώσσα"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Περισσότερα"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Περισσότερα για {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "Μετακίνηση του {name}. Σύρετε ή πατήστε Alt με τα βέλη."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Μετακίνηση κάτω"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Μετακίνηση πάνω"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Όνομα"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Νέο άρθρο"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Νέο άρθρο ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Νέα συλλογή"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Νέα συλλογή ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Κανένα άρθρο δεν πήρε «όχι» σε αυτή την περίοδο."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Κανένα άρθρο δεν ταιριάζει."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "Κανένα άρθρο δεν διαβάστηκε σε αυτή την περίοδο."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Δεν υπάρχουν άρθρα ακόμη. Γράψτε την πρώτη απάντηση που ρωτούν συνεχώς οι πελάτες σας."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Χωρίς συλλογή"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Δεν υπάρχουν συλλογές ακόμη. Τα άρθρα μπορούν να μένουν χωρίς συλλογή."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Δεν υπάρχουν προηγούμενες εκδόσεις ακόμη."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Δεν υπάρχει κέντρο βοήθειας ακόμη. Το δημιουργούν οι ιδιοκτήτες και οι διαχειριστές."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί κέντρο βοήθειας."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Κανένα"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "χωρίς όνομα"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "δεν γράφτηκε"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Δεν γράφτηκε"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Αριθμημένη λίστα"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Ανενεργό: οι πράκτορες γράφουν πρόχειρα και τα υποβάλλουν, οι ιδιοκτήτες και οι διαχειριστές δημοσιεύουν. Ενεργό: και οι πράκτορες με πρόσβαση στα εισερχόμενα δημοσιεύουν και αποδημοσιεύουν."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Μία διαδρομή ανά γραμμή, π.χ. /billing/*. Το widget συνομιλίας προτείνει αυτό το άρθρο σε σελίδες που ταιριάζουν."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Μόνο οι ιδιοκτήτες και οι διαχειριστές μπορούν να το κάνουν."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Πρωτότυπο"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Πρωτότυπο στα {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Αρχικό κείμενο ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "Άλλες λέξεις που μπορεί να πληκτρολογήσουν οι επισκέπτες, όπως συνώνυμα."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "ξεπερασμένο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Ξεπερασμένο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "Μέρος της διεύθυνσης web αυτής της μετάφρασης. Δημιουργείται από τον τίτλο όταν είναι κενό."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Άτομο"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Επιλέξτε χρώμα"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Βύσμα"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Προεπισκόπηση ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Προεπισκόπηση ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Προεπισκόπηση του {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "Προεπισκόπηση του άρθρου"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Δημόσια διεύθυνση"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Δημοσίευση"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Δημοσίευση ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Δημοσιευμένο"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Ερωτηματικό"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Παράθεση"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "Αφαίρεση του {0}"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Αναφορά"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "Περίοδος αναφοράς"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Επαναφορά αυτής της έκδοσης"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Επαναφέρθηκε"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Ανοιγμένα αποτελέσματα"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Αναθεωρήσεις"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Αναθεωρήσεις ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Πύραυλος"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Αποθήκευση τώρα"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Αποθηκεύτηκε"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Αποθήκευση…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Αναζήτηση στους τίτλους"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Αναζήτηση στους τίτλους ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Λέξεις αναζήτησης"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Αναζητήσεις"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Αναζητήσεις χωρίς αποτέλεσμα"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Απεστάλη"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Ασπίδα"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Εμφάνιση"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "Εμφανίζεται κάτω από το όνομα στην αρχική σελίδα."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Εμφανίζεται όταν ένα άρθρο δεν έχει μετάφραση στη γλώσσα του επισκέπτη."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Σύνδεσμος ιστότοπου"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Στο μεταξύ κάποιος αποθήκευσε αυτό το άρθρο."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Κάποιος αποθήκευσε αυτή τη μετάφραση ενώ την επεξεργαζόσασταν."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Αστέρι"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Ξεκινήστε με έναν τίτλο. Το κείμενο το γράφετε μετά και μένει πρόχειρο μέχρι να δημοσιευτεί."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Κατάσταση"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Υποβολή προχείρου"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Υποβολή προχείρου ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Πρόταση σε σελίδες"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Ομάδα"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "Η διεύθυνση απαντά «δεν βρέθηκε» μέχρι να δημοσιεύσετε το κέντρο βοήθειας."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "Το κέντρο βοήθειας όπως το βλέπουν τώρα οι επισκέπτες. Τα πρόχειρα παραλείπονται."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "Το κέντρο βοήθειας δεν προσφέρει αυτή τη γλώσσα. Προσθέστε την πρώτα στις ρυθμίσεις."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "Το κέντρο βοήθειας βρίσκεται στο {address}. Η παλιά διεύθυνση συνεχίζει να ανακατευθύνει αν την αλλάξετε."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "Το κέντρο βοήθειας δεν έχει δημοσιευτεί. Μόνο η ομάδα σας το βλέπει."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "Η κύρια γλώσσα δεν έχει ακόμη κείμενο για αυτό το άρθρο."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Η σελίδα παύει να λειτουργεί για τους επισκέπτες. Το πρόχειρο μένει και μπορείτε να το δημοσιεύσετε ξανά."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Οι σελίδες προσφέρουν αυτή τη συνομιλία κάτω από το «Χρειάζεστε ακόμη βοήθεια;»."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "Ο τίτλος χρειάζεται τουλάχιστον 3 χαρακτήρες"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Αυτό το εισερχόμενο έχει ήδη κέντρο βοήθειας."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Αυτή είναι η μοναδική μετάφραση του άρθρου. Διαγράψτε αντί γι’ αυτό το άρθρο."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Αυτός ο χώρος εργασίας έχει όσα άρθρα βοήθειας επιτρέπει ο διακομιστής. Διαγράψτε πρώτα τα παλιά."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Πάρα πολλά αιτήματα. Περιμένετε λίγο και δοκιμάστε ξανά."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Κορυφαία άρθρα"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Ανώτατο επίπεδο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Η μετάφραση διαγράφηκε"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Πληκτρολογήστε μια λέξη για αναζήτηση."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Αποδημοσίευση"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Αποδημοσίευση ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Αποδημοσίευση αυτής της μετάφρασης;"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Αδημοσίευτο"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Αδημοσίευτες αλλαγές"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Αδημοσίευτο, μόνο η ομάδα σας μπορεί να το δει σε προεπισκόπηση"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Μη αποθηκευμένες αλλαγές"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Χρησιμοποιήστε 3 έως 48 γράμματα, αριθμούς και εσωτερικές παύλες."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Χρησιμοποιήστε ένα χρώμα όπως το #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Χρήση της δικής τους έκδοσης"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "Η έκδοση επαναφέρθηκε στο πρόχειρο"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Προβολή"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Προβολή κέντρου βοήθειας"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Προβολές"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Τι διαβάζουν και τι αναζητούν οι επισκέπτες. Οι προβολές είναι κατά προσέγγιση και οι αριθμοί φτάνουν εδώ μέσα σε ένα λεπτό."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Ποιος μπορεί να δημοσιεύει"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Λέξεις που πληκτρολόγησαν οι επισκέπτες και δεν βρήκαν τίποτα. Ένα νέο άρθρο για καθεμία είναι η ταχύτερη λύση."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Γραφή"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Γράψτε την απάντηση σε Markdown…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Το προϊόν σας."

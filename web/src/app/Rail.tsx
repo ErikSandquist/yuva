@@ -8,6 +8,7 @@ import {
   BotIcon,
   ChartLineIcon,
   HouseIcon,
+  LifeBuoyIcon,
   MegaphoneIcon,
   MessageSquareHeartIcon,
   MessagesSquareIcon,
@@ -80,6 +81,7 @@ function useEntries(): Entry[] {
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
     { key: "broadcasts", label: t`Broadcasts`, icon: MegaphoneIcon, shortcut: SHORTCUTS.broadcasts },
     { key: "status", label: t`Status`, icon: ActivityIcon, shortcut: SHORTCUTS.status },
+    { key: "knowledge", label: t`Help`, icon: LifeBuoyIcon, shortcut: SHORTCUTS.helpCenter },
     { key: "analytics", label: t`Analytics`, icon: ChartLineIcon, shortcut: SHORTCUTS.analytics },
     {
       key: "assistants",

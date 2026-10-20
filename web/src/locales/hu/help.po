@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hu\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} cikkből {published} megjelent"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3–48 betű, szám és kötőjel. Egyedi ezen a szerveren."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "Egykori csapattag"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "Cikkek csoportja. Nevezze el minden nyelven, amelyen megjelenik; kezdésnek egy név elég."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "Kiemelőszín"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme súgó"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "Nyelv hozzáadása"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "Almappa hozzáadása"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "Cím"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "A cím vége"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "Az ügynökök közzétehetnek"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "Összes gyűjtemény"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "API-kulcs"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "Egy https-kép."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "Analitikai tulajdonság"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "Ezt a címet másik súgóközpont használja vagy használta."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "Válaszoljon a gyakori kérdésekre egyszer, írásban. Válassza ki egy postafiók súgóközpontját, hogy cikkeket írjon, gyűjteményekbe csoportosítsa őket, és lássa, mit keresnek az ügyfelek."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "Bármely állapot"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "Cikk"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "A cikk törölve"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "A cikk szövege"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "A cikk címe"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "Cikkmegtekintések"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "Cikkek"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "A cikkek ezeken a nyelveken írhatók és tehetők közzé. A látogatók a saját nyelvüket látják, ha van."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "Cikkek ebben a gyűjteményben"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "Cikkek, amelyek megválaszolják az ügyfelek kérdéseit a(z) {inboxName} kapcsán. Közzétételig nem jelenik meg."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "Cikkek, amelyek nem segítettek"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "Legalább 3 karakter."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "Csengő"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "Számlázás"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "Félkövér"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "Könyv"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "Felsorolás"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "Mégse"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "Diagram"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "Csevegés"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "Csevegőcsatorna"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "Elindított csevegések"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "Kód"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "Kódblokk"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "Gyűjtemény"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "Gyűjtemények"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "A gyűjtemények, cikkek, változatok és számlálók vele együtt törlődnek."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "Sütik nélkül számolja a súgóközpont oldalmegtekintéseit."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "Cikk létrehozása"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "Gyűjtemény létrehozása"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "Súgóközpont létrehozása"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "Súgóközpont létrehozása ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "Törlés"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "Törli a(z) {centerName} súgóközpontot?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "Törli a(z) {name} elemet?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "Cikk törlése"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "Gyűjtemény törlése"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "Súgóközpont törlése"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "Törli a(z) {name} fordítást?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "Törli ezt a cikket?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "Ennek a fordításnak a törlése"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "Fordítás törlése"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "Törli a súgóközpontot a gyűjteményeivel, cikkeivel, változataival és számlálóival. A nyilvános cím megszűnik működni."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "Leírás"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "Piszkozat"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "A piszkozat beküldve. Tulajdonos vagy adminisztrátor közzéteheti."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "A fordítás korábbi változatai. Egy változat visszaállítása felváltja a piszkozatot; a közzétett szöveg megmarad, amíg közzé nem teszi."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "Gyűjtemény szerkesztése"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "Üres"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "Minden keresés talált valamit."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "Minden fordítás, a változataik és a számlálóik törlődnek."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "Formázás"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "Első lépések"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "Földgömb"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "Csoportosítsa a cikkeket, hogy a látogatók böngészhessenek. Egy gyűjtemény egy szint almappát tartalmazhat. A sorrend húzással módosítható."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "Címsor"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "Súgó"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "Súgóközpont"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "Súgóközpont törölve"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "Súgóközpontok"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "A súgóközpontok ki vannak kapcsolva ezen a szerveren."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "Hasznos"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "Hogyan állíthatom vissza a jelszavamat?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "Ikon"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "Kép"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "Belül"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "Dőlt"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "A cikkei gyűjtemény nélkül maradnak. Az almappái legfelső szintű gyűjteményekké válnak."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "A piszkozata és változatai törlődnek. A többi nyelv megmarad."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "Az enyém megtartása"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "Nyelv"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "Nyelvek"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "Az elmúlt {d} nap"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "Hivatkozás"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "Továbbiak betöltése"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "Lakat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "Logó URL-je"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "Levél"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "Fő"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "Fő nyelv"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "Továbbiak"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "Továbbiak: {name}"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} áthelyezése. Húzza, vagy nyomja le az Alt billentyűt a nyilakkal."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "Mozgatás lefelé"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "Mozgatás felfelé"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "Név"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "Új cikk"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "Új cikk ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "Új gyűjtemény"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "Új gyűjtemény ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "Egyetlen cikk sem kapott „nem” választ ebben az időszakban."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "Nincs egyező cikk."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "Ebben az időszakban egyetlen cikket sem olvastak."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "Még nincs cikk. Írja meg az első választ, amit az ügyfelei újra és újra kérdeznek."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "Nincs gyűjtemény"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "Még nincs gyűjtemény. A cikkek gyűjtemény nélkül is maradhatnak."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "Még nincs korábbi változat."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "Még nincs súgóközpont. A tulajdonosok és az adminisztrátorok hozzák létre."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "Nincs postafiók, amelyhez súgóközpontot lehetne mutatni."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "Nincs"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "nincs elnevezve"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "nincs megírva"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "Nincs megírva"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "Számozott lista"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "Ki: az ügynökök piszkozatot írnak és beküldik, a tulajdonosok és adminisztrátorok teszik közzé. Be: a postafiókhoz hozzáférő ügynökök is közzétesznek és visszavonnak."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "Soronként egy elérési út, például /billing/*. A csevegő widget ezt a cikket javasolja az egyező oldalakon."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "Ezt csak tulajdonosok és adminisztrátorok tehetik meg."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "Eredeti"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "Eredeti ezen a nyelven: {language}"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "Eredeti szöveg ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "További szavak, amelyeket a látogatók beírhatnak, például szinonimák."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "elavult"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "Elavult"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "A fordítás webcímének része. Üresen a címből készül."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "Személy"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "Válasszon színt"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "Dugó"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "Előnézet"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "Előnézet ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Előnézet ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "Előnézet: {0}"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "A cikk előnézete"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "Nyilvános cím"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "Közzététel"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "Közzététel ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "Közzétéve"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "Kérdőjel"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "Idézet"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} eltávolítása"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "Jelentés"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "A jelentés időszaka"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "Ezen változat visszaállítása"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "Visszaállítva"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "Megnyitott találatok"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "Változatok"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "Változatok ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "Rakéta"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "Mentés"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "Mentés most"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "Mentve"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "Mentés…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "Keresés a címekben"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "Keresés a címekben ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "Keresőszavak"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "Keresések"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "Találat nélküli keresések"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "Elküldve"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "Beállítások"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "Pajzs"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "A kezdőlapon a név alatt jelenik meg."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "Akkor jelenik meg, ha a cikknek nincs fordítása a látogató nyelvén."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "Webhelyhivatkozás"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "Időközben valaki elmentette ezt a cikket."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "Valaki elmentette ezt a fordítást, miközben szerkesztette."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "Csillag"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "Kezdje egy címmel. A szöveget utána írja meg, és piszkozat marad, amíg közzé nem teszik."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "Állapot"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "Piszkozat beküldése"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "Piszkozat beküldése ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "Javaslat oldalakon"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "Csapat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "A cím „nem található” választ ad, amíg közzé nem teszi a súgóközpontot."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "A súgóközpont úgy, ahogy a látogatók most látják. A piszkozatok kimaradnak."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "A súgóközpont nem kínálja ezt a nyelvet. Először adja hozzá a beállításokban."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "A súgóközpont a(z) {address} címen érhető el. A régi cím tovább irányít, ha módosítja."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "A súgóközpont nincs közzétéve. Csak a csapata látja."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "A fő nyelvnek még nincs szövege ehhez a cikkhez."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "Az oldal nem működik tovább a látogatóknak. A piszkozat megmarad, és újra közzéteheti."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "Az oldalak ezt a csevegést a „Még mindig segítség kell?” alatt kínálják."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "A címnek legalább 3 karakteresnek kell lennie"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "Ennek a postafióknak már van súgóközpontja."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "Ez a cikk egyetlen fordítása. Inkább a cikket törölje."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "Ennek a munkaterületnek annyi súgócikke van, amennyit a szerver megenged. Előbb törölje a régieket."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "Cím"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "Túl sok kérés. Várjon egy pillanatot, és próbálja újra."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "Legolvasottabb cikkek"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "Legfelső szint"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "Fordítás törölve"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "Írjon be egy keresendő szót."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "Közzététel visszavonása"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Közzététel visszavonása ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "Visszavonja ennek a fordításnak a közzétételét?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "Nincs közzétéve"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "Közzé nem tett módosítások"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "Nincs közzétéve, csak a csapata tekintheti meg"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "Nem mentett módosítások"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Használjon 3–48 betűt, számot és belső kötőjelet."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "Használjon olyan színt, mint a #2563eb."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "Az ő változatuk használata"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "A változat visszaállítva a piszkozatba"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "Megtekintés"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "Súgóközpont megtekintése"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "Megtekintések"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "Mit olvasnak és keresnek a látogatók. A megtekintések hozzávetőlegesek, a számok egy percen belül ideérnek."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "Ki tehet közzé"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "Szavak, amelyeket a látogatók beírtak, és nem találtak semmit. Mindegyikre új cikket írni a leggyorsabb megoldás."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "Írás"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "Írja meg a választ Markdownban…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "Az Ön terméke."

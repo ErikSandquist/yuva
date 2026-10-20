@@ -1012,6 +1012,10 @@ msgstr "Član je komponento pozneje nastavil ročno, zato ostane, kot jo je pust
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Polje za združevanje brez nadomestne vrednosti bi bilo za nekatere prejemnike prazno. Dodajte mu nadomestno vrednost."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Sporočilo sprejme največ 3 članke."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Sporočilo je bilo dodano"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Dodajte kontaktno točko vrste Webhook, prilepite zgornji naslov, pustite metodo POST in kontaktno točko uporabite v pravilniku obvestil. Sprožena opozorila monitor ustavijo, rešena ga obnovijo."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Dodaj povezavo"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Dodaj monitor"
 
@@ -1264,6 +1272,10 @@ msgstr "Dodaj spletno mesto ali aplikacijo"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Dodaj analitično lastnost"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Dodaj sliko"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Prispelo neposredno na {address}, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Prispelo prek preusmeritve, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Članki"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Kot {name}, od {when}"
@@ -2216,6 +2232,10 @@ msgstr "Blokirani stiki"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Telo"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Krepko"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "Zapis CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Koda"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Zbirke"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Izbriši naročnino"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Izbrišite aplikacijo, ki ste jo ustvarili za Yuvo"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Izbriši članek"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Pozdrav iz nastavitve"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Pozdravljeni, nabiralnik {address} selim v Yuvo, naš podporni nabiralnik. Naša organizacija Microsoft 365 dovoljuje aplikacije samo skrbniku. Prosim, odprite to povezavo kot skrbnik in sprejmite, da lahko Yuva bere nabiralnik prek IMAP: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Pomoč"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Pomoč in povratne informacije"
@@ -5041,6 +5075,27 @@ msgstr "Pomoč in povratne informacije"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Pomoč in povratne informacije v vaši aplikaciji za iOS ali Android"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Članek pomoči"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Članki pomoči"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Center za pomoč"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Nastavitve centra za pomoč"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Poročilo pomoči"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Deloval bo kot vi, <0>{email}</0>, samo z dostopom, ki ga dovolite spoda
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Ne bo več prejemal obvestil."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Poševno"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Premakni izbrani blok"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Premakni izbrano zbirko"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Pomikaj se po člankih ali zbirkah"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Pomikaj se po množičnih sporočilih"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Novi naslovi, ki dobijo potrditveno sporočilo"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Nov članek"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Novo množično sporočilo ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Nov pripravljen odgovor"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Nova zbirka"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Še ni strani"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Ni čakajočih povabil."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Objavljenega članka ni mogoče najti."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Odpri nastavitev"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Odpri članek ali zbirko"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Odpri množično sporočilo"
 
@@ -8251,6 +8334,10 @@ msgstr "Odpri razpravo"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Odpri končno točko"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Odpri članek pomoči"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Odpri naslednji ali prejšnji pogovor"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Odpri nastavitve strani"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Odpri javni center za pomoč"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Besedilo predogleda"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Predogled centra za pomoč"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Predogled strani"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Prejšnji ali naslednji jezik"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Objavi zdaj"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Objavi ali prekliči objavo centra za pomoč"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Objavi stran ali jo umakni"
 
@@ -9072,6 +9175,10 @@ msgstr "Objavi osnutek"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Objavite ta zapis TXT v DNS svoje domene:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Objavi ali oddaj osnutek"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Oddaljene slike lahko pošiljatelju povedo, da ste sporočilo odprli."
 msgid "Remove"
 msgstr "Odstrani"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Pregled, nato pošlji ali načrtuj"
 msgid "Review, then send or schedule ({key})"
 msgstr "Pregled, nato pošlji ali načrtuj ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Revizije"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Shranite jo in kopirajte njen identifikator in skrivnost, ki ju Zendesk 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Shrani zdaj in ohrani različico"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Shrani osnutek zdaj"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Išči emoji (v angleščini)"
 msgid "Search feedback"
 msgstr "Išči po povratnih informacijah"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Išči članke pomoči …"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Išči v naloženih sporočilih"
@@ -10124,6 +10244,10 @@ msgstr "Išči prejemnike"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Išči naročnike"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Išči po člankih"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Pošlji signal"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Pošlji preverjanje"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Pošlji članek pomoči"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Pošlji članek pomoči ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Pokaži na strani"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Pokaži ali skrij citirano besedilo"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Pokaži ali skrij izvirno besedilo ob prevodu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Pokaži ali skrij predogled"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Umakni"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Umakni ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Prekliči objavo prevoda"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

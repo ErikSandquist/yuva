@@ -1,16 +1,18 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { PaperclipIcon, SlashIcon, SmileIcon, SparklesIcon, XIcon } from "lucide-react"
+import { LifeBuoyIcon, PaperclipIcon, SlashIcon, SmileIcon, SparklesIcon, XIcon } from "lucide-react"
 import { forwardRef, lazy, Suspense, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 
 import { BotAvatar, ErrorLine, Kbd, toast } from "@/components/common"
-import { mod } from "@/components/common/ShortcutSheet"
+import { keyLabel, mod, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { formatBytes } from "@/components/common/text"
 import { popupClass } from "@/components/ui/dropdown-menu"
 import { firstName, readDraft, writeDraft, type ConversationActions } from "@/features/conversation/actions"
+import { ArticlePicker, type HelpPick } from "@/features/conversation/composer/ArticlePicker"
 import { CannedMenu, slashToken, useCannedMatches } from "@/features/conversation/composer/CannedMenu"
 import { MentionMenu, mentionToken } from "@/features/conversation/composer/MentionMenu"
 import { useAuthorName, type ThreadContext } from "@/features/conversation/messages/context"
 import { useDraftActions } from "@/features/conversation/queries"
+import { useHelpCenters } from "@/features/help/queries"
 import type { CannedReply, Conversation, Member, Message } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useTypingSender } from "@/lib/typing"
@@ -28,6 +30,7 @@ export type ReplyHandle = {
   attach: () => void
   discardSuggestion: () => void
   quote: (text: string) => void
+  article: () => void
   addFiles: (files: File[]) => void
 }
 
@@ -125,6 +128,8 @@ export const ReplyBox = forwardRef<
   const [mode, setMode] = useState(initial.mode)
   const [body, setBody] = useState(initial.body)
   const [files, setFiles] = useState<File[]>(initial.files)
+  const [articles, setArticles] = useState<HelpPick[]>(initial.articles)
+  const [articleOpen, setArticleOpen] = useState(false)
   const [linked, setLinked] = useState<string | null>(null)
   const [caret, setCaret] = useState(0)
   const [pick, setPick] = useState(0)
@@ -140,10 +145,12 @@ export const ReplyBox = forwardRef<
   const { discard } = useDraftActions()
   const { membership } = useSession()
   const canned = useCannedReplies().data ?? []
+  const helpCenter = (useHelpCenters().data ?? []).find((h) => h.inbox_id === c.inbox_id)
   const note = mode === "note"
   const first = firstName(contactName)
+  const articleKey = keyLabel(SHORTCUTS.article).join("")
 
-  useEffect(() => writeDraft(c.id, { body, mode, files }), [c.id, body, mode, files])
+  useEffect(() => writeDraft(c.id, { body, mode, files, articles }), [c.id, body, mode, files, articles])
   const stopTyping = typing.stop
   useEffect(() => {
     if (note) stopTyping()
@@ -236,12 +243,16 @@ export const ReplyBox = forwardRef<
     attach: () => fileInput.current?.click(),
     discardSuggestion: dropSuggestion,
     quote,
+    article: () => {
+      if (helpCenter && !note) setArticleOpen(true)
+    },
     addFiles,
   }))
-  const hasContent = body.trim() !== "" || files.length > 0
+  const hasContent = body.trim() !== "" || files.length > 0 || articles.length > 0
   const reset = () => {
     setBody("")
     setFiles([])
+    setArticles([])
     setCaret(0)
     setLinked(null)
     setError(null)
@@ -250,10 +261,11 @@ export const ReplyBox = forwardRef<
     if (!hasContent || note) return
     typing.stop()
     const linkedDraft = suggestion && linked === suggestion.id ? suggestion : undefined
-    const saved = { body, files }
-    actions.send({ body, files, close, suggestion: linkedDraft })?.catch(() => {
+    const saved = { body, files, articles }
+    actions.send({ body, files, close, suggestion: linkedDraft, articles })?.catch(() => {
       setBody((b) => b || saved.body)
       setFiles((f) => (f.length ? f : saved.files))
+      setArticles((a) => (a.length ? a : saved.articles))
     })
     reset()
   }
@@ -428,6 +440,28 @@ export const ReplyBox = forwardRef<
           ))}
         </ul>
       )}
+      {articles.length > 0 && !note && (
+        <ul className="flex flex-wrap gap-1.5 px-4 pb-2" data-testid="composer-articles">
+          {articles.map((a) => (
+            <li
+              key={a.id}
+              className="flex max-w-full items-center gap-1.5 rounded-lg border bg-background py-0.5 ps-2 pe-0.5 text-caption"
+            >
+              <LifeBuoyIcon className="size-3 shrink-0 text-faint" />
+              <span className="max-w-56 truncate">{a.title}</span>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                className="text-faint"
+                aria-label={t`Remove ${a.title}`}
+                onClick={() => setArticles((all) => all.filter((x) => x.id !== a.id))}
+              >
+                <XIcon />
+              </Button>
+            </li>
+          ))}
+        </ul>
+      )}
       <ErrorLine error={error} className="px-4 pb-2 text-caption" />
       <div className="relative flex flex-wrap items-center gap-1 px-2.5 pb-2.5">
         <input
@@ -509,6 +543,35 @@ export const ReplyBox = forwardRef<
             </Command>
           </PopoverContent>
         </Popover>
+        {helpCenter && !note && (
+          <Popover open={articleOpen} onOpenChange={setArticleOpen}>
+            <PopoverTrigger
+              render={<Button variant="ghost" size="sm" className="text-faint hover:bg-muted aria-expanded:bg-muted" />}
+              title={t`Send a help article (${articleKey})`}
+              data-testid="article-button"
+            >
+              <LifeBuoyIcon />
+              <span className="@max-md/composer:hidden">
+                <Trans>Help article</Trans>
+              </span>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              align="start"
+              className={cn(popupClass, "w-[min(360px,calc(100vw-48px))] gap-0 rounded-xl p-0 ring-0")}
+            >
+              <ArticlePicker
+                center={helpCenter}
+                chosen={articles}
+                onPick={(a) => {
+                  setArticles((all) => (all.length < 3 && !all.some((x) => x.id === a.id) ? [...all, a] : all))
+                  setArticleOpen(false)
+                  requestAnimationFrame(() => textarea.current?.focus())
+                }}
+              />
+            </PopoverContent>
+          </Popover>
+        )}
         <span className="flex-1" />
         <span className="me-1.5 text-caption text-faint @max-md/composer:hidden">{actions.chat ? "↵" : `${mod}↵`}</span>
         {note ? (

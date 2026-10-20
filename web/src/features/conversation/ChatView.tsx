@@ -348,6 +348,7 @@ function Loaded({
     history: () => setHistoryOpen((o) => !o),
     discussion: () => setDiscussing(true),
     incident: () => setLinking(true),
+    article: () => reply.current?.article(),
   }
   useCommandHandlers(handlers)
   useHotkeys({
@@ -371,6 +372,7 @@ function Loaded({
     [SHORTCUTS.unread]: markUnread,
     [SHORTCUTS.discussion]: handlers.discussion,
     [SHORTCUTS.incident]: handlers.incident,
+    [SHORTCUTS.article]: handlers.article,
   })
 
   const sep = <span aria-hidden>·</span>

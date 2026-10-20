@@ -663,6 +663,15 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "status.monitor.up":
       void qc.invalidateQueries({ queryKey: keys.status(ctx.ws) })
       return
+    case "help.article.published":
+    case "help.article.unpublished":
+    case "help.article.deleted":
+      void qc.invalidateQueries({ queryKey: keys.help(ctx.ws) })
+      return
+    case "help.article.updated":
+      void qc.invalidateQueries({ queryKey: keys.helpArticle(ctx.ws, event.data.center_id, event.data.article_id) })
+      void qc.invalidateQueries({ queryKey: ["ws", ctx.ws, "help", "articles", event.data.center_id] })
+      return
     case "status_notice.updated": {
       const n = event.data
       const key = keys.statusNotices(ctx.ws, n.page_id, n.incident_id)

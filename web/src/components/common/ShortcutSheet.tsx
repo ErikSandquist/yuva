@@ -39,8 +39,10 @@ export const SHORTCUTS = {
   broadcasts: "g b",
   analytics: "g n",
   status: "g s",
+  helpCenter: "g k",
   discussion: "P",
   incident: "i",
+  article: "H",
   select: "x",
   linkSelected: "I",
 } as const
@@ -90,6 +92,25 @@ export const STATUS_KEYS = {
   edit: "e",
   remove: "X",
   replyLinked: "R",
+} as const
+
+export const HELP_KEYS = {
+  articles: "1",
+  collections: "2",
+  report: "3",
+  settings: "4",
+  newArticle: "n",
+  newCollection: "c",
+  search: "f",
+  openPage: "o",
+  preview: "v",
+  publishCenter: "P",
+  previous: "[",
+  next: "]",
+  unpublish: "u",
+  remove: "X",
+  moveUp: "ArrowUp",
+  moveDown: "ArrowDown",
 } as const
 
 export const DESIGNER_KEYS = {
@@ -160,6 +181,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.unread), t`Mark as unread and go back to the list`],
         [k(SHORTCUTS.discussion), t`Turn into a public discussion`],
         [k(SHORTCUTS.incident), t`Link to a status incident`],
+        [k(SHORTCUTS.article), t`Send a help article`],
       ],
     },
     {
@@ -242,6 +264,41 @@ export function ShortcutSheet({
       ],
     },
     {
+      title: t`Help center`,
+      items: [
+        [["↑", "↓"], t`Move through the articles or collections`],
+        [["↵"], t`Open the article or collection`],
+        [k(HELP_KEYS.articles), t`Articles`],
+        [k(HELP_KEYS.collections), t`Collections`],
+        [k(HELP_KEYS.report), t`Help report`],
+        [k(HELP_KEYS.settings), t`Help center settings`],
+        [k(HELP_KEYS.newArticle), t`New article`],
+        [k(HELP_KEYS.newCollection), t`New collection`],
+        [k(HELP_KEYS.search), t`Search the articles`],
+        [k(HELP_KEYS.preview), t`Preview the help center`],
+        [k(HELP_KEYS.openPage), t`Open the public help center`],
+        [k(HELP_KEYS.publishCenter), t`Publish or unpublish the help center`],
+        [[alt, "↑", "↓"], t`Move the selected collection`],
+      ],
+    },
+    {
+      title: t`Help article`,
+      items: [
+        [[mod, "S"], t`Save the draft now`],
+        [[mod, "↵"], t`Publish, or submit the draft`],
+        [k(HELP_KEYS.unpublish), t`Unpublish the translation`],
+        [k(HELP_KEYS.remove), t`Delete the article`],
+        [[HELP_KEYS.previous, HELP_KEYS.next], t`Previous or next language`],
+        [[mod, "B"], t`Bold`],
+        [[mod, "I"], t`Italic`],
+        [[alt, "K"], t`Add a link`],
+        [[alt, "I"], t`Add an image`],
+        [[alt, "P"], t`Show or hide the preview`],
+        [[alt, "C"], t`Show or hide the original text beside a translation`],
+        [[alt, "H"], t`Revisions`],
+      ],
+    },
+    {
       title: t`E-mail designer`,
       items: [
         [[mod, "Z"], t`Undo`],
@@ -275,6 +332,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.docs), t`Docs`],
         [k(SHORTCUTS.broadcasts), t`Broadcasts`],
         [k(SHORTCUTS.status), t`Status`],
+        [k(SHORTCUTS.helpCenter), t`Help`],
         [k(SHORTCUTS.analytics), t`Analytics`],
         [k(SHORTCUTS.assistants), t`Assistants`],
         [[mod, "K"], t`Everything`],

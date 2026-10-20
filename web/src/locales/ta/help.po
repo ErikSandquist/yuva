@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ta\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} கட்டுரைகளில் {published} வெளியிடப்பட்டன"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 முதல் 48 எழுத்துகள், எண்கள் மற்றும் இணைப்புக்கோடுகள். இந்தச் சேவையகத்தில் தனித்துவமானது."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "குழுவின் முன்னாள் உறுப்பினர்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "கட்டுரைகளின் ஒரு குழு. நீங்கள் வெளியிடும் ஒவ்வொரு மொழியிலும் பெயரிடுங்கள்; தொடங்க ஒரு பெயர் போதும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "அழுத்த நிறம்"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme உதவி"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "மொழியைச் சேர்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "துணைத் தொகுப்பைச் சேர்"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "முகவரி"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "முகவரியின் முடிவு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "முகவர்கள் வெளியிடலாம்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "அனைத்துத் தொகுப்புகள்"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "ஒரு API விசை"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "ஒரு https படம்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "பகுப்பாய்வுப் பண்பு"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "வேறொரு உதவி மையம் இந்த முகவரியை இப்போது அல்லது முன்பு பயன்படுத்துகிறது."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "பொதுவான கேள்விகளுக்கு ஒருமுறை, எழுத்துவடிவில் பதிலளியுங்கள். கட்டுரைகளை எழுத, தொகுப்புகளாகக் குழுவாக்க, வாடிக்கையாளர்கள் எதைத் தேடுகிறார்கள் என்பதைப் பார்க்க ஓர் இன்பாக்ஸின் உதவி மையத்தைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "எந்த நிலையும்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "கட்டுரை"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "கட்டுரை நீக்கப்பட்டது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "கட்டுரையின் உரை"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "கட்டுரையின் தலைப்பு"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "கட்டுரைப் பார்வைகள்"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "கட்டுரைகள்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "கட்டுரைகளை இந்த மொழிகளில் எழுதி வெளியிடலாம். பார்வையாளர்களுக்கு அவர்கள் மொழி இருந்தால் தெரியும்."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "இந்தத் தொகுப்பிலுள்ள கட்டுரைகள்"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "{inboxName} பற்றிய உங்கள் வாடிக்கையாளர்களின் கேள்விகளுக்குப் பதிலளிக்கும் கட்டுரைகள். நீங்கள் வெளியிடும் வரை இது வெளியிடப்படாமல் இருக்கும்."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "உதவாத கட்டுரைகள்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "குறைந்தது 3 எழுத்துகள்."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "மணி"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "கட்டணம்"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "தடித்த"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "புத்தகம்"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "புள்ளிப் பட்டியல்"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "ரத்து செய்"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "வரைபடம்"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "அரட்டை"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "அரட்டை சேனல்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "தொடங்கிய அரட்டைகள்"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "குறியீடு"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "குறியீட்டுத் தொகுதி"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "தொகுப்பு"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "தொகுப்புகள்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "தொகுப்புகள், கட்டுரைகள், திருத்தங்கள், எண்ணிகள் ஆகியவை அதனுடன் நீக்கப்படும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "குக்கீகள் இல்லாமல் உதவி மையத்தின் பக்கப் பார்வைகளை எண்ணுகிறது."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "கட்டுரையை உருவாக்கு"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "தொகுப்பை உருவாக்கு"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "உதவி மையத்தை உருவாக்கு"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "உதவி மையத்தை உருவாக்கு ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "நீக்கு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "{centerName} நீக்கவா?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "{name} நீக்கவா?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "கட்டுரையை நீக்கு"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "தொகுப்பை நீக்கு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "உதவி மையத்தை நீக்கு"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} மொழிபெயர்ப்பை நீக்கவா?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "இந்தக் கட்டுரையை நீக்கவா?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "இந்த மொழிபெயர்ப்பை நீக்கு"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "மொழிபெயர்ப்பை நீக்கு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "உதவி மையத்தை அதன் தொகுப்புகள், கட்டுரைகள், திருத்தங்கள், எண்ணிகளுடன் நீக்குகிறது. பொது முகவரி செயல்படுவதை நிறுத்தும்."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "விளக்கம்"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "வரைவு"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "வரைவு சமர்ப்பிக்கப்பட்டது. உரிமையாளர் அல்லது நிர்வாகி அதை வெளியிடலாம்."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "இந்த மொழிபெயர்ப்பின் முந்தைய பதிப்புகள். ஒன்றை மீட்டமைத்தால் வரைவு மாற்றப்படும்; நீங்கள் வெளியிடும் வரை வெளியிடப்பட்ட உரை இருக்கும்."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "திருத்து"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "தொகுப்பைத் திருத்து"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "காலி"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "ஒவ்வொரு தேடலிலும் ஏதோ கிடைத்தது."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "அனைத்து மொழிபெயர்ப்புகள், அவற்றின் திருத்தங்கள், எண்ணிகள் நீக்கப்படும்."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "வடிவமைப்பு"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "தொடங்குதல்"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "உலகக் கோளம்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "பார்வையாளர்கள் உலாவ கட்டுரைகளைக் குழுவாக்குங்கள். ஒரு தொகுப்பில் ஒரு நிலை துணைத் தொகுப்புகள் இருக்கலாம். வரிசையை மாற்ற இழுக்கவும்."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "தலைப்பு"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "உதவி"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "உதவி மையம்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "உதவி மையம் நீக்கப்பட்டது"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "உதவி மையங்கள்"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "இந்தச் சேவையகத்தில் உதவி மையங்கள் அணைக்கப்பட்டுள்ளன."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "பயனுள்ளது"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "என் கடவுச்சொல்லை எப்படி மீட்டமைப்பது?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "ஐகான்"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "படம்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "உள்ளே"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "சாய்வு"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "அதன் கட்டுரைகள் தொகுப்பு இல்லாமல் இருக்கும். அதன் துணைத் தொகுப்புகள் உயர்நிலைத் தொகுப்புகளாகும்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "அதன் வரைவும் திருத்தங்களும் நீக்கப்படும். மற்ற மொழிகள் இருக்கும்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "என்னுடையதை வைத்திரு"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "மொழி"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "மொழிகள்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "கடந்த {d} நாட்கள்"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "இணைப்பு"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "மேலும் ஏற்று"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "பூட்டு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "லோகோ URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "அஞ்சல்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "முதன்மை"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "முதன்மை மொழி"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "மேலும்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name}க்கு மேலும்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} ஐ நகர்த்து. இழுக்கவும், அல்லது அம்புக்குறி விசைகளுடன் Alt அழுத்தவும்."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "கீழே நகர்த்து"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "மேலே நகர்த்து"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "பெயர்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "புதிய கட்டுரை"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "புதிய கட்டுரை ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "புதிய தொகுப்பு"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "புதிய தொகுப்பு ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "இந்தக் காலத்தில் எந்தக் கட்டுரைக்கும் “இல்லை” கிடைக்கவில்லை."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "பொருந்தும் கட்டுரை இல்லை."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "இந்தக் காலத்தில் எந்தக் கட்டுரையும் படிக்கப்படவில்லை."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "இன்னும் கட்டுரைகள் இல்லை. உங்கள் வாடிக்கையாளர்கள் மீண்டும் மீண்டும் கேட்கும் முதல் பதிலை எழுதுங்கள்."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "தொகுப்பு இல்லை"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "இன்னும் தொகுப்புகள் இல்லை. கட்டுரைகள் தொகுப்பு இல்லாமலும் இருக்கலாம்."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "இன்னும் முந்தைய பதிப்புகள் இல்லை."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "இன்னும் உதவி மையம் இல்லை. உரிமையாளர்களும் நிர்வாகிகளும் அதை உருவாக்குகிறார்கள்."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "உதவி மையத்தைக் காட்ட இன்பாக்ஸ் இல்லை."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "பெயரிடப்படவில்லை"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "எழுதப்படவில்லை"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "எழுதப்படவில்லை"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "எண்ணிட்ட பட்டியல்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "அணைவு: முகவர்கள் வரைவுகளை எழுதிச் சமர்ப்பிப்பார்கள், உரிமையாளர்களும் நிர்வாகிகளும் வெளியிடுவார்கள். இயக்கம்: இன்பாக்ஸுக்கு அணுகல் உள்ள முகவர்களும் வெளியிடலாம், வெளியீட்டை நீக்கலாம்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "ஒரு வரிக்கு ஒரு பாதை, எ.கா. /billing/*. பொருந்தும் பக்கங்களில் அரட்டை விட்ஜெட் இந்தக் கட்டுரையைப் பரிந்துரைக்கும்."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "உரிமையாளர்களும் நிர்வாகிகளும் மட்டுமே இதைச் செய்யலாம்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "மூலம்"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language} மொழியில் மூலம்"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "மூல உரை ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "பார்வையாளர்கள் தட்டச்சு செய்யக்கூடிய பிற சொற்கள், எ.கா. ஒத்த சொற்கள்."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "காலாவதியானது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "காலாவதியானது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "இந்த மொழிபெயர்ப்பின் வலை முகவரியின் ஒரு பகுதி. காலியாக இருந்தால் தலைப்பிலிருந்து உருவாக்கப்படும்."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "நபர்"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "தொலைபேசி"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "நிறத்தைத் தேர்ந்தெடு"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "பிளக்"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "முன்னோட்டம்"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "முன்னோட்டம் ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "முன்னோட்டம் ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} முன்னோட்டம்"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "கட்டுரையின் முன்னோட்டம்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "பொது முகவரி"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "வெளியிடு"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "வெளியிடு ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "வெளியிடப்பட்டது"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "கேள்விக்குறி"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "மேற்கோள்"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} ஐ நீக்கு"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "அறிக்கை"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "அறிக்கைக் காலம்"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "இந்தப் பதிப்பை மீட்டமை"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "மீட்டமைக்கப்பட்டது"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "திறந்த முடிவுகள்"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "திருத்தங்கள்"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "திருத்தங்கள் ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "ராக்கெட்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "சேமி"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "இப்போது சேமி"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "சேமிக்கப்பட்டது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "சேமிக்கிறது…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "தலைப்புகளில் தேடு"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "தலைப்புகளில் தேடு ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "தேடல் சொற்கள்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "தேடல்கள்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "முடிவில்லாத தேடல்கள்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "அனுப்பப்பட்டவை"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "அமைப்புகள்"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "கேடயம்"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "காட்டு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "முகப்புப் பக்கத்தில் பெயருக்குக் கீழே காட்டப்படும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "பார்வையாளரின் மொழியில் கட்டுரைக்கு மொழிபெயர்ப்பு இல்லாதபோது காட்டப்படும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "தள இணைப்பு"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "இதற்கிடையில் ஒருவர் இந்தக் கட்டுரையைச் சேமித்தார்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "நீங்கள் திருத்தும்போது ஒருவர் இந்த மொழிபெயர்ப்பைச் சேமித்தார்."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "நட்சத்திரம்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "தலைப்புடன் தொடங்குங்கள். உரையை அடுத்து எழுதுவீர்கள், வெளியிடப்படும் வரை அது வரைவாக இருக்கும்."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "நிலை"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "வரைவைச் சமர்ப்பி"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "வரைவைச் சமர்ப்பி ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "பக்கங்களில் பரிந்துரை"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "குழு"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "நீங்கள் உதவி மையத்தை வெளியிடும் வரை முகவரி “கிடைக்கவில்லை” என்று பதிலளிக்கும்."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "பார்வையாளர்களுக்கு இப்போது தெரியும் உதவி மையம். வரைவுகள் சேர்க்கப்படவில்லை."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "உதவி மையம் இந்த மொழியை வழங்கவில்லை. முதலில் அமைப்புகளில் சேர்க்கவும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "உதவி மையம் {address} இல் உள்ளது. நீங்கள் முகவரியை மாற்றினால் பழைய முகவரி தொடர்ந்து திசைமாற்றும்."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "உதவி மையம் வெளியிடப்படவில்லை. உங்கள் குழு மட்டுமே இதைப் பார்க்கும்."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "முதன்மை மொழியில் இந்தக் கட்டுரைக்கு இன்னும் உரை இல்லை."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "பக்கம் பார்வையாளர்களுக்குச் செயல்படுவதை நிறுத்தும். வரைவு இருக்கும், நீங்கள் மீண்டும் வெளியிடலாம்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "பக்கங்கள் இந்த அரட்டையை “இன்னும் உதவி வேண்டுமா?” என்பதன் கீழ் வழங்கும்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "தலைப்பில் குறைந்தது 3 எழுத்துகள் வேண்டும்"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "இந்த இன்பாக்ஸுக்கு ஏற்கெனவே உதவி மையம் உள்ளது."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "இது கட்டுரையின் ஒரே மொழிபெயர்ப்பு. அதற்குப் பதிலாகக் கட்டுரையை நீக்குங்கள்."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "இந்தப் பணியிடத்தில் சேவையகம் அனுமதிக்கும் அளவு உதவிக் கட்டுரைகள் உள்ளன. முதலில் பழையவற்றை நீக்குங்கள்."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "தலைப்பு"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "மிக அதிகமான கோரிக்கைகள். சற்றுக் காத்திருந்து மீண்டும் முயலுங்கள்."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "அதிகம் படிக்கப்பட்ட கட்டுரைகள்"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "உயர்நிலை"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "மொழிபெயர்ப்பு நீக்கப்பட்டது"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "தேட ஒரு சொல்லை உள்ளிடுங்கள்."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "வெளியீட்டை நீக்கு"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "வெளியீட்டை நீக்கு ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "இந்த மொழிபெயர்ப்பின் வெளியீட்டை நீக்கவா?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "வெளியிடப்படவில்லை"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "வெளியிடப்படாத மாற்றங்கள்"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "வெளியிடப்படவில்லை, உங்கள் குழு மட்டுமே முன்னோட்டம் பார்க்கலாம்"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "சேமிக்கப்படாத மாற்றங்கள்"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 முதல் 48 எழுத்துகள், எண்கள், இடையிலுள்ள இணைப்புக்கோடுகளைப் பயன்படுத்துங்கள்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb போன்ற நிறத்தைப் பயன்படுத்துங்கள்."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "அவர்களின் பதிப்பைப் பயன்படுத்து"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "பதிப்பு வரைவில் மீட்டமைக்கப்பட்டது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "பார்"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "உதவி மையத்தைப் பார்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "பார்வைகள்"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "பார்வையாளர்கள் படிப்பதும் தேடுவதும். பார்வைகள் தோராயமானவை, எண்கள் ஒரு நிமிடத்தில் இந்தப் பக்கத்தை அடையும்."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "யார் வெளியிடலாம்"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "பார்வையாளர்கள் தட்டச்சு செய்து எதுவும் கிடைக்காத சொற்கள். ஒவ்வொன்றுக்கும் ஒரு புதிய கட்டுரை வேகமான தீர்வு."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "எழுது"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "பதிலை Markdown இல் எழுதுங்கள்…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "உங்கள் தயாரிப்பு."

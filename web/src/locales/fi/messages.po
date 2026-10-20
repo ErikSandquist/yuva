@@ -1012,6 +1012,10 @@ msgstr "Jäsen asetti komponentin myöhemmin käsin, joten se pysyy sellaisena k
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Yhdistämiskenttä ilman varaarvoa jäisi tyhjäksi joillekin vastaanottajille. Anna sille varaarvo."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "Viestiin voi liittää enintään 3 artikkelia."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Viesti lisättiin"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Lisää Webhook-tyyppinen yhteyspiste, liitä yllä oleva osoite, jätä menetelmäksi POST ja käytä yhteyspistettä ilmoituskäytännössä. Lauenneet hälytykset kaatavat valvonnan, ratkenneet palauttavat sen."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "Lisää linkki"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "Lisää valvonta"
 
@@ -1264,6 +1272,10 @@ msgstr "Lisää sivusto tai sovellus"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Lisää analytiikkaominaisuus"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "Lisää kuva"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "Saapui suoraan osoitteeseen {address}, {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "Saapui ohjauksen kautta, {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "Artikkelit"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "Nimellä {name}, {when} lähtien"
@@ -2216,6 +2232,10 @@ msgstr "Estetyt kontaktit"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "Runko"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "Lihavointi"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME-tietue"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Koodi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "Kokoelmat"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "Poista tilaus"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Poista Yuvaa varten luomasi sovellus"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "Poista artikkeli"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "Terveiset asennuksesta"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "Hei, siirrän postilaatikon {address} Yuvaan, tukipostilaatikkoomme. Microsoft 365 -organisaatiomme antaa vain ylläpitäjän sallia sovelluksia. Avaa tämä linkki ylläpitäjänä ja hyväksy, jotta Yuva voi lukea postilaatikon IMAPin kautta: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "Ohje"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "Ohje ja palaute"
@@ -5041,6 +5075,27 @@ msgstr "Ohje ja palaute"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Ohje ja palaute iOS- tai Android-sovelluksessasi"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "Ohjeartikkeli"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "Ohjeartikkelit"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "Ohjekeskus"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "Ohjekeskuksen asetukset"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "Ohjeraportti"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "Se toimii sinuna, <0>{email}</0>, vain alla sallimillasi oikeuksilla."
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "Se ei enää saa ilmoituksia."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "Kursivointi"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "Siirrä valittu lohko"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "Siirrä valittua kokoelmaa"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "Liiku artikkeleiden tai kokoelmien välillä"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "Liiku joukkolähetysten läpi"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Uudet osoitteet, jotka saavat vahvistusviestin"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "Uusi artikkeli"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "Uusi joukkolähetys ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Uusi valmis vastaus"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "Uusi kokoelma"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "Ei vielä sivuja"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "Ei odottavia kutsuja."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "Julkaistua artikkelia ei löytynyt."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "Avaa asennus"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "Avaa artikkeli tai kokoelma"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Avaa joukkolähetys"
 
@@ -8251,6 +8334,10 @@ msgstr "Avaa keskustelu"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "Avaa päätepiste"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "Avaa ohjeartikkeli"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "Avaa seuraava tai edellinen keskustelu"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Avaa sivun asetukset"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "Avaa julkinen ohjekeskus"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "Esikatseluteksti"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "Esikatsele ohjekeskusta"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "Esikatsele sivua"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "Edellinen tai seuraava kieli"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "Julkaise nyt"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "Julkaise tai poista ohjekeskuksen julkaisu"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "Julkaise sivu tai poista se julkaisusta"
 
@@ -9072,6 +9175,10 @@ msgstr "Julkaise luonnos"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Julkaise tämä TXT-tietue verkkotunnuksesi DNS:ssä:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "Julkaise tai lähetä luonnos"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "Etäkuvat voivat kertoa lähettäjälle, että avasit viestin."
 msgid "Remove"
 msgstr "Poista"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "Tarkista ja lähetä tai ajasta"
 msgid "Review, then send or schedule ({key})"
 msgstr "Tarkista ja lähetä tai ajasta ({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "Versiot"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "Tallenna se ja kopioi sen tunniste ja salaisuus, jotka Zendesk näyttä�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "Tallenna nyt ja säilytä versio"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "Tallenna luonnos nyt"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "Hae emojia (englanniksi)"
 msgid "Search feedback"
 msgstr "Hae palautteesta"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "Hae ohjeartikkeleita…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "Hae ladatuista viesteistä"
@@ -10124,6 +10244,10 @@ msgstr "Hae vastaanottajia"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "Hae tilaajia"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "Hae artikkeleista"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "Lähetä signaali"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "Lähetä tarkistus"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "Lähetä ohjeartikkeli"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "Lähetä ohjeartikkeli ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "Näytä sivulla"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "Näytä tai piilota lainattu teksti"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "Näytä tai piilota alkuperäinen teksti käännöksen vieressä"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "Näytä tai piilota esikatselu"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "Poista julkaisusta"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Poista julkaisusta ({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "Poista käännöksen julkaisu"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"

@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} కథనాల్లో {published} ప్రచురితం"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 నుండి 48 అక్షరాలు, అంకెలు మరియు హైఫన్‌లు. ఈ సర్వర్‌లో ప్రత్యేకమైనది."
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "టీమ్ మాజీ సభ్యుడు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "కథనాల సమూహం. మీరు ప్రచురించే ప్రతి భాషలో దానికి పేరు పెట్టండి; ప్రారంభించడానికి ఒక పేరు చాలు."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "యాక్సెంట్ రంగు"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme సహాయం"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "భాషను జోడించండి"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "ఉప-సేకరణను జోడించండి"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "చిరునామా"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "చిరునామా ముగింపు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "ఏజెంట్లు ప్రచురించవచ్చు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "అన్ని సేకరణలు"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "ఒక API కీ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "ఒక https చిత్రం."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "అనలిటిక్స్ ప్రాపర్టీ"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "ఈ చిరునామాను మరో సహాయ కేంద్రం ఇప్పుడు లేదా ఇంతకుముందు ఉపయోగిస్తోంది."
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "సాధారణ ప్రశ్నలకు ఒకసారి, వ్రాతపూర్వకంగా సమాధానం ఇవ్వండి. కథనాలు రాయడానికి, వాటిని సేకరణలుగా సమూహపరచడానికి, కస్టమర్లు ఏం వెతుకుతున్నారో చూడటానికి ఒక ఇన్‌బాక్స్ సహాయ కేంద్రాన్ని ఎంచుకోండి."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "ఏ స్థితి అయినా"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "కథనం"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "కథనం తొలగించబడింది"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "కథనం పాఠ్యం"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "కథనం శీర్షిక"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "కథనం వీక్షణలు"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "కథనాలు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "కథనాలను ఈ భాషల్లో రాసి ప్రచురించవచ్చు. సందర్శకులకు వారి భాష ఉంటే అది కనిపిస్తుంది."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "ఈ సేకరణలోని కథనాలు"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "{inboxName} గురించి మీ కస్టమర్ల ప్రశ్నలకు సమాధానమిచ్చే కథనాలు. మీరు ప్రచురించే వరకు ఇది ప్రచురితం కాకుండా ఉంటుంది."
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "సహాయపడని కథనాలు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "కనీసం 3 అక్షరాలు."
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "గంట"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "బిల్లింగ్"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "బోల్డ్"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "పుస్తకం"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "బుల్లెట్ జాబితా"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "రద్దు చేయి"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "చార్ట్"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "చాట్"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "చాట్ ఛానెల్"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "ప్రారంభమైన చాట్‌లు"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "కోడ్"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "కోడ్ బ్లాక్"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "సేకరణ"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "సేకరణలు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "సేకరణలు, కథనాలు, సవరణలు మరియు కౌంటర్లు దానితో పాటు తొలగించబడతాయి."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "కుక్కీలు లేకుండా సహాయ కేంద్రం పేజీ వీక్షణలను లెక్కిస్తుంది."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "కథనాన్ని సృష్టించండి"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "సేకరణను సృష్టించండి"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "సహాయ కేంద్రాన్ని సృష్టించండి"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "సహాయ కేంద్రాన్ని సృష్టించండి ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "తొలగించు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "{centerName} తొలగించాలా?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "{name} తొలగించాలా?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "కథనాన్ని తొలగించు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "సేకరణను తొలగించు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "సహాయ కేంద్రాన్ని తొలగించు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} అనువాదాన్ని తొలగించాలా?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "ఈ కథనాన్ని తొలగించాలా?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "ఈ అనువాదాన్ని తొలగించు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "అనువాదాన్ని తొలగించు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "సహాయ కేంద్రాన్ని దాని సేకరణలు, కథనాలు, సవరణలు, కౌంటర్లతో సహా తొలగిస్తుంది. పబ్లిక్ చిరునామా పని చేయడం ఆగిపోతుంది."
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "వివరణ"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "చిత్తుప్రతి"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "చిత్తుప్రతి సమర్పించబడింది. యజమాని లేదా అడ్మిన్ దీన్ని ప్రచురించవచ్చు."
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "ఈ అనువాదం యొక్క మునుపటి సంస్కరణలు. ఒకదాన్ని పునరుద్ధరిస్తే చిత్తుప్రతి భర్తీ అవుతుంది; మీరు ప్రచురించే వరకు ప్రచురించిన పాఠ్యం ఉంటుంది."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "సవరించు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "సేకరణను సవరించు"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "ఖాళీ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "ప్రతి శోధనలో ఏదో దొరికింది."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "అన్ని అనువాదాలు, వాటి సవరణలు, కౌంటర్లు తొలగించబడతాయి."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "ఫార్మాటింగ్"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "ప్రారంభించడం"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "గ్లోబ్"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "సందర్శకులు బ్రౌజ్ చేయడానికి వీలుగా కథనాలను సమూహపరచండి. ఒక సేకరణలో ఒక స్థాయి ఉప-సేకరణలు ఉండవచ్చు. క్రమం మార్చడానికి లాగండి."
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "శీర్షిక"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "సహాయం"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "సహాయ కేంద్రం"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "సహాయ కేంద్రం తొలగించబడింది"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "సహాయ కేంద్రాలు"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "ఈ సర్వర్‌లో సహాయ కేంద్రాలు ఆఫ్‌లో ఉన్నాయి."
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "ఉపయోగకరం"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "నా పాస్‌వర్డ్‌ను ఎలా రీసెట్ చేయాలి?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "చిహ్నం"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "చిత్రం"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "లోపల"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "ఇటాలిక్"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "దాని కథనాలు సేకరణ లేకుండా ఉంటాయి. దాని ఉప-సేకరణలు అగ్రస్థాయి సేకరణలు అవుతాయి."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "దాని చిత్తుప్రతి, సవరణలు తొలగించబడతాయి. ఇతర భాషలు ఉంటాయి."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "నాది ఉంచు"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "భాష"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "భాషలు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "గత {d} రోజులు"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "లింక్"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "మరిన్ని లోడ్ చేయి"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "తాళం"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "లోగో URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "మెయిల్"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "ప్రధాన"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "ప్రధాన భాష"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "మరిన్ని"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name} కోసం మరిన్ని"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} ను తరలించండి. లాగండి, లేదా బాణం కీలతో Alt నొక్కండి."
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "కిందికి తరలించు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "పైకి తరలించు"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "పేరు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "కొత్త కథనం"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "కొత్త కథనం ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "కొత్త సేకరణ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "కొత్త సేకరణ ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "ఈ కాలంలో ఏ కథనానికీ “కాదు” రాలేదు."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "సరిపోలే కథనం లేదు."
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "ఈ కాలంలో ఏ కథనమూ చదవబడలేదు."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "ఇంకా కథనాలు లేవు. మీ కస్టమర్లు పదే పదే అడిగే మొదటి సమాధానాన్ని రాయండి."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "సేకరణ లేదు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "ఇంకా సేకరణలు లేవు. కథనాలు సేకరణ లేకుండా ఉండవచ్చు."
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "ఇంకా మునుపటి సంస్కరణలు లేవు."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "ఇంకా సహాయ కేంద్రం లేదు. యజమానులు మరియు అడ్మిన్లు దీన్ని సృష్టిస్తారు."
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "సహాయ కేంద్రాన్ని చూపడానికి ఇన్‌బాక్స్ లేదు."
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "ఏదీ లేదు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "పేరు లేదు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "రాయలేదు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "రాయలేదు"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "సంఖ్యల జాబితా"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "ఆఫ్: ఏజెంట్లు చిత్తుప్రతులు రాసి సమర్పిస్తారు, యజమానులు మరియు అడ్మిన్లు ప్రచురిస్తారు. ఆన్: ఇన్‌బాక్స్‌కు యాక్సెస్ ఉన్న ఏజెంట్లు కూడా ప్రచురిస్తారు, ప్రచురణ రద్దు చేస్తారు."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "ప్రతి లైన్‌కు ఒక పాత్, ఉదా. /billing/*. సరిపోలే పేజీలలో చాట్ విడ్జెట్ ఈ కథనాన్ని సూచిస్తుంది."
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "దీన్ని యజమానులు మరియు అడ్మిన్లు మాత్రమే చేయగలరు."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "అసలు"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language} లో అసలు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "అసలు పాఠ్యం ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "సందర్శకులు టైప్ చేయగల ఇతర పదాలు, ఉదా. పర్యాయపదాలు."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "కాలం చెల్లింది"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "కాలం చెల్లింది"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "ఈ అనువాదం వెబ్ చిరునామాలో భాగం. ఖాళీగా ఉంటే శీర్షిక నుండి తయారవుతుంది."
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "వ్యక్తి"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "ఫోన్"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "రంగును ఎంచుకోండి"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "ప్లగ్"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "ప్రివ్యూ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "ప్రివ్యూ ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "ప్రివ్యూ ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} ప్రివ్యూ"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "కథనం ప్రివ్యూ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "పబ్లిక్ చిరునామా"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "ప్రచురించు"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "ప్రచురించు ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "ప్రచురితం"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "ప్రశ్నార్థకం"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "కొటేషన్"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} ను తీసివేయి"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "నివేదిక"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "నివేదిక కాలం"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "ఈ సంస్కరణను పునరుద్ధరించు"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "పునరుద్ధరించబడింది"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "తెరిచిన ఫలితాలు"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "సవరణలు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "సవరణలు ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "రాకెట్"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "సేవ్ చేయి"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "ఇప్పుడే సేవ్ చేయి"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "సేవ్ చేయబడింది"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "సేవ్ అవుతోంది…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "శీర్షికల్లో వెతుకు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "శీర్షికల్లో వెతుకు ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "శోధన పదాలు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "శోధనలు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "ఫలితం లేని శోధనలు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "పంపినవి"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "సెట్టింగ్‌లు"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "కవచం"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "చూపు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "హోమ్ పేజీలో పేరు కింద చూపబడుతుంది."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "కథనానికి సందర్శకుడి భాషలో అనువాదం లేనప్పుడు చూపబడుతుంది."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "సైట్ లింక్"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "ఈలోగా ఎవరో ఈ కథనాన్ని సేవ్ చేశారు."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "మీరు సవరిస్తున్నప్పుడు ఎవరో ఈ అనువాదాన్ని సేవ్ చేశారు."
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "నక్షత్రం"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "శీర్షికతో ప్రారంభించండి. పాఠ్యాన్ని తర్వాత రాస్తారు, ప్రచురించే వరకు అది చిత్తుప్రతిగా ఉంటుంది."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "స్థితి"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "చిత్తుప్రతిని సమర్పించు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "చిత్తుప్రతిని సమర్పించు ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "పేజీలలో సూచించు"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "టీమ్"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "మీరు సహాయ కేంద్రాన్ని ప్రచురించే వరకు చిరునామా “కనుగొనబడలేదు” అని బదులిస్తుంది."
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "సందర్శకులకు ఇప్పుడు కనిపించే సహాయ కేంద్రం. చిత్తుప్రతులు మినహాయించబడ్డాయి."
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "సహాయ కేంద్రం ఈ భాషను అందించదు. ముందు సెట్టింగ్‌లలో జోడించండి."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "సహాయ కేంద్రం {address} వద్ద ఉంది. మీరు చిరునామా మారిస్తే పాత చిరునామా దారి మళ్లిస్తూనే ఉంటుంది."
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "సహాయ కేంద్రం ప్రచురించబడలేదు. మీ టీమ్ మాత్రమే దీన్ని చూస్తుంది."
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "ప్రధాన భాషలో ఈ కథనానికి ఇంకా పాఠ్యం లేదు."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "పేజీ సందర్శకులకు పని చేయడం ఆగిపోతుంది. చిత్తుప్రతి ఉంటుంది, మీరు మళ్లీ ప్రచురించవచ్చు."
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "పేజీలు ఈ చాట్‌ను “ఇంకా సహాయం కావాలా?” కింద అందిస్తాయి."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "శీర్షికకు కనీసం 3 అక్షరాలు కావాలి"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "ఈ ఇన్‌బాక్స్‌కు ఇప్పటికే సహాయ కేంద్రం ఉంది."
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "ఇది కథనం యొక్క ఏకైక అనువాదం. బదులుగా కథనాన్ని తొలగించండి."
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "ఈ వర్క్‌స్పేస్‌లో సర్వర్ అనుమతించినంత సహాయ కథనాలు ఉన్నాయి. ముందు పాతవి తొలగించండి."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "శీర్షిక"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "చాలా ఎక్కువ అభ్యర్థనలు. కాసేపు ఆగి మళ్లీ ప్రయత్నించండి."
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "ఎక్కువగా చదివిన కథనాలు"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "అగ్రస్థాయి"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "అనువాదం తొలగించబడింది"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "వెతకడానికి ఒక పదాన్ని టైప్ చేయండి."
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "ప్రచురణ రద్దు చేయి"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ప్రచురణ రద్దు చేయి ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "ఈ అనువాదం ప్రచురణ రద్దు చేయాలా?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "ప్రచురించబడలేదు"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "ప్రచురించని మార్పులు"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "ప్రచురించబడలేదు, మీ టీమ్ మాత్రమే ప్రివ్యూ చూడగలదు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "సేవ్ చేయని మార్పులు"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 నుండి 48 అక్షరాలు, అంకెలు, మధ్యలో హైఫన్‌లను ఉపయోగించండి."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb వంటి రంగును ఉపయోగించండి."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "వారి సంస్కరణను ఉపయోగించు"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "సంస్కరణ చిత్తుప్రతిలో పునరుద్ధరించబడింది"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "చూడు"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "సహాయ కేంద్రాన్ని చూడు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "వీక్షణలు"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "సందర్శకులు ఏం చదువుతారో, ఏం వెతుకుతారో. వీక్షణలు సుమారుగా ఉంటాయి, సంఖ్యలు ఒక నిమిషంలో ఈ పేజీకి చేరతాయి."
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "ఎవరు ప్రచురించవచ్చు"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "సందర్శకులు టైప్ చేసి ఏమీ దొరకని పదాలు. ప్రతిదానికి ఒక కొత్త కథనం వేగవంతమైన పరిష్కారం."
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "రాయి"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "సమాధానాన్ని Markdown లో రాయండి…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "మీ ఉత్పత్తి."

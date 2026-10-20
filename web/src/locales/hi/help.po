@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 13:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hi\n"
+
+#: src/features/help/HelpColumn.tsx
+msgid "{published} of {total} articles published"
+msgstr "{total} में से {published} लेख प्रकाशित"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 से 48 अक्षर, अंक और हाइफ़न। इस सर्वर पर अद्वितीय।"
+
+#: src/features/help/Revisions.tsx
+msgid "A former teammate"
+msgstr "टीम के एक पूर्व सदस्य"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "A group of articles. Name it in each language you publish; one name is enough to start."
+msgstr "लेखों का एक समूह। जिन भाषाओं में आप प्रकाशित करते हैं, हर एक में इसका नाम रखें; शुरू करने के लिए एक नाम काफ़ी है।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Accent colour"
+msgstr "एक्सेंट रंग"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Acme help"
+msgstr "Acme सहायता"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Add a language"
+msgstr "भाषा जोड़ें"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Add a sub-collection"
+msgstr "उप-संग्रह जोड़ें"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Address"
+msgstr "पता"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Address ending"
+msgstr "पते का अंतिम भाग"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Agents may publish"
+msgstr "एजेंट प्रकाशित कर सकते हैं"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "All collections"
+msgstr "सभी संग्रह"
+
+#: src/features/help/Revisions.tsx
+msgid "An API key"
+msgstr "एक API कुंजी"
+
+#: src/features/help/SettingsTab.tsx
+msgid "An https image."
+msgstr "एक https छवि।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Analytics property"
+msgstr "एनालिटिक्स प्रॉपर्टी"
+
+#: src/features/help/text.tsx
+msgid "Another help center already uses this address, now or before."
+msgstr "कोई दूसरा सहायता केंद्र यह पता अभी या पहले इस्तेमाल करता है।"
+
+#: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
+msgstr "आम सवालों का जवाब एक बार, लिखित रूप में दें। लेख लिखने, उन्हें संग्रहों में समूहित करने और यह देखने के लिए कि ग्राहक क्या खोजते हैं, किसी इनबॉक्स का सहायता केंद्र चुनें।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Any state"
+msgstr "कोई भी स्थिति"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article"
+msgstr "लेख"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article deleted"
+msgstr "लेख हटाया गया"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article text"
+msgstr "लेख का पाठ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Article title"
+msgstr "लेख का शीर्षक"
+
+#: src/features/help/ReportTab.tsx
+msgid "Article views"
+msgstr "लेख देखे जाने की संख्या"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Articles"
+msgstr "लेख"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Articles can be written and published in these languages. Visitors see their own when it exists."
+msgstr "लेख इन भाषाओं में लिखे और प्रकाशित किए जा सकते हैं। आगंतुकों को उनकी अपनी भाषा दिखती है, यदि वह मौजूद हो।"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Articles in this collection"
+msgstr "इस संग्रह के लेख"
+
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
+msgstr "ऐसे लेख जो {inboxName} के बारे में आपके ग्राहकों के सवालों का जवाब देते हैं। आपके प्रकाशित करने तक यह अप्रकाशित रहता है।"
+
+#: src/features/help/ReportTab.tsx
+msgid "Articles that did not help"
+msgstr "ऐसे लेख जिनसे मदद नहीं मिली"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "At least 3 characters."
+msgstr "कम से कम 3 अक्षर।"
+
+#: src/features/help/text.tsx
+msgid "Bell"
+msgstr "घंटी"
+
+#: src/features/help/text.tsx
+msgid "Billing"
+msgstr "बिलिंग"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bold"
+msgstr "बोल्ड"
+
+#: src/features/help/text.tsx
+msgid "Book"
+msgstr "पुस्तक"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Bulleted list"
+msgstr "बुलेट सूची"
+
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: src/features/help/text.tsx
+msgid "Chart"
+msgstr "चार्ट"
+
+#: src/features/help/text.tsx
+msgid "Chat"
+msgstr "चैट"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Chat channel"
+msgstr "चैट चैनल"
+
+#: src/features/help/ReportTab.tsx
+msgid "Chats started"
+msgstr "शुरू हुई चैट"
+
+#: src/features/help/EditorToolbar.tsx
+#: src/features/help/text.tsx
+msgid "Code"
+msgstr "कोड"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Code block"
+msgstr "कोड ब्लॉक"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Collection"
+msgstr "संग्रह"
+
+#: src/features/help/pages.tsx
+msgid "Collections"
+msgstr "संग्रह"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Collections, articles, revisions and counters are deleted with it."
+msgstr "संग्रह, लेख, संशोधन और काउंटर इसके साथ हट जाते हैं।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Counts page views of the help center without cookies."
+msgstr "कुकी के बिना सहायता केंद्र के पेज व्यू गिनता है।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Create article"
+msgstr "लेख बनाएँ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Create collection"
+msgstr "संग्रह बनाएँ"
+
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center"
+msgstr "सहायता केंद्र बनाएँ"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Create help center ({newKey})"
+msgstr "सहायता केंद्र बनाएँ ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Delete"
+msgstr "हटाएँ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete {centerName}?"
+msgstr "{centerName} हटाएँ?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete {name}?"
+msgstr "{name} हटाएँ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete article"
+msgstr "लेख हटाएँ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Delete collection"
+msgstr "संग्रह हटाएँ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Delete help center"
+msgstr "सहायता केंद्र हटाएँ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete the {name} translation?"
+msgstr "{name} अनुवाद हटाएँ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this article?"
+msgstr "यह लेख हटाएँ?"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete this translation"
+msgstr "यह अनुवाद हटाएँ"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Delete translation"
+msgstr "अनुवाद हटाएँ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Deletes the help center with its collections, articles, revisions and counters. The public address stops working."
+msgstr "सहायता केंद्र को उसके संग्रहों, लेखों, संशोधनों और काउंटरों के साथ हटाता है। सार्वजनिक पता काम करना बंद कर देता है।"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Description"
+msgstr "विवरण"
+
+#: src/features/help/text.tsx
+msgid "Draft"
+msgstr "ड्राफ़्ट"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Draft submitted. An owner or admin can publish it."
+msgstr "ड्राफ़्ट जमा किया गया। कोई स्वामी या एडमिन इसे प्रकाशित कर सकता है।"
+
+#: src/features/help/Revisions.tsx
+msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
+msgstr "इस अनुवाद के पिछले संस्करण। किसी एक को पुनर्स्थापित करने पर ड्राफ़्ट बदल जाता है; प्रकाशित पाठ तब तक रहता है जब तक आप प्रकाशित नहीं करते।"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit"
+msgstr "संपादित करें"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Edit collection"
+msgstr "संग्रह संपादित करें"
+
+#: src/features/help/Revisions.tsx
+msgid "Empty"
+msgstr "खाली"
+
+#: src/features/help/ReportTab.tsx
+msgid "Every search found something."
+msgstr "हर खोज में कुछ मिला।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Every translation, its revisions and its counters are deleted."
+msgstr "सभी अनुवाद, उनके संशोधन और काउंटर हट जाते हैं।"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Formatting"
+msgstr "फ़ॉर्मैटिंग"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Getting started"
+msgstr "शुरू करना"
+
+#: src/features/help/text.tsx
+msgid "Globe"
+msgstr "ग्लोब"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Group articles so visitors can browse. A collection can hold one level of sub-collections. Drag to change the order."
+msgstr "लेखों को समूहित करें ताकि आगंतुक ब्राउज़ कर सकें। एक संग्रह में उप-संग्रहों का एक स्तर हो सकता है। क्रम बदलने के लिए खींचें।"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Heading"
+msgstr "शीर्षक"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help"
+msgstr "सहायता"
+
+#: src/features/help/pages.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Help center"
+msgstr "सहायता केंद्र"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Help center deleted"
+msgstr "सहायता केंद्र हटाया गया"
+
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+msgid "Help centers"
+msgstr "सहायता केंद्र"
+
+#: src/features/help/text.tsx
+msgid "Help centers are turned off on this server."
+msgstr "इस सर्वर पर सहायता केंद्र बंद हैं।"
+
+#: src/features/help/ReportTab.tsx
+msgid "Helpful"
+msgstr "उपयोगी"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "How do I reset my password?"
+msgstr "मैं अपना पासवर्ड कैसे रीसेट करूँ?"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Icon"
+msgstr "आइकन"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Image"
+msgstr "छवि"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Inside"
+msgstr "के अंदर"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Italic"
+msgstr "इटैलिक"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Its articles stay, with no collection. Its sub-collections become top-level collections."
+msgstr "इसके लेख बिना संग्रह के रहते हैं। इसके उप-संग्रह शीर्ष-स्तर के संग्रह बन जाते हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Its draft and revisions are deleted. The other languages stay."
+msgstr "इसका ड्राफ़्ट और संशोधन हट जाते हैं। दूसरी भाषाएँ बनी रहती हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Keep mine"
+msgstr "मेरा रखें"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+#: src/features/help/CollectionsTab.tsx
+msgid "Language"
+msgstr "भाषा"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Languages"
+msgstr "भाषाएँ"
+
+#: src/features/help/ReportTab.tsx
+msgid "Last {d} days"
+msgstr "पिछले {d} दिन"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Link"
+msgstr "लिंक"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Load more"
+msgstr "और लोड करें"
+
+#: src/features/help/text.tsx
+msgid "Lock"
+msgstr "ताला"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Logo URL"
+msgstr "लोगो URL"
+
+#: src/features/help/text.tsx
+msgid "Mail"
+msgstr "मेल"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main"
+msgstr "मुख्य"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Main language"
+msgstr "मुख्य भाषा"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "More"
+msgstr "और"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "More for {name}"
+msgstr "{name} के लिए और"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move {name}. Drag, or press Alt with the arrow keys."
+msgstr "{name} को ले जाएँ। खींचें, या तीर कुंजियों के साथ Alt दबाएँ।"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move down"
+msgstr "नीचे ले जाएँ"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Move up"
+msgstr "ऊपर ले जाएँ"
+
+#: src/features/help/CollectionsTab.tsx
+#: src/features/help/CreateCenterDialog.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Name"
+msgstr "नाम"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article"
+msgstr "नया लेख"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "New article ({newKey})"
+msgstr "नया लेख ({newKey})"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection"
+msgstr "नया संग्रह"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "New collection ({newKey})"
+msgstr "नया संग्रह ({newKey})"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article got a “no” in this period."
+msgstr "इस अवधि में किसी लेख को “नहीं” नहीं मिला।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No article matches."
+msgstr "कोई लेख मेल नहीं खाता।"
+
+#: src/features/help/ReportTab.tsx
+msgid "No article was read in this period."
+msgstr "इस अवधि में कोई लेख नहीं पढ़ा गया।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "No articles yet. Write the first answer your customers keep asking for."
+msgstr "अभी कोई लेख नहीं। वह पहला जवाब लिखें जो आपके ग्राहक बार-बार पूछते हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "No collection"
+msgstr "कोई संग्रह नहीं"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "No collections yet. Articles can stay without one."
+msgstr "अभी कोई संग्रह नहीं। लेख बिना संग्रह के रह सकते हैं।"
+
+#: src/features/help/Revisions.tsx
+msgid "No earlier versions yet."
+msgstr "अभी कोई पिछला संस्करण नहीं।"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No help center yet. Owners and admins create it."
+msgstr "अभी कोई सहायता केंद्र नहीं। स्वामी और एडमिन इसे बनाते हैं।"
+
+#: src/features/help/HelpColumn.tsx
+msgid "No inbox to show a help center for."
+msgstr "कोई इनबॉक्स नहीं जिसके लिए सहायता केंद्र दिखाया जाए।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "None"
+msgstr "कोई नहीं"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "not named"
+msgstr "बिना नाम"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "not written"
+msgstr "लिखा नहीं गया"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Not written"
+msgstr "लिखा नहीं गया"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Numbered list"
+msgstr "क्रमांकित सूची"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
+msgstr "बंद: एजेंट ड्राफ़्ट लिखकर जमा करते हैं, और स्वामी व एडमिन प्रकाशित करते हैं। चालू: इनबॉक्स तक पहुँच वाले एजेंट भी प्रकाशित और अप्रकाशित करते हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
+msgstr "हर पंक्ति में एक पाथ, जैसे /billing/*। चैट विजेट मेल खाते पेजों पर यह लेख सुझाता है।"
+
+#: src/features/help/text.tsx
+msgid "Only owners and admins can do this."
+msgstr "यह केवल स्वामी और एडमिन कर सकते हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original"
+msgstr "मूल"
+
+#: src/features/help/Preview.tsx
+msgid "Original in {language}"
+msgstr "{language} में मूल"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Original text ({alt} C)"
+msgstr "मूल पाठ ({alt} C)"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Other words visitors might type, such as synonyms."
+msgstr "अन्य शब्द जो आगंतुक टाइप कर सकते हैं, जैसे पर्यायवाची।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "out of date"
+msgstr "पुराना"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Out of date"
+msgstr "पुराना"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Part of this translation’s web address. Made from the title when empty."
+msgstr "इस अनुवाद के वेब पते का हिस्सा। खाली होने पर शीर्षक से बनता है।"
+
+#: src/features/help/text.tsx
+msgid "Person"
+msgstr "व्यक्ति"
+
+#: src/features/help/text.tsx
+msgid "Phone"
+msgstr "फ़ोन"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Pick a colour"
+msgstr "रंग चुनें"
+
+#: src/features/help/text.tsx
+msgid "Plug"
+msgstr "प्लग"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Preview.tsx
+msgid "Preview"
+msgstr "पूर्वावलोकन"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Preview ({alt} P)"
+msgstr "पूर्वावलोकन ({alt} P)"
+
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "पूर्वावलोकन ({previewKey})"
+
+#. placeholder {0}: center.name
+#: src/features/help/pages.tsx
+msgid "Preview of {0}"
+msgstr "{0} का पूर्वावलोकन"
+
+#: src/features/help/Preview.tsx
+msgid "Preview of the article"
+msgstr "लेख का पूर्वावलोकन"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Public address"
+msgstr "सार्वजनिक पता"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish"
+msgstr "प्रकाशित करें"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Publish ({publishKey})"
+msgstr "प्रकाशित करें ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/text.tsx
+msgid "Published"
+msgstr "प्रकाशित"
+
+#: src/features/help/text.tsx
+msgid "Question mark"
+msgstr "प्रश्नचिह्न"
+
+#: src/features/help/EditorToolbar.tsx
+msgid "Quote"
+msgstr "उद्धरण"
+
+#. placeholder {0}: name(l)
+#: src/features/help/SettingsTab.tsx
+msgid "Remove {0}"
+msgstr "{0} हटाएँ"
+
+#: src/features/help/pages.tsx
+msgid "Report"
+msgstr "रिपोर्ट"
+
+#: src/features/help/ReportTab.tsx
+msgid "Report period"
+msgstr "रिपोर्ट की अवधि"
+
+#: src/features/help/Revisions.tsx
+msgid "Restore this version"
+msgstr "यह संस्करण पुनर्स्थापित करें"
+
+#: src/features/help/Revisions.tsx
+msgid "Restored"
+msgstr "पुनर्स्थापित"
+
+#: src/features/help/ReportTab.tsx
+msgid "Results opened"
+msgstr "खोले गए परिणाम"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+msgid "Revisions"
+msgstr "संशोधन"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Revisions ({alt} H)"
+msgstr "संशोधन ({alt} H)"
+
+#: src/features/help/text.tsx
+msgid "Rocket"
+msgstr "रॉकेट"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Save"
+msgstr "सहेजें"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Save now"
+msgstr "अभी सहेजें"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
+msgid "Saved"
+msgstr "सहेजा गया"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Saving…"
+msgstr "सहेजा जा रहा है…"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles"
+msgstr "शीर्षकों में खोजें"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Search titles ({findKey})"
+msgstr "शीर्षकों में खोजें ({findKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Search words"
+msgstr "खोज शब्द"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches"
+msgstr "खोजें"
+
+#: src/features/help/ReportTab.tsx
+msgid "Searches with no result"
+msgstr "बिना परिणाम वाली खोजें"
+
+#: src/features/help/ReportTab.tsx
+msgid "Sent"
+msgstr "भेजे गए"
+
+#: src/features/help/pages.tsx
+#: src/features/help/text.tsx
+msgid "Settings"
+msgstr "सेटिंग"
+
+#: src/features/help/text.tsx
+msgid "Shield"
+msgstr "ढाल"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Show"
+msgstr "दिखाएँ"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown under the name on the home page."
+msgstr "होम पेज पर नाम के नीचे दिखता है।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Shown when an article has no translation in the visitor’s language."
+msgstr "तब दिखता है जब लेख का आगंतुक की भाषा में अनुवाद न हो।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Site link"
+msgstr "साइट लिंक"
+
+#: src/features/help/text.tsx
+msgid "Someone saved this article in the meantime."
+msgstr "इस बीच किसी ने यह लेख सहेज लिया।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Someone saved this translation while you were editing."
+msgstr "आपके संपादन करते समय किसी ने यह अनुवाद सहेज लिया।"
+
+#: src/features/help/text.tsx
+msgid "Star"
+msgstr "सितारा"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Start with a title. You write the text next, and it stays a draft until it is published."
+msgstr "शीर्षक से शुरू करें। पाठ आप आगे लिखेंगे, और प्रकाशित होने तक वह ड्राफ़्ट रहता है।"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "State"
+msgstr "स्थिति"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft"
+msgstr "ड्राफ़्ट जमा करें"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Submit draft ({publishKey})"
+msgstr "ड्राफ़्ट जमा करें ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Suggest on pages"
+msgstr "पेजों पर सुझाएँ"
+
+#: src/features/help/text.tsx
+msgid "Team"
+msgstr "टीम"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The address answers “not found” until you publish the help center."
+msgstr "जब तक आप सहायता केंद्र प्रकाशित नहीं करते, पता “नहीं मिला” जवाब देता है।"
+
+#: src/features/help/pages.tsx
+msgid "The help center as visitors see it now. Drafts are left out."
+msgstr "सहायता केंद्र जैसा आगंतुकों को अभी दिखता है। ड्राफ़्ट शामिल नहीं हैं।"
+
+#: src/features/help/text.tsx
+msgid "The help center does not offer this language. Add it in the settings first."
+msgstr "सहायता केंद्र यह भाषा नहीं देता। पहले इसे सेटिंग में जोड़ें।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The help center is at {address}. The old address keeps redirecting if you change it."
+msgstr "सहायता केंद्र {address} पर है। पता बदलने पर पुराना पता रीडायरेक्ट करता रहता है।"
+
+#: src/features/help/pages.tsx
+msgid "The help center is not published. Only your team sees this."
+msgstr "सहायता केंद्र प्रकाशित नहीं है। इसे केवल आपकी टीम देखती है।"
+
+#: src/features/help/Preview.tsx
+msgid "The main language has no text for this article yet."
+msgstr "मुख्य भाषा में इस लेख का अभी कोई पाठ नहीं है।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The page stops working for visitors. The draft stays, and you can publish it again."
+msgstr "पेज आगंतुकों के लिए काम करना बंद कर देता है। ड्राफ़्ट बना रहता है, और आप इसे फिर प्रकाशित कर सकते हैं।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "The pages offer this chat under “Still need help?”."
+msgstr "पेज यह चैट “अभी भी मदद चाहिए?” के नीचे देते हैं।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "The title needs at least 3 characters"
+msgstr "शीर्षक में कम से कम 3 अक्षर होने चाहिए"
+
+#: src/features/help/text.tsx
+msgid "This inbox already has a help center."
+msgstr "इस इनबॉक्स का पहले से एक सहायता केंद्र है।"
+
+#: src/features/help/text.tsx
+msgid "This is the article’s only translation. Delete the article instead."
+msgstr "यह लेख का एकमात्र अनुवाद है। इसके बजाय लेख हटाएँ।"
+
+#: src/features/help/text.tsx
+msgid "This workspace has as many help articles as the server allows. Delete old ones first."
+msgstr "इस कार्यक्षेत्र में उतने सहायता लेख हैं जितने सर्वर अनुमति देता है। पहले पुराने हटाएँ।"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
+msgid "Title"
+msgstr "शीर्षक"
+
+#: src/features/help/text.tsx
+msgid "Too many requests. Wait a moment and try again."
+msgstr "बहुत ज़्यादा अनुरोध। थोड़ी देर रुकें और फिर कोशिश करें।"
+
+#: src/features/help/ReportTab.tsx
+msgid "Top articles"
+msgstr "सबसे ज़्यादा पढ़े गए लेख"
+
+#: src/features/help/CollectionsTab.tsx
+msgid "Top level"
+msgstr "शीर्ष स्तर"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Translation deleted"
+msgstr "अनुवाद हटाया गया"
+
+#: src/features/help/text.tsx
+msgid "Type a word to search for."
+msgstr "खोजने के लिए एक शब्द टाइप करें।"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
+msgid "Unpublish"
+msgstr "प्रकाशन रद्द करें"
+
+#: src/features/help/pages.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "प्रकाशन रद्द करें ({publishKey})"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unpublish this translation?"
+msgstr "इस अनुवाद का प्रकाशन रद्द करें?"
+
+#: src/features/help/ArticleEditor.tsx
+#: src/features/help/HelpColumn.tsx
+msgid "Unpublished"
+msgstr "अप्रकाशित"
+
+#: src/features/help/text.tsx
+msgid "Unpublished changes"
+msgstr "अप्रकाशित बदलाव"
+
+#: src/features/help/pages.tsx
+msgid "Unpublished, only your team can preview it"
+msgstr "अप्रकाशित, केवल आपकी टीम पूर्वावलोकन कर सकती है"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Unsaved changes"
+msgstr "बिना सहेजे बदलाव"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 से 48 अक्षर, अंक और बीच के हाइफ़न इस्तेमाल करें।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Use a colour like #2563eb."
+msgstr "#2563eb जैसा रंग इस्तेमाल करें।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Use their version"
+msgstr "उनका संस्करण इस्तेमाल करें"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Version restored to the draft"
+msgstr "संस्करण ड्राफ़्ट में पुनर्स्थापित किया गया"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "View"
+msgstr "देखें"
+
+#: src/features/help/pages.tsx
+msgid "View help center"
+msgstr "सहायता केंद्र देखें"
+
+#: src/features/help/ReportTab.tsx
+msgid "Views"
+msgstr "व्यू"
+
+#: src/features/help/ReportTab.tsx
+msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
+msgstr "आगंतुक क्या पढ़ते और खोजते हैं। व्यू अनुमानित हैं, और संख्याएँ एक मिनट के भीतर इस पेज तक पहुँचती हैं।"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Who can publish"
+msgstr "कौन प्रकाशित कर सकता है"
+
+#: src/features/help/ReportTab.tsx
+msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
+msgstr "वे शब्द जो आगंतुकों ने टाइप किए और जिनसे कुछ नहीं मिला। हर एक के लिए नया लेख सबसे तेज़ उपाय है।"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write"
+msgstr "लिखें"
+
+#: src/features/help/ArticleEditor.tsx
+msgid "Write the answer in Markdown…"
+msgstr "जवाब Markdown में लिखें…"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Your product."
+msgstr "आपका उत्पाद।"

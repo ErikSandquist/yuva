@@ -1012,6 +1012,10 @@ msgstr "구성원이 나중에 구성 요소를 직접 설정했으므로 그 �
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "대체값이 없는 병합 필드는 일부 수신자에게 비어 보입니다. 대체값을 지정하세요."
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "A message takes at most 3 articles."
+msgstr "메시지 하나에는 문서를 최대 3개까지 넣을 수 있습니다."
+
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "메시지가 추가되었을 때"
@@ -1220,6 +1224,10 @@ msgid "Add a contact point of type Webhook, paste the address above, keep the me
 msgstr "Webhook 유형의 연락 지점을 추가하고 위 주소를 붙여 넣은 다음, 메서드는 POST로 두고 알림 정책에서 해당 연락 지점을 사용하세요. 발생한 알림은 모니터를 다운시키고 해결된 알림은 복구합니다."
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Add a link"
+msgstr "링크 추가"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Add a monitor"
 msgstr "모니터 추가"
 
@@ -1264,6 +1272,10 @@ msgstr "웹사이트 또는 앱 추가"
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "분석 속성 추가"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add an image"
+msgstr "이미지 추가"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1927,6 +1939,10 @@ msgstr "{address}에 직접 도착했습니다. {verifiedAt}."
 msgid "Arrived through forwarding, {verifiedAt}."
 msgstr "전달을 통해 도착했습니다. {verifiedAt}."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Articles"
+msgstr "문서"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "{name}(으)로, {when}부터"
@@ -2216,6 +2232,10 @@ msgstr "차단된 연락처"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
 msgstr "본문"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Bold"
+msgstr "굵게"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
@@ -2861,6 +2881,10 @@ msgstr "CNAME 레코드"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "코드"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collections"
+msgstr "컬렉션"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -3588,6 +3612,10 @@ msgstr "구독 삭제"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the app you created for Yuva"
 msgstr "Yuva용으로 만든 앱 삭제"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the article"
+msgstr "문서 삭제"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the draft"
@@ -5034,6 +5062,12 @@ msgstr "설정에서 보낸 인사"
 msgid "Hello, I am moving the mailbox {address} to Yuva, our support inbox. Our Microsoft 365 organization lets only an admin allow apps. Please open this link as an admin and accept, so Yuva may read the mailbox over IMAP: {url}"
 msgstr "안녕하세요. 메일함 {address}을(를) 지원 받은 편지함인 Yuva로 옮기고 있습니다. 저희 Microsoft 365 조직에서는 관리자만 앱을 허용할 수 있습니다. 관리자로서 이 링크를 열어 수락해 주세요. 그러면 Yuva가 IMAP으로 메일함을 읽을 수 있습니다: {url}"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help"
+msgstr "도움말"
+
 #: src/features/setup/previews.tsx
 msgid "Help and feedback"
 msgstr "도움말과 의견"
@@ -5041,6 +5075,27 @@ msgstr "도움말과 의견"
 #: src/features/setup/ChannelStep.tsx
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "iOS 또는 Android 앱 안의 도움말과 의견"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Help article"
+msgstr "도움말 문서"
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Help articles"
+msgstr "도움말 문서"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center"
+msgstr "도움말 센터"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help center settings"
+msgstr "도움말 센터 설정"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Help report"
+msgstr "도움말 보고서"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
@@ -5710,6 +5765,10 @@ msgstr "내 계정 <0>{email}</0>(으)로서, 아래에서 허용한 접근 범�
 #: src/features/settings/notifications/PushSection.tsx
 msgid "It will no longer receive notifications."
 msgstr "더 이상 알림을 받지 않습니다."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Italic"
+msgstr "기울임꼴"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
@@ -6697,6 +6756,14 @@ msgid "Move the selected block"
 msgstr "선택한 블록 이동"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected collection"
+msgstr "선택한 컬렉션 이동"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the articles or collections"
+msgstr "문서 또는 컬렉션 사이 이동"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the broadcasts"
 msgstr "일괄 발송 사이 이동"
 
@@ -6865,6 +6932,10 @@ msgid "New addresses that get a confirmation mail"
 msgstr "확인 메일을 받는 새 주소"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "New article"
+msgstr "새 문서"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "New broadcast"
@@ -6878,6 +6949,10 @@ msgstr "새 일괄 발송({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "새 자주 쓰는 답장"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "New collection"
+msgstr "새 컬렉션"
 
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
@@ -7364,6 +7439,10 @@ msgstr "아직 페이지가 없습니다"
 #: src/features/settings/members/Invites.tsx
 msgid "No pending invites."
 msgstr "대기 중인 초대가 없습니다."
+
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "No published article found."
+msgstr "게시된 문서를 찾을 수 없습니다."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -8228,6 +8307,10 @@ msgid "Open setup"
 msgstr "설정 열기"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Open the article or collection"
+msgstr "문서 또는 컬렉션 열기"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "일괄 발송 열기"
 
@@ -8251,6 +8334,10 @@ msgstr "토론 열기"
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Open the endpoint"
 msgstr "엔드포인트 열기"
+
+#: src/features/conversation/messages/ArticleCards.tsx
+msgid "Open the help article"
+msgstr "도움말 문서 열기"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -8276,6 +8363,10 @@ msgstr "다음 또는 이전 대화 열기"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "페이지 설정 열기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public help center"
+msgstr "공개 도움말 센터 열기"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -8967,8 +9058,16 @@ msgid "Preview text"
 msgstr "미리 보기 텍스트"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Preview the help center"
+msgstr "도움말 센터 미리보기"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Preview the page"
 msgstr "페이지 미리보기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next language"
+msgstr "이전 또는 다음 언어"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
@@ -9062,6 +9161,10 @@ msgid "Publish now"
 msgstr "지금 게시"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Publish or unpublish the help center"
+msgstr "도움말 센터 게시 또는 게시 취소"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Publish or unpublish the page"
 msgstr "페이지 게시 또는 게시 취소"
 
@@ -9072,6 +9175,10 @@ msgstr "초안 게시"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "이 TXT 레코드를 도메인의 DNS에 게시하세요:"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Publish, or submit the draft"
+msgstr "게시하거나 초안 제출"
 
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9416,6 +9523,7 @@ msgstr "원격 이미지는 보낸 사람에게 메일을 열었음을 알릴 �
 msgid "Remove"
 msgstr "제거"
 
+#. placeholder {0}: a.title
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -9817,6 +9925,10 @@ msgstr "검토한 다음 보내거나 예약"
 msgid "Review, then send or schedule ({key})"
 msgstr "검토한 다음 보내거나 예약({key})"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Revisions"
+msgstr "수정 이력"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
@@ -9948,6 +10060,10 @@ msgstr "저장한 다음 식별자와 시크릿을 복사하세요. 시크릿은
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
 msgstr "지금 저장하고 버전 남기기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save the draft now"
+msgstr "초안 지금 저장"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
@@ -10090,6 +10206,10 @@ msgstr "이모지 검색(영어)"
 msgid "Search feedback"
 msgstr "피드백 검색"
 
+#: src/features/conversation/composer/ArticlePicker.tsx
+msgid "Search help articles…"
+msgstr "도움말 문서 검색…"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
 msgstr "불러온 메시지에서 검색"
@@ -10124,6 +10244,10 @@ msgstr "수신자 검색"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Search subscribers"
 msgstr "구독자 검색"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search the articles"
+msgstr "문서 검색"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from Codex. It acts as you, with the access you allow."
@@ -10197,6 +10321,15 @@ msgstr "비트 보내기"
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
 msgstr "확인 메일 보내기"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send a help article"
+msgstr "도움말 문서 보내기"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send a help article ({articleKey})"
+msgstr "도움말 문서 보내기 ({articleKey})"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a mail to {address} from any mailbox."
@@ -10645,6 +10778,14 @@ msgstr "페이지에 표시"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show or hide quoted text"
 msgstr "인용문 표시 또는 숨기기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the original text beside a translation"
+msgstr "번역 옆에 원문 텍스트 표시 또는 숨기기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show or hide the preview"
+msgstr "미리보기 표시 또는 숨기기"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show original"
@@ -13086,6 +13227,10 @@ msgstr "게시 취소"
 #: src/features/status/StatusPagePane.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "게시 취소({publishKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Unpublish the translation"
+msgstr "번역 게시 취소"
 
 #: src/features/status/StatusColumn.tsx
 msgid "Unpublished"
