@@ -3,7 +3,7 @@ import { shadcnCopy } from "@/copy/shadcn"
 import { i18nFor } from "@/i18n"
 import ShadcnLayout from "@/layouts/ShadcnLayout.astro"
 import type { Locale } from "@/lib/routes"
-import { items, labelRows, propTables, shadcnHref, SHADCN_DOCS, type Item } from "@/lib/shadcn"
+import { chatEmailExample, items, labelRows, propTables, shadcnHref, SHADCN_DOCS, type Item } from "@/lib/shadcn"
 import ShadcnCode from "@/ui/ShadcnCode.astro"
 import ShadcnInstall from "@/ui/ShadcnInstall.astro"
 import ShadcnPreview from "@/ui/ShadcnPreview.astro"
@@ -32,6 +32,14 @@ const title = (name: string) => items().find((i) => i.name === name)?.title ?? n
 
 <ShadcnLayout locale={locale} title={item.title} description={item.description} slug={item.name} headings={headings}>
   <ShadcnPreview locale={locale} name={item.name} example={item.example} />
+  {item.name === "yuva-chat" && (
+    <>
+      <h3 id="email" class="mt-10 mb-3 font-mono text-base font-semibold">
+        YuvaChatEmail
+      </h3>
+      <ShadcnPreview locale={locale} name="yuva-chat-email" example={chatEmailExample} />
+    </>
+  )}
   <div class="docs-body">
     <h2 id="installation">{t.installation}</h2>
     <p class="mb-4 text-ink-soft">{t.installLead}</p>

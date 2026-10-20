@@ -197,6 +197,12 @@ export function createChatFixture(): YuvaClient {
       Object.assign(at, { rating, can_rate: false })
       return wait(at)
     },
+    setEmail: async (email: string) =>
+      wait({
+        ...contact,
+        typed_email: email,
+        email_confirmation: { state: "sent", email, expires_at: new Date(Date.now() + 86_400_000).toISOString() },
+      }),
     setTyping: async () => undefined,
     attachment: async () => new Blob(["fixture"], { type: "application/pdf" }),
   }

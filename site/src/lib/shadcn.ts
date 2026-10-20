@@ -51,7 +51,10 @@ export function Docs({ children }: { children: React.ReactNode }) {
 
 export const specs: Record<string, Spec> = {
   "yuva-chat": {
-    props: [{ id: "props", file: "components/yuva-chat.tsx", interface: "YuvaChatProps" }],
+    props: [
+      { id: "props", file: "components/yuva-chat.tsx", interface: "YuvaChatProps" },
+      { id: "email", file: "components/yuva-chat-email.tsx", interface: "YuvaChatEmailProps" },
+    ],
     labels: chatLabels,
     usage: `import { YuvaChat } from "@/components/yuva-chat"
 
@@ -141,6 +144,28 @@ export function Conversations() {
     ${chatEnv.replaceAll("\n      ", "\n    ")},
   })
   return <YuvaChatConversations chat={chat} />
+}`,
+  },
+  "yuva-chat-email": {
+    props: [
+      {
+        id: "props",
+        file: "components/yuva-chat-email.tsx",
+        interface: "YuvaChatEmailProps",
+      },
+    ],
+    labelsFrom: "yuva-chat",
+    usage: `import { YuvaChatEmail } from "@/components/yuva-chat-email"
+
+<YuvaChatEmail chat={chat} />`,
+    example: `import { YuvaChatEmail } from "@/components/yuva-chat-email"
+import { useYuvaChat } from "@/hooks/use-yuva-chat"
+
+export function EmailCard() {
+  const chat = useYuvaChat({
+    ${chatEnv.replaceAll("\n      ", "\n    ")},
+  })
+  return <YuvaChatEmail chat={chat} />
 }`,
   },
   "use-yuva-chat": {
@@ -361,6 +386,37 @@ export function Lists() {
   },
 }
 
+const autoSpecs = new Map<string, Spec>()
+
+function specFor(name: string, file: string): Spec {
+  const known = specs[name]
+  if (known) return known
+  let auto = autoSpecs.get(name)
+  if (!auto) {
+    const sf = parse(file)
+    const exported = (node: ts.Node) =>
+      !!ts.getModifiers(node as ts.HasModifiers)?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+    const interfaces = sf.statements.filter(
+      (st): st is ts.InterfaceDeclaration =>
+        ts.isInterfaceDeclaration(st) && exported(st) && /(Props|Options|State|Result)$/.test(st.name.text)
+    )
+    const functions = sf.statements.filter(
+      (st): st is ts.FunctionDeclaration => ts.isFunctionDeclaration(st) && exported(st) && !!st.name
+    )
+    const main = functions[0]?.name?.text ?? name
+    const alias = `@/${file.replace(/\.tsx?$/, "")}`
+    const hook = main.startsWith("use")
+    const usage = `import { ${main} } from "${alias}"\n\n${hook ? `const value = ${main}()` : `<${main} />`}`
+    auto = {
+      props: interfaces.map((i) => ({ id: i.name, file, interface: i.name })),
+      usage,
+      example: usage,
+    }
+    autoSpecs.set(name, auto)
+  }
+  return auto
+}
+
 export type Item = {
   name: string
   group: Group
@@ -396,8 +452,7 @@ export function items(): Item[] {
     JSON.parse(fs.readFileSync(path.resolve("../sdk/shadcn/registry.json"), "utf8")).items as RegistryItem[]
   )
     .map((entry) => {
-      const spec = specs[entry.name]
-      if (!spec) throw new Error(`shadcn: no docs for registry item ${entry.name}`)
+      const spec = specFor(entry.name, entry.files[0]!.path.replace(/^registry\/yuva\//, ""))
       const deps = entry.registryDependencies ?? []
       return {
         name: entry.name,
@@ -412,7 +467,9 @@ export function items(): Item[] {
         example: spec.example,
       }
     })
-    .sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name))
+    .map((item, index) => ({ item, key: order.includes(item.name) ? order.indexOf(item.name) : 1000 + index }))
+    .sort((a, b) => a.key - b.key)
+    .map(({ item }) => item)
   return cachedItems
 }
 
@@ -449,7 +506,7 @@ function interfaceOf(file: string, name: string) {
 const squash = (text: string) => text.replace(/\s+/g, " ").trim()
 
 export function propTables(name: string): Table[] {
-  return (specs[name]?.props ?? []).map(({ id, file, interface: iface }) => ({
+  return (specs[name]?.props ?? autoSpecs.get(name)?.props ?? []).map(({ id, file, interface: iface }) => ({
     id,
     title: iface,
     rows: interfaceOf(file, iface)
@@ -482,3 +539,5 @@ export function labelRows(name: string): { owner: string; rows: LabelRow[] } | n
     .filter((r) => !labels.only || labels.only.test(r.key))
   return { owner, rows }
 }
+
+export const chatEmailExample = specs["yuva-chat-email"]!.example

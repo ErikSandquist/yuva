@@ -6,6 +6,7 @@ import {
   UseYuvaChatPreview,
   YuvaChatComposerPreview,
   YuvaChatConversationsPreview,
+  YuvaChatEmailPreview,
   YuvaChatPreview,
   YuvaChatThreadPreview,
 } from "@/shadcn/previews/chat"
@@ -47,6 +48,7 @@ const t = shadcnCopy(i18nFor(locale))
       {name === "yuva-chat-thread" && <YuvaChatThreadPreview client:visible />}
       {name === "yuva-chat-composer" && <YuvaChatComposerPreview client:visible />}
       {name === "yuva-chat-conversations" && <YuvaChatConversationsPreview client:visible />}
+      {name === "yuva-chat-email" && <YuvaChatEmailPreview client:visible />}
       {name === "use-yuva-chat" && <UseYuvaChatPreview client:visible />}
       {name === "yuva-discussions" && <YuvaDiscussionsPreview client:visible />}
       {name === "yuva-discussion-list" && <YuvaDiscussionListPreview client:visible />}
