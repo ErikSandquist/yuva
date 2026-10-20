@@ -33,6 +33,7 @@ export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (localeCodes as readonly string[]).includes(value)
 }
 
+let requested = ""
 const wanted = new Set<Catalog>(["messages"])
 const loaded = new Set<string>()
 
@@ -45,13 +46,18 @@ async function loadCatalog(catalog: Catalog, locale: string) {
   loaded.add(key)
 }
 
-function loadAll(locale: string) {
-  return Promise.all([...wanted].map((c) => loadCatalog(c, locale)))
+async function loadAll(locale: string) {
+  let size = 0
+  while (size !== wanted.size) {
+    size = wanted.size
+    await Promise.all([...wanted].map((c) => loadCatalog(c, locale)))
+  }
 }
 
 export async function needCatalog(catalog: Catalog) {
   wanted.add(catalog)
-  if (i18n.locale) await loadCatalog(catalog, i18n.locale)
+  const locale = requested || i18n.locale
+  if (locale) await loadCatalog(catalog, locale)
 }
 
 const aliases: Record<string, Locale> = {
@@ -154,8 +160,6 @@ export function initialLocale(): Locale {
   }
   return matchLocale(navigator.languages?.length ? navigator.languages : [navigator.language])
 }
-
-let requested = ""
 
 export async function activate(tag: string) {
   const locale = isLocale(tag) ? tag : matchLocale([tag])
