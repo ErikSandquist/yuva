@@ -22,6 +22,12 @@ interface Column {
 }
 
 const tabs: Tab[] = ["ideas", "planned", "in_progress", "shipped"]
+const tabIcons: Record<Tab, string> = {
+  ideas: icons.idea,
+  planned: icons.planned,
+  in_progress: icons.progress,
+  shipped: icons.shipped,
+}
 const pageSize = 20
 const minTitle = 3
 const voteIcon = icons.vote.replace('width="20" height="20"', 'width="14" height="14"')
@@ -356,8 +362,11 @@ export function roadmapApp(context: AppContext, t: Translate, root: HTMLElement)
     const strip = el("div", "tabs")
     strip.setAttribute("role", "tablist")
     for (const value of tabs) {
-      const button = el("button", "", stageLabel(value))
+      const button = el("button")
       button.type = "button"
+      button.insertAdjacentHTML("beforeend", tabIcons[value])
+      button.setAttribute("aria-label", stageLabel(value))
+      button.dataset.tip = stageLabel(value)
       button.setAttribute("role", "tab")
       button.setAttribute("aria-selected", String(value === tab))
       button.addEventListener("click", () => {

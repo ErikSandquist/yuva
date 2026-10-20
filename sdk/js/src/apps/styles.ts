@@ -83,8 +83,13 @@ export const styles = `
 .rm-head { display: flex; align-items: center; gap: 12px; }
 .rm-head .hint { flex: 1; min-inline-size: 0; font-size: 13px; }
 .pill.suggest { flex: none; margin-inline-start: auto; gap: 6px; min-block-size: 36px; font-size: 13px; font-weight: 500; }
-.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); overflow-x: auto; scrollbar-width: none; border-block-end: 1px solid var(--yuva-border); margin-inline: -8px; }
-.tabs button { min-block-size: 44px; padding: 0 8px; white-space: nowrap; border: 0; border-block-end: 2px solid transparent; margin-block-end: -1px; background: transparent; color: var(--yuva-faint); font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-block-end: 1px solid var(--yuva-border); margin-inline: -8px; }
+.tabs button { position: relative; display: flex; align-items: center; justify-content: center; min-block-size: 44px; padding: 0; border: 0; border-block-end: 2px solid transparent; margin-block-end: -1px; background: transparent; color: var(--yuva-faint); cursor: pointer; }
+.tabs button:hover { color: var(--yuva-muted); }
+.tabs button::after { content: attr(data-tip); position: absolute; inset-block-start: calc(100% + 6px); left: 50%; transform: translateX(-50%); z-index: 2; padding: 4px 8px; border-radius: 6px; background: var(--yuva-fg); color: var(--yuva-bg); font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tabs button:first-child::after { left: auto; inset-inline-start: 4px; transform: none; }
+.tabs button:last-child::after { left: auto; inset-inline-end: 4px; transform: none; }
+.tabs button:hover::after, .tabs button:focus-visible::after { opacity: 1; }
 .tabs button[aria-selected="true"] { color: var(--yuva-fg); border-block-end-color: var(--yuva-brand); }
 .rm-list { padding-block-start: 4px; }
 .ideas { display: flex; flex-direction: column; }
