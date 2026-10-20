@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "Otevřít chat"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "Otevřít chat, nepřečtených: {count}"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "Otevřít chat, {count, plural, one {# novinka} few {# novinky} many {# novinky} other {# novinek}}"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "Otevřít chat, {count} novinek"
+msgid "Open chat, {count} unread"
+msgstr "Otevřít chat, nepřečtených: {count}"

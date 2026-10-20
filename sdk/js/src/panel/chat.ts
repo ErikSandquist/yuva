@@ -68,6 +68,7 @@ const loadApps = (): Promise<AppsModule> =>
 const impactRank = { none: 0, minor: 1, major: 2, critical: 3 }
 const maxFiles = 10
 const groupGap = 5 * 60_000
+const inboxRefreshGap = 60_000
 const maxTimer = 2 ** 31 - 1
 
 type View = { kind: "home" } | { kind: "list" } | { kind: "thread"; id: string | null } | { kind: "app"; app: AppKind }
@@ -105,6 +106,7 @@ export class Chat implements PanelController {
   #inbox: ClientInbox | null = null
   #updates = 0
   #updatesKey = ""
+  #inboxAt = 0
   #contact: ClientContact | null = null
   #phase: "loading" | "ready" | "error" = "loading"
   #error = ""
@@ -274,11 +276,11 @@ export class Chat implements PanelController {
       return
     }
     if (this.#phase === "ready") {
-      void (this.#client.token
-        ? this.#refreshSession()
-        : this.#preview()
-            .then(() => this.#render())
-            .catch(() => undefined))
+      if (this.#client.token) void this.#refreshSession()
+      else if (this.#inboxIsStale())
+        void this.#preview()
+          .then(() => this.#render())
+          .catch(() => undefined)
       this.#loadLists()
     }
     this.#render()
@@ -345,6 +347,7 @@ export class Chat implements PanelController {
     this.#host.setUnread(0)
     this.#updates = 0
     this.#updatesKey = ""
+    this.#inboxAt = 0
     this.#host.setUpdates(0)
   }
 
@@ -352,7 +355,11 @@ export class Chat implements PanelController {
     if (document.visibilityState !== "visible") return
     this.#client.reconnect()
     this.#markRead()
-    void this.#refreshInbox()
+    if (this.#client.connected || this.#inboxIsStale()) void this.#refreshInbox()
+  }
+
+  #inboxIsStale(): boolean {
+    return !this.#client.connected && Date.now() - this.#inboxAt >= inboxRefreshGap
   }
 
   async #setLocale(): Promise<void> {
@@ -413,9 +420,11 @@ export class Chat implements PanelController {
     if (!this.#client.token) this.#setInbox(inbox)
   }
 
-  #fetchInbox(): Promise<ClientInbox> {
+  async #fetchInbox(): Promise<ClientInbox> {
     if (!this.#host.config().channel) throw new ApiError(0, "not_configured")
-    return this.#client.channelSettings()
+    const inbox = await this.#client.channelSettings()
+    this.#inboxAt = Date.now()
+    return inbox
   }
 
   #setInbox(inbox: ClientInbox): void {

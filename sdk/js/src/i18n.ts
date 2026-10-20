@@ -13,6 +13,11 @@ export function catalogFor(locale: string): Messages {
   return catalogs[locale] ?? en
 }
 
-export function translatePlain(messages: Messages, descriptor: MessageDescriptor, fallback: Messages = en): string {
-  return translate(messages, descriptor, fallback)
+export function translatePlain(
+  messages: Messages,
+  descriptor: MessageDescriptor,
+  fallback: Messages = en,
+  locale?: string
+): string {
+  return translate(messages, descriptor, fallback, locale)
 }

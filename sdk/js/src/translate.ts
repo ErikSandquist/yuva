@@ -1,17 +1,32 @@
 import type { MessageDescriptor, Messages } from "@lingui/core"
 
-// Keeps @lingui/core out of the loader; only plain messages and simple placeholders (no plurals) belong here.
-export function translate(messages: Messages, descriptor: MessageDescriptor, fallback: Messages): string {
+type Part = string | [string, string?, Record<string, Part[]>?]
+
+function render(parts: Part[], values: Record<string, unknown>, locale: string, hash?: number): string {
+  return parts
+    .map((part) => {
+      if (typeof part === "string") return hash === undefined ? part : part.replaceAll("#", String(hash))
+      const [name = "", kind, options] = part
+      const value = values[name]
+      if (kind !== "plural" || !options) return String(value ?? "")
+      const count = Number(value)
+      const branch = options[`=${count}`] ?? options[new Intl.PluralRules(locale).select(count)] ?? options.other ?? []
+      return render(branch, values, locale, count)
+    })
+    .join("")
+}
+
+// Keeps @lingui/core out of the loader; plain messages, simple placeholders and plurals only.
+export function translate(
+  messages: Messages,
+  descriptor: MessageDescriptor,
+  fallback: Messages,
+  locale = sourceLocale
+): string {
   const entry = messages[descriptor.id] ?? fallback[descriptor.id]
   const values = (descriptor.values ?? {}) as Record<string, unknown>
   if (typeof entry === "string") return entry
-  if (Array.isArray(entry)) {
-    return entry
-      .map((part) =>
-        typeof part === "string" ? part : Array.isArray(part) ? String(values[part[0] as string] ?? "") : ""
-      )
-      .join("")
-  }
+  if (Array.isArray(entry)) return render(entry as Part[], values, locale)
   return descriptor.message ?? descriptor.id
 }
 

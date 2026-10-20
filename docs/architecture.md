@@ -3001,7 +3001,9 @@ appear in help search. Writing, rendering and translating are M20's.
     entries newer than the mark, shown up to "9+". The widget fetches the list only when
     `latest_published_at` is newer than the mark.
   - **Clearing.** Opening the app marks everything shown as seen.
-  - **Live updates.** A publish reaches open widgets through `inbox.updated`.
+  - **Live updates.** A publish reaches widgets with a live connection through `inbox.updated`; a
+    visitor without one gets it when the panel opens or the tab becomes visible again, at most once a
+    minute. A newer `latest_published_at` than the held list refetches the list past the browser cache.
   - **The badge.** The Home tile always shows the count. The launcher badge shows it only when the
     channel's `announce_updates` is on, and only while there are no unread messages. Messages keep the
     badge, and the update count has its own accessible label ("N updates").

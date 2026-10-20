@@ -1,5 +1,5 @@
 import type { MessageDescriptor } from "@lingui/core"
-import { msg } from "@lingui/core/macro"
+import { msg, plural } from "@lingui/core/macro"
 import type { ClientConversation, ClientInbox } from "../client/api"
 import type { AppKind, AppParams } from "../types"
 import { el, searchField, textButton } from "./helpers"
@@ -150,7 +150,7 @@ export function buildHome(data: HomeData): HTMLElement {
           top.insertAdjacentHTML("beforeend", tile.icon)
           const count = tile.count
           const badge = el("span", "tile-count", count > 9 ? "9+" : String(count))
-          badge.setAttribute("aria-label", t(msg`${count} updates`))
+          badge.setAttribute("aria-label", t(msg`${plural(count, { one: "# update", other: "# updates" })}`))
           top.append(badge)
           button.append(top)
         } else button.insertAdjacentHTML("beforeend", tile.icon)

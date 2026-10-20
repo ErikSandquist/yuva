@@ -7,13 +7,13 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: id\n"
 
+#: src/panel/home.ts
+msgid "{count, plural, one {# update} other {# updates}}"
+msgstr "{count} pembaruan"
+
 #: src/panel/chat.ts
 msgid "{count} new"
 msgstr "{count} baru"
-
-#: src/panel/home.ts
-msgid "{count} updates"
-msgstr "{count} pembaruan"
 
 #: src/panel/chat.ts
 msgid "{name} is typing…"

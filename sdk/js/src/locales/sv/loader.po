@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "Öppna chatten"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "Öppna chatten, {count} olästa"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "Öppna chatten, {count, plural, one {# uppdatering} other {# uppdateringar}}"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "Öppna chatten, {count} uppdateringar"
+msgid "Open chat, {count} unread"
+msgstr "Öppna chatten, {count} olästa"

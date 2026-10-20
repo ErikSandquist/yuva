@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "פתיחת הצ׳אט"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "פתיחת הצ׳אט, {count} שלא נקראו"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "פתיחת הצ'אט, {count, plural, one {עדכון אחד} two {שני עדכונים} other {# עדכונים}}"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "פתיחת הצ'אט, {count} עדכונים"
+msgid "Open chat, {count} unread"
+msgstr "פתיחת הצ׳אט, {count} שלא נקראו"

@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "チャットを開く"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "チャットを開く(未読{count}件)"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "チャットを開く、{count}件の更新"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "チャットを開く、{count}件の更新"
+msgid "Open chat, {count} unread"
+msgstr "チャットを開く(未読{count}件)"

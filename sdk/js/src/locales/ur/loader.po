@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "چیٹ کھولیں"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "چیٹ کھولیں، {count} ان پڑھے"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "چیٹ کھولیں، {count, plural, one {# اپ ڈیٹ} other {# اپ ڈیٹس}}"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "چیٹ کھولیں، {count} اپ ڈیٹس"
+msgid "Open chat, {count} unread"
+msgstr "چیٹ کھولیں، {count} ان پڑھے"

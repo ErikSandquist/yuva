@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "Obre el xat"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "Obre el xat, {count} sense llegir"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "Obre el xat, {count, plural, one {# novetat} other {# novetats}}"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "Obre el xat, {count} novetats"
+msgid "Open chat, {count} unread"
+msgstr "Obre el xat, {count} sense llegir"

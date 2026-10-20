@@ -1,5 +1,5 @@
 import type { Messages } from "@lingui/core"
-import { msg } from "@lingui/core/macro"
+import { msg, plural } from "@lingui/core/macro"
 import { catalogFor, directionOf, resolveLocale, translatePlain } from "./i18n"
 import type { components } from "./schema.gen"
 import { addStyles } from "./styles"
@@ -421,7 +421,12 @@ export class YuvaChatElement extends HTMLElement {
         : unread > 0
           ? translatePlain(this.#messages, msg`Open chat, ${count} unread`)
           : count > 0
-            ? translatePlain(this.#messages, msg`Open chat, ${count} updates`)
+            ? translatePlain(
+                this.#messages,
+                msg`Open chat, ${plural(count, { one: "# update", other: "# updates" })}`,
+                undefined,
+                this.locale
+              )
             : translatePlain(this.#messages, msg`Open chat`)
     )
     launcher.innerHTML = this.#open ? closeIcon : chatIcon

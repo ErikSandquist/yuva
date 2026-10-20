@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "Buka sembang"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "Buka sembang, {count} belum dibaca"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "Buka sembang, {count} kemas kini"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "Buka sembang, {count} kemas kini"
+msgid "Open chat, {count} unread"
+msgstr "Buka sembang, {count} belum dibaca"

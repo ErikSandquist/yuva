@@ -16,9 +16,9 @@ msgid "Open chat"
 msgstr "Csevegés megnyitása"
 
 #: src/element.ts
-msgid "Open chat, {count} unread"
-msgstr "Csevegés megnyitása, olvasatlan: {count}"
+msgid "Open chat, {count, plural, one {# update} other {# updates}}"
+msgstr "Csevegés megnyitása, {count} újdonság"
 
 #: src/element.ts
-msgid "Open chat, {count} updates"
-msgstr "Csevegés megnyitása, {count} újdonság"
+msgid "Open chat, {count} unread"
+msgstr "Csevegés megnyitása, olvasatlan: {count}"
