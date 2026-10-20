@@ -14,6 +14,7 @@ your own code. The walkthroughs are the [Headless guide](../docs/headless.md) an
 | [nitro](nitro) | A Nitro app with `useyuva/nitro`: a chat for a demo user signed in through `/_yuva/identity`, a webhook receiver and a server-side analytics event | Node 22+, Nitro 3 |
 | [fumadocs](fumadocs) | A Fumadocs site (from `create-fumadocs-app`) with `YuvaPageFeedback` and `YuvaDiscussions` on every docs page | Node 20.9+, Next.js 16, Fumadocs 16 |
 | [shadcn-next](shadcn-next) | A Next.js app on shadcn/ui with the `yuva-discussions` and `yuva-page-feedback` components installed from Yuva's shadcn registry | Node 20.9+, Next.js 16, shadcn 4 |
+| [shadcn-vite](shadcn-vite) | A Vite app on shadcn/ui with the `yuva-chat` and `yuva-discussions` blocks installed from Yuva's shadcn registry, themed with Yuva's lined look | Bun, Vite 7, React 19, Tailwind 4, shadcn 4 |
 
 The JS examples point at the SDK in this repository (`file:../../sdk/js`); build it once with
 `bun install && bun run build` in `sdk/js`. In your own project, depend on `useyuva` from npm
@@ -138,3 +139,21 @@ npm run dev                  # http://localhost:3103/docs/getting-started
 
 As in the Fumadocs example, `turbopack.root` in `next.config.ts` is there only because `useyuva` is
 linked from `sdk/js`.
+
+## shadcn-vite
+
+A Vite, React and Tailwind v4 project with a `components.json` and the `@` alias, then
+`bunx shadcn add <site>/r/yuva-chat.json <site>/r/yuva-discussions.json`. Everything that command wrote
+is committed (`src/components/`, `src/hooks/`, `src/lib/`). The look is only the shadcn CSS variables
+in `src/index.css` (Yuva's lined theme, light and dark, Geist from Fontsource) and the frame around
+each section; the registry items are untouched. Needs a chat channel with `http://localhost:3104` among
+its allowed origins.
+
+```sh
+cd examples/shadcn-vite
+bun install
+cp .env.example .env.local   # set VITE_YUVA_SERVER and VITE_YUVA_CHANNEL
+bun run dev                  # http://localhost:3104
+```
+
+`bun run build` type-checks and builds; `bun run preview` serves the build.

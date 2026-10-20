@@ -26,7 +26,7 @@ Keep this table current when a command changes.
 | `web/` | yuva-panel | in `web/`: `npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build` |
 | `edge/` | yuva-edge | in `edge/`: `bun run check` (oxfmt check, oxlint, tsc, tests) |
 | `sdk/js` | yuva-widget | in `sdk/js/`: `bun run check && bun run build` (`check` runs oxfmt check, oxlint, Lingui compile, tsc and tests; `build` reports the gzip size) |
-| `sdk/shadcn` | yuva-widget | in `sdk/shadcn/`: `bun run check` (oxfmt, oxlint, `shadcn build`); the site serves the registry at `/r/*.json` from it; `examples/shadcn-next`: `npx next build` |
+| `sdk/shadcn` | yuva-widget | in `sdk/shadcn/`: `bun run check` (oxfmt, oxlint, `shadcn build`); the site serves the registry at `/r/*.json` from it; `examples/shadcn-next`: `npx next build`; `examples/shadcn-vite`: `bun install && bun run build` (type-checks, then builds) |
 | `sdk/swift` | yuva-mobile | on the Mac, at the root: `swift build && swift test`; in `sdk/swift/Example/`: `xcodebuild -project YuvaExample.xcodeproj -scheme YuvaExample -destination "generic/platform=iOS Simulator" build` |
 | `sdk/kotlin` | yuva-mobile | in `sdk/kotlin/` on the Mac (JDK 21 as `JAVA_HOME`, `ANDROID_HOME` set), never on a machine without swap: `./gradlew check :sample:assembleDebug` |
 | `docs/`, site | yuva-docs | links resolve; every documented endpoint exists in `openapi/` |
