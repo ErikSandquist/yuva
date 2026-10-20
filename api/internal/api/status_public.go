@@ -550,13 +550,18 @@ type atomText struct {
 	Body string `xml:",chardata"`
 }
 
+type atomCategory struct {
+	Term string `xml:"term,attr"`
+}
+
 type atomEntry struct {
-	ID        string   `xml:"id"`
-	Title     string   `xml:"title"`
-	Updated   string   `xml:"updated"`
-	Published string   `xml:"published"`
-	Link      atomLink `xml:"link"`
-	Content   atomText `xml:"content"`
+	ID         string         `xml:"id"`
+	Title      string         `xml:"title"`
+	Updated    string         `xml:"updated"`
+	Published  string         `xml:"published"`
+	Link       atomLink       `xml:"link"`
+	Categories []atomCategory `xml:"category"`
+	Content    atomText       `xml:"content"`
 }
 
 type atomFeed struct {
@@ -592,6 +597,10 @@ func (s *Server) statusFeed(snap *statusSnap) ([]byte, error) {
 			Updated: inc.UpdatedAt.UTC().Format(time.RFC3339), Published: inc.PublishedAt.UTC().Format(time.RFC3339),
 			Link: atomLink{Href: url}, Content: atomText{Type: "html", Body: content.String()}})
 	}
+	return marshalAtom(feed)
+}
+
+func marshalAtom(feed atomFeed) ([]byte, error) {
 	out, err := xml.MarshalIndent(feed, "", "  ")
 	if err != nil {
 		return nil, err

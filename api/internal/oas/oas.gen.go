@@ -6116,6 +6116,24 @@ func (e ListChangelogEntriesParamsState) Valid() bool {
 	}
 }
 
+// Defines values for PreviewChangelogParamsView.
+const (
+	PreviewChangelogParamsViewEntry PreviewChangelogParamsView = "entry"
+	PreviewChangelogParamsViewHome  PreviewChangelogParamsView = "home"
+)
+
+// Valid indicates whether the value is a known member of the PreviewChangelogParamsView enum.
+func (e PreviewChangelogParamsView) Valid() bool {
+	switch e {
+	case PreviewChangelogParamsViewEntry:
+		return true
+	case PreviewChangelogParamsViewHome:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -20183,6 +20201,22 @@ type UploadChangelogImageParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// PreviewChangelogParams defines parameters for PreviewChangelog.
+type PreviewChangelogParams struct {
+	View *PreviewChangelogParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The entry, for `view=entry`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Draft  *bool        `form:"draft,omitempty" json:"draft,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewChangelogParamsView defines parameters for PreviewChangelog.
+type PreviewChangelogParamsView string
+
 // DeleteChannelParams defines parameters for DeleteChannel.
 type DeleteChannelParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -27411,6 +27445,9 @@ type ServerInterface interface {
 	// UploadChangelogImage Upload an image for entries
 	// (POST /v1/changelogs/{changelogId}/images)
 	UploadChangelogImage(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params UploadChangelogImageParams)
+	// PreviewChangelog Preview a What's new page
+	// (GET /v1/changelogs/{changelogId}/preview)
+	PreviewChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params PreviewChangelogParams)
 	// DeleteChannel Remove a channel
 	// (DELETE /v1/channels/{channelId})
 	DeleteChannel(w http.ResponseWriter, r *http.Request, channelId ChannelId, params DeleteChannelParams)
@@ -35625,6 +35662,108 @@ func (siw *ServerInterfaceWrapper) UploadChangelogImage(w http.ResponseWriter, r
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.UploadChangelogImage(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PreviewChangelog operation middleware
+func (siw *ServerInterfaceWrapper) PreviewChangelog(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PreviewChangelogParams
+
+	// ------------- Optional query parameter "view" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "view", r.URL.Query(), &params.View, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "view"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "view", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "id", r.URL.Query(), &params.Id, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "draft" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "draft", r.URL.Query(), &params.Draft, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "draft"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "draft", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewChangelog(w, r, changelogId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -52333,6 +52472,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.DeleteChangelog)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.GetChangelog)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.UpdateChangelog)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}/preview", wrapper.PreviewChangelog)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries", wrapper.ListChangelogEntries)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries", wrapper.CreateChangelogEntry)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}", wrapper.DeleteChangelogEntry)
@@ -67064,6 +67204,107 @@ func (response UploadChangelogImage422ApplicationProblemPlusJSONResponse) VisitU
 type UploadChangelogImage429ApplicationProblemPlusJSONResponse Problem
 
 func (response UploadChangelogImage429ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewChangelogRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      PreviewChangelogParams
+}
+
+type PreviewChangelogResponseObject interface {
+	VisitPreviewChangelogResponse(w http.ResponseWriter) error
+}
+
+type PreviewChangelog200TexthtmlResponse struct {
+	Body          io.Reader
+	ContentLength int64
+}
+
+func (response PreviewChangelog200TexthtmlResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/html")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type PreviewChangelog400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PreviewChangelog400ApplicationProblemPlusJSONResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewChangelog401ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewChangelog401ApplicationProblemPlusJSONResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewChangelog403ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewChangelog403ApplicationProblemPlusJSONResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewChangelog404ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewChangelog404ApplicationProblemPlusJSONResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PreviewChangelog429ApplicationProblemPlusJSONResponse Problem
+
+func (response PreviewChangelog429ApplicationProblemPlusJSONResponse) VisitPreviewChangelogResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -88617,6 +88858,9 @@ type StrictServerInterface interface {
 	// UploadChangelogImage Upload an image for entries
 	// (POST /v1/changelogs/{changelogId}/images)
 	UploadChangelogImage(ctx context.Context, request UploadChangelogImageRequestObject) (UploadChangelogImageResponseObject, error)
+	// PreviewChangelog Preview a What's new page
+	// (GET /v1/changelogs/{changelogId}/preview)
+	PreviewChangelog(ctx context.Context, request PreviewChangelogRequestObject) (PreviewChangelogResponseObject, error)
 	// DeleteChannel Remove a channel
 	// (DELETE /v1/channels/{channelId})
 	DeleteChannel(ctx context.Context, request DeleteChannelRequestObject) (DeleteChannelResponseObject, error)
@@ -93910,6 +94154,33 @@ func (sh *strictHandler) UploadChangelogImage(w http.ResponseWriter, r *http.Req
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UploadChangelogImageResponseObject); ok {
 		if err := validResponse.VisitUploadChangelogImageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PreviewChangelog operation middleware
+func (sh *strictHandler) PreviewChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params PreviewChangelogParams) {
+	var request PreviewChangelogRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PreviewChangelog(ctx, request.(PreviewChangelogRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PreviewChangelog")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PreviewChangelogResponseObject); ok {
+		if err := validResponse.VisitPreviewChangelogResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

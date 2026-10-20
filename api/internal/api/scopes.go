@@ -335,6 +335,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"GetChangelog":                    {oas.ChangelogRead},
 	"ListChangelogEntries":            {oas.ChangelogRead},
 	"GetChangelogEntry":               {oas.ChangelogRead},
+	"PreviewChangelog":                {oas.ChangelogRead},
 	"CreateChangelogEntry":            {oas.ChangelogWrite},
 	"UpdateChangelogEntry":            {oas.ChangelogWrite},
 	"DeleteChangelogEntry":            {oas.ChangelogWrite},

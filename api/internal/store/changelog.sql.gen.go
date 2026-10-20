@@ -495,6 +495,64 @@ func (q *Queries) FailChangelogSchedule(ctx context.Context, arg FailChangelogSc
 	return i, err
 }
 
+const findChangelogByFormerSlug = `-- name: FindChangelogByFormerSlug :one
+SELECT c.id, c.workspace_id, c.inbox_id, c.name, c.description, c.slug, c.default_locale, c.locales, c.analytics_property_id, c.agents_may_publish, c.published, c.next_entry_number, c.changed_at, c.created_at, c.updated_at FROM changelog_slugs f
+JOIN changelogs c ON c.workspace_id = f.workspace_id AND c.id = f.changelog_id
+WHERE f.slug = $1
+`
+
+// The documented exception, as FindChangelogBySlug, for a slug the changelog no longer uses.
+func (q *Queries) FindChangelogByFormerSlug(ctx context.Context, slug string) (Changelog, error) {
+	row := q.db.QueryRow(ctx, findChangelogByFormerSlug, slug)
+	var i Changelog
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.DefaultLocale,
+		&i.Locales,
+		&i.AnalyticsPropertyID,
+		&i.AgentsMayPublish,
+		&i.Published,
+		&i.NextEntryNumber,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const findChangelogBySlug = `-- name: FindChangelogBySlug :one
+SELECT id, workspace_id, inbox_id, name, description, slug, default_locale, locales, analytics_property_id, agents_may_publish, published, next_entry_number, changed_at, created_at, updated_at FROM changelogs WHERE slug = $1
+`
+
+// The documented exception: a public URL names only the slug, which is unique across the server.
+func (q *Queries) FindChangelogBySlug(ctx context.Context, slug string) (Changelog, error) {
+	row := q.db.QueryRow(ctx, findChangelogBySlug, slug)
+	var i Changelog
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.DefaultLocale,
+		&i.Locales,
+		&i.AnalyticsPropertyID,
+		&i.AgentsMayPublish,
+		&i.Published,
+		&i.NextEntryNumber,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getChangelog = `-- name: GetChangelog :one
 SELECT id, workspace_id, inbox_id, name, description, slug, default_locale, locales, analytics_property_id, agents_may_publish, published, next_entry_number, changed_at, created_at, updated_at FROM changelogs WHERE workspace_id = $1 AND id = $2
 `
@@ -730,6 +788,64 @@ func (q *Queries) GetPublicChangelogEntry(ctx context.Context, arg GetPublicChan
 	return i, err
 }
 
+const getPublicChangelogEntryByNumber = `-- name: GetPublicChangelogEntryByNumber :one
+SELECT e.id, e.number, e.labels, e.published_at::timestamptz AS published_at,
+    t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt, t.published_html::text AS html,
+    t.published_at::timestamptz AS translation_published_at,
+    i.token AS image_token, i.width AS image_width, i.height AS image_height
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.locale = $1 AND t.published_at IS NOT NULL
+LEFT JOIN email_images i ON i.workspace_id = e.workspace_id AND i.id = e.image_id
+WHERE e.workspace_id = $2 AND e.changelog_id = $3 AND e.number = $4 AND e.state = 'published'
+`
+
+type GetPublicChangelogEntryByNumberParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	ChangelogID uuid.UUID
+	Number      int32
+}
+
+type GetPublicChangelogEntryByNumberRow struct {
+	ID                     uuid.UUID
+	Number                 int32
+	Labels                 []string
+	PublishedAt            time.Time
+	Title                  string
+	Slug                   string
+	Excerpt                string
+	Html                   string
+	TranslationPublishedAt time.Time
+	ImageToken             *string
+	ImageWidth             *int32
+	ImageHeight            *int32
+}
+
+func (q *Queries) GetPublicChangelogEntryByNumber(ctx context.Context, arg GetPublicChangelogEntryByNumberParams) (GetPublicChangelogEntryByNumberRow, error) {
+	row := q.db.QueryRow(ctx, getPublicChangelogEntryByNumber,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.ChangelogID,
+		arg.Number,
+	)
+	var i GetPublicChangelogEntryByNumberRow
+	err := row.Scan(
+		&i.ID,
+		&i.Number,
+		&i.Labels,
+		&i.PublishedAt,
+		&i.Title,
+		&i.Slug,
+		&i.Excerpt,
+		&i.Html,
+		&i.TranslationPublishedAt,
+		&i.ImageToken,
+		&i.ImageWidth,
+		&i.ImageHeight,
+	)
+	return i, err
+}
+
 const latestChangelogPublishedAt = `-- name: LatestChangelogPublishedAt :one
 SELECT e.published_at::timestamptz AS latest FROM changelog_entries e
 WHERE e.workspace_id = $1 AND e.changelog_id = $2 AND e.state = 'published'
@@ -862,6 +978,51 @@ func (q *Queries) ListChangelogEntriesUsingImage(ctx context.Context, arg ListCh
 			&i.ChangelogID,
 			&i.Number,
 			&i.Title,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listChangelogSitemapEntries = `-- name: ListChangelogSitemapEntries :many
+SELECT e.number, t.locale, t.published_slug::text AS slug, t.published_at::timestamptz AS published_at
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.published_at IS NOT NULL
+WHERE e.workspace_id = $1 AND e.changelog_id = $2 AND e.state = 'published'
+ORDER BY e.number, t.locale
+`
+
+type ListChangelogSitemapEntriesParams struct {
+	WorkspaceID uuid.UUID
+	ChangelogID uuid.UUID
+}
+
+type ListChangelogSitemapEntriesRow struct {
+	Number      int32
+	Locale      string
+	Slug        string
+	PublishedAt time.Time
+}
+
+func (q *Queries) ListChangelogSitemapEntries(ctx context.Context, arg ListChangelogSitemapEntriesParams) ([]ListChangelogSitemapEntriesRow, error) {
+	rows, err := q.db.Query(ctx, listChangelogSitemapEntries, arg.WorkspaceID, arg.ChangelogID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListChangelogSitemapEntriesRow
+	for rows.Next() {
+		var i ListChangelogSitemapEntriesRow
+		if err := rows.Scan(
+			&i.Number,
+			&i.Locale,
+			&i.Slug,
+			&i.PublishedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1109,6 +1270,156 @@ func (q *Queries) ListPublicChangelogEntries(ctx context.Context, arg ListPublic
 			&i.Slug,
 			&i.Excerpt,
 			&i.Html,
+			&i.ImageToken,
+			&i.ImageWidth,
+			&i.ImageHeight,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicChangelogEntryLocales = `-- name: ListPublicChangelogEntryLocales :many
+SELECT t.locale, t.published_slug::text AS slug FROM changelog_entry_translations t
+JOIN changelog_entries e ON e.workspace_id = t.workspace_id AND e.id = t.entry_id
+WHERE t.workspace_id = $1 AND e.id = $2 AND e.state = 'published' AND t.published_at IS NOT NULL
+ORDER BY t.locale
+`
+
+type ListPublicChangelogEntryLocalesParams struct {
+	WorkspaceID uuid.UUID
+	EntryID     uuid.UUID
+}
+
+type ListPublicChangelogEntryLocalesRow struct {
+	Locale string
+	Slug   string
+}
+
+func (q *Queries) ListPublicChangelogEntryLocales(ctx context.Context, arg ListPublicChangelogEntryLocalesParams) ([]ListPublicChangelogEntryLocalesRow, error) {
+	rows, err := q.db.Query(ctx, listPublicChangelogEntryLocales, arg.WorkspaceID, arg.EntryID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPublicChangelogEntryLocalesRow
+	for rows.Next() {
+		var i ListPublicChangelogEntryLocalesRow
+		if err := rows.Scan(&i.Locale, &i.Slug); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicChangelogLocales = `-- name: ListPublicChangelogLocales :many
+SELECT DISTINCT t.locale FROM changelog_entry_translations t
+JOIN changelog_entries e ON e.workspace_id = t.workspace_id AND e.id = t.entry_id
+WHERE t.workspace_id = $1 AND e.changelog_id = $2 AND e.state = 'published' AND t.published_at IS NOT NULL
+ORDER BY t.locale
+`
+
+type ListPublicChangelogLocalesParams struct {
+	WorkspaceID uuid.UUID
+	ChangelogID uuid.UUID
+}
+
+func (q *Queries) ListPublicChangelogLocales(ctx context.Context, arg ListPublicChangelogLocalesParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, listPublicChangelogLocales, arg.WorkspaceID, arg.ChangelogID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var locale string
+		if err := rows.Scan(&locale); err != nil {
+			return nil, err
+		}
+		items = append(items, locale)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicChangelogPage = `-- name: ListPublicChangelogPage :many
+SELECT e.id, e.number, e.labels, e.published_at::timestamptz AS published_at,
+    t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt, t.published_html::text AS html,
+    t.published_at::timestamptz AS translation_published_at,
+    i.token AS image_token, i.width AS image_width, i.height AS image_height
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.locale = $1 AND t.published_at IS NOT NULL
+LEFT JOIN email_images i ON i.workspace_id = e.workspace_id AND i.id = e.image_id
+WHERE e.workspace_id = $2 AND e.changelog_id = $3 AND e.state = 'published'
+  AND ($4::text IS NULL OR $4::text = ANY (e.labels))
+  AND ($5::timestamptz IS NULL OR (e.published_at, e.id) < ($5::timestamptz, $6::uuid))
+ORDER BY e.published_at DESC, e.id DESC
+LIMIT $7
+`
+
+type ListPublicChangelogPageParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	ChangelogID uuid.UUID
+	Label       *string
+	CursorAt    *time.Time
+	CursorID    *uuid.UUID
+	Lim         int32
+}
+
+type ListPublicChangelogPageRow struct {
+	ID                     uuid.UUID
+	Number                 int32
+	Labels                 []string
+	PublishedAt            time.Time
+	Title                  string
+	Slug                   string
+	Excerpt                string
+	Html                   string
+	TranslationPublishedAt time.Time
+	ImageToken             *string
+	ImageWidth             *int32
+	ImageHeight            *int32
+}
+
+func (q *Queries) ListPublicChangelogPage(ctx context.Context, arg ListPublicChangelogPageParams) ([]ListPublicChangelogPageRow, error) {
+	rows, err := q.db.Query(ctx, listPublicChangelogPage,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.ChangelogID,
+		arg.Label,
+		arg.CursorAt,
+		arg.CursorID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPublicChangelogPageRow
+	for rows.Next() {
+		var i ListPublicChangelogPageRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.Labels,
+			&i.PublishedAt,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
+			&i.Html,
+			&i.TranslationPublishedAt,
 			&i.ImageToken,
 			&i.ImageWidth,
 			&i.ImageHeight,

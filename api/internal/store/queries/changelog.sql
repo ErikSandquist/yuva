@@ -267,3 +267,56 @@ WHERE e.workspace_id = @workspace_id AND (
         WHERE t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.image_ids @> ARRAY[@image_id::uuid]))
 ORDER BY e.number
 LIMIT 20;
+
+-- name: FindChangelogBySlug :one
+-- The documented exception: a public URL names only the slug, which is unique across the server.
+SELECT * FROM changelogs WHERE slug = @slug;
+
+-- name: FindChangelogByFormerSlug :one
+-- The documented exception, as FindChangelogBySlug, for a slug the changelog no longer uses.
+SELECT c.* FROM changelog_slugs f
+JOIN changelogs c ON c.workspace_id = f.workspace_id AND c.id = f.changelog_id
+WHERE f.slug = @slug;
+
+-- name: ListPublicChangelogPage :many
+SELECT e.id, e.number, e.labels, e.published_at::timestamptz AS published_at,
+    t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt, t.published_html::text AS html,
+    t.published_at::timestamptz AS translation_published_at,
+    i.token AS image_token, i.width AS image_width, i.height AS image_height
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.locale = @locale AND t.published_at IS NOT NULL
+LEFT JOIN email_images i ON i.workspace_id = e.workspace_id AND i.id = e.image_id
+WHERE e.workspace_id = @workspace_id AND e.changelog_id = @changelog_id AND e.state = 'published'
+  AND (sqlc.narg(label)::text IS NULL OR sqlc.narg(label)::text = ANY (e.labels))
+  AND (sqlc.narg(cursor_at)::timestamptz IS NULL OR (e.published_at, e.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
+ORDER BY e.published_at DESC, e.id DESC
+LIMIT @lim;
+
+-- name: GetPublicChangelogEntryByNumber :one
+SELECT e.id, e.number, e.labels, e.published_at::timestamptz AS published_at,
+    t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt, t.published_html::text AS html,
+    t.published_at::timestamptz AS translation_published_at,
+    i.token AS image_token, i.width AS image_width, i.height AS image_height
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.locale = @locale AND t.published_at IS NOT NULL
+LEFT JOIN email_images i ON i.workspace_id = e.workspace_id AND i.id = e.image_id
+WHERE e.workspace_id = @workspace_id AND e.changelog_id = @changelog_id AND e.number = @number AND e.state = 'published';
+
+-- name: ListPublicChangelogEntryLocales :many
+SELECT t.locale, t.published_slug::text AS slug FROM changelog_entry_translations t
+JOIN changelog_entries e ON e.workspace_id = t.workspace_id AND e.id = t.entry_id
+WHERE t.workspace_id = @workspace_id AND e.id = @entry_id AND e.state = 'published' AND t.published_at IS NOT NULL
+ORDER BY t.locale;
+
+-- name: ListPublicChangelogLocales :many
+SELECT DISTINCT t.locale FROM changelog_entry_translations t
+JOIN changelog_entries e ON e.workspace_id = t.workspace_id AND e.id = t.entry_id
+WHERE t.workspace_id = @workspace_id AND e.changelog_id = @changelog_id AND e.state = 'published' AND t.published_at IS NOT NULL
+ORDER BY t.locale;
+
+-- name: ListChangelogSitemapEntries :many
+SELECT e.number, t.locale, t.published_slug::text AS slug, t.published_at::timestamptz AS published_at
+FROM changelog_entries e
+JOIN changelog_entry_translations t ON t.workspace_id = e.workspace_id AND t.entry_id = e.id AND t.published_at IS NOT NULL
+WHERE e.workspace_id = @workspace_id AND e.changelog_id = @changelog_id AND e.state = 'published'
+ORDER BY e.number, t.locale;

@@ -11556,6 +11556,60 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/preview:
+    get:
+      operationId: previewChangelog
+      summary: Preview a What's new page
+      description: |
+        A page of the changelog as visitors see it, also while the changelog or the entry is
+        unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+        (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+        of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+        default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+        the public URLs. 60 renders a minute per caller.
+
+        Scope: `changelog:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - name: view
+          in: query
+          schema:
+            type: string
+            enum: [home, entry]
+            default: home
+        - name: id
+          in: query
+          description: The entry, for `view=entry`.
+          schema:
+            type: string
+            format: uuid
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+        - name: draft
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: The rendered page.
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /v1/changelogs/{changelogId}/entries:
     get:
       operationId: listChangelogEntries

@@ -730,4 +730,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpRoadmapTools, mcpInitTools)...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpRoadmapTools, mcpChangelogTools, mcpInitTools)...)

@@ -65,6 +65,12 @@ func addMCPResources(srv *mcp.Server, c *mcpCall) {
 			Description: "A help center with its collections and the titles of its articles per language; updated when an article is published, unpublished or deleted or a draft is saved.",
 		}, c.readResource)
 	}
+	if mayReadChangelogResource(c.p) {
+		srv.AddResourceTemplate(&mcp.ResourceTemplate{
+			Name: "changelog", Title: "What's new changelog", URITemplate: mcpChangelogPrefix + "{id}", MIMEType: mcpJSON,
+			Description: "A What's new changelog with its newest entries, their states and a title per language; updated when an entry is published, unpublished or deleted or a draft is saved.",
+		}, c.readResource)
+	}
 	if mayReadRoadmapResource(c.p) {
 		srv.AddResourceTemplate(&mcp.ResourceTemplate{
 			Name: "roadmap", Title: "Roadmap board", URITemplate: mcpRoadmapPrefix + "{id}", MIMEType: mcpJSON,
@@ -108,7 +114,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix, mcpHelpPrefix, mcpRoadmapPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix, mcpHelpPrefix, mcpRoadmapPrefix, mcpChangelogPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -165,6 +171,11 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, errInsufficientScope(oas.HelpRead)
 		}
 		return c.helpCenterResource(ctx, id)
+	case mcpChangelogPrefix:
+		if !mayReadChangelogResource(c.p) {
+			return nil, errInsufficientScope(oas.ChangelogRead)
+		}
+		return c.changelogResource(ctx, id)
 	case mcpRoadmapPrefix:
 		if !mayReadRoadmapResource(c.p) {
 			return nil, errInsufficientScope(oas.RoadmapRead)
@@ -336,6 +347,9 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 	}
 	if center, ok := helpEventCenter(e); ok {
 		uris = append(uris, mcpHelpPrefix+center.String())
+	}
+	if cl, ok := changelogEventChangelog(e); ok {
+		uris = append(uris, mcpChangelogPrefix+cl.String())
 	}
 	if board, ok := roadmapEventBoard(e); ok {
 		uris = append(uris, mcpRoadmapPrefix+board.String())

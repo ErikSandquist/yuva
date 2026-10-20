@@ -83,6 +83,7 @@ type Server struct {
 	roadmapCache      *publicCache
 	roadmap           RoadmapSettings
 	changelog         ChangelogSettings
+	changelogCache    *publicCache
 	helpCounts        *helpCounters
 	helpCache         *publicCache
 	canaries          canaryGuard
@@ -277,7 +278,7 @@ func New(d Deps) *Server {
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
 		status: d.Status, statusCache: newStatusCache(), statusDomainCache: newStatusDomainCache(), started: now(),
-		roadmap: d.Roadmap, changelog: d.Changelog, roadmapCache: newPublicCache(roadmapCacheTTL, roadmapCacheMax), help: d.Help, helpCounts: newHelpCounters(), helpCache: newPublicCache(helpPageCacheTTL, helpPageCacheMax),
+		roadmap: d.Roadmap, changelog: d.Changelog, changelogCache: newPublicCache(changelogCacheTTL, changelogCacheMax), roadmapCache: newPublicCache(roadmapCacheTTL, roadmapCacheMax), help: d.Help, helpCounts: newHelpCounters(), helpCache: newPublicCache(helpPageCacheTTL, helpPageCacheMax),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -378,6 +379,7 @@ func (s *Server) Handler() http.Handler {
 		s.routeHelp(mux)
 	}
 	s.routeRoadmap(mux)
+	s.routeChangelog(mux)
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)
 	mux.HandleFunc("GET "+heartbeatPathPrefix+"{token}", s.serveHeartbeat(false))

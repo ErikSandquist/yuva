@@ -6766,6 +6766,33 @@ export interface paths {
         patch: operations["updateChangelog"];
         trace?: never;
     };
+    "/v1/changelogs/{changelogId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview a What's new page
+         * @description A page of the changelog as visitors see it, also while the changelog or the entry is
+         *     unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+         *     (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+         *     of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+         *     default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+         *     the public URLs. 60 renders a minute per caller.
+         *
+         *     Scope: `changelog:read`.
+         */
+        get: operations["previewChangelog"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/changelogs/{changelogId}/entries": {
         parameters: {
             query?: never;
@@ -31262,6 +31289,42 @@ export interface operations {
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    previewChangelog: {
+        parameters: {
+            query?: {
+                view?: "home" | "entry";
+                /** @description The entry, for `view=entry`. */
+                id?: string;
+                locale?: components["schemas"]["LanguageTag"];
+                draft?: boolean;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rendered page. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
         };
     };

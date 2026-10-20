@@ -11,6 +11,8 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -742,5 +744,306 @@ func TestChangelogBroadcastNameFitsLongTitles(t *testing.T) {
 	b := ct.owner.expect(http.StatusCreated, "POST", ct.path("/entries/"+id+"/broadcast"), map[string]any{"locale": "en", "list_ids": []string{ct.list}})
 	if n := len([]rune(b.str("name"))); n > 200 || strings.Contains(b.str("name"), "{{") {
 		t.Fatalf("name: %d %q", n, b.str("name"))
+	}
+}
+
+func (c *client) fetch(path string, header map[string]string) response {
+	c.h.t.Helper()
+	req, err := http.NewRequest("GET", c.h.url+path, nil)
+	if err != nil {
+		c.h.t.Fatal(err)
+	}
+	req.Header.Set("X-Forwarded-For", c.ip)
+	for k, v := range header {
+		req.Header.Set(k, v)
+	}
+	hc := &http.Client{CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	res, err := hc.Do(req)
+	if err != nil {
+		c.h.t.Fatal(err)
+	}
+	defer res.Body.Close()
+	var sb strings.Builder
+	buf := make([]byte, 4096)
+	for {
+		n, err := res.Body.Read(buf)
+		sb.Write(buf[:n])
+		if err != nil {
+			break
+		}
+	}
+	return response{status: res.StatusCode, raw: []byte(sb.String()), header: res.Header}
+}
+
+func TestChangelogPublicPagesAndFeed(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ct := newChangelogTeam(t, h)
+	o := ct.owner
+	web := h.client()
+	base := "/changelog/" + ct.slug
+
+	pub := ct.entry(o, "en", "Faster search", "Results appear **as you type**.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n", "improved")
+	o.expect(http.StatusCreated, "PUT", ct.path("/entries/"+pub+"/translations/tr"), map[string]any{"base_version": 0, "title": "Daha hızlı arama", "body": "Sonuçlar **yazarken** çıkar."})
+	ct.publish(o, pub)
+	draft := ct.entry(o, "en", "Secret draft", "Hidden words.")
+	sched := ct.entry(o, "en", "Scheduled secret", "Later words.")
+	o.expect(http.StatusOK, "POST", ct.path("/entries/"+sched+"/schedule"), map[string]any{"publish_at": h.clock.Now().Add(time.Hour).Format(time.RFC3339)})
+	_ = draft
+
+	root := web.fetch(base, nil)
+	if root.status != http.StatusFound || !strings.HasSuffix(root.header.Get("Location"), base+"/en/") {
+		t.Fatalf("root: %d %v", root.status, root.header)
+	}
+	home := web.fetch(base+"/en/", nil)
+	body := string(home.raw)
+	if home.status != 200 || !strings.Contains(body, "Faster search") || !strings.Contains(body, "<strong>as you type</strong>") ||
+		!strings.Contains(body, `hreflang="tr"`) || !strings.Contains(body, `rel="canonical" href="http://localhost:8080`+base+`/en/"`) ||
+		!strings.Contains(body, "feed.atom") || strings.Contains(body, "Secret draft") || strings.Contains(body, "Scheduled secret") || strings.Contains(body, "Hidden words") {
+		t.Fatalf("home: %d %s", home.status, body)
+	}
+	if home.header.Get("Cache-Control") != "public, max-age=60, stale-while-revalidate=300, stale-if-error=86400" || home.header.Get("ETag") == "" ||
+		!strings.Contains(home.header.Get("Content-Security-Policy"), "frame-ancestors 'none'") {
+		t.Fatalf("headers: %v", home.header)
+	}
+	if again := web.fetch(base+"/en/", map[string]string{"If-None-Match": home.header.Get("ETag")}); again.status != http.StatusNotModified {
+		t.Fatalf("etag: %d", again.status)
+	}
+	if tr := web.fetch(base+"/tr/", nil); !strings.Contains(string(tr.raw), "Daha hızlı arama") || !strings.Contains(string(tr.raw), "Yenilikler") {
+		t.Fatalf("tr: %s", tr.raw)
+	}
+	if lab := web.fetch(base+"/en/?label=fixed", nil); strings.Contains(string(lab.raw), "Faster search") || lab.status != 200 {
+		t.Fatalf("label filter: %d", lab.status)
+	}
+
+	entry := web.fetch(base+"/en/entries/1-faster-search", nil)
+	eb := string(entry.raw)
+	if entry.status != 200 || !strings.Contains(eb, `"@type":"BlogPosting"`) || !strings.Contains(eb, `"@type":"BreadcrumbList"`) || !strings.Contains(eb, `hreflang="tr" href=`) {
+		t.Fatalf("entry: %d %s", entry.status, eb)
+	}
+	wrong := web.fetch(base+"/en/entries/1-old-slug", nil)
+	if wrong.status != http.StatusMovedPermanently || !strings.HasSuffix(wrong.header.Get("Location"), base+"/en/entries/1-faster-search") {
+		t.Fatalf("slug redirect: %d %v", wrong.status, wrong.header)
+	}
+	for _, p := range []string{"/en/entries/2-secret-draft", "/en/entries/3-scheduled-secret", "/en/entries/9-nothing", "/de/", "/en/nothing", "/tr/entries/2-secret-draft"} {
+		if r := web.fetch(base+p, nil); r.status != http.StatusNotFound || !strings.HasPrefix(r.header.Get("Content-Type"), "text/plain") {
+			t.Fatalf("%s: %d %s", p, r.status, r.raw)
+		}
+	}
+	if r := web.fetch("/changelog/no-such-slug/en/", nil); r.status != http.StatusNotFound {
+		t.Fatalf("unknown slug: %d", r.status)
+	}
+
+	feed := web.fetch(base+"/en/feed.atom", nil)
+	fb := string(feed.raw)
+	if feed.status != 200 || !strings.HasPrefix(feed.header.Get("Content-Type"), "application/atom+xml") || !strings.Contains(fb, `<category term="improved">`) ||
+		!strings.Contains(fb, `type="html"`) || !strings.Contains(fb, "&lt;strong&gt;as you type&lt;/strong&gt;") || strings.Contains(fb, "Secret") || strings.Contains(fb, "Scheduled") {
+		t.Fatalf("feed: %d %s", feed.status, fb)
+	}
+	if trFeed := web.fetch(base+"/tr/feed.atom", nil); !strings.Contains(string(trFeed.raw), "Daha hızlı arama") || strings.Contains(string(trFeed.raw), "Faster search") {
+		t.Fatalf("tr feed: %s", trFeed.raw)
+	}
+	site := web.fetch(base+"/sitemap.xml", nil)
+	if sb := string(site.raw); site.status != 200 || !strings.Contains(sb, "/en/entries/1-faster-search") || !strings.Contains(sb, `hreflang="tr"`) || strings.Contains(sb, "secret") {
+		t.Fatalf("sitemap: %d %s", site.status, sb)
+	}
+	if font := web.fetch(base+publicFontPathForTest(t, string(home.raw)), nil); font.status != 200 {
+		t.Fatalf("font: %d", font.status)
+	}
+
+	renamed := unique("renamed")
+	o.expect(http.StatusOK, "PATCH", ct.path(""), map[string]any{"slug": renamed})
+	moved := web.fetch(base+"/en/entries/1-faster-search?x=1", nil)
+	if moved.status != http.StatusMovedPermanently || !strings.Contains(moved.header.Get("Location"), "/changelog/"+renamed+"/en/entries/1-faster-search") {
+		t.Fatalf("former slug: %d %v", moved.status, moved.header)
+	}
+	o.expect(http.StatusOK, "PATCH", ct.path(""), map[string]any{"published": false})
+	for _, p := range []string{"/changelog/" + renamed + "/en/", "/changelog/" + renamed + "/en/feed.atom", "/changelog/" + renamed + "/en/entries/1-faster-search", base + "/en/"} {
+		if r := web.fetch(p, nil); r.status != http.StatusNotFound {
+			t.Fatalf("unpublished %s: %d", p, r.status)
+		}
+	}
+	o.expect(http.StatusOK, "PATCH", ct.path(""), map[string]any{"published": true})
+	ct.owner.expect(http.StatusOK, "POST", ct.path("/entries/"+pub+"/unpublish"), nil)
+	if r := web.fetch("/changelog/"+renamed+"/en/", nil); strings.Contains(string(r.raw), "Faster search") {
+		t.Fatalf("an unpublished entry is on the page")
+	}
+	if r := web.fetch("/changelog/"+renamed+"/en/feed.atom", nil); strings.Contains(string(r.raw), "Faster search") {
+		t.Fatalf("an unpublished entry is in the feed")
+	}
+}
+
+func publicFontPathForTest(t *testing.T, page string) string {
+	t.Helper()
+	i := strings.Index(page, "/fonts/Geist-Variable.")
+	if i < 0 {
+		t.Fatal("no font in page")
+	}
+	j := strings.Index(page[i:], ".woff2")
+	return page[i : i+j+len(".woff2")]
+}
+
+func TestChangelogPublicPagesAreLimitedAndOffByServer(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ct := newChangelogTeam(t, h)
+	web := h.client()
+	for range 120 {
+		web.fetch("/changelog/"+ct.slug+"/en/", nil)
+	}
+	if r := web.fetch("/changelog/"+ct.slug+"/en/", nil); r.status != http.StatusTooManyRequests || r.header.Get("Retry-After") == "" {
+		t.Fatalf("limit: %d %v", r.status, r.header)
+	}
+	off := newHarnessWith(t, func(d *api.Deps) { d.Changelog.Off = true })
+	if r := off.client().fetch("/changelog/x/en/", nil); r.status != http.StatusNotFound {
+		t.Fatalf("off: %d", r.status)
+	}
+}
+
+func TestChangelogPreview(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ct := newChangelogTeam(t, h)
+	o := ct.owner
+	o.expect(http.StatusOK, "PATCH", ct.path(""), map[string]any{"published": false})
+	id := ct.entry(o, "en", "Draft only", "Working **draft** text.")
+	prev := func(c *client, q string) response { return c.do("GET", ct.path("/preview"+q), nil) }
+	r := prev(o, "?draft=true")
+	if r.status != 200 || !strings.Contains(string(r.raw), "Working <strong>draft</strong> text.") || !strings.Contains(string(r.raw), `name="robots"`) ||
+		r.header.Get("Cache-Control") != "no-store" || !strings.Contains(r.header.Get("Content-Security-Policy"), "frame-ancestors 'self'") {
+		t.Fatalf("draft home: %d %s %v", r.status, r.raw, r.header)
+	}
+	if r := prev(o, ""); strings.Contains(string(r.raw), "Draft only") {
+		t.Fatalf("a draft shows without draft=true")
+	}
+	if r := prev(o, "?view=entry&draft=true&id="+id); r.status != 200 || !strings.Contains(string(r.raw), "Draft only") {
+		t.Fatalf("draft entry: %d %s", r.status, r.raw)
+	}
+	o.expectProblem(http.StatusNotFound, "not_found", "GET", ct.path("/preview?view=entry&id="+id), nil)
+	o.expectProblem(http.StatusBadRequest, "validation_failed", "GET", ct.path("/preview?view=entry"), nil)
+	o.expectProblem(http.StatusBadRequest, "locale_not_offered", "GET", ct.path("/preview?locale=de"), nil)
+	ct.publish(o, id)
+	if r := prev(o, "?view=entry&id="+id); r.status != 200 {
+		t.Fatalf("published entry of an unpublished changelog: %d", r.status)
+	}
+	stranger := newTeam(t, h)
+	stranger.owner.expectProblem(http.StatusNotFound, "not_found", "GET", ct.path("/preview"), nil)
+	reader := ct.apiKey("reader", map[string]any{"scopes": []string{"conversations:read"}})
+	reader.expectProblem(http.StatusForbidden, "insufficient_scope", "GET", ct.path("/preview"), nil)
+}
+
+func TestChangelogMCPDraftsAndNeverPublishes(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ct := newChangelogTeam(t, h)
+	o := ct.owner
+	tok := h.client()
+	tok.bearer = h.oauthTokenVia(o, ct.ws, "Claude Code", testOrigin+"/mcp", []string{"changelog:read", "changelog:write"}, "http://127.0.0.1:33418/callback", "http://127.0.0.1:33418/callback")
+	cs := h.mcpSession(tok.bearer)
+	names := toolNames(t, cs)
+	for _, want := range []string{"list_whats_new_entries", "get_whats_new_entry", "draft_whats_new_entry", "update_whats_new_draft"} {
+		if !slices.Contains(names, want) {
+			t.Fatalf("missing %s: %v", want, names)
+		}
+	}
+	for _, n := range names {
+		if strings.Contains(n, "publish") || strings.Contains(n, "schedule_whats") {
+			t.Fatalf("a tool could publish: %s", n)
+		}
+	}
+	if blind := toolNames(t, h.mcpSession(ct.apiKey("blind", map[string]any{"scopes": []string{"conversations:read"}}).bearer)); slices.ContainsFunc(blind, func(n string) bool { return strings.Contains(n, "whats_new") }) {
+		t.Fatalf("What's new tools without changelog scopes: %v", blind)
+	}
+
+	draft, msg := callTool(t, cs, "draft_whats_new_entry", map[string]any{"title": "Faster search", "body": "Results appear **as you type**.", "labels": []string{"improved"}})
+	if msg != "" || draft["state"] != "draft" || draft["locale"] != "en" || !strings.Contains(draft["note"].(string), "cannot publish") {
+		t.Fatalf("draft %v %s", draft, msg)
+	}
+	entry := draft["entry_id"].(string)
+	if _, msg := callTool(t, cs, "draft_whats_new_entry", map[string]any{"entry_id": entry, "locale": "tr", "title": "Daha hızlı arama", "body": "Sonuçlar yazarken çıkar."}); msg != "" {
+		t.Fatal(msg)
+	}
+	if _, msg := callTool(t, cs, "draft_whats_new_entry", map[string]any{"title": "No labels", "body": "x"}); msg == "" {
+		t.Fatal("an entry without labels was drafted")
+	}
+	upd, msg := callTool(t, cs, "update_whats_new_draft", map[string]any{"entry_id": entry, "locale": "en", "base_version": 1, "body": "New text.", "labels": []string{"fixed"}})
+	if msg != "" || upd["version"] != float64(2) {
+		t.Fatalf("update %v %s", upd, msg)
+	}
+	if _, msg := callTool(t, cs, "update_whats_new_draft", map[string]any{"entry_id": entry, "locale": "en", "base_version": 1, "body": "Stale."}); !strings.Contains(msg, "version_conflict") {
+		t.Fatalf("stale update: %q", msg)
+	}
+	got, msg := callTool(t, cs, "get_whats_new_entry", map[string]any{"entry_id": entry})
+	if msg != "" || got["labels"].([]any)[0] != "fixed" || len(got["translations"].([]any)) != 2 {
+		t.Fatalf("get %v %s", got, msg)
+	}
+	list, msg := callTool(t, cs, "list_whats_new_entries", map[string]any{"state": "draft"})
+	if msg != "" || len(list["items"].([]any)) != 1 {
+		t.Fatalf("list %v %s", list, msg)
+	}
+	res, err := cs.ReadResource(context.Background(), &mcp.ReadResourceParams{URI: "yuva://changelog/" + ct.changelog})
+	if err != nil || !strings.Contains(res.Contents[0].Text, "Daha hızlı arama") {
+		t.Fatalf("resource: %v %v", res, err)
+	}
+	pr, err := cs.GetPrompt(context.Background(), &mcp.GetPromptParams{Name: "draft_release_notes", Arguments: map[string]string{"notes": "fix: search lag"}})
+	if err != nil || !strings.Contains(pr.Messages[0].Content.(*mcp.TextContent).Text, "Do not try to publish") {
+		t.Fatalf("prompt: %v %v", pr, err)
+	}
+
+	rest := h.client()
+	rest.bearer = h.oauthToken(o, ct.ws, "Claude Code", testOrigin, []string{"changelog:read", "changelog:write"})
+	rest.expectProblem(http.StatusForbidden, "insufficient_scope", "POST", ct.path("/entries/"+entry+"/publish"), nil)
+	if e := ct.get(o, entry); e.str("state") != "draft" {
+		t.Fatalf("the token published: %s", e.raw)
+	}
+	o.expect(http.StatusOK, "PATCH", ct.path(""), map[string]any{"agents_may_publish": true})
+	rest.expectProblem(http.StatusForbidden, "insufficient_scope", "POST", ct.path("/entries/"+entry+"/schedule"), map[string]any{"publish_at": h.clock.Now().Add(time.Hour).Format(time.RFC3339)})
+
+	stranger := newTeam(t, h)
+	str := h.client()
+	str.bearer = h.oauthTokenVia(stranger.owner, stranger.ws, "Claude Code", testOrigin+"/mcp", []string{"changelog:read", "changelog:write"}, "http://127.0.0.1:33418/callback", "http://127.0.0.1:33418/callback")
+	scs := h.mcpSession(str.bearer)
+	if _, msg := callTool(t, scs, "get_whats_new_entry", map[string]any{"changelog_id": ct.changelog, "entry_id": entry}); msg == "" {
+		t.Fatal("another workspace read the entry")
+	}
+	if _, err := scs.ReadResource(context.Background(), &mcp.ReadResourceParams{URI: "yuva://changelog/" + ct.changelog}); err == nil {
+		t.Fatal("another workspace read the resource")
+	}
+}
+
+func TestChangelogMCPKeyCannotEditScheduledOrRelabelPublished(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ct := newChangelogTeam(t, h)
+	o := ct.owner
+	key := ct.apiKey("pipeline", map[string]any{"scopes": []string{"changelog:read", "changelog:write", "changelog:publish"}})
+	cs := h.mcpSession(key.bearer)
+	sched := ct.entry(o, "en", "Scheduled one", "Text.")
+	o.expect(http.StatusOK, "POST", ct.path("/entries/"+sched+"/schedule"), map[string]any{"publish_at": h.clock.Now().Add(time.Hour).Format(time.RFC3339)})
+	for _, args := range []map[string]any{
+		{"entry_id": sched, "locale": "en", "base_version": 1, "body": "Sneaky."},
+		{"entry_id": sched, "locale": "tr", "title": "Gizli", "body": "x"},
+	} {
+		tool := "update_whats_new_draft"
+		if args["base_version"] == nil {
+			tool = "draft_whats_new_entry"
+		}
+		if _, msg := callTool(t, cs, tool, args); !strings.Contains(msg, "entry_scheduled") {
+			t.Fatalf("%s on a scheduled entry: %q", tool, msg)
+		}
+	}
+	if e := ct.get(o, sched); e.body["translations"].([]any)[0].(map[string]any)["body"] != "Text." || len(e.body["translations"].([]any)) != 1 {
+		t.Fatalf("a scheduled entry changed: %s", e.raw)
+	}
+	pub := ct.entry(o, "en", "Published one", "Text.", "new")
+	ct.publish(o, pub)
+	if _, msg := callTool(t, cs, "update_whats_new_draft", map[string]any{"entry_id": pub, "locale": "en", "base_version": 1, "labels": []string{"fixed"}}); !strings.Contains(msg, "forbidden") {
+		t.Fatalf("relabelling a published entry: %q", msg)
+	}
+	if ct.get(o, pub).body["labels"].([]any)[0] != "new" {
+		t.Fatal("the labels changed")
+	}
+	if _, msg := callTool(t, cs, "update_whats_new_draft", map[string]any{"entry_id": pub, "locale": "en", "base_version": 1, "body": "Draft only."}); msg != "" {
+		t.Fatal(msg)
 	}
 }

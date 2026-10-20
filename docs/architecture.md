@@ -3107,6 +3107,24 @@ appear in help search. Writing, rendering and translating are M20's.
     (`used_by.changelog_entries`), as for help articles; the weekly cleanup keeps the same images.
   - **Client.** `ClientChangelog.latest_published_at` is absent for a changelog without entries. Client
     answers carry `Cache-Control: public, max-age=60`; there is no in-process cache for them.
+- **As built (step 3).** `/changelog/{slug}` uses the status page shell with its own word map
+  (`changelog_words.go`, en, tr, de, English fallback). A page shows only the entries that have a published
+  translation in the locale of its path; there is no fallback to the default locale on pages (the client API
+  has one). `/changelog/{slug}` answers `302` to `/{default_locale}/`; `?label=` filters and `?before=`
+  (a cursor) pages, 20 entries a page. Unpublished changelogs, drafts, scheduled entries, locales outside
+  `locales` and former slugs of unpublished changelogs answer the same plain `404`; former slugs of published
+  ones answer `301`. Pages, the feed and the sitemap share one cache per changelog keyed on `changed_at`,
+  5 minutes, with the `Cache-Control` and `ETag` of help pages, and 120 requests a minute per address. The
+  Atom writer is `marshalAtom` in `status_public.go`, shared with the status feed, whose entries gain
+  `category` elements only when they have labels. The pages do not send page views: no existing public page
+  does, so `analytics_property_id` is stored only. `previewChangelog` renders the home page or one entry for a
+  sandboxed frame with `noindex`; it shows published copies, or with `draft=true` the drafts of entries in any
+  state, and works while the changelog is unpublished.
+  - **MCP.** `list_whats_new_entries`, `get_whats_new_entry`, `draft_whats_new_entry`, `update_whats_new_draft`
+    (`changelog:read` and `changelog:write`), the resource `yuva://changelog/{id}` and the prompt
+    `draft_release_notes`. `changelog_id` may be left out when the caller sees one changelog. The tools call
+    the same handlers as the API, so a token cannot publish, schedule or change a scheduled entry
+    (`403 member_session_required`). Entry text is not wrapped in `customer_content`, as planned.
 - **Order of work.**
   M22 starts after M20's API step, whose renderer, translation and editor code it reuses. Changes to the
   contract, the migration and permissions go through `/code-review` before commit.

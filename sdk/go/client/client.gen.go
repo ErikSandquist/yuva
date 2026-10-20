@@ -6162,6 +6162,24 @@ func (e ListChangelogEntriesParamsState) Valid() bool {
 	}
 }
 
+// Defines values for PreviewChangelogParamsView.
+const (
+	PreviewChangelogParamsViewEntry PreviewChangelogParamsView = "entry"
+	PreviewChangelogParamsViewHome  PreviewChangelogParamsView = "home"
+)
+
+// Valid indicates whether the value is a known member of the PreviewChangelogParamsView enum.
+func (e PreviewChangelogParamsView) Valid() bool {
+	switch e {
+	case PreviewChangelogParamsViewEntry:
+		return true
+	case PreviewChangelogParamsViewHome:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -20252,6 +20270,22 @@ type UploadChangelogImageParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// PreviewChangelogParams defines parameters for PreviewChangelog.
+type PreviewChangelogParams struct {
+	View *PreviewChangelogParamsView `form:"view,omitempty" json:"view,omitempty"`
+
+	// Id The entry, for `view=entry`.
+	Id     *uuid.UUID   `form:"id,omitempty" json:"id,omitempty"`
+	Locale *LanguageTag `form:"locale,omitempty" json:"locale,omitempty"`
+	Draft  *bool        `form:"draft,omitempty" json:"draft,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PreviewChangelogParamsView defines parameters for PreviewChangelog.
+type PreviewChangelogParamsView string
+
 // DeleteChannelParams defines parameters for DeleteChannel.
 type DeleteChannelParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -30312,6 +30346,20 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
 	UploadChangelogImageWithBody(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewChangelog Preview a What's new page
+	//
+	// A page of the changelog as visitors see it, also while the changelog or the entry is
+	// unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+	// (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+	// of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+	// default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+	// the public URLs. 60 renders a minute per caller.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/preview (the `PreviewChangelog` operationId).
+	PreviewChangelog(ctx context.Context, changelogId ChangelogId, params *PreviewChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteChannel Remove a channel
 	//
@@ -40497,6 +40545,30 @@ func (c *Client) UnscheduleChangelogEntry(ctx context.Context, changelogId Chang
 // Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
 func (c *Client) UploadChangelogImageWithBody(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUploadChangelogImageRequestWithBody(c.Server, changelogId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PreviewChangelog Preview a What's new page
+//
+// A page of the changelog as visitors see it, also while the changelog or the entry is
+// unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+// (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+// of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+// default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+// the public URLs. 60 renders a minute per caller.
+//
+// Scope: `changelog:read`.
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/preview (the `PreviewChangelog` operationId).
+func (c *Client) PreviewChangelog(ctx context.Context, changelogId ChangelogId, params *PreviewChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewChangelogRequest(c.Server, changelogId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -57910,6 +57982,118 @@ func NewUploadChangelogImageRequestWithBody(server string, changelogId Changelog
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPreviewChangelogRequest constructs an http.Request for the PreviewChangelog method
+func NewPreviewChangelogRequest(server string, changelogId ChangelogId, params *PreviewChangelogParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.View != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "view", *params.View, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Id != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "id", *params.Id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Draft != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "draft", *params.Draft, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -78667,6 +78851,22 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
 	UploadChangelogImageWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadChangelogImageResponse, error)
 
+	// PreviewChangelogWithResponse Preview a What's new page
+	//
+	// A page of the changelog as visitors see it, also while the changelog or the entry is
+	// unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+	// (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+	// of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+	// default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+	// the public URLs. 60 renders a minute per caller.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/preview (the `PreviewChangelog` operationId).
+	PreviewChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *PreviewChangelogParams, reqEditors ...RequestEditorFn) (*PreviewChangelogResponse, error)
+
 	// DeleteChannelWithResponse Remove a channel
 	//
 	// Owners, admins and API keys. Conversations that started on it keep
@@ -94257,6 +94457,75 @@ func (r UploadChangelogImageResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UploadChangelogImageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PreviewChangelogResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PreviewChangelogResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PreviewChangelogResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PreviewChangelogResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r PreviewChangelogResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r PreviewChangelogResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewChangelogResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -116778,6 +117047,28 @@ func (c *ClientWithResponses) UploadChangelogImageWithBodyWithResponse(ctx conte
 	return ParseUploadChangelogImageResponse(rsp)
 }
 
+// PreviewChangelogWithResponse Preview a What's new page
+//
+// A page of the changelog as visitors see it, also while the changelog or the entry is
+// unpublished, for a sandboxed frame: the home page (`view=home`, newest entries) or one entry
+// (`view=entry&id=`). Entries show their published copy; with `draft=true` the working draft
+// of any entry in the locale, whatever its state. `locale` defaults to the changelog's
+// default locale. It is sent with `Cache-Control: no-store`, `noindex`, and its links point to
+// the public URLs. 60 renders a minute per caller.
+//
+// Scope: `changelog:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/preview (the `PreviewChangelog` operationId).
+func (c *ClientWithResponses) PreviewChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *PreviewChangelogParams, reqEditors ...RequestEditorFn) (*PreviewChangelogResponse, error) {
+	rsp, err := c.PreviewChangelog(ctx, changelogId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewChangelogResponse(rsp)
+}
+
 // DeleteChannelWithResponse Remove a channel
 //
 // Owners, admins and API keys. Conversations that started on it keep
@@ -132345,6 +132636,60 @@ func ParseUploadChangelogImageResponse(rsp *http.Response) (*UploadChangelogImag
 			return nil, err
 		}
 		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewChangelogResponse parses an HTTP response from a PreviewChangelogWithResponse call
+func ParsePreviewChangelogResponse(rsp *http.Response) (*PreviewChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest Problem
