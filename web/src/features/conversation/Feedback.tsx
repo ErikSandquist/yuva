@@ -49,6 +49,31 @@ export function CategoryChip({ category, className }: { category: FeedbackCatego
   )
 }
 
+export function ScoreMark({ score, className }: { score?: number; className?: string }) {
+  const { t } = useLingui()
+  if (!score) return null
+  const label = t`Score ${score} out of 5`
+  return (
+    <span
+      className={cn("inline-flex shrink-0 items-center gap-1.5 text-caption text-muted-foreground", className)}
+      role="img"
+      aria-label={label}
+      title={label}
+      data-testid="score-mark"
+      data-score={score}
+    >
+      <span className="inline-flex gap-px" aria-hidden>
+        {[1, 2, 3, 4, 5].map((i) => (
+          <span key={i} className={cn("h-2.5 w-1.5 rounded-[2px]", i <= score ? "bg-brand" : "bg-border")} />
+        ))}
+      </span>
+      <span className="tabular-nums" aria-hidden>
+        {score}/5
+      </span>
+    </span>
+  )
+}
+
 export const progressIcons: Record<FeedbackProgress, React.ComponentType<{ className?: string }>> = {
   planned: CircleDashedIcon,
   in_progress: CircleDotIcon,

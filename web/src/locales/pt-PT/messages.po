@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Escopos, caixas e validade permanecem como estão. Para outros, crie uma nova chave."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Classificação {score} em 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Ecrã"
 

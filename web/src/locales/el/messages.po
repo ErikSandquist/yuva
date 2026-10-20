@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Τα εύρη πρόσβασης, τα εισερχόμενα και η λήξη μένουν όπως είναι. Για διαφορετικά, δημιουργήστε νέο κλειδί."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Βαθμολογία {score} στα 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Οθόνη"
 

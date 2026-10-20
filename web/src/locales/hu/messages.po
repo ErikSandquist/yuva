@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "A hatókörök, postafiókok és lejárat maradnak, ahogy vannak. Másokhoz hozz létre új kulcsot."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Pontszám: {score} az 5-ből"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Képernyő"
 

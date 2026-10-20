@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Domeniile de acces, căsuțele și expirarea rămân cum sunt. Pentru altele, creează o cheie nouă."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Scor {score} din 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Ecran"
 

@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Phạm vi, hộp thư và thời hạn giữ nguyên. Muốn khác, hãy tạo khóa mới."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Điểm {score} trên 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Màn hình"
 

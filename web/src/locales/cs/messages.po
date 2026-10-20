@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Rozsahy, schránky a vypršení zůstávají, jak jsou. Pro jiné vytvořte nový klíč."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Skóre {score} z 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Obrazovka"
 

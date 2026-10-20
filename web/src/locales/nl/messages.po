@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Scopes, mailboxen en vervaldatum blijven zoals ze zijn. Maak voor andere een nieuwe sleutel."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Score {score} van 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Scherm"
 

@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "스코프, 받은 편지함, 만료는 그대로 유지됩니다. 다르게 하려면 새 키를 만드세요."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5점 만점에 {score}점"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "화면"
 

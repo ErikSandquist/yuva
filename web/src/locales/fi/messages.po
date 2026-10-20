@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Scopet, postilaatikot ja vanheneminen pysyvät ennallaan. Muita varten luo uusi avain."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Pisteet {score} / 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Näyttö"
 

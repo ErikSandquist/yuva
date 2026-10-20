@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "تبقى النطاقات وصناديق الوارد وتاريخ الانتهاء كما هي. لاختيارات مختلفة أنشئ مفتاحًا جديدًا."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "التقييم {score} من 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "الشاشة"
 

@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Області доступу, скриньки та термін дії залишаються колишніми. Для інших створіть новий ключ."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Оцінка {score} з 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Екран"
 

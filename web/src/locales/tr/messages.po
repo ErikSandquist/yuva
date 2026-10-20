@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Yetkiler, gelen kutuları ve son geçerlilik olduğu gibi kalır. Farklıları için yeni bir anahtar oluşturun."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5 üzerinden {score} puan"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Ekran"
 

@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "நோக்கெல்லைகள், இன்பாக்ஸ்கள், காலாவதி அப்படியே இருக்கும். வேறுபட்டவற்றுக்குப் புதிய விசையை உருவாக்குங்கள்."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5-க்கு {score} மதிப்பெண்"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "திரை"
 

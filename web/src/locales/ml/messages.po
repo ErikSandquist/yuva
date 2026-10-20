@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "സ്കോപ്പുകൾ, ഇൻബോക്സുകൾ, കാലാവധി എന്നിവ അതുപോലെ തുടരും. വ്യത്യസ്തമായവയ്ക്ക്, ഒരു പുതിയ കീ ഉണ്ടാക്കുക."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5-ൽ {score} സ്കോർ"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "സ്ക്രീൻ"
 

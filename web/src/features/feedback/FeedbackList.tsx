@@ -6,7 +6,7 @@ import { ContactAvatar, ErrorLine, isVisitor, Kbd, useContactName, VisitorAvatar
 import { formatShort } from "@/components/common/text"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Skeleton } from "@/components/ui/skeleton"
-import { CategoryChip, ProgressChip } from "@/features/conversation/Feedback"
+import { CategoryChip, ProgressChip, ScoreMark } from "@/features/conversation/Feedback"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListCursor } from "@/features/inbox/listCursor"
@@ -112,6 +112,7 @@ function Row({
       <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-3 group-last:border-transparent">
         <span className="flex min-w-0 items-center gap-2">
           {f && <CategoryChip category={f.category} />}
+          <ScoreMark score={f?.score} />
           <span
             className={cn("min-w-0 flex-1 truncate text-small", c.unread ? "font-semibold" : "text-muted-foreground")}
           >

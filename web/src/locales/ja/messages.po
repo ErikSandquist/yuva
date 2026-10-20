@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "スコープ、受信トレイ、有効期限はそのままです。変更したい場合は、新しいキーを作成してください。"
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "スコア 5 点中 {score} 点"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "画面"
 

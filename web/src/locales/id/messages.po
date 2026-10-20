@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Cakupan, kotak masuk, dan masa berlaku tetap seperti adanya. Untuk yang berbeda, buat kunci baru."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Skor {score} dari 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Layar"
 

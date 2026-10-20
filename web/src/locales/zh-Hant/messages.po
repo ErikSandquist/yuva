@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "許可權範圍、收件匣和有效期保持不變。如需不同的設定,請建立新金鑰。"
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "評分 {score} / 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "螢幕"
 

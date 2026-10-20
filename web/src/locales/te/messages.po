@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "స్కోప్‌లు, ఇన్‌బాక్స్‌లు మరియు గడువు అలాగే ఉంటాయి. వేరేవి కావాలంటే, కొత్త కీని సృష్టించండి."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5 లో {score} స్కోరు"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "స్క్రీన్"
 

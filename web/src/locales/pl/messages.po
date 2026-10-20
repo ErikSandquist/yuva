@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Zakresy, skrzynki i wygaśnięcie pozostają bez zmian. Aby mieć inne, utwórz nowy klucz."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Wynik {score} na 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Ekran"
 

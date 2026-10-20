@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "સ્કોપ, ઇનબૉક્સ અને સમાપ્તિ જેમ છે તેમ રહે છે. અલગ માટે, નવી કી બનાવો."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "સ્કોર 5 માંથી {score}"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "સ્ક્રીન"
 

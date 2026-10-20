@@ -30,7 +30,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import type { PendingReply } from "@/features/conversation/actions"
-import { FeedbackDetails } from "@/features/conversation/Feedback"
+import { FeedbackDetails, ScoreMark } from "@/features/conversation/Feedback"
 import { Attachments } from "@/features/conversation/messages/Attachments"
 import { baseSubject, timeOf, useAuthorName, type ThreadContext } from "@/features/conversation/messages/context"
 import { DeliveryState } from "@/features/conversation/messages/DeliveryState"
@@ -398,6 +398,7 @@ function FeedbackMessage({
       <MessageContent className="max-w-[88%] gap-1 phone:max-w-[94%]">
         <MessageHeader className={headerClass}>
           <Badge className={cn(tagClass, "rounded-md", categoryTag[category])}>{text.category[category]}</Badge>
+          <ScoreMark score={feedback.score} className="me-2" />
           {feedback.page_url ? (
             <Trans>Feedback sent from a documentation page</Trans>
           ) : (

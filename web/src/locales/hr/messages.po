@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "Dosezi, pretinci i istek ostaju kakvi jesu. Za drugačije izradite novi ključ."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "Ocjena {score} od 5"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Zaslon"
 

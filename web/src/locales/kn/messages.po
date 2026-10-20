@@ -10014,6 +10014,10 @@ msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a
 msgstr "ಸ್ಕೋಪ್‌ಗಳು, ಇನ್‌ಬಾಕ್ಸ್‌ಗಳು ಮತ್ತು ಅವಧಿ ಹಾಗೆಯೇ ಉಳಿಯುತ್ತವೆ. ಬೇರೆಯವಕ್ಕೆ, ಹೊಸ ಕೀಲಿ ರಚಿಸಿ."
 
 #: src/features/conversation/Feedback.tsx
+msgid "Score {score} out of 5"
+msgstr "5 ರಲ್ಲಿ {score} ಅಂಕ"
+
+#: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "ಪರದೆ"
 
