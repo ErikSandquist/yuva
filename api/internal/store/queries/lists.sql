@@ -205,7 +205,7 @@ WHERE workspace_id = @workspace_id AND list_id = @list_id
   AND (state = 'unsubscribed' OR (state = 'pending' AND unsubscribe_reason IS NOT NULL));
 
 -- name: IsEmailSuppressedAnyScope :one
-SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2) AS suppressed;
+SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope <> 'confirmations') AS suppressed;
 
 -- Pending subscriptions that never reached consent are deleted; one that was unsubscribed before
 -- and asked again goes back to unsubscribed, so its objection is not lost.

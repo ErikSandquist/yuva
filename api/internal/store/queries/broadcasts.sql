@@ -113,7 +113,7 @@ WHERE b.workspace_id = @workspace_id AND b.started_at > @since;
 -- name: BroadcastAudiencePage :many
 SELECT DISTINCT ON (s.contact_id)
     s.contact_id, s.email, s.list_id, c.name, c.attributes, c.blocked,
-    EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)::bool AS suppressed,
+    EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email AND x.scope <> 'confirmations')::bool AS suppressed,
     (count(*) OVER (PARTITION BY s.contact_id))::bigint AS subscriptions,
     ((cardinality(@locales::text[]) = 0 OR EXISTS (
         SELECT 1 FROM unnest(@locales::text[]) AS l (tag)

@@ -92,7 +92,7 @@ LIMIT 500;
 -- name: StatusNoticeRecipients :many
 SELECT s.id, s.contact_id, s.email FROM list_subscriptions s
 WHERE s.workspace_id = @workspace_id AND s.list_id = @list_id AND s.state = 'subscribed' AND s.id > @after::uuid
-  AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
+  AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email AND x.scope <> 'confirmations')
   AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
                   JOIN status_incident_components ic ON ic.workspace_id = c.workspace_id AND ic.component_id = c.component_id
@@ -110,7 +110,7 @@ LIMIT @lim;
 -- name: CountStatusNoticeReach :one
 SELECT count(*)::bigint FROM list_subscriptions s
 WHERE s.workspace_id = @workspace_id AND s.list_id = @list_id AND s.state = 'subscribed'
-  AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
+  AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email AND x.scope <> 'confirmations')
   AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
                   WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND c.component_id = ANY(@component_ids::uuid[]))

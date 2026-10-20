@@ -10,7 +10,9 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/productdevbook/yuva/api/internal/jobs"
 	"github.com/productdevbook/yuva/api/internal/mail"
+	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -30,8 +32,7 @@ func (s *Server) sendMail(ctx context.Context, msg mail.Message) {
 }
 
 // requestEmailConfirmation records a typed address for confirmation and returns the mail to send
-// once the transaction commits, or nil when no mail is due: the address already belongs to a
-// contact, or the contact asked too often.
+// once the transaction commits, or nil when no mail is due.
 func (s *Server) requestEmailConfirmation(ctx context.Context, q *store.Queries, inbox store.Inbox, contactID uuid.UUID, addr string) (*mail.Message, error) {
 	ws, now := inbox.WorkspaceID, s.now()
 	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: addr}); !store.IsNotFound(err) {
@@ -41,10 +42,26 @@ func (s *Server) requestEmailConfirmation(ctx context.Context, q *store.Queries,
 	if err != nil || n >= emailConfirmsPerHour {
 		return nil, err
 	}
+	outcome, err := typedEmailOutcome(ctx, q, ws, addr, now)
+	if err != nil {
+		return nil, err
+	}
 	token := ws.String() + "." + randomToken(32)
+	id, expires := newID(), now.Add(emailConfirmTTL)
+	switch outcome {
+	case typedEmailUndeliverable:
+		return nil, q.CreateBouncedEmailConfirmation(ctx, store.CreateBouncedEmailConfirmationParams{
+			WorkspaceID: ws, ID: id, ContactID: contactID, InboxID: inbox.ID, Email: addr, TokenHash: hashSecret(token), Now: now, ExpiresAt: expires,
+		})
+	case typedEmailSilent:
+		return nil, q.CreateEmailConfirmation(ctx, store.CreateEmailConfirmationParams{
+			WorkspaceID: ws, ID: id, ContactID: contactID, InboxID: inbox.ID, Email: addr, TokenHash: hashSecret(token), Now: now, ExpiresAt: expires,
+		})
+	}
+	msgID := s.confirmationMessageID()
 	if err := q.CreateEmailConfirmation(ctx, store.CreateEmailConfirmationParams{
-		WorkspaceID: ws, ID: newID(), ContactID: contactID, InboxID: inbox.ID, Email: addr,
-		TokenHash: hashSecret(token), Now: now, ExpiresAt: now.Add(emailConfirmTTL),
+		WorkspaceID: ws, ID: id, ContactID: contactID, InboxID: inbox.ID, Email: addr,
+		TokenHash: hashSecret(token), HeaderMessageID: &msgID, Now: now, ExpiresAt: expires,
 	}); err != nil {
 		return nil, err
 	}
@@ -55,8 +72,75 @@ func (s *Server) requestEmailConfirmation(ctx context.Context, q *store.Queries,
 	if err != nil {
 		return nil, err
 	}
-	msg.To = addr
+	msg.To, msg.MessageID = addr, msgID
+	msg.OnRelayed = func(ctx context.Context, relayID string) {
+		if err := s.st.SetEmailConfirmationRelayID(ctx, store.SetEmailConfirmationRelayIDParams{WorkspaceID: ws, ID: id, RelayMessageID: &relayID}); err != nil {
+			s.log.WarnContext(ctx, "confirmation relay id", slog.Any("error", err))
+		}
+	}
 	return &msg, nil
+}
+
+type typedEmailDelivery int
+
+const (
+	typedEmailSend typedEmailDelivery = iota
+	typedEmailUndeliverable
+	typedEmailSilent
+)
+
+// A bounce is public (anyone can mail the address); any other suppression must look like a sent link.
+func typedEmailOutcome(ctx context.Context, q *store.Queries, ws uuid.UUID, addr string, now time.Time) (typedEmailDelivery, error) {
+	reason, err := q.EmailSuppressionReason(ctx, store.EmailSuppressionReasonParams{WorkspaceID: ws, Email: addr, Expired: now.Add(-jobs.EmailConfirmationRetention)})
+	switch {
+	case store.IsNotFound(err):
+		return typedEmailSend, nil
+	case err != nil:
+		return 0, err
+	case reason == suppressBounce:
+		return typedEmailUndeliverable, nil
+	default:
+		return typedEmailSilent, nil
+	}
+}
+
+func (s *Server) confirmationMessageID() string {
+	domain := "yuva.invalid"
+	if len(s.ingress.OwnAddresses) > 0 {
+		if _, d, ok := strings.Cut(s.ingress.OwnAddresses[0], "@"); ok && d != "" {
+			domain = d
+		}
+	} else if u, err := url.Parse(s.auth.PublicURL); err == nil && u.Hostname() != "" {
+		domain = u.Hostname()
+	}
+	return "confirm." + randomToken(18) + "@" + domain
+}
+
+func (s *Server) emailConfirmationState(ctx context.Context, q *store.Queries, c contactRow, current *string) (*oas.ClientEmailConfirmation, error) {
+	r, err := q.LatestEmailConfirmation(ctx, store.LatestEmailConfirmationParams{WorkspaceID: c.WorkspaceID, ContactID: c.ID})
+	if store.IsNotFound(err) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	out := &oas.ClientEmailConfirmation{Email: oas.Email(r.Email)}
+	switch {
+	case c.TypedEmail == nil:
+		if r.ConfirmedAt == nil || current == nil || *current != r.Email {
+			return nil, nil
+		}
+		out.State = oas.EmailConfirmationConfirmed
+	case *c.TypedEmail != r.Email:
+		return nil, nil
+	case r.BouncedAt != nil:
+		out.State = oas.EmailConfirmationUndeliverable
+	case r.ConfirmedAt == nil && r.ExpiresAt.After(s.now()):
+		out.State, out.ExpiresAt = oas.EmailConfirmationSent, &r.ExpiresAt
+	default:
+		return nil, nil
+	}
+	return out, nil
 }
 
 func confirmationWorkspace(token string) (uuid.UUID, bool) {
@@ -158,10 +242,27 @@ func (s *Server) confirmEmail(ctx context.Context, q *store.Queries, events *eve
 	if err != nil {
 		return false, err
 	}
-	if ct.TypedEmail == nil || *ct.TypedEmail != c.Email {
+	discard := func() (bool, error) {
+		if err := q.DeleteEmailConfirmation(ctx, store.DeleteEmailConfirmationParams{WorkspaceID: ws, ID: c.ID}); err != nil {
+			return false, err
+		}
+		row, err := q.GetContact(ctx, store.GetContactParams{WorkspaceID: ws, ID: ct.ID})
+		if err != nil {
+			return false, err
+		}
+		body, err := s.contactBody(ctx, q, ws, allInboxScope, row)
+		if err != nil {
+			return false, err
+		}
+		events.add(realtime.ContactUpdated, nil, nil, body)
 		return false, nil
 	}
-	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: c.Email}); !store.IsNotFound(err) {
+	if ct.TypedEmail == nil || *ct.TypedEmail != c.Email {
+		return discard()
+	}
+	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: c.Email}); err == nil {
+		return discard()
+	} else if !store.IsNotFound(err) {
 		return false, err
 	}
 	n, err := q.CountContactEmails(ctx, store.CountContactEmailsParams{WorkspaceID: ws, ContactID: ct.ID})
@@ -175,7 +276,9 @@ func (s *Server) confirmEmail(ctx context.Context, q *store.Queries, events *eve
 	if err != nil {
 		return false, err
 	}
-	if err := q.DeleteContactEmailConfirmations(ctx, store.DeleteContactEmailConfirmationsParams{WorkspaceID: ws, ContactID: ct.ID, Now: now}); err != nil {
+	if err := q.DeleteContactEmailConfirmations(ctx, store.DeleteContactEmailConfirmationsParams{
+		WorkspaceID: ws, ContactID: ct.ID, Keep: c.ID,
+	}); err != nil {
 		return false, err
 	}
 	if err := q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: ct.ID}); err != nil {

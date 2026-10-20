@@ -169,10 +169,26 @@ ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail
 -- name: IsEmailSuppressed :one
 SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope = 'all') AS suppressed;
 
+-- Stops only confirmation mails; any other suppression replaces it, and a complaint is never turned back into a bounce.
+-- name: SuppressConfirmations :exec
+INSERT INTO email_suppressions (workspace_id, email, reason, detail, scope, created_at)
+VALUES (@workspace_id, @email, @reason, @detail, 'confirmations', @now)
+ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, created_at = excluded.created_at
+WHERE email_suppressions.scope = 'confirmations' AND email_suppressions.reason = 'bounce';
+
+-- name: EmailSuppressionReason :one
+SELECT reason FROM email_suppressions
+WHERE workspace_id = @workspace_id AND email = @email
+  AND NOT (scope = 'confirmations' AND reason = 'bounce' AND created_at <= @expired);
+
+-- name: DeleteExpiredConfirmationBounces :execrows
+DELETE FROM email_suppressions
+WHERE workspace_id = @workspace_id AND scope = 'confirmations' AND reason = 'bounce' AND created_at <= @before;
+
 -- name: ListContactSuppressions :many
 SELECT e.contact_id, s.email, s.reason, s.detail, s.created_at FROM email_suppressions s
 JOIN contact_emails e ON e.workspace_id = s.workspace_id AND e.email = s.email
-WHERE s.workspace_id = @workspace_id AND e.contact_id = ANY(@contact_ids::uuid[])
+WHERE s.workspace_id = @workspace_id AND e.contact_id = ANY(@contact_ids::uuid[]) AND s.scope <> 'confirmations'
 ORDER BY e.contact_id, e.position;
 
 -- name: ClearSuppression :exec

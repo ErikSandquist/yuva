@@ -85,7 +85,7 @@ WHERE workspace_id = @workspace_id AND storage_key IS NOT NULL
   AND (sqlc.narg(list_id)::uuid IS NULL OR list_id = sqlc.narg(list_id)::uuid);
 
 -- name: SuppressedEmailsIn :many
-SELECT DISTINCT email FROM email_suppressions WHERE workspace_id = @workspace_id AND email = ANY(@emails::text[]);
+SELECT DISTINCT email FROM email_suppressions WHERE workspace_id = @workspace_id AND email = ANY(@emails::text[]) AND scope <> 'confirmations';
 
 -- name: OptedOutHashesIn :many
 SELECT email_hash FROM email_optouts WHERE workspace_id = @workspace_id AND email_hash = ANY(@hashes::bytea[]);

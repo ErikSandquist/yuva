@@ -860,14 +860,19 @@ type EmailChannel struct {
 }
 
 type EmailConfirmation struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-	ContactID   uuid.UUID
-	InboxID     uuid.UUID
-	Email       string
-	TokenHash   []byte
-	CreatedAt   time.Time
-	ExpiresAt   time.Time
+	WorkspaceID     uuid.UUID
+	ID              uuid.UUID
+	ContactID       uuid.UUID
+	InboxID         uuid.UUID
+	Email           string
+	TokenHash       []byte
+	CreatedAt       time.Time
+	ExpiresAt       time.Time
+	HeaderMessageID *string
+	RelayMessageID  *string
+	BouncedAt       *time.Time
+	ComplainedAt    *time.Time
+	ConfirmedAt     *time.Time
 }
 
 type EmailDesign struct {

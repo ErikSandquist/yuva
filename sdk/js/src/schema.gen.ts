@@ -24,6 +24,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/status-domains/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ask whether a status page domain is verified
+         * @description For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+         *     `200` when `domain` is the verified own domain of a published status page in a live workspace,
+         *     `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+         *     reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+         *     address (`429 rate_limited`).
+         */
+        get: operations["checkStatusDomain"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/readyz": {
         parameters: {
             query?: never;
@@ -2553,7 +2577,8 @@ export interface paths {
         /**
          * List mailing lists
          * @description The lists of the inboxes the caller can see, newest first, with their subscription counts.
-         *     Archived lists are left out unless `archived=true`, which lists only them.
+         *     Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+         *     `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
          *
          *     Scope: `lists:read`.
          */
@@ -2595,7 +2620,7 @@ export interface paths {
          * @description Deletes the list with its subscriptions and their consent events. Addresses that had
          *     unsubscribed from it are remembered as opted out first, so they cannot be added back by a
          *     member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-         *     broadcast sends to it.
+         *     broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2605,7 +2630,9 @@ export interface paths {
         /**
          * Update a mailing list
          * @description Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-         *     `archived: true` hides it from forms, the preference page and the default list.
+         *     `archived: true` hides it from forms, the preference page and the default list. A status
+         *     list takes only `name` and `description`; its channel is set on its status page (`409
+         *     list_kind` for anything else).
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2676,6 +2703,11 @@ export interface paths {
          *     bounced or was reported as spam, `400 validation_failed` without `consent` or
          *     `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
          *     got 3 confirmation mails today.
+         *
+         *     A status list (`kind: status`) takes no declared consent: every new subscription is
+         *     `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+         *     `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+         *     suppressed address still gets `409 suppressed`.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2770,7 +2802,8 @@ export interface paths {
          *     rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
          *     in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
          *     agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-         *     your own records before uploading; only commercial lists need registering.
+         *     your own records before uploading; only commercial lists need registering. A status list
+         *     has no İYS export (`409 list_kind`).
          *
          *     The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
          *     Owners, admins and API keys. Scope: `lists:read`.
@@ -2821,7 +2854,8 @@ export interface paths {
          *     limit, 100,000 by default, fails). Start it with `/start`.
          *
          *     One import per workspace validates or imports at a time (`409 import_running`). A file
-         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+         *     list takes no imports (`409 list_kind`): its subscribers ask on the status page.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -5641,7 +5675,8 @@ export interface paths {
         post?: never;
         /**
          * Delete a status page
-         * @description The page with its groups, components, their history, incidents and updates.
+         * @description The page with its groups, components, their history, incidents and updates, its notices
+         *     and its subscriber list with the subscriptions and their consent events.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5653,6 +5688,13 @@ export interface paths {
          * @description Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
          *     takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
          *     redirect to the new one, until the page is deleted.
+         *
+         *     `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+         *     needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+         *     before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+         *     like the page (with ` (status)` added when the inbox has a list of that name). `false`
+         *     stops the form and the notices and keeps the subscribers. On a server with
+         *     `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5840,6 +5882,7 @@ export interface paths {
          *     `in_progress` when its start has passed. `components` name the components it touches with the
          *     state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
          *     incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+         *     Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
          *
          *     An incident created through MCP is always a draft.
          *
@@ -5879,7 +5922,8 @@ export interface paths {
          * Change an incident
          * @description Title, impact, the components it touches and a maintenance window. States change with an update
          *     (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-         *     (`409 incident_closed`).
+         *     (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+         *     `notify` is `false`; other changes send none.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5897,8 +5941,10 @@ export interface paths {
         put?: never;
         /**
          * Publish a draft incident
-         * @description Shows it on the page and, while it is open, sets the components it touches. Publishing a
-         *     published incident changes nothing.
+         * @description Shows it on the page and, while it is open, sets the components it touches, and queues one
+         *     notice to the page's e-mail subscribers covering every update of the draft that asked to notify,
+         *     unless `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+         *     nothing.
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -5924,7 +5970,10 @@ export interface paths {
          *     states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
          *     `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
          *     incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-         *     completing puts its components back; see the tag.
+         *     completing puts its components back; see the tag. On a published incident, `notify` (default
+         *     `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+         *     subscribers or joins the one waiting. Resolving or completing with `notify` `false` cancels the
+         *     notices still waiting (`skip_reason` `closed_quietly`).
          *
          *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6079,6 +6128,97 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/status-pages/{pageId}/notices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a page's notices
+         * @description The notices to the page's e-mail subscribers, newest first, with their counts.
+         *     `incident_id` and `state` narrow the list.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["listStatusNotices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notices/{noticeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A notice
+         * @description Scope: `status:read`.
+         */
+        get: operations["getStatusNotice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notices/{noticeId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a waiting notice
+         * @description Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+         *     covered stay on the page. `409 not_pending` once it is sending or done.
+         *
+         *     Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+         */
+        post: operations["cancelStatusNotice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/notice-reach": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How many subscribers a notice would reach
+         * @description The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+         *     several, none for an incident touching no component) would go to now: those who chose no
+         *     components and those who chose one of them. Suppressed addresses are left out. The panel
+         *     shows it beside "Notify subscribers".
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["getStatusNoticeReach"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/status-pages/{pageId}/monitors": {
         parameters: {
             query?: never;
@@ -6103,14 +6243,31 @@ export interface paths {
          *       `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
          *     - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
          *       `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+         *     - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+         *       within `timeout` seconds with a status in the expected range, the keyword in the first
+         *       64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+         *       days (a certificate expiring sooner fails the check).
+         *     - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+         *       `timeout` seconds.
+         *
+         *     `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+         *     address the host resolves to is checked when the monitor is saved and on every check;
+         *     a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+         *     cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+         *     with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+         *     or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round with failures whose canaries
+         *     all fail, while they answered within the last hour, is the server's own trouble: its failures
+         *     are dropped and change nothing. The certificate checked is the one of the URL's own host, not
+         *     of a redirect target.
          *
          *     The monitor fails after `failure_threshold` failures in a row and recovers after
-         *     `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+         *     `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+         *     for `http` and `tcp`). Failing sets the component to
          *     `failure_state`, never over a state a member set later than the monitor's last change, and
          *     opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-         *     it opened and puts the component back. The answer carries `token` and `url` once; only a
-         *     hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-         *     unset, `403 status_monitor_limit`).
+         *     it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+         *     and `url` once; only a hash of the token is kept. A workspace has at most
+         *     `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6137,8 +6294,8 @@ export interface paths {
         post?: never;
         /**
          * Delete a monitor
-         * @description With its checks. A component it set goes back to `operational` unless something else holds
-         *     it; an incident it opened stays.
+         * @description With its checks. An open incident it opened is resolved with an update saying so, and a
+         *     component it set goes back to `operational` unless something else holds it.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6150,7 +6307,9 @@ export interface paths {
          * @description Changes the given fields. Pausing stops results from counting and lets go of the component
          *     (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
          *     starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-         *     later. A new `interval` or `grace` moves the next beat's due time.
+         *     later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+         *     given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+         *     its stored value, and `headers` replaces the whole list. A target is checked again as on create.
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6169,6 +6328,7 @@ export interface paths {
         /**
          * Rotate a monitor's token
          * @description Makes a new token and drops the old one at once: calls with the old token answer `404`.
+         *     `http` and `tcp` monitors have no token (`409 monitor_kind`).
          *
          *     Owners, admins and API keys. Scope: `status:manage`.
          */
@@ -6188,12 +6348,37 @@ export interface paths {
         };
         /**
          * List a monitor's checks
-         * @description Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-         *     while the monitor is paused are not kept.
+         * @description Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+         *     that arrive while the monitor is paused, and failures of a dropped round, are not kept.
          *
          *     Scope: `status:read`.
          */
         get: operations["listStatusMonitorChecks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A monitor's response times and uptime
+         * @description The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+         *     last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+         *     share of checks that succeeded; response times are the 50th and 95th percentile of the
+         *     successful checks that measured one (`http` and `tcp`), absent when there are none.
+         *
+         *     Scope: `status:read`.
+         */
+        get: operations["getStatusMonitorCheckSummary"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6885,7 +7070,10 @@ export interface paths {
          *     existing contact; it is used only while the contact has no address from an identity token
          *     or from their own mail. Yuva mails the address a confirmation link (unless a contact already
          *     has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-         *     is confirmed.
+         *     is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+         *     `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+         *     address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+         *     another one.
          *     Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
          */
         put: operations["setClientContactEmail"];
@@ -7099,8 +7287,8 @@ export interface paths {
         /**
          * A published status page
          * @description What the public status page shows, as JSON: the page, its overall state, the visible
-         *     components by group with their uptime, open incidents and running or planned maintenance, and
-         *     the incidents of the last 14 days. Needs no credentials and sends
+         *     components by group with their uptime (and their response times when the page shows them), open
+         *     incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
          *     `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
          *     (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
          *     slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -7132,7 +7320,7 @@ export interface paths {
          *
          *     Every server message is one JSON text frame matching `ClientRealtimeMessage`. Stored events
          *     (`conversation.created`, `conversation.updated`, `message.created`, `message.updated`,
-         *     `read`) carry an increasing `id`; resume exactly as on `/v1/realtime`: remember the larger
+         *     `read`, `contact.updated`) carry an increasing `id`; resume exactly as on `/v1/realtime`: remember the larger
          *     of `ready.last_event_id` and the last `id` received, reconnect with `?last_event_id=`, and
          *     reload over HTTP on `resync_required`. `typing`, `presence` and `inbox.updated` have no
          *     `id` and are not replayed. `message.*` carries only messages (no notes or internal events),
@@ -7146,6 +7334,10 @@ export interface paths {
          *     A connection resumed with `last_event_id` gets one `inbox.updated` right after `ready`
          *     with the current settings and status, since changes made while disconnected are not
          *     replayed; one opened without it starts from the settings fetched just before.
+         *     `contact.updated` carries the session's own contact, the same `ClientContact` as
+         *     `GET /client/v1/session`, whenever what it shows changes: the typed address, its
+         *     `email_confirmation` (a link sent, bounced or confirmed) or a confirmed `email`; replace the
+         *     contact shown with it. A resumed connection gets at most one, with the contact as it is now.
          *
          *     The server pings every 30 seconds; the client sends nothing. Close codes as on
          *     `/v1/realtime`: 1008 when the session ends or the contact is deleted (start a new session),
@@ -7962,7 +8154,7 @@ export interface webhooks {
         put?: never;
         /**
          * A monitor failed
-         * @description A heartbeat or push monitor reached its failure threshold. `incident_id` names the incident it
+         * @description A monitor reached its failure threshold. `incident_id` names the incident it
          *     opened, when `on_failure` opened one. Endpoints of an inbox get the monitors of that inbox's
          *     page.
          */
@@ -11698,7 +11890,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -12270,6 +12462,7 @@ export interface components {
             locales: components["schemas"]["LanguageTag"][];
         };
         BroadcastAudienceInput: {
+            /** @description Lists of the broadcast's inbox; a status page's list (`kind` `status`) is refused with `400 validation_failed`. */
             list_ids: string[];
             conditions?: components["schemas"]["BroadcastCondition"][];
             locales?: components["schemas"]["LanguageTag"][];
@@ -12802,11 +12995,22 @@ export interface components {
             /** Format: int64 */
             unsubscribed: number;
         };
+        /**
+         * @description `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+         * @enum {string}
+         */
+        MailingListKind: "list" | "status";
         MailingList: {
             /** Format: uuid */
             id: string;
             /** Format: uuid */
             inbox_id: string;
+            kind: components["schemas"]["MailingListKind"];
+            /**
+             * Format: uuid
+             * @description The status page whose subscribers a `status` list holds.
+             */
+            status_page_id?: string;
             /**
              * Format: uuid
              * @description The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
@@ -12839,6 +13043,7 @@ export interface components {
             /** Format: uuid */
             inbox_id: string;
             name: string;
+            kind: components["schemas"]["MailingListKind"];
         };
         MailingListCreate: {
             /** Format: uuid */
@@ -12940,6 +13145,8 @@ export interface components {
             /** Format: date-time */
             unsubscribed_at?: string;
             unsubscribe_reason?: components["schemas"]["UnsubscribeReason"];
+            /** @description On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component. */
+            components?: string[];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -13593,9 +13800,33 @@ export interface components {
             email?: components["schemas"]["Email"];
             /** @description The address the contact typed, until it is verified. */
             typed_email?: components["schemas"]["Email"];
+            email_confirmation?: components["schemas"]["ClientEmailConfirmation"];
             /** @description The session was started with an identity token. */
             identified: boolean;
         };
+        /**
+         * @description Where the confirmation of the typed address stands. Absent when no link is out for the
+         *     address shown: none was due (a contact already has the address, or the hourly limit was
+         *     reached) or the last one expired after 24 hours.
+         */
+        ClientEmailConfirmation: {
+            /** @description The address the link went to, `typed_email` until it is confirmed. */
+            email: components["schemas"]["Email"];
+            state: components["schemas"]["ClientEmailConfirmationState"];
+            /**
+             * Format: date-time
+             * @description `sent` only: when the link runs out; after it the confirmation is absent.
+             */
+            expires_at?: string;
+        };
+        /**
+         * @description `sent`: a confirmation link went to `email` and was neither confirmed nor bounced yet ("we
+         *     sent a link to …, check your inbox"). `undeliverable`: mail to `email` cannot be delivered
+         *     (the link bounced, or the address bounced before); ask for another address. `confirmed`:
+         *     the link was confirmed and `email` is the contact's `email`.
+         * @enum {string}
+         */
+        ClientEmailConfirmationState: "sent" | "undeliverable" | "confirmed";
         ClientSessionInfo: {
             /**
              * Format: date-time
@@ -13888,8 +14119,21 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ClientInbox"];
         };
+        /** @description The session's contact changed in what `ClientContact` shows. */
+        ClientContactUpdatedEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "contact.updated";
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ClientContact"];
+        };
         /** @description One server message on `/client/v1/realtime`, told apart by `type`. */
-        ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["ClientContactUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android`
          *     apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
@@ -15000,7 +15244,11 @@ export interface components {
             name: string;
             description: string;
             slug: components["schemas"]["StatusPageSlug"];
-            /** @description The public page, at the server's status URL. */
+            /**
+             * @description The public page: on its own domain once that is verified (with `YUVA_STATUS_DOMAINS=cloudflare`,
+             *     once its Cloudflare custom hostname and certificate are both `active`), else at the server's
+             *     status URL.
+             */
             url: string;
             logo_url?: string;
             accent_color?: components["schemas"]["StatusColor"];
@@ -15016,12 +15264,134 @@ export interface components {
              */
             history_days: number;
             show_uptime: boolean;
+            /**
+             * @description Whether the public page and its JSON show the last 24 hours of response times of components
+             *     with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
+             */
+            show_response_times: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
+            email_subscribers: components["schemas"]["StatusEmailSubscribers"];
+            custom_domain?: components["schemas"]["StatusCustomDomain"];
+            own_domains?: components["schemas"]["StatusOwnDomains"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description Whether the server lets pages use their own domain (`YUVA_STATUS_DOMAINS`). Absent when it
+         *     is `off`; setting `custom_domain` is then refused.
+         */
+        StatusOwnDomains: {
+            /**
+             * @description `ask`: the owner points the records and asks for the certificate elsewhere (a proxy in
+             *     front). `cloudflare`: verified domains are registered as Cloudflare for SaaS custom
+             *     hostnames, which issue the certificate.
+             * @enum {string}
+             */
+            mode: "ask" | "cloudflare";
+        };
+        /**
+         * @description `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
+         *     `failed`: the last check found them but they name another target or value (checked every 10
+         *     minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+         *     domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+         *     `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+         *     a verified domain holds its name: any number of pages may claim a domain while it is pending
+         *     or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+         *     the page and is not checked again until `custom_domain` is set again.
+         * @enum {string}
+         */
+        StatusDomainState: "pending" | "verified" | "failed" | "off";
+        /**
+         * @description The page's own domain, absent when it has none or the server's `YUVA_STATUS_DOMAINS` is
+         *     `off`. The owner adds a CNAME from `domain` to `cname_target` and a TXT record `txt_name` with
+         *     `txt_value`. `cloudflare` is present when the server registers verified domains as Cloudflare
+         *     for SaaS custom hostnames.
+         */
+        StatusCustomDomain: {
+            /** @example status.example.com */
+            domain: string;
+            state: components["schemas"]["StatusDomainState"];
+            /** @description `YUVA_STATUS_CNAME`, or the host of the server's public URL. */
+            cname_target: string;
+            /** @example _yuva-status.status.example.com */
+            txt_name: string;
+            txt_value: string;
+            /**
+             * @description Who issues the domain's certificate, the server's `YUVA_STATUS_DOMAINS`.
+             * @enum {string}
+             */
+            certificates: "ask" | "cloudflare";
+            /**
+             * @description `taken` or `expired` for a `failed` claim that is no longer checked (see
+             *     `StatusDomainState`), else what the last check that did not verify the domain saw, in
+             *     English.
+             */
+            problem?: string;
+            /** Format: date-time */
+            checked_at?: string;
+            /** Format: date-time */
+            next_check_at?: string;
+            /** Format: date-time */
+            verified_at?: string;
+            /**
+             * Format: date-time
+             * @description A verified domain whose records the checks no longer see; it is turned off 3 days after this.
+             */
+            missing_since?: string;
+            cloudflare?: components["schemas"]["StatusCloudflareHostname"];
+        };
+        /**
+         * @description The domain's Cloudflare for SaaS custom hostname, as Cloudflare last reported it. Absent
+         *     fields mean it is not created yet (the domain is not verified, or creating it failed and is
+         *     tried again).
+         */
+        StatusCloudflareHostname: {
+            id?: string;
+            /** @description Cloudflare's hostname status (`pending`, `active`, `moved`, `blocked`, …). */
+            status?: string;
+            /** @description Cloudflare's certificate status (`initializing`, `pending_validation`, `active`, …). */
+            ssl_status?: string;
+            /** @description Cloudflare's verification and validation errors, or why creating the hostname failed. */
+            errors?: string[];
+            /** Format: date-time */
+            checked_at?: string;
+        };
+        StatusDomainCheck: {
+            domain: string;
+        };
+        /**
+         * @description Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+         *     are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+         *     subscribers are first turned on and kept when they are turned off; manage its subscribers
+         *     with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+         *     delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+         *     never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+         *     postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+         */
+        StatusEmailSubscribers: {
+            enabled: boolean;
+            /**
+             * Format: uuid
+             * @description The inbox's e-mail channel notices and confirmations go out through.
+             */
+            channel_id?: string;
+            /** Format: uuid */
+            list_id?: string;
+            counts: components["schemas"]["MailingListCounts"];
+            warnings: ("no_deliverability_check" | "no_postal_address" | "dkim_unaligned")[];
+            /** @description `channel_id` names a channel that can send. */
+            sender_ready?: boolean;
+        };
+        StatusEmailSubscribersUpdate: {
+            enabled?: boolean;
+            /**
+             * Format: uuid
+             * @description An e-mail channel of the page's inbox that can send (`409 sender_not_ready` otherwise).
+             */
+            channel_id?: string;
         };
         StatusPageList: {
             items: components["schemas"]["StatusPage"][];
@@ -15059,6 +15429,8 @@ export interface components {
             /** @description Default `true`. */
             show_uptime?: boolean;
             /** @description Default `false`. */
+            show_response_times?: boolean;
+            /** @description Default `false`. */
             published?: boolean;
         };
         StatusPageUpdate: {
@@ -15077,7 +15449,21 @@ export interface components {
             /** Format: int32 */
             history_days?: number;
             show_uptime?: boolean;
+            show_response_times?: boolean;
             published?: boolean;
+            email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
+            /**
+             * @description A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
+             *     one of the server's own hosts, and must not be another page's verified domain
+             *     (`409 domain_taken`). A new domain starts `pending` with a new verification value and is
+             *     checked at once; setting the same domain again checks a verified one at once and starts
+             *     any other over (same value, 7 more days). At most `YUVA_STATUS_DOMAIN_LIMIT` pages of a
+             *     workspace have a domain that is not `off` (`403 status_domain_limit`). When the server's
+             *     `YUVA_STATUS_DOMAINS` is `off`, only `null`, an empty string or the page's current domain
+             *     are accepted.
+             * @example status.example.com
+             */
+            custom_domain?: string | null;
         };
         StatusPageRef: {
             /** Format: uuid */
@@ -15343,6 +15729,8 @@ export interface components {
              * @description When it was resolved or completed.
              */
             resolved_at?: string;
+            /** @description For a draft, whether publishing it mails the subscribers unless the publish request says otherwise. */
+            notify?: boolean;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -15365,6 +15753,129 @@ export interface components {
             /** Format: date-time */
             scheduled_end?: string;
             publish?: boolean;
+            /**
+             * @description Mail the page's e-mail subscribers about it (default `true`). For a draft it is kept and
+             *     applies when the draft is published without naming `notify`.
+             */
+            notify?: boolean;
+        };
+        /**
+         * @description `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+         *     `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
+         * @enum {string}
+         */
+        StatusNoticeState: "pending" | "sending" | "sent" | "skipped" | "cancelled";
+        /**
+         * @description `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+         *     bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+         *     notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+         *     channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
+         *     notice, and no earlier notice of the incident was sent, so nobody had heard of it.
+         *     `closed_quietly`: the incident was resolved or completed without notifying, which cancels
+         *     the notices that still waited.
+         * @enum {string}
+         */
+        StatusNoticeSkipReason: "rate" | "suspended" | "email_off" | "unpublished" | "sender_not_ready" | "no_recipients" | "nothing_earlier" | "closed_quietly";
+        /**
+         * @description Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+         *     `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+         *     since the notice started), `replied` and `auto_replied`.
+         */
+        StatusNoticeCounts: {
+            /** Format: int64 */
+            recipients: number;
+            /** Format: int64 */
+            queued: number;
+            /** Format: int64 */
+            sent: number;
+            /** Format: int64 */
+            failed: number;
+            /** Format: int64 */
+            bounced: number;
+            /** Format: int64 */
+            complained: number;
+            /** Format: int64 */
+            skipped: number;
+            /** Format: int64 */
+            replied: number;
+            /** Format: int64 */
+            auto_replied: number;
+        };
+        StatusNotice: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            page_id: string;
+            /** Format: uuid */
+            incident_id: string;
+            state: components["schemas"]["StatusNoticeState"];
+            /** @description It reports the resolution or completion of the incident or the start of maintenance, so it skips the 15-minute gap and the hourly limit. */
+            final: boolean;
+            /** Format: date-time */
+            due_at: string;
+            skip_reason?: components["schemas"]["StatusNoticeSkipReason"];
+            /** @description The incident's updates it reports. */
+            update_ids: string[];
+            counts: components["schemas"]["StatusNoticeCounts"];
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        StatusNoticeList: {
+            items: components["schemas"]["StatusNotice"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        StatusNoticeReach: {
+            /** Format: int64 */
+            subscribers: number;
+        };
+        /**
+         * @description `status.page.updated`, on `/v1/realtime` only: the page's own domain changed state, its
+         *     Cloudflare hostname or certificate status moved, or the page was edited. Not stored, no id,
+         *     never replayed; reload the page (`GET /v1/status-pages/{id}`) after it and after a reconnect.
+         *     Reaches whoever may read the page with `status:read` or `status:manage` and sees its inbox.
+         */
+        StatusPageEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status.page.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: {
+                /** Format: uuid */
+                page_id: string;
+            };
+        };
+        /**
+         * @description `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved
+         *     its counts (at most every 5 seconds while sending). Not stored, no id, never replayed;
+         *     reload the notices after a reconnect. Reaches whoever may read the page with `status:read`.
+         */
+        StatusNoticeEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "status_notice.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["StatusNotice"];
         };
         StatusIncidentComponentInput: {
             /** Format: uuid */
@@ -15380,10 +15891,18 @@ export interface components {
             scheduled_start?: string;
             /** Format: date-time */
             scheduled_end?: string;
+            /** @description Mail the subscribers about a changed maintenance window (default `true` when the window changes; other changes send nothing). */
+            notify?: boolean;
         };
         StatusIncidentUpdateCreate: {
             state?: components["schemas"]["StatusIncidentState"];
             body: string;
+            /** @description Mail the subscribers about it. Default `true` when the update changes the state, `false` when it only adds text. */
+            notify?: boolean;
+        };
+        StatusIncidentPublish: {
+            /** @description Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise). */
+            notify?: boolean;
         };
         StatusIncidentUpdateEdit: {
             body: string;
@@ -15458,9 +15977,10 @@ export interface components {
         };
         /**
          * @description `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+         *     `http`: the server sends a request. `tcp`: the server opens a connection.
          * @enum {string}
          */
-        StatusMonitorKind: "heartbeat" | "push";
+        StatusMonitorKind: "heartbeat" | "push" | "http" | "tcp";
         /**
          * @description `pending` until the first result decides, then `up` or `down`.
          * @enum {string}
@@ -15508,9 +16028,26 @@ export interface components {
             recovery_threshold: number;
             /**
              * Format: int32
-             * @description `heartbeat`: seconds between beats.
+             * @description `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
              */
             interval?: number;
+            /**
+             * Format: int32
+             * @description `http` and `tcp`: seconds the check waits for an answer.
+             */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTP"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
+            /**
+             * Format: date-time
+             * @description `http` and `tcp`, not paused: when the next check is due.
+             */
+            next_check_at?: string;
+            /**
+             * Format: date-time
+             * @description `http` on https: when the certificate of the URL's own host, as the last check saw it, expires.
+             */
+            cert_expires_at?: string;
             /**
              * Format: int32
              * @description `heartbeat`: seconds a beat may be late.
@@ -15548,13 +16085,13 @@ export interface components {
             items: components["schemas"]["StatusMonitor"][];
         };
         StatusMonitorWithToken: components["schemas"]["StatusMonitor"] & {
-            /** @description Shown only now; only its hash is kept. */
-            token: string;
+            /** @description `heartbeat` and `push`: shown only now; only its hash is kept. */
+            token?: string;
             /**
-             * @description Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
-             *     run) or `<public URL>/ingress/status/{token}`.
+             * @description `heartbeat` and `push`: where the host calls, `<public URL>/ingress/heartbeat/{token}` (add
+             *     `/fail` for a failed run) or `<public URL>/ingress/status/{token}`.
              */
-            url: string;
+            url?: string;
         };
         StatusMonitorCreate: {
             kind: components["schemas"]["StatusMonitorKind"];
@@ -15567,17 +16104,18 @@ export interface components {
             on_failure?: components["schemas"]["StatusMonitorOnFailure"];
             /**
              * Format: int32
-             * @description Default 1.
+             * @description Default 1, or 3 for `http` and `tcp`.
              */
             failure_threshold?: number;
             /**
              * Format: int32
-             * @description Default 1.
+             * @description Default 1, or 2 for `http` and `tcp`.
              */
             recovery_threshold?: number;
             /**
              * Format: int32
-             * @description `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+             * @description `heartbeat`: seconds between beats, 30 seconds to 30 days; default 300. `http` and `tcp`:
+             *     seconds between checks, 60 (or `YUVA_STATUS_MIN_INTERVAL`) to 86400; default that minimum.
              */
             interval?: number;
             /**
@@ -15585,6 +16123,13 @@ export interface components {
              * @description `heartbeat` only: seconds a beat may be late, up to a day; default 60.
              */
             grace?: number;
+            /**
+             * Format: int32
+             * @description `http` and `tcp` only: seconds to wait for an answer, at most 30; default 10.
+             */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTPInput"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
             paused?: boolean;
         };
         StatusMonitorUpdate: {
@@ -15601,14 +16146,132 @@ export interface components {
             interval?: number;
             /** Format: int32 */
             grace?: number;
+            /** Format: int32 */
+            timeout?: number;
+            http?: components["schemas"]["StatusMonitorHTTPUpdate"];
+            tcp?: components["schemas"]["StatusMonitorTCP"];
             paused?: boolean;
+        };
+        /** @enum {string} */
+        StatusMonitorHTTPMethod: "GET" | "HEAD" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS";
+        /** @description What an `http` monitor sends and expects. Header values are never returned. */
+        StatusMonitorHTTP: {
+            url: string;
+            method: components["schemas"]["StatusMonitorHTTPMethod"];
+            /** @description The names of the headers sent; their values are kept encrypted and never shown. */
+            header_names: string[];
+            body?: string;
+            /** Format: int32 */
+            expected_status_min: number;
+            /** Format: int32 */
+            expected_status_max: number;
+            /** @description Text the first 64 KiB of the answer must contain, case-sensitive. */
+            keyword?: string;
+            follow_redirects: boolean;
+            /**
+             * Format: int32
+             * @description For https, a certificate of the URL's own host expiring within this many days fails the check; 0 checks only that it is valid.
+             */
+            cert_warn_days: number;
+        };
+        StatusMonitorHeader: {
+            name: string;
+            /** @description Required on create. On update, leaving it out keeps the value stored for this name. */
+            value?: string;
+        };
+        StatusMonitorHTTPInput: {
+            /** @description An http or https URL without credentials. */
+            url: string;
+            /** @description Default `GET`. */
+            method?: components["schemas"]["StatusMonitorHTTPMethod"];
+            /** @description Not `Host`, `Content-Length`, `Transfer-Encoding` or `Connection`. */
+            headers?: components["schemas"]["StatusMonitorHeader"][];
+            body?: string;
+            /**
+             * Format: int32
+             * @description Default 200.
+             */
+            expected_status_min?: number;
+            /**
+             * Format: int32
+             * @description Default 299.
+             */
+            expected_status_max?: number;
+            /** @description Empty for none. */
+            keyword?: string;
+            /** @description Default false; a 3xx answer is then judged against the expected range. */
+            follow_redirects?: boolean;
+            /**
+             * Format: int32
+             * @description Default 14.
+             */
+            cert_warn_days?: number;
+        };
+        StatusMonitorHTTPUpdate: {
+            url?: string;
+            method?: components["schemas"]["StatusMonitorHTTPMethod"];
+            headers?: components["schemas"]["StatusMonitorHeader"][];
+            /** @description Empty for none. */
+            body?: string;
+            /** Format: int32 */
+            expected_status_min?: number;
+            /** Format: int32 */
+            expected_status_max?: number;
+            /** @description Empty for none. */
+            keyword?: string;
+            follow_redirects?: boolean;
+            /** Format: int32 */
+            cert_warn_days?: number;
+        };
+        StatusMonitorTCP: {
+            /** @description A host name or an IP address (IPv6 without brackets), without a port. */
+            host: string;
+            /** Format: int32 */
+            port: number;
+        };
+        /** @enum {string} */
+        StatusCheckRange: "24h" | "7d";
+        StatusCheckBucket: {
+            /** Format: date-time */
+            start: string;
+            /** Format: int32 */
+            checks: number;
+            /** Format: int32 */
+            failures: number;
+            /** Format: int32 */
+            p50_ms?: number;
+            /** Format: int32 */
+            p95_ms?: number;
+        };
+        StatusCheckSummary: {
+            range: components["schemas"]["StatusCheckRange"];
+            /** Format: date-time */
+            from: string;
+            /** Format: date-time */
+            to: string;
+            /** Format: int32 */
+            bucket_seconds: number;
+            /** Format: int32 */
+            checks: number;
+            /** Format: int32 */
+            failures: number;
+            /**
+             * Format: double
+             * @description Percent of checks that succeeded, absent without checks.
+             */
+            uptime?: number;
+            /** Format: int32 */
+            p50_ms?: number;
+            /** Format: int32 */
+            p95_ms?: number;
+            buckets: components["schemas"]["StatusCheckBucket"][];
         };
         /**
          * @description `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-         *     `grafana` (pushed states).
+         *     `grafana` (pushed states), `http` and `tcp` (outside checks).
          * @enum {string}
          */
-        StatusCheckSource: "beat" | "fail" | "missed" | "push" | "alertmanager" | "grafana";
+        StatusCheckSource: "beat" | "fail" | "missed" | "push" | "alertmanager" | "grafana" | "http" | "tcp";
         StatusCheck: {
             /** Format: uuid */
             id: string;
@@ -15623,12 +16286,12 @@ export interface components {
             error?: string;
             /**
              * Format: int32
-             * @description For outside checks, which come later.
+             * @description `http` and `tcp`: milliseconds until the answer's headers or the connection.
              */
             duration_ms?: number;
             /**
              * Format: int32
-             * @description For outside checks, which come later.
+             * @description `http`: the final answer's status.
              */
             status_code?: number;
         };
@@ -15754,6 +16417,36 @@ export interface components {
             uptime?: number;
             /** @description Oldest first, the page's `history_days` ending today; when the page shows uptime. */
             days?: components["schemas"]["PublicStatusDay"][];
+            response_times?: components["schemas"]["PublicStatusResponseTimes"];
+        };
+        /**
+         * @description The last 24 hours of the component's `http` and `tcp` checks that succeeded, aggregated; only
+         *     when the page shows response times and the component has such a monitor. Addresses, errors
+         *     and status codes of checks are never public.
+         */
+        PublicStatusResponseTimes: {
+            /**
+             * Format: date-time
+             * @description The start of the first step.
+             */
+            from: string;
+            /**
+             * Format: int32
+             * @description The length of each step (900).
+             */
+            step_seconds: number;
+            /**
+             * Format: int32
+             * @description The median over the 24 hours; absent without a successful check.
+             */
+            median_ms?: number;
+            /**
+             * Format: int32
+             * @description The 95th percentile over the 24 hours; absent without a successful check.
+             */
+            p95_ms?: number;
+            /** @description Oldest first, one per step (96); the step's median, `null` without a successful check. */
+            points: (number | null)[];
         };
         PublicStatusGroup: {
             /** Format: uuid */
@@ -17085,6 +17778,7 @@ export interface components {
         StatusGroupId: string;
         StatusComponentId: string;
         StatusIncidentId: string;
+        StatusNoticeId: string;
         StatusReplyId: string;
         StatusUpdateId: string;
         StatusSlug: string;
@@ -17118,6 +17812,30 @@ export interface operations {
                     "application/json": components["schemas"]["Health"];
                 };
             };
+        };
+    };
+    checkStatusDomain: {
+        parameters: {
+            query: {
+                domain: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The domain is verified. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusDomainCheck"];
+                };
+            };
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     getReadyz: {
@@ -21130,6 +21848,7 @@ export interface operations {
             query?: {
                 inbox_id?: string;
                 archived?: boolean;
+                kind?: components["schemas"]["MailingListKind"];
                 /** @description The `next_cursor` of the previous page. */
                 cursor?: components["parameters"]["Cursor"];
                 /** @description Page size, 1 to 100; 25 by default. */
@@ -21387,6 +22106,15 @@ export interface operations {
                     "application/json": components["schemas"]["Subscription"];
                 };
             };
+            /** @description The new `pending` subscription of a status list; the confirmation mail is on its way. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Subscription"];
+                };
+            };
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
@@ -21550,6 +22278,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     listListImports: {
@@ -26214,7 +26943,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatusIncidentPublish"];
+            };
+        };
         responses: {
             /** @description The incident. */
             200: {
@@ -26466,6 +27199,132 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listStatusNotices: {
+        parameters: {
+            query?: {
+                incident_id?: string;
+                state?: components["schemas"]["StatusNoticeState"];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of notices. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNoticeList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusNotice: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                noticeId: components["parameters"]["StatusNoticeId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The notice. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNotice"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    cancelStatusNotice: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                noticeId: components["parameters"]["StatusNoticeId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The cancelled notice. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNotice"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getStatusNoticeReach: {
+        parameters: {
+            query?: {
+                component_id?: string[];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusNoticeReach"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     listStatusMonitors: {
         parameters: {
             query?: never;
@@ -26646,6 +27505,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     listStatusMonitorChecks: {
@@ -26675,6 +27535,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusCheckList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getStatusMonitorCheckSummary: {
+        parameters: {
+            query?: {
+                range?: components["schemas"]["StatusCheckRange"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                pageId: components["parameters"]["StatusPageId"];
+                monitorId: components["parameters"]["StatusMonitorId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The summary. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusCheckSummary"];
                 };
             };
             400: components["responses"]["Problem"];

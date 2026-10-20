@@ -407,8 +407,11 @@ func (s *Server) applyBroadcastDSN(ctx context.Context, ch store.FindEmailChanne
 
 func (s *Server) applyNoticeDSN(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
 	d, err := noticeDeliveryOf(ctx, s.st.Queries, ch.WorkspaceID, slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References))
-	if err != nil || d == nil {
+	if err != nil {
 		return IngestResult{}, false, err
+	}
+	if d == nil {
+		return s.applyConfirmationDSN(ctx, m)
 	}
 	for _, r := range m.Bounce.Failed() {
 		if r.Email != d.Email || !r.Permanent() {
@@ -430,8 +433,7 @@ func (s *Server) applyNoticeDSN(ctx context.Context, ch store.FindEmailChannelBy
 func (s *Server) applyNoticeSES(ctx context.Context, id string, recipients []bounced, tenant string) error {
 	d, err := s.st.FindStatusNoticeDeliveryAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {
-		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
-		return nil
+		return s.applyConfirmationSES(ctx, id, recipients)
 	}
 	if err != nil {
 		return err
@@ -458,5 +460,93 @@ func (s *Server) applyNoticeSES(ctx context.Context, id string, recipients []bou
 		}
 	}
 	s.log.InfoContext(ctx, "ses notification names no recipient of the message", slog.String("message_id", id))
+	return nil
+}
+
+// The report reaches the workspace owning the server's address, so the confirmation is found by its Message-ID in any.
+func (s *Server) applyConfirmationDSN(ctx context.Context, m *email.Message) (IngestResult, bool, error) {
+	for _, id := range slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References) {
+		if id == "" {
+			continue
+		}
+		c, err := s.st.FindEmailConfirmationByHeaderAnyWorkspace(ctx, id)
+		if store.IsNotFound(err) {
+			continue
+		}
+		if err != nil {
+			return IngestResult{}, false, err
+		}
+		for _, r := range m.Bounce.Failed() {
+			if !strings.EqualFold(r.Email, c.Email) || !r.Permanent() {
+				continue
+			}
+			if err := s.confirmationBounced(ctx, c, strings.TrimSpace(r.Status+" "+r.Diagnostic)); err != nil {
+				return IngestResult{}, false, err
+			}
+			break
+		}
+		return IngestResult{Status: IngestBounce}, true, nil
+	}
+	return IngestResult{}, false, nil
+}
+
+func (s *Server) applyConfirmationSES(ctx context.Context, id string, recipients []bounced) error {
+	c, err := s.st.FindEmailConfirmationByHeaderAnyWorkspace(ctx, id)
+	if store.IsNotFound(err) {
+		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	for _, r := range recipients {
+		switch {
+		case !strings.EqualFold(r.email, c.Email):
+		case r.reason == suppressComplaint:
+			return s.confirmationComplained(ctx, c, r.detail)
+		case r.permanent:
+			return s.confirmationBounced(ctx, c, r.detail)
+		}
+	}
+	s.log.InfoContext(ctx, "ses notification names no recipient of the message", slog.String("message_id", id))
+	return nil
+}
+
+func (s *Server) confirmationBounced(ctx context.Context, c store.FindEmailConfirmationByHeaderAnyWorkspaceRow, detail string) error {
+	return s.inTx(ctx, c.WorkspaceID, func(q *store.Queries, events *eventBatch) error {
+		if err := q.SuppressConfirmations(ctx, store.SuppressConfirmationsParams{WorkspaceID: c.WorkspaceID, Email: c.Email, Reason: suppressBounce, Detail: truncateRunes(detail, 2000), Now: s.now()}); err != nil {
+			return err
+		}
+		contactID, err := q.MarkEmailConfirmationBounced(ctx, store.MarkEmailConfirmationBouncedParams{WorkspaceID: c.WorkspaceID, ID: c.ID, Now: s.now()})
+		return s.confirmationEnded(ctx, q, events, c.WorkspaceID, contactID, err)
+	})
+}
+
+func (s *Server) confirmationComplained(ctx context.Context, c store.FindEmailConfirmationByHeaderAnyWorkspaceRow, detail string) error {
+	return s.inTx(ctx, c.WorkspaceID, func(q *store.Queries, events *eventBatch) error {
+		if err := q.SuppressConfirmations(ctx, store.SuppressConfirmationsParams{WorkspaceID: c.WorkspaceID, Email: c.Email, Reason: suppressComplaint, Detail: truncateRunes(detail, 2000), Now: s.now()}); err != nil {
+			return err
+		}
+		contactID, err := q.MarkEmailConfirmationComplained(ctx, store.MarkEmailConfirmationComplainedParams{WorkspaceID: c.WorkspaceID, ID: c.ID, Now: s.now()})
+		return s.confirmationEnded(ctx, q, events, c.WorkspaceID, contactID, err)
+	})
+}
+
+func (s *Server) confirmationEnded(ctx context.Context, q *store.Queries, events *eventBatch, ws, contactID uuid.UUID, markErr error) error {
+	if store.IsNotFound(markErr) {
+		return nil
+	}
+	if markErr != nil {
+		return markErr
+	}
+	row, err := q.GetContact(ctx, store.GetContactParams{WorkspaceID: ws, ID: contactID})
+	if err != nil {
+		return err
+	}
+	body, err := s.contactBody(ctx, q, ws, allInboxScope, row)
+	if err != nil {
+		return err
+	}
+	events.add(realtime.ContactUpdated, nil, nil, body)
 	return nil
 }

@@ -180,6 +180,8 @@ func transaction(c *smtp.Client, from string, to []string, msg []byte) (string, 
 	return data(c, msg)
 }
 
+func Data(c *smtp.Client, msg []byte) (string, error) { return data(c, msg) }
+
 // data sends DATA through the client's text connection, because net/smtp drops the final reply's
 // text, which is where a relay names the id it gave the message.
 func data(c *smtp.Client, msg []byte) (string, error) {

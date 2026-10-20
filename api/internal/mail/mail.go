@@ -25,6 +25,7 @@ import (
 	"time"
 
 	"github.com/productdevbook/yuva/api/internal/config"
+	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/mail/style"
 )
 
@@ -35,6 +36,10 @@ type Message struct {
 	HTML    string
 	// Unsubscribe is a one-click unsubscribe URL (RFC 8058), sent as List-Unsubscribe.
 	Unsubscribe string
+	// MessageID is without angle brackets; empty makes a random one.
+	MessageID string
+	// OnRelayed gets the Message-ID a relay such as Amazon SES put on the mail in place of ours.
+	OnRelayed func(ctx context.Context, relayID string)
 }
 
 type Mailer interface {
@@ -274,21 +279,20 @@ func (s SMTP) Send(ctx context.Context, m Message) error {
 	if err := c.Rcpt(m.To); err != nil {
 		return err
 	}
-	w, err := c.Data()
+	reply, err := email.Data(c, compose(from, m))
 	if err != nil {
 		return err
 	}
-	if _, err := w.Write(compose(from, m)); err != nil {
-		return err
+	if relayID := email.RelayMessageID(s.Config.Host, email.DataReplyID(reply)); relayID != "" && m.OnRelayed != nil {
+		m.OnRelayed(ctx, relayID)
 	}
-	if err := w.Close(); err != nil {
-		return err
-	}
-	return c.Quit()
+	// The relay accepted the mail with its reply to DATA; a failing QUIT does not unsend it.
+	_ = c.Quit()
+	return nil
 }
 
 func checkHeaders(m Message) error {
-	for name, v := range map[string]string{"To": m.To, "List-Unsubscribe": m.Unsubscribe} {
+	for name, v := range map[string]string{"To": m.To, "List-Unsubscribe": m.Unsubscribe, "Message-ID": m.MessageID} {
 		if strings.ContainsFunc(v, func(r rune) bool { return r < 0x20 || r == 0x7f }) {
 			return fmt.Errorf("mail: %s has a control character", name)
 		}
@@ -302,14 +306,18 @@ func compose(from *mail.Address, m Message) []byte {
 	if _, d, ok := strings.Cut(from.Address, "@"); ok {
 		domain = d
 	}
-	id := make([]byte, 16)
-	_, _ = rand.Read(id)
+	msgID := m.MessageID
+	if msgID == "" {
+		id := make([]byte, 16)
+		_, _ = rand.Read(id)
+		msgID = hex.EncodeToString(id) + "@" + domain
+	}
 	header := func(k, v string) { b.WriteString(k + ": " + v + "\r\n") }
 	header("From", from.String())
 	header("To", m.To)
 	header("Subject", mime.QEncoding.Encode("utf-8", m.Subject))
 	header("Date", time.Now().UTC().Format(time.RFC1123Z))
-	header("Message-ID", "<"+hex.EncodeToString(id)+"@"+domain+">")
+	header("Message-ID", "<"+msgID+">")
 	header("Auto-Submitted", "auto-generated")
 	if m.Unsubscribe != "" {
 		header("List-Unsubscribe", "<"+m.Unsubscribe+">")

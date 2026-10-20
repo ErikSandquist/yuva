@@ -442,3 +442,68 @@ func TestOperatorDigest(t *testing.T) {
 		checkHTML(t, "operator_digest", m.HTML)
 	}
 }
+
+func TestSMTPQuitsAfterDataAndIgnoresAFailedQuit(t *testing.T) {
+	for _, dropAfterData := range []bool{false, true} {
+		ln, err := net.Listen("tcp", "127.0.0.1:0")
+		if err != nil {
+			t.Fatal(err)
+		}
+		cmds := make(chan string, 16)
+		go func() {
+			defer close(cmds)
+			conn, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			defer conn.Close()
+			r := bufio.NewReader(conn)
+			say := func(s string) { _, _ = conn.Write([]byte(s + "\r\n")) }
+			say("220 test")
+			for {
+				line, err := r.ReadString('\n')
+				if err != nil {
+					return
+				}
+				cmd := strings.ToUpper(strings.TrimSpace(line))
+				cmds <- strings.Fields(cmd + " x")[0]
+				switch {
+				case strings.HasPrefix(cmd, "EHLO"):
+					say("250 test")
+				case cmd == "DATA":
+					say("354 go on")
+					for l, err := r.ReadString('\n'); l != ".\r\n"; l, err = r.ReadString('\n') {
+						if err != nil {
+							return
+						}
+					}
+					say("250 Ok 0102019a00000000-11111111-2222-3333-4444-555555555555-000000")
+					if dropAfterData {
+						return
+					}
+				case cmd == "QUIT":
+					say("221 bye")
+					return
+				default:
+					say("250 ok")
+				}
+			}
+		}()
+		s := mail.SMTP{Config: config.SMTP{Host: "127.0.0.1", Port: ln.Addr().(*net.TCPAddr).Port, TLS: "none", From: "Yuva <yuva@example.com>"}}
+		if err := s.Send(context.Background(), mail.Message{To: "success@simulator.amazonses.com", Subject: "s", Text: "t"}); err != nil {
+			t.Fatalf("drop after DATA %v: %v", dropAfterData, err)
+		}
+		var seen []string
+		for c := range cmds {
+			seen = append(seen, c)
+		}
+		ln.Close()
+		want := []string{"EHLO", "MAIL", "RCPT", "DATA", "QUIT"}
+		if dropAfterData {
+			want = want[:4]
+		}
+		if !slices.Equal(seen, want) {
+			t.Errorf("drop after DATA %v: commands %v, want %v", dropAfterData, seen, want)
+		}
+	}
+}

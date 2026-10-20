@@ -361,6 +361,43 @@ func (q *Queries) DeleteEmailChannelDkimKey(ctx context.Context, arg DeleteEmail
 	return err
 }
 
+const deleteExpiredConfirmationBounces = `-- name: DeleteExpiredConfirmationBounces :execrows
+DELETE FROM email_suppressions
+WHERE workspace_id = $1 AND scope = 'confirmations' AND reason = 'bounce' AND created_at <= $2
+`
+
+type DeleteExpiredConfirmationBouncesParams struct {
+	WorkspaceID uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) DeleteExpiredConfirmationBounces(ctx context.Context, arg DeleteExpiredConfirmationBouncesParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteExpiredConfirmationBounces, arg.WorkspaceID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const emailSuppressionReason = `-- name: EmailSuppressionReason :one
+SELECT reason FROM email_suppressions
+WHERE workspace_id = $1 AND email = $2
+  AND NOT (scope = 'confirmations' AND reason = 'bounce' AND created_at <= $3)
+`
+
+type EmailSuppressionReasonParams struct {
+	WorkspaceID uuid.UUID
+	Email       string
+	Expired     time.Time
+}
+
+func (q *Queries) EmailSuppressionReason(ctx context.Context, arg EmailSuppressionReasonParams) (string, error) {
+	row := q.db.QueryRow(ctx, emailSuppressionReason, arg.WorkspaceID, arg.Email, arg.Expired)
+	var reason string
+	err := row.Scan(&reason)
+	return reason, err
+}
+
 const findConversationByEmailToken = `-- name: FindConversationByEmailToken :one
 SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND email_token = ANY($3::text[])
 ORDER BY (contact_id = $4) DESC, created_at DESC
@@ -1091,7 +1128,7 @@ func (q *Queries) ListContactRawKeys(ctx context.Context, arg ListContactRawKeys
 const listContactSuppressions = `-- name: ListContactSuppressions :many
 SELECT e.contact_id, s.email, s.reason, s.detail, s.created_at FROM email_suppressions s
 JOIN contact_emails e ON e.workspace_id = s.workspace_id AND e.email = s.email
-WHERE s.workspace_id = $1 AND e.contact_id = ANY($2::uuid[])
+WHERE s.workspace_id = $1 AND e.contact_id = ANY($2::uuid[]) AND s.scope <> 'confirmations'
 ORDER BY e.contact_id, e.position
 `
 
@@ -1596,6 +1633,33 @@ type SetRelayMessageIDParams struct {
 
 func (q *Queries) SetRelayMessageID(ctx context.Context, arg SetRelayMessageIDParams) error {
 	_, err := q.db.Exec(ctx, setRelayMessageID, arg.RelayMessageID, arg.WorkspaceID, arg.MessageID)
+	return err
+}
+
+const suppressConfirmations = `-- name: SuppressConfirmations :exec
+INSERT INTO email_suppressions (workspace_id, email, reason, detail, scope, created_at)
+VALUES ($1, $2, $3, $4, 'confirmations', $5)
+ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, created_at = excluded.created_at
+WHERE email_suppressions.scope = 'confirmations' AND email_suppressions.reason = 'bounce'
+`
+
+type SuppressConfirmationsParams struct {
+	WorkspaceID uuid.UUID
+	Email       string
+	Reason      string
+	Detail      string
+	Now         time.Time
+}
+
+// Stops only confirmation mails; any other suppression replaces it, and a complaint is never turned back into a bounce.
+func (q *Queries) SuppressConfirmations(ctx context.Context, arg SuppressConfirmationsParams) error {
+	_, err := q.db.Exec(ctx, suppressConfirmations,
+		arg.WorkspaceID,
+		arg.Email,
+		arg.Reason,
+		arg.Detail,
+		arg.Now,
+	)
 	return err
 }
 

@@ -310,22 +310,65 @@ LIMIT 1;
 DELETE FROM contact_sessions WHERE workspace_id = @workspace_id AND expires_at < @before;
 
 -- name: CreateEmailConfirmation :exec
-INSERT INTO email_confirmations (workspace_id, id, contact_id, inbox_id, email, token_hash, created_at, expires_at)
-VALUES (@workspace_id, @id, @contact_id, @inbox_id, @email, @token_hash, @now, @expires_at);
+INSERT INTO email_confirmations (workspace_id, id, contact_id, inbox_id, email, token_hash, header_message_id, created_at, expires_at)
+VALUES (@workspace_id, @id, @contact_id, @inbox_id, @email, @token_hash, @header_message_id, @now, @expires_at);
 
 -- name: CountEmailConfirmations :one
 SELECT count(*) FROM email_confirmations WHERE workspace_id = @workspace_id AND contact_id = @contact_id AND created_at > @since;
 
 -- name: GetEmailConfirmation :one
 SELECT contact_id, inbox_id, email FROM email_confirmations
-WHERE workspace_id = @workspace_id AND token_hash = @token_hash AND expires_at > @now;
+WHERE workspace_id = @workspace_id AND token_hash = @token_hash AND expires_at > @now
+  AND confirmed_at IS NULL AND bounced_at IS NULL AND complained_at IS NULL;
 
 -- name: TakeEmailConfirmation :one
-DELETE FROM email_confirmations WHERE workspace_id = @workspace_id AND token_hash = @token_hash AND expires_at > @now
-RETURNING contact_id, inbox_id, email;
+UPDATE email_confirmations SET confirmed_at = @now::timestamptz
+WHERE workspace_id = @workspace_id AND token_hash = @token_hash AND expires_at > @now
+  AND confirmed_at IS NULL AND bounced_at IS NULL AND complained_at IS NULL
+RETURNING id, contact_id, inbox_id, email;
+
+-- name: DeleteEmailConfirmation :exec
+DELETE FROM email_confirmations WHERE workspace_id = @workspace_id AND id = @id;
 
 -- name: DeleteContactEmailConfirmations :exec
-DELETE FROM email_confirmations WHERE workspace_id = @workspace_id AND (contact_id = @contact_id OR expires_at <= @now);
+DELETE FROM email_confirmations WHERE workspace_id = @workspace_id AND contact_id = @contact_id AND id <> @keep;
+
+-- name: DeleteOldEmailConfirmations :execrows
+DELETE FROM email_confirmations WHERE workspace_id = @workspace_id AND expires_at <= @before;
+
+-- name: SetEmailConfirmationRelayID :exec
+UPDATE email_confirmations SET relay_message_id = @relay_message_id WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: LatestEmailConfirmation :one
+SELECT email, expires_at, bounced_at, confirmed_at FROM email_confirmations
+WHERE workspace_id = @workspace_id AND contact_id = @contact_id
+ORDER BY created_at DESC, id DESC
+LIMIT 1;
+
+-- name: FindEmailConfirmationByHeaderAnyWorkspace :one
+SELECT c.workspace_id, c.id, c.contact_id, c.email FROM email_confirmations c
+JOIN workspaces w ON w.id = c.workspace_id
+WHERE (c.header_message_id = @message_id::text OR c.relay_message_id = @message_id::text) AND w.deleted_at IS NULL
+LIMIT 1;
+
+-- name: MarkEmailConfirmationBounced :one
+UPDATE email_confirmations c SET bounced_at = @now::timestamptz
+WHERE c.workspace_id = @workspace_id AND c.id = @id AND c.bounced_at IS NULL AND c.confirmed_at IS NULL
+  AND c.expires_at > @now::timestamptz
+  AND EXISTS (SELECT 1 FROM contacts ct WHERE ct.workspace_id = c.workspace_id AND ct.id = c.contact_id AND ct.typed_email = c.email)
+  AND NOT EXISTS (
+    SELECT 1 FROM email_confirmations n
+    WHERE n.workspace_id = c.workspace_id AND n.contact_id = c.contact_id AND (n.created_at, n.id) > (c.created_at, c.id))
+RETURNING c.contact_id;
+
+-- name: MarkEmailConfirmationComplained :one
+UPDATE email_confirmations SET complained_at = @now::timestamptz
+WHERE workspace_id = @workspace_id AND id = @id AND bounced_at IS NULL AND confirmed_at IS NULL AND complained_at IS NULL
+RETURNING contact_id;
+
+-- name: CreateBouncedEmailConfirmation :exec
+INSERT INTO email_confirmations (workspace_id, id, contact_id, inbox_id, email, token_hash, created_at, expires_at, bounced_at)
+VALUES (@workspace_id, @id, @contact_id, @inbox_id, @email, @token_hash, @now, @expires_at, @now);
 
 -- name: DeleteExpiredIdentityTokenIDs :exec
 DELETE FROM identity_token_ids WHERE workspace_id = @workspace_id AND inbox_id = @inbox_id AND expires_at <= @now;

@@ -741,7 +741,7 @@ func (q *Queries) StartListImport(ctx context.Context, arg StartListImportParams
 }
 
 const suppressedEmailsIn = `-- name: SuppressedEmailsIn :many
-SELECT DISTINCT email FROM email_suppressions WHERE workspace_id = $1 AND email = ANY($2::text[])
+SELECT DISTINCT email FROM email_suppressions WHERE workspace_id = $1 AND email = ANY($2::text[]) AND scope <> 'confirmations'
 `
 
 type SuppressedEmailsInParams struct {

@@ -488,7 +488,7 @@ func (q *Queries) GetSubscription(ctx context.Context, arg GetSubscriptionParams
 }
 
 const isEmailSuppressedAnyScope = `-- name: IsEmailSuppressedAnyScope :one
-SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2) AS suppressed
+SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope <> 'confirmations') AS suppressed
 `
 
 type IsEmailSuppressedAnyScopeParams struct {

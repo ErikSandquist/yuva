@@ -564,6 +564,38 @@ conversation as their message, marked `unverified_sender` (its `from` is not one
 addresses, computed when read), and links nothing; once the address is confirmed it is the
 contact's and the mark goes away.
 
+The visitor, not the inbox, learns what became of the link. Each request leaves an
+`email_confirmations` row (deleted by the event cleanup job 30 days after it expires) and the client contact carries
+`email_confirmation` `{email, state, expires_at}`: `sent` (with the link's expiry), `undeliverable`
+or `confirmed` (only while that address is still the contact's first). Before mailing, one helper
+reads the address's suppression in the workspace, for the chat form and the feedback form alike: a
+bounce of any scope is public knowledge (anyone can mail the address) and the row is stored bounced
+and shown `undeliverable`, with nothing sent; a complaint or manual suppression stores an ordinary
+row and sends nothing, so the answer is `sent` exactly as for a clean address and the endpoint tells
+nobody what is on the suppression list. Confirmation mails go out through the server mailer with
+their own Message-ID (`confirm.<random>@<sender domain>`), stored on the row with the id a relay
+put in its place (Amazon SES names its own in the reply to DATA and in its delivery reports). A delivery report
+(inbound DSN after the reply, broadcast and notice lookups, under the same null-sender and
+`Final-Recipient` rules, the address compared without case) or an SES notification (server mail,
+so no tenant check) finds the row by that Message-ID or the relay's. A permanent failure of its own
+address always suppresses the address with scope `confirmations` (the bounce is about the address,
+not the row), and marks the row bounced and tells the visitor only while it is unconfirmed,
+unexpired, the contact's latest and still their typed address. The scope stops confirmation mails
+and nothing else (replies, notices,
+broadcasts, list imports and the contact's undeliverable list ignore it; any wider suppression
+replaces it and it never narrows one). Such a bounce expires after 30 days (ignored, then deleted by
+the cleanup job), so a mailbox that did not exist yet is not locked out. A complaint about a
+confirmation (SES notification or ARF report) suppresses the address with the same scope, reason
+`complaint`, which never expires, and ends a live link: it stops working and the visitor sees what
+the silent case shows. Temporary failures change nothing; no report about a
+confirmation opens a conversation or a contact. Every change reaches the visitor's
+`/client/v1/realtime` as a stored `contact.updated` frame carrying the `ClientContact`, sent only
+when what it shows changed. The row is found across workspaces (`FindEmailConfirmationByHeaderAnyWorkspace`),
+an exception to the `workspace_id` rule: the server mailer sends every workspace's confirmations
+from one address, so the report arrives at whichever workspace owns that address, and SES names
+only the message. The Message-ID is random and given only to the one recipient, the report must name
+that recipient, and everything after the lookup is scoped by the row's own `workspace_id`.
+
 ### E-mail
 
 Inbound:

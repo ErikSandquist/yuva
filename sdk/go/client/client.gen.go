@@ -1452,6 +1452,21 @@ func (e ChatLauncherPosition) Valid() bool {
 	}
 }
 
+// Defines values for ClientContactUpdatedEventType.
+const (
+	ClientContactUpdatedEventTypeContactUpdated ClientContactUpdatedEventType = "contact.updated"
+)
+
+// Valid indicates whether the value is a known member of the ClientContactUpdatedEventType enum.
+func (e ClientContactUpdatedEventType) Valid() bool {
+	switch e {
+	case ClientContactUpdatedEventTypeContactUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ClientConversationCreatedEventType.
 const (
 	ClientConversationCreatedEventTypeConversationCreated ClientConversationCreatedEventType = "conversation.created"
@@ -1476,6 +1491,27 @@ const (
 func (e ClientConversationUpdatedEventType) Valid() bool {
 	switch e {
 	case ClientConversationUpdatedEventTypeConversationUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ClientEmailConfirmationState.
+const (
+	EmailConfirmationConfirmed     ClientEmailConfirmationState = "confirmed"
+	EmailConfirmationSent          ClientEmailConfirmationState = "sent"
+	EmailConfirmationUndeliverable ClientEmailConfirmationState = "undeliverable"
+)
+
+// Valid indicates whether the value is a known member of the ClientEmailConfirmationState enum.
+func (e ClientEmailConfirmationState) Valid() bool {
+	switch e {
+	case EmailConfirmationConfirmed:
+		return true
+	case EmailConfirmationSent:
+		return true
+	case EmailConfirmationUndeliverable:
 		return true
 	default:
 		return false
@@ -8366,8 +8402,13 @@ type ClientContact struct {
 	// Email The contact's first verified address (from an identity token or their own mail).
 	//
 	// Examples: owner@example.com
-	Email *Email    `json:"email,omitempty"`
-	Id    uuid.UUID `json:"id"`
+	Email *Email `json:"email,omitempty"`
+
+	// EmailConfirmation Where the confirmation of the typed address stands. Absent when no link is out for the
+	// address shown: none was due (a contact already has the address, or the hourly limit was
+	// reached) or the last one expired after 24 hours.
+	EmailConfirmation *ClientEmailConfirmation `json:"email_confirmation,omitempty"`
+	Id                uuid.UUID                `json:"id"`
 
 	// Identified The session was started with an identity token.
 	Identified bool   `json:"identified"`
@@ -8378,6 +8419,17 @@ type ClientContact struct {
 	// Examples: owner@example.com
 	TypedEmail *Email `json:"typed_email,omitempty"`
 }
+
+// ClientContactUpdatedEvent The session's contact changed in what `ClientContact` shows.
+type ClientContactUpdatedEvent struct {
+	CreatedAt time.Time                     `json:"created_at"`
+	Data      ClientContact                 `json:"data"`
+	Id        int64                         `json:"id"`
+	Type      ClientContactUpdatedEventType `json:"type"`
+}
+
+// ClientContactUpdatedEventType defines model for ClientContactUpdatedEvent.Type.
+type ClientContactUpdatedEventType string
 
 // ClientConversation defines model for ClientConversation.
 type ClientConversation struct {
@@ -8513,6 +8565,31 @@ type ClientDiscussionPostUpdate struct {
 	// Title Opening post only.
 	Title *string `json:"title,omitempty"`
 }
+
+// ClientEmailConfirmation Where the confirmation of the typed address stands. Absent when no link is out for the
+// address shown: none was due (a contact already has the address, or the hourly limit was
+// reached) or the last one expired after 24 hours.
+type ClientEmailConfirmation struct {
+	// Email The address the link went to, `typed_email` until it is confirmed.
+	//
+	// Examples: owner@example.com
+	Email Email `json:"email"`
+
+	// ExpiresAt `sent` only: when the link runs out; after it the confirmation is absent.
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+
+	// State `sent`: a confirmation link went to `email` and was neither confirmed nor bounced yet ("we
+	// sent a link to …, check your inbox"). `undeliverable`: mail to `email` cannot be delivered
+	// (the link bounced, or the address bounced before); ask for another address. `confirmed`:
+	// the link was confirmed and `email` is the contact's `email`.
+	State ClientEmailConfirmationState `json:"state"`
+}
+
+// ClientEmailConfirmationState `sent`: a confirmation link went to `email` and was neither confirmed nor bounced yet ("we
+// sent a link to …, check your inbox"). `undeliverable`: mail to `email` cannot be delivered
+// (the link bounced, or the address bounced before); ask for another address. `confirmed`:
+// the link was confirmed and `email` is the contact's `email`.
+type ClientEmailConfirmationState string
 
 // ClientEmailUpdate defines model for ClientEmailUpdate.
 type ClientEmailUpdate struct {
@@ -20590,6 +20667,32 @@ func (t *ClientRealtimeMessage) MergeClientInboxUpdatedEvent(v ClientInboxUpdate
 	return err
 }
 
+// AsClientContactUpdatedEvent returns the union data inside the ClientRealtimeMessage as a ClientContactUpdatedEvent
+func (t ClientRealtimeMessage) AsClientContactUpdatedEvent() (ClientContactUpdatedEvent, error) {
+	var body ClientContactUpdatedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromClientContactUpdatedEvent overwrites any union data inside the ClientRealtimeMessage as the provided ClientContactUpdatedEvent
+func (t *ClientRealtimeMessage) FromClientContactUpdatedEvent(v ClientContactUpdatedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeClientContactUpdatedEvent performs a merge with any union data inside the ClientRealtimeMessage, using the provided ClientContactUpdatedEvent
+func (t *ClientRealtimeMessage) MergeClientContactUpdatedEvent(v ClientContactUpdatedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsRealtimeReady returns the union data inside the ClientRealtimeMessage as a RealtimeReady
 func (t ClientRealtimeMessage) AsRealtimeReady() (RealtimeReady, error) {
 	var body RealtimeReady
@@ -20656,6 +20759,8 @@ func (t ClientRealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "contact.updated":
+		return t.AsClientContactUpdatedEvent()
 	case "conversation.created":
 		return t.AsClientConversationCreatedEvent()
 	case "conversation.updated":
@@ -24051,7 +24156,10 @@ type ClientInterface interface {
 	// existing contact; it is used only while the contact has no address from an identity token
 	// or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 	// has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-	// is confirmed.
+	// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+	// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+	// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+	// another one.
 	// Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 	//
 	// Takes any type of body and a specified content type.
@@ -24066,7 +24174,10 @@ type ClientInterface interface {
 	// existing contact; it is used only while the contact has no address from an identity token
 	// or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 	// has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-	// is confirmed.
+	// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+	// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+	// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+	// another one.
 	// Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 	//
 	// Takes a body of the `application/json` content type.
@@ -30920,7 +31031,10 @@ func (c *Client) CreateClientSubscription(ctx context.Context, channelKey Channe
 // existing contact; it is used only while the contact has no address from an identity token
 // or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 // has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-// is confirmed.
+// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+// another one.
 // Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 //
 // Takes any type of body and a specified content type.
@@ -30945,7 +31059,10 @@ func (c *Client) SetClientContactEmailWithBody(ctx context.Context, contentType 
 // existing contact; it is used only while the contact has no address from an identity token
 // or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 // has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-// is confirmed.
+// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+// another one.
 // Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 //
 // Takes a body of the `application/json` content type.
@@ -64031,7 +64148,10 @@ type ClientWithResponsesInterface interface {
 	// existing contact; it is used only while the contact has no address from an identity token
 	// or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 	// has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-	// is confirmed.
+	// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+	// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+	// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+	// another one.
 	// Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -64046,7 +64166,10 @@ type ClientWithResponsesInterface interface {
 	// existing contact; it is used only while the contact has no address from an identity token
 	// or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 	// has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-	// is confirmed.
+	// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+	// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+	// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+	// another one.
 	// Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -94986,7 +95109,10 @@ func (c *ClientWithResponses) CreateClientSubscriptionWithResponse(ctx context.C
 // existing contact; it is used only while the contact has no address from an identity token
 // or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 // has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-// is confirmed.
+// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+// another one.
 // Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -95007,7 +95133,10 @@ func (c *ClientWithResponses) SetClientContactEmailWithBodyWithResponse(ctx cont
 // existing contact; it is used only while the contact has no address from an identity token
 // or from their own mail. Yuva mails the address a confirmation link (unless a contact already
 // has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-// is confirmed.
+// is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+// `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+// address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+// another one.
 // Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).

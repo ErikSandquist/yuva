@@ -7070,7 +7070,10 @@ export interface paths {
          *     existing contact; it is used only while the contact has no address from an identity token
          *     or from their own mail. Yuva mails the address a confirmation link (unless a contact already
          *     has it; at most 3 per hour); it becomes one of the contact's addresses only once that link
-         *     is confirmed.
+         *     is confirmed. `email_confirmation` on the answer says whether a link went out, and a
+         *     `contact.updated` frame on `/client/v1/realtime` brings its bounce or confirmation. An
+         *     address that bounced before is stored but not mailed and shows `undeliverable`: ask for
+         *     another one.
          *     Allowed when the channel asks for an address (`ask_email_offline`), else `403 forbidden`.
          */
         put: operations["setClientContactEmail"];
@@ -7284,8 +7287,8 @@ export interface paths {
         /**
          * A published status page
          * @description What the public status page shows, as JSON: the page, its overall state, the visible
-         *     components by group with their uptime, open incidents and running or planned maintenance, and
-         *     the incidents of the last 14 days. Needs no credentials and sends
+         *     components by group with their uptime (and their response times when the page shows them), open
+         *     incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
          *     `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
          *     (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
          *     slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -7317,7 +7320,7 @@ export interface paths {
          *
          *     Every server message is one JSON text frame matching `ClientRealtimeMessage`. Stored events
          *     (`conversation.created`, `conversation.updated`, `message.created`, `message.updated`,
-         *     `read`) carry an increasing `id`; resume exactly as on `/v1/realtime`: remember the larger
+         *     `read`, `contact.updated`) carry an increasing `id`; resume exactly as on `/v1/realtime`: remember the larger
          *     of `ready.last_event_id` and the last `id` received, reconnect with `?last_event_id=`, and
          *     reload over HTTP on `resync_required`. `typing`, `presence` and `inbox.updated` have no
          *     `id` and are not replayed. `message.*` carries only messages (no notes or internal events),
@@ -7331,6 +7334,10 @@ export interface paths {
          *     A connection resumed with `last_event_id` gets one `inbox.updated` right after `ready`
          *     with the current settings and status, since changes made while disconnected are not
          *     replayed; one opened without it starts from the settings fetched just before.
+         *     `contact.updated` carries the session's own contact, the same `ClientContact` as
+         *     `GET /client/v1/session`, whenever what it shows changes: the typed address, its
+         *     `email_confirmation` (a link sent, bounced or confirmed) or a confirmed `email`; replace the
+         *     contact shown with it. A resumed connection gets at most one, with the contact as it is now.
          *
          *     The server pings every 30 seconds; the client sends nothing. Close codes as on
          *     `/v1/realtime`: 1008 when the session ends or the contact is deleted (start a new session),
@@ -13793,9 +13800,33 @@ export interface components {
             email?: components["schemas"]["Email"];
             /** @description The address the contact typed, until it is verified. */
             typed_email?: components["schemas"]["Email"];
+            email_confirmation?: components["schemas"]["ClientEmailConfirmation"];
             /** @description The session was started with an identity token. */
             identified: boolean;
         };
+        /**
+         * @description Where the confirmation of the typed address stands. Absent when no link is out for the
+         *     address shown: none was due (a contact already has the address, or the hourly limit was
+         *     reached) or the last one expired after 24 hours.
+         */
+        ClientEmailConfirmation: {
+            /** @description The address the link went to, `typed_email` until it is confirmed. */
+            email: components["schemas"]["Email"];
+            state: components["schemas"]["ClientEmailConfirmationState"];
+            /**
+             * Format: date-time
+             * @description `sent` only: when the link runs out; after it the confirmation is absent.
+             */
+            expires_at?: string;
+        };
+        /**
+         * @description `sent`: a confirmation link went to `email` and was neither confirmed nor bounced yet ("we
+         *     sent a link to …, check your inbox"). `undeliverable`: mail to `email` cannot be delivered
+         *     (the link bounced, or the address bounced before); ask for another address. `confirmed`:
+         *     the link was confirmed and `email` is the contact's `email`.
+         * @enum {string}
+         */
+        ClientEmailConfirmationState: "sent" | "undeliverable" | "confirmed";
         ClientSessionInfo: {
             /**
              * Format: date-time
@@ -14088,8 +14119,21 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ClientInbox"];
         };
+        /** @description The session's contact changed in what `ClientContact` shows. */
+        ClientContactUpdatedEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "contact.updated";
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ClientContact"];
+        };
         /** @description One server message on `/client/v1/realtime`, told apart by `type`. */
-        ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["ClientContactUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android`
          *     apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
@@ -15220,6 +15264,11 @@ export interface components {
              */
             history_days: number;
             show_uptime: boolean;
+            /**
+             * @description Whether the public page and its JSON show the last 24 hours of response times of components
+             *     with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
+             */
+            show_response_times: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
@@ -15380,6 +15429,8 @@ export interface components {
             /** @description Default `true`. */
             show_uptime?: boolean;
             /** @description Default `false`. */
+            show_response_times?: boolean;
+            /** @description Default `false`. */
             published?: boolean;
         };
         StatusPageUpdate: {
@@ -15398,6 +15449,7 @@ export interface components {
             /** Format: int32 */
             history_days?: number;
             show_uptime?: boolean;
+            show_response_times?: boolean;
             published?: boolean;
             email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
             /**
@@ -16365,6 +16417,36 @@ export interface components {
             uptime?: number;
             /** @description Oldest first, the page's `history_days` ending today; when the page shows uptime. */
             days?: components["schemas"]["PublicStatusDay"][];
+            response_times?: components["schemas"]["PublicStatusResponseTimes"];
+        };
+        /**
+         * @description The last 24 hours of the component's `http` and `tcp` checks that succeeded, aggregated; only
+         *     when the page shows response times and the component has such a monitor. Addresses, errors
+         *     and status codes of checks are never public.
+         */
+        PublicStatusResponseTimes: {
+            /**
+             * Format: date-time
+             * @description The start of the first step.
+             */
+            from: string;
+            /**
+             * Format: int32
+             * @description The length of each step (900).
+             */
+            step_seconds: number;
+            /**
+             * Format: int32
+             * @description The median over the 24 hours; absent without a successful check.
+             */
+            median_ms?: number;
+            /**
+             * Format: int32
+             * @description The 95th percentile over the 24 hours; absent without a successful check.
+             */
+            p95_ms?: number;
+            /** @description Oldest first, one per step (96); the step's median, `null` without a successful check. */
+            points: (number | null)[];
         };
         PublicStatusGroup: {
             /** Format: uuid */

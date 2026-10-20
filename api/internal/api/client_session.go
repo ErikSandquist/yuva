@@ -165,7 +165,7 @@ func (s *Server) startContactSession(ctx context.Context, chat store.ChatChannel
 			return err
 		}
 		out.Token, out.ExpiresAt = token, sess.ExpiresAt
-		if out.Contact, err = clientContactBody(ctx, q, contact, claims != nil); err != nil {
+		if out.Contact, err = s.clientContactBody(ctx, q, contact, claims != nil); err != nil {
 			return err
 		}
 		out.Inbox, err = s.clientInbox(ctx, q, inbox, chat)
@@ -407,7 +407,7 @@ func (s *Server) mergeContact(ctx context.Context, q *store.Queries, events *eve
 	return nil
 }
 
-func clientContactBody(ctx context.Context, q *store.Queries, c contactRow, identified bool) (oas.ClientContact, error) {
+func (s *Server) clientContactBody(ctx context.Context, q *store.Queries, c contactRow, identified bool) (oas.ClientContact, error) {
 	out := oas.ClientContact{Id: c.ID, Name: c.Name, Identified: identified}
 	emails, err := q.ListContactEmails(ctx, store.ListContactEmailsParams{WorkspaceID: c.WorkspaceID, ContactIds: []uuid.UUID{c.ID}})
 	if err != nil {
@@ -421,7 +421,8 @@ func clientContactBody(ctx context.Context, q *store.Queries, c contactRow, iden
 		e := oas.Email(*c.TypedEmail)
 		out.TypedEmail = &e
 	}
-	return out, nil
+	out.EmailConfirmation, err = s.emailConfirmationState(ctx, q, c, (*string)(out.Email))
+	return out, err
 }
 
 func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inbox, chat store.ChatChannel) (oas.ClientInbox, error) {
@@ -467,7 +468,7 @@ func (s *Server) clientSessionInfo(ctx context.Context, cp contactPrincipal) (oa
 		return out, err
 	}
 	out.ExpiresAt = cp.expiresAt
-	if out.Contact, err = clientContactBody(ctx, s.st.Queries, c, cp.identified); err != nil {
+	if out.Contact, err = s.clientContactBody(ctx, s.st.Queries, c, cp.identified); err != nil {
 		return out, err
 	}
 	out.Inbox, err = s.clientInbox(ctx, s.st.Queries, in, cp.chat)
@@ -514,7 +515,7 @@ func (s *Server) SetClientContactEmail(ctx context.Context, req oas.SetClientCon
 		if confirm, err = s.confirmTypedEmail(ctx, q, cp, addr); err != nil {
 			return err
 		}
-		if out, err = clientContactBody(ctx, q, contactRow(r), cp.identified); err != nil {
+		if out, err = s.clientContactBody(ctx, q, contactRow(r), cp.identified); err != nil {
 			return err
 		}
 		body, err := s.contactBody(ctx, q, cp.workspaceID, allInboxScope, contactRow(r))

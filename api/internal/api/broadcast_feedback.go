@@ -429,7 +429,7 @@ func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChan
 	}
 	sent, err := s.st.FindOutboundEmailByHeader(ctx, store.FindOutboundEmailByHeaderParams{WorkspaceID: ch.WorkspaceID, HeaderMessageID: f.OriginalMessageID})
 	if store.IsNotFound(err) {
-		return IngestResult{}, false, nil
+		return s.applyConfirmationFeedback(ctx, f)
 	}
 	if err != nil {
 		return IngestResult{}, false, err
@@ -608,4 +608,21 @@ func (s *Server) CleanBroadcasts(ctx context.Context) error {
 		}
 	}
 	return nil
+}
+
+func (s *Server) applyConfirmationFeedback(ctx context.Context, f *email.Feedback) (IngestResult, bool, error) {
+	c, err := s.st.FindEmailConfirmationByHeaderAnyWorkspace(ctx, f.OriginalMessageID)
+	if store.IsNotFound(err) {
+		return IngestResult{}, false, nil
+	}
+	if err != nil {
+		return IngestResult{}, false, err
+	}
+	if f.OriginalRcptTo != "" && !strings.EqualFold(f.OriginalRcptTo, c.Email) {
+		return IngestResult{}, false, nil
+	}
+	if err := s.confirmationComplained(ctx, c, "feedback report: "+f.Type); err != nil {
+		return IngestResult{}, false, err
+	}
+	return IngestResult{Status: IngestBounce}, true, nil
 }

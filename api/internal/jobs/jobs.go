@@ -36,6 +36,7 @@ const (
 	EventRetention              = 7 * 24 * time.Hour
 	WebhookRetention            = 7 * 24 * time.Hour
 	IdempotencyRetention        = 24 * time.Hour
+	EmailConfirmationRetention  = 30 * 24 * time.Hour
 	UnusedOAuthClientAge        = 30 * 24 * time.Hour
 	PresenceSweepInterval       = time.Minute
 	OperatorDigestInterval      = time.Minute
@@ -310,6 +311,12 @@ func (w *EventCleanupWorker) Work(ctx context.Context, _ *river.Job[EventCleanup
 			return fmt.Errorf("workspace %s: %w", id, err)
 		}
 		if _, err := w.Queries.DeleteExpiredOAuthCodes(ctx, store.DeleteExpiredOAuthCodesParams{WorkspaceID: id, Before: w.Now()}); err != nil {
+			return fmt.Errorf("workspace %s: %w", id, err)
+		}
+		if _, err := w.Queries.DeleteOldEmailConfirmations(ctx, store.DeleteOldEmailConfirmationsParams{WorkspaceID: id, Before: w.Now().Add(-EmailConfirmationRetention)}); err != nil {
+			return fmt.Errorf("workspace %s: %w", id, err)
+		}
+		if _, err := w.Queries.DeleteExpiredConfirmationBounces(ctx, store.DeleteExpiredConfirmationBouncesParams{WorkspaceID: id, Before: w.Now().Add(-EmailConfirmationRetention)}); err != nil {
 			return fmt.Errorf("workspace %s: %w", id, err)
 		}
 	}

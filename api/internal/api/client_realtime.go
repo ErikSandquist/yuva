@@ -28,6 +28,7 @@ type clientFrame struct {
 const (
 	clientPresenceFrame = "presence"
 	clientInboxFrame    = "inbox.updated"
+	clientContactFrame  = "contact.updated"
 	// statusUnsent marks a conversation whose status a resuming connection may have missed, so the
 	// next change, replayed or live, is sent even when it equals the current status.
 	statusUnsent = ""
@@ -98,6 +99,10 @@ func (s *Server) clientStream(conn *websocket.Conn, r *http.Request, cp contactP
 	defer s.hub.Unsubscribe(sub)
 	f := &clientFilter{s: s, cp: cp, names: map[uuid.UUID]string{}, readAt: map[uuid.UUID]time.Time{}}
 	if err := f.load(ctx, resumeFrom != nil); err != nil {
+		var cs *closeStream
+		if errors.As(err, &cs) {
+			return cs.code, cs.reason, nil
+		}
 		return websocket.StatusInternalError, "internal", err
 	}
 	connID := newID()
@@ -256,6 +261,7 @@ type clientFilter struct {
 	inbox    store.Inbox
 	chat     store.ChatChannel
 	settings []byte
+	contact  []byte
 	convs    map[uuid.UUID]string
 	names    map[uuid.UUID]string
 	readAt   map[uuid.UUID]time.Time
@@ -270,6 +276,16 @@ func (f *clientFilter) load(ctx context.Context, resuming bool) error {
 	f.inbox, f.chat = in, f.cp.chat
 	if _, err := f.inboxFrames(ctx); err != nil {
 		return err
+	}
+	if !resuming {
+		c, err := f.clientContact(ctx)
+		if store.IsNotFound(err) {
+			return &closeStream{websocket.StatusPolicyViolation, "unauthenticated"}
+		}
+		if err != nil {
+			return err
+		}
+		f.contact = mustJSON(c)
 	}
 	rows, err := f.s.st.ListContactConversationIDs(ctx, store.ListContactConversationIDsParams{
 		WorkspaceID: f.cp.workspaceID, InboxID: f.cp.inboxID, ContactID: f.cp.contactID,
@@ -375,6 +391,30 @@ func (f *clientFilter) inboxFrames(ctx context.Context) ([]any, error) {
 		return nil, nil
 	}
 	return []any{oas.ClientInboxUpdatedEvent{Type: oas.ClientInboxUpdatedEventType(clientInboxFrame), CreatedAt: f.s.now(), Data: in}}, nil
+}
+
+func (f *clientFilter) clientContact(ctx context.Context) (oas.ClientContact, error) {
+	c, err := f.s.st.GetContact(ctx, store.GetContactParams{WorkspaceID: f.cp.workspaceID, ID: f.cp.contactID})
+	if err != nil {
+		return oas.ClientContact{}, err
+	}
+	return f.s.clientContactBody(ctx, f.s.st.Queries, c, f.cp.identified)
+}
+
+func (f *clientFilter) contactFrames(ctx context.Context, e realtime.Event) ([]any, error) {
+	c, err := f.clientContact(ctx)
+	if store.IsNotFound(err) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	b := mustJSON(c)
+	if string(b) == string(f.contact) {
+		return nil, nil
+	}
+	f.contact = b
+	return []any{oas.ClientContactUpdatedEvent{Id: e.ID, Type: oas.ClientContactUpdatedEventType(clientContactFrame), CreatedAt: e.CreatedAt, Data: c}}, nil
 }
 
 // currentInboxFrame sends the inbox's settings and status as they are now, for a connection that
@@ -493,6 +533,15 @@ func (f *clientFilter) transform(ctx context.Context, e realtime.Event) ([]any, 
 			ConversationId: ty.ConversationId, Typing: ty.Typing,
 			Author: oas.ClientMessageAuthor{Type: oas.AuthorTypeMember, Name: &name, Initials: &ini},
 		}), nil
+	case realtime.ContactUpdated:
+		var ref oas.ContactRef
+		if err := json.Unmarshal(e.Data, &ref); err != nil {
+			return nil, err
+		}
+		if ref.Id != f.cp.contactID {
+			return nil, nil
+		}
+		return f.contactFrames(ctx, e)
 	case realtime.ContactDeleted:
 		var ref oas.ContactRef
 		if err := json.Unmarshal(e.Data, &ref); err != nil {
