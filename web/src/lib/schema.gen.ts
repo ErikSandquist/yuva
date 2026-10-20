@@ -12009,8 +12009,9 @@ export interface components {
             /** @description Feedback sent from a documentation page; the URL without query and fragment. */
             page_url?: string;
             page_title?: string;
-            /** @description The visitor's rating of the page the feedback follows. */
             rating?: components["schemas"]["PageRating"];
+            /** @description The visitor's rating of the page the feedback follows. */
+            score?: components["schemas"]["FeedbackScore"];
         };
         FeedbackFields: {
             app_version?: string;
@@ -12034,6 +12035,7 @@ export interface components {
             page_title?: string;
             /** @description The visitor's rating of the page, with `page_url`. */
             rating?: components["schemas"]["PageRating"];
+            score?: components["schemas"]["FeedbackScore"];
             subject?: string;
             /** @description The feedback text. Required unless files are attached. */
             body?: string;
@@ -12048,6 +12050,12 @@ export interface components {
         };
         /** @enum {string} */
         PageRating: "up" | "down";
+        /**
+         * Format: int32
+         * @description How satisfied the contact is, 1 (worst) to 5 (best). `400` for any other value. Absent when
+         *     none was sent, as on all feedback created before it existed.
+         */
+        FeedbackScore: number;
         PageRatingCreate: {
             /** @description The page's absolute `http` or `https` URL; query and fragment are dropped. */
             page: string;
@@ -15476,6 +15484,11 @@ export interface components {
          *     scheduled maintenance that has not started and hidden components are left out.
          */
         ClientInboxStatus: {
+            /**
+             * @description The status page's slug, for `GET /client/v1/status/{slug}`; works when the page is
+             *     served on a custom domain. `status` itself is absent when no published page is linked to the inbox.
+             */
+            slug?: string;
             /**
              * Format: uri
              * @description The public page.

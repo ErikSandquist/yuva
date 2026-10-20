@@ -75,7 +75,7 @@ func TestClientInboxStatus(t *testing.T) {
 	}
 	sp.owner.expect(http.StatusOK, "PATCH", sp.path(""), map[string]any{"published": true})
 	s := sp.clientStatus(t, h)
-	if s == nil || s["state"] != "operational" || s["url"] != testOrigin+"/status/"+sp.slug || len(openTitles(s)) != 0 {
+	if s == nil || s["slug"] != sp.slug || s["state"] != "operational" || s["url"] != testOrigin+"/status/"+sp.slug || len(openTitles(s)) != 0 {
 		t.Fatalf("published page status %v", s)
 	}
 

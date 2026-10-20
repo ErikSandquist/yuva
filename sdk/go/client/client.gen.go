@@ -8627,9 +8627,13 @@ type ClientFeedbackCreate struct {
 	PageUrl *string `json:"page_url,omitempty"`
 
 	// Rating The visitor's rating of the page, with `page_url`.
-	Rating  *PageRating `json:"rating,omitempty"`
-	Screen  *string     `json:"screen,omitempty"`
-	Subject *string     `json:"subject,omitempty"`
+	Rating *PageRating `json:"rating,omitempty"`
+
+	// Score How satisfied the contact is, 1 (worst) to 5 (best). `400` for any other value. Absent when
+	// none was sent, as on all feedback created before it existed.
+	Score   *FeedbackScore `json:"score,omitempty"`
+	Screen  *string        `json:"screen,omitempty"`
+	Subject *string        `json:"subject,omitempty"`
 }
 
 // ClientFeedbackCreateMultipart defines model for ClientFeedbackCreateMultipart.
@@ -8663,9 +8667,13 @@ type ClientFeedbackCreateMultipart struct {
 	PageUrl *string `json:"page_url,omitempty"`
 
 	// Rating The visitor's rating of the page, with `page_url`.
-	Rating  *PageRating `json:"rating,omitempty"`
-	Screen  *string     `json:"screen,omitempty"`
-	Subject *string     `json:"subject,omitempty"`
+	Rating *PageRating `json:"rating,omitempty"`
+
+	// Score How satisfied the contact is, 1 (worst) to 5 (best). `400` for any other value. Absent when
+	// none was sent, as on all feedback created before it existed.
+	Score   *FeedbackScore `json:"score,omitempty"`
+	Screen  *string        `json:"screen,omitempty"`
+	Subject *string        `json:"subject,omitempty"`
 }
 
 // ClientInbox The inbox's public settings. `live` inboxes carry `presence`; `async` inboxes never do and
@@ -8714,6 +8722,10 @@ type ClientInbox struct {
 type ClientInboxStatus struct {
 	// Open Open published incidents and running maintenance, newest first.
 	Open []ClientStatusIncident `json:"open"`
+
+	// Slug The status page's slug, for `GET /client/v1/status/{slug}`; works when the page is
+	// served on a custom domain. `status` itself is absent when no published page is linked to the inbox.
+	Slug *string `json:"slug,omitempty"`
 
 	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
 	State StatusComponentStateValue `json:"state"`
@@ -11415,9 +11427,10 @@ type Feedback struct {
 
 	// Progress Set by a member with `PATCH /v1/conversations/{id}`; absent when nobody set it.
 	Progress *FeedbackProgress `json:"progress,omitempty"`
+	Rating   *PageRating       `json:"rating,omitempty"`
 
-	// Rating The visitor's rating of the page the feedback follows.
-	Rating *PageRating `json:"rating,omitempty"`
+	// Score The visitor's rating of the page the feedback follows.
+	Score *FeedbackScore `json:"score,omitempty"`
 
 	// Screen The app screen or route the feedback was sent from.
 	Screen *string `json:"screen,omitempty"`
@@ -11487,6 +11500,10 @@ type FeedbackFields struct {
 // FeedbackProgress Where a feedback stands, set by members and shown to the contact: Planned, In progress,
 // Done, Won't do. Separate from the status: a feedback can be `done` and still open.
 type FeedbackProgress string
+
+// FeedbackScore How satisfied the contact is, 1 (worst) to 5 (best). `400` for any other value. Absent when
+// none was sent, as on all feedback created before it existed.
+type FeedbackScore = int32
 
 // GrafanaWebhookBody The body of Grafana's legacy alerting webhook notifier.
 type GrafanaWebhookBody struct {

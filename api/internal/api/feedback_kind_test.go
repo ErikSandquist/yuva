@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -253,4 +254,65 @@ func TestListByStatuses(t *testing.T) {
 		}
 	}
 	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "GET", "/v1/conversations?status=open,done", nil)
+}
+
+func TestFeedbackScore(t *testing.T) {
+	h := newHarness(t)
+	at := newAppTeam(t, h, false)
+	other := newAppTeam(t, h, false)
+	cs := at.session(h, "user-1")
+
+	for _, bad := range []any{0, 6, -1, 3.5, "5"} {
+		cs.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/client/v1/feedback", map[string]any{"category": "idea", "body": "x", "score": bad})
+	}
+	scored := cs.expect(http.StatusCreated, "POST", "/client/v1/feedback", map[string]any{"category": "praise", "body": "great", "score": 4}).body["conversation"].(map[string]any)["id"].(string)
+	plain := cs.expect(http.StatusCreated, "POST", "/client/v1/feedback", map[string]any{"category": "bug", "body": "broken"}).body["conversation"].(map[string]any)["id"].(string)
+
+	var buf bytes.Buffer
+	mw := multipart.NewWriter(&buf)
+	for k, v := range map[string]string{"category": "idea", "body": "form", "score": "9"} {
+		_ = mw.WriteField(k, v)
+	}
+	_ = mw.Close()
+	req, _ := http.NewRequest("POST", h.url+"/client/v1/feedback", &buf)
+	req.Header.Set("Content-Type", mw.FormDataContentType())
+	req.Header.Set("Authorization", "Bearer "+cs.token)
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Body.Close()
+	if res.StatusCode != http.StatusBadRequest {
+		t.Fatalf("multipart score 9: %d", res.StatusCode)
+	}
+
+	score := func(c *client, id string) any {
+		fb, _ := c.expect(http.StatusOK, "GET", "/v1/conversations/"+id, nil).body["feedback"].(map[string]any)
+		return fb["score"]
+	}
+	if score(at.owner, scored) != float64(4) || score(at.owner, plain) != nil {
+		t.Fatalf("stored scores %v %v", score(at.owner, scored), score(at.owner, plain))
+	}
+	var listed int
+	for _, it := range at.owner.expect(http.StatusOK, "GET", "/v1/conversations?kind=feedback", nil).body["items"].([]any) {
+		fb, _ := it.(map[string]any)["feedback"].(map[string]any)
+		if it.(map[string]any)["id"] == scored && fb["score"] == float64(4) {
+			listed++
+		}
+	}
+	if listed != 1 {
+		t.Fatal("score missing from the feedback listing")
+	}
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/conversations/"+scored, nil)
+
+	reader := h.client()
+	reader.bearer = at.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "reader", "scopes": []string{"conversations:read"}}).str("secret")
+	got, errText := callTool(t, h.mcpSession(reader.bearer), "list_feedback", nil)
+	if errText != "" || !strings.Contains(fmt.Sprint(got), "feedback_score:4") {
+		t.Fatalf("list_feedback %v %s", got, errText)
+	}
+
+	if _, err := h.st.Pool.Exec(context.Background(), "UPDATE conversations SET feedback = feedback || '{\"score\": 7}' WHERE id = $1", plain); err == nil {
+		t.Fatal("the database accepted a score of 7")
+	}
 }

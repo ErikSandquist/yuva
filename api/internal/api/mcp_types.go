@@ -28,6 +28,7 @@ type mcpConversation struct {
 	Unread           *bool                  `json:"unread,omitempty" jsonschema:"whether the calling member has unread messages here"`
 	SnoozeUntil      *time.Time             `json:"snooze_until,omitempty"`
 	FeedbackCategory string                 `json:"feedback_category,omitempty" jsonschema:"bug, idea, praise or other, for feedback"`
+	FeedbackScore    int32                  `json:"feedback_score,omitempty" jsonschema:"1 (worst) to 5 (best) when the contact scored the feedback"`
 	FeedbackProgress string                 `json:"feedback_progress,omitempty" jsonschema:"planned, in_progress, done or wont_do, for feedback whose progress a member set"`
 	CreatedAt        time.Time              `json:"created_at"`
 	LastActivityAt   time.Time              `json:"last_activity_at"`
@@ -56,6 +57,10 @@ func conversationOut(c oas.Conversation) mcpConversation {
 	if c.Feedback != nil && c.Feedback.Progress != nil {
 		progress = string(*c.Feedback.Progress)
 	}
+	var score int32
+	if c.Feedback != nil && c.Feedback.Score != nil {
+		score = *c.Feedback.Score
+	}
 	labels := c.Labels
 	if labels == nil {
 		labels = []uuid.UUID{}
@@ -63,7 +68,7 @@ func conversationOut(c oas.Conversation) mcpConversation {
 	return mcpConversation{
 		ID: c.Id, InboxID: c.InboxId, ContactID: c.ContactId, Kind: string(c.Kind), Status: string(c.Status),
 		Priority: string(c.Priority), AssigneeID: c.AssigneeId, Labels: labels, Spam: c.Spam, SnoozeUntil: c.SnoozeUntil,
-		FeedbackCategory: cat, FeedbackProgress: progress, CreatedAt: c.CreatedAt, LastActivityAt: c.LastActivityAt,
+		FeedbackCategory: cat, FeedbackScore: score, FeedbackProgress: progress, CreatedAt: c.CreatedAt, LastActivityAt: c.LastActivityAt,
 		CustomerContent: mcpConversationContent{Subject: c.Subject, Feedback: fb},
 	}
 }

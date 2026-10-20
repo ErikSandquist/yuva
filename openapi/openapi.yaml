@@ -19545,6 +19545,8 @@ components:
           type: string
         rating:
           $ref: "#/components/schemas/PageRating"
+        score:
+          $ref: "#/components/schemas/FeedbackScore"
           description: The visitor's rating of the page the feedback follows.
     FeedbackFields:
       type: object
@@ -19594,6 +19596,8 @@ components:
             rating:
               $ref: "#/components/schemas/PageRating"
               description: The visitor's rating of the page, with `page_url`.
+            score:
+              $ref: "#/components/schemas/FeedbackScore"
             subject:
               type: string
               maxLength: 500
@@ -19625,6 +19629,14 @@ components:
     PageRating:
       type: string
       enum: [up, down]
+    FeedbackScore:
+      type: integer
+      format: int32
+      minimum: 1
+      maximum: 5
+      description: |
+        How satisfied the contact is, 1 (worst) to 5 (best). `400` for any other value. Absent when
+        none was sent, as on all feedback created before it existed.
     PageRatingCreate:
       type: object
       required: [page, rating]
@@ -24962,6 +24974,11 @@ components:
         scheduled maintenance that has not started and hidden components are left out.
       required: [url, state, open]
       properties:
+        slug:
+          type: string
+          description: |
+            The status page's slug, for `GET /client/v1/status/{slug}`; works when the page is
+            served on a custom domain. `status` itself is absent when no published page is linked to the inbox.
         url:
           type: string
           format: uri

@@ -44,7 +44,7 @@ func (s *Server) clientStatus(ctx context.Context, q *store.Queries, inboxID, ws
 	if err != nil {
 		return nil, err
 	}
-	out := oas.ClientInboxStatus{Url: s.pageURL(pg, ""), State: oas.StatusComponentStateValue(pageState(comps)), Open: []oas.ClientStatusIncident{}}
+	out := oas.ClientInboxStatus{Slug: &pg.Slug, Url: s.pageURL(pg, ""), State: oas.StatusComponentStateValue(pageState(comps)), Open: []oas.ClientStatusIncident{}}
 	for _, i := range incs {
 		out.Open = append(out.Open, oas.ClientStatusIncident{
 			Id: i.ID, Kind: oas.StatusIncidentKind(i.Kind), Title: i.Title, Impact: oas.StatusIncidentImpact(i.Impact),

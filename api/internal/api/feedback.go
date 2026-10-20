@@ -21,7 +21,7 @@ var feedbackCategories = []oas.FeedbackCategory{oas.Bug, oas.Idea, oas.Praise, o
 var (
 	errFeedbackChannel     = problem(http.StatusForbidden, "forbidden", "feedback is sent from app and chat channels")
 	errFeedbackNeedsKey    = problem(http.StatusForbidden, "forbidden", "only an API key can post feedback for a contact")
-	clientFeedbackFields   = []string{"category", "subject", "body", "client_id", "allow_email", "email", "app_version", "build", "os", "os_version", "device_model", "locale", "screen", "installation_id", "page_url", "page_title", "rating"}
+	clientFeedbackFields   = []string{"category", "subject", "body", "client_id", "allow_email", "email", "app_version", "build", "os", "os_version", "device_model", "locale", "screen", "installation_id", "page_url", "page_title", "rating", "score"}
 	feedbackFieldMaxLength = map[string]int{
 		"app_version": 50, "build": 50, "os": 50, "os_version": 50, "device_model": 100, "locale": 35, "screen": 200, "installation_id": 200,
 	}
@@ -108,6 +108,7 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 		email      *oas.Email
 		fields     map[string]*string
 		page       pageInput
+		score      *int32
 	)
 	switch {
 	case req.JSONBody != nil:
@@ -122,6 +123,7 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 		}
 		allowEmail = b.AllowEmail != nil && *b.AllowEmail
 		page = pageInput{url: b.PageUrl, title: b.PageTitle, rating: b.Rating}
+		score = b.Score
 		fields = feedbackFieldsOf(oas.FeedbackFields{
 			AppVersion: b.AppVersion, Build: b.Build, Os: b.Os, OsVersion: b.OsVersion, DeviceModel: b.DeviceModel,
 			Locale: b.Locale, Screen: b.Screen, InstallationId: b.InstallationId,
@@ -140,6 +142,15 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 		if v, ok := in.extra["rating"]; ok && v != "" {
 			r := oas.PageRating(v)
 			page.rating = &r
+		}
+		if v, ok := in.extra["score"]; ok && strings.TrimSpace(v) != "" {
+			n, err := strconv.ParseInt(strings.TrimSpace(v), 10, 32)
+			if err != nil {
+				in.close()
+				return nil, errValidation("score must be an integer from 1 to 5")
+			}
+			n32 := int32(n)
+			score = &n32
 		}
 		if v, ok := in.extra["allow_email"]; ok {
 			if allowEmail, err = strconv.ParseBool(v); err != nil {
@@ -173,6 +184,12 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 	}
 	if err := page.apply(cp, &fb); err != nil {
 		return nil, err
+	}
+	if score != nil {
+		if *score < 1 || *score > 5 {
+			return nil, errValidation("score must be an integer from 1 to 5")
+		}
+		fb.Score = score
 	}
 	var addr *string
 	if email != nil {

@@ -48,6 +48,10 @@ answered like any other conversation; the answer reaches the contact in the app,
 they allowed it (`allow_email`): members' replies the contact has not read go out through the same
 delayed e-mail as chat replies. The panel
 filters conversations by `kind` and feedback `category` and counts open feedback per category.
+A feedback may carry a `score`, an integer 1 to 5 (`POST /client/v1/feedback`, `400` outside the range), kept in the
+`feedback` JSON next to the category (a check constraint holds the range, migration 00079) and returned wherever
+feedback is: the conversation and feedback listings, `feedback.score` in webhook payloads and `feedback_score` in
+the MCP `list_feedback` tool. Feedback sent without one, or before it existed, has none.
 
 Feedback has its own place (M18). It stays a conversation, so replies, notes, assignment, e-mail
 fallback, events and webhooks are the ones every conversation has; only where it is shown and what it
@@ -763,7 +767,7 @@ inline thread inside a product's own panel.
 - Home offers apps inside the same panel, loaded on first use from a chunk of their own
   (`/widget/yuva-chat-apps-<hash>.js`, with one catalog chunk per language): Feedback
   (`POST /client/v1/feedback` with the inbox's `feedback_categories`, files as multipart), Status
-  (`inbox.status`, and the page JSON at `/client/v1/status/{slug}` when the slug is in `status.url`)
+  (`inbox.status`, and the page JSON at `/client/v1/status/{slug}` with `inbox.status.slug`, which works on a custom domain too)
   and Get updates (`/client/v1/channels/{key}/lists` and `/subscriptions`). A tile appears only when
   its API answers for the channel; a help center, a roadmap and a changelog have no client API yet and
   have no tile.
