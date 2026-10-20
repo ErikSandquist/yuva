@@ -1092,6 +1092,10 @@ msgstr "Μια πραγματική διεύθυνση όπου λαμβάνετ
 msgid "A reply was written in a discussion"
 msgstr "Μια απάντηση γράφτηκε σε μια συζήτηση"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Μια ιδέα του οδικού χάρτη μετακινήθηκε σε άλλο στάδιο"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Μια σύνδεση πρέπει να επιστρέψει εντός 10 λεπτών και λειτουργεί μία φορά. Ανοίξτε τη μεταφορά και συνδεθείτε ξανά."
@@ -6047,6 +6051,10 @@ msgstr "Φωτεινή εμφάνιση"
 msgid "Limit the pace"
 msgstr "Περιορισμός ρυθμού"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Σύνδεση σχολίων με ιδέες, απάντηση στους συνδεδεμένους πελάτες και διαχείριση των πινάκων οδικού χάρτη"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Σύνδεσμος για τον διαχειριστή σας στο Microsoft 365"
@@ -6746,6 +6754,10 @@ msgstr "Περισσότερες ψήφοι"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Μετακίνηση κάτω"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Μετακίνηση ιδεών ανάμεσα στα στάδια του οδικού χάρτη"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Ανάγνωση λιστών αλληλογραφίας, συνδρομ
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Μόνο ανάγνωση"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Ανάγνωση πινάκων οδικού χάρτη, ιδεών και ιστορικού σταδίων"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

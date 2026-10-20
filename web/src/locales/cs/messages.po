@@ -1092,6 +1092,10 @@ msgstr "Skutečná adresa, na kterou přijímáte poštu"
 msgid "A reply was written in a discussion"
 msgstr "V diskusi byla napsána odpověď"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Nápad z plánu vývoje přešel do další fáze"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Přihlášení se musí vrátit do 10 minut a funguje jednou. Otevřete migraci a přihlaste se znovu."
@@ -6047,6 +6051,10 @@ msgstr "Světlý vzhled"
 msgid "Limit the pace"
 msgstr "Omezit tempo"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Propojovat zpětnou vazbu s nápady, odpovídat propojeným zákazníkům a spravovat nástěnky plánu vývoje"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Odkaz pro správce Microsoft 365"
@@ -6746,6 +6754,10 @@ msgstr "Nejvíce hlasů"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Posunout dolů"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Přesouvat nápady mezi fázemi plánu vývoje"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Číst e-mailové skupiny, odběratele a záznamy o souhlasu"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Jen pro čtení"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Číst nástěnky plánu vývoje, nápady a historii fází"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

@@ -937,6 +937,9 @@ const (
 	MessagesWrite      ApiKeyScope = "messages:write"
 	MigrationsManage   ApiKeyScope = "migrations:manage"
 	NotesWrite         ApiKeyScope = "notes:write"
+	RoadmapRead        ApiKeyScope = "roadmap:read"
+	RoadmapStage       ApiKeyScope = "roadmap:stage"
+	RoadmapWrite       ApiKeyScope = "roadmap:write"
 	StatusManage       ApiKeyScope = "status:manage"
 	StatusRead         ApiKeyScope = "status:read"
 	WebhooksManage     ApiKeyScope = "webhooks:manage"
@@ -993,6 +996,12 @@ func (e ApiKeyScope) Valid() bool {
 	case MigrationsManage:
 		return true
 	case NotesWrite:
+		return true
+	case RoadmapRead:
+		return true
+	case RoadmapStage:
+		return true
+	case RoadmapWrite:
 		return true
 	case StatusManage:
 		return true
@@ -1895,6 +1904,24 @@ func (e DiscussionEventType) Valid() bool {
 	}
 }
 
+// Defines values for DiscussionKind.
+const (
+	DiscussionKindIdea DiscussionKind = "idea"
+	DiscussionKindPage DiscussionKind = "page"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionKind enum.
+func (e DiscussionKind) Valid() bool {
+	switch e {
+	case DiscussionKindIdea:
+		return true
+	case DiscussionKindPage:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DiscussionMode.
 const (
 	DiscussionModeModerated DiscussionMode = "moderated"
@@ -1955,6 +1982,21 @@ func (e DiscussionSort) Valid() bool {
 	}
 }
 
+// Defines values for DiscussionStageEventType.
+const (
+	DiscussionStageEventTypeDiscussionStageChanged DiscussionStageEventType = "discussion.stage_changed"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionStageEventType enum.
+func (e DiscussionStageEventType) Valid() bool {
+	switch e {
+	case DiscussionStageEventTypeDiscussionStageChanged:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DiscussionState.
 const (
 	DiscussionStateHidden    DiscussionState = "hidden"
@@ -1981,6 +2023,7 @@ const (
 	DiscussionTeamSortActivity DiscussionTeamSort = "activity"
 	DiscussionTeamSortNew      DiscussionTeamSort = "new"
 	DiscussionTeamSortTop      DiscussionTeamSort = "top"
+	DiscussionTeamSortVotes    DiscussionTeamSort = "votes"
 )
 
 // Valid indicates whether the value is a known member of the DiscussionTeamSort enum.
@@ -1991,6 +2034,8 @@ func (e DiscussionTeamSort) Valid() bool {
 	case DiscussionTeamSortNew:
 		return true
 	case DiscussionTeamSortTop:
+		return true
+	case DiscussionTeamSortVotes:
 		return true
 	default:
 		return false
@@ -2895,6 +2940,7 @@ const (
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
 	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
 	LimitMigrationUploadMaxBytes HostedLimit = "YUVA_MIGRATION_UPLOAD_MAX_BYTES"
+	LimitRoadmapMaxIdeas         HostedLimit = "YUVA_ROADMAP_MAX_IDEAS"
 )
 
 // Valid indicates whether the value is a known member of the HostedLimit enum.
@@ -2909,6 +2955,35 @@ func (e HostedLimit) Valid() bool {
 	case LimitMigrationSources:
 		return true
 	case LimitMigrationUploadMaxBytes:
+		return true
+	case LimitRoadmapMaxIdeas:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for IdeaStage.
+const (
+	IdeaStageClosed     IdeaStage = "closed"
+	IdeaStageIdeas      IdeaStage = "ideas"
+	IdeaStageInProgress IdeaStage = "in_progress"
+	IdeaStagePlanned    IdeaStage = "planned"
+	IdeaStageShipped    IdeaStage = "shipped"
+)
+
+// Valid indicates whether the value is a known member of the IdeaStage enum.
+func (e IdeaStage) Valid() bool {
+	switch e {
+	case IdeaStageClosed:
+		return true
+	case IdeaStageIdeas:
+		return true
+	case IdeaStageInProgress:
+		return true
+	case IdeaStagePlanned:
+		return true
+	case IdeaStageShipped:
 		return true
 	default:
 		return false
@@ -3077,6 +3152,30 @@ func (e IngressResultStatus) Valid() bool {
 	case IngressResultStatusDuplicate:
 		return true
 	case IngressResultStatusStored:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LinkedReplyOutcome.
+const (
+	LinkedReplyOutcomeFailed  LinkedReplyOutcome = "failed"
+	LinkedReplyOutcomePending LinkedReplyOutcome = "pending"
+	LinkedReplyOutcomeSent    LinkedReplyOutcome = "sent"
+	LinkedReplyOutcomeSkipped LinkedReplyOutcome = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the LinkedReplyOutcome enum.
+func (e LinkedReplyOutcome) Valid() bool {
+	switch e {
+	case LinkedReplyOutcomeFailed:
+		return true
+	case LinkedReplyOutcomePending:
+		return true
+	case LinkedReplyOutcomeSent:
+		return true
+	case LinkedReplyOutcomeSkipped:
 		return true
 	default:
 		return false
@@ -4560,6 +4659,7 @@ func (e Rating) Valid() bool {
 const (
 	Answer ReaderNotificationKind = "answer"
 	Reply  ReaderNotificationKind = "reply"
+	Stage  ReaderNotificationKind = "stage"
 )
 
 // Valid indicates whether the value is a known member of the ReaderNotificationKind enum.
@@ -4568,6 +4668,8 @@ func (e ReaderNotificationKind) Valid() bool {
 	case Answer:
 		return true
 	case Reply:
+		return true
+	case Stage:
 		return true
 	default:
 		return false
@@ -4598,6 +4700,42 @@ const (
 func (e RealtimeResyncRequiredType) Valid() bool {
 	switch e {
 	case ResyncRequired:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RoadmapBoardSignalType.
+const (
+	RoadmapBoardUpdated RoadmapBoardSignalType = "roadmap.board.updated"
+)
+
+// Valid indicates whether the value is a known member of the RoadmapBoardSignalType enum.
+func (e RoadmapBoardSignalType) Valid() bool {
+	switch e {
+	case RoadmapBoardUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RoadmapSuggestions.
+const (
+	RoadmapSuggestionsModerated RoadmapSuggestions = "moderated"
+	RoadmapSuggestionsOff       RoadmapSuggestions = "off"
+	RoadmapSuggestionsOpen      RoadmapSuggestions = "open"
+)
+
+// Valid indicates whether the value is a known member of the RoadmapSuggestions enum.
+func (e RoadmapSuggestions) Valid() bool {
+	switch e {
+	case RoadmapSuggestionsModerated:
+		return true
+	case RoadmapSuggestionsOff:
+		return true
+	case RoadmapSuggestionsOpen:
 		return true
 	default:
 		return false
@@ -4979,30 +5117,6 @@ func (e StatusIncidentKind) Valid() bool {
 	case StatusKindIncident:
 		return true
 	case StatusKindMaintenance:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for StatusIncidentReplyOutcome.
-const (
-	StatusIncidentReplyOutcomeFailed  StatusIncidentReplyOutcome = "failed"
-	StatusIncidentReplyOutcomePending StatusIncidentReplyOutcome = "pending"
-	StatusIncidentReplyOutcomeSent    StatusIncidentReplyOutcome = "sent"
-	StatusIncidentReplyOutcomeSkipped StatusIncidentReplyOutcome = "skipped"
-)
-
-// Valid indicates whether the value is a known member of the StatusIncidentReplyOutcome enum.
-func (e StatusIncidentReplyOutcome) Valid() bool {
-	switch e {
-	case StatusIncidentReplyOutcomeFailed:
-		return true
-	case StatusIncidentReplyOutcomePending:
-		return true
-	case StatusIncidentReplyOutcomeSent:
-		return true
-	case StatusIncidentReplyOutcomeSkipped:
 		return true
 	default:
 		return false
@@ -5561,6 +5675,7 @@ const (
 	WebhookEventTypeDiscussionAnswered     WebhookEventType = "discussion.answered"
 	WebhookEventTypeDiscussionCreated      WebhookEventType = "discussion.created"
 	WebhookEventTypeDiscussionPostCreated  WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionStageChanged WebhookEventType = "discussion.stage_changed"
 	WebhookEventTypeDiscussionUpdated      WebhookEventType = "discussion.updated"
 	WebhookEventTypeDraftCreated           WebhookEventType = "draft.created"
 	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
@@ -5602,6 +5717,8 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeDiscussionCreated:
 		return true
 	case WebhookEventTypeDiscussionPostCreated:
+		return true
+	case WebhookEventTypeDiscussionStageChanged:
 		return true
 	case WebhookEventTypeDiscussionUpdated:
 		return true
@@ -5879,6 +5996,21 @@ func (e ExportContactConsentParamsFormat) Valid() bool {
 	case ExportContactConsentParamsFormatCsv:
 		return true
 	case ExportContactConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListConversationsParamsIdea.
+const (
+	ListConversationsParamsIdeaNone ListConversationsParamsIdea = "none"
+)
+
+// Valid indicates whether the value is a known member of the ListConversationsParamsIdea enum.
+func (e ListConversationsParamsIdea) Valid() bool {
+	switch e {
+	case ListConversationsParamsIdeaNone:
 		return true
 	default:
 		return false
@@ -7202,6 +7334,7 @@ type AnalyticsRangeProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7754,7 +7887,13 @@ type ApiKeyList struct {
 //	    translations, delete published ones. API keys only, and never implied: a key made without
 //	    naming its scopes does not hold it, and OAuth clients are not offered it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
+//	  - `roadmap:read`: roadmap boards, an idea's stage history and linked counts.
+//	  - `roadmap:write`: link feedback to ideas, "Reply to linked" for ideas, create, change and
+//	    delete boards (owners and admins).
+//	  - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
+//	    Never implied: a key made without naming its scopes does not hold it.
+//
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -8180,6 +8319,7 @@ type BroadcastProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8762,12 +8902,16 @@ type ClientConversationUpdatedEventType string
 // ClientDiscussionCreate defines model for ClientDiscussionCreate.
 type ClientDiscussionCreate struct {
 	// Body Markdown.
-	Body      string  `json:"body"`
-	PageTitle *string `json:"page_title,omitempty"`
+	Body string `json:"body"`
 
-	// PageUrl The page's absolute URL; query and fragment are dropped.
-	PageUrl string `json:"page_url"`
-	Title   string `json:"title"`
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl `page`, required: the page's absolute URL; query and fragment are dropped. Not allowed for an `idea`.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
 }
 
 // ClientDiscussionPostUpdate defines model for ClientDiscussionPostUpdate.
@@ -9083,6 +9227,11 @@ type ClientInbox struct {
 	// Presence Who can answer now, in a `live` inbox.
 	Presence *ClientPresence `json:"presence,omitempty"`
 
+	// Roadmap Absent unless the inbox has a public roadmap board (and on a server with
+	// `YUVA_ROADMAP=off`); show the Roadmap tile only then. An `inbox.updated` frame brings
+	// every change.
+	Roadmap *ClientInboxRoadmap `json:"roadmap,omitempty"`
+
 	// Status Absent unless the inbox has a published status page. Show a line while `open` is not
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
@@ -9098,6 +9247,19 @@ type ClientInboxHelp struct {
 	Locales       []LanguageTag `json:"locales"`
 
 	// Url The center's public home page.
+	Url string `json:"url"`
+}
+
+// ClientInboxRoadmap The inbox's public roadmap board.
+type ClientInboxRoadmap struct {
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+
+	// Url The board's public page.
 	Url string `json:"url"`
 }
 
@@ -9302,6 +9464,31 @@ type ClientReadState struct {
 // ClientRealtimeMessage One server message on `/client/v1/realtime`, told apart by `type`.
 type ClientRealtimeMessage struct {
 	union json.RawMessage
+}
+
+// ClientRoadmap defines model for ClientRoadmap.
+type ClientRoadmap struct {
+	Description string `json:"description"`
+	Name        string `json:"name"`
+
+	// Stages Published ideas per public stage; `closed` ideas are not listed publicly.
+	Stages ClientRoadmapStages `json:"stages"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+	Url         string             `json:"url"`
+}
+
+// ClientRoadmapStages Published ideas per public stage; `closed` ideas are not listed publicly.
+type ClientRoadmapStages struct {
+	Ideas      int32 `json:"ideas"`
+	InProgress int32 `json:"in_progress"`
+	Planned    int32 `json:"planned"`
+	Shipped    int32 `json:"shipped"`
 }
 
 // ClientSession defines model for ClientSession.
@@ -9809,6 +9996,9 @@ type Conversation struct {
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
 
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
+
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
 	// they were imported. Absent otherwise.
@@ -10026,6 +10216,9 @@ type ConversationListItem struct {
 	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
+
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -10329,10 +10522,11 @@ type DeliverabilityYuvaDkim struct {
 // Direction defines model for Direction.
 type Direction string
 
-// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-// `voted` and `following` on `/client/v1` only (false without a token).
+// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+// `following` on `/client/v1` only (false without a token).
 type Discussion struct {
 	// AnswerPostId The accepted answer; absent while there is none.
 	AnswerPostId *uuid.UUID `json:"answer_post_id,omitempty"`
@@ -10342,6 +10536,9 @@ type Discussion struct {
 	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
 	// given on `/v1` only.
 	Author DiscussionAuthor `json:"author"`
+
+	// BoardId `idea` only: the roadmap board the idea belongs to.
+	BoardId *uuid.UUID `json:"board_id,omitempty"`
 
 	// Body Markdown as written; empty once the opening post was deleted.
 	Body string `json:"body"`
@@ -10357,20 +10554,27 @@ type Discussion struct {
 	CreatedAt      time.Time  `json:"created_at"`
 
 	// Deleted The opening post was deleted by its author; the replies stay.
-	Deleted        *bool      `json:"deleted,omitempty"`
-	EditedAt       *time.Time `json:"edited_at,omitempty"`
-	Following      *bool      `json:"following,omitempty"`
-	HiddenPosts    *int32     `json:"hidden_posts,omitempty"`
-	Id             uuid.UUID  `json:"id"`
-	InboxId        *uuid.UUID `json:"inbox_id,omitempty"`
-	LastActivityAt time.Time  `json:"last_activity_at"`
-	Locked         bool       `json:"locked"`
+	Deleted     *bool      `json:"deleted,omitempty"`
+	EditedAt    *time.Time `json:"edited_at,omitempty"`
+	Following   *bool      `json:"following,omitempty"`
+	HiddenPosts *int32     `json:"hidden_posts,omitempty"`
+	Id          uuid.UUID  `json:"id"`
+	InboxId     *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind           DiscussionKind `json:"kind"`
+	LastActivityAt time.Time      `json:"last_activity_at"`
+
+	// LinkedCount `idea` only, on `/v1`: feedback conversations linked to it.
+	LinkedCount *int32 `json:"linked_count,omitempty"`
+	Locked      bool   `json:"locked"`
 
 	// Mine The caller started it.
 	Mine          *bool     `json:"mine,omitempty"`
 	OpeningPostId uuid.UUID `json:"opening_post_id"`
 
-	// Page The page's URL without query and fragment.
+	// Page The page's URL without query and fragment; empty for an idea, which has no page.
 	Page      string  `json:"page"`
 	PageTitle *string `json:"page_title,omitempty"`
 
@@ -10380,12 +10584,20 @@ type Discussion struct {
 	// ReplyCount Published replies, replies to replies included.
 	ReplyCount int32 `json:"reply_count"`
 
+	// Stage `idea` only: where the idea stands.
+	Stage *IdeaStage `json:"stage,omitempty"`
+
+	// StageChangedAt `idea` only: when the stage last changed; absent for an idea that was never moved.
+	StageChangedAt *time.Time `json:"stage_changed_at,omitempty"`
+
 	// State `published`: public. `pending`: waits for a member; only its author and members see it.
 	// `hidden`: a member hid it; only members see it.
 	State DiscussionState `json:"state"`
 	Title string          `json:"title"`
 	Voted *bool           `json:"voted,omitempty"`
-	Votes int32           `json:"votes"`
+
+	// Votes The opening post's votes.
+	Votes int32 `json:"votes"`
 }
 
 // DiscussionAnswer defines model for DiscussionAnswer.
@@ -10418,22 +10630,32 @@ type DiscussionAuthorKind string
 
 // DiscussionCreate defines model for DiscussionCreate.
 type DiscussionCreate struct {
+	// BoardId `idea`: the roadmap board the idea is filed on, which names the channel.
+	BoardId *uuid.UUID `json:"board_id,omitempty"`
+
 	// Body Markdown.
 	Body string `json:"body"`
 
-	// ChannelId A chat channel that allows the page's origin.
-	ChannelId uuid.UUID `json:"channel_id"`
-	PageTitle *string   `json:"page_title,omitempty"`
-	PageUrl   string    `json:"page_url"`
-	Title     string    `json:"title"`
+	// ChannelId `page`, required: a chat channel that allows the page's origin.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl `page`, required.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
 }
 
 // DiscussionDetail defines model for DiscussionDetail.
 type DiscussionDetail struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Posts The replies, the accepted answer first, then oldest first; not the opening post.
@@ -10460,10 +10682,11 @@ type DiscussionEventType string
 
 // DiscussionEventData defines model for DiscussionEventData.
 type DiscussionEventData struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Post The post the event is about; absent for changes to the thread alone.
@@ -10472,17 +10695,25 @@ type DiscussionEventData struct {
 
 // DiscussionFromConversation defines model for DiscussionFromConversation.
 type DiscussionFromConversation struct {
-	// Answer Posted by the member and marked as the accepted answer.
+	// Answer Posted by the member and marked as the accepted answer. Not allowed for an `idea`.
 	Answer *string `json:"answer,omitempty"`
 
 	// Body The public question, as the member edits it (Markdown).
-	Body      string  `json:"body"`
-	PageTitle *string `json:"page_title,omitempty"`
+	Body string `json:"body"`
 
-	// PageUrl The page, when the conversation has none or another one is meant.
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl The page, when the conversation has none or another one is meant. Not allowed for an `idea`.
 	PageUrl *string `json:"page_url,omitempty"`
 	Title   string  `json:"title"`
 }
+
+// DiscussionKind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+// to no page and has a `stage`.
+type DiscussionKind string
 
 // DiscussionMode Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
 // reader's posts wait for a member until one of theirs in the workspace was approved;
@@ -10541,10 +10772,11 @@ type DiscussionPostCreate struct {
 
 // DiscussionPostItem defines model for DiscussionPostItem.
 type DiscussionPostItem struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Post One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
@@ -10574,6 +10806,45 @@ type DiscussionPostUpdateState string
 
 // DiscussionSort defines model for DiscussionSort.
 type DiscussionSort string
+
+// DiscussionStageEvent `discussion.stage_changed`: an idea was moved to another stage. Delivered to callers who
+// can see the idea's inbox.
+type DiscussionStageEvent struct {
+	CreatedAt   time.Time                `json:"created_at"`
+	Data        DiscussionStageEventData `json:"data"`
+	Id          int64                    `json:"id"`
+	InboxId     uuid.UUID                `json:"inbox_id"`
+	Type        DiscussionStageEventType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// DiscussionStageEventType defines model for DiscussionStageEvent.Type.
+type DiscussionStageEventType string
+
+// DiscussionStageEventData defines model for DiscussionStageEventData.
+type DiscussionStageEventData struct {
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// From Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	From IdeaStage `json:"from"`
+
+	// Linked Feedback linked to the idea when it was moved.
+	Linked int32 `json:"linked"`
+
+	// To Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	To IdeaStage `json:"to"`
+}
 
 // DiscussionState `published`: public. `pending`: waits for a member; only its author and members see it.
 // `hidden`: a member hid it; only members see it.
@@ -11070,6 +11341,7 @@ type EmailDesignProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11402,6 +11674,7 @@ type EmailImageProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12387,6 +12660,7 @@ type HelpConflictProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12668,7 +12942,27 @@ type HomeWaitingConversation struct {
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 // `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 type HostedLimit string
+
+// IdeaRef The idea a feedback conversation is linked to.
+type IdeaRef struct {
+	// Id The idea's discussion id.
+	Id uuid.UUID `json:"id"`
+
+	// Stage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	Stage IdeaStage `json:"stage"`
+	Title string    `json:"title"`
+}
+
+// IdeaStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+type IdeaStage string
 
 // IdentitySecret defines model for IdentitySecret.
 type IdentitySecret struct {
@@ -13037,6 +13331,65 @@ type LabelUpdate struct {
 //
 // Examples: en, tr
 type LanguageTag = string
+
+// LinkedReply One "Reply to linked" request of an incident or an idea, with what became of each
+// conversation. Exactly one of `incident_id` and `idea_id` is given.
+type LinkedReply struct {
+	Close      bool                `json:"close"`
+	Counts     LinkedReplyCounts   `json:"counts"`
+	CreatedAt  time.Time           `json:"created_at"`
+	Id         uuid.UUID           `json:"id"`
+	IdeaId     *uuid.UUID          `json:"idea_id,omitempty"`
+	IncidentId *uuid.UUID          `json:"incident_id,omitempty"`
+	Items      []LinkedReplyTarget `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+
+	// Queued The conversations the request was queued for.
+	Queued int32 `json:"queued"`
+}
+
+// LinkedReplyCounts defines model for LinkedReplyCounts.
+type LinkedReplyCounts struct {
+	Failed  int32 `json:"failed"`
+	Pending int32 `json:"pending"`
+	Sent    int32 `json:"sent"`
+	Skipped int32 `json:"skipped"`
+}
+
+// LinkedReplyCreate defines model for LinkedReplyCreate.
+type LinkedReplyCreate struct {
+	// Body The reply's text, as for any message.
+	Body string `json:"body"`
+
+	// Close Close each conversation after the reply.
+	Close *bool `json:"close,omitempty"`
+}
+
+// LinkedReplyOutcome defines model for LinkedReplyOutcome.
+type LinkedReplyOutcome string
+
+// LinkedReplyResult defines model for LinkedReplyResult.
+type LinkedReplyResult struct {
+	// Id The reply request; read its outcomes with `GET .../replies/{replyId}`.
+	Id uuid.UUID `json:"id"`
+
+	// Queued The conversations a reply was queued for.
+	Queued int32 `json:"queued"`
+}
+
+// LinkedReplyTarget defines model for LinkedReplyTarget.
+type LinkedReplyTarget struct {
+	ConversationId uuid.UUID `json:"conversation_id"`
+
+	// FinishedAt Absent while `pending`.
+	FinishedAt *time.Time         `json:"finished_at,omitempty"`
+	Outcome    LinkedReplyOutcome `json:"outcome"`
+
+	// Reason Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
+	Reason *string `json:"reason,omitempty"`
+}
 
 // ListImport defines model for ListImport.
 type ListImport struct {
@@ -13718,6 +14071,9 @@ type MessageEvent struct {
 	// FeedbackProgress `feedback_progress` only: the new progress, `null` when it was cleared.
 	FeedbackProgress nullable.Nullable[FeedbackProgress] `json:"feedback_progress,omitempty"`
 
+	// IdeaId `feedback_progress` only: the roadmap idea whose stage move set the progress.
+	IdeaId *uuid.UUID `json:"idea_id,omitempty"`
+
 	// InboxId The inbox it moved to (`moved`).
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
@@ -14248,6 +14604,7 @@ type MigrationFileProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -15277,6 +15634,7 @@ type Problem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -15572,7 +15930,7 @@ type ReaderNotification struct {
 	Id        uuid.UUID `json:"id"`
 	InboxName string    `json:"inbox_name"`
 
-	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there. `stage`: a followed roadmap idea moved to another stage.
 	Kind   ReaderNotificationKind `json:"kind"`
 	Page   string                 `json:"page"`
 	PostId *uuid.UUID             `json:"post_id,omitempty"`
@@ -15582,7 +15940,7 @@ type ReaderNotification struct {
 	Title string `json:"title"`
 }
 
-// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there. `stage`: a followed roadmap idea moved to another stage.
 type ReaderNotificationKind string
 
 // ReaderNotificationPage defines model for ReaderNotificationPage.
@@ -15654,6 +16012,211 @@ type RealtimeResyncRequired struct {
 
 // RealtimeResyncRequiredType defines model for RealtimeResyncRequired.Type.
 type RealtimeResyncRequiredType string
+
+// RoadmapBoard defines model for RoadmapBoard.
+type RoadmapBoard struct {
+	// AnalyticsPropertyId The analytics property the public page counts cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// ChannelId The `chat` channel the public page embeds and ideas members start are filed on.
+	ChannelId uuid.UUID `json:"channel_id"`
+
+	// Counts Published ideas per stage, and the ideas waiting for approval.
+	Counts      RoadmapBoardCounts `json:"counts"`
+	CreatedAt   time.Time          `json:"created_at"`
+	Description string             `json:"description"`
+	Id          uuid.UUID          `json:"id"`
+	InboxId     uuid.UUID          `json:"inbox_id"`
+	Name        string             `json:"name"`
+
+	// Public A private board is a triage tool for the team and has no public page.
+	Public bool `json:"public"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug RoadmapBoardSlug `json:"slug"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+	UpdatedAt   time.Time          `json:"updated_at"`
+
+	// Url The public page, at the server's `/roadmap/{slug}`.
+	Url string `json:"url"`
+}
+
+// RoadmapBoardCounts Published ideas per stage, and the ideas waiting for approval.
+type RoadmapBoardCounts struct {
+	Closed     int32 `json:"closed"`
+	Ideas      int32 `json:"ideas"`
+	InProgress int32 `json:"in_progress"`
+
+	// Pending Ideas waiting for a member.
+	Pending int32 `json:"pending"`
+	Planned int32 `json:"planned"`
+	Shipped int32 `json:"shipped"`
+}
+
+// RoadmapBoardCreate defines model for RoadmapBoardCreate.
+type RoadmapBoardCreate struct {
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// ChannelId A `chat` channel of the same inbox.
+	ChannelId   uuid.UUID `json:"channel_id"`
+	Description *string   `json:"description,omitempty"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+
+	// Public Default `false`.
+	Public *bool `json:"public,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug RoadmapBoardSlug `json:"slug"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions *RoadmapSuggestions `json:"suggestions,omitempty"`
+}
+
+// RoadmapBoardList defines model for RoadmapBoardList.
+type RoadmapBoardList struct {
+	Items []RoadmapBoard `json:"items"`
+}
+
+// RoadmapBoardSignal `roadmap.board.updated`, on `/v1/realtime` only: a board or one of its ideas changed in a
+// way the public page shows. Not stored, no id, never replayed. Reaches whoever sees the
+// board's inbox.
+type RoadmapBoardSignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		BoardId uuid.UUID `json:"board_id"`
+	} `json:"data"`
+	InboxId     uuid.UUID              `json:"inbox_id"`
+	Type        RoadmapBoardSignalType `json:"type"`
+	WorkspaceId uuid.UUID              `json:"workspace_id"`
+}
+
+// RoadmapBoardSignalType defines model for RoadmapBoardSignal.Type.
+type RoadmapBoardSignalType string
+
+// RoadmapBoardSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme
+type RoadmapBoardSlug = string
+
+// RoadmapBoardUpdate defines model for RoadmapBoardUpdate.
+type RoadmapBoardUpdate struct {
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+	ChannelId           *uuid.UUID                   `json:"channel_id,omitempty"`
+	Description         *string                      `json:"description,omitempty"`
+	Name                *string                      `json:"name,omitempty"`
+	Public              *bool                        `json:"public,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug *RoadmapBoardSlug `json:"slug,omitempty"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions *RoadmapSuggestions `json:"suggestions,omitempty"`
+}
+
+// RoadmapStageChange One move of an idea. The counts are filled when the job that sets the linked feedback's
+// progress has run; `finished_at` is absent until then (and for moves that set no progress).
+type RoadmapStageChange struct {
+	// ApiKeyId The API key that moved it.
+	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
+
+	// CommentPostId The reply posted with the move.
+	CommentPostId *uuid.UUID `json:"comment_post_id,omitempty"`
+	CreatedAt     time.Time  `json:"created_at"`
+	DiscussionId  uuid.UUID  `json:"discussion_id"`
+	FinishedAt    *time.Time `json:"finished_at,omitempty"`
+
+	// FromStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	FromStage IdeaStage `json:"from_stage"`
+	Id        uuid.UUID `json:"id"`
+
+	// Linked Feedback linked to the idea when it was moved.
+	Linked int32 `json:"linked"`
+
+	// MemberId The member who moved it; absent for an API key or once the member left.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Progress The progress the move sets on the linked feedback; absent when it sets none.
+	Progress *FeedbackProgress `json:"progress,omitempty"`
+
+	// ProgressSet Feedback whose progress the move changed.
+	ProgressSet int32 `json:"progress_set"`
+
+	// ProgressSkipped Feedback skipped because it already had that progress, was deleted, or the move was replaced by a newer one.
+	ProgressSkipped int32 `json:"progress_skipped"`
+
+	// ToStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	ToStage IdeaStage `json:"to_stage"`
+
+	// Via The OAuth client or MCP client that moved it on a member's behalf.
+	Via *string `json:"via,omitempty"`
+}
+
+// RoadmapStageChangePage defines model for RoadmapStageChangePage.
+type RoadmapStageChangePage struct {
+	Items []RoadmapStageChange `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// RoadmapStageMove defines model for RoadmapStageMove.
+type RoadmapStageMove struct {
+	// Comment Markdown, posted as the member's published reply on the idea in the same transaction. Needs a member session.
+	Comment *string `json:"comment,omitempty"`
+
+	// Stage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	Stage IdeaStage `json:"stage"`
+}
+
+// RoadmapStageMoveResult defines model for RoadmapStageMoveResult.
+type RoadmapStageMoveResult struct {
+	// Change The move; absent when the idea was already in that stage and nothing changed.
+	Change *RoadmapStageChange `json:"change,omitempty"`
+
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+}
+
+// RoadmapSuggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at
+// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+// still work.
+type RoadmapSuggestions string
 
 // Role defines model for Role.
 type Role string
@@ -16151,6 +16714,9 @@ type StatusIncidentConversation struct {
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
 
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
+
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
 	// they were imported. Absent otherwise.
@@ -16298,63 +16864,6 @@ type StatusIncidentPatch struct {
 type StatusIncidentPublish struct {
 	// Notify Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise).
 	Notify *bool `json:"notify,omitempty"`
-}
-
-// StatusIncidentReply defines model for StatusIncidentReply.
-type StatusIncidentReply struct {
-	// Body The reply's text, as for any message.
-	Body string `json:"body"`
-
-	// Close Close each conversation after the reply.
-	Close *bool `json:"close,omitempty"`
-}
-
-// StatusIncidentReplyCounts defines model for StatusIncidentReplyCounts.
-type StatusIncidentReplyCounts struct {
-	Failed  int32 `json:"failed"`
-	Pending int32 `json:"pending"`
-	Sent    int32 `json:"sent"`
-	Skipped int32 `json:"skipped"`
-}
-
-// StatusIncidentReplyOutcome defines model for StatusIncidentReplyOutcome.
-type StatusIncidentReplyOutcome string
-
-// StatusIncidentReplyReport defines model for StatusIncidentReplyReport.
-type StatusIncidentReplyReport struct {
-	Close      bool                        `json:"close"`
-	Counts     StatusIncidentReplyCounts   `json:"counts"`
-	CreatedAt  time.Time                   `json:"created_at"`
-	Id         uuid.UUID                   `json:"id"`
-	IncidentId uuid.UUID                   `json:"incident_id"`
-	Items      []StatusIncidentReplyTarget `json:"items"`
-
-	// NextCursor Absent on the last page.
-	NextCursor *string `json:"next_cursor,omitempty"`
-
-	// Queued The conversations the request was queued for.
-	Queued int32 `json:"queued"`
-}
-
-// StatusIncidentReplyResult defines model for StatusIncidentReplyResult.
-type StatusIncidentReplyResult struct {
-	// Id The reply request; read its outcomes with `GET .../replies/{replyId}`.
-	Id uuid.UUID `json:"id"`
-
-	// Queued The conversations a reply was queued for.
-	Queued int32 `json:"queued"`
-}
-
-// StatusIncidentReplyTarget defines model for StatusIncidentReplyTarget.
-type StatusIncidentReplyTarget struct {
-	ConversationId uuid.UUID `json:"conversation_id"`
-
-	// FinishedAt Absent while `pending`.
-	FinishedAt *time.Time                 `json:"finished_at,omitempty"`
-	Outcome    StatusIncidentReplyOutcome `json:"outcome"`
-
-	// Reason Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
-	Reason *string `json:"reason,omitempty"`
 }
 
 // StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
@@ -17549,6 +18058,19 @@ type WebhookDiscussionPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookDiscussionStagePayload defines model for WebhookDiscussionStagePayload.
+type WebhookDiscussionStagePayload struct {
+	Data DiscussionStageEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookEndpoint defines model for WebhookEndpoint.
 type WebhookEndpoint struct {
 	CreatedAt   time.Time  `json:"created_at"`
@@ -17952,6 +18474,9 @@ type PasskeyId = uuid.UUID
 // PushSubscriptionId defines model for PushSubscriptionId.
 type PushSubscriptionId = uuid.UUID
 
+// RoadmapBoardId defines model for RoadmapBoardId.
+type RoadmapBoardId = uuid.UUID
+
 // Search defines model for Search.
 type Search = string
 
@@ -18017,8 +18542,16 @@ type SignedIn = Me
 
 // ListClientDiscussionsParams defines parameters for ListClientDiscussions.
 type ListClientDiscussionsParams struct {
-	// Page The page's URL.
-	Page string          `form:"page" json:"page"`
+	Kind *DiscussionKind `form:"kind,omitempty" json:"kind,omitempty"`
+
+	// Page The page's URL; required unless `kind=idea`.
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// Stage `kind=idea` only.
+	Stage *IdeaStage `form:"stage,omitempty" json:"stage,omitempty"`
+
+	// Q `kind=idea` only: a title search.
+	Q    *string         `form:"q,omitempty" json:"q,omitempty"`
 	Sort *DiscussionSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Cursor The `next_cursor` of the previous page.
@@ -18954,6 +19487,13 @@ type ListConversationsParams struct {
 	// BroadcastId Only conversations opened by replies to this broadcast.
 	BroadcastId *uuid.UUID `form:"broadcast_id,omitempty" json:"broadcast_id,omitempty"`
 
+	// IdeaId Only the feedback linked to this roadmap idea. An idea of an inbox the caller cannot
+	// see answers `404`.
+	IdeaId *uuid.UUID `form:"idea_id,omitempty" json:"idea_id,omitempty"`
+
+	// Idea `none` lists only feedback that is not linked to an idea (and no other kind).
+	Idea *ListConversationsParamsIdea `form:"idea,omitempty" json:"idea,omitempty"`
+
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
 	// without it, both. Member sessions only (`400 validation_failed` for API keys).
 	Pinned *bool `form:"pinned,omitempty" json:"pinned,omitempty"`
@@ -18970,6 +19510,9 @@ type ListConversationsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
+
+// ListConversationsParamsIdea defines parameters for ListConversations.
+type ListConversationsParamsIdea string
 
 // CreateConversationParams defines parameters for CreateConversation.
 type CreateConversationParams struct {
@@ -19155,7 +19698,17 @@ type VoteDiscussionPostParams struct {
 
 // ListDiscussionsParams defines parameters for ListDiscussions.
 type ListDiscussionsParams struct {
-	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	InboxId *uuid.UUID      `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Kind    *DiscussionKind `form:"kind,omitempty" json:"kind,omitempty"`
+
+	// BoardId `kind=idea` only: the ideas of this board.
+	BoardId *uuid.UUID `form:"board_id,omitempty" json:"board_id,omitempty"`
+
+	// Stage `kind=idea` only: the ideas in this stage.
+	Stage *IdeaStage `form:"stage,omitempty" json:"stage,omitempty"`
+
+	// Q `kind=idea` only: a title search, at most 200 characters.
+	Q *string `form:"q,omitempty" json:"q,omitempty"`
 
 	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
 	// Without it, every site.
@@ -19214,10 +19767,64 @@ type AcceptDiscussionAnswerParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// UnlinkIdeaConversationParams defines parameters for UnlinkIdeaConversation.
+type UnlinkIdeaConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// LinkIdeaConversationParams defines parameters for LinkIdeaConversation.
+type LinkIdeaConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReplyToIdeaConversationsParams defines parameters for ReplyToIdeaConversations.
+type ReplyToIdeaConversationsParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetIdeaLinkedReplyParams defines parameters for GetIdeaLinkedReply.
+type GetIdeaLinkedReplyParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // CreateDiscussionPostParams defines parameters for CreateDiscussionPost.
 type CreateDiscussionPostParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MoveIdeaStageParams defines parameters for MoveIdeaStage.
+type MoveIdeaStageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListIdeaStageChangesParams defines parameters for ListIdeaStageChanges.
+type ListIdeaStageChangesParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -20270,6 +20877,42 @@ type RevokeOAuthGrantParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListRoadmapBoardsParams defines parameters for ListRoadmapBoards.
+type ListRoadmapBoardsParams struct {
+	// InboxId Only the board of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateRoadmapBoardParams defines parameters for CreateRoadmapBoard.
+type CreateRoadmapBoardParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteRoadmapBoardParams defines parameters for DeleteRoadmapBoard.
+type DeleteRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetRoadmapBoardParams defines parameters for GetRoadmapBoard.
+type GetRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateRoadmapBoardParams defines parameters for UpdateRoadmapBoard.
+type UpdateRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -20846,6 +21489,20 @@ type WebhookDiscussionPostCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookDiscussionStageChangedParams defines parameters for WebhookDiscussionStageChanged.
+type WebhookDiscussionStageChangedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookDiscussionUpdatedParams defines parameters for WebhookDiscussionUpdated.
 type WebhookDiscussionUpdatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -21303,8 +21960,14 @@ type UpdateDiscussionJSONRequestBody = DiscussionUpdate
 // AcceptDiscussionAnswerJSONRequestBody defines body for AcceptDiscussionAnswer for application/json ContentType.
 type AcceptDiscussionAnswerJSONRequestBody = DiscussionAnswer
 
+// ReplyToIdeaConversationsJSONRequestBody defines body for ReplyToIdeaConversations for application/json ContentType.
+type ReplyToIdeaConversationsJSONRequestBody = LinkedReplyCreate
+
 // CreateDiscussionPostJSONRequestBody defines body for CreateDiscussionPost for application/json ContentType.
 type CreateDiscussionPostJSONRequestBody = DiscussionPostCreate
+
+// MoveIdeaStageJSONRequestBody defines body for MoveIdeaStage for application/json ContentType.
+type MoveIdeaStageJSONRequestBody = RoadmapStageMove
 
 // CreateEmailDesignJSONRequestBody defines body for CreateEmailDesign for application/json ContentType.
 type CreateEmailDesignJSONRequestBody = EmailDesignCreate
@@ -21450,6 +22113,12 @@ type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
+// CreateRoadmapBoardJSONRequestBody defines body for CreateRoadmapBoard for application/json ContentType.
+type CreateRoadmapBoardJSONRequestBody = RoadmapBoardCreate
+
+// UpdateRoadmapBoardJSONRequestBody defines body for UpdateRoadmapBoard for application/json ContentType.
+type UpdateRoadmapBoardJSONRequestBody = RoadmapBoardUpdate
+
 // CreateStatusPageJSONRequestBody defines body for CreateStatusPage for application/json ContentType.
 type CreateStatusPageJSONRequestBody = StatusPageCreate
 
@@ -21481,7 +22150,7 @@ type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
 type PublishStatusIncidentJSONRequestBody = StatusIncidentPublish
 
 // ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
-type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
+type ReplyToStatusIncidentConversationsJSONRequestBody = LinkedReplyCreate
 
 // CreateStatusIncidentUpdateJSONRequestBody defines body for CreateStatusIncidentUpdate for application/json ContentType.
 type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
@@ -21542,6 +22211,9 @@ type WebhookDiscussionCreatedJSONRequestBody = WebhookDiscussionPayload
 
 // WebhookDiscussionPostCreatedJSONRequestBody defines body for WebhookDiscussionPostCreated for application/json ContentType.
 type WebhookDiscussionPostCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionStageChangedJSONRequestBody defines body for WebhookDiscussionStageChanged for application/json ContentType.
+type WebhookDiscussionStageChangedJSONRequestBody = WebhookDiscussionStagePayload
 
 // WebhookDiscussionUpdatedJSONRequestBody defines body for WebhookDiscussionUpdated for application/json ContentType.
 type WebhookDiscussionUpdatedJSONRequestBody = WebhookDiscussionPayload
@@ -23654,6 +24326,32 @@ func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsDiscussionStageEvent returns the union data inside the RealtimeMessage as a DiscussionStageEvent
+func (t RealtimeMessage) AsDiscussionStageEvent() (DiscussionStageEvent, error) {
+	var body DiscussionStageEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionStageEvent overwrites any union data inside the RealtimeMessage as the provided DiscussionStageEvent
+func (t *RealtimeMessage) FromDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionStageEvent performs a merge with any union data inside the RealtimeMessage, using the provided DiscussionStageEvent
+func (t *RealtimeMessage) MergeDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsSubscriptionEvent returns the union data inside the RealtimeMessage as a SubscriptionEvent
 func (t RealtimeMessage) AsSubscriptionEvent() (SubscriptionEvent, error) {
 	var body SubscriptionEvent
@@ -24018,6 +24716,32 @@ func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
 	return err
 }
 
+// AsRoadmapBoardSignal returns the union data inside the RealtimeMessage as a RoadmapBoardSignal
+func (t RealtimeMessage) AsRoadmapBoardSignal() (RoadmapBoardSignal, error) {
+	var body RoadmapBoardSignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoadmapBoardSignal overwrites any union data inside the RealtimeMessage as the provided RoadmapBoardSignal
+func (t *RealtimeMessage) FromRoadmapBoardSignal(v RoadmapBoardSignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoadmapBoardSignal performs a merge with any union data inside the RealtimeMessage, using the provided RoadmapBoardSignal
+func (t *RealtimeMessage) MergeRoadmapBoardSignal(v RoadmapBoardSignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -24270,6 +24994,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDiscussionEvent()
 	case "discussion.post_created":
 		return t.AsDiscussionEvent()
+	case "discussion.stage_changed":
+		return t.AsDiscussionStageEvent()
 	case "discussion.updated":
 		return t.AsDiscussionEvent()
 	case "draft.created":
@@ -24314,6 +25040,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsRealtimeReady()
 	case "resync_required":
 		return t.AsRealtimeResyncRequired()
+	case "roadmap.board.updated":
+		return t.AsRoadmapBoardSignal()
 	case "status.component.updated":
 		return t.AsStatusComponentEvent()
 	case "status.incident.created":
@@ -24743,6 +25471,32 @@ func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsDiscussionStageEvent returns the union data inside the StoredEvent as a DiscussionStageEvent
+func (t StoredEvent) AsDiscussionStageEvent() (DiscussionStageEvent, error) {
+	var body DiscussionStageEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionStageEvent overwrites any union data inside the StoredEvent as the provided DiscussionStageEvent
+func (t *StoredEvent) FromDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionStageEvent performs a merge with any union data inside the StoredEvent, using the provided DiscussionStageEvent
+func (t *StoredEvent) MergeDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsSubscriptionEvent returns the union data inside the StoredEvent as a SubscriptionEvent
 func (t StoredEvent) AsSubscriptionEvent() (SubscriptionEvent, error) {
 	var body SubscriptionEvent
@@ -24991,6 +25745,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDiscussionEvent()
 	case "discussion.post_created":
 		return t.AsDiscussionEvent()
+	case "discussion.stage_changed":
+		return t.AsDiscussionStageEvent()
 	case "discussion.updated":
 		return t.AsDiscussionEvent()
 	case "draft.created":
@@ -25100,6 +25856,9 @@ type ServerInterface interface {
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
+	// GetClientRoadmap The inbox's roadmap board
+	// (GET /client/v1/channels/{channel_key}/roadmap)
+	GetClientRoadmap(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
 	// CreateClientSubscription Subscribe from a form
 	// (POST /client/v1/channels/{channel_key}/subscriptions)
 	CreateClientSubscription(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
@@ -25598,9 +26357,27 @@ type ServerInterface interface {
 	// AcceptDiscussionAnswer Mark the accepted answer
 	// (PUT /v1/discussions/{discussionId}/answer)
 	AcceptDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params AcceptDiscussionAnswerParams)
+	// UnlinkIdeaConversation Unlink feedback from an idea
+	// (DELETE /v1/discussions/{discussionId}/conversations/{conversationId})
+	UnlinkIdeaConversation(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, conversationId ConversationId, params UnlinkIdeaConversationParams)
+	// LinkIdeaConversation Link feedback to an idea
+	// (PUT /v1/discussions/{discussionId}/conversations/{conversationId})
+	LinkIdeaConversation(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, conversationId ConversationId, params LinkIdeaConversationParams)
+	// ReplyToIdeaConversations Reply to the feedback linked to an idea
+	// (POST /v1/discussions/{discussionId}/linked-replies)
+	ReplyToIdeaConversations(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ReplyToIdeaConversationsParams)
+	// GetIdeaLinkedReply Get what became of a reply to an idea's linked feedback
+	// (GET /v1/discussions/{discussionId}/linked-replies/{replyId})
+	GetIdeaLinkedReply(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, replyId StatusReplyId, params GetIdeaLinkedReplyParams)
 	// CreateDiscussionPost Reply as a member
 	// (POST /v1/discussions/{discussionId}/posts)
 	CreateDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateDiscussionPostParams)
+	// MoveIdeaStage Move an idea to a stage
+	// (POST /v1/discussions/{discussionId}/stage)
+	MoveIdeaStage(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params MoveIdeaStageParams)
+	// ListIdeaStageChanges An idea's stage history
+	// (GET /v1/discussions/{discussionId}/stage-changes)
+	ListIdeaStageChanges(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ListIdeaStageChangesParams)
 	// GetDocsPage One documentation page
 	// (GET /v1/docs/page)
 	GetDocsPage(w http.ResponseWriter, r *http.Request, params GetDocsPageParams)
@@ -26030,6 +26807,21 @@ type ServerInterface interface {
 	// GetVapidPublicKey The server's Web Push key
 	// (GET /v1/push/vapid-public-key)
 	GetVapidPublicKey(w http.ResponseWriter, r *http.Request)
+	// ListRoadmapBoards List roadmap boards
+	// (GET /v1/roadmap-boards)
+	ListRoadmapBoards(w http.ResponseWriter, r *http.Request, params ListRoadmapBoardsParams)
+	// CreateRoadmapBoard Create a roadmap board
+	// (POST /v1/roadmap-boards)
+	CreateRoadmapBoard(w http.ResponseWriter, r *http.Request, params CreateRoadmapBoardParams)
+	// DeleteRoadmapBoard Delete a roadmap board
+	// (DELETE /v1/roadmap-boards/{boardId})
+	DeleteRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params DeleteRoadmapBoardParams)
+	// GetRoadmapBoard A roadmap board
+	// (GET /v1/roadmap-boards/{boardId})
+	GetRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params GetRoadmapBoardParams)
+	// UpdateRoadmapBoard Update a roadmap board
+	// (PATCH /v1/roadmap-boards/{boardId})
+	UpdateRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params UpdateRoadmapBoardParams)
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(w http.ResponseWriter, r *http.Request, params GetStatsParams)
@@ -26389,15 +27181,54 @@ func (siw *ServerInterfaceWrapper) ListClientDiscussions(w http.ResponseWriter, 
 	// Parameter object where we will unmarshal all parameters from the context
 	var params ListClientDiscussionsParams
 
-	// ------------- Required query parameter "page" -------------
+	// ------------- Optional query parameter "kind" -------------
 
-	err = runtime.BindQueryParameterWithOptions("form", true, true, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "page" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
 	if err != nil {
 		var requiredError *runtime.RequiredParameterError
 		if errors.As(err, &requiredError) {
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "stage" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "stage", r.URL.Query(), &params.Stage, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "stage"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "stage", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
 		}
 		return
 	}
@@ -26829,6 +27660,32 @@ func (siw *ServerInterfaceWrapper) CreatePageRating(w http.ResponseWriter, r *ht
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreatePageRating(w, r, channelKey)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientRoadmap operation middleware
+func (siw *ServerInterfaceWrapper) GetClientRoadmap(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientRoadmap(w, r, channelKey)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -33929,6 +34786,32 @@ func (siw *ServerInterfaceWrapper) ListConversations(w http.ResponseWriter, r *h
 		return
 	}
 
+	// ------------- Optional query parameter "idea_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "idea_id", r.URL.Query(), &params.IdeaId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "idea_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "idea_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "idea" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "idea", r.URL.Query(), &params.Idea, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "idea"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "idea", Err: err})
+		}
+		return
+	}
+
 	// ------------- Optional query parameter "pinned" -------------
 
 	err = runtime.BindQueryParameterWithOptions("form", true, false, "pinned", r.URL.Query(), &params.Pinned, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
@@ -35331,6 +36214,58 @@ func (siw *ServerInterfaceWrapper) ListDiscussions(w http.ResponseWriter, r *htt
 		return
 	}
 
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "board_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "board_id", r.URL.Query(), &params.BoardId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "board_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "board_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "stage" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "stage", r.URL.Query(), &params.Stage, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "stage"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "stage", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
 	// ------------- Optional query parameter "site" -------------
 
 	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
@@ -35740,6 +36675,278 @@ func (siw *ServerInterfaceWrapper) AcceptDiscussionAnswer(w http.ResponseWriter,
 	handler.ServeHTTP(w, r)
 }
 
+// UnlinkIdeaConversation operation middleware
+func (siw *ServerInterfaceWrapper) UnlinkIdeaConversation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnlinkIdeaConversationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnlinkIdeaConversation(w, r, discussionId, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// LinkIdeaConversation operation middleware
+func (siw *ServerInterfaceWrapper) LinkIdeaConversation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params LinkIdeaConversationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.LinkIdeaConversation(w, r, discussionId, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplyToIdeaConversations operation middleware
+func (siw *ServerInterfaceWrapper) ReplyToIdeaConversations(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplyToIdeaConversationsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplyToIdeaConversations(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetIdeaLinkedReply operation middleware
+func (siw *ServerInterfaceWrapper) GetIdeaLinkedReply(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "replyId" -------------
+	var replyId StatusReplyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "replyId", r.PathValue("replyId"), &replyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "replyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetIdeaLinkedReplyParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetIdeaLinkedReply(w, r, discussionId, replyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // CreateDiscussionPost operation middleware
 func (siw *ServerInterfaceWrapper) CreateDiscussionPost(w http.ResponseWriter, r *http.Request) {
 
@@ -35800,6 +37007,151 @@ func (siw *ServerInterfaceWrapper) CreateDiscussionPost(w http.ResponseWriter, r
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateDiscussionPost(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// MoveIdeaStage operation middleware
+func (siw *ServerInterfaceWrapper) MoveIdeaStage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params MoveIdeaStageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.MoveIdeaStage(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListIdeaStageChanges operation middleware
+func (siw *ServerInterfaceWrapper) ListIdeaStageChanges(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListIdeaStageChangesParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListIdeaStageChanges(w, r, discussionId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -43997,6 +45349,270 @@ func (siw *ServerInterfaceWrapper) GetVapidPublicKey(w http.ResponseWriter, r *h
 	handler.ServeHTTP(w, r)
 }
 
+// ListRoadmapBoards operation middleware
+func (siw *ServerInterfaceWrapper) ListRoadmapBoards(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListRoadmapBoardsParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListRoadmapBoards(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateRoadmapBoard operation middleware
+func (siw *ServerInterfaceWrapper) CreateRoadmapBoard(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateRoadmapBoardParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateRoadmapBoard(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteRoadmapBoard operation middleware
+func (siw *ServerInterfaceWrapper) DeleteRoadmapBoard(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "boardId" -------------
+	var boardId RoadmapBoardId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "boardId", r.PathValue("boardId"), &boardId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "boardId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteRoadmapBoardParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteRoadmapBoard(w, r, boardId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetRoadmapBoard operation middleware
+func (siw *ServerInterfaceWrapper) GetRoadmapBoard(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "boardId" -------------
+	var boardId RoadmapBoardId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "boardId", r.PathValue("boardId"), &boardId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "boardId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetRoadmapBoardParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetRoadmapBoard(w, r, boardId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateRoadmapBoard operation middleware
+func (siw *ServerInterfaceWrapper) UpdateRoadmapBoard(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "boardId" -------------
+	var boardId RoadmapBoardId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "boardId", r.PathValue("boardId"), &boardId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "boardId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateRoadmapBoardParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateRoadmapBoard(w, r, boardId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetStats operation middleware
 func (siw *ServerInterfaceWrapper) GetStats(w http.ResponseWriter, r *http.Request) {
 
@@ -47833,6 +49449,17 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussion-posts/{postId}/spam", wrapper.MarkDiscussionPostSpam)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.UnvoteDiscussionPost)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.VoteDiscussionPost)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/roadmap-boards", wrapper.ListRoadmapBoards)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/roadmap-boards", wrapper.CreateRoadmapBoard)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.DeleteRoadmapBoard)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.GetRoadmapBoard)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/roadmap-boards/{boardId}", wrapper.UpdateRoadmapBoard)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussions/{discussionId}/stage", wrapper.MoveIdeaStage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussions/{discussionId}/stage-changes", wrapper.ListIdeaStageChanges)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussions/{discussionId}/conversations/{conversationId}", wrapper.UnlinkIdeaConversation)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/discussions/{discussionId}/conversations/{conversationId}", wrapper.LinkIdeaConversation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussions/{discussionId}/linked-replies", wrapper.ReplyToIdeaConversations)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussions/{discussionId}/linked-replies/{replyId}", wrapper.GetIdeaLinkedReply)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists", wrapper.ListMailingLists)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists", wrapper.CreateMailingList)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/lists/{listId}", wrapper.DeleteMailingList)
@@ -48043,6 +49670,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/page-ratings", wrapper.CreatePageRating)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions", wrapper.ListClientDiscussions)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions/{discussionId}", wrapper.GetClientDiscussion)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/roadmap", wrapper.GetClientRoadmap)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/lists", wrapper.ListClientMailingLists)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/subscriptions", wrapper.CreateClientSubscription)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/help", wrapper.GetClientHelp)
@@ -48121,6 +49749,9 @@ type WebhookReceiverInterface interface {
 	// A reply was written in a thread
 	// HandleWebhookDiscussionPostCreatedWebhook handles the POST webhook for discussion.post_created.
 	HandleWebhookDiscussionPostCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionPostCreatedParams)
+	// An idea was moved to another stage
+	// HandleWebhookDiscussionStageChangedWebhook handles the POST webhook for discussion.stage_changed.
+	HandleWebhookDiscussionStageChangedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionStageChangedParams)
 	// A thread or post was moderated or edited
 	// HandleWebhookDiscussionUpdatedWebhook handles the POST webhook for discussion.updated.
 	HandleWebhookDiscussionUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionUpdatedParams)
@@ -49091,6 +50722,98 @@ func WebhookDiscussionPostCreatedWebhookHandler(si WebhookReceiverInterface, err
 		}
 
 		si.HandleWebhookDiscussionPostCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookDiscussionStageChangedWebhookHandler returns the http.Handler for the discussion.stage_changed webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookDiscussionStageChangedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookDiscussionStageChangedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookDiscussionStageChangedWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -51994,6 +53717,82 @@ func (response CreatePageRating429ApplicationProblemPlusJSONResponse) VisitCreat
 	return err
 }
 
+type GetClientRoadmapRequestObject struct {
+	ChannelKey ChannelKey `json:"channel_key"`
+}
+
+type GetClientRoadmapResponseObject interface {
+	VisitGetClientRoadmapResponse(w http.ResponseWriter) error
+}
+
+type GetClientRoadmap200ResponseHeaders struct {
+	CacheControl *string
+}
+
+type GetClientRoadmap200JSONResponse struct {
+	Body    ClientRoadmap
+	Headers GetClientRoadmap200ResponseHeaders
+}
+
+func (response GetClientRoadmap200JSONResponse) VisitGetClientRoadmapResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientRoadmap403ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientRoadmap403ApplicationProblemPlusJSONResponse) VisitGetClientRoadmapResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientRoadmap404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientRoadmap404ApplicationProblemPlusJSONResponse) VisitGetClientRoadmapResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientRoadmap429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientRoadmap429ApplicationProblemPlusJSONResponse) VisitGetClientRoadmapResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type CreateClientSubscriptionRequestObject struct {
 	ChannelKey ChannelKey `json:"channel_key"`
 	Body       *CreateClientSubscriptionJSONRequestBody
@@ -53157,6 +54956,20 @@ func (response VoteClientDiscussionPost404ApplicationProblemPlusJSONResponse) Vi
 	return err
 }
 
+type VoteClientDiscussionPost409ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteClientDiscussionPost409ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type VoteClientDiscussionPost429ApplicationProblemPlusJSONResponse Problem
 
 func (response VoteClientDiscussionPost429ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
@@ -53234,6 +55047,34 @@ func (response CreateClientDiscussion403ApplicationProblemPlusJSONResponse) Visi
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussion404ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussion422ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -53395,6 +55236,20 @@ func (response AcceptClientDiscussionAnswer404ApplicationProblemPlusJSONResponse
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswer409ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptClientDiscussionAnswer409ApplicationProblemPlusJSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -60546,6 +62401,20 @@ func (response DeleteChannel404ApplicationProblemPlusJSONResponse) VisitDeleteCh
 	return err
 }
 
+type DeleteChannel409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChannel409ApplicationProblemPlusJSONResponse) VisitDeleteChannelResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetChannelRequestObject struct {
 	ChannelId ChannelId `json:"channelId"`
 	Params    GetChannelParams
@@ -62986,6 +64855,20 @@ func (response CreateDiscussionFromConversation409ApplicationProblemPlusJSONResp
 	return err
 }
 
+type CreateDiscussionFromConversation422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionFromConversation422ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListConversationIncidentsRequestObject struct {
 	ConversationId ConversationId `json:"conversationId"`
 	Params         ListConversationIncidentsParams
@@ -64166,6 +66049,20 @@ func (response VoteDiscussionPost404ApplicationProblemPlusJSONResponse) VisitVot
 	return err
 }
 
+type VoteDiscussionPost409ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteDiscussionPost409ApplicationProblemPlusJSONResponse) VisitVoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListDiscussionsRequestObject struct {
 	Params ListDiscussionsParams
 }
@@ -64323,6 +66220,20 @@ func (response CreateDiscussion404ApplicationProblemPlusJSONResponse) VisitCreat
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussion422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussion422ApplicationProblemPlusJSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -64625,6 +66536,350 @@ func (response AcceptDiscussionAnswer404ApplicationProblemPlusJSONResponse) Visi
 	return err
 }
 
+type AcceptDiscussionAnswer409ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptDiscussionAnswer409ApplicationProblemPlusJSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkIdeaConversationRequestObject struct {
+	DiscussionId   DiscussionId   `json:"discussionId"`
+	ConversationId ConversationId `json:"conversationId"`
+	Params         UnlinkIdeaConversationParams
+}
+
+type UnlinkIdeaConversationResponseObject interface {
+	VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error
+}
+
+type UnlinkIdeaConversation204Response struct {
+}
+
+func (response UnlinkIdeaConversation204Response) VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type UnlinkIdeaConversation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnlinkIdeaConversation401ApplicationProblemPlusJSONResponse) VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkIdeaConversation403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlinkIdeaConversation403ApplicationProblemPlusJSONResponse) VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkIdeaConversation404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlinkIdeaConversation404ApplicationProblemPlusJSONResponse) VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkIdeaConversation409ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlinkIdeaConversation409ApplicationProblemPlusJSONResponse) VisitUnlinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkIdeaConversationRequestObject struct {
+	DiscussionId   DiscussionId   `json:"discussionId"`
+	ConversationId ConversationId `json:"conversationId"`
+	Params         LinkIdeaConversationParams
+}
+
+type LinkIdeaConversationResponseObject interface {
+	VisitLinkIdeaConversationResponse(w http.ResponseWriter) error
+}
+
+type LinkIdeaConversation204Response struct {
+}
+
+func (response LinkIdeaConversation204Response) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type LinkIdeaConversation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response LinkIdeaConversation401ApplicationProblemPlusJSONResponse) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkIdeaConversation403ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkIdeaConversation403ApplicationProblemPlusJSONResponse) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkIdeaConversation404ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkIdeaConversation404ApplicationProblemPlusJSONResponse) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkIdeaConversation409ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkIdeaConversation409ApplicationProblemPlusJSONResponse) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkIdeaConversation422ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkIdeaConversation422ApplicationProblemPlusJSONResponse) VisitLinkIdeaConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToIdeaConversationsRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       ReplyToIdeaConversationsParams
+	Body         *ReplyToIdeaConversationsJSONRequestBody
+}
+
+type ReplyToIdeaConversationsResponseObject interface {
+	VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error
+}
+
+type ReplyToIdeaConversations202JSONResponse LinkedReplyResult
+
+func (response ReplyToIdeaConversations202JSONResponse) VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToIdeaConversations400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ReplyToIdeaConversations400ApplicationProblemPlusJSONResponse) VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToIdeaConversations401ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToIdeaConversations401ApplicationProblemPlusJSONResponse) VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToIdeaConversations403ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToIdeaConversations403ApplicationProblemPlusJSONResponse) VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToIdeaConversations404ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToIdeaConversations404ApplicationProblemPlusJSONResponse) VisitReplyToIdeaConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdeaLinkedReplyRequestObject struct {
+	DiscussionId DiscussionId  `json:"discussionId"`
+	ReplyId      StatusReplyId `json:"replyId"`
+	Params       GetIdeaLinkedReplyParams
+}
+
+type GetIdeaLinkedReplyResponseObject interface {
+	VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error
+}
+
+type GetIdeaLinkedReply200JSONResponse LinkedReply
+
+func (response GetIdeaLinkedReply200JSONResponse) VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdeaLinkedReply400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetIdeaLinkedReply400ApplicationProblemPlusJSONResponse) VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdeaLinkedReply401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetIdeaLinkedReply401ApplicationProblemPlusJSONResponse) VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdeaLinkedReply403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetIdeaLinkedReply403ApplicationProblemPlusJSONResponse) VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdeaLinkedReply404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetIdeaLinkedReply404ApplicationProblemPlusJSONResponse) VisitGetIdeaLinkedReplyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type CreateDiscussionPostRequestObject struct {
 	DiscussionId DiscussionId `json:"discussionId"`
 	Params       CreateDiscussionPostParams
@@ -64696,6 +66951,183 @@ func (response CreateDiscussionPost403ApplicationProblemPlusJSONResponse) VisitC
 type CreateDiscussionPost404ApplicationProblemPlusJSONResponse Problem
 
 func (response CreateDiscussionPost404ApplicationProblemPlusJSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStageRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       MoveIdeaStageParams
+	Body         *MoveIdeaStageJSONRequestBody
+}
+
+type MoveIdeaStageResponseObject interface {
+	VisitMoveIdeaStageResponse(w http.ResponseWriter) error
+}
+
+type MoveIdeaStage200JSONResponse RoadmapStageMoveResult
+
+func (response MoveIdeaStage200JSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStage400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response MoveIdeaStage400ApplicationProblemPlusJSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStage401ApplicationProblemPlusJSONResponse Problem
+
+func (response MoveIdeaStage401ApplicationProblemPlusJSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStage403ApplicationProblemPlusJSONResponse Problem
+
+func (response MoveIdeaStage403ApplicationProblemPlusJSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStage404ApplicationProblemPlusJSONResponse Problem
+
+func (response MoveIdeaStage404ApplicationProblemPlusJSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MoveIdeaStage409ApplicationProblemPlusJSONResponse Problem
+
+func (response MoveIdeaStage409ApplicationProblemPlusJSONResponse) VisitMoveIdeaStageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListIdeaStageChangesRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       ListIdeaStageChangesParams
+}
+
+type ListIdeaStageChangesResponseObject interface {
+	VisitListIdeaStageChangesResponse(w http.ResponseWriter) error
+}
+
+type ListIdeaStageChanges200JSONResponse RoadmapStageChangePage
+
+func (response ListIdeaStageChanges200JSONResponse) VisitListIdeaStageChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListIdeaStageChanges400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListIdeaStageChanges400ApplicationProblemPlusJSONResponse) VisitListIdeaStageChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListIdeaStageChanges401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListIdeaStageChanges401ApplicationProblemPlusJSONResponse) VisitListIdeaStageChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListIdeaStageChanges403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListIdeaStageChanges403ApplicationProblemPlusJSONResponse) VisitListIdeaStageChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListIdeaStageChanges404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListIdeaStageChanges404ApplicationProblemPlusJSONResponse) VisitListIdeaStageChangesResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -76110,6 +78542,405 @@ func (response GetVapidPublicKey404ApplicationProblemPlusJSONResponse) VisitGetV
 	return err
 }
 
+type ListRoadmapBoardsRequestObject struct {
+	Params ListRoadmapBoardsParams
+}
+
+type ListRoadmapBoardsResponseObject interface {
+	VisitListRoadmapBoardsResponse(w http.ResponseWriter) error
+}
+
+type ListRoadmapBoards200JSONResponse RoadmapBoardList
+
+func (response ListRoadmapBoards200JSONResponse) VisitListRoadmapBoardsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListRoadmapBoards401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListRoadmapBoards401ApplicationProblemPlusJSONResponse) VisitListRoadmapBoardsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListRoadmapBoards403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListRoadmapBoards403ApplicationProblemPlusJSONResponse) VisitListRoadmapBoardsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListRoadmapBoards404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListRoadmapBoards404ApplicationProblemPlusJSONResponse) VisitListRoadmapBoardsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoardRequestObject struct {
+	Params CreateRoadmapBoardParams
+	Body   *CreateRoadmapBoardJSONRequestBody
+}
+
+type CreateRoadmapBoardResponseObject interface {
+	VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error
+}
+
+type CreateRoadmapBoard201JSONResponse RoadmapBoard
+
+func (response CreateRoadmapBoard201JSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoard400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateRoadmapBoard400ApplicationProblemPlusJSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoard401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateRoadmapBoard401ApplicationProblemPlusJSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoard403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateRoadmapBoard403ApplicationProblemPlusJSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoard404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateRoadmapBoard404ApplicationProblemPlusJSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateRoadmapBoard409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateRoadmapBoard409ApplicationProblemPlusJSONResponse) VisitCreateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteRoadmapBoardRequestObject struct {
+	BoardId RoadmapBoardId `json:"boardId"`
+	Params  DeleteRoadmapBoardParams
+}
+
+type DeleteRoadmapBoardResponseObject interface {
+	VisitDeleteRoadmapBoardResponse(w http.ResponseWriter) error
+}
+
+type DeleteRoadmapBoard204Response struct {
+}
+
+func (response DeleteRoadmapBoard204Response) VisitDeleteRoadmapBoardResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteRoadmapBoard401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteRoadmapBoard401ApplicationProblemPlusJSONResponse) VisitDeleteRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteRoadmapBoard403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteRoadmapBoard403ApplicationProblemPlusJSONResponse) VisitDeleteRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteRoadmapBoard404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteRoadmapBoard404ApplicationProblemPlusJSONResponse) VisitDeleteRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetRoadmapBoardRequestObject struct {
+	BoardId RoadmapBoardId `json:"boardId"`
+	Params  GetRoadmapBoardParams
+}
+
+type GetRoadmapBoardResponseObject interface {
+	VisitGetRoadmapBoardResponse(w http.ResponseWriter) error
+}
+
+type GetRoadmapBoard200JSONResponse RoadmapBoard
+
+func (response GetRoadmapBoard200JSONResponse) VisitGetRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetRoadmapBoard401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetRoadmapBoard401ApplicationProblemPlusJSONResponse) VisitGetRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetRoadmapBoard403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetRoadmapBoard403ApplicationProblemPlusJSONResponse) VisitGetRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetRoadmapBoard404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetRoadmapBoard404ApplicationProblemPlusJSONResponse) VisitGetRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoardRequestObject struct {
+	BoardId RoadmapBoardId `json:"boardId"`
+	Params  UpdateRoadmapBoardParams
+	Body    *UpdateRoadmapBoardJSONRequestBody
+}
+
+type UpdateRoadmapBoardResponseObject interface {
+	VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error
+}
+
+type UpdateRoadmapBoard200JSONResponse RoadmapBoard
+
+func (response UpdateRoadmapBoard200JSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateRoadmapBoard400ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateRoadmapBoard401ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateRoadmapBoard403ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateRoadmapBoard404ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateRoadmapBoard409ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateRoadmapBoard429ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateRoadmapBoard429ApplicationProblemPlusJSONResponse) VisitUpdateRoadmapBoardResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetStatsRequestObject struct {
 	Params GetStatsParams
 }
@@ -77952,7 +80783,7 @@ type GetStatusIncidentReplyResponseObject interface {
 	VisitGetStatusIncidentReplyResponse(w http.ResponseWriter) error
 }
 
-type GetStatusIncidentReply200JSONResponse StatusIncidentReplyReport
+type GetStatusIncidentReply200JSONResponse LinkedReply
 
 func (response GetStatusIncidentReply200JSONResponse) VisitGetStatusIncidentReplyResponse(w http.ResponseWriter) error {
 
@@ -78035,7 +80866,7 @@ type ReplyToStatusIncidentConversationsResponseObject interface {
 	VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error
 }
 
-type ReplyToStatusIncidentConversations202JSONResponse StatusIncidentReplyResult
+type ReplyToStatusIncidentConversations202JSONResponse LinkedReplyResult
 
 func (response ReplyToStatusIncidentConversations202JSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
 
@@ -80481,6 +83312,9 @@ type StrictServerInterface interface {
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(ctx context.Context, request CreatePageRatingRequestObject) (CreatePageRatingResponseObject, error)
+	// GetClientRoadmap The inbox's roadmap board
+	// (GET /client/v1/channels/{channel_key}/roadmap)
+	GetClientRoadmap(ctx context.Context, request GetClientRoadmapRequestObject) (GetClientRoadmapResponseObject, error)
 	// CreateClientSubscription Subscribe from a form
 	// (POST /client/v1/channels/{channel_key}/subscriptions)
 	CreateClientSubscription(ctx context.Context, request CreateClientSubscriptionRequestObject) (CreateClientSubscriptionResponseObject, error)
@@ -80979,9 +83813,27 @@ type StrictServerInterface interface {
 	// AcceptDiscussionAnswer Mark the accepted answer
 	// (PUT /v1/discussions/{discussionId}/answer)
 	AcceptDiscussionAnswer(ctx context.Context, request AcceptDiscussionAnswerRequestObject) (AcceptDiscussionAnswerResponseObject, error)
+	// UnlinkIdeaConversation Unlink feedback from an idea
+	// (DELETE /v1/discussions/{discussionId}/conversations/{conversationId})
+	UnlinkIdeaConversation(ctx context.Context, request UnlinkIdeaConversationRequestObject) (UnlinkIdeaConversationResponseObject, error)
+	// LinkIdeaConversation Link feedback to an idea
+	// (PUT /v1/discussions/{discussionId}/conversations/{conversationId})
+	LinkIdeaConversation(ctx context.Context, request LinkIdeaConversationRequestObject) (LinkIdeaConversationResponseObject, error)
+	// ReplyToIdeaConversations Reply to the feedback linked to an idea
+	// (POST /v1/discussions/{discussionId}/linked-replies)
+	ReplyToIdeaConversations(ctx context.Context, request ReplyToIdeaConversationsRequestObject) (ReplyToIdeaConversationsResponseObject, error)
+	// GetIdeaLinkedReply Get what became of a reply to an idea's linked feedback
+	// (GET /v1/discussions/{discussionId}/linked-replies/{replyId})
+	GetIdeaLinkedReply(ctx context.Context, request GetIdeaLinkedReplyRequestObject) (GetIdeaLinkedReplyResponseObject, error)
 	// CreateDiscussionPost Reply as a member
 	// (POST /v1/discussions/{discussionId}/posts)
 	CreateDiscussionPost(ctx context.Context, request CreateDiscussionPostRequestObject) (CreateDiscussionPostResponseObject, error)
+	// MoveIdeaStage Move an idea to a stage
+	// (POST /v1/discussions/{discussionId}/stage)
+	MoveIdeaStage(ctx context.Context, request MoveIdeaStageRequestObject) (MoveIdeaStageResponseObject, error)
+	// ListIdeaStageChanges An idea's stage history
+	// (GET /v1/discussions/{discussionId}/stage-changes)
+	ListIdeaStageChanges(ctx context.Context, request ListIdeaStageChangesRequestObject) (ListIdeaStageChangesResponseObject, error)
 	// GetDocsPage One documentation page
 	// (GET /v1/docs/page)
 	GetDocsPage(ctx context.Context, request GetDocsPageRequestObject) (GetDocsPageResponseObject, error)
@@ -81411,6 +84263,21 @@ type StrictServerInterface interface {
 	// GetVapidPublicKey The server's Web Push key
 	// (GET /v1/push/vapid-public-key)
 	GetVapidPublicKey(ctx context.Context, request GetVapidPublicKeyRequestObject) (GetVapidPublicKeyResponseObject, error)
+	// ListRoadmapBoards List roadmap boards
+	// (GET /v1/roadmap-boards)
+	ListRoadmapBoards(ctx context.Context, request ListRoadmapBoardsRequestObject) (ListRoadmapBoardsResponseObject, error)
+	// CreateRoadmapBoard Create a roadmap board
+	// (POST /v1/roadmap-boards)
+	CreateRoadmapBoard(ctx context.Context, request CreateRoadmapBoardRequestObject) (CreateRoadmapBoardResponseObject, error)
+	// DeleteRoadmapBoard Delete a roadmap board
+	// (DELETE /v1/roadmap-boards/{boardId})
+	DeleteRoadmapBoard(ctx context.Context, request DeleteRoadmapBoardRequestObject) (DeleteRoadmapBoardResponseObject, error)
+	// GetRoadmapBoard A roadmap board
+	// (GET /v1/roadmap-boards/{boardId})
+	GetRoadmapBoard(ctx context.Context, request GetRoadmapBoardRequestObject) (GetRoadmapBoardResponseObject, error)
+	// UpdateRoadmapBoard Update a roadmap board
+	// (PATCH /v1/roadmap-boards/{boardId})
+	UpdateRoadmapBoard(ctx context.Context, request UpdateRoadmapBoardRequestObject) (UpdateRoadmapBoardResponseObject, error)
 	// GetStats Team activity since a moment
 	// (GET /v1/stats)
 	GetStats(ctx context.Context, request GetStatsRequestObject) (GetStatsResponseObject, error)
@@ -82079,6 +84946,32 @@ func (sh *strictHandler) CreatePageRating(w http.ResponseWriter, r *http.Request
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreatePageRatingResponseObject); ok {
 		if err := validResponse.VisitCreatePageRatingResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientRoadmap operation middleware
+func (sh *strictHandler) GetClientRoadmap(w http.ResponseWriter, r *http.Request, channelKey ChannelKey) {
+	var request GetClientRoadmapRequestObject
+
+	request.ChannelKey = channelKey
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientRoadmap(ctx, request.(GetClientRoadmapRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientRoadmap")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientRoadmapResponseObject); ok {
+		if err := validResponse.VisitGetClientRoadmapResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -87002,6 +89895,124 @@ func (sh *strictHandler) AcceptDiscussionAnswer(w http.ResponseWriter, r *http.R
 	}
 }
 
+// UnlinkIdeaConversation operation middleware
+func (sh *strictHandler) UnlinkIdeaConversation(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, conversationId ConversationId, params UnlinkIdeaConversationParams) {
+	var request UnlinkIdeaConversationRequestObject
+
+	request.DiscussionId = discussionId
+	request.ConversationId = conversationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnlinkIdeaConversation(ctx, request.(UnlinkIdeaConversationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnlinkIdeaConversation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnlinkIdeaConversationResponseObject); ok {
+		if err := validResponse.VisitUnlinkIdeaConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// LinkIdeaConversation operation middleware
+func (sh *strictHandler) LinkIdeaConversation(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, conversationId ConversationId, params LinkIdeaConversationParams) {
+	var request LinkIdeaConversationRequestObject
+
+	request.DiscussionId = discussionId
+	request.ConversationId = conversationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.LinkIdeaConversation(ctx, request.(LinkIdeaConversationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "LinkIdeaConversation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(LinkIdeaConversationResponseObject); ok {
+		if err := validResponse.VisitLinkIdeaConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ReplyToIdeaConversations operation middleware
+func (sh *strictHandler) ReplyToIdeaConversations(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ReplyToIdeaConversationsParams) {
+	var request ReplyToIdeaConversationsRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body ReplyToIdeaConversationsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ReplyToIdeaConversations(ctx, request.(ReplyToIdeaConversationsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ReplyToIdeaConversations")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ReplyToIdeaConversationsResponseObject); ok {
+		if err := validResponse.VisitReplyToIdeaConversationsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetIdeaLinkedReply operation middleware
+func (sh *strictHandler) GetIdeaLinkedReply(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, replyId StatusReplyId, params GetIdeaLinkedReplyParams) {
+	var request GetIdeaLinkedReplyRequestObject
+
+	request.DiscussionId = discussionId
+	request.ReplyId = replyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetIdeaLinkedReply(ctx, request.(GetIdeaLinkedReplyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetIdeaLinkedReply")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetIdeaLinkedReplyResponseObject); ok {
+		if err := validResponse.VisitGetIdeaLinkedReplyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // CreateDiscussionPost operation middleware
 func (sh *strictHandler) CreateDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateDiscussionPostParams) {
 	var request CreateDiscussionPostRequestObject
@@ -87029,6 +90040,67 @@ func (sh *strictHandler) CreateDiscussionPost(w http.ResponseWriter, r *http.Req
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateDiscussionPostResponseObject); ok {
 		if err := validResponse.VisitCreateDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// MoveIdeaStage operation middleware
+func (sh *strictHandler) MoveIdeaStage(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params MoveIdeaStageParams) {
+	var request MoveIdeaStageRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body MoveIdeaStageJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.MoveIdeaStage(ctx, request.(MoveIdeaStageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "MoveIdeaStage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(MoveIdeaStageResponseObject); ok {
+		if err := validResponse.VisitMoveIdeaStageResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListIdeaStageChanges operation middleware
+func (sh *strictHandler) ListIdeaStageChanges(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ListIdeaStageChangesParams) {
+	var request ListIdeaStageChangesRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListIdeaStageChanges(ctx, request.(ListIdeaStageChangesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListIdeaStageChanges")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListIdeaStageChangesResponseObject); ok {
+		if err := validResponse.VisitListIdeaStageChangesResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -91203,6 +94275,153 @@ func (sh *strictHandler) GetVapidPublicKey(w http.ResponseWriter, r *http.Reques
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetVapidPublicKeyResponseObject); ok {
 		if err := validResponse.VisitGetVapidPublicKeyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListRoadmapBoards operation middleware
+func (sh *strictHandler) ListRoadmapBoards(w http.ResponseWriter, r *http.Request, params ListRoadmapBoardsParams) {
+	var request ListRoadmapBoardsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListRoadmapBoards(ctx, request.(ListRoadmapBoardsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListRoadmapBoards")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListRoadmapBoardsResponseObject); ok {
+		if err := validResponse.VisitListRoadmapBoardsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateRoadmapBoard operation middleware
+func (sh *strictHandler) CreateRoadmapBoard(w http.ResponseWriter, r *http.Request, params CreateRoadmapBoardParams) {
+	var request CreateRoadmapBoardRequestObject
+
+	request.Params = params
+
+	var body CreateRoadmapBoardJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateRoadmapBoard(ctx, request.(CreateRoadmapBoardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateRoadmapBoard")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateRoadmapBoardResponseObject); ok {
+		if err := validResponse.VisitCreateRoadmapBoardResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteRoadmapBoard operation middleware
+func (sh *strictHandler) DeleteRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params DeleteRoadmapBoardParams) {
+	var request DeleteRoadmapBoardRequestObject
+
+	request.BoardId = boardId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteRoadmapBoard(ctx, request.(DeleteRoadmapBoardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteRoadmapBoard")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteRoadmapBoardResponseObject); ok {
+		if err := validResponse.VisitDeleteRoadmapBoardResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetRoadmapBoard operation middleware
+func (sh *strictHandler) GetRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params GetRoadmapBoardParams) {
+	var request GetRoadmapBoardRequestObject
+
+	request.BoardId = boardId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetRoadmapBoard(ctx, request.(GetRoadmapBoardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetRoadmapBoard")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetRoadmapBoardResponseObject); ok {
+		if err := validResponse.VisitGetRoadmapBoardResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateRoadmapBoard operation middleware
+func (sh *strictHandler) UpdateRoadmapBoard(w http.ResponseWriter, r *http.Request, boardId RoadmapBoardId, params UpdateRoadmapBoardParams) {
+	var request UpdateRoadmapBoardRequestObject
+
+	request.BoardId = boardId
+	request.Params = params
+
+	var body UpdateRoadmapBoardJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateRoadmapBoard(ctx, request.(UpdateRoadmapBoardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateRoadmapBoard")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateRoadmapBoardResponseObject); ok {
+		if err := validResponse.VisitUpdateRoadmapBoardResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

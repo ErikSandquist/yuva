@@ -61,7 +61,7 @@ SELECT
         WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $2::date
           AND r.up + r.down > 0 AND ($3::text IS NULL OR left(r.page, length($3::text) + 1) = $3::text || '/')) rp)::bigint AS rated_pages,
     (SELECT coalesce(sum(d.pending_posts), 0) FROM discussions d
-     WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+     WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
        AND ($3::text IS NULL OR left(d.page, length($3::text) + 1) = $3::text || '/'))::bigint AS pending_posts
 `
 
@@ -123,7 +123,7 @@ WITH visible AS (
            count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
            sum(d.pending_posts)::bigint AS pending_posts
     FROM discussions d
-    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
       AND ($10::text IS NULL OR d.page = $10::text)
       AND ($11::text IS NULL OR left(d.page, length($11::text) + 1) = $11::text || '/')
     GROUP BY d.inbox_id, d.page
@@ -142,7 +142,7 @@ SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
          WHERE ct.workspace_id = $1 AND ct.inbox_id = p.inbox_id AND ct.page_url = p.page AND ct.page_title <> ''
          ORDER BY ct.created_at DESC LIMIT 1),
         (SELECT dt.page_title FROM discussions dt
-         WHERE dt.workspace_id = $1 AND dt.inbox_id = p.inbox_id AND dt.page = p.page AND dt.page_title <> ''
+         WHERE dt.workspace_id = $1 AND dt.inbox_id = p.inbox_id AND dt.kind = 'page' AND dt.page = p.page AND dt.page_title <> ''
          ORDER BY dt.created_at DESC LIMIT 1),
         '')::text AS title,
     coalesce(rated.up, 0)::bigint AS up,
@@ -262,7 +262,7 @@ WITH visible AS (
            count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
            sum(d.pending_posts)::bigint AS pending_posts
     FROM discussions d
-    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
     GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
@@ -393,7 +393,7 @@ WITH visible AS (
 ), started AS (
     SELECT (d.created_at AT TIME ZONE 'UTC')::date AS day, count(*)::bigint AS threads
     FROM discussions d
-    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
       AND d.created_at >= $8::timestamptz AND ($7::text IS NULL OR left(d.page, length($7::text) + 1) = $7::text || '/')
     GROUP BY 1
 )

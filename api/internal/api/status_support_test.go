@@ -274,18 +274,18 @@ func TestReplyToLinked(t *testing.T) {
 	if r.body["queued"] != float64(3) {
 		t.Fatalf("queued %s", r.raw)
 	}
-	jobs := h.jobs("status_reply", sp.ws)
+	jobs := h.jobs("linked_reply", sp.ws)
 	if len(jobs) != 3 {
 		t.Fatalf("%d jobs", len(jobs))
 	}
 	run := func() {
 		t.Helper()
 		for _, j := range jobs {
-			var a api.StatusReplyArgs
+			var a api.LinkedReplyArgs
 			if err := json.Unmarshal(j.args, &a); err != nil {
 				t.Fatal(err)
 			}
-			if err := h.srv.RunStatusReply(context.Background(), a); err != nil {
+			if err := h.srv.RunLinkedReply(context.Background(), a); err != nil {
 				t.Fatal(err)
 			}
 		}
@@ -367,12 +367,12 @@ func outcomes(r response) map[string]string {
 
 func (h *harness) runStatusReplies(t *testing.T, ws string) {
 	t.Helper()
-	for _, j := range h.jobs("status_reply", ws) {
-		var a api.StatusReplyArgs
+	for _, j := range h.jobs("linked_reply", ws) {
+		var a api.LinkedReplyArgs
 		if err := json.Unmarshal(j.args, &a); err != nil {
 			t.Fatal(err)
 		}
-		if err := h.srv.RunStatusReply(context.Background(), a); err != nil {
+		if err := h.srv.RunLinkedReply(context.Background(), a); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -510,10 +510,10 @@ func TestReplyOutcomes(t *testing.T) {
 		t.Fatalf("reply %s", reply.raw)
 	}
 	id := reply.str("id")
-	if n := h.count("SELECT count(*) FROM status_incident_replies WHERE workspace_id = $1", sp.ws); n != 1 {
+	if n := h.count("SELECT count(*) FROM linked_replies WHERE workspace_id = $1", sp.ws); n != 1 {
 		t.Fatalf("%d reply rows", n)
 	}
-	jobs := h.jobs("status_reply", sp.ws)
+	jobs := h.jobs("linked_reply", sp.ws)
 	if len(jobs) != 5 || strings.Contains(string(jobs[0].args), "Working on it") {
 		t.Fatalf("%d jobs, args %s", len(jobs), jobs[0].args)
 	}

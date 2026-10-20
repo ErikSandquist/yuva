@@ -388,6 +388,11 @@ func (s *Server) DeleteChannel(ctx context.Context, req oas.DeleteChannelRequest
 		return nil, err
 	}
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		if _, err := q.ChannelRoadmapBoard(ctx, store.ChannelRoadmapBoardParams{WorkspaceID: p.workspaceID, ChannelID: c.ID}); err == nil {
+			return errChannelHasBoard
+		} else if !store.IsNotFound(err) {
+			return err
+		}
 		e, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: p.workspaceID, ChannelID: c.ID})
 		found := err == nil
 		if err != nil && !store.IsNotFound(err) {

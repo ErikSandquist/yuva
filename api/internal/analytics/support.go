@@ -64,7 +64,7 @@ func (src SupportSource) fromInbox(ctx context.Context, q querier, from, to time
 		GROUP BY 1, 2
 		UNION ALL
 		SELECT page, (created_at AT TIME ZONE $3)::date, 0, 0, 0, 0, count(*) FROM discussions
-		WHERE workspace_id = $1 AND inbox_id = $2 AND state = 'published' AND created_at >= $6 AND created_at < $7
+		WHERE workspace_id = $1 AND inbox_id = $2 AND kind = 'page' AND state = 'published' AND created_at >= $6 AND created_at < $7
 		GROUP BY 1, 2
 	) AS t GROUP BY 1, 2`, src.WorkspaceID, src.InboxID, loc.String(), from, to, start, end)
 	if err != nil {

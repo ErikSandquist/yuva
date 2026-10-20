@@ -20,9 +20,13 @@ type pendingEvent struct {
 	deleted        *deletedContact
 }
 
+type boardRef struct{ ws, inbox, board uuid.UUID }
+
 type eventBatch struct {
 	items []pendingEvent
 	jobs  []river.InsertManyParams
+	// boards are roadmap boards whose public side changed; open panels hear of it after the commit.
+	boards []boardRef
 	// quiet drops events and keeps jobs: imports write no event or webhook per row.
 	quiet bool
 }
@@ -66,11 +70,13 @@ func (b *eventBatch) conversation(typ string, c store.Conversation, data any) {
 // inTx writes the queued events last, so the per-workspace event lock is the final lock a
 // transaction takes and event ids follow commit order within a workspace.
 func (s *Server) inTx(ctx context.Context, workspaceID uuid.UUID, fn func(q *store.Queries, ev *eventBatch) error) error {
-	return s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
+	var boards []boardRef
+	err := s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
 		var ev eventBatch
 		if err := fn(q, &ev); err != nil {
 			return err
 		}
+		boards = ev.boards
 		if len(ev.jobs) > 0 {
 			if _, err := s.jobs.InsertManyTx(ctx, tx, ev.jobs); err != nil {
 				return err
@@ -85,6 +91,16 @@ func (s *Server) inTx(ctx context.Context, workspaceID uuid.UUID, fn func(q *sto
 		}
 		return s.queueNotifications(ctx, tx, workspaceID, ev.items)
 	})
+	if err == nil {
+		seen := map[uuid.UUID]bool{}
+		for _, b := range boards {
+			if !seen[b.board] {
+				seen[b.board] = true
+				s.boardSignal(ctx, b.ws, b.inbox, b.board)
+			}
+		}
+	}
+	return err
 }
 
 func writeEvents(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, items []pendingEvent) ([]int64, error) {

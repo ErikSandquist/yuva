@@ -1092,6 +1092,10 @@ msgstr "Una adreça real on rebis correu postal"
 msgid "A reply was written in a discussion"
 msgstr "S'ha escrit una resposta en un debat"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Una idea de la full de ruta ha passat a una altra etapa"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Un inici de sessió ha de tornar en 10 minuts i funciona una sola vegada. Obre la migració i inicia la sessió de nou."
@@ -6047,6 +6051,10 @@ msgstr "Aspecte clar"
 msgid "Limit the pace"
 msgstr "Limita el ritme"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Vincula comentaris a idees, respon als clients vinculats i gestiona els taulers del full de ruta"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Enllaç per al teu administrador de Microsoft 365"
@@ -6746,6 +6754,10 @@ msgstr "Més vots"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Mou avall"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Mou idees entre les etapes del full de ruta"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Llegeix llistes de correu, subscriptors i registres de consentiment"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Només lectura"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Llegeix els taulers del full de ruta, les idees i l'historial d'etapes"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

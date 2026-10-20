@@ -751,7 +751,7 @@ type Discussion struct {
 	WorkspaceID    uuid.UUID
 	InboxID        uuid.UUID
 	ChannelID      uuid.UUID
-	Page           string
+	Page           *string
 	PageTitle      string
 	Title          string
 	OpeningPostID  uuid.UUID
@@ -765,6 +765,12 @@ type Discussion struct {
 	ConversationID *uuid.UUID
 	CreatedAt      time.Time
 	LastActivityAt time.Time
+	Kind           string
+	BoardID        *uuid.UUID
+	Stage          *string
+	StageChangedAt *time.Time
+	VoteCount      int32
+	Search         interface{}
 }
 
 type DiscussionFollow struct {
@@ -1158,6 +1164,31 @@ type Label struct {
 	Name        string
 	Color       string
 	CreatedAt   time.Time
+}
+
+type LinkedReply struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	IncidentID  *uuid.UUID
+	Body        string
+	Close       bool
+	MemberID    *uuid.UUID
+	ApiKeyID    *uuid.UUID
+	GrantID     *uuid.UUID
+	Via         string
+	McpOnly     bool
+	Queued      int32
+	CreatedAt   time.Time
+	IdeaID      *uuid.UUID
+}
+
+type LinkedReplyTarget struct {
+	WorkspaceID    uuid.UUID
+	ReplyID        uuid.UUID
+	ConversationID uuid.UUID
+	Outcome        string
+	Reason         *string
+	FinishedAt     *time.Time
 }
 
 type ListImport struct {
@@ -1665,6 +1696,57 @@ type RealtimeConnection struct {
 	ViewingConversationID *uuid.UUID
 }
 
+type RoadmapBoard struct {
+	ID                  uuid.UUID
+	WorkspaceID         uuid.UUID
+	InboxID             uuid.UUID
+	ChannelID           uuid.UUID
+	Name                string
+	Description         string
+	Slug                string
+	Public              bool
+	Suggestions         string
+	AnalyticsPropertyID *uuid.UUID
+	ChangedAt           time.Time
+	CreatedAt           time.Time
+	UpdatedAt           time.Time
+}
+
+type RoadmapBoardSlug struct {
+	Slug        string
+	WorkspaceID uuid.UUID
+	BoardID     uuid.UUID
+	CreatedAt   time.Time
+}
+
+type RoadmapIdeaConversation struct {
+	WorkspaceID      uuid.UUID
+	ConversationID   uuid.UUID
+	IdeaID           uuid.UUID
+	LinkedByMemberID *uuid.UUID
+	LinkedByApiKeyID *uuid.UUID
+	LinkedAt         time.Time
+}
+
+type RoadmapStageChange struct {
+	ID              uuid.UUID
+	WorkspaceID     uuid.UUID
+	IdeaID          uuid.UUID
+	FromStage       string
+	ToStage         string
+	MemberID        *uuid.UUID
+	ApiKeyID        *uuid.UUID
+	GrantID         *uuid.UUID
+	Via             string
+	CommentPostID   *uuid.UUID
+	Linked          int32
+	Progress        *string
+	ProgressSet     int32
+	ProgressSkipped int32
+	FinishedAt      *time.Time
+	CreatedAt       time.Time
+}
+
 type SesTenant struct {
 	WorkspaceID      uuid.UUID
 	InboxID          uuid.UUID
@@ -1787,30 +1869,6 @@ type StatusIncidentConversation struct {
 	LinkedByMemberID *uuid.UUID
 	LinkedByApiKeyID *uuid.UUID
 	LinkedAt         time.Time
-}
-
-type StatusIncidentReply struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-	IncidentID  uuid.UUID
-	Body        string
-	Close       bool
-	MemberID    *uuid.UUID
-	ApiKeyID    *uuid.UUID
-	GrantID     *uuid.UUID
-	Via         string
-	McpOnly     bool
-	Queued      int32
-	CreatedAt   time.Time
-}
-
-type StatusIncidentReplyTarget struct {
-	WorkspaceID    uuid.UUID
-	ReplyID        uuid.UUID
-	ConversationID uuid.UUID
-	Outcome        string
-	Reason         *string
-	FinishedAt     *time.Time
 }
 
 type StatusIncidentUpdate struct {

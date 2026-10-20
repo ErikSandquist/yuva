@@ -277,31 +277,34 @@ SELECT EXISTS (SELECT 1 FROM status_incident_conversations
 -- name: CountStatusIncidentConversations :one
 SELECT count(*)::int FROM status_incident_conversations WHERE workspace_id = @workspace_id AND incident_id = @incident_id;
 
--- name: CreateStatusIncidentReply :one
-INSERT INTO status_incident_replies (workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at)
-VALUES (@workspace_id, @id, @incident_id, @body, @close, sqlc.narg(member_id), sqlc.narg(api_key_id), sqlc.narg(grant_id), @via, @mcp_only, @queued, @created_at)
+-- name: CreateLinkedReply :one
+INSERT INTO linked_replies (workspace_id, id, incident_id, idea_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at)
+VALUES (@workspace_id, @id, sqlc.narg(incident_id), sqlc.narg(idea_id), @body, @close, sqlc.narg(member_id), sqlc.narg(api_key_id), sqlc.narg(grant_id), @via, @mcp_only, @queued, @created_at)
 RETURNING *;
 
--- name: GetStatusIncidentReply :one
-SELECT * FROM status_incident_replies WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND id = @id;
+-- name: GetIncidentLinkedReply :one
+SELECT * FROM linked_replies WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND id = @id;
 
--- name: GetStatusReply :one
-SELECT * FROM status_incident_replies WHERE workspace_id = @workspace_id AND id = @id;
+-- name: GetIdeaLinkedReply :one
+SELECT * FROM linked_replies WHERE workspace_id = @workspace_id AND idea_id = @idea_id AND id = @id;
 
--- name: AddStatusReplyTargets :exec
-INSERT INTO status_incident_reply_targets (workspace_id, reply_id, conversation_id)
+-- name: GetLinkedReply :one
+SELECT * FROM linked_replies WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: AddLinkedReplyTargets :exec
+INSERT INTO linked_reply_targets (workspace_id, reply_id, conversation_id)
 SELECT @workspace_id, @reply_id, unnest(@conversation_ids::uuid[]);
 
--- name: FinishStatusReplyTarget :exec
-UPDATE status_incident_reply_targets SET outcome = @outcome, reason = sqlc.narg(reason), finished_at = @now
+-- name: FinishLinkedReplyTarget :exec
+UPDATE linked_reply_targets SET outcome = @outcome, reason = sqlc.narg(reason), finished_at = @now
 WHERE workspace_id = @workspace_id AND reply_id = @reply_id AND conversation_id = @conversation_id AND outcome = 'pending';
 
--- name: StatusReplyTargetOutcome :one
-SELECT outcome FROM status_incident_reply_targets
+-- name: LinkedReplyTargetOutcome :one
+SELECT outcome FROM linked_reply_targets
 WHERE workspace_id = @workspace_id AND reply_id = @reply_id AND conversation_id = @conversation_id;
 
--- name: CountStatusReplyTargets :many
-SELECT t.outcome, count(*)::int AS n FROM status_incident_reply_targets t
+-- name: CountLinkedReplyTargets :many
+SELECT t.outcome, count(*)::int AS n FROM linked_reply_targets t
 JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
 WHERE t.workspace_id = @workspace_id AND t.reply_id = @reply_id
   AND (@all_inboxes::bool OR EXISTS (
@@ -309,8 +312,8 @@ WHERE t.workspace_id = @workspace_id AND t.reply_id = @reply_id
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id))
 GROUP BY t.outcome;
 
--- name: ListStatusReplyTargetOutcomes :many
-SELECT t.conversation_id, t.outcome, t.reason, t.finished_at FROM status_incident_reply_targets t
+-- name: ListLinkedReplyTargetOutcomes :many
+SELECT t.conversation_id, t.outcome, t.reason, t.finished_at FROM linked_reply_targets t
 JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
 WHERE t.workspace_id = @workspace_id AND t.reply_id = @reply_id
   AND (@all_inboxes::bool OR EXISTS (

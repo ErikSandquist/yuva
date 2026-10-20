@@ -87,11 +87,16 @@ func (s *Server) CreateReaderToken(ctx context.Context, req oas.CreateReaderToke
 		return nil, err
 	}
 	origin, ok := normalizeOrigin(string(req.Body.Origin))
-	if !ok || !containsString(ch.AllowedOrigins, origin) {
+	if !ok || !s.originAllowedFor(origin, ch.Kind, ch.AllowedOrigins) {
 		return nil, errOriginRefused
 	}
 	if ch.Discussions == string(oas.DiscussionModeOff) {
-		return nil, errDiscussionsOff
+		if _, err := s.inboxBoard(ctx, s.st.Queries, ch.WorkspaceID, ch.InboxID); err != nil {
+			if err == errRoadmapNoBoard {
+				return nil, errDiscussionsOff
+			}
+			return nil, err
+		}
 	}
 	person, err := s.st.GetPerson(ctx, p.personID)
 	if err != nil {

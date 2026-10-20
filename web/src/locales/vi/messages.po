@@ -1092,6 +1092,10 @@ msgstr "Một địa chỉ thật để bạn nhận thư tín"
 msgid "A reply was written in a discussion"
 msgstr "Một phản hồi đã được viết trong một cuộc thảo luận"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Một ý tưởng trong lộ trình đã chuyển sang giai đoạn khác"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Lần đăng nhập phải quay lại trong vòng 10 phút và chỉ dùng được một lần. Hãy mở lại quá trình di chuyển và đăng nhập lại."
@@ -6047,6 +6051,10 @@ msgstr "Giao diện sáng"
 msgid "Limit the pace"
 msgstr "Giới hạn tốc độ"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Liên kết phản hồi với ý tưởng, trả lời khách hàng được liên kết và quản lý bảng lộ trình"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Liên kết cho quản trị viên Microsoft 365 của bạn"
@@ -6746,6 +6754,10 @@ msgstr "Nhiều phiếu nhất"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Chuyển xuống"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Chuyển ý tưởng giữa các giai đoạn của lộ trình"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Đọc danh sách gửi thư, người đăng ký và bản ghi đồng 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Chỉ đọc"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Đọc bảng lộ trình, ý tưởng và lịch sử giai đoạn"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

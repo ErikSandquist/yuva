@@ -101,6 +101,9 @@ func (w *retentionWorker) Work(ctx context.Context, _ *river.Job[jobs.RetentionA
 	if err := w.s.CleanHelp(ctx); err != nil {
 		return err
 	}
+	if err := w.s.CleanRoadmap(ctx); err != nil {
+		return err
+	}
 	if err := w.s.CleanStatusNotices(ctx); err != nil {
 		return err
 	}

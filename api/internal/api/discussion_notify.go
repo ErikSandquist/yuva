@@ -110,6 +110,12 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 		if err != nil || d.State != statePublished {
 			return err
 		}
+		if d.Kind == kindIdea {
+			board, err := q.GetRoadmapBoard(ctx, store.GetRoadmapBoardParams{WorkspaceID: a.WorkspaceID, ID: orZero(d.BoardID)})
+			if err != nil || !board.Public {
+				return err
+			}
+		}
 		contact := a.ContactID
 		posts, err := q.ListDigestPosts(ctx, store.ListDigestPostsParams{WorkspaceID: a.WorkspaceID, DiscussionID: d.ID, After: f.SeenThrough, ContactID: &contact})
 		if err != nil {
@@ -139,7 +145,18 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 			}
 			seen = later(seen, d.AnsweredAt)
 		}
-		if len(list) == 0 && data["Answer"] == nil {
+		var stages []map[string]string
+		if d.Kind == kindIdea {
+			moves, err := q.ListStageDigestChanges(ctx, store.ListStageDigestChangesParams{WorkspaceID: a.WorkspaceID, IdeaID: d.ID, After: f.SeenThrough})
+			if err != nil {
+				return err
+			}
+			for _, m := range moves {
+				stages = append(stages, map[string]string{"Stage": m.ToStage})
+				seen = later(seen, &m.CreatedAt)
+			}
+		}
+		if len(list) == 0 && data["Answer"] == nil && len(stages) == 0 {
 			return nil
 		}
 		if err := q.MarkDiscussionFollowEmailed(ctx, store.MarkDiscussionFollowEmailedParams{
@@ -160,7 +177,14 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 		}
 		unsubscribe := s.auth.PublicURL + unsubscribePathPrefix + s.unsubscribeToken(a)
 		data["Inbox"], data["Title"], data["Posts"] = in.Name, d.Title, list
-		data["URL"], data["UnsubscribeURL"], data["SettingsURL"] = d.Page+"#yuva-discussion-"+d.ID.String(), unsubscribe, settings
+		data["URL"], data["UnsubscribeURL"], data["SettingsURL"] = orZero(d.Page)+"#yuva-discussion-"+d.ID.String(), unsubscribe, settings
+		if d.Kind == kindIdea {
+			board, err := q.GetRoadmapBoard(ctx, store.GetRoadmapBoardParams{WorkspaceID: a.WorkspaceID, ID: orZero(d.BoardID)})
+			if err != nil {
+				return err
+			}
+			data["URL"], data["Idea"], data["Stages"] = s.roadmapURL(board.Slug)+"/ideas/"+d.ID.String(), true, stages
+		}
 		m, err := mail.RenderAs(inboxMailBrand(in), "discussion_digest", locale, data)
 		if err != nil {
 			return err

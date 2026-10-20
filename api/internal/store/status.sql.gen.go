@@ -53,6 +53,22 @@ func (q *Queries) ActiveStatusHolders(ctx context.Context, arg ActiveStatusHolde
 	return items, nil
 }
 
+const addLinkedReplyTargets = `-- name: AddLinkedReplyTargets :exec
+INSERT INTO linked_reply_targets (workspace_id, reply_id, conversation_id)
+SELECT $1, $2, unnest($3::uuid[])
+`
+
+type AddLinkedReplyTargetsParams struct {
+	WorkspaceID     uuid.UUID
+	ReplyID         uuid.UUID
+	ConversationIds []uuid.UUID
+}
+
+func (q *Queries) AddLinkedReplyTargets(ctx context.Context, arg AddLinkedReplyTargetsParams) error {
+	_, err := q.db.Exec(ctx, addLinkedReplyTargets, arg.WorkspaceID, arg.ReplyID, arg.ConversationIds)
+	return err
+}
+
 const addStatusFormerSlug = `-- name: AddStatusFormerSlug :exec
 INSERT INTO status_page_slugs (slug, workspace_id, page_id, created_at) VALUES ($1, $2, $3, $4)
 `
@@ -93,22 +109,6 @@ func (q *Queries) AddStatusIncidentComponent(ctx context.Context, arg AddStatusI
 		arg.ComponentID,
 		arg.State,
 	)
-	return err
-}
-
-const addStatusReplyTargets = `-- name: AddStatusReplyTargets :exec
-INSERT INTO status_incident_reply_targets (workspace_id, reply_id, conversation_id)
-SELECT $1, $2, unnest($3::uuid[])
-`
-
-type AddStatusReplyTargetsParams struct {
-	WorkspaceID     uuid.UUID
-	ReplyID         uuid.UUID
-	ConversationIds []uuid.UUID
-}
-
-func (q *Queries) AddStatusReplyTargets(ctx context.Context, arg AddStatusReplyTargetsParams) error {
-	_, err := q.db.Exec(ctx, addStatusReplyTargets, arg.WorkspaceID, arg.ReplyID, arg.ConversationIds)
 	return err
 }
 
@@ -209,6 +209,53 @@ func (q *Queries) ClientStatusIncidents(ctx context.Context, arg ClientStatusInc
 	return items, nil
 }
 
+const countLinkedReplyTargets = `-- name: CountLinkedReplyTargets :many
+SELECT t.outcome, count(*)::int AS n FROM linked_reply_targets t
+JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
+WHERE t.workspace_id = $1 AND t.reply_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+GROUP BY t.outcome
+`
+
+type CountLinkedReplyTargetsParams struct {
+	WorkspaceID uuid.UUID
+	ReplyID     uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+}
+
+type CountLinkedReplyTargetsRow struct {
+	Outcome string
+	N       int32
+}
+
+func (q *Queries) CountLinkedReplyTargets(ctx context.Context, arg CountLinkedReplyTargetsParams) ([]CountLinkedReplyTargetsRow, error) {
+	rows, err := q.db.Query(ctx, countLinkedReplyTargets,
+		arg.WorkspaceID,
+		arg.ReplyID,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []CountLinkedReplyTargetsRow
+	for rows.Next() {
+		var i CountLinkedReplyTargetsRow
+		if err := rows.Scan(&i.Outcome, &i.N); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const countStatusComponents = `-- name: CountStatusComponents :one
 SELECT count(*)::bigint FROM status_components WHERE workspace_id = $1 AND page_id = $2
 `
@@ -241,51 +288,61 @@ func (q *Queries) CountStatusIncidentConversations(ctx context.Context, arg Coun
 	return column_1, err
 }
 
-const countStatusReplyTargets = `-- name: CountStatusReplyTargets :many
-SELECT t.outcome, count(*)::int AS n FROM status_incident_reply_targets t
-JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
-WHERE t.workspace_id = $1 AND t.reply_id = $2
-  AND ($3::bool OR EXISTS (
-      SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
-GROUP BY t.outcome
+const createLinkedReply = `-- name: CreateLinkedReply :one
+INSERT INTO linked_replies (workspace_id, id, incident_id, idea_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+RETURNING workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at, idea_id
 `
 
-type CountStatusReplyTargetsParams struct {
+type CreateLinkedReplyParams struct {
 	WorkspaceID uuid.UUID
-	ReplyID     uuid.UUID
-	AllInboxes  bool
-	ViewerID    uuid.UUID
+	ID          uuid.UUID
+	IncidentID  *uuid.UUID
+	IdeaID      *uuid.UUID
+	Body        string
+	Close       bool
+	MemberID    *uuid.UUID
+	ApiKeyID    *uuid.UUID
+	GrantID     *uuid.UUID
+	Via         string
+	McpOnly     bool
+	Queued      int32
+	CreatedAt   time.Time
 }
 
-type CountStatusReplyTargetsRow struct {
-	Outcome string
-	N       int32
-}
-
-func (q *Queries) CountStatusReplyTargets(ctx context.Context, arg CountStatusReplyTargetsParams) ([]CountStatusReplyTargetsRow, error) {
-	rows, err := q.db.Query(ctx, countStatusReplyTargets,
+func (q *Queries) CreateLinkedReply(ctx context.Context, arg CreateLinkedReplyParams) (LinkedReply, error) {
+	row := q.db.QueryRow(ctx, createLinkedReply,
 		arg.WorkspaceID,
-		arg.ReplyID,
-		arg.AllInboxes,
-		arg.ViewerID,
+		arg.ID,
+		arg.IncidentID,
+		arg.IdeaID,
+		arg.Body,
+		arg.Close,
+		arg.MemberID,
+		arg.ApiKeyID,
+		arg.GrantID,
+		arg.Via,
+		arg.McpOnly,
+		arg.Queued,
+		arg.CreatedAt,
 	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []CountStatusReplyTargetsRow
-	for rows.Next() {
-		var i CountStatusReplyTargetsRow
-		if err := rows.Scan(&i.Outcome, &i.N); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
+	var i LinkedReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
+		&i.IdeaID,
+	)
+	return i, err
 }
 
 const createStatusComponent = `-- name: CreateStatusComponent :one
@@ -434,60 +491,6 @@ func (q *Queries) CreateStatusIncident(ctx context.Context, arg CreateStatusInci
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.Notify,
-	)
-	return i, err
-}
-
-const createStatusIncidentReply = `-- name: CreateStatusIncidentReply :one
-INSERT INTO status_incident_replies (workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-RETURNING workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at
-`
-
-type CreateStatusIncidentReplyParams struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-	IncidentID  uuid.UUID
-	Body        string
-	Close       bool
-	MemberID    *uuid.UUID
-	ApiKeyID    *uuid.UUID
-	GrantID     *uuid.UUID
-	Via         string
-	McpOnly     bool
-	Queued      int32
-	CreatedAt   time.Time
-}
-
-func (q *Queries) CreateStatusIncidentReply(ctx context.Context, arg CreateStatusIncidentReplyParams) (StatusIncidentReply, error) {
-	row := q.db.QueryRow(ctx, createStatusIncidentReply,
-		arg.WorkspaceID,
-		arg.ID,
-		arg.IncidentID,
-		arg.Body,
-		arg.Close,
-		arg.MemberID,
-		arg.ApiKeyID,
-		arg.GrantID,
-		arg.Via,
-		arg.McpOnly,
-		arg.Queued,
-		arg.CreatedAt,
-	)
-	var i StatusIncidentReply
-	err := row.Scan(
-		&i.WorkspaceID,
-		&i.ID,
-		&i.IncidentID,
-		&i.Body,
-		&i.Close,
-		&i.MemberID,
-		&i.ApiKeyID,
-		&i.GrantID,
-		&i.Via,
-		&i.McpOnly,
-		&i.Queued,
-		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -878,12 +881,12 @@ func (q *Queries) FindStatusPageBySlug(ctx context.Context, slug string) (Status
 	return i, err
 }
 
-const finishStatusReplyTarget = `-- name: FinishStatusReplyTarget :exec
-UPDATE status_incident_reply_targets SET outcome = $1, reason = $2, finished_at = $3
+const finishLinkedReplyTarget = `-- name: FinishLinkedReplyTarget :exec
+UPDATE linked_reply_targets SET outcome = $1, reason = $2, finished_at = $3
 WHERE workspace_id = $4 AND reply_id = $5 AND conversation_id = $6 AND outcome = 'pending'
 `
 
-type FinishStatusReplyTargetParams struct {
+type FinishLinkedReplyTargetParams struct {
 	Outcome        string
 	Reason         *string
 	Now            *time.Time
@@ -892,8 +895,8 @@ type FinishStatusReplyTargetParams struct {
 	ConversationID uuid.UUID
 }
 
-func (q *Queries) FinishStatusReplyTarget(ctx context.Context, arg FinishStatusReplyTargetParams) error {
-	_, err := q.db.Exec(ctx, finishStatusReplyTarget,
+func (q *Queries) FinishLinkedReplyTarget(ctx context.Context, arg FinishLinkedReplyTargetParams) error {
+	_, err := q.db.Exec(ctx, finishLinkedReplyTarget,
 		arg.Outcome,
 		arg.Reason,
 		arg.Now,
@@ -902,6 +905,37 @@ func (q *Queries) FinishStatusReplyTarget(ctx context.Context, arg FinishStatusR
 		arg.ConversationID,
 	)
 	return err
+}
+
+const getIdeaLinkedReply = `-- name: GetIdeaLinkedReply :one
+SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at, idea_id FROM linked_replies WHERE workspace_id = $1 AND idea_id = $2 AND id = $3
+`
+
+type GetIdeaLinkedReplyParams struct {
+	WorkspaceID uuid.UUID
+	IdeaID      *uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetIdeaLinkedReply(ctx context.Context, arg GetIdeaLinkedReplyParams) (LinkedReply, error) {
+	row := q.db.QueryRow(ctx, getIdeaLinkedReply, arg.WorkspaceID, arg.IdeaID, arg.ID)
+	var i LinkedReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
+		&i.IdeaID,
+	)
+	return i, err
 }
 
 const getInboxStatusPage = `-- name: GetInboxStatusPage :one
@@ -952,6 +986,67 @@ func (q *Queries) GetInboxStatusPage(ctx context.Context, arg GetInboxStatusPage
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
 		&i.ShowResponseTimes,
+	)
+	return i, err
+}
+
+const getIncidentLinkedReply = `-- name: GetIncidentLinkedReply :one
+SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at, idea_id FROM linked_replies WHERE workspace_id = $1 AND incident_id = $2 AND id = $3
+`
+
+type GetIncidentLinkedReplyParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  *uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetIncidentLinkedReply(ctx context.Context, arg GetIncidentLinkedReplyParams) (LinkedReply, error) {
+	row := q.db.QueryRow(ctx, getIncidentLinkedReply, arg.WorkspaceID, arg.IncidentID, arg.ID)
+	var i LinkedReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
+		&i.IdeaID,
+	)
+	return i, err
+}
+
+const getLinkedReply = `-- name: GetLinkedReply :one
+SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at, idea_id FROM linked_replies WHERE workspace_id = $1 AND id = $2
+`
+
+type GetLinkedReplyParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetLinkedReply(ctx context.Context, arg GetLinkedReplyParams) (LinkedReply, error) {
+	row := q.db.QueryRow(ctx, getLinkedReply, arg.WorkspaceID, arg.ID)
+	var i LinkedReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
+		&i.IdeaID,
 	)
 	return i, err
 }
@@ -1040,36 +1135,6 @@ func (q *Queries) GetStatusIncident(ctx context.Context, arg GetStatusIncidentPa
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.Notify,
-	)
-	return i, err
-}
-
-const getStatusIncidentReply = `-- name: GetStatusIncidentReply :one
-SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at FROM status_incident_replies WHERE workspace_id = $1 AND incident_id = $2 AND id = $3
-`
-
-type GetStatusIncidentReplyParams struct {
-	WorkspaceID uuid.UUID
-	IncidentID  uuid.UUID
-	ID          uuid.UUID
-}
-
-func (q *Queries) GetStatusIncidentReply(ctx context.Context, arg GetStatusIncidentReplyParams) (StatusIncidentReply, error) {
-	row := q.db.QueryRow(ctx, getStatusIncidentReply, arg.WorkspaceID, arg.IncidentID, arg.ID)
-	var i StatusIncidentReply
-	err := row.Scan(
-		&i.WorkspaceID,
-		&i.ID,
-		&i.IncidentID,
-		&i.Body,
-		&i.Close,
-		&i.MemberID,
-		&i.ApiKeyID,
-		&i.GrantID,
-		&i.Via,
-		&i.McpOnly,
-		&i.Queued,
-		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -1178,35 +1243,6 @@ func (q *Queries) GetStatusPageByList(ctx context.Context, arg GetStatusPageByLi
 	return i, err
 }
 
-const getStatusReply = `-- name: GetStatusReply :one
-SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at FROM status_incident_replies WHERE workspace_id = $1 AND id = $2
-`
-
-type GetStatusReplyParams struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-}
-
-func (q *Queries) GetStatusReply(ctx context.Context, arg GetStatusReplyParams) (StatusIncidentReply, error) {
-	row := q.db.QueryRow(ctx, getStatusReply, arg.WorkspaceID, arg.ID)
-	var i StatusIncidentReply
-	err := row.Scan(
-		&i.WorkspaceID,
-		&i.ID,
-		&i.IncidentID,
-		&i.Body,
-		&i.Close,
-		&i.MemberID,
-		&i.ApiKeyID,
-		&i.GrantID,
-		&i.Via,
-		&i.McpOnly,
-		&i.Queued,
-		&i.CreatedAt,
-	)
-	return i, err
-}
-
 const handOverStatusComponentState = `-- name: HandOverStatusComponentState :exec
 UPDATE status_component_states SET source = $1, source_id = $2
 WHERE workspace_id = $3 AND component_id = $4 AND ended_at IS NULL
@@ -1255,6 +1291,24 @@ func (q *Queries) LinkStatusIncidentConversation(ctx context.Context, arg LinkSt
 		arg.Now,
 	)
 	return err
+}
+
+const linkedReplyTargetOutcome = `-- name: LinkedReplyTargetOutcome :one
+SELECT outcome FROM linked_reply_targets
+WHERE workspace_id = $1 AND reply_id = $2 AND conversation_id = $3
+`
+
+type LinkedReplyTargetOutcomeParams struct {
+	WorkspaceID    uuid.UUID
+	ReplyID        uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) LinkedReplyTargetOutcome(ctx context.Context, arg LinkedReplyTargetOutcomeParams) (string, error) {
+	row := q.db.QueryRow(ctx, linkedReplyTargetOutcome, arg.WorkspaceID, arg.ReplyID, arg.ConversationID)
+	var outcome string
+	err := row.Scan(&outcome)
+	return outcome, err
 }
 
 const listConversationIncidents = `-- name: ListConversationIncidents :many
@@ -1324,6 +1378,66 @@ func (q *Queries) ListConversationIncidents(ctx context.Context, arg ListConvers
 			&i.PageCfStatus,
 			&i.PageCfSslStatus,
 			&i.LinkedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listLinkedReplyTargetOutcomes = `-- name: ListLinkedReplyTargetOutcomes :many
+SELECT t.conversation_id, t.outcome, t.reason, t.finished_at FROM linked_reply_targets t
+JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
+WHERE t.workspace_id = $1 AND t.reply_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+  AND ($5::uuid IS NULL OR t.conversation_id > $5::uuid)
+ORDER BY t.conversation_id
+LIMIT $6
+`
+
+type ListLinkedReplyTargetOutcomesParams struct {
+	WorkspaceID uuid.UUID
+	ReplyID     uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+	CursorID    *uuid.UUID
+	Lim         int32
+}
+
+type ListLinkedReplyTargetOutcomesRow struct {
+	ConversationID uuid.UUID
+	Outcome        string
+	Reason         *string
+	FinishedAt     *time.Time
+}
+
+func (q *Queries) ListLinkedReplyTargetOutcomes(ctx context.Context, arg ListLinkedReplyTargetOutcomesParams) ([]ListLinkedReplyTargetOutcomesRow, error) {
+	rows, err := q.db.Query(ctx, listLinkedReplyTargetOutcomes,
+		arg.WorkspaceID,
+		arg.ReplyID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.CursorID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListLinkedReplyTargetOutcomesRow
+	for rows.Next() {
+		var i ListLinkedReplyTargetOutcomesRow
+		if err := rows.Scan(
+			&i.ConversationID,
+			&i.Outcome,
+			&i.Reason,
+			&i.FinishedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1910,66 +2024,6 @@ func (q *Queries) ListStatusPagesByLists(ctx context.Context, arg ListStatusPage
 	return items, nil
 }
 
-const listStatusReplyTargetOutcomes = `-- name: ListStatusReplyTargetOutcomes :many
-SELECT t.conversation_id, t.outcome, t.reason, t.finished_at FROM status_incident_reply_targets t
-JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
-WHERE t.workspace_id = $1 AND t.reply_id = $2
-  AND ($3::bool OR EXISTS (
-      SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
-  AND ($5::uuid IS NULL OR t.conversation_id > $5::uuid)
-ORDER BY t.conversation_id
-LIMIT $6
-`
-
-type ListStatusReplyTargetOutcomesParams struct {
-	WorkspaceID uuid.UUID
-	ReplyID     uuid.UUID
-	AllInboxes  bool
-	ViewerID    uuid.UUID
-	CursorID    *uuid.UUID
-	Lim         int32
-}
-
-type ListStatusReplyTargetOutcomesRow struct {
-	ConversationID uuid.UUID
-	Outcome        string
-	Reason         *string
-	FinishedAt     *time.Time
-}
-
-func (q *Queries) ListStatusReplyTargetOutcomes(ctx context.Context, arg ListStatusReplyTargetOutcomesParams) ([]ListStatusReplyTargetOutcomesRow, error) {
-	rows, err := q.db.Query(ctx, listStatusReplyTargetOutcomes,
-		arg.WorkspaceID,
-		arg.ReplyID,
-		arg.AllInboxes,
-		arg.ViewerID,
-		arg.CursorID,
-		arg.Lim,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []ListStatusReplyTargetOutcomesRow
-	for rows.Next() {
-		var i ListStatusReplyTargetOutcomesRow
-		if err := rows.Scan(
-			&i.ConversationID,
-			&i.Outcome,
-			&i.Reason,
-			&i.FinishedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const listStatusReplyTargets = `-- name: ListStatusReplyTargets :many
 SELECT c.id FROM status_incident_conversations l
 JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
@@ -2470,24 +2524,6 @@ func (q *Queries) StatusIncidentConversationLinked(ctx context.Context, arg Stat
 	var column_1 bool
 	err := row.Scan(&column_1)
 	return column_1, err
-}
-
-const statusReplyTargetOutcome = `-- name: StatusReplyTargetOutcome :one
-SELECT outcome FROM status_incident_reply_targets
-WHERE workspace_id = $1 AND reply_id = $2 AND conversation_id = $3
-`
-
-type StatusReplyTargetOutcomeParams struct {
-	WorkspaceID    uuid.UUID
-	ReplyID        uuid.UUID
-	ConversationID uuid.UUID
-}
-
-func (q *Queries) StatusReplyTargetOutcome(ctx context.Context, arg StatusReplyTargetOutcomeParams) (string, error) {
-	row := q.db.QueryRow(ctx, statusReplyTargetOutcome, arg.WorkspaceID, arg.ReplyID, arg.ConversationID)
-	var outcome string
-	err := row.Scan(&outcome)
-	return outcome, err
 }
 
 const statusSlugTaken = `-- name: StatusSlugTaken :one

@@ -1,7 +1,9 @@
-{{.Inbox}}: {{if .Answer}}Antwort in „{{.Title}}“{{else}}neue Antworten in „{{.Title}}“{{end}}
+{{.Inbox}}: {{if .Answer}}Antwort in „{{.Title}}“{{else if .Posts}}neue Antworten in „{{.Title}}“{{else}}neuer Stand von „{{.Title}}“{{end}}
 
 {{if .Answer}}In „{{.Title}}“ wurde eine Antwort angenommen, geschrieben von {{or .Answer.Author "jemandem aus der Leserschaft"}}:
 > {{.Answer.Text}}
+
+{{end}}{{range .Stages}}Diese Idee ist jetzt: {{if eq .Stage "planned"}}Geplant{{else if eq .Stage "in_progress"}}In Arbeit{{else if eq .Stage "shipped"}}Ausgeliefert{{else}}Geschlossen{{end}}.
 
 {{end}}{{if .Posts}}Neue Antworten in „{{.Title}}“:
 {{range .Posts}}
@@ -10,7 +12,7 @@
 {{end}}{{if .More}}
 …und {{.More}} weitere.
 {{end}}
-{{end}}Zum Thema: {{.URL}}
+{{end}}{{if .Idea}}Zur Idee{{else}}Zum Thema{{end}}: {{.URL}}
 
-Sie erhalten diese E-Mail, weil Sie diesem Thema in der Dokumentation von {{.Inbox}} folgen. Nicht mehr folgen: {{.UnsubscribeURL}}{{if .SettingsURL}}
+Sie erhalten diese E-Mail, weil Sie {{if .Idea}}dieser Idee auf der Roadmap von {{.Inbox}}{{else}}diesem Thema in der Dokumentation von {{.Inbox}}{{end}} folgen. Nicht mehr folgen: {{.UnsubscribeURL}}{{if .SettingsURL}}
 Wählen Sie, welche E-Mails Sie erhalten: {{.SettingsURL}}{{end}}

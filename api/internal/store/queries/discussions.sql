@@ -1,7 +1,7 @@
 -- name: CreateDiscussion :one
-INSERT INTO discussions (id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state,
+INSERT INTO discussions (id, workspace_id, inbox_id, channel_id, kind, page, page_title, board_id, stage, title, opening_post_id, state,
                          conversation_id, created_at, last_activity_at)
-VALUES (@id, @workspace_id, @inbox_id, @channel_id, @page, @page_title, @title, @opening_post_id, @state,
+VALUES (@id, @workspace_id, @inbox_id, @channel_id, @kind, sqlc.narg(page), @page_title, sqlc.narg(board_id), sqlc.narg(stage), @title, @opening_post_id, @state,
         sqlc.narg(conversation_id), @now, @now)
 RETURNING *;
 
@@ -190,7 +190,7 @@ UPDATE contacts SET person_id = NULL WHERE workspace_id = @workspace_id AND id =
 -- name: ListPageDiscussions :many
 SELECT d.* FROM discussions d
 JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
-WHERE d.workspace_id = @workspace_id AND d.inbox_id = @inbox_id AND d.page = @page
+WHERE d.workspace_id = @workspace_id AND d.inbox_id = @inbox_id AND d.kind = 'page' AND d.page = @page
   AND (d.state = 'published'
        OR (d.state = 'pending' AND (o.author_contact_id = sqlc.narg(viewer_contact)::uuid
                                     OR o.author_member_id = sqlc.narg(viewer_member)::uuid)))
@@ -203,11 +203,14 @@ LIMIT @lim OFFSET @off;
 
 -- name: ListTeamDiscussions :many
 SELECT d.* FROM discussions d
-WHERE d.workspace_id = @workspace_id
+WHERE d.workspace_id = @workspace_id AND d.kind = @kind::text
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = d.workspace_id AND iv.inbox_id = d.inbox_id AND iv.viewer_id = @viewer_id::uuid))
   AND (sqlc.narg(inbox_id)::uuid IS NULL OR d.inbox_id = sqlc.narg(inbox_id)::uuid)
+  AND (sqlc.narg(board_id)::uuid IS NULL OR d.board_id = sqlc.narg(board_id)::uuid)
+  AND (sqlc.narg(stage)::text IS NULL OR d.stage = sqlc.narg(stage)::text)
+  AND (sqlc.narg(tsq)::text IS NULL OR d.search @@ to_tsquery('simple', sqlc.narg(tsq)::text))
   AND (sqlc.narg(page)::text IS NULL OR d.page = sqlc.narg(page)::text)
   AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
   AND (sqlc.narg(state)::text IS NULL OR d.state = sqlc.narg(state)::text)
@@ -216,6 +219,7 @@ WHERE d.workspace_id = @workspace_id
   AND (sqlc.narg(pending)::bool IS NULL OR (d.pending_posts > 0) = sqlc.narg(pending)::bool)
 ORDER BY
     CASE WHEN @sort::text = 'top' THEN (SELECT count(*) FROM discussion_votes v WHERE v.workspace_id = d.workspace_id AND v.post_id = d.opening_post_id) END DESC NULLS LAST,
+    CASE WHEN @sort::text = 'votes' THEN d.vote_count END DESC NULLS LAST,
     CASE WHEN @sort::text = 'new' THEN d.created_at END DESC NULLS LAST,
     d.last_activity_at DESC, d.id DESC
 LIMIT @lim OFFSET @off;
@@ -273,7 +277,7 @@ DELETE FROM reader_notifications WHERE created_at < @before;
 
 -- name: ListReaderNotifications :many
 SELECT n.id, n.workspace_id, n.kind, n.discussion_id, n.post_id, n.created_at, n.read_at,
-       d.title, d.page, i.name AS inbox_name
+       d.title, coalesce(d.page, '')::text AS page, i.name AS inbox_name
 FROM reader_notifications n
 JOIN discussions d ON d.workspace_id = n.workspace_id AND d.id = n.discussion_id
 JOIN inboxes i ON i.workspace_id = d.workspace_id AND i.id = d.inbox_id
@@ -296,7 +300,7 @@ WHERE person_id = @person_id AND read_at IS NULL
   AND (NOT @only_ids::bool OR id = ANY(@ids::uuid[]));
 
 -- name: ListPersonDiscussions :many
-SELECT d.id, d.workspace_id, d.page, d.page_title, d.title, d.state, d.locked_at, d.answer_post_id, d.reply_count,
+SELECT d.id, d.workspace_id, coalesce(d.page, '')::text AS page, d.page_title, d.title, d.state, d.locked_at, d.answer_post_id, d.reply_count,
        d.created_at, d.last_activity_at, d.opening_post_id, w.name AS workspace_name, i.name AS inbox_name,
        (o.author_contact_id = c.id)::bool AS started,
        EXISTS (SELECT 1 FROM discussion_follows f WHERE f.workspace_id = d.workspace_id AND f.discussion_id = d.id AND f.contact_id = c.id)::bool AS following,
@@ -306,7 +310,7 @@ JOIN workspaces w ON w.id = c.workspace_id AND w.deleted_at IS NULL
 JOIN discussions d ON d.workspace_id = c.workspace_id
 JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
 JOIN inboxes i ON i.workspace_id = d.workspace_id AND i.id = d.inbox_id
-WHERE c.person_id = @person_id
+WHERE c.person_id = @person_id AND d.kind = 'page'
   AND CASE WHEN @following_only::bool
       THEN EXISTS (SELECT 1 FROM discussion_follows f WHERE f.workspace_id = d.workspace_id AND f.discussion_id = d.id AND f.contact_id = c.id)
       ELSE EXISTS (SELECT 1 FROM discussion_posts p WHERE p.workspace_id = d.workspace_id AND p.discussion_id = d.id AND p.author_contact_id = c.id)

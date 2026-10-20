@@ -144,6 +144,7 @@ export function DiscussionsPane() {
     activity: t`Recent activity`,
     new: t`Newest`,
     top: t`Most votes`,
+    votes: t`Most votes`,
   }
   const empty: Record<ThreadView, React.ReactNode> = {
     all: <Trans>No discussions yet. Readers start them under your documentation pages.</Trans>,

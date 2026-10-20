@@ -85,7 +85,7 @@ func grantableScopes() []string {
 func offeredScopes(requested []string, role string) []oas.ApiKeyScope {
 	out := []oas.ApiKeyScope{}
 	for _, sc := range allScopes {
-		if slices.Contains(keyOnlyScopes, sc) || (requested != nil && !slices.Contains(requested, string(sc))) {
+		if slices.Contains(keyOnlyScopes, sc) || (requested != nil && !slices.Contains(requested, string(sc))) || (requested == nil && sc == oas.RoadmapStage) {
 			continue
 		}
 		if role == roleAgent && slices.Contains(managerScopes, sc) {

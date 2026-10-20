@@ -46,7 +46,7 @@ WITH visible AS (
            count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
            sum(d.pending_posts)::bigint AS pending_posts
     FROM discussions d
-    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
       AND (sqlc.narg(page)::text IS NULL OR d.page = sqlc.narg(page)::text)
       AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY d.inbox_id, d.page
@@ -65,7 +65,7 @@ SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
          WHERE ct.workspace_id = @workspace_id AND ct.inbox_id = p.inbox_id AND ct.page_url = p.page AND ct.page_title <> ''
          ORDER BY ct.created_at DESC LIMIT 1),
         (SELECT dt.page_title FROM discussions dt
-         WHERE dt.workspace_id = @workspace_id AND dt.inbox_id = p.inbox_id AND dt.page = p.page AND dt.page_title <> ''
+         WHERE dt.workspace_id = @workspace_id AND dt.inbox_id = p.inbox_id AND dt.kind = 'page' AND dt.page = p.page AND dt.page_title <> ''
          ORDER BY dt.created_at DESC LIMIT 1),
         '')::text AS title,
     coalesce(rated.up, 0)::bigint AS up,
@@ -124,7 +124,7 @@ WITH visible AS (
 ), started AS (
     SELECT (d.created_at AT TIME ZONE 'UTC')::date AS day, count(*)::bigint AS threads
     FROM discussions d
-    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
       AND d.created_at >= @since_at::timestamptz AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY 1
 )
@@ -154,7 +154,7 @@ SELECT
         WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
           AND r.up + r.down > 0 AND (sqlc.narg(site)::text IS NULL OR left(r.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')) rp)::bigint AS rated_pages,
     (SELECT coalesce(sum(d.pending_posts), 0) FROM discussions d
-     WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+     WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
        AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/'))::bigint AS pending_posts;
 
 -- name: ListDocsSites :many
@@ -183,7 +183,7 @@ WITH visible AS (
            count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
            sum(d.pending_posts)::bigint AS pending_posts
     FROM discussions d
-    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible) AND d.kind = 'page'
     GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated

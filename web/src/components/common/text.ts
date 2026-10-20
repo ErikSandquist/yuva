@@ -61,6 +61,7 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "help.article.published",
   "help.article.unpublished",
   "help.article.deleted",
+  "discussion.stage_changed",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -91,6 +92,9 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "help:read",
   "help:write",
   "help:publish",
+  "roadmap:read",
+  "roadmap:write",
+  "roadmap:stage",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export type ApiKeyPreset = "read" | "support" | "everything" | "custom"
@@ -103,6 +107,7 @@ export const API_KEY_PRESET_SCOPES: Record<Exclude<ApiKeyPreset, "custom">, ApiK
     "broadcasts:read",
     "analytics:read",
     "status:read",
+    "roadmap:read",
   ],
   support: [
     "conversations:read",
@@ -194,6 +199,7 @@ export function useEnumText() {
       "help.article.published": t`A help center article was published`,
       "help.article.unpublished": t`A help center article was unpublished`,
       "help.article.deleted": t`A help center article was deleted`,
+      "discussion.stage_changed": t`A roadmap idea moved to another stage`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -224,6 +230,9 @@ export function useEnumText() {
       "help:read": t`Read help centers, collections and articles`,
       "help:write": t`Edit help center collections and article drafts`,
       "help:publish": t`Publish and unpublish help center articles`,
+      "roadmap:read": t`Read roadmap boards, ideas and stage history`,
+      "roadmap:write": t`Link feedback to ideas, reply to linked customers and manage roadmap boards`,
+      "roadmap:stage": t`Move ideas between roadmap stages`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,

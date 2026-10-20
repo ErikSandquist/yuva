@@ -29,6 +29,7 @@ type discussant struct {
 	personID                        *uuid.UUID
 	readerTokenID                   *uuid.UUID
 	identified                      bool
+	roadmapOff                      bool
 }
 
 const discussantKey ctxKey = iota + 200
@@ -47,7 +48,7 @@ func (s *Server) resolveDiscussant(ctx context.Context, token string) (*discussa
 		contact := cp.contactID
 		return &discussant{
 			actor: actor{contactID: &contact}, workspaceID: cp.workspaceID, inboxID: cp.inboxID, channelID: cp.channelID,
-			kind: cp.kind, chat: cp.chat, identified: cp.identified,
+			kind: cp.kind, chat: cp.chat, identified: cp.identified, roadmapOff: s.roadmap.Off,
 		}, nil
 	}
 	now := s.now()
@@ -78,7 +79,7 @@ func (s *Server) resolveDiscussant(ctx context.Context, token string) (*discussa
 	person, tokenID := tok.PersonID, tok.ID
 	d := &discussant{
 		workspaceID: tok.WorkspaceID, inboxID: inbox.InboxID, channelID: tok.ChannelID, kind: ch.Kind, chat: sessionChat(ch),
-		personID: &person, readerTokenID: &tokenID,
+		personID: &person, readerTokenID: &tokenID, roadmapOff: s.roadmap.Off,
 	}
 	m, err := s.st.GetMemberByPerson(ctx, store.GetMemberByPersonParams{WorkspaceID: tok.WorkspaceID, PersonID: person})
 	if err != nil && !store.IsNotFound(err) {
@@ -165,6 +166,16 @@ func (s *Server) discussionChecks(ctx context.Context, d *discussant) []rateChec
 		rateCheck{"discussion:posth:" + who, limitDiscussionPostsPerHour})
 }
 
+func (d *discussant) rateWho() string {
+	if d.contactID != nil {
+		return "contact:" + d.contactID.String()
+	}
+	if d.memberID != nil {
+		return "member:" + d.memberID.String()
+	}
+	return "person:" + uuidString(d.personID)
+}
+
 func uuidString(id *uuid.UUID) string {
 	if id == nil {
 		return ""
@@ -182,7 +193,11 @@ func (d *discussant) thread(ctx context.Context, q *store.Queries, id uuid.UUID,
 	if t.d.InboxID != d.inboxID {
 		return t, errDiscussionGone
 	}
-	if _, err := channelPage(t.d.Page, d.kind, d.chat.AllowedOrigins); err != nil {
+	if t.d.Kind == kindIdea {
+		if _, err := publicBoardOf(ctx, q, t.d, d.roadmapOff); err != nil {
+			return t, errDiscussionGone
+		}
+	} else if _, err := channelPage(orZero(t.d.Page), d.kind, d.chat.AllowedOrigins); err != nil {
 		return t, errDiscussionGone
 	}
 	v := viewer{actor: d.actor}
@@ -193,6 +208,43 @@ func (d *discussant) thread(ctx context.Context, q *store.Queries, id uuid.UUID,
 }
 
 func (d *discussant) viewer() *viewer { return &viewer{actor: d.actor, client: true} }
+
+func publicBoardOf(ctx context.Context, q *store.Queries, d store.Discussion, off bool) (store.RoadmapBoard, error) {
+	if off || d.BoardID == nil {
+		return store.RoadmapBoard{}, errRoadmapNoBoard
+	}
+	b, err := q.GetRoadmapBoard(ctx, store.GetRoadmapBoardParams{WorkspaceID: d.WorkspaceID, ID: *d.BoardID})
+	if store.IsNotFound(err) || (err == nil && !b.Public) {
+		return b, errRoadmapNoBoard
+	}
+	return b, err
+}
+
+// writeThread loads a thread the discussant is about to write in and the moderation mode that applies
+// to the post: the channel's for a page thread, the board's for an idea (replies on a board that takes
+// no suggestions still wait for a member like a moderated board's).
+func (d *discussant) writeThread(ctx context.Context, q *store.Queries, id uuid.UUID) (thread, string, error) {
+	t, err := d.thread(ctx, q, id, true)
+	if err == errDiscussionGone {
+		if off := d.checkOpen(); off != nil {
+			return t, "", off
+		}
+	}
+	if err != nil {
+		return t, "", err
+	}
+	if t.d.Kind != kindIdea {
+		return t, d.chat.Discussions, d.checkOpen()
+	}
+	b, err := publicBoardOf(ctx, q, t.d, d.roadmapOff)
+	if err != nil {
+		return t, "", err
+	}
+	if b.Suggestions == string(oas.RoadmapSuggestionsOff) {
+		return t, string(oas.RoadmapSuggestionsModerated), nil
+	}
+	return t, b.Suggestions, nil
+}
 
 func (d *discussant) checkOpen() error {
 	if d.kind != string(oas.ChannelKindChat) || d.chat.Discussions == string(oas.DiscussionModeOff) || d.chat.Discussions == "" {
@@ -252,14 +304,14 @@ func (s *Server) discussionChannel(ctx context.Context, key string) (store.FindC
 	if err := s.rateLimit(rateCheck{"discussions:ip:" + rateIP(s.clientIP(requestFrom(ctx))), limitChannelPerIP}); err != nil {
 		return store.FindChatChannelByKeyRow{}, err
 	}
-	ch, err := s.docsChannel(ctx, key, nil)
-	if err != nil {
-		return ch, err
-	}
+	return s.docsChannel(ctx, key, nil)
+}
+
+func pageDiscussionsOn(ch store.FindChatChannelByKeyRow) error {
 	if ch.Discussions == string(oas.DiscussionModeOff) {
-		return ch, errDiscussionsOff
+		return errDiscussionsOff
 	}
-	return ch, nil
+	return nil
 }
 
 func (s *Server) ListClientDiscussions(ctx context.Context, req oas.ListClientDiscussionsRequestObject) (oas.ListClientDiscussionsResponseObject, error) {
@@ -268,7 +320,24 @@ func (s *Server) ListClientDiscussions(ctx context.Context, req oas.ListClientDi
 		return nil, err
 	}
 	prm := req.Params
-	page, err := channelPage(prm.Page, ch.Kind, ch.AllowedOrigins)
+	if prm.Kind != nil {
+		if !prm.Kind.Valid() {
+			return nil, errValidation("kind must be page or idea")
+		}
+		if *prm.Kind == oas.DiscussionKindIdea {
+			return s.listClientIdeas(ctx, ch, prm)
+		}
+	}
+	if err := pageDiscussionsOn(ch); err != nil {
+		return nil, err
+	}
+	if prm.Stage != nil || prm.Q != nil {
+		return nil, errValidation("stage and q are only for kind=idea")
+	}
+	if prm.Page == nil {
+		return nil, errValidation("page is required")
+	}
+	page, err := channelPage(*prm.Page, ch.Kind, ch.AllowedOrigins)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +361,7 @@ func (s *Server) ListClientDiscussions(ctx context.Context, req oas.ListClientDi
 		return nil, err
 	}
 	rows, err := s.st.ListPageDiscussions(ctx, store.ListPageDiscussionsParams{
-		WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Page: page, ViewerContact: v.contactID, ViewerMember: v.memberID,
+		WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Page: &page, ViewerContact: v.contactID, ViewerMember: v.memberID,
 		Sort: string(sort), Lim: lim + 1, Off: off,
 	})
 	if err != nil {
@@ -324,14 +393,28 @@ func (s *Server) GetClientDiscussion(ctx context.Context, req oas.GetClientDiscu
 		return nil, err
 	}
 	t, err := loadThread(ctx, s.st.Queries, ch.WorkspaceID, req.DiscussionId, false)
+	if err == errDiscussionGone {
+		if off := pageDiscussionsOn(ch); off != nil {
+			return nil, off
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
 	if t.d.InboxID != ch.InboxID || !v.sees(t.opening()) {
 		return nil, errDiscussionGone
 	}
-	if _, err := channelPage(t.d.Page, ch.Kind, ch.AllowedOrigins); err != nil {
-		return nil, errDiscussionGone
+	if t.d.Kind == kindIdea {
+		if _, err := publicBoardOf(ctx, s.st.Queries, t.d, s.roadmap.Off); err != nil {
+			return nil, err
+		}
+	} else {
+		if err := pageDiscussionsOn(ch); err != nil {
+			return nil, err
+		}
+		if _, err := channelPage(orZero(t.d.Page), ch.Kind, ch.AllowedOrigins); err != nil {
+			return nil, errDiscussionGone
+		}
 	}
 	if err := fillViewer(ctx, s.st.Queries, ch.WorkspaceID, v, []uuid.UUID{t.d.ID}); err != nil {
 		return nil, err
@@ -344,14 +427,23 @@ func (s *Server) GetClientDiscussion(ctx context.Context, req oas.GetClientDiscu
 
 func (s *Server) CreateClientDiscussion(ctx context.Context, req oas.CreateClientDiscussionRequestObject) (oas.CreateClientDiscussionResponseObject, error) {
 	d := discussantFrom(ctx)
+	b := req.Body
+	if b.Kind != nil && !b.Kind.Valid() {
+		return nil, errValidation("kind must be page or idea")
+	}
+	if b.Kind != nil && *b.Kind == oas.DiscussionKindIdea {
+		return s.createClientIdea(ctx, d, b)
+	}
 	if err := d.checkOpen(); err != nil {
 		return nil, err
 	}
 	if err := s.rateLimit(s.discussionChecks(ctx, d)...); err != nil {
 		return nil, err
 	}
-	b := req.Body
-	page, err := channelPage(b.PageUrl, d.kind, d.chat.AllowedOrigins)
+	if b.PageUrl == nil {
+		return nil, errValidation("page_url is required")
+	}
+	page, err := channelPage(*b.PageUrl, d.kind, d.chat.AllowedOrigins)
 	if err != nil {
 		return nil, err
 	}
@@ -396,9 +488,6 @@ func (s *Server) CreateClientDiscussion(ctx context.Context, req oas.CreateClien
 
 func (s *Server) CreateClientDiscussionPost(ctx context.Context, req oas.CreateClientDiscussionPostRequestObject) (oas.CreateClientDiscussionPostResponseObject, error) {
 	d := discussantFrom(ctx)
-	if err := d.checkOpen(); err != nil {
-		return nil, err
-	}
 	if err := s.rateLimit(s.discussionChecks(ctx, d)...); err != nil {
 		return nil, err
 	}
@@ -408,7 +497,7 @@ func (s *Server) CreateClientDiscussionPost(ctx context.Context, req oas.CreateC
 	}
 	var id uuid.UUID
 	err = s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
-		t, err := d.thread(ctx, q, req.DiscussionId, true)
+		t, mode, err := d.writeThread(ctx, q, req.DiscussionId)
 		if err != nil {
 			return err
 		}
@@ -418,7 +507,7 @@ func (s *Server) CreateClientDiscussionPost(ctx context.Context, req oas.CreateC
 		if err := s.bindWriter(ctx, q, d); err != nil {
 			return err
 		}
-		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, d.chat.Discussions, d.actor, d.identified)
+		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, mode, d.actor, d.identified)
 		if err != nil {
 			return err
 		}
@@ -441,6 +530,9 @@ func (s *Server) clientAnswer(ctx context.Context, id uuid.UUID, postID *uuid.UU
 		t, err := d.thread(ctx, q, id, true)
 		if err != nil {
 			return err
+		}
+		if t.d.Kind == kindIdea {
+			return errNotSupported
 		}
 		if err := d.mayChange(t); err != nil {
 			return err
@@ -600,10 +692,24 @@ func (s *Server) clientVote(ctx context.Context, id uuid.UUID, add bool) (oas.Di
 		if !add && d.memberID == nil && d.contactID == nil {
 			return nil
 		}
+		if add && ideaVotesClosed(t.d) {
+			return errIdeaClosed
+		}
+		if t.d.Kind == kindIdea {
+			if err := s.rateLimit(rateCheck{"idea:vote:" + d.rateWho(), limitIdeaVotes}); err != nil {
+				return err
+			}
+		}
 		if err := s.bindWriter(ctx, q, d); err != nil {
 			return err
 		}
-		return vote(ctx, q, d.workspaceID, p, d.actor, add, s.now())
+		if err := vote(ctx, q, d.workspaceID, p, d.actor, add, s.now()); err != nil {
+			return err
+		}
+		if add && t.d.Kind == kindIdea && d.contactID != nil {
+			return q.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID, Now: s.now()})
+		}
+		return nil
 	})
 	if err != nil {
 		return oas.DiscussionPost{}, err
@@ -636,4 +742,160 @@ func (s *Server) DeleteReaderToken(ctx context.Context, _ oas.DeleteReaderTokenR
 		return nil, err
 	}
 	return oas.DeleteReaderToken204Response{}, nil
+}
+
+func (s *Server) createClientIdea(ctx context.Context, d *discussant, b *oas.ClientDiscussionCreate) (oas.CreateClientDiscussionResponseObject, error) {
+	if err := s.roadmapOn(); err != nil {
+		return nil, err
+	}
+	if err := s.rateLimit(s.discussionChecks(ctx, d)...); err != nil {
+		return nil, err
+	}
+	if b.PageUrl != nil || b.PageTitle != nil {
+		return nil, errIdeaPageNotAllowed
+	}
+	title, err := discussionTitle(b.Title)
+	if err != nil {
+		return nil, err
+	}
+	body, err := discussionBodyText(b.Body)
+	if err != nil {
+		return nil, err
+	}
+	var id uuid.UUID
+	err = s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		board, err := s.inboxBoard(ctx, q, d.workspaceID, d.inboxID)
+		if err != nil {
+			return err
+		}
+		if board.Suggestions == string(oas.RoadmapSuggestionsOff) {
+			return errSuggestionsOff
+		}
+		if err := s.bindWriter(ctx, q, d); err != nil {
+			return err
+		}
+		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, board.Suggestions, d.actor, d.identified)
+		if err != nil {
+			return err
+		}
+		if state == statePending {
+			n, err := q.CountPendingBoardIdeas(ctx, store.CountPendingBoardIdeasParams{WorkspaceID: d.workspaceID, BoardID: &board.ID})
+			if err != nil {
+				return err
+			}
+			if int(n) >= maxPendingIdeas {
+				return errSuggestionsFull
+			}
+		}
+		if err := s.ideaLimit(ctx, q, d.workspaceID); err != nil {
+			return err
+		}
+		t, err := s.createThread(ctx, q, events, newThread{
+			ws: d.workspaceID, inbox: d.inboxID, channel: board.ChannelID, board: &board.ID, title: title, body: body, author: d.actor, state: state,
+		})
+		id = t.ID
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	out, err := threadView(ctx, s.st.Queries, d.workspaceID, id, d.viewer())
+	if err != nil {
+		return nil, err
+	}
+	return oas.CreateClientDiscussion201JSONResponse(out), nil
+}
+
+func (s *Server) listClientIdeas(ctx context.Context, ch store.FindChatChannelByKeyRow, prm oas.ListClientDiscussionsParams) (oas.ListClientDiscussionsResponseObject, error) {
+	if err := s.roadmapOn(); err != nil {
+		return nil, err
+	}
+	board, err := s.inboxBoard(ctx, s.st.Queries, ch.WorkspaceID, ch.InboxID)
+	if err != nil {
+		return nil, err
+	}
+	sort := oas.DiscussionSortNew
+	if prm.Sort != nil {
+		if !prm.Sort.Valid() || *prm.Sort == oas.DiscussionSortUnanswered {
+			return nil, errValidation("sort must be new or top for ideas")
+		}
+		sort = *prm.Sort
+	}
+	arg := store.ListBoardIdeasParams{WorkspaceID: ch.WorkspaceID, BoardID: &board.ID, Sort: string(sort)}
+	if prm.Stage != nil {
+		if !prm.Stage.Valid() {
+			return nil, errValidation("stage must be ideas, planned, in_progress, shipped or closed")
+		}
+		arg.Stage = new(string(*prm.Stage))
+	}
+	if arg.Tsq, err = ideaTsQuery(prm.Q); err != nil {
+		return nil, err
+	}
+	if arg.Tsq != nil {
+		if err := s.rateLimit(rateCheck{"ideas:search:" + rateIP(s.clientIP(requestFrom(ctx))) + ":" + ch.ChannelID.String(), limitIdeaSearch}); err != nil {
+			return nil, err
+		}
+	}
+	lim, err := pageSize(prm.Limit)
+	if err != nil {
+		return nil, err
+	}
+	off, err := decodePosition(string(sort), prm.Cursor)
+	if err != nil {
+		return nil, err
+	}
+	v, cache, err := s.readerOf(ctx, ch)
+	if err != nil {
+		return nil, err
+	}
+	arg.ViewerContact, arg.ViewerMember, arg.Lim, arg.Off = v.contactID, v.memberID, lim+1, off
+	var rows []store.Discussion
+	if err := s.searchTx(ctx, arg.Tsq != nil, func(q *store.Queries) (err error) {
+		rows, err = q.ListBoardIdeas(ctx, arg)
+		return err
+	}); err != nil {
+		return nil, err
+	}
+	var next *string
+	if len(rows) > int(lim) {
+		rows = rows[:lim]
+		c := encodePosition(string(sort), off+lim)
+		next = &c
+	}
+	items, err := discussionsBody(ctx, s.st.Queries, ch.WorkspaceID, rows, v)
+	if err != nil {
+		return nil, err
+	}
+	return oas.ListClientDiscussions200JSONResponse{
+		Body:    oas.DiscussionPage{Items: items, NextCursor: next},
+		Headers: oas.ListClientDiscussions200ResponseHeaders{CacheControl: &cache},
+	}, nil
+}
+
+func (s *Server) GetClientRoadmap(ctx context.Context, req oas.GetClientRoadmapRequestObject) (oas.GetClientRoadmapResponseObject, error) {
+	if err := s.roadmapOn(); err != nil {
+		return nil, errRoadmapNoBoard
+	}
+	ch, err := s.discussionChannel(ctx, req.ChannelKey)
+	if err != nil {
+		return nil, err
+	}
+	board, err := s.inboxBoard(ctx, s.st.Queries, ch.WorkspaceID, ch.InboxID)
+	if err != nil {
+		return nil, err
+	}
+	counts, err := s.roadmapBoardOut(ctx, s.st.Queries, board)
+	if err != nil {
+		return nil, err
+	}
+	cache := publicMaxAge
+	return oas.GetClientRoadmap200JSONResponse{
+		Body: oas.ClientRoadmap{
+			Name: board.Name, Description: board.Description, Url: s.roadmapURL(board.Slug), Suggestions: oas.RoadmapSuggestions(board.Suggestions),
+			Stages: oas.ClientRoadmapStages{
+				Ideas: counts.Counts.Ideas, Planned: counts.Counts.Planned, InProgress: counts.Counts.InProgress, Shipped: counts.Counts.Shipped,
+			},
+		},
+		Headers: oas.GetClientRoadmap200ResponseHeaders{CacheControl: &cache},
+	}, nil
 }

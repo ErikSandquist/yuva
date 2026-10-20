@@ -1092,6 +1092,10 @@ msgstr "Valódi cím, ahol postát fogadsz"
 msgid "A reply was written in a discussion"
 msgstr "Egy vitában választ írtak"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Egy ütemterv-ötlet másik szakaszba került"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "A bejelentkezésnek 10 percen belül vissza kell érkeznie, és egyszer működik. Nyisd meg az átvitelt, és jelentkezz be újra."
@@ -6047,6 +6051,10 @@ msgstr "Világos megjelenés"
 msgid "Limit the pace"
 msgstr "Tempó korlátozása"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Visszajelzések ötletekhez kapcsolása, válasz a kapcsolt ügyfeleknek és az ütemtervtáblák kezelése"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Link a Microsoft 365-adminodnak"
@@ -6746,6 +6754,10 @@ msgstr "Legtöbb szavazat"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Mozgatás lefelé"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Ötletek áthelyezése az ütemterv szakaszai között"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Levelezési listák, feliratkozók és hozzájárulási rekordok olvasá
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Csak olvasható"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Ütemtervtáblák, ötletek és a szakaszok előzményeinek olvasása"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

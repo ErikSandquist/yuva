@@ -190,6 +190,7 @@ type viewer struct {
 	client    bool
 	voted     map[uuid.UUID]bool
 	following map[uuid.UUID]bool
+	linked    map[uuid.UUID]int32
 }
 
 func (v *viewer) sees(p store.DiscussionPostView) bool {
@@ -227,7 +228,7 @@ func discussionAuthor(p store.DiscussionPostView, team bool) oas.DiscussionAutho
 
 func discussionBody(d store.Discussion, op store.DiscussionPostView, v *viewer) oas.Discussion {
 	out := oas.Discussion{
-		Id: d.ID, Page: d.Page, Title: d.Title, OpeningPostId: d.OpeningPostID, Body: op.Body, BodyHtml: renderMarkdown(op.Body),
+		Id: d.ID, Kind: oas.DiscussionKind(d.Kind), Page: orZero(d.Page), Title: d.Title, OpeningPostId: d.OpeningPostID, Body: op.Body, BodyHtml: renderMarkdown(op.Body),
 		Author: discussionAuthor(op, v.team), State: oas.DiscussionState(d.State), AnswerPostId: d.AnswerPostID,
 		AnsweredAt: d.AnsweredAt, Locked: d.LockedAt != nil, Votes: op.Votes, ReplyCount: d.ReplyCount,
 		CreatedAt: d.CreatedAt, EditedAt: op.EditedAt, LastActivityAt: d.LastActivityAt,
@@ -235,6 +236,12 @@ func discussionBody(d store.Discussion, op store.DiscussionPostView, v *viewer) 
 	if d.PageTitle != "" {
 		t := d.PageTitle
 		out.PageTitle = &t
+	}
+	if d.Kind == kindIdea {
+		out.BoardId, out.Stage, out.StageChangedAt = d.BoardID, (*oas.IdeaStage)(d.Stage), d.StageChangedAt
+		if n, ok := v.linked[d.ID]; v.team && ok {
+			out.LinkedCount = &n
+		}
 	}
 	if op.DeletedAt != nil {
 		deleted := true
@@ -380,6 +387,9 @@ func discussionsBody(ctx context.Context, q *store.Queries, ws uuid.UUID, rows [
 			return nil, err
 		}
 	}
+	if err := fillLinked(ctx, q, ws, v, rows); err != nil {
+		return nil, err
+	}
 	out := make([]oas.Discussion, len(rows))
 	for i, d := range rows {
 		op, ok := byID[d.OpeningPostID]
@@ -389,6 +399,33 @@ func discussionsBody(ctx context.Context, q *store.Queries, ws uuid.UUID, rows [
 		out[i] = discussionBody(d, op, v)
 	}
 	return out, nil
+}
+
+func fillLinked(ctx context.Context, q *store.Queries, ws uuid.UUID, v *viewer, rows []store.Discussion) error {
+	if !v.team {
+		return nil
+	}
+	var ids []uuid.UUID
+	for _, d := range rows {
+		if d.Kind == kindIdea {
+			ids = append(ids, d.ID)
+		}
+	}
+	v.linked = map[uuid.UUID]int32{}
+	if len(ids) == 0 {
+		return nil
+	}
+	counts, err := q.CountIdeaLinksByIdeas(ctx, store.CountIdeaLinksByIdeasParams{WorkspaceID: ws, IdeaIds: ids})
+	if err != nil {
+		return err
+	}
+	for _, id := range ids {
+		v.linked[id] = 0
+	}
+	for _, c := range counts {
+		v.linked[c.IdeaID] = c.N
+	}
+	return nil
 }
 
 var teamViewer = viewer{team: true}
@@ -416,7 +453,17 @@ func discussionEventWith(ctx context.Context, q *store.Queries, events *eventBat
 	}
 	inbox := t.d.InboxID
 	events.add(typ, &inbox, nil, data)
-	return nil
+	return touchIdeaBoard(ctx, q, events, t.d)
+}
+
+// touchIdeaBoard moves the board's cache key after a change the public page shows and tells open
+// panels once the transaction has committed.
+func touchIdeaBoard(ctx context.Context, q *store.Queries, events *eventBatch, d store.Discussion) error {
+	if d.Kind != kindIdea || d.BoardID == nil {
+		return nil
+	}
+	events.boards = append(events.boards, boardRef{ws: d.WorkspaceID, inbox: d.InboxID, board: *d.BoardID})
+	return q.TouchRoadmapBoardNow(ctx, store.TouchRoadmapBoardNowParams{WorkspaceID: d.WorkspaceID, ID: *d.BoardID})
 }
 
 func recount(ctx context.Context, q *store.Queries, ws uuid.UUID, ids ...uuid.UUID) error {
@@ -454,6 +501,7 @@ func newPostState(ctx context.Context, q *store.Queries, ws, inbox uuid.UUID, mo
 type newThread struct {
 	ws, inbox, channel uuid.UUID
 	page, pageTitle    string
+	board              *uuid.UUID
 	title, body        string
 	author             actor
 	state              string
@@ -463,10 +511,14 @@ type newThread struct {
 func (s *Server) createThread(ctx context.Context, q *store.Queries, events *eventBatch, n newThread) (store.Discussion, error) {
 	now := s.now()
 	id, opening := newID(), newID()
-	d, err := q.CreateDiscussion(ctx, store.CreateDiscussionParams{
-		ID: id, WorkspaceID: n.ws, InboxID: n.inbox, ChannelID: n.channel, Page: n.page, PageTitle: n.pageTitle, Title: n.title,
+	arg := store.CreateDiscussionParams{
+		ID: id, WorkspaceID: n.ws, InboxID: n.inbox, ChannelID: n.channel, Kind: kindPage, Page: &n.page, PageTitle: n.pageTitle, Title: n.title,
 		OpeningPostID: opening, State: n.state, ConversationID: n.conversation, Now: now,
-	})
+	}
+	if n.board != nil {
+		arg.Kind, arg.Page, arg.BoardID, arg.Stage = kindIdea, nil, n.board, new(stageIdeas)
+	}
+	d, err := q.CreateDiscussion(ctx, arg)
 	if err != nil {
 		return d, err
 	}
@@ -480,8 +532,18 @@ func (s *Server) createThread(ctx context.Context, q *store.Queries, events *eve
 		return d, err
 	}
 	if n.author.contactID != nil {
-		if err := q.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: n.ws, DiscussionID: id, ContactID: *n.author.contactID, Now: now}); err != nil {
-			return d, err
+		follow := true
+		if n.board != nil {
+			b, err := q.GetRoadmapBoard(ctx, store.GetRoadmapBoardParams{WorkspaceID: n.ws, ID: *n.board})
+			if err != nil {
+				return d, err
+			}
+			follow = b.Public
+		}
+		if follow {
+			if err := q.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: n.ws, DiscussionID: id, ContactID: *n.author.contactID, Now: now}); err != nil {
+				return d, err
+			}
 		}
 	}
 	return d, discussionEvent(ctx, q, events, eventDiscussionCreated, n.ws, id, &opening)
@@ -522,6 +584,9 @@ func (s *Server) addReply(ctx context.Context, q *store.Queries, events *eventBa
 
 // setAnswer marks or clears the accepted answer.
 func (s *Server) setAnswer(ctx context.Context, q *store.Queries, events *eventBatch, t thread, postID *uuid.UUID, by actor) error {
+	if t.d.Kind == kindIdea {
+		return errNotSupported
+	}
 	ws := t.d.WorkspaceID
 	if postID == nil {
 		if t.d.AnswerPostID == nil {
@@ -742,28 +807,44 @@ func threadView(ctx context.Context, q *store.Queries, ws, id uuid.UUID, v *view
 const (
 	notifyReply  = "reply"
 	notifyAnswer = "answer"
+	notifyStage  = "stage"
 )
 
 // notifyFollowers tells a thread's followers about a published reply or an accepted answer:
 // readers get a notification row, every follower one e-mail per delay.
 func (s *Server) notifyFollowers(ctx context.Context, q *store.Queries, events *eventBatch, ws, discussionID, postID uuid.UUID, kind string, skip *uuid.UUID) error {
-	followers, err := q.ListDiscussionFollowers(ctx, store.ListDiscussionFollowersParams{WorkspaceID: ws, DiscussionID: discussionID})
+	p, err := q.GetDiscussionPost(ctx, store.GetDiscussionPostParams{WorkspaceID: ws, ID: postID})
 	if err != nil {
 		return err
 	}
-	p, err := q.GetDiscussionPost(ctx, store.GetDiscussionPostParams{WorkspaceID: ws, ID: postID})
+	return s.notifyAll(ctx, q, events, ws, discussionID, &postID, kind, func(f store.ListDiscussionFollowersRow) bool {
+		return (skip != nil && f.ContactID == *skip) || (p.AuthorContactID != nil && f.ContactID == *p.AuthorContactID && kind == notifyReply)
+	})
+}
+
+func (s *Server) notifyAll(ctx context.Context, q *store.Queries, events *eventBatch, ws, discussionID uuid.UUID, postID *uuid.UUID, kind string, skip func(store.ListDiscussionFollowersRow) bool) error {
+	d, err := q.GetDiscussion(ctx, store.GetDiscussionParams{WorkspaceID: ws, ID: discussionID})
+	if err != nil {
+		return err
+	}
+	if d.Kind == kindIdea && d.BoardID != nil {
+		b, err := q.GetRoadmapBoard(ctx, store.GetRoadmapBoardParams{WorkspaceID: ws, ID: *d.BoardID})
+		if err != nil || !b.Public {
+			return err
+		}
+	}
+	followers, err := q.ListDiscussionFollowers(ctx, store.ListDiscussionFollowersParams{WorkspaceID: ws, DiscussionID: discussionID})
 	if err != nil {
 		return err
 	}
 	now := s.now()
 	for _, f := range followers {
-		if (skip != nil && f.ContactID == *skip) || (p.AuthorContactID != nil && f.ContactID == *p.AuthorContactID && kind == notifyReply) {
+		if skip != nil && skip(f) {
 			continue
 		}
 		if f.PersonID != nil {
-			post := postID
 			if err := q.CreateReaderNotification(ctx, store.CreateReaderNotificationParams{
-				ID: newID(), WorkspaceID: ws, PersonID: *f.PersonID, DiscussionID: discussionID, PostID: &post, Kind: kind, Now: now,
+				ID: newID(), WorkspaceID: ws, PersonID: *f.PersonID, DiscussionID: discussionID, PostID: postID, Kind: kind, Now: now,
 			}); err != nil {
 				return err
 			}

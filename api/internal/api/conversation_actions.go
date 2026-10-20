@@ -150,6 +150,9 @@ func (s *Server) MoveConversation(ctx context.Context, req oas.MoveConversationR
 		if err != nil {
 			return err
 		}
+		if err := q.UnlinkConversationIdea(ctx, store.UnlinkConversationIdeaParams{WorkspaceID: p.workspaceID, ConversationID: cur.ID}); err != nil {
+			return err
+		}
 		if out, err = oneConversation(ctx, q, moved); err != nil {
 			return err
 		}

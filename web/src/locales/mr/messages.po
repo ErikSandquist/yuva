@@ -1092,6 +1092,10 @@ msgstr "खरा पत्ता जिथे तुम्हाला पत�
 msgid "A reply was written in a discussion"
 msgstr "चर्चेत उत्तर लिहिले गेले"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "रोडमॅपमधील एक कल्पना दुसऱ्या टप्प्यात गेली"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "साइन-इन 10 मिनिटांत परत आले पाहिजे आणि एकदाच चालते. मायग्रेशन उघडा आणि पुन्हा साइन इन करा."
@@ -6047,6 +6051,10 @@ msgstr "लाइट स्वरूप"
 msgid "Limit the pace"
 msgstr "वेग मर्यादित करा"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "फीडबॅक कल्पनांशी जोडा, जोडलेल्या ग्राहकांना उत्तर द्या आणि रोडमॅप बोर्ड व्यवस्थापित करा"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "तुमच्या Microsoft 365 ॲडमिनसाठी लिंक"
@@ -6746,6 +6754,10 @@ msgstr "सर्वाधिक मते"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "खाली हलवा"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "रोडमॅपच्या टप्प्यांदरम्यान कल्पना हलवा"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "मेलिंग लिस्ट, सबस्क्रायबर �
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "फक्त वाचन"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "रोडमॅप बोर्ड, कल्पना आणि टप्प्यांचा इतिहास वाचा"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

@@ -102,11 +102,11 @@ func (q *Queries) CountUnreadReaderNotifications(ctx context.Context, personID u
 }
 
 const createDiscussion = `-- name: CreateDiscussion :one
-INSERT INTO discussions (id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state,
+INSERT INTO discussions (id, workspace_id, inbox_id, channel_id, kind, page, page_title, board_id, stage, title, opening_post_id, state,
                          conversation_id, created_at, last_activity_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
-        $10, $11, $11)
-RETURNING id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,
+        $13, $14, $14)
+RETURNING id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search
 `
 
 type CreateDiscussionParams struct {
@@ -114,8 +114,11 @@ type CreateDiscussionParams struct {
 	WorkspaceID    uuid.UUID
 	InboxID        uuid.UUID
 	ChannelID      uuid.UUID
-	Page           string
+	Kind           string
+	Page           *string
 	PageTitle      string
+	BoardID        *uuid.UUID
+	Stage          *string
 	Title          string
 	OpeningPostID  uuid.UUID
 	State          string
@@ -129,8 +132,11 @@ func (q *Queries) CreateDiscussion(ctx context.Context, arg CreateDiscussionPara
 		arg.WorkspaceID,
 		arg.InboxID,
 		arg.ChannelID,
+		arg.Kind,
 		arg.Page,
 		arg.PageTitle,
+		arg.BoardID,
+		arg.Stage,
 		arg.Title,
 		arg.OpeningPostID,
 		arg.State,
@@ -157,6 +163,12 @@ func (q *Queries) CreateDiscussion(ctx context.Context, arg CreateDiscussionPara
 		&i.ConversationID,
 		&i.CreatedAt,
 		&i.LastActivityAt,
+		&i.Kind,
+		&i.BoardID,
+		&i.Stage,
+		&i.StageChangedAt,
+		&i.VoteCount,
+		&i.Search,
 	)
 	return i, err
 }
@@ -523,7 +535,7 @@ func (q *Queries) GetContactDiscussionState(ctx context.Context, arg GetContactD
 }
 
 const getDiscussion = `-- name: GetDiscussion :one
-SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at FROM discussions WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search FROM discussions WHERE workspace_id = $1 AND id = $2
 `
 
 type GetDiscussionParams struct {
@@ -553,12 +565,18 @@ func (q *Queries) GetDiscussion(ctx context.Context, arg GetDiscussionParams) (D
 		&i.ConversationID,
 		&i.CreatedAt,
 		&i.LastActivityAt,
+		&i.Kind,
+		&i.BoardID,
+		&i.Stage,
+		&i.StageChangedAt,
+		&i.VoteCount,
+		&i.Search,
 	)
 	return i, err
 }
 
 const getDiscussionByConversation = `-- name: GetDiscussionByConversation :one
-SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at FROM discussions WHERE workspace_id = $1 AND conversation_id = $2
+SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search FROM discussions WHERE workspace_id = $1 AND conversation_id = $2
 `
 
 type GetDiscussionByConversationParams struct {
@@ -588,6 +606,12 @@ func (q *Queries) GetDiscussionByConversation(ctx context.Context, arg GetDiscus
 		&i.ConversationID,
 		&i.CreatedAt,
 		&i.LastActivityAt,
+		&i.Kind,
+		&i.BoardID,
+		&i.Stage,
+		&i.StageChangedAt,
+		&i.VoteCount,
+		&i.Search,
 	)
 	return i, err
 }
@@ -879,7 +903,7 @@ func (q *Queries) ListDiscussionPosts(ctx context.Context, arg ListDiscussionPos
 }
 
 const listDiscussionsByIDs = `-- name: ListDiscussionsByIDs :many
-SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at FROM discussions WHERE workspace_id = $1 AND id = ANY($2::uuid[])
+SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search FROM discussions WHERE workspace_id = $1 AND id = ANY($2::uuid[])
 `
 
 type ListDiscussionsByIDsParams struct {
@@ -915,6 +939,12 @@ func (q *Queries) ListDiscussionsByIDs(ctx context.Context, arg ListDiscussionsB
 			&i.ConversationID,
 			&i.CreatedAt,
 			&i.LastActivityAt,
+			&i.Kind,
+			&i.BoardID,
+			&i.Stage,
+			&i.StageChangedAt,
+			&i.VoteCount,
+			&i.Search,
 		); err != nil {
 			return nil, err
 		}
@@ -1005,9 +1035,9 @@ func (q *Queries) ListOpeningPosts(ctx context.Context, arg ListOpeningPostsPara
 }
 
 const listPageDiscussions = `-- name: ListPageDiscussions :many
-SELECT d.id, d.workspace_id, d.inbox_id, d.channel_id, d.page, d.page_title, d.title, d.opening_post_id, d.state, d.locked_at, d.answer_post_id, d.answered_at, d.reply_count, d.pending_posts, d.hidden_posts, d.conversation_id, d.created_at, d.last_activity_at FROM discussions d
+SELECT d.id, d.workspace_id, d.inbox_id, d.channel_id, d.page, d.page_title, d.title, d.opening_post_id, d.state, d.locked_at, d.answer_post_id, d.answered_at, d.reply_count, d.pending_posts, d.hidden_posts, d.conversation_id, d.created_at, d.last_activity_at, d.kind, d.board_id, d.stage, d.stage_changed_at, d.vote_count, d.search FROM discussions d
 JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
-WHERE d.workspace_id = $1 AND d.inbox_id = $2 AND d.page = $3
+WHERE d.workspace_id = $1 AND d.inbox_id = $2 AND d.kind = 'page' AND d.page = $3
   AND (d.state = 'published'
        OR (d.state = 'pending' AND (o.author_contact_id = $4::uuid
                                     OR o.author_member_id = $5::uuid)))
@@ -1022,7 +1052,7 @@ LIMIT $8 OFFSET $7
 type ListPageDiscussionsParams struct {
 	WorkspaceID   uuid.UUID
 	InboxID       uuid.UUID
-	Page          string
+	Page          *string
 	ViewerContact *uuid.UUID
 	ViewerMember  *uuid.UUID
 	Sort          string
@@ -1067,6 +1097,12 @@ func (q *Queries) ListPageDiscussions(ctx context.Context, arg ListPageDiscussio
 			&i.ConversationID,
 			&i.CreatedAt,
 			&i.LastActivityAt,
+			&i.Kind,
+			&i.BoardID,
+			&i.Stage,
+			&i.StageChangedAt,
+			&i.VoteCount,
+			&i.Search,
 		); err != nil {
 			return nil, err
 		}
@@ -1108,7 +1144,7 @@ func (q *Queries) ListPersonContacts(ctx context.Context, personID *uuid.UUID) (
 }
 
 const listPersonDiscussions = `-- name: ListPersonDiscussions :many
-SELECT d.id, d.workspace_id, d.page, d.page_title, d.title, d.state, d.locked_at, d.answer_post_id, d.reply_count,
+SELECT d.id, d.workspace_id, coalesce(d.page, '')::text AS page, d.page_title, d.title, d.state, d.locked_at, d.answer_post_id, d.reply_count,
        d.created_at, d.last_activity_at, d.opening_post_id, w.name AS workspace_name, i.name AS inbox_name,
        (o.author_contact_id = c.id)::bool AS started,
        EXISTS (SELECT 1 FROM discussion_follows f WHERE f.workspace_id = d.workspace_id AND f.discussion_id = d.id AND f.contact_id = c.id)::bool AS following,
@@ -1118,7 +1154,7 @@ JOIN workspaces w ON w.id = c.workspace_id AND w.deleted_at IS NULL
 JOIN discussions d ON d.workspace_id = c.workspace_id
 JOIN discussion_posts o ON o.workspace_id = d.workspace_id AND o.id = d.opening_post_id
 JOIN inboxes i ON i.workspace_id = d.workspace_id AND i.id = d.inbox_id
-WHERE c.person_id = $1
+WHERE c.person_id = $1 AND d.kind = 'page'
   AND CASE WHEN $2::bool
       THEN EXISTS (SELECT 1 FROM discussion_follows f WHERE f.workspace_id = d.workspace_id AND f.discussion_id = d.id AND f.contact_id = c.id)
       ELSE EXISTS (SELECT 1 FROM discussion_posts p WHERE p.workspace_id = d.workspace_id AND p.discussion_id = d.id AND p.author_contact_id = c.id)
@@ -1203,7 +1239,7 @@ func (q *Queries) ListPersonDiscussions(ctx context.Context, arg ListPersonDiscu
 
 const listReaderNotifications = `-- name: ListReaderNotifications :many
 SELECT n.id, n.workspace_id, n.kind, n.discussion_id, n.post_id, n.created_at, n.read_at,
-       d.title, d.page, i.name AS inbox_name
+       d.title, coalesce(d.page, '')::text AS page, i.name AS inbox_name
 FROM reader_notifications n
 JOIN discussions d ON d.workspace_id = n.workspace_id AND d.id = n.discussion_id
 JOIN inboxes i ON i.workspace_id = d.workspace_id AND i.id = d.inbox_id
@@ -1352,30 +1388,38 @@ func (q *Queries) ListTeamDiscussionPosts(ctx context.Context, arg ListTeamDiscu
 }
 
 const listTeamDiscussions = `-- name: ListTeamDiscussions :many
-SELECT d.id, d.workspace_id, d.inbox_id, d.channel_id, d.page, d.page_title, d.title, d.opening_post_id, d.state, d.locked_at, d.answer_post_id, d.answered_at, d.reply_count, d.pending_posts, d.hidden_posts, d.conversation_id, d.created_at, d.last_activity_at FROM discussions d
-WHERE d.workspace_id = $1
-  AND ($2::bool OR EXISTS (
+SELECT d.id, d.workspace_id, d.inbox_id, d.channel_id, d.page, d.page_title, d.title, d.opening_post_id, d.state, d.locked_at, d.answer_post_id, d.answered_at, d.reply_count, d.pending_posts, d.hidden_posts, d.conversation_id, d.created_at, d.last_activity_at, d.kind, d.board_id, d.stage, d.stage_changed_at, d.vote_count, d.search FROM discussions d
+WHERE d.workspace_id = $1 AND d.kind = $2::text
+  AND ($3::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = d.workspace_id AND iv.inbox_id = d.inbox_id AND iv.viewer_id = $3::uuid))
-  AND ($4::uuid IS NULL OR d.inbox_id = $4::uuid)
-  AND ($5::text IS NULL OR d.page = $5::text)
-  AND ($6::text IS NULL OR left(d.page, length($6::text) + 1) = $6::text || '/')
-  AND ($7::text IS NULL OR d.state = $7::text)
-  AND ($8::bool IS NULL OR (d.answer_post_id IS NOT NULL) = $8::bool)
-  AND ($9::bool IS NULL OR (d.locked_at IS NOT NULL) = $9::bool)
-  AND ($10::bool IS NULL OR (d.pending_posts > 0) = $10::bool)
+      WHERE iv.workspace_id = d.workspace_id AND iv.inbox_id = d.inbox_id AND iv.viewer_id = $4::uuid))
+  AND ($5::uuid IS NULL OR d.inbox_id = $5::uuid)
+  AND ($6::uuid IS NULL OR d.board_id = $6::uuid)
+  AND ($7::text IS NULL OR d.stage = $7::text)
+  AND ($8::text IS NULL OR d.search @@ to_tsquery('simple', $8::text))
+  AND ($9::text IS NULL OR d.page = $9::text)
+  AND ($10::text IS NULL OR left(d.page, length($10::text) + 1) = $10::text || '/')
+  AND ($11::text IS NULL OR d.state = $11::text)
+  AND ($12::bool IS NULL OR (d.answer_post_id IS NOT NULL) = $12::bool)
+  AND ($13::bool IS NULL OR (d.locked_at IS NOT NULL) = $13::bool)
+  AND ($14::bool IS NULL OR (d.pending_posts > 0) = $14::bool)
 ORDER BY
-    CASE WHEN $11::text = 'top' THEN (SELECT count(*) FROM discussion_votes v WHERE v.workspace_id = d.workspace_id AND v.post_id = d.opening_post_id) END DESC NULLS LAST,
-    CASE WHEN $11::text = 'new' THEN d.created_at END DESC NULLS LAST,
+    CASE WHEN $15::text = 'top' THEN (SELECT count(*) FROM discussion_votes v WHERE v.workspace_id = d.workspace_id AND v.post_id = d.opening_post_id) END DESC NULLS LAST,
+    CASE WHEN $15::text = 'votes' THEN d.vote_count END DESC NULLS LAST,
+    CASE WHEN $15::text = 'new' THEN d.created_at END DESC NULLS LAST,
     d.last_activity_at DESC, d.id DESC
-LIMIT $13 OFFSET $12
+LIMIT $17 OFFSET $16
 `
 
 type ListTeamDiscussionsParams struct {
 	WorkspaceID uuid.UUID
+	Kind        string
 	AllInboxes  bool
 	ViewerID    uuid.UUID
 	InboxID     *uuid.UUID
+	BoardID     *uuid.UUID
+	Stage       *string
+	Tsq         *string
 	Page        *string
 	Site        *string
 	State       *string
@@ -1390,9 +1434,13 @@ type ListTeamDiscussionsParams struct {
 func (q *Queries) ListTeamDiscussions(ctx context.Context, arg ListTeamDiscussionsParams) ([]Discussion, error) {
 	rows, err := q.db.Query(ctx, listTeamDiscussions,
 		arg.WorkspaceID,
+		arg.Kind,
 		arg.AllInboxes,
 		arg.ViewerID,
 		arg.InboxID,
+		arg.BoardID,
+		arg.Stage,
+		arg.Tsq,
 		arg.Page,
 		arg.Site,
 		arg.State,
@@ -1429,6 +1477,12 @@ func (q *Queries) ListTeamDiscussions(ctx context.Context, arg ListTeamDiscussio
 			&i.ConversationID,
 			&i.CreatedAt,
 			&i.LastActivityAt,
+			&i.Kind,
+			&i.BoardID,
+			&i.Stage,
+			&i.StageChangedAt,
+			&i.VoteCount,
+			&i.Search,
 		); err != nil {
 			return nil, err
 		}
@@ -1480,7 +1534,7 @@ func (q *Queries) ListVoterPosts(ctx context.Context, arg ListVoterPostsParams) 
 }
 
 const lockDiscussion = `-- name: LockDiscussion :one
-SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at FROM discussions WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search FROM discussions WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockDiscussionParams struct {
@@ -1510,6 +1564,12 @@ func (q *Queries) LockDiscussion(ctx context.Context, arg LockDiscussionParams) 
 		&i.ConversationID,
 		&i.CreatedAt,
 		&i.LastActivityAt,
+		&i.Kind,
+		&i.BoardID,
+		&i.Stage,
+		&i.StageChangedAt,
+		&i.VoteCount,
+		&i.Search,
 	)
 	return i, err
 }
@@ -1681,7 +1741,7 @@ UPDATE discussions d SET
                         WHERE p.workspace_id = d.workspace_id AND p.discussion_id = d.id
                           AND p.state = 'published' AND p.deleted_at IS NULL), d.created_at))
 WHERE d.workspace_id = $1 AND d.id = $2
-RETURNING id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at
+RETURNING id, workspace_id, inbox_id, channel_id, page, page_title, title, opening_post_id, state, locked_at, answer_post_id, answered_at, reply_count, pending_posts, hidden_posts, conversation_id, created_at, last_activity_at, kind, board_id, stage, stage_changed_at, vote_count, search
 `
 
 type RecountDiscussionParams struct {
@@ -1711,6 +1771,12 @@ func (q *Queries) RecountDiscussion(ctx context.Context, arg RecountDiscussionPa
 		&i.ConversationID,
 		&i.CreatedAt,
 		&i.LastActivityAt,
+		&i.Kind,
+		&i.BoardID,
+		&i.Stage,
+		&i.StageChangedAt,
+		&i.VoteCount,
+		&i.Search,
 	)
 	return i, err
 }

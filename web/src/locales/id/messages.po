@@ -1092,6 +1092,10 @@ msgstr "Alamat nyata tempat Anda menerima surat"
 msgid "A reply was written in a discussion"
 msgstr "Balasan ditulis di sebuah diskusi"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Sebuah ide peta jalan berpindah ke tahap lain"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Proses masuk harus kembali dalam 10 menit dan hanya berlaku sekali. Buka migrasi dan masuk lagi."
@@ -6047,6 +6051,10 @@ msgstr "Tampilan terang"
 msgid "Limit the pace"
 msgstr "Batasi laju"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Tautkan masukan ke ide, balas pelanggan yang tertaut, dan kelola papan peta jalan"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Tautan untuk admin Microsoft 365 Anda"
@@ -6746,6 +6754,10 @@ msgstr "Suara terbanyak"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Pindah ke bawah"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Pindahkan ide antartahap peta jalan"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Baca milis, pelanggan, dan catatan persetujuan"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Hanya baca"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Baca papan peta jalan, ide, dan riwayat tahap"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

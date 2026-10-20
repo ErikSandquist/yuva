@@ -1052,7 +1052,9 @@ export interface paths {
         /**
          * Remove a channel
          * @description Owners, admins and API keys. Conversations that started on it keep
-         *     their messages and lose their `channel_id`.
+         *     their messages and lose their `channel_id`. A channel a roadmap board files its ideas on
+         *     is refused with `409 channel_has_roadmap_board`; delete the board or point it at another
+         *     channel first.
          *
          *     Scope: `inboxes:manage`.
          */
@@ -1731,7 +1733,9 @@ export interface paths {
          *     conversation; the assignee stays only when they can access the new inbox. The
          *     conversation continues on the new inbox's channel of the same kind (for e-mail the one
          *     its chat continuity would use); an e-mail conversation is refused with
-         *     `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+         *     `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+         *     roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+         *     timeline gets a `moved` event.
          *     `conversation.updated` reports the new inbox; members watching the old one get
          *     `conversation.moved`.
          *
@@ -1767,6 +1771,13 @@ export interface paths {
          *     otherwise the calling member is. With `answer`, the member's reply is posted and marked as
          *     the accepted answer. The author follows the thread. A conversation becomes one thread
          *     (`409 already_discussed`); `conversation_id` on the thread links back.
+         *
+         *     With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+         *     have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+         *     `ideas` on the board, with the title and body the member writes, and links the conversation
+         *     to it in the same transaction, replacing a link it had; the author rule above applies.
+         *     Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+         *     allowed.
          *
          *     Member sessions only.
          */
@@ -2365,8 +2376,13 @@ export interface paths {
          *     state is listed unless `state` narrows it, so the panel sees threads waiting for approval
          *     and hidden ones too.
          *
-         *     `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
-         *     votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+         *     `kind` defaults to `page`, so callers that know no ideas see none: documentation threads
+         *     only. `kind=idea` lists roadmap ideas instead, narrowed by `board_id`, `stage` and `q` (a
+         *     title search: words are ANDed and the last may be the start of a word), and takes no `site`
+         *     or `page`. Ideas waiting for approval are listed with `state=pending`.
+         *
+         *     `sort`: `activity` (default, last activity first), `new` (newest first), `top` (most
+         *     votes first) or `votes` (the same, from the vote count kept on the idea). `answered=false` keeps threads without an accepted answer, `locked` locked or
          *     unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
          *     `next_cursor` belongs to the sort and filters it was returned for.
          *
@@ -2379,6 +2395,11 @@ export interface paths {
          * @description A thread on a documentation page, written by the calling member and published at once. The
          *     page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
          *     channel must have discussions on (`403 discussions_off`). The member follows it.
+         *
+         *     With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+         *     inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+         *     once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+         *     the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
          *     Member sessions only.
          */
         post: operations["createDiscussion"];
@@ -2450,7 +2471,8 @@ export interface paths {
          * Mark the accepted answer
          * @description Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
          *     as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-         *     threads. Followers are told once (`discussion.answered`). Member sessions only.
+         *     threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+         *     (`409 not_supported`). Member sessions only.
          */
         put: operations["acceptDiscussionAnswer"];
         post?: never;
@@ -2553,7 +2575,8 @@ export interface paths {
         /**
          * Vote for a post as a member
          * @description One vote per member and post (the opening post votes for the thread); voting again changes
-         *     nothing. Member sessions only.
+         *     nothing. A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Member
+         *     sessions only.
          */
         put: operations["voteDiscussionPost"];
         post?: never;
@@ -2562,6 +2585,236 @@ export interface paths {
          * @description Member sessions only.
          */
         delete: operations["unvoteDiscussionPost"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/roadmap-boards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List roadmap boards
+         * @description The boards of the inboxes the caller can see, oldest first, each with how many ideas sit in
+         *     every stage.
+         *
+         *     Scope: `roadmap:read`.
+         */
+        get: operations["listRoadmapBoards"];
+        put?: never;
+        /**
+         * Create a roadmap board
+         * @description Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+         *     `slug` names the board in its URL, is unique across the server, current and former slugs
+         *     alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+         *     a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+         *     are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+         *     `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+         */
+        post: operations["createRoadmapBoard"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/roadmap-boards/{boardId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A roadmap board
+         * @description With its idea counts per stage and its public `url`.
+         *
+         *     Scope: `roadmap:read`.
+         */
+        get: operations["getRoadmapBoard"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a roadmap board
+         * @description The board with its ideas, their posts, votes, follows and stage history, and the links to
+         *     feedback. The feedback conversations and the progress already set on them stay.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+         */
+        delete: operations["deleteRoadmapBoard"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a roadmap board
+         * @description Changes the given fields; `null` clears the analytics property. `public: false` takes the
+         *     board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+         *     keeps the old one reserved for this board, and its public addresses redirect to the new one,
+         *     for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+         *     at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+         */
+        patch: operations["updateRoadmapBoard"];
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/stage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Move an idea to a stage
+         * @description Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+         *     `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+         *     the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+         *     and adds a `stage` notification for every follower who is a signed-in reader (with the
+         *     usual digest e-mail).
+         *
+         *     For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+         *     progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+         *     `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+         *     changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+         *     naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+         *     skips feedback that already has that progress and deleted conversations, and stops as soon
+         *     as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+         *     or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+         *     the counts when the job has finished (`finished_at`).
+         *
+         *     `comment` is posted in the same transaction as the member's published reply on the idea
+         *     and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+         *     votes.
+         *
+         *     Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+         *     It is never implied: a key made without naming its scopes does not hold it.
+         */
+        post: operations["moveIdeaStage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/stage-changes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An idea's stage history
+         * @description Every move of the idea, newest first. The public page shows its dates ("Planned on",
+         *     "Shipped on"). An idea in an inbox the caller cannot see, and a discussion that is not an
+         *     idea, answer `404`.
+         *
+         *     Scope: `roadmap:read`.
+         */
+        get: operations["listIdeaStageChanges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/conversations/{conversationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Link feedback to an idea
+         * @description Links a `feedback` conversation to the idea (`409 not_feedback` for any other kind, and
+         *     `409 not_an_idea` when the discussion is a page thread). An idea
+         *     has many links and a feedback has at most one: a link replaces the feedback's previous link,
+         *     and linking it to the idea it already has changes nothing. The idea must belong to a board of
+         *     the conversation's inbox (`404` otherwise, also when either was deleted meanwhile). An idea
+         *     takes at most 5,000 links (`422 too_many_links`). Linking feedback to an idea that is past
+         *     `ideas` sets the feedback's progress at once, as a stage move would. Links store no event.
+         *
+         *     Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+         *     `conversations:read`.
+         */
+        put: operations["linkIdeaConversation"];
+        post?: never;
+        /**
+         * Unlink feedback from an idea
+         * @description Unlinking feedback that is not linked to this idea changes nothing. The progress already set
+         *     on the feedback stays. A discussion that is not an idea answers `409 not_an_idea`.
+         *
+         *     Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+         *     `conversations:read`.
+         */
+        delete: operations["unlinkIdeaConversation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/linked-replies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reply to the feedback linked to an idea
+         * @description "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+         *     the idea's linked feedback as its conversations. One reply, written once, is sent to every
+         *     linked conversation that is not closed and that the caller can see, optionally closing each
+         *     afterwards, one job per conversation through the normal reply path. It reaches the contact on
+         *     the conversation's own channel and fires the usual `message.created` and
+         *     `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+         *     A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+         *     reports what became of each conversation.
+         *
+         *     API keys and MCP clients need the workspace to let them deliver messages
+         *     (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+         *     keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+         */
+        post: operations["replyToIdeaConversations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/linked-replies/{replyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get what became of a reply to an idea's linked feedback
+         * @description The outcome of one "Reply to linked" request per conversation, with the outcomes and reasons
+         *     of `getStatusIncidentReply`.
+         *
+         *     Agents with access to the idea's inbox, owners, admins and API keys. Scopes: `roadmap:read`
+         *     and `conversations:read`.
+         */
+        get: operations["getIdeaLinkedReply"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -6993,6 +7246,12 @@ export interface paths {
          *     `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
          *     without an accepted answer only, those nobody replied to first, then newest).
          *
+         *     With `kind=idea` it lists the roadmap ideas of the channel's inbox instead of a page's
+         *     threads: `page` is not used, `stage` narrows to one stage (the default is every public
+         *     stage; `closed` ideas are left out of public lists), `sort` is `top` or `new` and `q` is a
+         *     title search (at most 200 characters, 30 a minute per address and channel). It answers
+         *     `404 roadmap_off` without a public board, whatever the channel's `discussions` setting.
+         *
          *     Authors are shown by display name and initials only. Without `Authorization` the answer may
          *     be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
          *     session of this channel the caller's own threads still waiting for a member are included and
@@ -7020,13 +7279,42 @@ export interface paths {
         };
         /**
          * A thread with its replies
-         * @description A published thread of the channel's inbox on a page the channel serves, with its published
+         * @description A published thread of the channel's inbox on a page the channel serves, or a published idea of
+         *     the inbox's public roadmap board (a `closed` idea is answered with its stage), with its published
          *     replies: the accepted answer first, then oldest first; replies to replies carry
          *     `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
          *     body. Caching, authentication and errors as for the list; with a token the caller's own
          *     pending posts (and their own pending thread) are included.
          */
         get: operations["getClientDiscussion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/roadmap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The inbox's roadmap board
+         * @description The public roadmap board of the inbox of a `chat` channel, without a session: its name,
+         *     description, public URL, whether and how readers may suggest ideas, and how many ideas sit in
+         *     each public stage (`closed` ideas are not listed publicly). Read the ideas with
+         *     `listClientDiscussions` and `kind=idea`. Nothing is created.
+         *
+         *     Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+         *     `404 roadmap_off` when the inbox has no public board (also on a server with
+         *     `YUVA_ROADMAP=off`) and for an `app` channel's key. Rate limited per IP address
+         *     (`429 rate_limited`). Sent with `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientRoadmap"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7270,6 +7558,12 @@ export interface paths {
          *     an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
          *     off answers `403 discussions_off`.
          *
+         *     With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+         *     allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+         *     none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+         *     `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+         *     channel's `discussions` setting does not.
+         *
          *     With the channel's `discussions: moderated` (the default) a reader's thread waits for a
          *     member (`state: pending`, visible only to its author and members) until one of their posts
          *     in the workspace has been approved; identity-token users and members are published at once.
@@ -7320,7 +7614,8 @@ export interface paths {
         /**
          * Mark the accepted answer
          * @description The thread's author marks a published reply to the thread itself as its answer, replacing an
-         *     earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+         *     earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+         *     an idea `409 not_supported`.
          */
         put: operations["acceptClientDiscussionAnswer"];
         post?: never;
@@ -7398,6 +7693,8 @@ export interface paths {
          * Vote for a post
          * @description One vote per author and post; the opening post's votes are the thread's. Voting again changes
          *     nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+         *     A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Votes on ideas are
+         *     limited to 120 an hour per author.
          */
         put: operations["voteClientDiscussionPost"];
         post?: never;
@@ -8594,6 +8891,27 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "discussion.stage_changed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * An idea was moved to another stage
+         * @description A roadmap idea changed stage. `linked` is the number of feedback conversations linked to it
+         *     at the time; the progress set on them sends the usual `conversation.updated`.
+         */
+        post: operations["webhookDiscussionStageChanged"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "subscription.created": {
         parameters: {
             query?: never;
@@ -9142,10 +9460,16 @@ export interface components {
          *       translations, delete published ones. API keys only, and never implied: a key made without
          *       naming its scopes does not hold it, and OAuth clients are not offered it.
          *
-         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
+         *     - `roadmap:read`: roadmap boards, an idea's stage history and linked counts.
+         *     - `roadmap:write`: link feedback to ideas, "Reply to linked" for ideas, create, change and
+         *       delete boards (owners and admins).
+         *     - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
+         *       Never implied: a key made without naming its scopes does not hold it.
+         *
+         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage" | "help:read" | "help:write" | "help:publish";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage" | "help:read" | "help:write" | "help:publish" | "roadmap:read" | "roadmap:write" | "roadmap:stage";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -10007,7 +10331,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up" | "help.article.published" | "help.article.unpublished" | "help.article.deleted";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up" | "help.article.published" | "help.article.unpublished" | "help.article.deleted" | "discussion.stage_changed";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -10259,6 +10583,8 @@ export interface components {
              * @description The help article the contact read just before starting the conversation from it; absent otherwise.
              */
             help_article_id?: string;
+            /** @description The roadmap idea a `feedback` conversation is linked to; absent when it is not linked. */
+            idea?: components["schemas"]["IdeaRef"];
             /**
              * Format: uuid
              * @description The channel it started on; absent when unknown or removed.
@@ -10839,6 +11165,11 @@ export interface components {
             rating?: components["schemas"]["Rating"];
             /** @description `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation. */
             broadcast?: components["schemas"]["BroadcastRef"];
+            /**
+             * Format: uuid
+             * @description `feedback_progress` only: the roadmap idea whose stage move set the progress.
+             */
+            idea_id?: string;
             /** @description `feedback_progress` only: the new progress, `null` when it was cleared. */
             feedback_progress?: components["schemas"]["FeedbackProgress"] | null;
             /** @description `feedback_progress` only: the progress before; absent when it was not set. */
@@ -12576,7 +12907,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["HelpArticleEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["HelpArticleEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -12595,7 +12926,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["HelpArticleSignal"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["HelpArticleSignal"] | components["schemas"]["RoadmapBoardSignal"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -12903,7 +13234,7 @@ export interface components {
          * @default activity
          * @enum {string}
          */
-        DiscussionTeamSort: "activity" | "new" | "top";
+        DiscussionTeamSort: "activity" | "new" | "top" | "votes";
         /**
          * @description `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
          *     `anonymous`: no author to show (threads moved over from published answers).
@@ -12928,10 +13259,11 @@ export interface components {
             contact_id?: string;
         };
         /**
-         * @description A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-         *     votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-         *     `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-         *     `voted` and `following` on `/client/v1` only (false without a token).
+         * @description A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+         *     opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+         *     moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+         *     `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+         *     `following` on `/client/v1` only (false without a token).
          */
         Discussion: {
             /** Format: uuid */
@@ -12943,7 +13275,25 @@ export interface components {
              * @description The chat channel whose setting applied when it was started.
              */
             channel_id?: string;
-            /** @description The page's URL without query and fragment. */
+            kind: components["schemas"]["DiscussionKind"];
+            /**
+             * Format: uuid
+             * @description `idea` only: the roadmap board the idea belongs to.
+             */
+            board_id?: string;
+            /** @description `idea` only: where the idea stands. */
+            stage?: components["schemas"]["IdeaStage"];
+            /**
+             * Format: date-time
+             * @description `idea` only: when the stage last changed; absent for an idea that was never moved.
+             */
+            stage_changed_at?: string;
+            /**
+             * Format: int32
+             * @description `idea` only, on `/v1`: feedback conversations linked to it.
+             */
+            linked_count?: number;
+            /** @description The page's URL without query and fragment; empty for an idea, which has no page. */
             page: string;
             page_title?: string;
             title: string;
@@ -12963,7 +13313,10 @@ export interface components {
             /** Format: date-time */
             answered_at?: string;
             locked: boolean;
-            /** Format: int32 */
+            /**
+             * Format: int32
+             * @description The opening post's votes.
+             */
             votes: number;
             /**
              * Format: int32
@@ -13045,20 +13398,28 @@ export interface components {
             next_cursor?: string;
         };
         DiscussionCreate: {
+            kind?: components["schemas"]["DiscussionKind"];
             /**
              * Format: uuid
-             * @description A chat channel that allows the page's origin.
+             * @description `idea`: the roadmap board the idea is filed on, which names the channel.
              */
-            channel_id: string;
-            page_url: string;
+            board_id?: string;
+            /**
+             * Format: uuid
+             * @description `page`, required: a chat channel that allows the page's origin.
+             */
+            channel_id?: string;
+            /** @description `page`, required. */
+            page_url?: string;
             page_title?: string;
             title: string;
             /** @description Markdown. */
             body: string;
         };
         ClientDiscussionCreate: {
-            /** @description The page's absolute URL; query and fragment are dropped. */
-            page_url: string;
+            kind?: components["schemas"]["DiscussionKind"];
+            /** @description `page`, required: the page's absolute URL; query and fragment are dropped. Not allowed for an `idea`. */
+            page_url?: string;
             page_title?: string;
             title: string;
             /** @description Markdown. */
@@ -13094,12 +13455,13 @@ export interface components {
             post_id: string;
         };
         DiscussionFromConversation: {
+            kind?: components["schemas"]["DiscussionKind"];
             title: string;
             /** @description The public question, as the member edits it (Markdown). */
             body: string;
-            /** @description Posted by the member and marked as the accepted answer. */
+            /** @description Posted by the member and marked as the accepted answer. Not allowed for an `idea`. */
             answer?: string;
-            /** @description The page, when the conversation has none or another one is meant. */
+            /** @description The page, when the conversation has none or another one is meant. Not allowed for an `idea`. */
             page_url?: string;
             page_title?: string;
         };
@@ -13134,6 +13496,267 @@ export interface components {
         };
         WebhookDiscussionPayload: components["schemas"]["WebhookPayloadBase"] & {
             data: components["schemas"]["DiscussionEventData"];
+        };
+        /**
+         * @description `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+         *     to no page and has a `stage`.
+         * @default page
+         * @enum {string}
+         */
+        DiscussionKind: "page" | "idea";
+        /**
+         * @description Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+         *     and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+         *     of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+         *     `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+         * @enum {string}
+         */
+        IdeaStage: "ideas" | "planned" | "in_progress" | "shipped" | "closed";
+        /** @description The idea a feedback conversation is linked to. */
+        IdeaRef: {
+            /**
+             * Format: uuid
+             * @description The idea's discussion id.
+             */
+            id: string;
+            title: string;
+            stage: components["schemas"]["IdeaStage"];
+        };
+        /**
+         * @description Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+         *     threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+         *     in the workspace has been approved; identity-token users and members are published at
+         *     once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+         *     still work.
+         * @enum {string}
+         */
+        RoadmapSuggestions: "off" | "moderated" | "open";
+        /**
+         * @description `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+         * @example acme
+         */
+        RoadmapBoardSlug: string;
+        /** @description Published ideas per stage, and the ideas waiting for approval. */
+        RoadmapBoardCounts: {
+            /** Format: int32 */
+            ideas: number;
+            /** Format: int32 */
+            planned: number;
+            /** Format: int32 */
+            in_progress: number;
+            /** Format: int32 */
+            shipped: number;
+            /** Format: int32 */
+            closed: number;
+            /**
+             * Format: int32
+             * @description Ideas waiting for a member.
+             */
+            pending: number;
+        };
+        RoadmapBoard: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /**
+             * Format: uuid
+             * @description The `chat` channel the public page embeds and ideas members start are filed on.
+             */
+            channel_id: string;
+            name: string;
+            description: string;
+            slug: components["schemas"]["RoadmapBoardSlug"];
+            /** @description The public page, at the server's `/roadmap/{slug}`. */
+            url: string;
+            /** @description A private board is a triage tool for the team and has no public page. */
+            public: boolean;
+            suggestions: components["schemas"]["RoadmapSuggestions"];
+            /**
+             * Format: uuid
+             * @description The analytics property the public page counts cookieless page views in.
+             */
+            analytics_property_id?: string;
+            counts: components["schemas"]["RoadmapBoardCounts"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        RoadmapBoardList: {
+            items: components["schemas"]["RoadmapBoard"][];
+        };
+        RoadmapBoardCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            /**
+             * Format: uuid
+             * @description A `chat` channel of the same inbox.
+             */
+            channel_id: string;
+            name: string;
+            description?: string;
+            slug: components["schemas"]["RoadmapBoardSlug"];
+            /** @description Default `false`. */
+            public?: boolean;
+            suggestions?: components["schemas"]["RoadmapSuggestions"];
+            /** Format: uuid */
+            analytics_property_id?: string;
+        };
+        RoadmapBoardUpdate: {
+            /** Format: uuid */
+            channel_id?: string;
+            name?: string;
+            description?: string;
+            slug?: components["schemas"]["RoadmapBoardSlug"];
+            public?: boolean;
+            suggestions?: components["schemas"]["RoadmapSuggestions"];
+            /** Format: uuid */
+            analytics_property_id?: string | null;
+        };
+        RoadmapStageMove: {
+            stage: components["schemas"]["IdeaStage"];
+            /** @description Markdown, posted as the member's published reply on the idea in the same transaction. Needs a member session. */
+            comment?: string;
+        };
+        /**
+         * @description One move of an idea. The counts are filled when the job that sets the linked feedback's
+         *     progress has run; `finished_at` is absent until then (and for moves that set no progress).
+         */
+        RoadmapStageChange: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            discussion_id: string;
+            from_stage: components["schemas"]["IdeaStage"];
+            to_stage: components["schemas"]["IdeaStage"];
+            /**
+             * Format: uuid
+             * @description The member who moved it; absent for an API key or once the member left.
+             */
+            member_id?: string;
+            /**
+             * Format: uuid
+             * @description The API key that moved it.
+             */
+            api_key_id?: string;
+            /** @description The OAuth client or MCP client that moved it on a member's behalf. */
+            via?: string;
+            /**
+             * Format: uuid
+             * @description The reply posted with the move.
+             */
+            comment_post_id?: string;
+            /**
+             * Format: int32
+             * @description Feedback linked to the idea when it was moved.
+             */
+            linked: number;
+            /** @description The progress the move sets on the linked feedback; absent when it sets none. */
+            progress?: components["schemas"]["FeedbackProgress"];
+            /**
+             * Format: int32
+             * @description Feedback whose progress the move changed.
+             */
+            progress_set: number;
+            /**
+             * Format: int32
+             * @description Feedback skipped because it already had that progress, was deleted, or the move was replaced by a newer one.
+             */
+            progress_skipped: number;
+            /** Format: date-time */
+            finished_at?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        RoadmapStageChangePage: {
+            items: components["schemas"]["RoadmapStageChange"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        RoadmapStageMoveResult: {
+            discussion: components["schemas"]["Discussion"];
+            /** @description The move; absent when the idea was already in that stage and nothing changed. */
+            change?: components["schemas"]["RoadmapStageChange"];
+        };
+        DiscussionStageEventData: {
+            discussion: components["schemas"]["Discussion"];
+            from: components["schemas"]["IdeaStage"];
+            to: components["schemas"]["IdeaStage"];
+            /**
+             * Format: int32
+             * @description Feedback linked to the idea when it was moved.
+             */
+            linked: number;
+        };
+        /**
+         * @description `discussion.stage_changed`: an idea was moved to another stage. Delivered to callers who
+         *     can see the idea's inbox.
+         */
+        DiscussionStageEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "discussion.stage_changed";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["DiscussionStageEventData"];
+        };
+        WebhookDiscussionStagePayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["DiscussionStageEventData"];
+        };
+        /**
+         * @description `roadmap.board.updated`, on `/v1/realtime` only: a board or one of its ideas changed in a
+         *     way the public page shows. Not stored, no id, never replayed. Reaches whoever sees the
+         *     board's inbox.
+         */
+        RoadmapBoardSignal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "roadmap.board.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: {
+                /** Format: uuid */
+                board_id: string;
+            };
+        };
+        /** @description The inbox's public roadmap board. */
+        ClientInboxRoadmap: {
+            /** @description The board's public page. */
+            url: string;
+            suggestions: components["schemas"]["RoadmapSuggestions"];
+        };
+        /** @description Published ideas per public stage; `closed` ideas are not listed publicly. */
+        ClientRoadmapStages: {
+            /** Format: int32 */
+            ideas: number;
+            /** Format: int32 */
+            planned: number;
+            /** Format: int32 */
+            in_progress: number;
+            /** Format: int32 */
+            shipped: number;
+        };
+        ClientRoadmap: {
+            name: string;
+            description: string;
+            url: string;
+            suggestions: components["schemas"]["RoadmapSuggestions"];
+            stages: components["schemas"]["ClientRoadmapStages"];
         };
         /**
          * @description `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
@@ -14356,10 +14979,10 @@ export interface components {
             next_cursor?: string;
         };
         /**
-         * @description `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+         * @description `reply`: a new reply in a followed thread. `answer`: an answer was accepted there. `stage`: a followed roadmap idea moved to another stage.
          * @enum {string}
          */
-        ReaderNotificationKind: "reply" | "answer";
+        ReaderNotificationKind: "reply" | "answer" | "stage";
         ReaderNotification: {
             /** Format: uuid */
             id: string;
@@ -14511,6 +15134,12 @@ export interface components {
              *     frame brings every change.
              */
             help?: components["schemas"]["ClientInboxHelp"];
+            /**
+             * @description Absent unless the inbox has a public roadmap board (and on a server with
+             *     `YUVA_ROADMAP=off`); show the Roadmap tile only then. An `inbox.updated` frame brings
+             *     every change.
+             */
+            roadmap?: components["schemas"]["ClientInboxRoadmap"];
         };
         ClientContact: {
             /** Format: uuid */
@@ -16276,7 +16905,7 @@ export interface components {
         ConversationIncidentList: {
             items: components["schemas"]["ConversationIncident"][];
         };
-        StatusIncidentReply: {
+        LinkedReplyCreate: {
             /** @description The reply's text, as for any message. */
             body: string;
             /**
@@ -16285,7 +16914,7 @@ export interface components {
              */
             close: boolean;
         };
-        StatusIncidentReplyResult: {
+        LinkedReplyResult: {
             /**
              * Format: uuid
              * @description The reply request; read its outcomes with `GET .../replies/{replyId}`.
@@ -16298,8 +16927,8 @@ export interface components {
             queued: number;
         };
         /** @enum {string} */
-        StatusIncidentReplyOutcome: "pending" | "sent" | "skipped" | "failed";
-        StatusIncidentReplyCounts: {
+        LinkedReplyOutcome: "pending" | "sent" | "skipped" | "failed";
+        LinkedReplyCounts: {
             /** Format: int32 */
             pending: number;
             /** Format: int32 */
@@ -16309,10 +16938,10 @@ export interface components {
             /** Format: int32 */
             failed: number;
         };
-        StatusIncidentReplyTarget: {
+        LinkedReplyTarget: {
             /** Format: uuid */
             conversation_id: string;
-            outcome: components["schemas"]["StatusIncidentReplyOutcome"];
+            outcome: components["schemas"]["LinkedReplyOutcome"];
             /** @description Why the conversation was skipped or the reply failed; absent for `pending` and `sent`. */
             reason?: string;
             /**
@@ -16321,21 +16950,27 @@ export interface components {
              */
             finished_at?: string;
         };
-        StatusIncidentReplyReport: {
+        /**
+         * @description One "Reply to linked" request of an incident or an idea, with what became of each
+         *     conversation. Exactly one of `incident_id` and `idea_id` is given.
+         */
+        LinkedReply: {
             /** Format: uuid */
             id: string;
             /** Format: uuid */
-            incident_id: string;
+            incident_id?: string;
+            /** Format: uuid */
+            idea_id?: string;
             close: boolean;
             /**
              * Format: int32
              * @description The conversations the request was queued for.
              */
             queued: number;
-            counts: components["schemas"]["StatusIncidentReplyCounts"];
+            counts: components["schemas"]["LinkedReplyCounts"];
             /** Format: date-time */
             created_at: string;
-            items: components["schemas"]["StatusIncidentReplyTarget"][];
+            items: components["schemas"]["LinkedReplyTarget"][];
             /** @description Absent on the last page. */
             next_cursor?: string;
         };
@@ -19051,9 +19686,10 @@ export interface components {
          *     `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
          *     allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
          *     `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+         *     `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
          * @enum {string}
          */
-        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES" | "YUVA_HELP_MAX_ARTICLES";
+        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES" | "YUVA_HELP_MAX_ARTICLES" | "YUVA_ROADMAP_MAX_IDEAS";
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -19235,6 +19871,7 @@ export interface components {
         /** @description `1` or `true` reports a failure. */
         StatusHeartbeatFail: "1" | "true" | "0" | "false";
         HelpCenterId: string;
+        RoadmapBoardId: string;
         HelpCollectionId: string;
         HelpArticleId: string;
         /** @description One of the center's `locales`. */
@@ -20907,6 +21544,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     updateChannel: {
@@ -21684,6 +22322,13 @@ export interface operations {
                 /** @description Only conversations opened by replies to this broadcast. */
                 broadcast_id?: string;
                 /**
+                 * @description Only the feedback linked to this roadmap idea. An idea of an inbox the caller cannot
+                 *     see answers `404`.
+                 */
+                idea_id?: string;
+                /** @description `none` lists only feedback that is not linked to an idea (and no other kind). */
+                idea?: "none";
+                /**
                  * @description `true` lists only the conversations the calling member pinned, `false` only the others;
                  *     without it, both. Member sessions only (`400 validation_failed` for API keys).
                  */
@@ -22007,6 +22652,7 @@ export interface operations {
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
         };
     };
     listMessages: {
@@ -22883,6 +23529,13 @@ export interface operations {
         parameters: {
             query?: {
                 inbox_id?: string;
+                kind?: components["schemas"]["DiscussionKind"];
+                /** @description `kind=idea` only: the ideas of this board. */
+                board_id?: string;
+                /** @description `kind=idea` only: the ideas in this stage. */
+                stage?: components["schemas"]["IdeaStage"];
+                /** @description `kind=idea` only: a title search, at most 200 characters. */
+                q?: string;
                 /**
                  * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
                  *     Without it, every site.
@@ -22956,6 +23609,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
         };
     };
     getDiscussion: {
@@ -23085,6 +23739,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     clearDiscussionAnswer: {
@@ -23270,6 +23925,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     unvoteDiscussionPost: {
@@ -23295,6 +23951,355 @@ export interface operations {
                     "application/json": components["schemas"]["DiscussionPost"];
                 };
             };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listRoadmapBoards: {
+        parameters: {
+            query?: {
+                /** @description Only the board of this inbox. */
+                inbox_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The boards. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapBoardList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createRoadmapBoard: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoadmapBoardCreate"];
+            };
+        };
+        responses: {
+            /** @description The board. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapBoard"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getRoadmapBoard: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                boardId: components["parameters"]["RoadmapBoardId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The board. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapBoard"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteRoadmapBoard: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                boardId: components["parameters"]["RoadmapBoardId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateRoadmapBoard: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                boardId: components["parameters"]["RoadmapBoardId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoadmapBoardUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated board. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapBoard"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    moveIdeaStage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoadmapStageMove"];
+            };
+        };
+        responses: {
+            /** @description The idea and the change. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapStageMoveResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    listIdeaStageChanges: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of changes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoadmapStageChangePage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    linkIdeaConversation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+                conversationId: components["parameters"]["ConversationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The feedback is linked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    unlinkIdeaConversation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+                conversationId: components["parameters"]["ConversationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The feedback is not linked to the idea. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    replyToIdeaConversations: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LinkedReplyCreate"];
+            };
+        };
+        responses: {
+            /** @description The reply and how many conversations it was queued for. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LinkedReplyResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getIdeaLinkedReply: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+                replyId: components["parameters"]["StatusReplyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The reply and its outcomes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LinkedReply"];
+                };
+            };
+            400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
@@ -28601,7 +29606,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["StatusIncidentReply"];
+                "application/json": components["schemas"]["LinkedReplyCreate"];
             };
         };
         responses: {
@@ -28611,7 +29616,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusIncidentReplyResult"];
+                    "application/json": components["schemas"]["LinkedReplyResult"];
                 };
             };
             400: components["responses"]["Problem"];
@@ -28647,7 +29652,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusIncidentReplyReport"];
+                    "application/json": components["schemas"]["LinkedReply"];
                 };
             };
             400: components["responses"]["Problem"];
@@ -30004,9 +31009,14 @@ export interface operations {
     };
     listClientDiscussions: {
         parameters: {
-            query: {
-                /** @description The page's URL. */
-                page: string;
+            query?: {
+                kind?: components["schemas"]["DiscussionKind"];
+                /** @description The page's URL; required unless `kind=idea`. */
+                page?: string;
+                /** @description `kind=idea` only. */
+                stage?: components["schemas"]["IdeaStage"];
+                /** @description `kind=idea` only: a title search. */
+                q?: string;
                 sort?: components["schemas"]["DiscussionSort"];
                 /** @description The `next_cursor` of the previous page. */
                 cursor?: components["parameters"]["Cursor"];
@@ -30065,6 +31075,33 @@ export interface operations {
                 };
             };
             401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getClientRoadmap: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The chat channel's public key. */
+                channel_key: components["parameters"]["ChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The board. */
+            200: {
+                headers: {
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientRoadmap"];
+                };
+            };
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
@@ -30342,6 +31379,8 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
         };
     };
@@ -30407,6 +31446,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     clearClientDiscussionAnswer: {
@@ -30556,6 +31596,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
         };
     };
@@ -32135,6 +33176,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookDiscussionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookDiscussionStageChanged: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookDiscussionStagePayload"];
             };
         };
         responses: {

@@ -1092,6 +1092,10 @@ msgstr "Prawdziwy adres, pod którym odbierasz pocztę"
 msgid "A reply was written in a discussion"
 msgstr "Napisano odpowiedź w dyskusji"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Pomysł z mapy drogowej przeszedł do innego etapu"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Logowanie musi wrócić w ciągu 10 minut i działa raz. Otwórz migrację i zaloguj się ponownie."
@@ -6047,6 +6051,10 @@ msgstr "Jasny wygląd"
 msgid "Limit the pace"
 msgstr "Ogranicz tempo"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Łącz opinie z pomysłami, odpowiadaj powiązanym klientom i zarządzaj tablicami mapy drogowej"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Link dla administratora Microsoft 365"
@@ -6746,6 +6754,10 @@ msgstr "Najwięcej głosów"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Przenieś w dół"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Przenoś pomysły między etapami mapy drogowej"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Czytaj listy mailingowe, subskrybentów i rekordy zgód"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Tylko do odczytu"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Czytaj tablice mapy drogowej, pomysły i historię etapów"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

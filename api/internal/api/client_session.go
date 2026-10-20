@@ -456,7 +456,10 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 	if out.Status, err = s.clientStatus(ctx, q, in.ID, in.WorkspaceID); err != nil {
 		return out, err
 	}
-	out.Help, err = s.clientHelpInbox(ctx, q, in)
+	if out.Help, err = s.clientHelpInbox(ctx, q, in); err != nil {
+		return out, err
+	}
+	out.Roadmap, err = s.clientRoadmapInbox(ctx, q, in)
 	return out, err
 }
 

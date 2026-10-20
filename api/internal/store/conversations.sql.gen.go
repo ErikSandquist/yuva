@@ -523,39 +523,45 @@ WHERE c.workspace_id = $1
   AND ($11::text IS NULL OR c.feedback->>'category' = $11::text)
   AND ($12::text IS NULL OR c.page_url = $12::text)
   AND ($13::text[] IS NULL OR c.status = ANY($13::text[]))
-  AND (NOT $14::bool OR c.assignee_id IS NULL)
-  AND ($15::uuid IS NULL OR c.assignee_id = $15::uuid)
-  AND ($16::uuid IS NULL OR EXISTS (
+  AND ($14::uuid IS NULL OR EXISTS (
+      SELECT 1 FROM roadmap_idea_conversations ri
+      WHERE ri.workspace_id = c.workspace_id AND ri.conversation_id = c.id AND ri.idea_id = $14::uuid))
+  AND (NOT $15::bool OR (c.kind = 'feedback' AND NOT EXISTS (
+      SELECT 1 FROM roadmap_idea_conversations ri
+      WHERE ri.workspace_id = c.workspace_id AND ri.conversation_id = c.id)))
+  AND (NOT $16::bool OR c.assignee_id IS NULL)
+  AND ($17::uuid IS NULL OR c.assignee_id = $17::uuid)
+  AND ($18::uuid IS NULL OR EXISTS (
       SELECT 1 FROM conversation_labels cl
-      WHERE cl.workspace_id = c.workspace_id AND cl.conversation_id = c.id AND cl.label_id = $16::uuid))
-  AND ($17::bool IS NULL OR $17::bool = EXISTS (
+      WHERE cl.workspace_id = c.workspace_id AND cl.conversation_id = c.id AND cl.label_id = $18::uuid))
+  AND ($19::bool IS NULL OR $19::bool = EXISTS (
       SELECT 1 FROM conversation_member_states s
       WHERE s.workspace_id = c.workspace_id AND s.conversation_id = c.id
-        AND s.member_id = $18::uuid AND s.pinned_at IS NOT NULL))
-  AND ($19::text IS NULL OR (
-      to_tsvector('simple', translate(c.subject, 'İı', 'ii')) @@ websearch_to_tsquery('simple', translate($19::text, 'İı', 'ii'))
+        AND s.member_id = $20::uuid AND s.pinned_at IS NOT NULL))
+  AND ($21::text IS NULL OR (
+      to_tsvector('simple', translate(c.subject, 'İı', 'ii')) @@ websearch_to_tsquery('simple', translate($21::text, 'İı', 'ii'))
       OR EXISTS (
           SELECT 1 FROM messages m
           WHERE m.workspace_id = c.workspace_id AND m.conversation_id = c.id AND NOT m.draft
-            AND m.search @@ websearch_to_tsquery('simple', translate($19::text, 'İı', 'ii')))
+            AND m.search @@ websearch_to_tsquery('simple', translate($21::text, 'İı', 'ii')))
       OR EXISTS (
           SELECT 1 FROM contacts ct
           WHERE ct.workspace_id = c.workspace_id AND ct.id = c.contact_id
-            AND ct.search @@ websearch_to_tsquery('simple', translate($19::text, 'İı', 'ii')))))
-  AND ($20::text IS NULL OR NOT (
-      to_tsvector('simple', translate(c.subject, 'İı', 'ii')) @@ websearch_to_tsquery('simple', translate($20::text, 'İı', 'ii'))
+            AND ct.search @@ websearch_to_tsquery('simple', translate($21::text, 'İı', 'ii')))))
+  AND ($22::text IS NULL OR NOT (
+      to_tsvector('simple', translate(c.subject, 'İı', 'ii')) @@ websearch_to_tsquery('simple', translate($22::text, 'İı', 'ii'))
       OR EXISTS (
           SELECT 1 FROM messages m
           WHERE m.workspace_id = c.workspace_id AND m.conversation_id = c.id AND NOT m.draft
-            AND m.search @@ websearch_to_tsquery('simple', translate($20::text, 'İı', 'ii')))
+            AND m.search @@ websearch_to_tsquery('simple', translate($22::text, 'İı', 'ii')))
       OR EXISTS (
           SELECT 1 FROM contacts ct
           WHERE ct.workspace_id = c.workspace_id AND ct.id = c.contact_id
-            AND ct.search @@ websearch_to_tsquery('simple', translate($20::text, 'İı', 'ii')))))
-  AND ($21::timestamptz IS NULL
-       OR (c.last_activity_at, c.id) < ($21::timestamptz, $22::uuid))
+            AND ct.search @@ websearch_to_tsquery('simple', translate($22::text, 'İı', 'ii')))))
+  AND ($23::timestamptz IS NULL
+       OR (c.last_activity_at, c.id) < ($23::timestamptz, $24::uuid))
 ORDER BY c.last_activity_at DESC, c.id DESC
-LIMIT $23
+LIMIT $25
 `
 
 type ListConversationsParams struct {
@@ -572,6 +578,8 @@ type ListConversationsParams struct {
 	Category     *string
 	Page         *string
 	Statuses     []string
+	IdeaID       *uuid.UUID
+	NoIdea       bool
 	Unassigned   bool
 	AssigneeID   *uuid.UUID
 	LabelID      *uuid.UUID
@@ -599,6 +607,8 @@ func (q *Queries) ListConversations(ctx context.Context, arg ListConversationsPa
 		arg.Category,
 		arg.Page,
 		arg.Statuses,
+		arg.IdeaID,
+		arg.NoIdea,
 		arg.Unassigned,
 		arg.AssigneeID,
 		arg.LabelID,

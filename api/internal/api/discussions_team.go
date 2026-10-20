@@ -51,6 +51,9 @@ func (s *Server) teamDetail(ctx context.Context, p principal, id uuid.UUID) (oas
 		return oas.DiscussionDetail{}, err
 	}
 	v := viewer{actor: memberActor(p), team: true}
+	if err := fillLinked(ctx, s.st.Queries, p.workspaceID, &v, []store.Discussion{t.d}); err != nil {
+		return oas.DiscussionDetail{}, err
+	}
 	return t.detail(&v), nil
 }
 
@@ -69,17 +72,50 @@ func (s *Server) ListDiscussions(ctx context.Context, req oas.ListDiscussionsReq
 	sort := oas.DiscussionTeamSortActivity
 	if prm.Sort != nil {
 		if !prm.Sort.Valid() {
-			return nil, errValidation("sort must be activity, new or top")
+			return nil, errValidation("sort must be activity, new, top or votes")
 		}
 		sort = *prm.Sort
+	}
+	kind := kindPage
+	if prm.Kind != nil {
+		if !prm.Kind.Valid() {
+			return nil, errValidation("kind must be page or idea")
+		}
+		kind = string(*prm.Kind)
 	}
 	off, err := decodePosition(string(sort), prm.Cursor)
 	if err != nil {
 		return nil, err
 	}
 	arg := store.ListTeamDiscussionsParams{
-		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId,
+		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId, Kind: kind,
 		Answered: prm.Answered, Locked: prm.Locked, Pending: prm.Pending, Sort: string(sort), Lim: lim + 1, Off: off,
+	}
+	if kind == kindIdea {
+		if err := s.roadmapOn(); err != nil {
+			return nil, err
+		}
+		if prm.Site != nil || prm.Page != nil {
+			return nil, errValidation("site and page are only for page threads")
+		}
+		if prm.BoardId != nil {
+			b, err := visibleBoard(ctx, s.st.Queries, p, *prm.BoardId, false)
+			if err != nil {
+				return nil, err
+			}
+			arg.BoardID = &b.ID
+		}
+		if prm.Stage != nil {
+			if !prm.Stage.Valid() {
+				return nil, errValidation("stage must be ideas, planned, in_progress, shipped or closed")
+			}
+			arg.Stage = new(string(*prm.Stage))
+		}
+		if arg.Tsq, err = ideaTsQuery(prm.Q); err != nil {
+			return nil, err
+		}
+	} else if prm.BoardId != nil || prm.Stage != nil || prm.Q != nil {
+		return nil, errValidation("board_id, stage and q are only for kind=idea")
 	}
 	if prm.InboxId != nil {
 		if _, err := visibleInbox(ctx, s.st.Queries, p, *prm.InboxId); err != nil {
@@ -103,8 +139,11 @@ func (s *Server) ListDiscussions(ctx context.Context, req oas.ListDiscussionsReq
 		}
 		arg.Page = &page
 	}
-	rows, err := s.st.ListTeamDiscussions(ctx, arg)
-	if err != nil {
+	var rows []store.Discussion
+	if err := s.searchTx(ctx, arg.Tsq != nil, func(q *store.Queries) (err error) {
+		rows, err = q.ListTeamDiscussions(ctx, arg)
+		return err
+	}); err != nil {
 		return nil, err
 	}
 	var next *string
@@ -113,7 +152,7 @@ func (s *Server) ListDiscussions(ctx context.Context, req oas.ListDiscussionsReq
 		c := encodePosition(string(sort), off+lim)
 		next = &c
 	}
-	items, err := discussionsBody(ctx, s.st.Queries, p.workspaceID, rows, &teamViewer)
+	items, err := discussionsBody(ctx, s.st.Queries, p.workspaceID, rows, &viewer{team: true})
 	if err != nil {
 		return nil, err
 	}
@@ -131,18 +170,30 @@ func (s *Server) CreateDiscussion(ctx context.Context, req oas.CreateDiscussionR
 	if err != nil {
 		return nil, err
 	}
+	if b.Kind != nil && !b.Kind.Valid() {
+		return nil, errValidation("kind must be page or idea")
+	}
+	if b.Kind != nil && *b.Kind == oas.DiscussionKindIdea {
+		return s.createTeamIdea(ctx, p, b, title, body)
+	}
+	if b.BoardId != nil {
+		return nil, errValidation("board_id is only for kind=idea")
+	}
+	if b.ChannelId == nil || b.PageUrl == nil {
+		return nil, errValidation("channel_id and page_url are required")
+	}
 	pageTitle, err := pageTitle(b.PageTitle)
 	if err != nil {
 		return nil, err
 	}
-	ch, err := s.st.GetSessionChannel(ctx, store.GetSessionChannelParams{WorkspaceID: p.workspaceID, ChannelID: b.ChannelId})
+	ch, err := s.st.GetSessionChannel(ctx, store.GetSessionChannelParams{WorkspaceID: p.workspaceID, ChannelID: *b.ChannelId})
 	if store.IsNotFound(err) || (err == nil && ch.Kind != string(oas.ChannelKindChat)) {
 		return nil, errChannelGone
 	}
 	if err != nil {
 		return nil, err
 	}
-	c, err := s.st.GetChannel(ctx, store.GetChannelParams{WorkspaceID: p.workspaceID, ID: b.ChannelId})
+	c, err := s.st.GetChannel(ctx, store.GetChannelParams{WorkspaceID: p.workspaceID, ID: *b.ChannelId})
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +203,7 @@ func (s *Server) CreateDiscussion(ctx context.Context, req oas.CreateDiscussionR
 	if ch.Discussions == string(oas.DiscussionModeOff) {
 		return nil, errDiscussionsOff
 	}
-	page, err := channelPage(b.PageUrl, ch.Kind, ch.AllowedOrigins)
+	page, err := channelPage(*b.PageUrl, ch.Kind, ch.AllowedOrigins)
 	if err != nil {
 		return nil, err
 	}
@@ -163,6 +214,42 @@ func (s *Server) CreateDiscussion(ctx context.Context, req oas.CreateDiscussionR
 			n.pageTitle = *pageTitle
 		}
 		d, err := s.createThread(ctx, q, events, n)
+		id = d.ID
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	out, err := s.teamDiscussion(ctx, p, id)
+	if err != nil {
+		return nil, err
+	}
+	return oas.CreateDiscussion201JSONResponse(out), nil
+}
+
+func (s *Server) createTeamIdea(ctx context.Context, p principal, b *oas.DiscussionCreate, title, body string) (oas.CreateDiscussionResponseObject, error) {
+	if err := s.roadmapOn(); err != nil {
+		return nil, err
+	}
+	if b.ChannelId != nil || b.PageUrl != nil || b.PageTitle != nil {
+		return nil, errIdeaPageNotAllowed
+	}
+	if b.BoardId == nil {
+		return nil, errValidation("board_id is required for an idea")
+	}
+	var id uuid.UUID
+	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		board, err := visibleBoard(ctx, q, p, *b.BoardId, false)
+		if err != nil {
+			return err
+		}
+		if err := s.ideaLimit(ctx, q, p.workspaceID); err != nil {
+			return err
+		}
+		d, err := s.createThread(ctx, q, events, newThread{
+			ws: p.workspaceID, inbox: board.InboxID, channel: board.ChannelID, board: &board.ID, title: title, body: body,
+			author: memberActor(p), state: statePublished,
+		})
 		id = d.ID
 		return err
 	})
@@ -451,12 +538,15 @@ func (s *Server) MarkDiscussionPostSpam(ctx context.Context, req oas.MarkDiscuss
 func (s *Server) teamVote(ctx context.Context, id uuid.UUID, add bool) (oas.DiscussionPost, error) {
 	p := principalFrom(ctx)
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
-		_, post, err := teamPost(ctx, q, p, id)
+		t, post, err := teamPost(ctx, q, p, id)
 		if err != nil {
 			return err
 		}
 		if post.State != statePublished || post.DeletedAt != nil {
 			return errDiscussionPostGone
+		}
+		if add && ideaVotesClosed(t.d) {
+			return errIdeaClosed
 		}
 		return vote(ctx, q, p.workspaceID, post, memberActor(p), add, s.now())
 	})
@@ -482,6 +572,41 @@ func (s *Server) UnvoteDiscussionPost(ctx context.Context, req oas.UnvoteDiscuss
 	return oas.UnvoteDiscussionPost200JSONResponse(out), nil
 }
 
+// createIdeaFromConversation starts a published idea on the inbox's board with the member's text and
+// links the feedback to it; the feedback stays private.
+func (s *Server) createIdeaFromConversation(ctx context.Context, q *store.Queries, events *eventBatch, p principal, c store.Conversation, title, body string) (uuid.UUID, error) {
+	if c.Kind != string(oas.ConversationKindFeedback) {
+		return uuid.Nil(), errNotFeedbackLink
+	}
+	board, err := q.GetInboxRoadmapBoard(ctx, store.GetInboxRoadmapBoardParams{WorkspaceID: p.workspaceID, InboxID: c.InboxID})
+	if store.IsNotFound(err) {
+		return uuid.Nil(), errInboxNoBoard
+	}
+	if err != nil {
+		return uuid.Nil(), err
+	}
+	if err := s.ideaLimit(ctx, q, p.workspaceID); err != nil {
+		return uuid.Nil(), err
+	}
+	author := memberActor(p)
+	known, err := q.ContactHasPersonOrIdentity(ctx, store.ContactHasPersonOrIdentityParams{WorkspaceID: p.workspaceID, ID: c.ContactID, InboxID: c.InboxID})
+	if err != nil {
+		return uuid.Nil(), err
+	}
+	if known {
+		contact := c.ContactID
+		author = actor{contactID: &contact}
+	}
+	d, err := s.createThread(ctx, q, events, newThread{
+		ws: p.workspaceID, inbox: board.InboxID, channel: board.ChannelID, board: &board.ID, title: title, body: body,
+		author: author, state: statePublished,
+	})
+	if err != nil {
+		return uuid.Nil(), err
+	}
+	return d.ID, s.linkIdea(ctx, q, events, p, d, c)
+}
+
 func (s *Server) CreateDiscussionFromConversation(ctx context.Context, req oas.CreateDiscussionFromConversationRequestObject) (oas.CreateDiscussionFromConversationResponseObject, error) {
 	p := principalFrom(ctx)
 	b := req.Body
@@ -492,6 +617,18 @@ func (s *Server) CreateDiscussionFromConversation(ctx context.Context, req oas.C
 	body, err := discussionBodyText(b.Body)
 	if err != nil {
 		return nil, err
+	}
+	if b.Kind != nil && !b.Kind.Valid() {
+		return nil, errValidation("kind must be page or idea")
+	}
+	idea := b.Kind != nil && *b.Kind == oas.DiscussionKindIdea
+	if idea {
+		if err := s.roadmapOn(); err != nil {
+			return nil, err
+		}
+		if b.Answer != nil || b.PageUrl != nil || b.PageTitle != nil {
+			return nil, errValidation("answer, page_url and page_title are not allowed for an idea")
+		}
 	}
 	var answer string
 	if b.Answer != nil {
@@ -507,6 +644,10 @@ func (s *Server) CreateDiscussionFromConversation(ctx context.Context, req oas.C
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		c, err := visibleConversation(ctx, q, p, req.ConversationId, true)
 		if err != nil {
+			return err
+		}
+		if idea {
+			id, err = s.createIdeaFromConversation(ctx, q, events, p, c, title, body)
 			return err
 		}
 		if _, err := q.GetDiscussionByConversation(ctx, store.GetDiscussionByConversationParams{WorkspaceID: p.workspaceID, ConversationID: &c.ID}); err == nil {

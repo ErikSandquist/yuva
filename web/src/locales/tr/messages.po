@@ -1092,6 +1092,10 @@ msgstr "Posta aldığınız gerçek bir adres"
 msgid "A reply was written in a discussion"
 msgstr "Bir tartışmaya yanıt yazıldı"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Bir yol haritası fikri başka bir aşamaya geçti"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Oturum açma işlemi 10 dakika içinde geri dönmeli ve yalnızca bir kez kullanılabilir. Taşımayı açıp yeniden oturum açın."
@@ -6047,6 +6051,10 @@ msgstr "Açık tema"
 msgid "Limit the pace"
 msgstr "Hızı sınırla"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Geri bildirimleri fikirlere bağla, bağlı müşterilere yanıt ver ve yol haritası panolarını yönet"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Microsoft 365 yöneticiniz için bağlantı"
@@ -6746,6 +6754,10 @@ msgstr "En çok oy"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Aşağı taşı"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Fikirleri yol haritası aşamaları arasında taşı"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "E-posta listelerini, aboneleri ve izin kayıtlarını okuma"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Salt okunur"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Yol haritası panolarını, fikirleri ve aşama geçmişini oku"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

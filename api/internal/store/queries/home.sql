@@ -58,7 +58,7 @@ SELECT 'channel', ch.id, ch.inbox_id, ch.name, ch.kind, ch.created_at, '{}', '{}
     ch.kind = 'chat' AND (
         EXISTS (SELECT 1 FROM page_ratings r WHERE r.workspace_id = ch.workspace_id AND r.channel_id = ch.id)
         OR EXISTS (SELECT 1 FROM conversations c WHERE c.workspace_id = ch.workspace_id AND c.channel_id = ch.id AND c.page_url IS NOT NULL)
-        OR EXISTS (SELECT 1 FROM discussions d WHERE d.workspace_id = ch.workspace_id AND d.inbox_id = ch.inbox_id AND d.channel_id = ch.id)),
+        OR EXISTS (SELECT 1 FROM discussions d WHERE d.workspace_id = ch.workspace_id AND d.inbox_id = ch.inbox_id AND d.channel_id = ch.id AND d.kind = 'page')),
     row_number() OVER (ORDER BY ch.created_at, ch.id)
 FROM channels ch
 WHERE @with_inboxes::bool AND @with_channels::bool AND ch.workspace_id = @workspace_id AND ch.inbox_id IN (SELECT id FROM visible)

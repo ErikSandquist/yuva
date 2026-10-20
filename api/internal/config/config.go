@@ -111,6 +111,11 @@ type Config struct {
 	Help            bool
 	HelpMaxArticles int
 
+	// Roadmap is YUVA_ROADMAP: off removes roadmap boards. RoadmapMaxIdeas caps a workspace's ideas
+	// (YUVA_ROADMAP_MAX_IDEAS; 2000 with open signup); 0 is no limit.
+	Roadmap         bool
+	RoadmapMaxIdeas int
+
 	StatusDomains      string
 	StatusCNAME        string
 	StatusDomainLimit  int
@@ -411,6 +416,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadHelp(public); err != nil {
 		return c, err
 	}
+	if err := c.loadRoadmap(); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -500,6 +508,25 @@ func (c *Config) loadHelp(public *url.URL) error {
 	var err error
 	if c.HelpMaxArticles, err = strconv.Atoi(env("YUVA_HELP_MAX_ARTICLES", def)); err != nil || c.HelpMaxArticles < 0 {
 		return errors.New("YUVA_HELP_MAX_ARTICLES must be a number of articles, 0 for no limit")
+	}
+	return nil
+}
+
+func (c *Config) loadRoadmap() error {
+	switch strings.ToLower(env("YUVA_ROADMAP", "on")) {
+	case "on":
+		c.Roadmap = true
+	case "off":
+	default:
+		return errors.New("YUVA_ROADMAP must be on or off")
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "2000"
+	}
+	var err error
+	if c.RoadmapMaxIdeas, err = strconv.Atoi(env("YUVA_ROADMAP_MAX_IDEAS", def)); err != nil || c.RoadmapMaxIdeas < 0 {
+		return errors.New("YUVA_ROADMAP_MAX_IDEAS must be a number of ideas, 0 for no limit")
 	}
 	return nil
 }

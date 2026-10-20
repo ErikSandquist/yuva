@@ -1092,6 +1092,10 @@ msgstr "郵便物を受け取れる実際の住所"
 msgid "A reply was written in a discussion"
 msgstr "ディスカッションに返信が書き込まれたとき"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "ロードマップのアイデアが別のステージに移りました"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "サインインは 10 分以内に戻る必要があり、1 回のみ有効です。移行を開いて、もう一度サインインしてください。"
@@ -6047,6 +6051,10 @@ msgstr "ライト外観"
 msgid "Limit the pace"
 msgstr "ペースを制限"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "フィードバックをアイデアに紐付け、紐付いた顧客に返信し、ロードマップボードを管理する"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Microsoft 365 管理者向けリンク"
@@ -6746,6 +6754,10 @@ msgstr "投票が多い順"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "下へ移動"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "アイデアをロードマップのステージ間で移動する"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "メーリングリスト、登録者、同意記録を読み取り"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "読み取り専用"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "ロードマップボード、アイデア、ステージ履歴を読み取る"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

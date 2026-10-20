@@ -2787,6 +2787,27 @@ posts, votes, follows, moderation, reader accounts, rendering and notifications 
   table and the "never implied" sentence. Add `discussion.stage_changed` to the webhook events. In
   "Live chat", replace "a roadmap … have no client API yet" with the Roadmap tile. Add `/roadmap/{slug}`
   to the API surfaces table. In "Discussions (M12)", say that `kind` separates page threads from ideas.
+- **As built (steps 1 and 2).** Where the build differs from the text above, this wins.
+  - **Triggers.** `discussions.search` and `discussions.vote_count` are kept by triggers, not a
+    generated column or the vote's handler: a generated column rewrites the table, and a trigger
+    also covers merges, account deletion and cascades. The backfill runs under a share lock on the
+    votes after the trigger exists, so the count ends exact.
+  - **Contract.** The API has `votes` (the opening post's) and no `vote_count`. `Discussion.page` is
+    an empty string for ideas. `GET /v1/discussions` takes `sort=votes` next to `top`.
+    `YUVA_ROADMAP_MAX_IDEAS` answers `422 hosted_limit`. `…/{id}/preview` moves to step 3. A move to
+    the stage the idea is in changes nothing and returns no `change`. Writes on a discussion that is
+    not an idea answer `409 not_an_idea`, reads `404`. `ReaderNotificationKind` gains `stage`.
+  - **Stage changes** also hold `linked`, `progress`, `comment_post_id` and `finished_at`. Each
+    per-conversation transaction of `roadmap_progress` locks the idea row first (idea, then
+    conversation, as linking does) and sets nothing unless its change is still the idea's latest, so
+    an older move never overwrites a newer one.
+  - **Private boards mail nobody.** Ideas on a private board are not followed by their author, send
+    no stage or reply notifications and no digest, even when a contact is the author.
+  - **Channels.** A board's channel cannot be deleted while the board exists
+    (`409 channel_has_roadmap_board`; the foreign key has no cascade). Every idea is filed on the
+    board's channel, and changing the board's channel moves its ideas.
+  - **Moving feedback.** Moving a conversation to another inbox unlinks it from its idea, since a
+    board belongs to one inbox; its progress stays.
 - **Not in M21.** Merging duplicate ideas, a `<yuva-roadmap>` web component, the roadmap in the Swift and
   Kotlin SDKs, own domains, and private boards visible to signed-in customers.
 - **Order of work.**

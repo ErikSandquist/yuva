@@ -1092,6 +1092,10 @@ msgstr "可以收信的真实地址"
 msgid "A reply was written in a discussion"
 msgstr "讨论中有了回复时"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "一个路线图想法进入了另一个阶段"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "登录必须在 10 分钟内返回,且只能使用一次。请打开迁移并重新登录。"
@@ -6047,6 +6051,10 @@ msgstr "浅色外观"
 msgid "Limit the pace"
 msgstr "限制速度"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "将反馈关联到想法、回复已关联的客户并管理路线图看板"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "给你的 Microsoft 365 管理员的链接"
@@ -6746,6 +6754,10 @@ msgstr "票数最多"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "下移"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "在路线图阶段之间移动想法"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "读取邮件列表、订阅者和同意记录"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "只读"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "读取路线图看板、想法和阶段历史"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

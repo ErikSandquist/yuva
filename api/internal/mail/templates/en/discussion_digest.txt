@@ -1,7 +1,9 @@
-{{.Inbox}}: {{if .Answer}}answered{{else}}new replies{{end}} in "{{.Title}}"
+{{.Inbox}}: {{if .Answer}}answered{{else if .Posts}}new replies{{else}}status update{{end}} in "{{.Title}}"
 
 {{if .Answer}}An answer was accepted in "{{.Title}}", written by {{or .Answer.Author "a reader"}}:
 > {{.Answer.Text}}
+
+{{end}}{{range .Stages}}This idea is now {{if eq .Stage "planned"}}Planned{{else if eq .Stage "in_progress"}}In progress{{else if eq .Stage "shipped"}}Shipped{{else}}Closed{{end}}.
 
 {{end}}{{if .Posts}}New replies in "{{.Title}}":
 {{range .Posts}}
@@ -10,7 +12,7 @@
 {{end}}{{if .More}}
 …and {{.More}} more.
 {{end}}
-{{end}}Read the thread: {{.URL}}
+{{end}}{{if .Idea}}View the idea{{else}}Read the thread{{end}}: {{.URL}}
 
-You get this e-mail because you follow this thread on {{.Inbox}}'s documentation. Stop following it: {{.UnsubscribeURL}}{{if .SettingsURL}}
+You get this e-mail because you {{if .Idea}}follow this idea on {{.Inbox}}'s roadmap{{else}}follow this thread on {{.Inbox}}'s documentation{{end}}. Stop following it: {{.UnsubscribeURL}}{{if .SettingsURL}}
 Choose which e-mails you get: {{.SettingsURL}}{{end}}

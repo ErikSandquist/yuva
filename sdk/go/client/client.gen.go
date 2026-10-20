@@ -935,6 +935,9 @@ const (
 	MessagesWrite      ApiKeyScope = "messages:write"
 	MigrationsManage   ApiKeyScope = "migrations:manage"
 	NotesWrite         ApiKeyScope = "notes:write"
+	RoadmapRead        ApiKeyScope = "roadmap:read"
+	RoadmapStage       ApiKeyScope = "roadmap:stage"
+	RoadmapWrite       ApiKeyScope = "roadmap:write"
 	StatusManage       ApiKeyScope = "status:manage"
 	StatusRead         ApiKeyScope = "status:read"
 	WebhooksManage     ApiKeyScope = "webhooks:manage"
@@ -991,6 +994,12 @@ func (e ApiKeyScope) Valid() bool {
 	case MigrationsManage:
 		return true
 	case NotesWrite:
+		return true
+	case RoadmapRead:
+		return true
+	case RoadmapStage:
+		return true
+	case RoadmapWrite:
 		return true
 	case StatusManage:
 		return true
@@ -1893,6 +1902,24 @@ func (e DiscussionEventType) Valid() bool {
 	}
 }
 
+// Defines values for DiscussionKind.
+const (
+	DiscussionKindIdea DiscussionKind = "idea"
+	DiscussionKindPage DiscussionKind = "page"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionKind enum.
+func (e DiscussionKind) Valid() bool {
+	switch e {
+	case DiscussionKindIdea:
+		return true
+	case DiscussionKindPage:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DiscussionMode.
 const (
 	DiscussionModeModerated DiscussionMode = "moderated"
@@ -1953,6 +1980,21 @@ func (e DiscussionSort) Valid() bool {
 	}
 }
 
+// Defines values for DiscussionStageEventType.
+const (
+	DiscussionStageEventTypeDiscussionStageChanged DiscussionStageEventType = "discussion.stage_changed"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionStageEventType enum.
+func (e DiscussionStageEventType) Valid() bool {
+	switch e {
+	case DiscussionStageEventTypeDiscussionStageChanged:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DiscussionState.
 const (
 	DiscussionStateHidden    DiscussionState = "hidden"
@@ -1979,6 +2021,7 @@ const (
 	DiscussionTeamSortActivity DiscussionTeamSort = "activity"
 	DiscussionTeamSortNew      DiscussionTeamSort = "new"
 	DiscussionTeamSortTop      DiscussionTeamSort = "top"
+	DiscussionTeamSortVotes    DiscussionTeamSort = "votes"
 )
 
 // Valid indicates whether the value is a known member of the DiscussionTeamSort enum.
@@ -1989,6 +2032,8 @@ func (e DiscussionTeamSort) Valid() bool {
 	case DiscussionTeamSortNew:
 		return true
 	case DiscussionTeamSortTop:
+		return true
+	case DiscussionTeamSortVotes:
 		return true
 	default:
 		return false
@@ -2893,6 +2938,7 @@ const (
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
 	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
 	LimitMigrationUploadMaxBytes HostedLimit = "YUVA_MIGRATION_UPLOAD_MAX_BYTES"
+	LimitRoadmapMaxIdeas         HostedLimit = "YUVA_ROADMAP_MAX_IDEAS"
 )
 
 // Valid indicates whether the value is a known member of the HostedLimit enum.
@@ -2907,6 +2953,35 @@ func (e HostedLimit) Valid() bool {
 	case LimitMigrationSources:
 		return true
 	case LimitMigrationUploadMaxBytes:
+		return true
+	case LimitRoadmapMaxIdeas:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for IdeaStage.
+const (
+	IdeaStageClosed     IdeaStage = "closed"
+	IdeaStageIdeas      IdeaStage = "ideas"
+	IdeaStageInProgress IdeaStage = "in_progress"
+	IdeaStagePlanned    IdeaStage = "planned"
+	IdeaStageShipped    IdeaStage = "shipped"
+)
+
+// Valid indicates whether the value is a known member of the IdeaStage enum.
+func (e IdeaStage) Valid() bool {
+	switch e {
+	case IdeaStageClosed:
+		return true
+	case IdeaStageIdeas:
+		return true
+	case IdeaStageInProgress:
+		return true
+	case IdeaStagePlanned:
+		return true
+	case IdeaStageShipped:
 		return true
 	default:
 		return false
@@ -3075,6 +3150,30 @@ func (e IngressResultStatus) Valid() bool {
 	case IngressResultStatusDuplicate:
 		return true
 	case IngressResultStatusStored:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LinkedReplyOutcome.
+const (
+	LinkedReplyOutcomeFailed  LinkedReplyOutcome = "failed"
+	LinkedReplyOutcomePending LinkedReplyOutcome = "pending"
+	LinkedReplyOutcomeSent    LinkedReplyOutcome = "sent"
+	LinkedReplyOutcomeSkipped LinkedReplyOutcome = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the LinkedReplyOutcome enum.
+func (e LinkedReplyOutcome) Valid() bool {
+	switch e {
+	case LinkedReplyOutcomeFailed:
+		return true
+	case LinkedReplyOutcomePending:
+		return true
+	case LinkedReplyOutcomeSent:
+		return true
+	case LinkedReplyOutcomeSkipped:
 		return true
 	default:
 		return false
@@ -4558,6 +4657,7 @@ func (e Rating) Valid() bool {
 const (
 	Answer ReaderNotificationKind = "answer"
 	Reply  ReaderNotificationKind = "reply"
+	Stage  ReaderNotificationKind = "stage"
 )
 
 // Valid indicates whether the value is a known member of the ReaderNotificationKind enum.
@@ -4566,6 +4666,8 @@ func (e ReaderNotificationKind) Valid() bool {
 	case Answer:
 		return true
 	case Reply:
+		return true
+	case Stage:
 		return true
 	default:
 		return false
@@ -4596,6 +4698,42 @@ const (
 func (e RealtimeResyncRequiredType) Valid() bool {
 	switch e {
 	case ResyncRequired:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RoadmapBoardSignalType.
+const (
+	RoadmapBoardUpdated RoadmapBoardSignalType = "roadmap.board.updated"
+)
+
+// Valid indicates whether the value is a known member of the RoadmapBoardSignalType enum.
+func (e RoadmapBoardSignalType) Valid() bool {
+	switch e {
+	case RoadmapBoardUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RoadmapSuggestions.
+const (
+	RoadmapSuggestionsModerated RoadmapSuggestions = "moderated"
+	RoadmapSuggestionsOff       RoadmapSuggestions = "off"
+	RoadmapSuggestionsOpen      RoadmapSuggestions = "open"
+)
+
+// Valid indicates whether the value is a known member of the RoadmapSuggestions enum.
+func (e RoadmapSuggestions) Valid() bool {
+	switch e {
+	case RoadmapSuggestionsModerated:
+		return true
+	case RoadmapSuggestionsOff:
+		return true
+	case RoadmapSuggestionsOpen:
 		return true
 	default:
 		return false
@@ -4977,30 +5115,6 @@ func (e StatusIncidentKind) Valid() bool {
 	case StatusKindIncident:
 		return true
 	case StatusKindMaintenance:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for StatusIncidentReplyOutcome.
-const (
-	StatusIncidentReplyOutcomeFailed  StatusIncidentReplyOutcome = "failed"
-	StatusIncidentReplyOutcomePending StatusIncidentReplyOutcome = "pending"
-	StatusIncidentReplyOutcomeSent    StatusIncidentReplyOutcome = "sent"
-	StatusIncidentReplyOutcomeSkipped StatusIncidentReplyOutcome = "skipped"
-)
-
-// Valid indicates whether the value is a known member of the StatusIncidentReplyOutcome enum.
-func (e StatusIncidentReplyOutcome) Valid() bool {
-	switch e {
-	case StatusIncidentReplyOutcomeFailed:
-		return true
-	case StatusIncidentReplyOutcomePending:
-		return true
-	case StatusIncidentReplyOutcomeSent:
-		return true
-	case StatusIncidentReplyOutcomeSkipped:
 		return true
 	default:
 		return false
@@ -5559,6 +5673,7 @@ const (
 	WebhookEventTypeDiscussionAnswered     WebhookEventType = "discussion.answered"
 	WebhookEventTypeDiscussionCreated      WebhookEventType = "discussion.created"
 	WebhookEventTypeDiscussionPostCreated  WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionStageChanged WebhookEventType = "discussion.stage_changed"
 	WebhookEventTypeDiscussionUpdated      WebhookEventType = "discussion.updated"
 	WebhookEventTypeDraftCreated           WebhookEventType = "draft.created"
 	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
@@ -5600,6 +5715,8 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeDiscussionCreated:
 		return true
 	case WebhookEventTypeDiscussionPostCreated:
+		return true
+	case WebhookEventTypeDiscussionStageChanged:
 		return true
 	case WebhookEventTypeDiscussionUpdated:
 		return true
@@ -5925,6 +6042,21 @@ func (e ExportContactConsentParamsFormat) Valid() bool {
 	case ExportContactConsentParamsFormatCsv:
 		return true
 	case ExportContactConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListConversationsParamsIdea.
+const (
+	ListConversationsParamsIdeaNone ListConversationsParamsIdea = "none"
+)
+
+// Valid indicates whether the value is a known member of the ListConversationsParamsIdea enum.
+func (e ListConversationsParamsIdea) Valid() bool {
+	switch e {
+	case ListConversationsParamsIdeaNone:
 		return true
 	default:
 		return false
@@ -7248,6 +7380,7 @@ type AnalyticsRangeProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7800,7 +7933,13 @@ type ApiKeyList struct {
 //	    translations, delete published ones. API keys only, and never implied: a key made without
 //	    naming its scopes does not hold it, and OAuth clients are not offered it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*` and `help:*` are never added to keys made before they existed.
+//	  - `roadmap:read`: roadmap boards, an idea's stage history and linked counts.
+//	  - `roadmap:write`: link feedback to ideas, "Reply to linked" for ideas, create, change and
+//	    delete boards (owners and admins).
+//	  - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
+//	    Never implied: a key made without naming its scopes does not hold it.
+//
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -8226,6 +8365,7 @@ type BroadcastProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8808,12 +8948,16 @@ type ClientConversationUpdatedEventType string
 // ClientDiscussionCreate defines model for ClientDiscussionCreate.
 type ClientDiscussionCreate struct {
 	// Body Markdown.
-	Body      string  `json:"body"`
-	PageTitle *string `json:"page_title,omitempty"`
+	Body string `json:"body"`
 
-	// PageUrl The page's absolute URL; query and fragment are dropped.
-	PageUrl string `json:"page_url"`
-	Title   string `json:"title"`
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl `page`, required: the page's absolute URL; query and fragment are dropped. Not allowed for an `idea`.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
 }
 
 // ClientDiscussionPostUpdate defines model for ClientDiscussionPostUpdate.
@@ -9129,6 +9273,11 @@ type ClientInbox struct {
 	// Presence Who can answer now, in a `live` inbox.
 	Presence *ClientPresence `json:"presence,omitempty"`
 
+	// Roadmap Absent unless the inbox has a public roadmap board (and on a server with
+	// `YUVA_ROADMAP=off`); show the Roadmap tile only then. An `inbox.updated` frame brings
+	// every change.
+	Roadmap *ClientInboxRoadmap `json:"roadmap,omitempty"`
+
 	// Status Absent unless the inbox has a published status page. Show a line while `open` is not
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
@@ -9144,6 +9293,19 @@ type ClientInboxHelp struct {
 	Locales       []LanguageTag `json:"locales"`
 
 	// Url The center's public home page.
+	Url string `json:"url"`
+}
+
+// ClientInboxRoadmap The inbox's public roadmap board.
+type ClientInboxRoadmap struct {
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+
+	// Url The board's public page.
 	Url string `json:"url"`
 }
 
@@ -9348,6 +9510,31 @@ type ClientReadState struct {
 // ClientRealtimeMessage One server message on `/client/v1/realtime`, told apart by `type`.
 type ClientRealtimeMessage struct {
 	union json.RawMessage
+}
+
+// ClientRoadmap defines model for ClientRoadmap.
+type ClientRoadmap struct {
+	Description string `json:"description"`
+	Name        string `json:"name"`
+
+	// Stages Published ideas per public stage; `closed` ideas are not listed publicly.
+	Stages ClientRoadmapStages `json:"stages"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+	Url         string             `json:"url"`
+}
+
+// ClientRoadmapStages Published ideas per public stage; `closed` ideas are not listed publicly.
+type ClientRoadmapStages struct {
+	Ideas      int32 `json:"ideas"`
+	InProgress int32 `json:"in_progress"`
+	Planned    int32 `json:"planned"`
+	Shipped    int32 `json:"shipped"`
 }
 
 // ClientSession defines model for ClientSession.
@@ -9855,6 +10042,9 @@ type Conversation struct {
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
 
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
+
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
 	// they were imported. Absent otherwise.
@@ -10072,6 +10262,9 @@ type ConversationListItem struct {
 	// HelpArticleId The help article the contact read just before starting the conversation from it; absent otherwise.
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
+
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
 
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
@@ -10375,10 +10568,11 @@ type DeliverabilityYuvaDkim struct {
 // Direction defines model for Direction.
 type Direction string
 
-// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-// `voted` and `following` on `/client/v1` only (false without a token).
+// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+// `following` on `/client/v1` only (false without a token).
 type Discussion struct {
 	// AnswerPostId The accepted answer; absent while there is none.
 	AnswerPostId *uuid.UUID `json:"answer_post_id,omitempty"`
@@ -10388,6 +10582,9 @@ type Discussion struct {
 	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
 	// given on `/v1` only.
 	Author DiscussionAuthor `json:"author"`
+
+	// BoardId `idea` only: the roadmap board the idea belongs to.
+	BoardId *uuid.UUID `json:"board_id,omitempty"`
 
 	// Body Markdown as written; empty once the opening post was deleted.
 	Body string `json:"body"`
@@ -10403,20 +10600,27 @@ type Discussion struct {
 	CreatedAt      time.Time  `json:"created_at"`
 
 	// Deleted The opening post was deleted by its author; the replies stay.
-	Deleted        *bool      `json:"deleted,omitempty"`
-	EditedAt       *time.Time `json:"edited_at,omitempty"`
-	Following      *bool      `json:"following,omitempty"`
-	HiddenPosts    *int32     `json:"hidden_posts,omitempty"`
-	Id             uuid.UUID  `json:"id"`
-	InboxId        *uuid.UUID `json:"inbox_id,omitempty"`
-	LastActivityAt time.Time  `json:"last_activity_at"`
-	Locked         bool       `json:"locked"`
+	Deleted     *bool      `json:"deleted,omitempty"`
+	EditedAt    *time.Time `json:"edited_at,omitempty"`
+	Following   *bool      `json:"following,omitempty"`
+	HiddenPosts *int32     `json:"hidden_posts,omitempty"`
+	Id          uuid.UUID  `json:"id"`
+	InboxId     *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind           DiscussionKind `json:"kind"`
+	LastActivityAt time.Time      `json:"last_activity_at"`
+
+	// LinkedCount `idea` only, on `/v1`: feedback conversations linked to it.
+	LinkedCount *int32 `json:"linked_count,omitempty"`
+	Locked      bool   `json:"locked"`
 
 	// Mine The caller started it.
 	Mine          *bool     `json:"mine,omitempty"`
 	OpeningPostId uuid.UUID `json:"opening_post_id"`
 
-	// Page The page's URL without query and fragment.
+	// Page The page's URL without query and fragment; empty for an idea, which has no page.
 	Page      string  `json:"page"`
 	PageTitle *string `json:"page_title,omitempty"`
 
@@ -10426,12 +10630,20 @@ type Discussion struct {
 	// ReplyCount Published replies, replies to replies included.
 	ReplyCount int32 `json:"reply_count"`
 
+	// Stage `idea` only: where the idea stands.
+	Stage *IdeaStage `json:"stage,omitempty"`
+
+	// StageChangedAt `idea` only: when the stage last changed; absent for an idea that was never moved.
+	StageChangedAt *time.Time `json:"stage_changed_at,omitempty"`
+
 	// State `published`: public. `pending`: waits for a member; only its author and members see it.
 	// `hidden`: a member hid it; only members see it.
 	State DiscussionState `json:"state"`
 	Title string          `json:"title"`
 	Voted *bool           `json:"voted,omitempty"`
-	Votes int32           `json:"votes"`
+
+	// Votes The opening post's votes.
+	Votes int32 `json:"votes"`
 }
 
 // DiscussionAnswer defines model for DiscussionAnswer.
@@ -10464,22 +10676,32 @@ type DiscussionAuthorKind string
 
 // DiscussionCreate defines model for DiscussionCreate.
 type DiscussionCreate struct {
+	// BoardId `idea`: the roadmap board the idea is filed on, which names the channel.
+	BoardId *uuid.UUID `json:"board_id,omitempty"`
+
 	// Body Markdown.
 	Body string `json:"body"`
 
-	// ChannelId A chat channel that allows the page's origin.
-	ChannelId uuid.UUID `json:"channel_id"`
-	PageTitle *string   `json:"page_title,omitempty"`
-	PageUrl   string    `json:"page_url"`
-	Title     string    `json:"title"`
+	// ChannelId `page`, required: a chat channel that allows the page's origin.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl `page`, required.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
 }
 
 // DiscussionDetail defines model for DiscussionDetail.
 type DiscussionDetail struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Posts The replies, the accepted answer first, then oldest first; not the opening post.
@@ -10506,10 +10728,11 @@ type DiscussionEventType string
 
 // DiscussionEventData defines model for DiscussionEventData.
 type DiscussionEventData struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Post The post the event is about; absent for changes to the thread alone.
@@ -10518,17 +10741,25 @@ type DiscussionEventData struct {
 
 // DiscussionFromConversation defines model for DiscussionFromConversation.
 type DiscussionFromConversation struct {
-	// Answer Posted by the member and marked as the accepted answer.
+	// Answer Posted by the member and marked as the accepted answer. Not allowed for an `idea`.
 	Answer *string `json:"answer,omitempty"`
 
 	// Body The public question, as the member edits it (Markdown).
-	Body      string  `json:"body"`
-	PageTitle *string `json:"page_title,omitempty"`
+	Body string `json:"body"`
 
-	// PageUrl The page, when the conversation has none or another one is meant.
+	// Kind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+	// to no page and has a `stage`.
+	Kind      *DiscussionKind `json:"kind,omitempty"`
+	PageTitle *string         `json:"page_title,omitempty"`
+
+	// PageUrl The page, when the conversation has none or another one is meant. Not allowed for an `idea`.
 	PageUrl *string `json:"page_url,omitempty"`
 	Title   string  `json:"title"`
 }
+
+// DiscussionKind `page`: a thread on a documentation page. `idea`: an idea on a roadmap board, which belongs
+// to no page and has a `stage`.
+type DiscussionKind string
 
 // DiscussionMode Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
 // reader's posts wait for a member until one of theirs in the workspace was approved;
@@ -10587,10 +10818,11 @@ type DiscussionPostCreate struct {
 
 // DiscussionPostItem defines model for DiscussionPostItem.
 type DiscussionPostItem struct {
-	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
-	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
-	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
-	// `voted` and `following` on `/client/v1` only (false without a token).
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
 	Discussion Discussion `json:"discussion"`
 
 	// Post One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
@@ -10620,6 +10852,45 @@ type DiscussionPostUpdateState string
 
 // DiscussionSort defines model for DiscussionSort.
 type DiscussionSort string
+
+// DiscussionStageEvent `discussion.stage_changed`: an idea was moved to another stage. Delivered to callers who
+// can see the idea's inbox.
+type DiscussionStageEvent struct {
+	CreatedAt   time.Time                `json:"created_at"`
+	Data        DiscussionStageEventData `json:"data"`
+	Id          int64                    `json:"id"`
+	InboxId     uuid.UUID                `json:"inbox_id"`
+	Type        DiscussionStageEventType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// DiscussionStageEventType defines model for DiscussionStageEvent.Type.
+type DiscussionStageEventType string
+
+// DiscussionStageEventData defines model for DiscussionStageEventData.
+type DiscussionStageEventData struct {
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// From Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	From IdeaStage `json:"from"`
+
+	// Linked Feedback linked to the idea when it was moved.
+	Linked int32 `json:"linked"`
+
+	// To Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	To IdeaStage `json:"to"`
+}
 
 // DiscussionState `published`: public. `pending`: waits for a member; only its author and members see it.
 // `hidden`: a member hid it; only members see it.
@@ -11116,6 +11387,7 @@ type EmailDesignProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11448,6 +11720,7 @@ type EmailImageProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12433,6 +12706,7 @@ type HelpConflictProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12714,7 +12988,27 @@ type HomeWaitingConversation struct {
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 // `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 type HostedLimit string
+
+// IdeaRef The idea a feedback conversation is linked to.
+type IdeaRef struct {
+	// Id The idea's discussion id.
+	Id uuid.UUID `json:"id"`
+
+	// Stage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	Stage IdeaStage `json:"stage"`
+	Title string    `json:"title"`
+}
+
+// IdeaStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+type IdeaStage string
 
 // IdentitySecret defines model for IdentitySecret.
 type IdentitySecret struct {
@@ -13083,6 +13377,65 @@ type LabelUpdate struct {
 //
 // Examples: en, tr
 type LanguageTag = string
+
+// LinkedReply One "Reply to linked" request of an incident or an idea, with what became of each
+// conversation. Exactly one of `incident_id` and `idea_id` is given.
+type LinkedReply struct {
+	Close      bool                `json:"close"`
+	Counts     LinkedReplyCounts   `json:"counts"`
+	CreatedAt  time.Time           `json:"created_at"`
+	Id         uuid.UUID           `json:"id"`
+	IdeaId     *uuid.UUID          `json:"idea_id,omitempty"`
+	IncidentId *uuid.UUID          `json:"incident_id,omitempty"`
+	Items      []LinkedReplyTarget `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+
+	// Queued The conversations the request was queued for.
+	Queued int32 `json:"queued"`
+}
+
+// LinkedReplyCounts defines model for LinkedReplyCounts.
+type LinkedReplyCounts struct {
+	Failed  int32 `json:"failed"`
+	Pending int32 `json:"pending"`
+	Sent    int32 `json:"sent"`
+	Skipped int32 `json:"skipped"`
+}
+
+// LinkedReplyCreate defines model for LinkedReplyCreate.
+type LinkedReplyCreate struct {
+	// Body The reply's text, as for any message.
+	Body string `json:"body"`
+
+	// Close Close each conversation after the reply.
+	Close *bool `json:"close,omitempty"`
+}
+
+// LinkedReplyOutcome defines model for LinkedReplyOutcome.
+type LinkedReplyOutcome string
+
+// LinkedReplyResult defines model for LinkedReplyResult.
+type LinkedReplyResult struct {
+	// Id The reply request; read its outcomes with `GET .../replies/{replyId}`.
+	Id uuid.UUID `json:"id"`
+
+	// Queued The conversations a reply was queued for.
+	Queued int32 `json:"queued"`
+}
+
+// LinkedReplyTarget defines model for LinkedReplyTarget.
+type LinkedReplyTarget struct {
+	ConversationId uuid.UUID `json:"conversation_id"`
+
+	// FinishedAt Absent while `pending`.
+	FinishedAt *time.Time         `json:"finished_at,omitempty"`
+	Outcome    LinkedReplyOutcome `json:"outcome"`
+
+	// Reason Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
+	Reason *string `json:"reason,omitempty"`
+}
 
 // ListImport defines model for ListImport.
 type ListImport struct {
@@ -13764,6 +14117,9 @@ type MessageEvent struct {
 	// FeedbackProgress `feedback_progress` only: the new progress, `null` when it was cleared.
 	FeedbackProgress nullable.Nullable[FeedbackProgress] `json:"feedback_progress,omitempty"`
 
+	// IdeaId `feedback_progress` only: the roadmap idea whose stage move set the progress.
+	IdeaId *uuid.UUID `json:"idea_id,omitempty"`
+
 	// InboxId The inbox it moved to (`moved`).
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
@@ -14294,6 +14650,7 @@ type MigrationFileProblem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -15323,6 +15680,7 @@ type Problem struct {
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -15618,7 +15976,7 @@ type ReaderNotification struct {
 	Id        uuid.UUID `json:"id"`
 	InboxName string    `json:"inbox_name"`
 
-	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there. `stage`: a followed roadmap idea moved to another stage.
 	Kind   ReaderNotificationKind `json:"kind"`
 	Page   string                 `json:"page"`
 	PostId *uuid.UUID             `json:"post_id,omitempty"`
@@ -15628,7 +15986,7 @@ type ReaderNotification struct {
 	Title string `json:"title"`
 }
 
-// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there. `stage`: a followed roadmap idea moved to another stage.
 type ReaderNotificationKind string
 
 // ReaderNotificationPage defines model for ReaderNotificationPage.
@@ -15700,6 +16058,211 @@ type RealtimeResyncRequired struct {
 
 // RealtimeResyncRequiredType defines model for RealtimeResyncRequired.Type.
 type RealtimeResyncRequiredType string
+
+// RoadmapBoard defines model for RoadmapBoard.
+type RoadmapBoard struct {
+	// AnalyticsPropertyId The analytics property the public page counts cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// ChannelId The `chat` channel the public page embeds and ideas members start are filed on.
+	ChannelId uuid.UUID `json:"channel_id"`
+
+	// Counts Published ideas per stage, and the ideas waiting for approval.
+	Counts      RoadmapBoardCounts `json:"counts"`
+	CreatedAt   time.Time          `json:"created_at"`
+	Description string             `json:"description"`
+	Id          uuid.UUID          `json:"id"`
+	InboxId     uuid.UUID          `json:"inbox_id"`
+	Name        string             `json:"name"`
+
+	// Public A private board is a triage tool for the team and has no public page.
+	Public bool `json:"public"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug RoadmapBoardSlug `json:"slug"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions RoadmapSuggestions `json:"suggestions"`
+	UpdatedAt   time.Time          `json:"updated_at"`
+
+	// Url The public page, at the server's `/roadmap/{slug}`.
+	Url string `json:"url"`
+}
+
+// RoadmapBoardCounts Published ideas per stage, and the ideas waiting for approval.
+type RoadmapBoardCounts struct {
+	Closed     int32 `json:"closed"`
+	Ideas      int32 `json:"ideas"`
+	InProgress int32 `json:"in_progress"`
+
+	// Pending Ideas waiting for a member.
+	Pending int32 `json:"pending"`
+	Planned int32 `json:"planned"`
+	Shipped int32 `json:"shipped"`
+}
+
+// RoadmapBoardCreate defines model for RoadmapBoardCreate.
+type RoadmapBoardCreate struct {
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// ChannelId A `chat` channel of the same inbox.
+	ChannelId   uuid.UUID `json:"channel_id"`
+	Description *string   `json:"description,omitempty"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+
+	// Public Default `false`.
+	Public *bool `json:"public,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug RoadmapBoardSlug `json:"slug"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions *RoadmapSuggestions `json:"suggestions,omitempty"`
+}
+
+// RoadmapBoardList defines model for RoadmapBoardList.
+type RoadmapBoardList struct {
+	Items []RoadmapBoard `json:"items"`
+}
+
+// RoadmapBoardSignal `roadmap.board.updated`, on `/v1/realtime` only: a board or one of its ideas changed in a
+// way the public page shows. Not stored, no id, never replayed. Reaches whoever sees the
+// board's inbox.
+type RoadmapBoardSignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		BoardId uuid.UUID `json:"board_id"`
+	} `json:"data"`
+	InboxId     uuid.UUID              `json:"inbox_id"`
+	Type        RoadmapBoardSignalType `json:"type"`
+	WorkspaceId uuid.UUID              `json:"workspace_id"`
+}
+
+// RoadmapBoardSignalType defines model for RoadmapBoardSignal.Type.
+type RoadmapBoardSignalType string
+
+// RoadmapBoardSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme
+type RoadmapBoardSlug = string
+
+// RoadmapBoardUpdate defines model for RoadmapBoardUpdate.
+type RoadmapBoardUpdate struct {
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+	ChannelId           *uuid.UUID                   `json:"channel_id,omitempty"`
+	Description         *string                      `json:"description,omitempty"`
+	Name                *string                      `json:"name,omitempty"`
+	Public              *bool                        `json:"public,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme
+	Slug *RoadmapBoardSlug `json:"slug,omitempty"`
+
+	// Suggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+	// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at
+	// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+	// still work.
+	Suggestions *RoadmapSuggestions `json:"suggestions,omitempty"`
+}
+
+// RoadmapStageChange One move of an idea. The counts are filled when the job that sets the linked feedback's
+// progress has run; `finished_at` is absent until then (and for moves that set no progress).
+type RoadmapStageChange struct {
+	// ApiKeyId The API key that moved it.
+	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
+
+	// CommentPostId The reply posted with the move.
+	CommentPostId *uuid.UUID `json:"comment_post_id,omitempty"`
+	CreatedAt     time.Time  `json:"created_at"`
+	DiscussionId  uuid.UUID  `json:"discussion_id"`
+	FinishedAt    *time.Time `json:"finished_at,omitempty"`
+
+	// FromStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	FromStage IdeaStage `json:"from_stage"`
+	Id        uuid.UUID `json:"id"`
+
+	// Linked Feedback linked to the idea when it was moved.
+	Linked int32 `json:"linked"`
+
+	// MemberId The member who moved it; absent for an API key or once the member left.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Progress The progress the move sets on the linked feedback; absent when it sets none.
+	Progress *FeedbackProgress `json:"progress,omitempty"`
+
+	// ProgressSet Feedback whose progress the move changed.
+	ProgressSet int32 `json:"progress_set"`
+
+	// ProgressSkipped Feedback skipped because it already had that progress, was deleted, or the move was replaced by a newer one.
+	ProgressSkipped int32 `json:"progress_skipped"`
+
+	// ToStage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	ToStage IdeaStage `json:"to_stage"`
+
+	// Via The OAuth client or MCP client that moved it on a member's behalf.
+	Via *string `json:"via,omitempty"`
+}
+
+// RoadmapStageChangePage defines model for RoadmapStageChangePage.
+type RoadmapStageChangePage struct {
+	Items []RoadmapStageChange `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// RoadmapStageMove defines model for RoadmapStageMove.
+type RoadmapStageMove struct {
+	// Comment Markdown, posted as the member's published reply on the idea in the same transaction. Needs a member session.
+	Comment *string `json:"comment,omitempty"`
+
+	// Stage Where an idea stands. `ideas`: suggested or under consideration. `planned`, `in_progress`
+	// and `shipped`: on the roadmap. `closed`: will not be done. Moving an idea sets the progress
+	// of its linked feedback: `planned` to `planned`, `in_progress` to `in_progress`, `shipped` to
+	// `done` and `closed` to `wont_do`; a move back to `ideas` sets none.
+	Stage IdeaStage `json:"stage"`
+}
+
+// RoadmapStageMoveResult defines model for RoadmapStageMoveResult.
+type RoadmapStageMoveResult struct {
+	// Change The move; absent when the idea was already in that stage and nothing changed.
+	Change *RoadmapStageChange `json:"change,omitempty"`
+
+	// Discussion A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
+	// opening post (`opening_post_id`) carries the body, votes and author; vote, edit and
+	// moderate the thread through it. `inbox_id`, `channel_id`, `pending_posts`, `hidden_posts`,
+	// `conversation_id` and `linked_count` are given on `/v1` only; `mine`, `voted` and
+	// `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+}
+
+// RoadmapSuggestions Whether readers may suggest ideas, as a channel's `discussions` mode works for page
+// threads. `moderated` (default): a reader's idea waits (`pending`) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at
+// once. `open`: everyone is published at once. `off`: no suggestions, but votes and replies
+// still work.
+type RoadmapSuggestions string
 
 // Role defines model for Role.
 type Role string
@@ -16197,6 +16760,9 @@ type StatusIncidentConversation struct {
 	HelpArticleId *uuid.UUID `json:"help_article_id,omitempty"`
 	Id            uuid.UUID  `json:"id"`
 
+	// Idea The roadmap idea a `feedback` conversation is linked to; absent when it is not linked.
+	Idea *IdeaRef `json:"idea,omitempty"`
+
 	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
 	// original times, were never unread and wrote no events, notifications or webhooks when
 	// they were imported. Absent otherwise.
@@ -16344,63 +16910,6 @@ type StatusIncidentPatch struct {
 type StatusIncidentPublish struct {
 	// Notify Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise).
 	Notify *bool `json:"notify,omitempty"`
-}
-
-// StatusIncidentReply defines model for StatusIncidentReply.
-type StatusIncidentReply struct {
-	// Body The reply's text, as for any message.
-	Body string `json:"body"`
-
-	// Close Close each conversation after the reply.
-	Close *bool `json:"close,omitempty"`
-}
-
-// StatusIncidentReplyCounts defines model for StatusIncidentReplyCounts.
-type StatusIncidentReplyCounts struct {
-	Failed  int32 `json:"failed"`
-	Pending int32 `json:"pending"`
-	Sent    int32 `json:"sent"`
-	Skipped int32 `json:"skipped"`
-}
-
-// StatusIncidentReplyOutcome defines model for StatusIncidentReplyOutcome.
-type StatusIncidentReplyOutcome string
-
-// StatusIncidentReplyReport defines model for StatusIncidentReplyReport.
-type StatusIncidentReplyReport struct {
-	Close      bool                        `json:"close"`
-	Counts     StatusIncidentReplyCounts   `json:"counts"`
-	CreatedAt  time.Time                   `json:"created_at"`
-	Id         uuid.UUID                   `json:"id"`
-	IncidentId uuid.UUID                   `json:"incident_id"`
-	Items      []StatusIncidentReplyTarget `json:"items"`
-
-	// NextCursor Absent on the last page.
-	NextCursor *string `json:"next_cursor,omitempty"`
-
-	// Queued The conversations the request was queued for.
-	Queued int32 `json:"queued"`
-}
-
-// StatusIncidentReplyResult defines model for StatusIncidentReplyResult.
-type StatusIncidentReplyResult struct {
-	// Id The reply request; read its outcomes with `GET .../replies/{replyId}`.
-	Id uuid.UUID `json:"id"`
-
-	// Queued The conversations a reply was queued for.
-	Queued int32 `json:"queued"`
-}
-
-// StatusIncidentReplyTarget defines model for StatusIncidentReplyTarget.
-type StatusIncidentReplyTarget struct {
-	ConversationId uuid.UUID `json:"conversation_id"`
-
-	// FinishedAt Absent while `pending`.
-	FinishedAt *time.Time                 `json:"finished_at,omitempty"`
-	Outcome    StatusIncidentReplyOutcome `json:"outcome"`
-
-	// Reason Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
-	Reason *string `json:"reason,omitempty"`
 }
 
 // StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
@@ -17595,6 +18104,19 @@ type WebhookDiscussionPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookDiscussionStagePayload defines model for WebhookDiscussionStagePayload.
+type WebhookDiscussionStagePayload struct {
+	Data DiscussionStageEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookEndpoint defines model for WebhookEndpoint.
 type WebhookEndpoint struct {
 	CreatedAt   time.Time  `json:"created_at"`
@@ -17998,6 +18520,9 @@ type PasskeyId = uuid.UUID
 // PushSubscriptionId defines model for PushSubscriptionId.
 type PushSubscriptionId = uuid.UUID
 
+// RoadmapBoardId defines model for RoadmapBoardId.
+type RoadmapBoardId = uuid.UUID
+
 // Search defines model for Search.
 type Search = string
 
@@ -18063,8 +18588,16 @@ type SignedIn = Me
 
 // ListClientDiscussionsParams defines parameters for ListClientDiscussions.
 type ListClientDiscussionsParams struct {
-	// Page The page's URL.
-	Page string          `form:"page" json:"page"`
+	Kind *DiscussionKind `form:"kind,omitempty" json:"kind,omitempty"`
+
+	// Page The page's URL; required unless `kind=idea`.
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// Stage `kind=idea` only.
+	Stage *IdeaStage `form:"stage,omitempty" json:"stage,omitempty"`
+
+	// Q `kind=idea` only: a title search.
+	Q    *string         `form:"q,omitempty" json:"q,omitempty"`
 	Sort *DiscussionSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Cursor The `next_cursor` of the previous page.
@@ -19023,6 +19556,13 @@ type ListConversationsParams struct {
 	// BroadcastId Only conversations opened by replies to this broadcast.
 	BroadcastId *uuid.UUID `form:"broadcast_id,omitempty" json:"broadcast_id,omitempty"`
 
+	// IdeaId Only the feedback linked to this roadmap idea. An idea of an inbox the caller cannot
+	// see answers `404`.
+	IdeaId *uuid.UUID `form:"idea_id,omitempty" json:"idea_id,omitempty"`
+
+	// Idea `none` lists only feedback that is not linked to an idea (and no other kind).
+	Idea *ListConversationsParamsIdea `form:"idea,omitempty" json:"idea,omitempty"`
+
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
 	// without it, both. Member sessions only (`400 validation_failed` for API keys).
 	Pinned *bool `form:"pinned,omitempty" json:"pinned,omitempty"`
@@ -19039,6 +19579,9 @@ type ListConversationsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
+
+// ListConversationsParamsIdea defines parameters for ListConversations.
+type ListConversationsParamsIdea string
 
 // CreateConversationParams defines parameters for CreateConversation.
 type CreateConversationParams struct {
@@ -19224,7 +19767,17 @@ type VoteDiscussionPostParams struct {
 
 // ListDiscussionsParams defines parameters for ListDiscussions.
 type ListDiscussionsParams struct {
-	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	InboxId *uuid.UUID      `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Kind    *DiscussionKind `form:"kind,omitempty" json:"kind,omitempty"`
+
+	// BoardId `kind=idea` only: the ideas of this board.
+	BoardId *uuid.UUID `form:"board_id,omitempty" json:"board_id,omitempty"`
+
+	// Stage `kind=idea` only: the ideas in this stage.
+	Stage *IdeaStage `form:"stage,omitempty" json:"stage,omitempty"`
+
+	// Q `kind=idea` only: a title search, at most 200 characters.
+	Q *string `form:"q,omitempty" json:"q,omitempty"`
 
 	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
 	// Without it, every site.
@@ -19283,10 +19836,64 @@ type AcceptDiscussionAnswerParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// UnlinkIdeaConversationParams defines parameters for UnlinkIdeaConversation.
+type UnlinkIdeaConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// LinkIdeaConversationParams defines parameters for LinkIdeaConversation.
+type LinkIdeaConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReplyToIdeaConversationsParams defines parameters for ReplyToIdeaConversations.
+type ReplyToIdeaConversationsParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetIdeaLinkedReplyParams defines parameters for GetIdeaLinkedReply.
+type GetIdeaLinkedReplyParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // CreateDiscussionPostParams defines parameters for CreateDiscussionPost.
 type CreateDiscussionPostParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MoveIdeaStageParams defines parameters for MoveIdeaStage.
+type MoveIdeaStageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListIdeaStageChangesParams defines parameters for ListIdeaStageChanges.
+type ListIdeaStageChangesParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -20339,6 +20946,42 @@ type RevokeOAuthGrantParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListRoadmapBoardsParams defines parameters for ListRoadmapBoards.
+type ListRoadmapBoardsParams struct {
+	// InboxId Only the board of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateRoadmapBoardParams defines parameters for CreateRoadmapBoard.
+type CreateRoadmapBoardParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteRoadmapBoardParams defines parameters for DeleteRoadmapBoard.
+type DeleteRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetRoadmapBoardParams defines parameters for GetRoadmapBoard.
+type GetRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateRoadmapBoardParams defines parameters for UpdateRoadmapBoard.
+type UpdateRoadmapBoardParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -20915,6 +21558,20 @@ type WebhookDiscussionPostCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookDiscussionStageChangedParams defines parameters for WebhookDiscussionStageChanged.
+type WebhookDiscussionStageChangedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookDiscussionUpdatedParams defines parameters for WebhookDiscussionUpdated.
 type WebhookDiscussionUpdatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -21381,8 +22038,14 @@ type UpdateDiscussionJSONRequestBody = DiscussionUpdate
 // AcceptDiscussionAnswerJSONRequestBody defines body for AcceptDiscussionAnswer for application/json ContentType.
 type AcceptDiscussionAnswerJSONRequestBody = DiscussionAnswer
 
+// ReplyToIdeaConversationsJSONRequestBody defines body for ReplyToIdeaConversations for application/json ContentType.
+type ReplyToIdeaConversationsJSONRequestBody = LinkedReplyCreate
+
 // CreateDiscussionPostJSONRequestBody defines body for CreateDiscussionPost for application/json ContentType.
 type CreateDiscussionPostJSONRequestBody = DiscussionPostCreate
+
+// MoveIdeaStageJSONRequestBody defines body for MoveIdeaStage for application/json ContentType.
+type MoveIdeaStageJSONRequestBody = RoadmapStageMove
 
 // CreateEmailDesignJSONRequestBody defines body for CreateEmailDesign for application/json ContentType.
 type CreateEmailDesignJSONRequestBody = EmailDesignCreate
@@ -21528,6 +22191,12 @@ type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
+// CreateRoadmapBoardJSONRequestBody defines body for CreateRoadmapBoard for application/json ContentType.
+type CreateRoadmapBoardJSONRequestBody = RoadmapBoardCreate
+
+// UpdateRoadmapBoardJSONRequestBody defines body for UpdateRoadmapBoard for application/json ContentType.
+type UpdateRoadmapBoardJSONRequestBody = RoadmapBoardUpdate
+
 // CreateStatusPageJSONRequestBody defines body for CreateStatusPage for application/json ContentType.
 type CreateStatusPageJSONRequestBody = StatusPageCreate
 
@@ -21559,7 +22228,7 @@ type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
 type PublishStatusIncidentJSONRequestBody = StatusIncidentPublish
 
 // ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
-type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
+type ReplyToStatusIncidentConversationsJSONRequestBody = LinkedReplyCreate
 
 // CreateStatusIncidentUpdateJSONRequestBody defines body for CreateStatusIncidentUpdate for application/json ContentType.
 type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
@@ -21620,6 +22289,9 @@ type WebhookDiscussionCreatedJSONRequestBody = WebhookDiscussionPayload
 
 // WebhookDiscussionPostCreatedJSONRequestBody defines body for WebhookDiscussionPostCreated for application/json ContentType.
 type WebhookDiscussionPostCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionStageChangedJSONRequestBody defines body for WebhookDiscussionStageChanged for application/json ContentType.
+type WebhookDiscussionStageChangedJSONRequestBody = WebhookDiscussionStagePayload
 
 // WebhookDiscussionUpdatedJSONRequestBody defines body for WebhookDiscussionUpdated for application/json ContentType.
 type WebhookDiscussionUpdatedJSONRequestBody = WebhookDiscussionPayload
@@ -23732,6 +24404,32 @@ func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsDiscussionStageEvent returns the union data inside the RealtimeMessage as a DiscussionStageEvent
+func (t RealtimeMessage) AsDiscussionStageEvent() (DiscussionStageEvent, error) {
+	var body DiscussionStageEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionStageEvent overwrites any union data inside the RealtimeMessage as the provided DiscussionStageEvent
+func (t *RealtimeMessage) FromDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionStageEvent performs a merge with any union data inside the RealtimeMessage, using the provided DiscussionStageEvent
+func (t *RealtimeMessage) MergeDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsSubscriptionEvent returns the union data inside the RealtimeMessage as a SubscriptionEvent
 func (t RealtimeMessage) AsSubscriptionEvent() (SubscriptionEvent, error) {
 	var body SubscriptionEvent
@@ -24096,6 +24794,32 @@ func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
 	return err
 }
 
+// AsRoadmapBoardSignal returns the union data inside the RealtimeMessage as a RoadmapBoardSignal
+func (t RealtimeMessage) AsRoadmapBoardSignal() (RoadmapBoardSignal, error) {
+	var body RoadmapBoardSignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoadmapBoardSignal overwrites any union data inside the RealtimeMessage as the provided RoadmapBoardSignal
+func (t *RealtimeMessage) FromRoadmapBoardSignal(v RoadmapBoardSignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoadmapBoardSignal performs a merge with any union data inside the RealtimeMessage, using the provided RoadmapBoardSignal
+func (t *RealtimeMessage) MergeRoadmapBoardSignal(v RoadmapBoardSignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -24348,6 +25072,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDiscussionEvent()
 	case "discussion.post_created":
 		return t.AsDiscussionEvent()
+	case "discussion.stage_changed":
+		return t.AsDiscussionStageEvent()
 	case "discussion.updated":
 		return t.AsDiscussionEvent()
 	case "draft.created":
@@ -24392,6 +25118,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsRealtimeReady()
 	case "resync_required":
 		return t.AsRealtimeResyncRequired()
+	case "roadmap.board.updated":
+		return t.AsRoadmapBoardSignal()
 	case "status.component.updated":
 		return t.AsStatusComponentEvent()
 	case "status.incident.created":
@@ -24821,6 +25549,32 @@ func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsDiscussionStageEvent returns the union data inside the StoredEvent as a DiscussionStageEvent
+func (t StoredEvent) AsDiscussionStageEvent() (DiscussionStageEvent, error) {
+	var body DiscussionStageEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionStageEvent overwrites any union data inside the StoredEvent as the provided DiscussionStageEvent
+func (t *StoredEvent) FromDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionStageEvent performs a merge with any union data inside the StoredEvent, using the provided DiscussionStageEvent
+func (t *StoredEvent) MergeDiscussionStageEvent(v DiscussionStageEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsSubscriptionEvent returns the union data inside the StoredEvent as a SubscriptionEvent
 func (t StoredEvent) AsSubscriptionEvent() (SubscriptionEvent, error) {
 	var body SubscriptionEvent
@@ -25069,6 +25823,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsDiscussionEvent()
 	case "discussion.post_created":
 		return t.AsDiscussionEvent()
+	case "discussion.stage_changed":
+		return t.AsDiscussionStageEvent()
 	case "discussion.updated":
 		return t.AsDiscussionEvent()
 	case "draft.created":
@@ -25582,6 +26338,12 @@ type ClientInterface interface {
 	// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
 	// without an accepted answer only, those nobody replied to first, then newest).
 	//
+	// With `kind=idea` it lists the roadmap ideas of the channel's inbox instead of a page's
+	// threads: `page` is not used, `stage` narrows to one stage (the default is every public
+	// stage; `closed` ideas are left out of public lists), `sort` is `top` or `new` and `q` is a
+	// title search (at most 200 characters, 30 a minute per address and channel). It answers
+	// `404 roadmap_off` without a public board, whatever the channel's `discussions` setting.
+	//
 	// Authors are shown by display name and initials only. Without `Authorization` the answer may
 	// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
 	// session of this channel the caller's own threads still waiting for a member are included and
@@ -25596,7 +26358,8 @@ type ClientInterface interface {
 
 	// GetClientDiscussion A thread with its replies
 	//
-	// A published thread of the channel's inbox on a page the channel serves, with its published
+	// A published thread of the channel's inbox on a page the channel serves, or a published idea of
+	// the inbox's public roadmap board (a `closed` idea is answered with its stage), with its published
 	// replies: the accepted answer first, then oldest first; replies to replies carry
 	// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
 	// body. Caching, authentication and errors as for the list; with a token the caller's own
@@ -25757,6 +26520,21 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 	CreatePageRating(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientRoadmap The inbox's roadmap board
+	//
+	// The public roadmap board of the inbox of a `chat` channel, without a session: its name,
+	// description, public URL, whether and how readers may suggest ideas, and how many ideas sit in
+	// each public stage (`closed` ideas are not listed publicly). Read the ideas with
+	// `listClientDiscussions` and `kind=idea`. Nothing is created.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// `404 roadmap_off` when the inbox has no public board (also on a server with
+	// `YUVA_ROADMAP=off`) and for an `app` channel's key. Rate limited per IP address
+	// (`429 rate_limited`). Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/roadmap (the `GetClientRoadmap` operationId).
+	GetClientRoadmap(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateClientSubscriptionWithBody Subscribe from a form
 	//
@@ -26063,6 +26841,8 @@ type ClientInterface interface {
 	//
 	// One vote per author and post; the opening post's votes are the thread's. Voting again changes
 	// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Votes on ideas are
+	// limited to 120 an hour per author.
 	//
 	// Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
 	VoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -26073,6 +26853,12 @@ type ClientInterface interface {
 	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 	// off answers `403 discussions_off`.
+	//
+	// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+	// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+	// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+	// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+	// channel's `discussions` setting does not.
 	//
 	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 	// member (`state: pending`, visible only to its author and members) until one of their posts
@@ -26093,6 +26879,12 @@ type ClientInterface interface {
 	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 	// off answers `403 discussions_off`.
+	//
+	// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+	// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+	// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+	// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+	// channel's `discussions` setting does not.
 	//
 	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 	// member (`state: pending`, visible only to its author and members) until one of their posts
@@ -26117,7 +26909,8 @@ type ClientInterface interface {
 	// AcceptClientDiscussionAnswerWithBody Mark the accepted answer
 	//
 	// The thread's author marks a published reply to the thread itself as its answer, replacing an
-	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+	// an idea `409 not_supported`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -26127,7 +26920,8 @@ type ClientInterface interface {
 	// AcceptClientDiscussionAnswer Mark the accepted answer
 	//
 	// The thread's author marks a published reply to the thread itself as its answer, replacing an
-	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+	// an idea `409 not_supported`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -27965,7 +28759,9 @@ type ClientInterface interface {
 	// DeleteChannel Remove a channel
 	//
 	// Owners, admins and API keys. Conversations that started on it keep
-	// their messages and lose their `channel_id`.
+	// their messages and lose their `channel_id`. A channel a roadmap board files its ideas on
+	// is refused with `409 channel_has_roadmap_board`; delete the board or point it at another
+	// channel first.
 	//
 	// Scope: `inboxes:manage`.
 	//
@@ -28471,6 +29267,13 @@ type ClientInterface interface {
 	// the accepted answer. The author follows the thread. A conversation becomes one thread
 	// (`409 already_discussed`); `conversation_id` on the thread links back.
 	//
+	// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+	// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+	// `ideas` on the board, with the title and body the member writes, and links the conversation
+	// to it in the same transaction, replacing a link it had; the author rule above applies.
+	// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+	// allowed.
+	//
 	// Member sessions only.
 	//
 	// Takes any type of body and a specified content type.
@@ -28492,6 +29295,13 @@ type ClientInterface interface {
 	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
 	// the accepted answer. The author follows the thread. A conversation becomes one thread
 	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+	// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+	// `ideas` on the board, with the title and body the member writes, and links the conversation
+	// to it in the same transaction, replacing a link it had; the author rule above applies.
+	// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+	// allowed.
 	//
 	// Member sessions only.
 	//
@@ -28611,7 +29421,9 @@ type ClientInterface interface {
 	// conversation; the assignee stays only when they can access the new inbox. The
 	// conversation continues on the new inbox's channel of the same kind (for e-mail the one
 	// its chat continuity would use); an e-mail conversation is refused with
-	// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+	// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+	// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+	// timeline gets a `moved` event.
 	// `conversation.updated` reports the new inbox; members watching the old one get
 	// `conversation.moved`.
 	//
@@ -28628,7 +29440,9 @@ type ClientInterface interface {
 	// conversation; the assignee stays only when they can access the new inbox. The
 	// conversation continues on the new inbox's channel of the same kind (for e-mail the one
 	// its chat continuity would use); an e-mail conversation is refused with
-	// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+	// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+	// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+	// timeline gets a `moved` event.
 	// `conversation.updated` reports the new inbox; members watching the old one get
 	// `conversation.moved`.
 	//
@@ -28790,7 +29604,8 @@ type ClientInterface interface {
 	// VoteDiscussionPost Vote for a post as a member
 	//
 	// One vote per member and post (the opening post votes for the thread); voting again changes
-	// nothing. Member sessions only.
+	// nothing. A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Member
+	// sessions only.
 	//
 	// Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
 	VoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -28801,8 +29616,13 @@ type ClientInterface interface {
 	// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
 	// and hidden ones too.
 	//
-	// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
-	// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+	// `kind` defaults to `page`, so callers that know no ideas see none: documentation threads
+	// only. `kind=idea` lists roadmap ideas instead, narrowed by `board_id`, `stage` and `q` (a
+	// title search: words are ANDed and the last may be the start of a word), and takes no `site`
+	// or `page`. Ideas waiting for approval are listed with `state=pending`.
+	//
+	// `sort`: `activity` (default, last activity first), `new` (newest first), `top` (most
+	// votes first) or `votes` (the same, from the vote count kept on the idea). `answered=false` keeps threads without an accepted answer, `locked` locked or
 	// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
 	// `next_cursor` belongs to the sort and filters it was returned for.
 	//
@@ -28816,6 +29636,11 @@ type ClientInterface interface {
 	// A thread on a documentation page, written by the calling member and published at once. The
 	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	//
+	// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+	// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+	// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+	// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 	// Member sessions only.
 	//
 	// Takes any type of body and a specified content type.
@@ -28828,6 +29653,11 @@ type ClientInterface interface {
 	// A thread on a documentation page, written by the calling member and published at once. The
 	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	//
+	// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+	// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+	// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+	// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 	// Member sessions only.
 	//
 	// Takes a body of the `application/json` content type.
@@ -28876,7 +29706,8 @@ type ClientInterface interface {
 	//
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+	// (`409 not_supported`). Member sessions only.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -28887,12 +29718,91 @@ type ClientInterface interface {
 	//
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+	// (`409 not_supported`). Member sessions only.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
 	AcceptDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnlinkIdeaConversation Unlink feedback from an idea
+	//
+	// Unlinking feedback that is not linked to this idea changes nothing. The progress already set
+	// on the feedback stays. A discussion that is not an idea answers `409 not_an_idea`.
+	//
+	// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+	// `conversations:read`.
+	//
+	// Corresponds with DELETE /v1/discussions/{discussionId}/conversations/{conversationId} (the `UnlinkIdeaConversation` operationId).
+	UnlinkIdeaConversation(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *UnlinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// LinkIdeaConversation Link feedback to an idea
+	//
+	// Links a `feedback` conversation to the idea (`409 not_feedback` for any other kind, and
+	// `409 not_an_idea` when the discussion is a page thread). An idea
+	// has many links and a feedback has at most one: a link replaces the feedback's previous link,
+	// and linking it to the idea it already has changes nothing. The idea must belong to a board of
+	// the conversation's inbox (`404` otherwise, also when either was deleted meanwhile). An idea
+	// takes at most 5,000 links (`422 too_many_links`). Linking feedback to an idea that is past
+	// `ideas` sets the feedback's progress at once, as a stage move would. Links store no event.
+	//
+	// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+	// `conversations:read`.
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/conversations/{conversationId} (the `LinkIdeaConversation` operationId).
+	LinkIdeaConversation(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *LinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReplyToIdeaConversationsWithBody Reply to the feedback linked to an idea
+	//
+	// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+	// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+	// linked conversation that is not closed and that the caller can see, optionally closing each
+	// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+	// the conversation's own channel and fires the usual `message.created` and
+	// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+	// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+	// reports what became of each conversation.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+	// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+	ReplyToIdeaConversationsWithBody(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReplyToIdeaConversations Reply to the feedback linked to an idea
+	//
+	// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+	// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+	// linked conversation that is not closed and that the caller can see, optionally closing each
+	// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+	// the conversation's own channel and fires the usual `message.created` and
+	// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+	// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+	// reports what became of each conversation.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+	// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+	ReplyToIdeaConversations(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, body ReplyToIdeaConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetIdeaLinkedReply Get what became of a reply to an idea's linked feedback
+	//
+	// The outcome of one "Reply to linked" request per conversation, with the outcomes and reasons
+	// of `getStatusIncidentReply`.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scopes: `roadmap:read`
+	// and `conversations:read`.
+	//
+	// Corresponds with GET /v1/discussions/{discussionId}/linked-replies/{replyId} (the `GetIdeaLinkedReply` operationId).
+	GetIdeaLinkedReply(ctx context.Context, discussionId DiscussionId, replyId StatusReplyId, params *GetIdeaLinkedReplyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateDiscussionPostWithBody Reply as a member
 	//
@@ -28915,6 +29825,77 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
 	CreateDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MoveIdeaStageWithBody Move an idea to a stage
+	//
+	// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+	// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+	// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+	// and adds a `stage` notification for every follower who is a signed-in reader (with the
+	// usual digest e-mail).
+	//
+	// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+	// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+	// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+	// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+	// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+	// skips feedback that already has that progress and deleted conversations, and stops as soon
+	// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+	// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+	// the counts when the job has finished (`finished_at`).
+	//
+	// `comment` is posted in the same transaction as the member's published reply on the idea
+	// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+	// votes.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+	// It is never implied: a key made without naming its scopes does not hold it.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+	MoveIdeaStageWithBody(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MoveIdeaStage Move an idea to a stage
+	//
+	// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+	// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+	// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+	// and adds a `stage` notification for every follower who is a signed-in reader (with the
+	// usual digest e-mail).
+	//
+	// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+	// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+	// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+	// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+	// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+	// skips feedback that already has that progress and deleted conversations, and stops as soon
+	// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+	// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+	// the counts when the job has finished (`finished_at`).
+	//
+	// `comment` is posted in the same transaction as the member's published reply on the idea
+	// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+	// votes.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+	// It is never implied: a key made without naming its scopes does not hold it.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+	MoveIdeaStage(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, body MoveIdeaStageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListIdeaStageChanges An idea's stage history
+	//
+	// Every move of the idea, newest first. The public page shows its dates ("Planned on",
+	// "Shipped on"). An idea in an inbox the caller cannot see, and a discussion that is not an
+	// idea, answer `404`.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Corresponds with GET /v1/discussions/{discussionId}/stage-changes (the `ListIdeaStageChanges` operationId).
+	ListIdeaStageChanges(ctx context.Context, discussionId DiscussionId, params *ListIdeaStageChangesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDocsPage One documentation page
 	//
@@ -31498,6 +32479,97 @@ type ClientInterface interface {
 	// Corresponds with GET /v1/push/vapid-public-key (the `GetVapidPublicKey` operationId).
 	GetVapidPublicKey(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListRoadmapBoards List roadmap boards
+	//
+	// The boards of the inboxes the caller can see, oldest first, each with how many ideas sit in
+	// every stage.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Corresponds with GET /v1/roadmap-boards (the `ListRoadmapBoards` operationId).
+	ListRoadmapBoards(ctx context.Context, params *ListRoadmapBoardsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateRoadmapBoardWithBody Create a roadmap board
+	//
+	// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+	// `slug` names the board in its URL, is unique across the server, current and former slugs
+	// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+	// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+	// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+	// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+	CreateRoadmapBoardWithBody(ctx context.Context, params *CreateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateRoadmapBoard Create a roadmap board
+	//
+	// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+	// `slug` names the board in its URL, is unique across the server, current and former slugs
+	// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+	// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+	// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+	// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+	CreateRoadmapBoard(ctx context.Context, params *CreateRoadmapBoardParams, body CreateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteRoadmapBoard Delete a roadmap board
+	//
+	// The board with its ideas, their posts, votes, follows and stage history, and the links to
+	// feedback. The feedback conversations and the progress already set on them stay.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Corresponds with DELETE /v1/roadmap-boards/{boardId} (the `DeleteRoadmapBoard` operationId).
+	DeleteRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *DeleteRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetRoadmapBoard A roadmap board
+	//
+	// With its idea counts per stage and its public `url`.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Corresponds with GET /v1/roadmap-boards/{boardId} (the `GetRoadmapBoard` operationId).
+	GetRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *GetRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateRoadmapBoardWithBody Update a roadmap board
+	//
+	// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+	// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+	// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+	// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+	// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+	UpdateRoadmapBoardWithBody(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateRoadmapBoard Update a roadmap board
+	//
+	// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+	// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+	// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+	// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+	// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+	UpdateRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetStats Team activity since a moment
 	//
 	// What the team did in the inboxes the caller can see (or in one of them) from `since` until
@@ -32944,6 +34016,12 @@ func (c *Client) GetClientChannel(ctx context.Context, channelKey string, reqEdi
 // `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
 // without an accepted answer only, those nobody replied to first, then newest).
 //
+// With `kind=idea` it lists the roadmap ideas of the channel's inbox instead of a page's
+// threads: `page` is not used, `stage` narrows to one stage (the default is every public
+// stage; `closed` ideas are left out of public lists), `sort` is `top` or `new` and `q` is a
+// title search (at most 200 characters, 30 a minute per address and channel). It answers
+// `404 roadmap_off` without a public board, whatever the channel's `discussions` setting.
+//
 // Authors are shown by display name and initials only. Without `Authorization` the answer may
 // be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
 // session of this channel the caller's own threads still waiting for a member are included and
@@ -32968,7 +34046,8 @@ func (c *Client) ListClientDiscussions(ctx context.Context, channelKey ChannelKe
 
 // GetClientDiscussion A thread with its replies
 //
-// A published thread of the channel's inbox on a page the channel serves, with its published
+// A published thread of the channel's inbox on a page the channel serves, or a published idea of
+// the inbox's public roadmap board (a `closed` idea is answered with its stage), with its published
 // replies: the accepted answer first, then oldest first; replies to replies carry
 // `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
 // body. Caching, authentication and errors as for the list; with a token the caller's own
@@ -33240,6 +34319,31 @@ func (c *Client) CreatePageRatingWithBody(ctx context.Context, channelKey Channe
 // Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 func (c *Client) CreatePageRating(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreatePageRatingRequest(c.Server, channelKey, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientRoadmap The inbox's roadmap board
+//
+// The public roadmap board of the inbox of a `chat` channel, without a session: its name,
+// description, public URL, whether and how readers may suggest ideas, and how many ideas sit in
+// each public stage (`closed` ideas are not listed publicly). Read the ideas with
+// `listClientDiscussions` and `kind=idea`. Nothing is created.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// `404 roadmap_off` when the inbox has no public board (also on a server with
+// `YUVA_ROADMAP=off`) and for an `app` channel's key. Rate limited per IP address
+// (`429 rate_limited`). Sent with `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/roadmap (the `GetClientRoadmap` operationId).
+func (c *Client) GetClientRoadmap(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientRoadmapRequest(c.Server, channelKey)
 	if err != nil {
 		return nil, err
 	}
@@ -33765,6 +34869,8 @@ func (c *Client) UnvoteClientDiscussionPost(ctx context.Context, postId Discussi
 //
 // One vote per author and post; the opening post's votes are the thread's. Voting again changes
 // nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Votes on ideas are
+// limited to 120 an hour per author.
 //
 // Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
 func (c *Client) VoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -33785,6 +34891,12 @@ func (c *Client) VoteClientDiscussionPost(ctx context.Context, postId Discussion
 // allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 // an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 // off answers `403 discussions_off`.
+//
+// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+// channel's `discussions` setting does not.
 //
 // With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 // member (`state: pending`, visible only to its author and members) until one of their posts
@@ -33815,6 +34927,12 @@ func (c *Client) CreateClientDiscussionWithBody(ctx context.Context, params *Cre
 // allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 // an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 // off answers `403 discussions_off`.
+//
+// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+// channel's `discussions` setting does not.
 //
 // With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 // member (`state: pending`, visible only to its author and members) until one of their posts
@@ -33859,7 +34977,8 @@ func (c *Client) ClearClientDiscussionAnswer(ctx context.Context, discussionId D
 // AcceptClientDiscussionAnswerWithBody Mark the accepted answer
 //
 // The thread's author marks a published reply to the thread itself as its answer, replacing an
-// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+// an idea `409 not_supported`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -33879,7 +34998,8 @@ func (c *Client) AcceptClientDiscussionAnswerWithBody(ctx context.Context, discu
 // AcceptClientDiscussionAnswer Mark the accepted answer
 //
 // The thread's author marks a published reply to the thread itself as its answer, replacing an
-// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+// an idea `409 not_supported`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -37107,7 +38227,9 @@ func (c *Client) UpdateCannedReply(ctx context.Context, cannedReplyId CannedRepl
 // DeleteChannel Remove a channel
 //
 // Owners, admins and API keys. Conversations that started on it keep
-// their messages and lose their `channel_id`.
+// their messages and lose their `channel_id`. A channel a roadmap board files its ideas on
+// is refused with `409 channel_has_roadmap_board`; delete the board or point it at another
+// channel first.
 //
 // Scope: `inboxes:manage`.
 //
@@ -38013,6 +39135,13 @@ func (c *Client) UpdateConversation(ctx context.Context, conversationId Conversa
 // the accepted answer. The author follows the thread. A conversation becomes one thread
 // (`409 already_discussed`); `conversation_id` on the thread links back.
 //
+// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+// `ideas` on the board, with the title and body the member writes, and links the conversation
+// to it in the same transaction, replacing a link it had; the author rule above applies.
+// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+// allowed.
+//
 // Member sessions only.
 //
 // Takes any type of body and a specified content type.
@@ -38044,6 +39173,13 @@ func (c *Client) CreateDiscussionFromConversationWithBody(ctx context.Context, c
 // otherwise the calling member is. With `answer`, the member's reply is posted and marked as
 // the accepted answer. The author follows the thread. A conversation becomes one thread
 // (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+// `ideas` on the board, with the title and body the member writes, and links the conversation
+// to it in the same transaction, replacing a link it had; the author rule above applies.
+// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+// allowed.
 //
 // Member sessions only.
 //
@@ -38213,7 +39349,9 @@ func (c *Client) CreateMessage(ctx context.Context, conversationId ConversationI
 // conversation; the assignee stays only when they can access the new inbox. The
 // conversation continues on the new inbox's channel of the same kind (for e-mail the one
 // its chat continuity would use); an e-mail conversation is refused with
-// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+// timeline gets a `moved` event.
 // `conversation.updated` reports the new inbox; members watching the old one get
 // `conversation.moved`.
 //
@@ -38240,7 +39378,9 @@ func (c *Client) MoveConversationWithBody(ctx context.Context, conversationId Co
 // conversation; the assignee stays only when they can access the new inbox. The
 // conversation continues on the new inbox's channel of the same kind (for e-mail the one
 // its chat continuity would use); an e-mail conversation is refused with
-// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+// timeline gets a `moved` event.
 // `conversation.updated` reports the new inbox; members watching the old one get
 // `conversation.moved`.
 //
@@ -38542,7 +39682,8 @@ func (c *Client) UnvoteDiscussionPost(ctx context.Context, postId DiscussionPost
 // VoteDiscussionPost Vote for a post as a member
 //
 // One vote per member and post (the opening post votes for the thread); voting again changes
-// nothing. Member sessions only.
+// nothing. A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Member
+// sessions only.
 //
 // Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
 func (c *Client) VoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -38563,8 +39704,13 @@ func (c *Client) VoteDiscussionPost(ctx context.Context, postId DiscussionPostId
 // state is listed unless `state` narrows it, so the panel sees threads waiting for approval
 // and hidden ones too.
 //
-// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
-// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+// `kind` defaults to `page`, so callers that know no ideas see none: documentation threads
+// only. `kind=idea` lists roadmap ideas instead, narrowed by `board_id`, `stage` and `q` (a
+// title search: words are ANDed and the last may be the start of a word), and takes no `site`
+// or `page`. Ideas waiting for approval are listed with `state=pending`.
+//
+// `sort`: `activity` (default, last activity first), `new` (newest first), `top` (most
+// votes first) or `votes` (the same, from the vote count kept on the idea). `answered=false` keeps threads without an accepted answer, `locked` locked or
 // unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
 // `next_cursor` belongs to the sort and filters it was returned for.
 //
@@ -38588,6 +39734,11 @@ func (c *Client) ListDiscussions(ctx context.Context, params *ListDiscussionsPar
 // A thread on a documentation page, written by the calling member and published at once. The
 // page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 // channel must have discussions on (`403 discussions_off`). The member follows it.
+//
+// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 // Member sessions only.
 //
 // Takes any type of body and a specified content type.
@@ -38610,6 +39761,11 @@ func (c *Client) CreateDiscussionWithBody(ctx context.Context, params *CreateDis
 // A thread on a documentation page, written by the calling member and published at once. The
 // page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 // channel must have discussions on (`403 discussions_off`). The member follows it.
+//
+// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 // Member sessions only.
 //
 // Takes a body of the `application/json` content type.
@@ -38708,7 +39864,8 @@ func (c *Client) ClearDiscussionAnswer(ctx context.Context, discussionId Discuss
 //
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-// threads. Followers are told once (`discussion.answered`). Member sessions only.
+// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+// (`409 not_supported`). Member sessions only.
 //
 // Takes any type of body and a specified content type.
 //
@@ -38729,13 +39886,142 @@ func (c *Client) AcceptDiscussionAnswerWithBody(ctx context.Context, discussionI
 //
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-// threads. Followers are told once (`discussion.answered`). Member sessions only.
+// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+// (`409 not_supported`). Member sessions only.
 //
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
 func (c *Client) AcceptDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAcceptDiscussionAnswerRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnlinkIdeaConversation Unlink feedback from an idea
+//
+// Unlinking feedback that is not linked to this idea changes nothing. The progress already set
+// on the feedback stays. A discussion that is not an idea answers `409 not_an_idea`.
+//
+// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+// `conversations:read`.
+//
+// Corresponds with DELETE /v1/discussions/{discussionId}/conversations/{conversationId} (the `UnlinkIdeaConversation` operationId).
+func (c *Client) UnlinkIdeaConversation(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *UnlinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnlinkIdeaConversationRequest(c.Server, discussionId, conversationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// LinkIdeaConversation Link feedback to an idea
+//
+// Links a `feedback` conversation to the idea (`409 not_feedback` for any other kind, and
+// `409 not_an_idea` when the discussion is a page thread). An idea
+// has many links and a feedback has at most one: a link replaces the feedback's previous link,
+// and linking it to the idea it already has changes nothing. The idea must belong to a board of
+// the conversation's inbox (`404` otherwise, also when either was deleted meanwhile). An idea
+// takes at most 5,000 links (`422 too_many_links`). Linking feedback to an idea that is past
+// `ideas` sets the feedback's progress at once, as a stage move would. Links store no event.
+//
+// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+// `conversations:read`.
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/conversations/{conversationId} (the `LinkIdeaConversation` operationId).
+func (c *Client) LinkIdeaConversation(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *LinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewLinkIdeaConversationRequest(c.Server, discussionId, conversationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReplyToIdeaConversationsWithBody Reply to the feedback linked to an idea
+//
+// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+// linked conversation that is not closed and that the caller can see, optionally closing each
+// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+// the conversation's own channel and fires the usual `message.created` and
+// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+// reports what became of each conversation.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+func (c *Client) ReplyToIdeaConversationsWithBody(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplyToIdeaConversationsRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReplyToIdeaConversations Reply to the feedback linked to an idea
+//
+// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+// linked conversation that is not closed and that the caller can see, optionally closing each
+// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+// the conversation's own channel and fires the usual `message.created` and
+// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+// reports what became of each conversation.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+func (c *Client) ReplyToIdeaConversations(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, body ReplyToIdeaConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplyToIdeaConversationsRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetIdeaLinkedReply Get what became of a reply to an idea's linked feedback
+//
+// The outcome of one "Reply to linked" request per conversation, with the outcomes and reasons
+// of `getStatusIncidentReply`.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scopes: `roadmap:read`
+// and `conversations:read`.
+//
+// Corresponds with GET /v1/discussions/{discussionId}/linked-replies/{replyId} (the `GetIdeaLinkedReply` operationId).
+func (c *Client) GetIdeaLinkedReply(ctx context.Context, discussionId DiscussionId, replyId StatusReplyId, params *GetIdeaLinkedReplyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetIdeaLinkedReplyRequest(c.Server, discussionId, replyId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -38778,6 +40064,107 @@ func (c *Client) CreateDiscussionPostWithBody(ctx context.Context, discussionId 
 // Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
 func (c *Client) CreateDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateDiscussionPostRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MoveIdeaStageWithBody Move an idea to a stage
+//
+// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+// and adds a `stage` notification for every follower who is a signed-in reader (with the
+// usual digest e-mail).
+//
+// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+// skips feedback that already has that progress and deleted conversations, and stops as soon
+// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+// the counts when the job has finished (`finished_at`).
+//
+// `comment` is posted in the same transaction as the member's published reply on the idea
+// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+// votes.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+// It is never implied: a key made without naming its scopes does not hold it.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+func (c *Client) MoveIdeaStageWithBody(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveIdeaStageRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MoveIdeaStage Move an idea to a stage
+//
+// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+// and adds a `stage` notification for every follower who is a signed-in reader (with the
+// usual digest e-mail).
+//
+// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+// skips feedback that already has that progress and deleted conversations, and stops as soon
+// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+// the counts when the job has finished (`finished_at`).
+//
+// `comment` is posted in the same transaction as the member's published reply on the idea
+// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+// votes.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+// It is never implied: a key made without naming its scopes does not hold it.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+func (c *Client) MoveIdeaStage(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, body MoveIdeaStageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveIdeaStageRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListIdeaStageChanges An idea's stage history
+//
+// Every move of the idea, newest first. The public page shows its dates ("Planned on",
+// "Shipped on"). An idea in an inbox the caller cannot see, and a discussion that is not an
+// idea, answer `404`.
+//
+// Scope: `roadmap:read`.
+//
+// Corresponds with GET /v1/discussions/{discussionId}/stage-changes (the `ListIdeaStageChanges` operationId).
+func (c *Client) ListIdeaStageChanges(ctx context.Context, discussionId DiscussionId, params *ListIdeaStageChangesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListIdeaStageChangesRequest(c.Server, discussionId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -43240,6 +44627,167 @@ func (c *Client) GetVapidPublicKey(ctx context.Context, reqEditors ...RequestEdi
 	return c.Client.Do(req)
 }
 
+// ListRoadmapBoards List roadmap boards
+//
+// The boards of the inboxes the caller can see, oldest first, each with how many ideas sit in
+// every stage.
+//
+// Scope: `roadmap:read`.
+//
+// Corresponds with GET /v1/roadmap-boards (the `ListRoadmapBoards` operationId).
+func (c *Client) ListRoadmapBoards(ctx context.Context, params *ListRoadmapBoardsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListRoadmapBoardsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateRoadmapBoardWithBody Create a roadmap board
+//
+// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+// `slug` names the board in its URL, is unique across the server, current and former slugs
+// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+func (c *Client) CreateRoadmapBoardWithBody(ctx context.Context, params *CreateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateRoadmapBoardRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateRoadmapBoard Create a roadmap board
+//
+// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+// `slug` names the board in its URL, is unique across the server, current and former slugs
+// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+func (c *Client) CreateRoadmapBoard(ctx context.Context, params *CreateRoadmapBoardParams, body CreateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateRoadmapBoardRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteRoadmapBoard Delete a roadmap board
+//
+// The board with its ideas, their posts, votes, follows and stage history, and the links to
+// feedback. The feedback conversations and the progress already set on them stay.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Corresponds with DELETE /v1/roadmap-boards/{boardId} (the `DeleteRoadmapBoard` operationId).
+func (c *Client) DeleteRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *DeleteRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteRoadmapBoardRequest(c.Server, boardId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetRoadmapBoard A roadmap board
+//
+// With its idea counts per stage and its public `url`.
+//
+// Scope: `roadmap:read`.
+//
+// Corresponds with GET /v1/roadmap-boards/{boardId} (the `GetRoadmapBoard` operationId).
+func (c *Client) GetRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *GetRoadmapBoardParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRoadmapBoardRequest(c.Server, boardId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateRoadmapBoardWithBody Update a roadmap board
+//
+// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+func (c *Client) UpdateRoadmapBoardWithBody(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateRoadmapBoardRequestWithBody(c.Server, boardId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateRoadmapBoard Update a roadmap board
+//
+// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+func (c *Client) UpdateRoadmapBoard(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateRoadmapBoardRequest(c.Server, boardId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetStats Team activity since a moment
 //
 // What the team did in the inboxes the caller can see (or in one of them) from `since` until
@@ -45396,12 +46944,52 @@ func NewListClientDiscussionsRequest(server string, channelKey ChannelKey, param
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
 
-		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-			return nil, err
-		} else {
-			for _, qp := range strings.Split(queryFrag, "&") {
-				rawQueryFragments = append(rawQueryFragments, qp)
+		if params.Kind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
 			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Stage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "stage", *params.Stage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
 		}
 
 		if params.Sort != nil {
@@ -45975,6 +47563,40 @@ func NewCreatePageRatingRequestWithBody(server string, channelKey ChannelKey, co
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetClientRoadmapRequest constructs an http.Request for the GetClientRoadmap method
+func NewGetClientRoadmapRequest(server string, channelKey ChannelKey) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/roadmap", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -54325,6 +55947,30 @@ func NewListConversationsRequest(server string, params *ListConversationsParams)
 
 		}
 
+		if params.IdeaId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "idea_id", *params.IdeaId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Idea != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "idea", *params.Idea, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Pinned != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pinned", *params.Pinned, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
@@ -55813,6 +57459,54 @@ func NewListDiscussionsRequest(server string, params *ListDiscussionsParams) (*h
 
 		}
 
+		if params.Kind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.BoardId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "board_id", *params.BoardId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Stage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "stage", *params.Stage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Site != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
@@ -56238,6 +57932,286 @@ func NewAcceptDiscussionAnswerRequestWithBody(server string, discussionId Discus
 	return req, nil
 }
 
+// NewUnlinkIdeaConversationRequest constructs an http.Request for the UnlinkIdeaConversation method
+func NewUnlinkIdeaConversationRequest(server string, discussionId DiscussionId, conversationId ConversationId, params *UnlinkIdeaConversationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/conversations/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewLinkIdeaConversationRequest constructs an http.Request for the LinkIdeaConversation method
+func NewLinkIdeaConversationRequest(server string, discussionId DiscussionId, conversationId ConversationId, params *LinkIdeaConversationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/conversations/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewReplyToIdeaConversationsRequest calls the generic ReplyToIdeaConversations builder with application/json body
+func NewReplyToIdeaConversationsRequest(server string, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, body ReplyToIdeaConversationsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewReplyToIdeaConversationsRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewReplyToIdeaConversationsRequestWithBody constructs an http.Request for the ReplyToIdeaConversations method, with any body, and a specified content type
+func NewReplyToIdeaConversationsRequestWithBody(server string, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/linked-replies", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetIdeaLinkedReplyRequest constructs an http.Request for the GetIdeaLinkedReply method
+func NewGetIdeaLinkedReplyRequest(server string, discussionId DiscussionId, replyId StatusReplyId, params *GetIdeaLinkedReplyParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "replyId", replyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/linked-replies/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewCreateDiscussionPostRequest calls the generic CreateDiscussionPost builder with application/json body
 func NewCreateDiscussionPostRequest(server string, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -56304,6 +58278,167 @@ func NewCreateDiscussionPostRequestWithBody(server string, discussionId Discussi
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewMoveIdeaStageRequest calls the generic MoveIdeaStage builder with application/json body
+func NewMoveIdeaStageRequest(server string, discussionId DiscussionId, params *MoveIdeaStageParams, body MoveIdeaStageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewMoveIdeaStageRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewMoveIdeaStageRequestWithBody constructs an http.Request for the MoveIdeaStage method, with any body, and a specified content type
+func NewMoveIdeaStageRequestWithBody(server string, discussionId DiscussionId, params *MoveIdeaStageParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/stage", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListIdeaStageChangesRequest constructs an http.Request for the ListIdeaStageChanges method
+func NewListIdeaStageChangesRequest(server string, discussionId DiscussionId, params *ListIdeaStageChangesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/stage-changes", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -65146,6 +67281,301 @@ func NewGetVapidPublicKeyRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewListRoadmapBoardsRequest constructs an http.Request for the ListRoadmapBoards method
+func NewListRoadmapBoardsRequest(server string, params *ListRoadmapBoardsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateRoadmapBoardRequest calls the generic CreateRoadmapBoard builder with application/json body
+func NewCreateRoadmapBoardRequest(server string, params *CreateRoadmapBoardParams, body CreateRoadmapBoardJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateRoadmapBoardRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateRoadmapBoardRequestWithBody constructs an http.Request for the CreateRoadmapBoard method, with any body, and a specified content type
+func NewCreateRoadmapBoardRequestWithBody(server string, params *CreateRoadmapBoardParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteRoadmapBoardRequest constructs an http.Request for the DeleteRoadmapBoard method
+func NewDeleteRoadmapBoardRequest(server string, boardId RoadmapBoardId, params *DeleteRoadmapBoardParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "boardId", boardId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetRoadmapBoardRequest constructs an http.Request for the GetRoadmapBoard method
+func NewGetRoadmapBoardRequest(server string, boardId RoadmapBoardId, params *GetRoadmapBoardParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "boardId", boardId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateRoadmapBoardRequest calls the generic UpdateRoadmapBoard builder with application/json body
+func NewUpdateRoadmapBoardRequest(server string, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateRoadmapBoardRequestWithBody(server, boardId, params, "application/json", bodyReader)
+}
+
+// NewUpdateRoadmapBoardRequestWithBody constructs an http.Request for the UpdateRoadmapBoard method, with any body, and a specified content type
+func NewUpdateRoadmapBoardRequestWithBody(server string, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "boardId", boardId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/roadmap-boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetStatsRequest constructs an http.Request for the GetStats method
 func NewGetStatsRequest(server string, params *GetStatsParams) (*http.Request, error) {
 	var err error
@@ -69324,6 +71754,12 @@ type ClientWithResponsesInterface interface {
 	// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
 	// without an accepted answer only, those nobody replied to first, then newest).
 	//
+	// With `kind=idea` it lists the roadmap ideas of the channel's inbox instead of a page's
+	// threads: `page` is not used, `stage` narrows to one stage (the default is every public
+	// stage; `closed` ideas are left out of public lists), `sort` is `top` or `new` and `q` is a
+	// title search (at most 200 characters, 30 a minute per address and channel). It answers
+	// `404 roadmap_off` without a public board, whatever the channel's `discussions` setting.
+	//
 	// Authors are shown by display name and initials only. Without `Authorization` the answer may
 	// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
 	// session of this channel the caller's own threads still waiting for a member are included and
@@ -69340,7 +71776,8 @@ type ClientWithResponsesInterface interface {
 
 	// GetClientDiscussionWithResponse A thread with its replies
 	//
-	// A published thread of the channel's inbox on a page the channel serves, with its published
+	// A published thread of the channel's inbox on a page the channel serves, or a published idea of
+	// the inbox's public roadmap board (a `closed` idea is answered with its stage), with its published
 	// replies: the accepted answer first, then oldest first; replies to replies carry
 	// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
 	// body. Caching, authentication and errors as for the list; with a token the caller's own
@@ -69513,6 +71950,23 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 	CreatePageRatingWithResponse(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageRatingResponse, error)
+
+	// GetClientRoadmapWithResponse The inbox's roadmap board
+	//
+	// The public roadmap board of the inbox of a `chat` channel, without a session: its name,
+	// description, public URL, whether and how readers may suggest ideas, and how many ideas sit in
+	// each public stage (`closed` ideas are not listed publicly). Read the ideas with
+	// `listClientDiscussions` and `kind=idea`. Nothing is created.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// `404 roadmap_off` when the inbox has no public board (also on a server with
+	// `YUVA_ROADMAP=off`) and for an `app` channel's key. Rate limited per IP address
+	// (`429 rate_limited`). Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/roadmap (the `GetClientRoadmap` operationId).
+	GetClientRoadmapWithResponse(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*GetClientRoadmapResponse, error)
 
 	// CreateClientSubscriptionWithBodyWithResponse Subscribe from a form
 	//
@@ -69829,6 +72283,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// One vote per author and post; the opening post's votes are the thread's. Voting again changes
 	// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Votes on ideas are
+	// limited to 120 an hour per author.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -69841,6 +72297,12 @@ type ClientWithResponsesInterface interface {
 	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 	// off answers `403 discussions_off`.
+	//
+	// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+	// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+	// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+	// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+	// channel's `discussions` setting does not.
 	//
 	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 	// member (`state: pending`, visible only to its author and members) until one of their posts
@@ -69861,6 +72323,12 @@ type ClientWithResponsesInterface interface {
 	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 	// off answers `403 discussions_off`.
+	//
+	// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+	// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+	// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+	// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+	// channel's `discussions` setting does not.
 	//
 	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 	// member (`state: pending`, visible only to its author and members) until one of their posts
@@ -69887,7 +72355,8 @@ type ClientWithResponsesInterface interface {
 	// AcceptClientDiscussionAnswerWithBodyWithResponse Mark the accepted answer
 	//
 	// The thread's author marks a published reply to the thread itself as its answer, replacing an
-	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+	// an idea `409 not_supported`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -69897,7 +72366,8 @@ type ClientWithResponsesInterface interface {
 	// AcceptClientDiscussionAnswerWithResponse Mark the accepted answer
 	//
 	// The thread's author marks a published reply to the thread itself as its answer, replacing an
-	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+	// an idea `409 not_supported`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -71863,7 +74333,9 @@ type ClientWithResponsesInterface interface {
 	// DeleteChannelWithResponse Remove a channel
 	//
 	// Owners, admins and API keys. Conversations that started on it keep
-	// their messages and lose their `channel_id`.
+	// their messages and lose their `channel_id`. A channel a roadmap board files its ideas on
+	// is refused with `409 channel_has_roadmap_board`; delete the board or point it at another
+	// channel first.
 	//
 	// Scope: `inboxes:manage`.
 	//
@@ -72413,6 +74885,13 @@ type ClientWithResponsesInterface interface {
 	// the accepted answer. The author follows the thread. A conversation becomes one thread
 	// (`409 already_discussed`); `conversation_id` on the thread links back.
 	//
+	// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+	// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+	// `ideas` on the board, with the title and body the member writes, and links the conversation
+	// to it in the same transaction, replacing a link it had; the author rule above applies.
+	// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+	// allowed.
+	//
 	// Member sessions only.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -72434,6 +74913,13 @@ type ClientWithResponsesInterface interface {
 	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
 	// the accepted answer. The author follows the thread. A conversation becomes one thread
 	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+	// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+	// `ideas` on the board, with the title and body the member writes, and links the conversation
+	// to it in the same transaction, replacing a link it had; the author rule above applies.
+	// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+	// allowed.
 	//
 	// Member sessions only.
 	//
@@ -72557,7 +75043,9 @@ type ClientWithResponsesInterface interface {
 	// conversation; the assignee stays only when they can access the new inbox. The
 	// conversation continues on the new inbox's channel of the same kind (for e-mail the one
 	// its chat continuity would use); an e-mail conversation is refused with
-	// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+	// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+	// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+	// timeline gets a `moved` event.
 	// `conversation.updated` reports the new inbox; members watching the old one get
 	// `conversation.moved`.
 	//
@@ -72574,7 +75062,9 @@ type ClientWithResponsesInterface interface {
 	// conversation; the assignee stays only when they can access the new inbox. The
 	// conversation continues on the new inbox's channel of the same kind (for e-mail the one
 	// its chat continuity would use); an e-mail conversation is refused with
-	// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+	// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+	// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+	// timeline gets a `moved` event.
 	// `conversation.updated` reports the new inbox; members watching the old one get
 	// `conversation.moved`.
 	//
@@ -72750,7 +75240,8 @@ type ClientWithResponsesInterface interface {
 	// VoteDiscussionPostWithResponse Vote for a post as a member
 	//
 	// One vote per member and post (the opening post votes for the thread); voting again changes
-	// nothing. Member sessions only.
+	// nothing. A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Member
+	// sessions only.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -72763,8 +75254,13 @@ type ClientWithResponsesInterface interface {
 	// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
 	// and hidden ones too.
 	//
-	// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
-	// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+	// `kind` defaults to `page`, so callers that know no ideas see none: documentation threads
+	// only. `kind=idea` lists roadmap ideas instead, narrowed by `board_id`, `stage` and `q` (a
+	// title search: words are ANDed and the last may be the start of a word), and takes no `site`
+	// or `page`. Ideas waiting for approval are listed with `state=pending`.
+	//
+	// `sort`: `activity` (default, last activity first), `new` (newest first), `top` (most
+	// votes first) or `votes` (the same, from the vote count kept on the idea). `answered=false` keeps threads without an accepted answer, `locked` locked or
 	// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
 	// `next_cursor` belongs to the sort and filters it was returned for.
 	//
@@ -72780,6 +75276,11 @@ type ClientWithResponsesInterface interface {
 	// A thread on a documentation page, written by the calling member and published at once. The
 	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	//
+	// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+	// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+	// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+	// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 	// Member sessions only.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -72792,6 +75293,11 @@ type ClientWithResponsesInterface interface {
 	// A thread on a documentation page, written by the calling member and published at once. The
 	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	//
+	// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+	// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+	// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+	// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 	// Member sessions only.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -72844,7 +75350,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+	// (`409 not_supported`). Member sessions only.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -72855,12 +75362,97 @@ type ClientWithResponsesInterface interface {
 	//
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+	// (`409 not_supported`). Member sessions only.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
 	AcceptDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*AcceptDiscussionAnswerResponse, error)
+
+	// UnlinkIdeaConversationWithResponse Unlink feedback from an idea
+	//
+	// Unlinking feedback that is not linked to this idea changes nothing. The progress already set
+	// on the feedback stays. A discussion that is not an idea answers `409 not_an_idea`.
+	//
+	// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+	// `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/discussions/{discussionId}/conversations/{conversationId} (the `UnlinkIdeaConversation` operationId).
+	UnlinkIdeaConversationWithResponse(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *UnlinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*UnlinkIdeaConversationResponse, error)
+
+	// LinkIdeaConversationWithResponse Link feedback to an idea
+	//
+	// Links a `feedback` conversation to the idea (`409 not_feedback` for any other kind, and
+	// `409 not_an_idea` when the discussion is a page thread). An idea
+	// has many links and a feedback has at most one: a link replaces the feedback's previous link,
+	// and linking it to the idea it already has changes nothing. The idea must belong to a board of
+	// the conversation's inbox (`404` otherwise, also when either was deleted meanwhile). An idea
+	// takes at most 5,000 links (`422 too_many_links`). Linking feedback to an idea that is past
+	// `ideas` sets the feedback's progress at once, as a stage move would. Links store no event.
+	//
+	// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+	// `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/conversations/{conversationId} (the `LinkIdeaConversation` operationId).
+	LinkIdeaConversationWithResponse(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *LinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*LinkIdeaConversationResponse, error)
+
+	// ReplyToIdeaConversationsWithBodyWithResponse Reply to the feedback linked to an idea
+	//
+	// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+	// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+	// linked conversation that is not closed and that the caller can see, optionally closing each
+	// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+	// the conversation's own channel and fires the usual `message.created` and
+	// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+	// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+	// reports what became of each conversation.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+	// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+	ReplyToIdeaConversationsWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplyToIdeaConversationsResponse, error)
+
+	// ReplyToIdeaConversationsWithResponse Reply to the feedback linked to an idea
+	//
+	// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+	// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+	// linked conversation that is not closed and that the caller can see, optionally closing each
+	// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+	// the conversation's own channel and fires the usual `message.created` and
+	// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+	// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+	// reports what became of each conversation.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+	// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+	ReplyToIdeaConversationsWithResponse(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, body ReplyToIdeaConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplyToIdeaConversationsResponse, error)
+
+	// GetIdeaLinkedReplyWithResponse Get what became of a reply to an idea's linked feedback
+	//
+	// The outcome of one "Reply to linked" request per conversation, with the outcomes and reasons
+	// of `getStatusIncidentReply`.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scopes: `roadmap:read`
+	// and `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/discussions/{discussionId}/linked-replies/{replyId} (the `GetIdeaLinkedReply` operationId).
+	GetIdeaLinkedReplyWithResponse(ctx context.Context, discussionId DiscussionId, replyId StatusReplyId, params *GetIdeaLinkedReplyParams, reqEditors ...RequestEditorFn) (*GetIdeaLinkedReplyResponse, error)
 
 	// CreateDiscussionPostWithBodyWithResponse Reply as a member
 	//
@@ -72883,6 +75475,79 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
 	CreateDiscussionPostWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionPostResponse, error)
+
+	// MoveIdeaStageWithBodyWithResponse Move an idea to a stage
+	//
+	// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+	// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+	// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+	// and adds a `stage` notification for every follower who is a signed-in reader (with the
+	// usual digest e-mail).
+	//
+	// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+	// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+	// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+	// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+	// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+	// skips feedback that already has that progress and deleted conversations, and stops as soon
+	// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+	// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+	// the counts when the job has finished (`finished_at`).
+	//
+	// `comment` is posted in the same transaction as the member's published reply on the idea
+	// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+	// votes.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+	// It is never implied: a key made without naming its scopes does not hold it.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+	MoveIdeaStageWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveIdeaStageResponse, error)
+
+	// MoveIdeaStageWithResponse Move an idea to a stage
+	//
+	// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+	// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+	// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+	// and adds a `stage` notification for every follower who is a signed-in reader (with the
+	// usual digest e-mail).
+	//
+	// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+	// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+	// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+	// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+	// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+	// skips feedback that already has that progress and deleted conversations, and stops as soon
+	// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+	// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+	// the counts when the job has finished (`finished_at`).
+	//
+	// `comment` is posted in the same transaction as the member's published reply on the idea
+	// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+	// votes.
+	//
+	// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+	// It is never implied: a key made without naming its scopes does not hold it.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+	MoveIdeaStageWithResponse(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, body MoveIdeaStageJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveIdeaStageResponse, error)
+
+	// ListIdeaStageChangesWithResponse An idea's stage history
+	//
+	// Every move of the idea, newest first. The public page shows its dates ("Planned on",
+	// "Shipped on"). An idea in an inbox the caller cannot see, and a discussion that is not an
+	// idea, answer `404`.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/discussions/{discussionId}/stage-changes (the `ListIdeaStageChanges` operationId).
+	ListIdeaStageChangesWithResponse(ctx context.Context, discussionId DiscussionId, params *ListIdeaStageChangesParams, reqEditors ...RequestEditorFn) (*ListIdeaStageChangesResponse, error)
 
 	// GetDocsPageWithResponse One documentation page
 	//
@@ -75656,6 +78321,103 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /v1/push/vapid-public-key (the `GetVapidPublicKey` operationId).
 	GetVapidPublicKeyWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVapidPublicKeyResponse, error)
 
+	// ListRoadmapBoardsWithResponse List roadmap boards
+	//
+	// The boards of the inboxes the caller can see, oldest first, each with how many ideas sit in
+	// every stage.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/roadmap-boards (the `ListRoadmapBoards` operationId).
+	ListRoadmapBoardsWithResponse(ctx context.Context, params *ListRoadmapBoardsParams, reqEditors ...RequestEditorFn) (*ListRoadmapBoardsResponse, error)
+
+	// CreateRoadmapBoardWithBodyWithResponse Create a roadmap board
+	//
+	// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+	// `slug` names the board in its URL, is unique across the server, current and former slugs
+	// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+	// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+	// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+	// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+	CreateRoadmapBoardWithBodyWithResponse(ctx context.Context, params *CreateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateRoadmapBoardResponse, error)
+
+	// CreateRoadmapBoardWithResponse Create a roadmap board
+	//
+	// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+	// `slug` names the board in its URL, is unique across the server, current and former slugs
+	// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+	// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+	// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+	// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+	CreateRoadmapBoardWithResponse(ctx context.Context, params *CreateRoadmapBoardParams, body CreateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRoadmapBoardResponse, error)
+
+	// DeleteRoadmapBoardWithResponse Delete a roadmap board
+	//
+	// The board with its ideas, their posts, votes, follows and stage history, and the links to
+	// feedback. The feedback conversations and the progress already set on them stay.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/roadmap-boards/{boardId} (the `DeleteRoadmapBoard` operationId).
+	DeleteRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *DeleteRoadmapBoardParams, reqEditors ...RequestEditorFn) (*DeleteRoadmapBoardResponse, error)
+
+	// GetRoadmapBoardWithResponse A roadmap board
+	//
+	// With its idea counts per stage and its public `url`.
+	//
+	// Scope: `roadmap:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/roadmap-boards/{boardId} (the `GetRoadmapBoard` operationId).
+	GetRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *GetRoadmapBoardParams, reqEditors ...RequestEditorFn) (*GetRoadmapBoardResponse, error)
+
+	// UpdateRoadmapBoardWithBodyWithResponse Update a roadmap board
+	//
+	// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+	// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+	// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+	// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+	// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+	UpdateRoadmapBoardWithBodyWithResponse(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRoadmapBoardResponse, error)
+
+	// UpdateRoadmapBoardWithResponse Update a roadmap board
+	//
+	// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+	// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+	// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+	// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+	// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+	UpdateRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRoadmapBoardResponse, error)
+
 	// GetStatsWithResponse Team activity since a moment
 	//
 	// What the team did in the inboxes the caller can see (or in one of them) from `since` until
@@ -77948,6 +80710,75 @@ func (r CreatePageRatingResponse) ContentType() string {
 	return ""
 }
 
+// GetClientRoadmapResponse200Headers the declared response headers of an HTTP 200 response for GetClientRoadmap
+type GetClientRoadmapResponse200Headers struct {
+	CacheControl *string
+}
+
+type GetClientRoadmapResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientRoadmap
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetClientRoadmapResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientRoadmapResponse) GetJSON200() *ClientRoadmap {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientRoadmapResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientRoadmapResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientRoadmapResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientRoadmapResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientRoadmapResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientRoadmapResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientRoadmapResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateClientSubscriptionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -78870,6 +81701,8 @@ type VoteClientDiscussionPostResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
 	ApplicationproblemJSON429 *Problem
 }
@@ -78892,6 +81725,11 @@ func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON403() *Proble
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
@@ -78939,6 +81777,10 @@ type CreateClientDiscussionResponse struct {
 	ApplicationproblemJSON401 *Problem
 	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
 	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
 	ApplicationproblemJSON429 *Problem
 }
@@ -78961,6 +81803,16 @@ func (r CreateClientDiscussionResponse) GetApplicationproblemJSON401() *Problem 
 // GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
 func (r CreateClientDiscussionResponse) GetApplicationproblemJSON403() *Problem {
 	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
@@ -79072,6 +81924,8 @@ type AcceptClientDiscussionAnswerResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -79097,6 +81951,11 @@ func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON403() *Pr
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -85617,6 +88476,8 @@ type DeleteChannelResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
@@ -85632,6 +88493,11 @@ func (r DeleteChannelResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r DeleteChannelResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteChannelResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -87678,6 +90544,8 @@ type CreateDiscussionFromConversationResponse struct {
 	ApplicationproblemJSON404 *Problem
 	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
 	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -87708,6 +90576,11 @@ func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON404()
 // GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
 func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON409() *Problem {
 	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -88695,6 +91568,8 @@ type VoteDiscussionPostResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -88715,6 +91590,11 @@ func (r VoteDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r VoteDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r VoteDiscussionPostResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -88828,6 +91708,8 @@ type CreateDiscussionResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -88853,6 +91735,11 @@ func (r CreateDiscussionResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r CreateDiscussionResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateDiscussionResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -89090,6 +91977,8 @@ type AcceptDiscussionAnswerResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -89117,6 +92006,11 @@ func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem 
 	return r.ApplicationproblemJSON404
 }
 
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
 // GetBody returns the raw response body bytes
 func (r AcceptDiscussionAnswerResponse) GetBody() []byte {
 	return r.Body
@@ -89140,6 +92034,275 @@ func (r AcceptDiscussionAnswerResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r AcceptDiscussionAnswerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnlinkIdeaConversationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnlinkIdeaConversationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnlinkIdeaConversationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnlinkIdeaConversationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UnlinkIdeaConversationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UnlinkIdeaConversationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnlinkIdeaConversationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnlinkIdeaConversationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnlinkIdeaConversationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type LinkIdeaConversationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r LinkIdeaConversationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r LinkIdeaConversationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r LinkIdeaConversationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r LinkIdeaConversationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r LinkIdeaConversationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r LinkIdeaConversationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r LinkIdeaConversationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r LinkIdeaConversationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r LinkIdeaConversationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReplyToIdeaConversationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *LinkedReplyResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r ReplyToIdeaConversationsResponse) GetJSON202() *LinkedReplyResult {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ReplyToIdeaConversationsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ReplyToIdeaConversationsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ReplyToIdeaConversationsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ReplyToIdeaConversationsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ReplyToIdeaConversationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReplyToIdeaConversationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReplyToIdeaConversationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReplyToIdeaConversationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetIdeaLinkedReplyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *LinkedReply
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetIdeaLinkedReplyResponse) GetJSON200() *LinkedReply {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetIdeaLinkedReplyResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetIdeaLinkedReplyResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetIdeaLinkedReplyResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetIdeaLinkedReplyResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetIdeaLinkedReplyResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetIdeaLinkedReplyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetIdeaLinkedReplyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetIdeaLinkedReplyResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -89209,6 +92372,151 @@ func (r CreateDiscussionPostResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MoveIdeaStageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RoadmapStageMoveResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r MoveIdeaStageResponse) GetJSON200() *RoadmapStageMoveResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r MoveIdeaStageResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r MoveIdeaStageResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r MoveIdeaStageResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r MoveIdeaStageResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r MoveIdeaStageResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r MoveIdeaStageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r MoveIdeaStageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MoveIdeaStageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MoveIdeaStageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListIdeaStageChangesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RoadmapStageChangePage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListIdeaStageChangesResponse) GetJSON200() *RoadmapStageChangePage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListIdeaStageChangesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListIdeaStageChangesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListIdeaStageChangesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListIdeaStageChangesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListIdeaStageChangesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListIdeaStageChangesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListIdeaStageChangesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListIdeaStageChangesResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -98845,6 +102153,344 @@ func (r GetVapidPublicKeyResponse) ContentType() string {
 	return ""
 }
 
+type ListRoadmapBoardsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RoadmapBoardList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListRoadmapBoardsResponse) GetJSON200() *RoadmapBoardList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListRoadmapBoardsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListRoadmapBoardsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListRoadmapBoardsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListRoadmapBoardsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListRoadmapBoardsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListRoadmapBoardsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListRoadmapBoardsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateRoadmapBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *RoadmapBoard
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateRoadmapBoardResponse) GetJSON201() *RoadmapBoard {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateRoadmapBoardResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateRoadmapBoardResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateRoadmapBoardResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateRoadmapBoardResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateRoadmapBoardResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateRoadmapBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateRoadmapBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateRoadmapBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateRoadmapBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteRoadmapBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteRoadmapBoardResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteRoadmapBoardResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteRoadmapBoardResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteRoadmapBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteRoadmapBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteRoadmapBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteRoadmapBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetRoadmapBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RoadmapBoard
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetRoadmapBoardResponse) GetJSON200() *RoadmapBoard {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetRoadmapBoardResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetRoadmapBoardResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetRoadmapBoardResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetRoadmapBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRoadmapBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRoadmapBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetRoadmapBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateRoadmapBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RoadmapBoard
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateRoadmapBoardResponse) GetJSON200() *RoadmapBoard {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UpdateRoadmapBoardResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateRoadmapBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateRoadmapBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateRoadmapBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateRoadmapBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetStatsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -100414,7 +104060,7 @@ type GetStatusIncidentReplyResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *StatusIncidentReplyReport
+	JSON200 *LinkedReply
 	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
 	ApplicationproblemJSON400 *Problem
 	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
@@ -100426,7 +104072,7 @@ type GetStatusIncidentReplyResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetStatusIncidentReplyResponse) GetJSON200() *StatusIncidentReplyReport {
+func (r GetStatusIncidentReplyResponse) GetJSON200() *LinkedReply {
 	return r.JSON200
 }
 
@@ -100483,7 +104129,7 @@ type ReplyToStatusIncidentConversationsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON202 the response for an HTTP 202 `application/json` response
-	JSON202 *StatusIncidentReplyResult
+	JSON202 *LinkedReplyResult
 	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
 	ApplicationproblemJSON400 *Problem
 	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
@@ -100495,7 +104141,7 @@ type ReplyToStatusIncidentConversationsResponse struct {
 }
 
 // GetJSON202 returns the response for an HTTP 202 `application/json` response
-func (r ReplyToStatusIncidentConversationsResponse) GetJSON202() *StatusIncidentReplyResult {
+func (r ReplyToStatusIncidentConversationsResponse) GetJSON202() *LinkedReplyResult {
 	return r.JSON202
 }
 
@@ -102961,6 +106607,12 @@ func (c *ClientWithResponses) GetClientChannelWithResponse(ctx context.Context, 
 // `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
 // without an accepted answer only, those nobody replied to first, then newest).
 //
+// With `kind=idea` it lists the roadmap ideas of the channel's inbox instead of a page's
+// threads: `page` is not used, `stage` narrows to one stage (the default is every public
+// stage; `closed` ideas are left out of public lists), `sort` is `top` or `new` and `q` is a
+// title search (at most 200 characters, 30 a minute per address and channel). It answers
+// `404 roadmap_off` without a public board, whatever the channel's `discussions` setting.
+//
 // Authors are shown by display name and initials only. Without `Authorization` the answer may
 // be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
 // session of this channel the caller's own threads still waiting for a member are included and
@@ -102983,7 +106635,8 @@ func (c *ClientWithResponses) ListClientDiscussionsWithResponse(ctx context.Cont
 
 // GetClientDiscussionWithResponse A thread with its replies
 //
-// A published thread of the channel's inbox on a page the channel serves, with its published
+// A published thread of the channel's inbox on a page the channel serves, or a published idea of
+// the inbox's public roadmap board (a `closed` idea is answered with its stage), with its published
 // replies: the accepted answer first, then oldest first; replies to replies carry
 // `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
 // body. Caching, authentication and errors as for the list; with a token the caller's own
@@ -103227,6 +106880,29 @@ func (c *ClientWithResponses) CreatePageRatingWithResponse(ctx context.Context, 
 		return nil, err
 	}
 	return ParseCreatePageRatingResponse(rsp)
+}
+
+// GetClientRoadmapWithResponse The inbox's roadmap board
+//
+// The public roadmap board of the inbox of a `chat` channel, without a session: its name,
+// description, public URL, whether and how readers may suggest ideas, and how many ideas sit in
+// each public stage (`closed` ideas are not listed publicly). Read the ideas with
+// `listClientDiscussions` and `kind=idea`. Nothing is created.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// `404 roadmap_off` when the inbox has no public board (also on a server with
+// `YUVA_ROADMAP=off`) and for an `app` channel's key. Rate limited per IP address
+// (`429 rate_limited`). Sent with `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/roadmap (the `GetClientRoadmap` operationId).
+func (c *ClientWithResponses) GetClientRoadmapWithResponse(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*GetClientRoadmapResponse, error) {
+	rsp, err := c.GetClientRoadmap(ctx, channelKey, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientRoadmapResponse(rsp)
 }
 
 // CreateClientSubscriptionWithBodyWithResponse Subscribe from a form
@@ -103670,6 +107346,8 @@ func (c *ClientWithResponses) UnvoteClientDiscussionPostWithResponse(ctx context
 //
 // One vote per author and post; the opening post's votes are the thread's. Voting again changes
 // nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Votes on ideas are
+// limited to 120 an hour per author.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -103688,6 +107366,12 @@ func (c *ClientWithResponses) VoteClientDiscussionPostWithResponse(ctx context.C
 // allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 // an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 // off answers `403 discussions_off`.
+//
+// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+// channel's `discussions` setting does not.
 //
 // With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 // member (`state: pending`, visible only to its author and members) until one of their posts
@@ -103714,6 +107398,12 @@ func (c *ClientWithResponses) CreateClientDiscussionWithBodyWithResponse(ctx con
 // allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
 // an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
 // off answers `403 discussions_off`.
+//
+// With `kind: idea` it suggests an idea on the inbox's public roadmap board (`page_url` is not
+// allowed; `404 roadmap_off` without a public board, `403 suggestions_off` when the board takes
+// none, `429 suggestions_full` while 200 suggestions wait for a member). The board's
+// `suggestions` mode applies as the channel's `discussions` mode does to page threads, and the
+// channel's `discussions` setting does not.
 //
 // With the channel's `discussions: moderated` (the default) a reader's thread waits for a
 // member (`state: pending`, visible only to its author and members) until one of their posts
@@ -103752,7 +107442,8 @@ func (c *ClientWithResponses) ClearClientDiscussionAnswerWithResponse(ctx contex
 // AcceptClientDiscussionAnswerWithBodyWithResponse Mark the accepted answer
 //
 // The thread's author marks a published reply to the thread itself as its answer, replacing an
-// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+// an idea `409 not_supported`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -103768,7 +107459,8 @@ func (c *ClientWithResponses) AcceptClientDiscussionAnswerWithBodyWithResponse(c
 // AcceptClientDiscussionAnswerWithResponse Mark the accepted answer
 //
 // The thread's author marks a published reply to the thread itself as its answer, replacing an
-// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`,
+// an idea `409 not_supported`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -106568,7 +110260,9 @@ func (c *ClientWithResponses) UpdateCannedReplyWithResponse(ctx context.Context,
 // DeleteChannelWithResponse Remove a channel
 //
 // Owners, admins and API keys. Conversations that started on it keep
-// their messages and lose their `channel_id`.
+// their messages and lose their `channel_id`. A channel a roadmap board files its ideas on
+// is refused with `409 channel_has_roadmap_board`; delete the board or point it at another
+// channel first.
 //
 // Scope: `inboxes:manage`.
 //
@@ -107358,6 +111052,13 @@ func (c *ClientWithResponses) UpdateConversationWithResponse(ctx context.Context
 // the accepted answer. The author follows the thread. A conversation becomes one thread
 // (`409 already_discussed`); `conversation_id` on the thread links back.
 //
+// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+// `ideas` on the board, with the title and body the member writes, and links the conversation
+// to it in the same transaction, replacing a link it had; the author rule above applies.
+// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+// allowed.
+//
 // Member sessions only.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -107385,6 +111086,13 @@ func (c *ClientWithResponses) CreateDiscussionFromConversationWithBodyWithRespon
 // otherwise the calling member is. With `answer`, the member's reply is posted and marked as
 // the accepted answer. The author follows the thread. A conversation becomes one thread
 // (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// With `kind: idea` the conversation must be `feedback` (`409 not_feedback`) and its inbox must
+// have a roadmap board (`404 roadmap_off` otherwise). It starts a published idea in stage
+// `ideas` on the board, with the title and body the member writes, and links the conversation
+// to it in the same transaction, replacing a link it had; the author rule above applies.
+// Nothing of the feedback becomes public. `answer`, `page_url` and `page_title` are not
+// allowed.
 //
 // Member sessions only.
 //
@@ -107538,7 +111246,9 @@ func (c *ClientWithResponses) CreateMessageWithResponse(ctx context.Context, con
 // conversation; the assignee stays only when they can access the new inbox. The
 // conversation continues on the new inbox's channel of the same kind (for e-mail the one
 // its chat continuity would use); an e-mail conversation is refused with
-// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+// timeline gets a `moved` event.
 // `conversation.updated` reports the new inbox; members watching the old one get
 // `conversation.moved`.
 //
@@ -107561,7 +111271,9 @@ func (c *ClientWithResponses) MoveConversationWithBodyWithResponse(ctx context.C
 // conversation; the assignee stays only when they can access the new inbox. The
 // conversation continues on the new inbox's channel of the same kind (for e-mail the one
 // its chat continuity would use); an e-mail conversation is refused with
-// `409 no_email_channel` when the new inbox has none. The timeline gets a `moved` event.
+// `409 no_email_channel` when the new inbox has none. A feedback conversation linked to a
+// roadmap idea is unlinked, since boards belong to one inbox; its progress stays. The
+// timeline gets a `moved` event.
 // `conversation.updated` reports the new inbox; members watching the old one get
 // `conversation.moved`.
 //
@@ -107821,7 +111533,8 @@ func (c *ClientWithResponses) UnvoteDiscussionPostWithResponse(ctx context.Conte
 // VoteDiscussionPostWithResponse Vote for a post as a member
 //
 // One vote per member and post (the opening post votes for the thread); voting again changes
-// nothing. Member sessions only.
+// nothing. A `shipped` or `closed` idea takes no new votes (`409 idea_closed`). Member
+// sessions only.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -107840,8 +111553,13 @@ func (c *ClientWithResponses) VoteDiscussionPostWithResponse(ctx context.Context
 // state is listed unless `state` narrows it, so the panel sees threads waiting for approval
 // and hidden ones too.
 //
-// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
-// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+// `kind` defaults to `page`, so callers that know no ideas see none: documentation threads
+// only. `kind=idea` lists roadmap ideas instead, narrowed by `board_id`, `stage` and `q` (a
+// title search: words are ANDed and the last may be the start of a word), and takes no `site`
+// or `page`. Ideas waiting for approval are listed with `state=pending`.
+//
+// `sort`: `activity` (default, last activity first), `new` (newest first), `top` (most
+// votes first) or `votes` (the same, from the vote count kept on the idea). `answered=false` keeps threads without an accepted answer, `locked` locked or
 // unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
 // `next_cursor` belongs to the sort and filters it was returned for.
 //
@@ -107863,6 +111581,11 @@ func (c *ClientWithResponses) ListDiscussionsWithResponse(ctx context.Context, p
 // A thread on a documentation page, written by the calling member and published at once. The
 // page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 // channel must have discussions on (`403 discussions_off`). The member follows it.
+//
+// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 // Member sessions only.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -107881,6 +111604,11 @@ func (c *ClientWithResponses) CreateDiscussionWithBodyWithResponse(ctx context.C
 // A thread on a documentation page, written by the calling member and published at once. The
 // page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
 // channel must have discussions on (`403 discussions_off`). The member follows it.
+//
+// With `kind: idea` it is an idea on the roadmap board `board_id` (`404` for a board of an
+// inbox the caller cannot see), filed on the board's channel in stage `ideas`, published at
+// once; `channel_id`, `page_url` and `page_title` are not allowed. `422 hosted_limit` when
+// the workspace holds as many ideas as `YUVA_ROADMAP_MAX_IDEAS` allows.
 // Member sessions only.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -107963,7 +111691,8 @@ func (c *ClientWithResponses) ClearDiscussionAnswerWithResponse(ctx context.Cont
 //
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-// threads. Followers are told once (`discussion.answered`). Member sessions only.
+// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+// (`409 not_supported`). Member sessions only.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -107980,7 +111709,8 @@ func (c *ClientWithResponses) AcceptDiscussionAnswerWithBodyWithResponse(ctx con
 //
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
-// threads. Followers are told once (`discussion.answered`). Member sessions only.
+// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
+// (`409 not_supported`). Member sessions only.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -107991,6 +111721,120 @@ func (c *ClientWithResponses) AcceptDiscussionAnswerWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseAcceptDiscussionAnswerResponse(rsp)
+}
+
+// UnlinkIdeaConversationWithResponse Unlink feedback from an idea
+//
+// Unlinking feedback that is not linked to this idea changes nothing. The progress already set
+// on the feedback stays. A discussion that is not an idea answers `409 not_an_idea`.
+//
+// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+// `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/discussions/{discussionId}/conversations/{conversationId} (the `UnlinkIdeaConversation` operationId).
+func (c *ClientWithResponses) UnlinkIdeaConversationWithResponse(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *UnlinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*UnlinkIdeaConversationResponse, error) {
+	rsp, err := c.UnlinkIdeaConversation(ctx, discussionId, conversationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnlinkIdeaConversationResponse(rsp)
+}
+
+// LinkIdeaConversationWithResponse Link feedback to an idea
+//
+// Links a `feedback` conversation to the idea (`409 not_feedback` for any other kind, and
+// `409 not_an_idea` when the discussion is a page thread). An idea
+// has many links and a feedback has at most one: a link replaces the feedback's previous link,
+// and linking it to the idea it already has changes nothing. The idea must belong to a board of
+// the conversation's inbox (`404` otherwise, also when either was deleted meanwhile). An idea
+// takes at most 5,000 links (`422 too_many_links`). Linking feedback to an idea that is past
+// `ideas` sets the feedback's progress at once, as a stage move would. Links store no event.
+//
+// Agents with access to the inbox, owners, admins and API keys. Scopes: `roadmap:write` and
+// `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/conversations/{conversationId} (the `LinkIdeaConversation` operationId).
+func (c *ClientWithResponses) LinkIdeaConversationWithResponse(ctx context.Context, discussionId DiscussionId, conversationId ConversationId, params *LinkIdeaConversationParams, reqEditors ...RequestEditorFn) (*LinkIdeaConversationResponse, error) {
+	rsp, err := c.LinkIdeaConversation(ctx, discussionId, conversationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseLinkIdeaConversationResponse(rsp)
+}
+
+// ReplyToIdeaConversationsWithBodyWithResponse Reply to the feedback linked to an idea
+//
+// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+// linked conversation that is not closed and that the caller can see, optionally closing each
+// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+// the conversation's own channel and fires the usual `message.created` and
+// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+// reports what became of each conversation.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+func (c *ClientWithResponses) ReplyToIdeaConversationsWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplyToIdeaConversationsResponse, error) {
+	rsp, err := c.ReplyToIdeaConversationsWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReplyToIdeaConversationsResponse(rsp)
+}
+
+// ReplyToIdeaConversationsWithResponse Reply to the feedback linked to an idea
+//
+// "Reply to linked" for ideas: the mechanism of `replyToStatusIncidentConversations`, with
+// the idea's linked feedback as its conversations. One reply, written once, is sent to every
+// linked conversation that is not closed and that the caller can see, optionally closing each
+// afterwards, one job per conversation through the normal reply path. It reaches the contact on
+// the conversation's own channel and fires the usual `message.created` and
+// `conversation.updated` events and webhooks. The job checks the caller again when it runs.
+// A retried job never sends a conversation the reply twice. `GET .../linked-replies/{replyId}`
+// reports what became of each conversation.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the idea's inbox, owners, admins and API
+// keys. Scopes: `roadmap:write` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/linked-replies (the `ReplyToIdeaConversations` operationId).
+func (c *ClientWithResponses) ReplyToIdeaConversationsWithResponse(ctx context.Context, discussionId DiscussionId, params *ReplyToIdeaConversationsParams, body ReplyToIdeaConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplyToIdeaConversationsResponse, error) {
+	rsp, err := c.ReplyToIdeaConversations(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReplyToIdeaConversationsResponse(rsp)
+}
+
+// GetIdeaLinkedReplyWithResponse Get what became of a reply to an idea's linked feedback
+//
+// The outcome of one "Reply to linked" request per conversation, with the outcomes and reasons
+// of `getStatusIncidentReply`.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scopes: `roadmap:read`
+// and `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/discussions/{discussionId}/linked-replies/{replyId} (the `GetIdeaLinkedReply` operationId).
+func (c *ClientWithResponses) GetIdeaLinkedReplyWithResponse(ctx context.Context, discussionId DiscussionId, replyId StatusReplyId, params *GetIdeaLinkedReplyParams, reqEditors ...RequestEditorFn) (*GetIdeaLinkedReplyResponse, error) {
+	rsp, err := c.GetIdeaLinkedReply(ctx, discussionId, replyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetIdeaLinkedReplyResponse(rsp)
 }
 
 // CreateDiscussionPostWithBodyWithResponse Reply as a member
@@ -108025,6 +111869,97 @@ func (c *ClientWithResponses) CreateDiscussionPostWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseCreateDiscussionPostResponse(rsp)
+}
+
+// MoveIdeaStageWithBodyWithResponse Move an idea to a stage
+//
+// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+// and adds a `stage` notification for every follower who is a signed-in reader (with the
+// usual digest e-mail).
+//
+// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+// skips feedback that already has that progress and deleted conversations, and stops as soon
+// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+// the counts when the job has finished (`finished_at`).
+//
+// `comment` is posted in the same transaction as the member's published reply on the idea
+// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+// votes.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+// It is never implied: a key made without naming its scopes does not hold it.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+func (c *ClientWithResponses) MoveIdeaStageWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveIdeaStageResponse, error) {
+	rsp, err := c.MoveIdeaStageWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveIdeaStageResponse(rsp)
+}
+
+// MoveIdeaStageWithResponse Move an idea to a stage
+//
+// Moves an idea (a discussion of kind `idea`) to `stage`; a discussion of another kind answers
+// `409 not_an_idea`, and moving to the stage it is in changes nothing. The move is recorded in
+// the idea's stage history, moves the board's `changed_at`, stores `discussion.stage_changed`
+// and adds a `stage` notification for every follower who is a signed-in reader (with the
+// usual digest e-mail).
+//
+// For `planned`, `in_progress`, `shipped` and `closed` it also queues one job that sets the
+// progress of every linked feedback: `planned` to `planned`, `in_progress` to `in_progress`,
+// `shipped` to `done` and `closed` to `wont_do`. A move back to `ideas` sets none. The job
+// changes each conversation as the caller (so the timeline gets a `feedback_progress` event
+// naming the idea, the contact sees the line, and `conversation.updated` goes to webhooks),
+// skips feedback that already has that progress and deleted conversations, and stops as soon
+// as a newer move has replaced this one. It checks the caller again when it runs: a revoked
+// or expired key or grant, a removed member or a lost scope sets nothing. The change reports
+// the counts when the job has finished (`finished_at`).
+//
+// `comment` is posted in the same transaction as the member's published reply on the idea
+// and needs a member session (`400` for an API key). `shipped` and `closed` ideas take no new
+// votes.
+//
+// Agents with access to the idea's inbox, owners, admins and API keys. Scope: `roadmap:stage`.
+// It is never implied: a key made without naming its scopes does not hold it.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/stage (the `MoveIdeaStage` operationId).
+func (c *ClientWithResponses) MoveIdeaStageWithResponse(ctx context.Context, discussionId DiscussionId, params *MoveIdeaStageParams, body MoveIdeaStageJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveIdeaStageResponse, error) {
+	rsp, err := c.MoveIdeaStage(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveIdeaStageResponse(rsp)
+}
+
+// ListIdeaStageChangesWithResponse An idea's stage history
+//
+// Every move of the idea, newest first. The public page shows its dates ("Planned on",
+// "Shipped on"). An idea in an inbox the caller cannot see, and a discussion that is not an
+// idea, answer `404`.
+//
+// Scope: `roadmap:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/discussions/{discussionId}/stage-changes (the `ListIdeaStageChanges` operationId).
+func (c *ClientWithResponses) ListIdeaStageChangesWithResponse(ctx context.Context, discussionId DiscussionId, params *ListIdeaStageChangesParams, reqEditors ...RequestEditorFn) (*ListIdeaStageChangesResponse, error) {
+	rsp, err := c.ListIdeaStageChanges(ctx, discussionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListIdeaStageChangesResponse(rsp)
 }
 
 // GetDocsPageWithResponse One documentation page
@@ -111921,6 +115856,145 @@ func (c *ClientWithResponses) GetVapidPublicKeyWithResponse(ctx context.Context,
 	return ParseGetVapidPublicKeyResponse(rsp)
 }
 
+// ListRoadmapBoardsWithResponse List roadmap boards
+//
+// The boards of the inboxes the caller can see, oldest first, each with how many ideas sit in
+// every stage.
+//
+// Scope: `roadmap:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/roadmap-boards (the `ListRoadmapBoards` operationId).
+func (c *ClientWithResponses) ListRoadmapBoardsWithResponse(ctx context.Context, params *ListRoadmapBoardsParams, reqEditors ...RequestEditorFn) (*ListRoadmapBoardsResponse, error) {
+	rsp, err := c.ListRoadmapBoards(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListRoadmapBoardsResponse(rsp)
+}
+
+// CreateRoadmapBoardWithBodyWithResponse Create a roadmap board
+//
+// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+// `slug` names the board in its URL, is unique across the server, current and former slugs
+// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+func (c *ClientWithResponses) CreateRoadmapBoardWithBodyWithResponse(ctx context.Context, params *CreateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateRoadmapBoardResponse, error) {
+	rsp, err := c.CreateRoadmapBoardWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateRoadmapBoardResponse(rsp)
+}
+
+// CreateRoadmapBoardWithResponse Create a roadmap board
+//
+// Switches the roadmap on for an inbox, which has at most one board (`409 roadmap_board_exists`).
+// `slug` names the board in its URL, is unique across the server, current and former slugs
+// alike (`409 slug_taken`), and cannot be one of the reserved words (`400`). `channel_id` names
+// a `chat` channel of the same inbox: the public page embeds its chat, and ideas members start
+// are filed on it. A board is private (a triage tool for the team) unless `public` is `true`;
+// `suggestions` defaults to `moderated`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off`.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/roadmap-boards (the `CreateRoadmapBoard` operationId).
+func (c *ClientWithResponses) CreateRoadmapBoardWithResponse(ctx context.Context, params *CreateRoadmapBoardParams, body CreateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRoadmapBoardResponse, error) {
+	rsp, err := c.CreateRoadmapBoard(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateRoadmapBoardResponse(rsp)
+}
+
+// DeleteRoadmapBoardWithResponse Delete a roadmap board
+//
+// The board with its ideas, their posts, votes, follows and stage history, and the links to
+// feedback. The feedback conversations and the progress already set on them stay.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/roadmap-boards/{boardId} (the `DeleteRoadmapBoard` operationId).
+func (c *ClientWithResponses) DeleteRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *DeleteRoadmapBoardParams, reqEditors ...RequestEditorFn) (*DeleteRoadmapBoardResponse, error) {
+	rsp, err := c.DeleteRoadmapBoard(ctx, boardId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteRoadmapBoardResponse(rsp)
+}
+
+// GetRoadmapBoardWithResponse A roadmap board
+//
+// With its idea counts per stage and its public `url`.
+//
+// Scope: `roadmap:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/roadmap-boards/{boardId} (the `GetRoadmapBoard` operationId).
+func (c *ClientWithResponses) GetRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *GetRoadmapBoardParams, reqEditors ...RequestEditorFn) (*GetRoadmapBoardResponse, error) {
+	rsp, err := c.GetRoadmapBoard(ctx, boardId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRoadmapBoardResponse(rsp)
+}
+
+// UpdateRoadmapBoardWithBodyWithResponse Update a roadmap board
+//
+// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+func (c *ClientWithResponses) UpdateRoadmapBoardWithBodyWithResponse(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRoadmapBoardResponse, error) {
+	rsp, err := c.UpdateRoadmapBoardWithBody(ctx, boardId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateRoadmapBoardResponse(rsp)
+}
+
+// UpdateRoadmapBoardWithResponse Update a roadmap board
+//
+// Changes the given fields; `null` clears the analytics property. `public: false` takes the
+// board off the web (`404`) at once and the widget loses its Roadmap tile. Changing `slug`
+// keeps the old one reserved for this board, and its public addresses redirect to the new one,
+// for 90 days; a board keeps its 10 newest former slugs, and its slug changes 10 times a day
+// at most (`429 rate_limited`). `channel_id` must stay a `chat` channel of the board's inbox.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `roadmap:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/roadmap-boards/{boardId} (the `UpdateRoadmapBoard` operationId).
+func (c *ClientWithResponses) UpdateRoadmapBoardWithResponse(ctx context.Context, boardId RoadmapBoardId, params *UpdateRoadmapBoardParams, body UpdateRoadmapBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRoadmapBoardResponse, error) {
+	rsp, err := c.UpdateRoadmapBoard(ctx, boardId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateRoadmapBoardResponse(rsp)
+}
+
 // GetStatsWithResponse Team activity since a moment
 //
 // What the team did in the inboxes the caller can see (or in one of them) from `since` until
@@ -114473,6 +118547,66 @@ func ParseCreatePageRatingResponse(rsp *http.Response) (*CreatePageRatingRespons
 	return response, nil
 }
 
+// ParseGetClientRoadmapResponse parses an HTTP response from a GetClientRoadmapWithResponse call
+func ParseGetClientRoadmapResponse(rsp *http.Response) (*GetClientRoadmapResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientRoadmapResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientRoadmap
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetClientRoadmapResponse200Headers
+		if values := rsp.Header.Values("Cache-Control"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Cache-Control", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.CacheControl = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseCreateClientSubscriptionResponse parses an HTTP response from a CreateClientSubscriptionWithResponse call
 func ParseCreateClientSubscriptionResponse(rsp *http.Response) (*CreateClientSubscriptionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -115237,6 +119371,13 @@ func ParseVoteClientDiscussionPostResponse(rsp *http.Response) (*VoteClientDiscu
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest Problem
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -115290,6 +119431,20 @@ func ParseCreateClientDiscussionResponse(rsp *http.Response) (*CreateClientDiscu
 			return nil, err
 		}
 		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest Problem
@@ -115398,6 +119553,13 @@ func ParseAcceptClientDiscussionAnswerResponse(rsp *http.Response) (*AcceptClien
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 
@@ -120527,6 +124689,13 @@ func ParseDeleteChannelResponse(rsp *http.Response) (*DeleteChannelResponse, err
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	}
 
 	return response, nil
@@ -122159,6 +126328,13 @@ func ParseCreateDiscussionFromConversationResponse(rsp *http.Response) (*CreateD
 		}
 		response.ApplicationproblemJSON409 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
 	}
 
 	return response, nil
@@ -122947,6 +127123,13 @@ func ParseVoteDiscussionPostResponse(rsp *http.Response) (*VoteDiscussionPostRes
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	}
 
 	return response, nil
@@ -123054,6 +127237,13 @@ func ParseCreateDiscussionResponse(rsp *http.Response) (*CreateDiscussionRespons
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	}
 
@@ -123257,6 +127447,228 @@ func ParseAcceptDiscussionAnswerResponse(rsp *http.Response) (*AcceptDiscussionA
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnlinkIdeaConversationResponse parses an HTTP response from a UnlinkIdeaConversationWithResponse call
+func ParseUnlinkIdeaConversationResponse(rsp *http.Response) (*UnlinkIdeaConversationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnlinkIdeaConversationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseLinkIdeaConversationResponse parses an HTTP response from a LinkIdeaConversationWithResponse call
+func ParseLinkIdeaConversationResponse(rsp *http.Response) (*LinkIdeaConversationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &LinkIdeaConversationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReplyToIdeaConversationsResponse parses an HTTP response from a ReplyToIdeaConversationsWithResponse call
+func ParseReplyToIdeaConversationsResponse(rsp *http.Response) (*ReplyToIdeaConversationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReplyToIdeaConversationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest LinkedReplyResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetIdeaLinkedReplyResponse parses an HTTP response from a GetIdeaLinkedReplyWithResponse call
+func ParseGetIdeaLinkedReplyResponse(rsp *http.Response) (*GetIdeaLinkedReplyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetIdeaLinkedReplyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest LinkedReply
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
 	}
 
 	return response, nil
@@ -123282,6 +127694,121 @@ func ParseCreateDiscussionPostResponse(rsp *http.Response) (*CreateDiscussionPos
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMoveIdeaStageResponse parses an HTTP response from a MoveIdeaStageWithResponse call
+func ParseMoveIdeaStageResponse(rsp *http.Response) (*MoveIdeaStageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MoveIdeaStageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RoadmapStageMoveResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListIdeaStageChangesResponse parses an HTTP response from a ListIdeaStageChangesWithResponse call
+func ParseListIdeaStageChangesResponse(rsp *http.Response) (*ListIdeaStageChangesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListIdeaStageChangesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RoadmapStageChangePage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Problem
@@ -130906,6 +135433,272 @@ func ParseGetVapidPublicKeyResponse(rsp *http.Response) (*GetVapidPublicKeyRespo
 	return response, nil
 }
 
+// ParseListRoadmapBoardsResponse parses an HTTP response from a ListRoadmapBoardsWithResponse call
+func ParseListRoadmapBoardsResponse(rsp *http.Response) (*ListRoadmapBoardsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListRoadmapBoardsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RoadmapBoardList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateRoadmapBoardResponse parses an HTTP response from a CreateRoadmapBoardWithResponse call
+func ParseCreateRoadmapBoardResponse(rsp *http.Response) (*CreateRoadmapBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateRoadmapBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest RoadmapBoard
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteRoadmapBoardResponse parses an HTTP response from a DeleteRoadmapBoardWithResponse call
+func ParseDeleteRoadmapBoardResponse(rsp *http.Response) (*DeleteRoadmapBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteRoadmapBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetRoadmapBoardResponse parses an HTTP response from a GetRoadmapBoardWithResponse call
+func ParseGetRoadmapBoardResponse(rsp *http.Response) (*GetRoadmapBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetRoadmapBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RoadmapBoard
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateRoadmapBoardResponse parses an HTTP response from a UpdateRoadmapBoardWithResponse call
+func ParseUpdateRoadmapBoardResponse(rsp *http.Response) (*UpdateRoadmapBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateRoadmapBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RoadmapBoard
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetStatsResponse parses an HTTP response from a GetStatsWithResponse call
 func ParseGetStatsResponse(rsp *http.Response) (*GetStatsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -132144,7 +136937,7 @@ func ParseGetStatusIncidentReplyResponse(rsp *http.Response) (*GetStatusIncident
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest StatusIncidentReplyReport
+		var dest LinkedReply
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -132198,7 +136991,7 @@ func ParseReplyToStatusIncidentConversationsResponse(rsp *http.Response) (*Reply
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
-		var dest StatusIncidentReplyResult
+		var dest LinkedReplyResult
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -133929,6 +138722,11 @@ type WebhookInitiatorInterface interface {
 
 	WebhookDiscussionPostCreated(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, body WebhookDiscussionPostCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookDiscussionStageChangedWithBody fires the discussion.stage_changed webhook with any body
+	WebhookDiscussionStageChangedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionStageChangedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookDiscussionStageChanged(ctx context.Context, targetURL string, params *WebhookDiscussionStageChangedParams, body WebhookDiscussionStageChangedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookDiscussionUpdatedWithBody fires the discussion.updated webhook with any body
 	WebhookDiscussionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -134245,6 +139043,30 @@ func (p *WebhookInitiator) WebhookDiscussionPostCreatedWithBody(ctx context.Cont
 
 func (p *WebhookInitiator) WebhookDiscussionPostCreated(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, body WebhookDiscussionPostCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookDiscussionPostCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionStageChangedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionStageChangedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionStageChangedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionStageChanged(ctx context.Context, targetURL string, params *WebhookDiscussionStageChangedParams, body WebhookDiscussionStageChangedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionStageChangedWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -135225,6 +140047,67 @@ func NewWebhookDiscussionPostCreatedWebhookRequest(targetURL string, params *Web
 
 // NewWebhookDiscussionPostCreatedWebhookRequestWithBody builds a POST request for the discussion.post_created webhook with any body
 func NewWebhookDiscussionPostCreatedWebhookRequestWithBody(targetURL string, params *WebhookDiscussionPostCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookDiscussionStageChangedWebhookRequest builds a application/json POST request for the discussion.stage_changed webhook
+func NewWebhookDiscussionStageChangedWebhookRequest(targetURL string, params *WebhookDiscussionStageChangedParams, body WebhookDiscussionStageChangedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookDiscussionStageChangedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookDiscussionStageChangedWebhookRequestWithBody builds a POST request for the discussion.stage_changed webhook with any body
+func NewWebhookDiscussionStageChangedWebhookRequestWithBody(targetURL string, params *WebhookDiscussionStageChangedParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

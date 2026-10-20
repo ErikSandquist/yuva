@@ -1092,6 +1092,10 @@ msgstr "En riktig adress där du får post"
 msgid "A reply was written in a discussion"
 msgstr "Ett svar skrevs i en diskussion"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "En idé på färdplanen flyttades till ett annat steg"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "En inloggning måste komma tillbaka inom 10 minuter och fungerar en gång. Öppna migreringen och logga in igen."
@@ -6047,6 +6051,10 @@ msgstr "Ljust utseende"
 msgid "Limit the pace"
 msgstr "Begränsa takten"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Länka feedback till idéer, svara länkade kunder och hantera färdplanstavlor"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Länk till din Microsoft 365-admin"
@@ -6746,6 +6754,10 @@ msgstr "Flest röster"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Flytta ned"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Flytta idéer mellan färdplanens steg"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Läsa sändlistor, prenumeranter och samtyckesbevis"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Skrivskyddad"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Läsa färdplanstavlor, idéer och stegens historik"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

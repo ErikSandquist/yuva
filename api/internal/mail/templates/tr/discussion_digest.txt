@@ -1,7 +1,9 @@
-{{.Inbox}}: "{{.Title}}" {{if .Answer}}yanıtlandı{{else}}konusunda yeni yanıtlar{{end}}
+{{.Inbox}}: "{{.Title}}" {{if .Answer}}yanıtlandı{{else if .Posts}}konusunda yeni yanıtlar{{else}}durum güncellemesi{{end}}
 
 {{if .Answer}}"{{.Title}}" konusunda bir yanıt kabul edildi ({{or .Answer.Author "bir okuyucu"}}):
 > {{.Answer.Text}}
+
+{{end}}{{range .Stages}}Bu fikrin durumu: {{if eq .Stage "planned"}}Planlandı{{else if eq .Stage "in_progress"}}Geliştiriliyor{{else if eq .Stage "shipped"}}Yayınlandı{{else}}Kapatıldı{{end}}.
 
 {{end}}{{if .Posts}}"{{.Title}}" konusunda yeni yanıtlar:
 {{range .Posts}}
@@ -10,7 +12,7 @@
 {{end}}{{if .More}}
 …ve {{.More}} yanıt daha.
 {{end}}
-{{end}}Konuyu okuyun: {{.URL}}
+{{end}}{{if .Idea}}Fikri görüntüleyin{{else}}Konuyu okuyun{{end}}: {{.URL}}
 
-Bu e-postayı {{.Inbox}} belgelerindeki bu konuyu takip ettiğiniz için aldınız. Takibi bırakın: {{.UnsubscribeURL}}{{if .SettingsURL}}
+Bu e-postayı {{if .Idea}}{{.Inbox}} yol haritasındaki bu fikri{{else}}{{.Inbox}} belgelerindeki bu konuyu{{end}} takip ettiğiniz için aldınız. Takibi bırakın: {{.UnsubscribeURL}}{{if .SettingsURL}}
 Hangi e-postaları alacağınızı seçin: {{.SettingsURL}}{{end}}

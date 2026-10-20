@@ -140,7 +140,7 @@ export function useRealtime(ws: string, memberId: string) {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
           return
         }
-        if (msg.type === "help.article.updated") return
+        if (msg.type === "help.article.updated" || msg.type === "roadmap.board.updated") return
         cursor = Math.max(cursor ?? 0, msg.id)
         if (msg.type === "message.created" && msg.data.kind === "message" && msg.data.author.type === "contact") {
           stopTyping(msg.data.conversation_id, { type: "contact", contact_id: msg.data.author.contact_id })

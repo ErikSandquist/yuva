@@ -1092,6 +1092,10 @@ msgstr "Prava adresa na kojoj primate poštu"
 msgid "A reply was written in a discussion"
 msgstr "U raspravi je napisan odgovor"
 
+#: src/components/common/text.ts
+msgid "A roadmap idea moved to another stage"
+msgstr "Ideja s plana razvoja prešla je u drugu fazu"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
 msgstr "Prijava se mora vratiti unutar 10 minuta i vrijedi jednom. Otvorite migraciju i prijavite se ponovno."
@@ -6047,6 +6051,10 @@ msgstr "Svijetli izgled"
 msgid "Limit the pace"
 msgstr "Ograniči tempo"
 
+#: src/components/common/text.ts
+msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
+msgstr "Povezuj povratne informacije s idejama, odgovaraj povezanim klijentima i upravljaj pločama plana razvoja"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Poveznica za vašeg administratora Microsoft 365"
@@ -6746,6 +6754,10 @@ msgstr "Najviše glasova"
 #: src/features/status/ComponentsTab.tsx
 msgid "Move down"
 msgstr "Pomakni dolje"
+
+#: src/components/common/text.ts
+msgid "Move ideas between roadmap stages"
+msgstr "Premještaj ideje između faza plana razvoja"
 
 #: src/components/common/text.ts
 msgid "Move mailboxes to Yuva: find the provider, connect, scan, copy and switch"
@@ -9338,6 +9350,10 @@ msgstr "Čitaj popise e-pošte, pretplatnike i zapise o privoli"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Samo za čitanje"
+
+#: src/components/common/text.ts
+msgid "Read roadmap boards, ideas and stage history"
+msgstr "Čitaj ploče plana razvoja, ideje i povijest faza"
 
 #: src/components/common/text.ts
 msgid "Read status pages, components and incidents"

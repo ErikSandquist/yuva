@@ -46,6 +46,12 @@ WHERE c.workspace_id = @workspace_id
   AND (sqlc.narg(category)::text IS NULL OR c.feedback->>'category' = sqlc.narg(category)::text)
   AND (sqlc.narg(page)::text IS NULL OR c.page_url = sqlc.narg(page)::text)
   AND (sqlc.narg(statuses)::text[] IS NULL OR c.status = ANY(sqlc.narg(statuses)::text[]))
+  AND (sqlc.narg(idea_id)::uuid IS NULL OR EXISTS (
+      SELECT 1 FROM roadmap_idea_conversations ri
+      WHERE ri.workspace_id = c.workspace_id AND ri.conversation_id = c.id AND ri.idea_id = sqlc.narg(idea_id)::uuid))
+  AND (NOT @no_idea::bool OR (c.kind = 'feedback' AND NOT EXISTS (
+      SELECT 1 FROM roadmap_idea_conversations ri
+      WHERE ri.workspace_id = c.workspace_id AND ri.conversation_id = c.id)))
   AND (NOT @unassigned::bool OR c.assignee_id IS NULL)
   AND (sqlc.narg(assignee_id)::uuid IS NULL OR c.assignee_id = sqlc.narg(assignee_id)::uuid)
   AND (sqlc.narg(label_id)::uuid IS NULL OR EXISTS (

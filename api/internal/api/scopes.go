@@ -13,11 +13,11 @@ var allScopes = []oas.ApiKeyScope{
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
 	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage,
 	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage, oas.StatusRead, oas.StatusManage,
-	oas.HelpRead, oas.HelpWrite, oas.HelpPublish,
+	oas.HelpRead, oas.HelpWrite, oas.HelpPublish, oas.RoadmapRead, oas.RoadmapWrite, oas.RoadmapStage,
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
-var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage, oas.HelpPublish}
+var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage, oas.HelpPublish, oas.RoadmapStage}
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage, oas.AnalyticsManage}
 
@@ -316,6 +316,18 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteHelpCenter":                {oas.HelpPublish},
 	"PublishHelpArticleTranslation":   {oas.HelpPublish},
 	"UnpublishHelpArticleTranslation": {oas.HelpPublish},
+
+	"ListRoadmapBoards":        {oas.RoadmapRead},
+	"GetRoadmapBoard":          {oas.RoadmapRead},
+	"CreateRoadmapBoard":       {oas.RoadmapWrite},
+	"UpdateRoadmapBoard":       {oas.RoadmapWrite},
+	"DeleteRoadmapBoard":       {oas.RoadmapWrite},
+	"ListIdeaStageChanges":     {oas.RoadmapRead},
+	"MoveIdeaStage":            {oas.RoadmapStage},
+	"LinkIdeaConversation":     {oas.RoadmapWrite, oas.ConversationsRead},
+	"UnlinkIdeaConversation":   {oas.RoadmapWrite, oas.ConversationsRead},
+	"ReplyToIdeaConversations": {oas.RoadmapWrite, oas.MessagesWrite},
+	"GetIdeaLinkedReply":       {oas.RoadmapRead, oas.ConversationsRead},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

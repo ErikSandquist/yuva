@@ -48,3 +48,21 @@ func (s *Server) CountHelpView(ws, center, article uuid.UUID, locale string) {
 func (s *Server) CountHelpSearch(ws, center uuid.UUID, locale, query string, found bool) {
 	s.countHelpSearch(store.HelpCenter{WorkspaceID: ws, ID: center}, locale, query, found)
 }
+
+func SetMaxIdeaLinks(n int) (restore func()) {
+	old := maxIdeaLinks
+	maxIdeaLinks = n
+	return func() { maxIdeaLinks = old }
+}
+
+func SetRoadmapBatchSize(n int) (restore func()) {
+	old := roadmapBatchSize
+	roadmapBatchSize = n
+	return func() { roadmapBatchSize = old }
+}
+
+func SetMaxPendingIdeas(n int) (restore func()) {
+	old := maxPendingIdeas
+	maxPendingIdeas = n
+	return func() { maxPendingIdeas = old }
+}
