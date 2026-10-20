@@ -3,8 +3,6 @@ package api
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
-	"encoding/base64"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
@@ -15,7 +13,6 @@ import (
 	"net/url"
 	"slices"
 	"strings"
-	"sync"
 	"time"
 	"uuid"
 
@@ -36,53 +33,13 @@ const (
 	statusCacheControl = "public, max-age=30, stale-if-error=86400"
 )
 
-var limitStatusPerIP = limit{120, time.Minute}
+var limitStatusPerIP = limitPublicPerIP
 
-type statusCacheEntry struct {
-	changed, at time.Time
-	ctype       string
-	body        []byte
-}
+type statusCacheEntry = publicEntry
 
-// statusCache keeps rendered public answers per page, view and language; an entry is used only while
-// the page's changed_at is the one it was made from and for at most statusCacheTTL, since day bars and
-// relative times move on their own.
-type statusCache struct {
-	mu      sync.Mutex
-	entries map[string]statusCacheEntry
-}
+type statusCache = publicCache
 
-func newStatusCache() *statusCache { return &statusCache{entries: map[string]statusCacheEntry{}} }
-
-func (c *statusCache) get(key string, changed, now time.Time) (statusCacheEntry, bool) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	e, ok := c.entries[key]
-	if !ok || !e.changed.Equal(changed) || now.Sub(e.at) >= statusCacheTTL || now.Before(e.at) {
-		return e, false
-	}
-	return e, true
-}
-
-func (c *statusCache) put(key string, e statusCacheEntry) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	if len(c.entries) >= statusMaxCached {
-		c.entries = map[string]statusCacheEntry{}
-	}
-	c.entries[key] = e
-}
-
-func (c *statusCache) forget(page uuid.UUID) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	prefix := page.String() + "|"
-	for k := range c.entries {
-		if strings.HasPrefix(k, prefix) {
-			delete(c.entries, k)
-		}
-	}
-}
+func newStatusCache() *statusCache { return newPublicCache(statusCacheTTL, statusMaxCached) }
 
 type statusHostKey struct{}
 
@@ -150,7 +107,7 @@ func (s *Server) routeStatus(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/incidents/{id}", s.serveStatus("incident"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/feed.atom", s.serveStatus("feed"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/badge.svg", s.serveStatus("badge"))
-	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/fonts/{name}", serveStatusFont)
+	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/fonts/{name}", servePublicFont)
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
 	mux.HandleFunc("POST "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe/sent", s.serveStatusSubscribe)
@@ -254,12 +211,7 @@ var (
 		`document.querySelectorAll("select[data-rt]").forEach(function(s){var c=document.querySelectorAll("[data-rt-chart]");function f(){c.forEach(function(e){e.hidden=e.getAttribute("data-rt-chart")!==s.value})}s.closest("label").hidden=false;s.addEventListener("change",f);f()});` +
 		`document.querySelectorAll("select[data-lang]").forEach(function(s){var b=s.form.querySelector("button");if(b)b.hidden=true;s.addEventListener("change",function(){s.form.submit()})});` +
 		`setTimeout(function(){location.reload()},60000)`
-	statusScriptHash = func() string {
-		h := sha256.Sum256([]byte(statusScript))
-		return base64.StdEncoding.EncodeToString(h[:])
-	}()
-	statusPageCSP = "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; script-src 'sha256-" + statusScriptHash +
-		"'; frame-ancestors *; base-uri 'none'; form-action 'self'"
+	statusPageCSP = publicCSP{img: "'self' https: data:", script: "", scriptHash: publicScriptHash(statusScript), frameAncestors: "*", formAction: "'self'"}.String()
 )
 
 func writeStatusAnswer(w http.ResponseWriter, e statusCacheEntry) {

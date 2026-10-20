@@ -302,6 +302,12 @@ type replyIn struct {
 	Body           string    `json:"body" jsonschema:"plain text"`
 }
 
+type draftReplyIn struct {
+	ConversationID uuid.UUID   `json:"conversation_id"`
+	Body           string      `json:"body" jsonschema:"plain text"`
+	ArticleIDs     []uuid.UUID `json:"article_ids,omitempty" jsonschema:"up to 3 published help articles to send with the reply, from search_help_articles; the body ends with their titles and links"`
+}
+
 type sendDraftIn struct {
 	MessageID uuid.UUID `json:"message_id" jsonschema:"the id draft_reply returned"`
 }
@@ -587,12 +593,14 @@ var mcpTools = append([]mcpTool{
 		}),
 
 	defineTool("draft_reply", "Draft a reply",
-		"Stores a reply to the contact as a draft. Nothing is delivered: a member reviews, edits and sends it in Yuva. Maps to POST /v1/conversations/{id}/messages with draft: true.",
+		"Stores a reply to the contact as a draft. Nothing is delivered: a member reviews, edits and sends it in Yuva. article_ids attaches help articles from search_help_articles as cards (up to 3). Maps to POST /v1/conversations/{id}/messages with draft: true.",
 		additive, nil, mcpTool{ops: []string{"CreateMessage"}, scopes: []oas.ApiKeyScope{oas.MessagesWrite}},
-		func(ctx context.Context, c *mcpCall, in replyIn) (mcpMessage, error) {
-			return c.createMessage(ctx, in.ConversationID, oas.MessageCreate{
-				Kind: oas.MessageCreateKindMessage, Direction: new(oas.Out), Body: &in.Body, Draft: boolPtr(true),
-			})
+		func(ctx context.Context, c *mcpCall, in draftReplyIn) (mcpMessage, error) {
+			b := oas.MessageCreate{Kind: oas.MessageCreateKindMessage, Direction: new(oas.Out), Body: &in.Body, Draft: boolPtr(true)}
+			if len(in.ArticleIDs) > 0 {
+				b.ArticleIds = &in.ArticleIDs
+			}
+			return c.createMessage(ctx, in.ConversationID, b)
 		}),
 	defineTool("send_reply", "Send a reply",
 		"Sends a new reply to the contact now, by e-mail or chat. Prefer draft_reply unless the person you work for asked to send; to send a draft that exists, use send_draft. Maps to POST /v1/conversations/{id}/messages.",
@@ -717,4 +725,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpInitTools)...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpInitTools)...)

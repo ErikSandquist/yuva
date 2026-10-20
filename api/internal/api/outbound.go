@@ -423,7 +423,7 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 		To:            email.Address{Name: toName, Email: to},
 		Subject:       me.Subject,
 		MessageID:     me.HeaderMessageID,
-		Text:          batchText(msgs),
+		Text:          batchText(msgs, false),
 		Date:          msg.CreatedAt,
 		References:    me.ReferencesIds,
 		AutoSubmitted: me.Auto,
@@ -433,6 +433,12 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 	}
 	if me.FullHtml != nil && len(msgs) == 1 {
 		out.HTML = *me.FullHtml
+	}
+	if blocks := batchCards(msgs); blocks != "" {
+		if out.HTML == "" {
+			out.HTML = email.TextToHTML(batchText(msgs, true))
+		}
+		out.HTML += blocks
 	}
 	for _, m := range msgs {
 		atts, err := s.st.ListAttachmentsOfMessage(ctx, store.ListAttachmentsOfMessageParams{WorkspaceID: workspaceID, MessageID: m.ID})
@@ -460,10 +466,15 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 	return email.SendRelayed(sendCtx, s.sender, cfg, me.FromAddress, []string{to}, raw)
 }
 
-func batchText(msgs []messageRow) string {
+// batchText joins the messages' bodies; plain leaves out the article lines that the HTML part draws as cards.
+func batchText(msgs []messageRow, plain bool) string {
 	parts := make([]string, 0, len(msgs))
 	for _, m := range msgs {
-		if b := strings.TrimSpace(m.Body); b != "" {
+		body := m.Body
+		if plain {
+			body = withoutHelpCards(body, helpCardsOf(m.HelpCards))
+		}
+		if b := strings.TrimSpace(body); b != "" {
 			parts = append(parts, b)
 		}
 	}
@@ -598,4 +609,12 @@ func normalizedAddressList(in []email.Address) []string {
 		}
 	}
 	return out
+}
+
+func batchCards(msgs []messageRow) string {
+	var b strings.Builder
+	for _, m := range msgs {
+		b.WriteString(helpCardsHTML(helpCardsOf(m.HelpCards)))
+	}
+	return b.String()
 }

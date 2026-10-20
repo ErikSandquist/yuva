@@ -2186,7 +2186,7 @@ func (q *Queries) SetBroadcastsWaiting(ctx context.Context, arg SetBroadcastsWai
 }
 
 const setConversationBroadcast = `-- name: SetConversationBroadcast :one
-UPDATE conversations SET broadcast_id = $1 WHERE workspace_id = $2 AND id = $3 RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress
+UPDATE conversations SET broadcast_id = $1 WHERE workspace_id = $2 AND id = $3 RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress, help_article_id
 `
 
 type SetConversationBroadcastParams struct {
@@ -2234,6 +2234,7 @@ func (q *Queries) SetConversationBroadcast(ctx context.Context, arg SetConversat
 		&i.MigrationID,
 		&i.ImportedAt,
 		&i.FeedbackProgress,
+		&i.HelpArticleID,
 	)
 	return i, err
 }

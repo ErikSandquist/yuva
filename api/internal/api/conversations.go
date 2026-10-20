@@ -181,7 +181,7 @@ func (s *Server) listItems(ctx context.Context, p principal, rows []store.Conver
 			Status: c.Status, SnoozeUntil: c.SnoozeUntil, Priority: c.Priority, Spam: c.Spam, AssigneeId: c.AssigneeId, Labels: c.Labels,
 			LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt, CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt,
 			RelatedConversationId: c.RelatedConversationId, ClosedAt: c.ClosedAt, Rating: c.Rating, LastReadByContactAt: c.LastReadByContactAt, BroadcastId: c.BroadcastId,
-			Imported: c.Imported, Contact: contacts[r.ContactID], LastMessage: previews[r.ID], Unread: unread[r.ID], PinnedAt: pinned[r.ID],
+			Imported: c.Imported, HelpArticleId: c.HelpArticleId, Contact: contacts[r.ContactID], LastMessage: previews[r.ID], Unread: unread[r.ID], PinnedAt: pinned[r.ID],
 		}
 	}
 	return out, nil
@@ -197,6 +197,7 @@ func conversationBody(c store.Conversation, labels []uuid.UUID) oas.Conversation
 		AssigneeId: c.AssigneeID, Labels: labels, LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt,
 		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, RelatedConversationId: c.RelatedConversationID, BroadcastId: c.BroadcastID,
 		ClosedAt: c.ClosedAt, Rating: conversationRating(c), LastReadByContactAt: c.LastReadByContactAt, Imported: conversationImport(c),
+		HelpArticleId: c.HelpArticleID,
 	}
 }
 

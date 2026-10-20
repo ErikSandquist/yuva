@@ -154,11 +154,13 @@ func (s *Server) SendMessage(ctx context.Context, req oas.SendMessageRequestObje
 		return nil, errBotSendingDisabled
 	}
 	var out oas.Message
+	var inbox uuid.UUID
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		c, err := lockDraft(ctx, q, p, req.MessageId)
 		if err != nil {
 			return err
 		}
+		inbox = c.InboxID
 		plan, err := s.planEmail(ctx, q, c)
 		if err != nil {
 			return err
@@ -208,6 +210,9 @@ func (s *Server) SendMessage(ctx context.Context, req oas.SendMessageRequestObje
 	})
 	if err != nil {
 		return nil, err
+	}
+	if out.Cards != nil {
+		s.countHelpSent(ctx, p.workspaceID, inbox, *out.Cards)
 	}
 	return oas.SendMessage200JSONResponse(out), nil
 }

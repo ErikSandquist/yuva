@@ -339,6 +339,7 @@ func (f *clientFilter) clientMessage(ctx context.Context, m oas.Message) (oas.Cl
 	if m.Direction != nil {
 		out.Direction = *m.Direction
 	}
+	out.Cards = m.Cards
 	out.Author = clientAuthor(m.Author, map[uuid.UUID]string{derefID(m.Author.MemberId): name})
 	if m.Author.Type == oas.AuthorTypeContact {
 		out.ClientId = m.ClientId

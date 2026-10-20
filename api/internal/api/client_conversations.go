@@ -16,7 +16,7 @@ import (
 
 var (
 	clientMessageFields      = []string{"body", "client_id"}
-	clientConversationFields = []string{"subject", "body", "client_id", "page_url", "page_title"}
+	clientConversationFields = []string{"subject", "body", "client_id", "page_url", "page_title", "help_article_id"}
 )
 
 func clientAttachmentBody(a store.Attachment) oas.ClientAttachment {
@@ -59,6 +59,9 @@ func clientMessageBody(m messageRow, atts []store.Attachment, names map[uuid.UUI
 	}
 	for _, a := range atts {
 		out.Attachments = append(out.Attachments, clientAttachmentBody(a))
+	}
+	if cards := helpCardsOf(m.HelpCards); len(cards) > 0 {
+		out.Cards = &cards
 	}
 	return out
 }
@@ -370,6 +373,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 	}
 	var in *messageInput
 	var rawPage, rawTitle *string
+	var rawArticle *uuid.UUID
 	switch {
 	case req.JSONBody != nil:
 		b := req.JSONBody
@@ -377,7 +381,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		if b.Body != nil {
 			in.body = *b.Body
 		}
-		rawPage, rawTitle = b.PageUrl, b.PageTitle
+		rawPage, rawTitle, rawArticle = b.PageUrl, b.PageTitle, b.HelpArticleId
 	case req.MultipartBody != nil:
 		var err error
 		if in, err = s.readMultipart(req.MultipartBody, cp.workspaceID, clientConversationFields); err != nil {
@@ -388,6 +392,11 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		}
 		if v, ok := in.extra["page_title"]; ok {
 			rawTitle = &v
+		}
+		if v, ok := in.extra["help_article_id"]; ok {
+			if id, err := uuid.Parse(strings.TrimSpace(v)); err == nil {
+				rawArticle = &id
+			}
 		}
 	default:
 		return nil, errValidation("send application/json or multipart/form-data")
@@ -412,6 +421,18 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 			return nil, err
 		}
 	}
+	var article *uuid.UUID
+	var articleCenter store.HelpCenter
+	var articleLocale string
+	if rawArticle != nil && !s.help.Off {
+		rows, err := s.helpArticleLocales(ctx, s.st.Queries, cp.workspaceID, cp.inboxID, *rawArticle)
+		if err != nil {
+			return nil, err
+		}
+		if len(rows) > 0 {
+			article, articleCenter, articleLocale = rawArticle, store.HelpCenter{WorkspaceID: cp.workspaceID, ID: rows[0].CenterID}, helpConversationLocale(rows)
+		}
+	}
 	stored, err := s.putUploads(ctx, in)
 	if err != nil {
 		return nil, err
@@ -425,7 +446,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		channelID := cp.channelID
 		c, err := q.CreateConversation(ctx, store.CreateConversationParams{
 			ID: newID(), WorkspaceID: cp.workspaceID, InboxID: cp.inboxID, ContactID: cp.contactID, ChannelID: &channelID,
-			Subject: subject, Priority: string(oas.Normal), PageUrl: page, PageTitle: title, Now: s.now(),
+			Subject: subject, Priority: string(oas.Normal), PageUrl: page, PageTitle: title, HelpArticleID: article, Now: s.now(),
 		})
 		if err != nil {
 			return err
@@ -438,6 +459,9 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 	if err != nil {
 		s.deleteObjects(ctx, stored)
 		return nil, err
+	}
+	if article != nil {
+		s.countHelpArticle(articleCenter, *article, articleLocale, helpArticleCount{conversations: 1})
 	}
 	out, err := s.clientConversationCreated(ctx, cp, convID, msgID)
 	if err != nil {

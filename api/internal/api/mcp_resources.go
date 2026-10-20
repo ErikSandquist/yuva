@@ -59,6 +59,12 @@ func addMCPResources(srv *mcp.Server, c *mcpCall) {
 			Description: "A migration of a mailbox into Yuva with its progress, dry run, folders and switch, as get_migration returns it; updated on every change of state.",
 		}, c.readResource)
 	}
+	if mayReadHelpResource(c.p) {
+		srv.AddResourceTemplate(&mcp.ResourceTemplate{
+			Name: "help-center", Title: "Help center", URITemplate: mcpHelpPrefix + "{id}", MIMEType: mcpJSON,
+			Description: "A help center with its collections and the titles of its articles per language; updated when an article is published, unpublished or deleted or a draft is saved.",
+		}, c.readResource)
+	}
 	if mayReadBroadcastResource(c.p) {
 		srv.AddResourceTemplate(&mcp.ResourceTemplate{
 			Name: "broadcast", Title: "Broadcast", URITemplate: mcpBroadcastPrefix + "{id}", MIMEType: mcpJSON,
@@ -96,7 +102,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix, mcpHelpPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -148,6 +154,11 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, errInsufficientScope(oas.AnalyticsRead)
 		}
 		return c.propertyResource(ctx, id)
+	case mcpHelpPrefix:
+		if !mayReadHelpResource(c.p) {
+			return nil, errInsufficientScope(oas.HelpRead)
+		}
+		return c.helpCenterResource(ctx, id)
 	case mcpMigrationPrefix:
 		t, _ := mcpToolNamed("get_migration")
 		if err := t.refusal(c.p); err != nil {
@@ -311,6 +322,9 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 		if json.Unmarshal(e.Data, &a) == nil {
 			uris = append(uris, mcpPropertyPrefix+a.Property.ID.String())
 		}
+	}
+	if center, ok := helpEventCenter(e); ok {
+		uris = append(uris, mcpHelpPrefix+center.String())
 	}
 	if e.Type == realtime.ContactUpdated || e.Type == realtime.ContactDeleted {
 		var ct struct {

@@ -3,16 +3,13 @@ package api
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	_ "embed"
-	"encoding/hex"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"html/template"
 	"log/slog"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -173,7 +170,7 @@ func (s *Server) homeView(ctx context.Context, l homeLocale) (homeView, error) {
 	w := homeWordsFor(l.Code)
 	panel := strings.TrimRight(s.auth.PublicURL, "/")
 	v := homeView{W: w, Lang: l.Code, Dir: l.dir(), Origin: origin, Canonical: homeURL(origin, l), Alternates: s.homeAlternates(origin),
-		LocaleName: l.Name, OGLocale: l.OG, FontSans: statusFontPath("Geist"), FontMono: statusFontPath("GeistMono"),
+		LocaleName: l.Name, OGLocale: l.OG, FontSans: publicFontPath("Geist"), FontMono: publicFontPath("GeistMono"),
 		OGImage: origin + "/og.png", Favicon: "/favicon.svg", CreateURL: panel + "/status", SignInURL: panel + "/sign-in",
 		DocsURL: docsBase, GuideURL: docsBase + "status-pages/", GitHubURL: "https://github.com/productdevbook/yuva", SiteURL: yuvaSite,
 		Style: template.CSS(statusStyle + homeStyle), Mark: yuvaMark, Globe: homeGlobe,
@@ -270,26 +267,7 @@ func (s *Server) homeAnswer(ctx context.Context, l homeLocale) (statusCacheEntry
 }
 
 func writeHomeAnswer(w http.ResponseWriter, r *http.Request, e statusCacheEntry, csp string) {
-	sum := sha256.Sum256(e.body)
-	etag := `"` + hex.EncodeToString(sum[:8]) + `"`
-	h := w.Header()
-	h.Set("Content-Type", e.ctype)
-	h.Set("Cache-Control", statusCacheControl)
-	h.Set("ETag", etag)
-	h.Set("Referrer-Policy", "strict-origin-when-cross-origin")
-	h.Set("X-Content-Type-Options", "nosniff")
-	if csp != "" {
-		h.Set("Content-Security-Policy", csp)
-	}
-	if strings.Contains(r.Header.Get("If-None-Match"), etag) {
-		w.WriteHeader(http.StatusNotModified)
-		return
-	}
-	h.Set("Content-Length", strconv.Itoa(len(e.body)))
-	w.WriteHeader(http.StatusOK)
-	if r.Method != http.MethodHead {
-		_, _ = w.Write(e.body)
-	}
+	writePublicAnswer(w, r, e, statusCacheControl, csp)
 }
 
 func (s *Server) statusHomeOff(w http.ResponseWriter) {
@@ -344,7 +322,7 @@ func (s *Server) serveStatusRoot(w http.ResponseWriter, r *http.Request) bool {
 	}
 	if name, ok := strings.CutPrefix(p, "/fonts/"); ok && name != "" && !strings.Contains(name, "/") {
 		r.SetPathValue("name", name)
-		serveStatusFont(w, r)
+		servePublicFont(w, r)
 		return true
 	}
 	if p == "/" {

@@ -9,6 +9,7 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
@@ -32,6 +33,7 @@ type helpArticleKey struct {
 
 type helpArticleCount struct {
 	views, conversations, sent int32
+	up, down                   int32
 }
 
 type helpSearchKey struct {
@@ -80,6 +82,8 @@ func (h *helpCounters) addArticle(k helpArticleKey, n helpArticleCount) {
 	cur.views += n.views
 	cur.conversations += n.conversations
 	cur.sent += n.sent
+	cur.up += n.up
+	cur.down += n.down
 	h.articles[k] = cur
 }
 
@@ -165,6 +169,25 @@ func (s *Server) countHelpArticle(c store.HelpCenter, articleID uuid.UUID, local
 	s.helpCounts.addArticle(helpArticleKey{ws: c.WorkspaceID, center: c.ID, article: articleID, locale: locale, day: utcDay(s.now())}, n)
 }
 
+// A changed answer moves the count from the earlier answer to the new one.
+func (s *Server) countHelpReaction(c store.HelpCenter, article uuid.UUID, locale string, rating, previous oas.PageRating) {
+	if rating == previous {
+		return
+	}
+	var n helpArticleCount
+	for r, d := range map[oas.PageRating]int32{rating: 1, previous: -1} {
+		if r == "" {
+			continue
+		}
+		if r == oas.PageRatingUp {
+			n.up += d
+		} else {
+			n.down += d
+		}
+	}
+	s.countHelpArticle(c, article, locale, n)
+}
+
 func (s *Server) countHelpSearch(c store.HelpCenter, locale, query string, found bool) {
 	q := helpStoredQuery(query)
 	if q == "" {
@@ -194,7 +217,7 @@ func (s *Server) FlushHelpCounters(ctx context.Context) error {
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
 		for k, n := range a {
 			if err := q.AddHelpArticleDaily(ctx, store.AddHelpArticleDailyParams{
-				WorkspaceID: k.ws, ArticleID: k.article, Locale: k.locale, Day: k.day, Views: n.views, Conversations: n.conversations, Sent: n.sent,
+				WorkspaceID: k.ws, ArticleID: k.article, Locale: k.locale, Day: k.day, Views: n.views, HelpfulUp: n.up, HelpfulDown: n.down, Conversations: n.conversations, Sent: n.sent,
 			}); err != nil {
 				return err
 			}

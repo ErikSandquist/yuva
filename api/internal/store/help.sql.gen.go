@@ -14,12 +14,12 @@ import (
 
 const addHelpArticleDaily = `-- name: AddHelpArticleDaily :exec
 INSERT INTO help_article_daily (workspace_id, center_id, article_id, locale, day, views, helpful_up, helpful_down, conversations, sent)
-SELECT a.workspace_id, a.center_id, a.id, $1, $2, $3, $4, $5, $6, $7
+SELECT a.workspace_id, a.center_id, a.id, $1, $2, $3, greatest(0, $4::int), greatest(0, $5::int), $6, $7
 FROM help_articles a WHERE a.workspace_id = $8 AND a.id = $9
 ON CONFLICT (workspace_id, article_id, locale, day) DO UPDATE SET
     views = help_article_daily.views + EXCLUDED.views,
-    helpful_up = help_article_daily.helpful_up + EXCLUDED.helpful_up,
-    helpful_down = help_article_daily.helpful_down + EXCLUDED.helpful_down,
+    helpful_up = greatest(0, help_article_daily.helpful_up + EXCLUDED.helpful_up),
+    helpful_down = greatest(0, help_article_daily.helpful_down + EXCLUDED.helpful_down),
     conversations = help_article_daily.conversations + EXCLUDED.conversations,
     sent = help_article_daily.sent + EXCLUDED.sent
 `
@@ -626,6 +626,74 @@ func (q *Queries) DeleteOldHelpSearchDaily(ctx context.Context, arg DeleteOldHel
 	return result.RowsAffected(), nil
 }
 
+const findHelpCenterByFormerSlug = `-- name: FindHelpCenterByFormerSlug :one
+SELECT c.id, c.workspace_id, c.inbox_id, c.name, c.description, c.slug, c.default_locale, c.locales, c.logo_url, c.accent_color, c.site_url, c.chat_channel_id, c.analytics_property_id, c.agents_may_publish, c.published, c.next_collection_number, c.next_article_number, c.changed_at, c.created_at, c.updated_at FROM help_center_slugs f
+JOIN help_centers c ON c.workspace_id = f.workspace_id AND c.id = f.center_id
+WHERE f.slug = $1
+`
+
+// The documented exception, as FindHelpCenterBySlug, for a slug the center no longer uses.
+func (q *Queries) FindHelpCenterByFormerSlug(ctx context.Context, slug string) (HelpCenter, error) {
+	row := q.db.QueryRow(ctx, findHelpCenterByFormerSlug, slug)
+	var i HelpCenter
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.DefaultLocale,
+		&i.Locales,
+		&i.LogoUrl,
+		&i.AccentColor,
+		&i.SiteUrl,
+		&i.ChatChannelID,
+		&i.AnalyticsPropertyID,
+		&i.AgentsMayPublish,
+		&i.Published,
+		&i.NextCollectionNumber,
+		&i.NextArticleNumber,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const findHelpCenterBySlug = `-- name: FindHelpCenterBySlug :one
+SELECT id, workspace_id, inbox_id, name, description, slug, default_locale, locales, logo_url, accent_color, site_url, chat_channel_id, analytics_property_id, agents_may_publish, published, next_collection_number, next_article_number, changed_at, created_at, updated_at FROM help_centers WHERE slug = $1
+`
+
+// The documented exception: a public URL names only the slug, which is unique across the server.
+func (q *Queries) FindHelpCenterBySlug(ctx context.Context, slug string) (HelpCenter, error) {
+	row := q.db.QueryRow(ctx, findHelpCenterBySlug, slug)
+	var i HelpCenter
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.DefaultLocale,
+		&i.Locales,
+		&i.LogoUrl,
+		&i.AccentColor,
+		&i.SiteUrl,
+		&i.ChatChannelID,
+		&i.AnalyticsPropertyID,
+		&i.AgentsMayPublish,
+		&i.Published,
+		&i.NextCollectionNumber,
+		&i.NextArticleNumber,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getHelpArticle = `-- name: GetHelpArticle :one
 SELECT id, workspace_id, center_id, collection_id, number, position, paths, created_by_member_id, created_by_api_key_id, created_at, updated_at FROM help_articles WHERE workspace_id = $1 AND center_id = $2 AND id = $3
 `
@@ -653,6 +721,46 @@ func (q *Queries) GetHelpArticle(ctx context.Context, arg GetHelpArticleParams) 
 		&i.UpdatedAt,
 	)
 	return i, err
+}
+
+const getHelpArticleLocalesForConversation = `-- name: GetHelpArticleLocalesForConversation :many
+SELECT c.id AS center_id, c.default_locale, t.locale FROM help_articles a
+JOIN help_centers c ON c.workspace_id = a.workspace_id AND c.id = a.center_id
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $1 AND a.id = $2 AND c.inbox_id = $3 AND c.published
+ORDER BY t.locale
+`
+
+type GetHelpArticleLocalesForConversationParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	InboxID     uuid.UUID
+}
+
+type GetHelpArticleLocalesForConversationRow struct {
+	CenterID      uuid.UUID
+	DefaultLocale string
+	Locale        string
+}
+
+func (q *Queries) GetHelpArticleLocalesForConversation(ctx context.Context, arg GetHelpArticleLocalesForConversationParams) ([]GetHelpArticleLocalesForConversationRow, error) {
+	rows, err := q.db.Query(ctx, getHelpArticleLocalesForConversation, arg.WorkspaceID, arg.ID, arg.InboxID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetHelpArticleLocalesForConversationRow
+	for rows.Next() {
+		var i GetHelpArticleLocalesForConversationRow
+		if err := rows.Scan(&i.CenterID, &i.DefaultLocale, &i.Locale); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const getHelpCenter = `-- name: GetHelpCenter :one
@@ -833,6 +941,108 @@ func (q *Queries) GetInboxHelpCenter(ctx context.Context, arg GetInboxHelpCenter
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getPublicHelpArticle = `-- name: GetPublicHelpArticle :one
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_html::text AS html, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $2 AND a.center_id = $3 AND a.id = $4
+`
+
+type GetPublicHelpArticleParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	ID          uuid.UUID
+}
+
+type GetPublicHelpArticleRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Position     int32
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+	Html         string
+	PublishedAt  time.Time
+}
+
+func (q *Queries) GetPublicHelpArticle(ctx context.Context, arg GetPublicHelpArticleParams) (GetPublicHelpArticleRow, error) {
+	row := q.db.QueryRow(ctx, getPublicHelpArticle,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.CenterID,
+		arg.ID,
+	)
+	var i GetPublicHelpArticleRow
+	err := row.Scan(
+		&i.ID,
+		&i.Number,
+		&i.CollectionID,
+		&i.Position,
+		&i.Locale,
+		&i.Title,
+		&i.Slug,
+		&i.Excerpt,
+		&i.Html,
+		&i.PublishedAt,
+	)
+	return i, err
+}
+
+const getPublicHelpArticleByNumber = `-- name: GetPublicHelpArticleByNumber :one
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_html::text AS html, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $2 AND a.center_id = $3 AND a.number = $4
+`
+
+type GetPublicHelpArticleByNumberParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	Number      int32
+}
+
+type GetPublicHelpArticleByNumberRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Position     int32
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+	Html         string
+	PublishedAt  time.Time
+}
+
+func (q *Queries) GetPublicHelpArticleByNumber(ctx context.Context, arg GetPublicHelpArticleByNumberParams) (GetPublicHelpArticleByNumberRow, error) {
+	row := q.db.QueryRow(ctx, getPublicHelpArticleByNumber,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.CenterID,
+		arg.Number,
+	)
+	var i GetPublicHelpArticleByNumberRow
+	err := row.Scan(
+		&i.ID,
+		&i.Number,
+		&i.CollectionID,
+		&i.Position,
+		&i.Locale,
+		&i.Title,
+		&i.Slug,
+		&i.Excerpt,
+		&i.Html,
+		&i.PublishedAt,
 	)
 	return i, err
 }
@@ -1128,6 +1338,42 @@ func (q *Queries) ListEmailImagesByTokens(ctx context.Context, arg ListEmailImag
 	return items, nil
 }
 
+const listHelpArticleLocales = `-- name: ListHelpArticleLocales :many
+SELECT t.locale, t.published_slug::text AS slug FROM help_article_translations t
+WHERE t.workspace_id = $1 AND t.article_id = $2 AND t.published_at IS NOT NULL
+ORDER BY t.locale
+`
+
+type ListHelpArticleLocalesParams struct {
+	WorkspaceID uuid.UUID
+	ArticleID   uuid.UUID
+}
+
+type ListHelpArticleLocalesRow struct {
+	Locale string
+	Slug   string
+}
+
+func (q *Queries) ListHelpArticleLocales(ctx context.Context, arg ListHelpArticleLocalesParams) ([]ListHelpArticleLocalesRow, error) {
+	rows, err := q.db.Query(ctx, listHelpArticleLocales, arg.WorkspaceID, arg.ArticleID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListHelpArticleLocalesRow
+	for rows.Next() {
+		var i ListHelpArticleLocalesRow
+		if err := rows.Scan(&i.Locale, &i.Slug); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listHelpArticles = `-- name: ListHelpArticles :many
 SELECT a.id, a.workspace_id, a.center_id, a.collection_id, a.number, a.position, a.paths, a.created_by_member_id, a.created_by_api_key_id, a.created_at, a.updated_at FROM help_articles a
 WHERE a.workspace_id = $1 AND a.center_id = $2
@@ -1248,6 +1494,110 @@ func (q *Queries) ListHelpArticlesUsingImage(ctx context.Context, arg ListHelpAr
 			&i.CenterID,
 			&i.Number,
 			&i.Title,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listHelpArticlesWithPaths = `-- name: ListHelpArticlesWithPaths :many
+SELECT a.id, a.number, a.collection_id, a.paths, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $2 AND a.center_id = $3 AND cardinality(a.paths) > 0
+ORDER BY a.position, a.number
+`
+
+type ListHelpArticlesWithPathsParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+}
+
+type ListHelpArticlesWithPathsRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Paths        []string
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+}
+
+func (q *Queries) ListHelpArticlesWithPaths(ctx context.Context, arg ListHelpArticlesWithPathsParams) ([]ListHelpArticlesWithPathsRow, error) {
+	rows, err := q.db.Query(ctx, listHelpArticlesWithPaths, arg.Locale, arg.WorkspaceID, arg.CenterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListHelpArticlesWithPathsRow
+	for rows.Next() {
+		var i ListHelpArticlesWithPathsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.CollectionID,
+			&i.Paths,
+			&i.Locale,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listHelpCardArticles = `-- name: ListHelpCardArticles :many
+SELECT a.id, a.number, t.locale, t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $1 AND a.center_id = $2 AND a.id = ANY ($3::uuid[])
+`
+
+type ListHelpCardArticlesParams struct {
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	ArticleIds  []uuid.UUID
+}
+
+type ListHelpCardArticlesRow struct {
+	ID      uuid.UUID
+	Number  int32
+	Locale  string
+	Title   string
+	Slug    string
+	Excerpt string
+}
+
+func (q *Queries) ListHelpCardArticles(ctx context.Context, arg ListHelpCardArticlesParams) ([]ListHelpCardArticlesRow, error) {
+	rows, err := q.db.Query(ctx, listHelpCardArticles, arg.WorkspaceID, arg.CenterID, arg.ArticleIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListHelpCardArticlesRow
+	for rows.Next() {
+		var i ListHelpCardArticlesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.Locale,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
 		); err != nil {
 			return nil, err
 		}
@@ -1418,6 +1768,38 @@ func (q *Queries) ListHelpCollections(ctx context.Context, arg ListHelpCollectio
 	return items, nil
 }
 
+const listHelpPublishedLocales = `-- name: ListHelpPublishedLocales :many
+SELECT DISTINCT t.locale FROM help_article_translations t
+JOIN help_articles a ON a.workspace_id = t.workspace_id AND a.id = t.article_id
+WHERE t.workspace_id = $1 AND a.center_id = $2 AND t.published_at IS NOT NULL
+ORDER BY t.locale
+`
+
+type ListHelpPublishedLocalesParams struct {
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+}
+
+func (q *Queries) ListHelpPublishedLocales(ctx context.Context, arg ListHelpPublishedLocalesParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, listHelpPublishedLocales, arg.WorkspaceID, arg.CenterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var locale string
+		if err := rows.Scan(&locale); err != nil {
+			return nil, err
+		}
+		items = append(items, locale)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listHelpRevisions = `-- name: ListHelpRevisions :many
 SELECT id, workspace_id, article_id, locale, kind, title, body, keywords, image_ids, author_member_id, author_api_key_id, via, created_at FROM help_article_revisions
 WHERE workspace_id = $1 AND article_id = $2 AND locale = $3
@@ -1453,6 +1835,51 @@ func (q *Queries) ListHelpRevisions(ctx context.Context, arg ListHelpRevisionsPa
 			&i.AuthorApiKeyID,
 			&i.Via,
 			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listHelpSitemapArticles = `-- name: ListHelpSitemapArticles :many
+SELECT a.number, t.locale, t.published_slug::text AS slug, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $1 AND a.center_id = $2
+ORDER BY a.number, t.locale
+`
+
+type ListHelpSitemapArticlesParams struct {
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+}
+
+type ListHelpSitemapArticlesRow struct {
+	Number      int32
+	Locale      string
+	Slug        string
+	PublishedAt time.Time
+}
+
+func (q *Queries) ListHelpSitemapArticles(ctx context.Context, arg ListHelpSitemapArticlesParams) ([]ListHelpSitemapArticlesRow, error) {
+	rows, err := q.db.Query(ctx, listHelpSitemapArticles, arg.WorkspaceID, arg.CenterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListHelpSitemapArticlesRow
+	for rows.Next() {
+		var i ListHelpSitemapArticlesRow
+		if err := rows.Scan(
+			&i.Number,
+			&i.Locale,
+			&i.Slug,
+			&i.PublishedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1566,6 +1993,259 @@ func (q *Queries) ListHelpTranslations(ctx context.Context, arg ListHelpTranslat
 			&i.UpdatedByApiKeyID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPopularHelpArticles = `-- name: ListPopularHelpArticles :many
+SELECT a.id, a.number, a.collection_id, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+JOIN LATERAL (SELECT sum(d.views) AS views FROM help_article_daily d
+    WHERE d.workspace_id = a.workspace_id AND d.article_id = a.id AND d.day >= $2::date) v ON v.views > 0
+WHERE a.workspace_id = $3 AND a.center_id = $4
+ORDER BY v.views DESC, a.number
+LIMIT $5
+`
+
+type ListPopularHelpArticlesParams struct {
+	Locale      string
+	Since       time.Time
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+	Lim         int32
+}
+
+type ListPopularHelpArticlesRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+}
+
+func (q *Queries) ListPopularHelpArticles(ctx context.Context, arg ListPopularHelpArticlesParams) ([]ListPopularHelpArticlesRow, error) {
+	rows, err := q.db.Query(ctx, listPopularHelpArticles,
+		arg.Locale,
+		arg.Since,
+		arg.WorkspaceID,
+		arg.CenterID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPopularHelpArticlesRow
+	for rows.Next() {
+		var i ListPopularHelpArticlesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.CollectionID,
+			&i.Locale,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicHelpArticles = `-- name: ListPublicHelpArticles :many
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $2 AND a.center_id = $3
+  AND ($4::uuid IS NULL OR a.collection_id = $4::uuid)
+ORDER BY a.position, a.number
+`
+
+type ListPublicHelpArticlesParams struct {
+	Locale       string
+	WorkspaceID  uuid.UUID
+	CenterID     uuid.UUID
+	CollectionID *uuid.UUID
+}
+
+type ListPublicHelpArticlesRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Position     int32
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+	PublishedAt  time.Time
+}
+
+func (q *Queries) ListPublicHelpArticles(ctx context.Context, arg ListPublicHelpArticlesParams) ([]ListPublicHelpArticlesRow, error) {
+	rows, err := q.db.Query(ctx, listPublicHelpArticles,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.CenterID,
+		arg.CollectionID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPublicHelpArticlesRow
+	for rows.Next() {
+		var i ListPublicHelpArticlesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.CollectionID,
+			&i.Position,
+			&i.Locale,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
+			&i.PublishedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPublicHelpCollections = `-- name: ListPublicHelpCollections :many
+SELECT c.id, c.parent_id, c.number, c.icon, c.position, t.locale, t.name, t.description, t.slug,
+    (SELECT count(*) FROM help_articles a
+        JOIN help_article_translations pt ON pt.workspace_id = a.workspace_id AND pt.article_id = a.id
+        WHERE a.workspace_id = c.workspace_id AND a.collection_id = c.id AND pt.locale = t.locale AND pt.published_at IS NOT NULL)::int AS article_count
+FROM help_collections c
+JOIN help_collection_translations t ON t.workspace_id = c.workspace_id AND t.collection_id = c.id AND t.locale = $1
+WHERE c.workspace_id = $2 AND c.center_id = $3
+ORDER BY c.position, c.number
+`
+
+type ListPublicHelpCollectionsParams struct {
+	Locale      string
+	WorkspaceID uuid.UUID
+	CenterID    uuid.UUID
+}
+
+type ListPublicHelpCollectionsRow struct {
+	ID           uuid.UUID
+	ParentID     *uuid.UUID
+	Number       int32
+	Icon         *string
+	Position     int32
+	Locale       string
+	Name         string
+	Description  string
+	Slug         string
+	ArticleCount int32
+}
+
+func (q *Queries) ListPublicHelpCollections(ctx context.Context, arg ListPublicHelpCollectionsParams) ([]ListPublicHelpCollectionsRow, error) {
+	rows, err := q.db.Query(ctx, listPublicHelpCollections, arg.Locale, arg.WorkspaceID, arg.CenterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListPublicHelpCollectionsRow
+	for rows.Next() {
+		var i ListPublicHelpCollectionsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.ParentID,
+			&i.Number,
+			&i.Icon,
+			&i.Position,
+			&i.Locale,
+			&i.Name,
+			&i.Description,
+			&i.Slug,
+			&i.ArticleCount,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listRelatedHelpArticles = `-- name: ListRelatedHelpArticles :many
+SELECT a.id, a.number, a.collection_id, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = $1 AND t.published_at IS NOT NULL
+WHERE a.workspace_id = $2 AND a.center_id = $3 AND a.id <> $4 AND a.collection_id = $5
+ORDER BY a.position, a.number
+LIMIT $6
+`
+
+type ListRelatedHelpArticlesParams struct {
+	Locale       string
+	WorkspaceID  uuid.UUID
+	CenterID     uuid.UUID
+	ID           uuid.UUID
+	CollectionID *uuid.UUID
+	Lim          int32
+}
+
+type ListRelatedHelpArticlesRow struct {
+	ID           uuid.UUID
+	Number       int32
+	CollectionID *uuid.UUID
+	Locale       string
+	Title        string
+	Slug         string
+	Excerpt      string
+}
+
+func (q *Queries) ListRelatedHelpArticles(ctx context.Context, arg ListRelatedHelpArticlesParams) ([]ListRelatedHelpArticlesRow, error) {
+	rows, err := q.db.Query(ctx, listRelatedHelpArticles,
+		arg.Locale,
+		arg.WorkspaceID,
+		arg.CenterID,
+		arg.ID,
+		arg.CollectionID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListRelatedHelpArticlesRow
+	for rows.Next() {
+		var i ListRelatedHelpArticlesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Number,
+			&i.CollectionID,
+			&i.Locale,
+			&i.Title,
+			&i.Slug,
+			&i.Excerpt,
 		); err != nil {
 			return nil, err
 		}

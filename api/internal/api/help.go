@@ -31,6 +31,7 @@ var (
 	limitHelpSlug = limit{10, 24 * time.Hour}
 
 	errHelpOff              = problem(http.StatusNotFound, "help_off", "help centers are off on this server")
+	errHelpNoCenter         = problem(http.StatusNotFound, "help_off", "this inbox has no published help center")
 	errHelpCenterGone       = problem(http.StatusNotFound, "not_found", "no such help center")
 	errHelpCollectionGone   = problem(http.StatusNotFound, "not_found", "no such collection")
 	errHelpArticleGone      = problem(http.StatusNotFound, "not_found", "no such article")
@@ -319,6 +320,7 @@ func (s *Server) CreateHelpCenter(ctx context.Context, req oas.CreateHelpCenterR
 	if err != nil {
 		return nil, helpUniqueConflict(err)
 	}
+	s.statusHint(ctx, p.workspaceID, out.InboxId)
 	return oas.CreateHelpCenter201JSONResponse(out), nil
 }
 
@@ -437,6 +439,7 @@ func (s *Server) UpdateHelpCenter(ctx context.Context, req oas.UpdateHelpCenterR
 	if err != nil {
 		return nil, helpUniqueConflict(err)
 	}
+	s.statusHint(ctx, p.workspaceID, out.InboxId)
 	return oas.UpdateHelpCenter200JSONResponse(out), nil
 }
 
@@ -448,17 +451,20 @@ func (s *Server) DeleteHelpCenter(ctx context.Context, req oas.DeleteHelpCenterR
 	if err := requireCenterManager(p); err != nil {
 		return nil, err
 	}
+	var inbox uuid.UUID
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
 		c, err := visibleHelpCenter(ctx, q, p, req.CenterId, true)
 		if err != nil {
 			return err
 		}
+		inbox = c.InboxID
 		_, err = q.DeleteHelpCenter(ctx, store.DeleteHelpCenterParams{WorkspaceID: p.workspaceID, ID: c.ID})
 		return err
 	})
 	if err != nil {
 		return nil, err
 	}
+	s.statusHint(ctx, p.workspaceID, inbox)
 	return oas.DeleteHelpCenter204Response{}, nil
 }
 

@@ -325,27 +325,3 @@ func (s *Server) PreviewHelpCenter(ctx context.Context, req oas.PreviewHelpCente
 	}
 	return helpPreviewResponse(buf.Bytes()), nil
 }
-
-func (s *Server) GetClientHelp(context.Context, oas.GetClientHelpRequestObject) (oas.GetClientHelpResponseObject, error) {
-	return nil, errHelpOff
-}
-
-func (s *Server) SearchClientHelp(context.Context, oas.SearchClientHelpRequestObject) (oas.SearchClientHelpResponseObject, error) {
-	return nil, errHelpOff
-}
-
-func (s *Server) GetClientHelpCollection(context.Context, oas.GetClientHelpCollectionRequestObject) (oas.GetClientHelpCollectionResponseObject, error) {
-	return nil, errHelpOff
-}
-
-func (s *Server) GetClientHelpArticle(context.Context, oas.GetClientHelpArticleRequestObject) (oas.GetClientHelpArticleResponseObject, error) {
-	return nil, errHelpOff
-}
-
-func (s *Server) CreateClientHelpReaction(context.Context, oas.CreateClientHelpReactionRequestObject) (oas.CreateClientHelpReactionResponseObject, error) {
-	return nil, errHelpOff
-}
-
-func (s *Server) CreateClientHelpSearchClick(context.Context, oas.CreateClientHelpSearchClickRequestObject) (oas.CreateClientHelpSearchClickResponseObject, error) {
-	return nil, errHelpOff
-}

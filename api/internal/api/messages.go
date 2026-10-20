@@ -59,11 +59,12 @@ type messageInput struct {
 	subject   *string
 	draft     bool
 	mentions  []uuid.UUID
+	articles  []uuid.UUID
 	extra     map[string]string
 	files     []*upload
 }
 
-var memberFormFields = []string{"kind", "direction", "body", "html", "client_id", "draft", "mentions"}
+var memberFormFields = []string{"kind", "direction", "body", "html", "client_id", "draft", "mentions", "article_ids"}
 
 func (in *messageInput) close() {
 	for _, f := range in.files {
@@ -114,11 +115,21 @@ func (s *Server) validateMessage(p principal, in *messageInput) error {
 	}
 	slices.SortFunc(in.mentions, func(a, b uuid.UUID) int { return a.Compare(b) })
 	in.mentions = slices.Compact(in.mentions)
+	if len(in.articles) > 0 {
+		if in.kind != string(oas.MessageKindMessage) || in.direction != string(oas.Out) {
+			return errValidation("article_ids can only go with an outgoing message")
+		}
+		seen := map[uuid.UUID]bool{}
+		in.articles = slices.DeleteFunc(in.articles, func(id uuid.UUID) bool { dup := seen[id]; seen[id] = true; return dup })
+		if len(in.articles) > maxHelpCards {
+			return errValidation("a message carries at most 3 articles")
+		}
+	}
 	if len([]rune(in.body)) > maxMessageBodyRunes {
 		return errValidation("body must be at most 65536 characters")
 	}
-	if strings.TrimSpace(in.body) == "" && len(in.files) == 0 {
-		return errValidation("body is required unless files are attached")
+	if strings.TrimSpace(in.body) == "" && len(in.files) == 0 && len(in.articles) == 0 {
+		return errValidation("body is required unless files or articles are attached")
 	}
 	if in.html != nil {
 		if len(*in.html) > maxMessageHTMLBytes {
@@ -279,6 +290,13 @@ func (s *Server) readMultipart(r *multipart.Reader, workspaceID uuid.UUID, field
 				return nil, errValidation("mentions must be member ids")
 			}
 			in.mentions = append(in.mentions, id)
+		case "article_ids":
+			id, err := uuid.Parse(strings.TrimSpace(v))
+			if err != nil {
+				in.close()
+				return nil, errValidation("article_ids must be article ids")
+			}
+			in.articles = append(in.articles, id)
 		case "subject":
 			in.subject = &v
 		default:
@@ -355,6 +373,9 @@ func messageBody(m messageRow, atts []store.Attachment) oas.Message {
 	}
 	for _, a := range atts {
 		out.Attachments = append(out.Attachments, attachmentBody(a))
+	}
+	if cards := helpCardsOf(m.HelpCards); len(cards) > 0 {
+		out.Cards = &cards
 	}
 	out.ImportedAt = m.ImportedAt
 	if len(m.ImportedAuthor) > 0 {
@@ -462,6 +483,9 @@ func (s *Server) CreateMessage(ctx context.Context, req oas.CreateMessageRequest
 		if b.Mentions != nil {
 			in.mentions = *b.Mentions
 		}
+		if b.ArticleIds != nil {
+			in.articles = *b.ArticleIds
+		}
 	case req.MultipartBody != nil:
 		var err error
 		if in, err = s.readMultipart(req.MultipartBody, p.workspaceID, memberFormFields); err != nil {
@@ -486,6 +510,8 @@ func (s *Server) CreateMessage(ctx context.Context, req oas.CreateMessageRequest
 		msg     messageRow
 		atts    []store.Attachment
 		summary *store.ListMessageEmailsRow
+		cards   []oas.MessageCard
+		inbox   uuid.UUID
 		created = true
 	)
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
@@ -493,6 +519,7 @@ func (s *Server) CreateMessage(ctx context.Context, req oas.CreateMessageRequest
 		if err != nil {
 			return err
 		}
+		inbox = c.InboxID
 		if in.clientID != nil {
 			prev, err := q.GetMessageByClientID(ctx, store.GetMessageByClientIDParams{WorkspaceID: p.workspaceID, ConversationID: c.ID, ClientID: in.clientID})
 			if err == nil {
@@ -530,6 +557,17 @@ func (s *Server) CreateMessage(ctx context.Context, req oas.CreateMessageRequest
 		arg := store.CreateMessageParams{
 			ID: newID(), WorkspaceID: p.workspaceID, ConversationID: c.ID, Kind: in.kind, Body: in.body,
 			Html: in.html, ClientID: in.clientID, CreatedAt: now, Draft: in.draft, Via: p.viaClient(), Mentions: in.mentions,
+		}
+		if len(in.articles) > 0 {
+			_, cards, err = s.helpCards(ctx, q, c, in.articles)
+			if err != nil {
+				return err
+			}
+			arg.Body = withHelpCards(in.body, cards)
+			if len([]rune(arg.Body)) > maxMessageBodyRunes {
+				return errValidation("body with the articles must be at most 65536 characters")
+			}
+			arg.HelpCards = mustJSON(cards)
 		}
 		if in.kind == string(oas.MessageKindMessage) {
 			arg.Direction = &in.direction
@@ -591,6 +629,9 @@ func (s *Server) CreateMessage(ctx context.Context, req oas.CreateMessageRequest
 	}
 	if !created {
 		return oas.CreateMessage200JSONResponse(withEmail(messageBody(msg, atts), summary)), nil
+	}
+	if !in.draft {
+		s.countHelpSent(ctx, p.workspaceID, inbox, cards)
 	}
 	return oas.CreateMessage201JSONResponse(withEmail(messageBody(msg, atts), summary)), nil
 }

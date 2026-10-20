@@ -710,6 +710,7 @@ type Conversation struct {
 	MigrationID           *uuid.UUID
 	ImportedAt            *time.Time
 	FeedbackProgress      *string
+	HelpArticleID         *uuid.UUID
 }
 
 type ConversationLabel struct {
@@ -1300,6 +1301,7 @@ type Message struct {
 	Mentions          []uuid.UUID
 	ImportedAt        *time.Time
 	ImportedAuthor    []byte
+	HelpCards         []byte
 }
 
 type MessageEmail struct {

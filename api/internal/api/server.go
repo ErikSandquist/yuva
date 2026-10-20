@@ -81,6 +81,7 @@ type Server struct {
 	statusDomainCache *statusDomainCache
 	help              HelpSettings
 	helpCounts        *helpCounters
+	helpCache         *publicCache
 	canaries          canaryGuard
 	started           time.Time
 	sesCaller         atomic.Pointer[string]
@@ -271,7 +272,7 @@ func New(d Deps) *Server {
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
 		status: d.Status, statusCache: newStatusCache(), statusDomainCache: newStatusDomainCache(), started: now(),
-		help: d.Help, helpCounts: newHelpCounters(),
+		help: d.Help, helpCounts: newHelpCounters(), helpCache: newPublicCache(helpPageCacheTTL, helpPageCacheMax),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -368,6 +369,9 @@ func (s *Server) Handler() http.Handler {
 		mux.HandleFunc("POST "+analyticsPrefix+"{key}", s.serveAnalyticsCollect)
 	}
 	s.routeStatus(mux)
+	if !s.help.Off {
+		s.routeHelp(mux)
+	}
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)
 	mux.HandleFunc("GET "+heartbeatPathPrefix+"{token}", s.serveHeartbeat(false))
@@ -421,7 +425,7 @@ func (s *Server) Handler() http.Handler {
 		}
 		panel.ServeHTTP(w, r)
 	})
-	return s.recoverer(s.logRequests(noSniff(s.statusHost(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux))))))))))
+	return s.recoverer(s.logRequests(noSniff(s.helpHost(s.statusHost(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux)))))))))))
 }
 
 var mailLinkPrefixes = []string{managePathPrefix, confirmPathPrefix, clickPathPrefix, emailImagePathPrefix}

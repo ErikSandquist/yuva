@@ -531,7 +531,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 		HistoryURL: snap.link("/history"), FeedURL: snap.url("/feed.atom"), BadgeURL: snap.url("/badge.svg"),
 		JSONURL: s.auth.PublicURL + clientStatusPrefix + pg.Slug, State: w.States[state], StateClass: state,
 		Headline: w.Headlines[state], Updated: snap.at(pg.ChangedAt), Script: template.JS(statusScript),
-		FontSans: snap.url(statusFontPath("Geist")), FontMono: snap.url(statusFontPath("GeistMono")),
+		FontSans: snap.url(publicFontPath("Geist")), FontMono: snap.url(publicFontPath("GeistMono")),
 		Mark: yuvaMark, YuvaSite: yuvaSite}
 	v.FeedPath, v.JSONPath = urlPath(v.FeedURL), clientStatusPrefix+pg.Slug
 	v.EmbedCode = `<iframe src="` + snap.url("") + `" title="` + pg.Name + `" width="100%" height="640" style="border:0"></iframe>`

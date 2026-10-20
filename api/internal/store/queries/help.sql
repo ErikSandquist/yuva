@@ -342,12 +342,12 @@ LIMIT @lim;
 
 -- name: AddHelpArticleDaily :exec
 INSERT INTO help_article_daily (workspace_id, center_id, article_id, locale, day, views, helpful_up, helpful_down, conversations, sent)
-SELECT a.workspace_id, a.center_id, a.id, @locale, @day, @views, @helpful_up, @helpful_down, @conversations, @sent
+SELECT a.workspace_id, a.center_id, a.id, @locale, @day, @views, greatest(0, @helpful_up::int), greatest(0, @helpful_down::int), @conversations, @sent
 FROM help_articles a WHERE a.workspace_id = @workspace_id AND a.id = @article_id
 ON CONFLICT (workspace_id, article_id, locale, day) DO UPDATE SET
     views = help_article_daily.views + EXCLUDED.views,
-    helpful_up = help_article_daily.helpful_up + EXCLUDED.helpful_up,
-    helpful_down = help_article_daily.helpful_down + EXCLUDED.helpful_down,
+    helpful_up = greatest(0, help_article_daily.helpful_up + EXCLUDED.helpful_up),
+    helpful_down = greatest(0, help_article_daily.helpful_down + EXCLUDED.helpful_down),
     conversations = help_article_daily.conversations + EXCLUDED.conversations,
     sent = help_article_daily.sent + EXCLUDED.sent;
 
@@ -397,3 +397,105 @@ WHERE workspace_id = @workspace_id AND center_id = @center_id AND day >= @since:
 GROUP BY query, locale
 ORDER BY searches DESC, query COLLATE "C", locale
 LIMIT 50;
+
+-- name: FindHelpCenterBySlug :one
+-- The documented exception: a public URL names only the slug, which is unique across the server.
+SELECT * FROM help_centers WHERE slug = @slug;
+
+-- name: FindHelpCenterByFormerSlug :one
+-- The documented exception, as FindHelpCenterBySlug, for a slug the center no longer uses.
+SELECT c.* FROM help_center_slugs f
+JOIN help_centers c ON c.workspace_id = f.workspace_id AND c.id = f.center_id
+WHERE f.slug = @slug;
+
+-- name: ListPublicHelpCollections :many
+SELECT c.id, c.parent_id, c.number, c.icon, c.position, t.locale, t.name, t.description, t.slug,
+    (SELECT count(*) FROM help_articles a
+        JOIN help_article_translations pt ON pt.workspace_id = a.workspace_id AND pt.article_id = a.id
+        WHERE a.workspace_id = c.workspace_id AND a.collection_id = c.id AND pt.locale = t.locale AND pt.published_at IS NOT NULL)::int AS article_count
+FROM help_collections c
+JOIN help_collection_translations t ON t.workspace_id = c.workspace_id AND t.collection_id = c.id AND t.locale = @locale
+WHERE c.workspace_id = @workspace_id AND c.center_id = @center_id
+ORDER BY c.position, c.number;
+
+-- name: ListPublicHelpArticles :many
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id
+  AND (sqlc.narg(collection_id)::uuid IS NULL OR a.collection_id = sqlc.narg(collection_id)::uuid)
+ORDER BY a.position, a.number;
+
+-- name: GetPublicHelpArticle :one
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_html::text AS html, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id AND a.id = @id;
+
+-- name: GetPublicHelpArticleByNumber :one
+SELECT a.id, a.number, a.collection_id, a.position, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt, t.published_html::text AS html, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id AND a.number = @number;
+
+-- name: ListHelpArticleLocales :many
+SELECT t.locale, t.published_slug::text AS slug FROM help_article_translations t
+WHERE t.workspace_id = @workspace_id AND t.article_id = @article_id AND t.published_at IS NOT NULL
+ORDER BY t.locale;
+
+-- name: ListHelpSitemapArticles :many
+SELECT a.number, t.locale, t.published_slug::text AS slug, t.published_at::timestamptz AS published_at
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id
+ORDER BY a.number, t.locale;
+
+-- name: ListPopularHelpArticles :many
+SELECT a.id, a.number, a.collection_id, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+JOIN LATERAL (SELECT sum(d.views) AS views FROM help_article_daily d
+    WHERE d.workspace_id = a.workspace_id AND d.article_id = a.id AND d.day >= @since::date) v ON v.views > 0
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id
+ORDER BY v.views DESC, a.number
+LIMIT @lim;
+
+-- name: ListHelpArticlesWithPaths :many
+SELECT a.id, a.number, a.collection_id, a.paths, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id AND cardinality(a.paths) > 0
+ORDER BY a.position, a.number;
+
+-- name: ListRelatedHelpArticles :many
+SELECT a.id, a.number, a.collection_id, t.locale, t.published_title::text AS title, t.published_slug::text AS slug,
+    t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.locale = @locale AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id AND a.id <> @id AND a.collection_id = @collection_id
+ORDER BY a.position, a.number
+LIMIT @lim;
+
+-- name: ListHelpCardArticles :many
+SELECT a.id, a.number, t.locale, t.published_title::text AS title, t.published_slug::text AS slug, t.published_excerpt::text AS excerpt
+FROM help_articles a
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.center_id = @center_id AND a.id = ANY (@article_ids::uuid[]);
+
+-- name: GetHelpArticleLocalesForConversation :many
+SELECT c.id AS center_id, c.default_locale, t.locale FROM help_articles a
+JOIN help_centers c ON c.workspace_id = a.workspace_id AND c.id = a.center_id
+JOIN help_article_translations t ON t.workspace_id = a.workspace_id AND t.article_id = a.id AND t.published_at IS NOT NULL
+WHERE a.workspace_id = @workspace_id AND a.id = @id AND c.inbox_id = @inbox_id AND c.published
+ORDER BY t.locale;
+
+-- name: ListHelpPublishedLocales :many
+SELECT DISTINCT t.locale FROM help_article_translations t
+JOIN help_articles a ON a.workspace_id = t.workspace_id AND a.id = t.article_id
+WHERE t.workspace_id = @workspace_id AND a.center_id = @center_id AND t.published_at IS NOT NULL
+ORDER BY t.locale;

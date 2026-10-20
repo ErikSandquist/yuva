@@ -89,7 +89,7 @@ func (s *Server) clientCORS(next http.Handler) http.Handler {
 			return
 		}
 		origin, ok := normalizeOrigin(raw)
-		known := ok && origin == s.ownOrigin()
+		known := ok && s.ownsOrigin(origin)
 		if ok && !known {
 			var err error
 			if known, err = s.st.AnyChatChannelAllowsOrigin(r.Context(), origin); err != nil {
@@ -127,13 +127,25 @@ func (s *Server) ownOrigin() string {
 	return o
 }
 
+// ownsOrigin tells the server's own origin, and the help origin when help pages are served from
+// another host, whose embedded chat every chat channel allows.
+func (s *Server) ownsOrigin(origin string) bool {
+	if origin == "" {
+		return false
+	}
+	if origin == s.ownOrigin() {
+		return true
+	}
+	return !s.help.Off && s.help.URL != "" && origin == originOf(s.help.URL)
+}
+
 // originAllowedFor checks a chat channel's origins; app channels serve native apps, which send no
 // Origin, so their keys are not tied to origins.
 func (s *Server) originAllowedFor(origin, kind string, allowed []string) bool {
 	if kind == string(oas.ChannelKindApp) {
 		return true
 	}
-	return origin != "" && (origin == s.ownOrigin() || slices.Contains(allowed, origin))
+	return origin != "" && (s.ownsOrigin(origin) || slices.Contains(allowed, origin))
 }
 
 func sessionChat(ch store.GetSessionChannelRow) store.ChatChannel {

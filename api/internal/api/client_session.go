@@ -453,7 +453,10 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 	if out.Presence, err = s.presence(ctx, q, in); err != nil {
 		return out, err
 	}
-	out.Status, err = s.clientStatus(ctx, q, in.ID, in.WorkspaceID)
+	if out.Status, err = s.clientStatus(ctx, q, in.ID, in.WorkspaceID); err != nil {
+		return out, err
+	}
+	out.Help, err = s.clientHelpInbox(ctx, q, in)
 	return out, err
 }
 
