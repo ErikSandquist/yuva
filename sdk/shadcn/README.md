@@ -17,6 +17,11 @@ npx shadcn@latest add https://useyuva.com/r/yuva-discussions.json
 | `yuva-discussion-composer` | component | Markdown composer with Write and Preview tabs, and the sign-in prompt. |
 | `yuva-page-feedback` | component | Yes and No page rating. |
 | `yuva-subscribe` | component | Mailing list sign-up form with an unticked consent box, or a switch per list for signed-in users. |
+| `yuva-chat` | block | Live chat panel: conversation list, thread and composer, with a slot for the e-mail confirmation card. Built on shadcn's `message`, `bubble`, `message-scroller`, `marker`, `attachment`, `input-group`, `kbd`, `spinner`, `empty` and `item`. |
+| `yuva-chat-thread` | component | One conversation with grouped messages, day separators, attachments, typing and a jump-to-latest button. |
+| `yuva-chat-composer` | component | Message box with file chips, an Enter to send hint and a send button. |
+| `yuva-chat-conversations` | component | The visitor's conversations as rows, with an empty state. |
+| `use-yuva-chat` | hook | `useYuvaChat`: session, conversations, one thread over realtime, typing, read state, sending text and files. |
 | `use-yuva-subscribe` | hook | `useYuvaSubscribe`: public lists, form subscribing and the signed-in user's subscriptions. |
 | `use-yuva-discussions` | hook | `YuvaDiscussionsProvider` and the hooks, plus labels and helpers in `lib/yuva-utils.ts`. |
 

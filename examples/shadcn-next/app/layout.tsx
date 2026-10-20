@@ -44,6 +44,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                   {doc.title}
                 </Link>
               ))}
+              <Link
+                href="/chat"
+                className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                Chat
+              </Link>
             </nav>
             <main className="min-w-0 flex-1">{children}</main>
           </div>

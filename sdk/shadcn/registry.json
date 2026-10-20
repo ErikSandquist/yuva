@@ -174,6 +174,118 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "use-yuva-chat",
+      "type": "registry:hook",
+      "title": "Yuva chat hook",
+      "description": "A React hook over the useyuva headless client for live chat: the session, conversation list, one thread with realtime messages, typing, read state, sending text and files, rating and attachment download. Labels with English defaults.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/hooks/use-yuva-chat.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/yuva/lib/yuva-chat-utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "yuva-chat-thread",
+      "type": "registry:component",
+      "title": "Yuva chat thread",
+      "description": "One conversation: grouped messages, day separators, system events, attachments, link bubbles, typing, seen state and a scroller that sticks to the bottom with a jump-to-latest button.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "attachment",
+        "avatar",
+        "bubble",
+        "button",
+        "empty",
+        "marker",
+        "message",
+        "message-scroller",
+        "spinner",
+        "https://useyuva.com/r/use-yuva-chat.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-chat-thread.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-chat-composer",
+      "type": "registry:component",
+      "title": "Yuva chat composer",
+      "description": "A message box with an attach button, file chips, an Enter to send hint and a send button.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "attachment",
+        "input-group",
+        "kbd",
+        "https://useyuva.com/r/use-yuva-chat.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-chat-composer.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-chat-conversations",
+      "type": "registry:component",
+      "title": "Yuva chat conversations",
+      "description": "The visitor's conversations as rows with the last message, time and an unread dot, and an empty state.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "empty",
+        "item",
+        "https://useyuva.com/r/use-yuva-chat.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-chat-conversations.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-chat",
+      "type": "registry:block",
+      "title": "Yuva chat",
+      "description": "Live chat for a page or an app: conversation list, thread and composer in one panel, with a slot for the e-mail confirmation card.",
+      "dependencies": [
+        "lucide-react",
+        "useyuva"
+      ],
+      "registryDependencies": [
+        "button",
+        "spinner",
+        "https://useyuva.com/r/use-yuva-chat.json",
+        "https://useyuva.com/r/yuva-chat-thread.json",
+        "https://useyuva.com/r/yuva-chat-composer.json",
+        "https://useyuva.com/r/yuva-chat-conversations.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-chat.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
