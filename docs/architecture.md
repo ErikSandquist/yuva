@@ -3063,6 +3063,50 @@ appear in help search. Writing, rendering and translating are M20's.
 - **Not in M22.** Reactions or comments on entries, per-contact read state on the server, linking entries
   to shipped ideas, What's new screens in the Swift and Kotlin SDKs, own domains, and mailing without the
   broadcast composer.
+- **As built (steps 1 and 2).** Where the build differs from the text above, this wins.
+  - **Contract.** `renderMarkdown` at `POST /v1/markdown/render` is new and shared (any member, key with
+    `help:write` or `changelog:write`); `renderHelpMarkdown` stays because the panel uses it. The
+    changelog preview (`previewChangelog`) ships with the public pages in step 3. `ClientChatSettings.announce_updates`
+    is optional in the schema (absent means `false`) so SDKs keep working against older servers; the server
+    always sends it. `ChatChannel.announce_updates` is required. `YUVA_CHANGELOG_MAX_ENTRIES` answers
+    `422 hosted_limit`.
+  - **Tables.** Migration `00084_whats_new.sql`. Entries also hold `schedule_failed` (`lost_right`,
+    `key_revoked`, `key_scope_lost` or `no_default_translation`) and `schedule_failed_at`; a new schedule
+    clears them. Translations keep `image_ids` of the draft and the published copy, as help articles do.
+  - **States.** `unpublish` returns a published entry to `draft`, drops every published copy and keeps
+    `published_at`, so publishing again keeps the date. `publish` with `locale` needs a published entry
+    (`409 not_published`) and publishes that translation only; republishing freezes only translations
+    that changed. A published or scheduled entry keeps its default-locale translation
+    (`409 default_translation`), and changing the changelog's `default_locale` is refused while one of
+    them lacks a translation there (`409 default_locale_missing`). Changing labels or the image of a
+    published entry, and deleting a non-draft entry or a published translation, need the right to publish.
+    A scheduled entry goes public as it is when its time comes, so changing it, saving or deleting its
+    translations also need that right (`403 entry_scheduled`; tokens `403 member_session_required`).
+  - **Scheduling.** The job a schedule queues is not unique; a schedule that moves leaves the first job,
+    which finds the entry not yet due. The sweep (every minute, across workspaces) queues unique
+    `sweep` jobs. Both end in `PublishScheduledEntry`: it locks the changelog and then the entry, returns
+    unless the entry is still `scheduled` and due, asks again whether the scheduler may publish (the
+    member's role and inbox access, the key's revocation, expiry, `changelog:publish` and inbox limit),
+    and publishes with `PublishDueChangelogEntry`, one conditional update.
+  - **Events.** The realtime signal `changelog.entry.updated` (`changelog_id`, `entry_id`, `locale`,
+    `version`, `member_id`) follows every change to an entry or draft, not only draft saves. Stored
+    events and webhooks carry `{changelog: {id, name, url}, entry: {id, number, labels, published_at,
+    translations: [{locale, title, url}]}}`; `unpublished` and `deleted` list the translations the entry
+    had. Replacing a published translation by `publish` with `locale` sends `published` again.
+    Publishing, unpublishing and deleting a published entry send the `inbox.updated` hint through
+    `statusHint`.
+  - **Mail.** The design is the `product-update` template with `logo` and `f1`-`f4` removed (the logo is
+    the template's placeholder), `hero` moved ahead of the text, the footer replaced by a line naming
+    `{{ inbox.name }}` in the entry's language (en, tr, de; the template's other words are its own), and
+    the body after the title. `{{` in the title, text, link or alt is broken so a member's words are never
+    merge fields; at most 150 body blocks, then a link to the entry. The release line uses the inbox's
+    time zone. `CreateBroadcast` and the entry call share `insertBroadcast`, and the call makes its design
+    in the same transaction, so a refused draft leaves nothing behind. The excerpt (and so the preheader)
+    has no space before punctuation.
+  - **Images.** `DeleteEmailImage` also refuses an image an entry shows or a draft or published text uses
+    (`used_by.changelog_entries`), as for help articles; the weekly cleanup keeps the same images.
+  - **Client.** `ClientChangelog.latest_published_at` is absent for a changelog without entries. Client
+    answers carry `Cache-Control: public, max-age=60`; there is no in-process cache for them.
 - **Order of work.**
   M22 starts after M20's API step, whose renderer, translation and editor code it reuses. Changes to the
   contract, the migration and permissions go through `/code-review` before commit.

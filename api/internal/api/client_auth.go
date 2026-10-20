@@ -152,7 +152,7 @@ func sessionChat(ch store.GetSessionChannelRow) store.ChatChannel {
 	return store.ChatChannel{
 		WorkspaceID: ch.WorkspaceID, ChannelID: ch.ChannelID, PublicKey: ch.PublicKey, AllowedOrigins: ch.AllowedOrigins,
 		AllowAnonymous: ch.AllowAnonymous, AskEmailOffline: ch.AskEmailOffline, Greeting: ch.Greeting,
-		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms, Discussions: ch.Discussions,
+		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms, Discussions: ch.Discussions, AnnounceUpdates: ch.AnnounceUpdates,
 	}
 }
 

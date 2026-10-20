@@ -1072,6 +1072,10 @@ msgstr "Lastnost ima lahko največ 20 lijakov. Najprej enega izbrišite."
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Javna stran, ki strankam pove, ali {inboxName} deluje. Ostane neobjavljena, dokler je ne objavite."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Objavljen vnos v Novostih je bil izbrisan"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Poslano stanje, ki navede lastno stanje, ga obdrži."
@@ -1140,6 +1144,14 @@ msgstr "Nit se vzame v celoti, če je njeno zadnje sporočilo v obdobju."
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Uporabniško ime zahteva TLS ali STARTTLS: geslo se nikoli ne pošlje nešifrirano."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Vnos v Novostih je bil objavljen"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Vnos v Novostih je bil umaknjen"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Objavite ta zapis TXT v DNS svoje domene:"
 msgid "Publish, or submit the draft"
 msgstr "Objavi ali oddaj osnutek"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Objavljanje, načrtovanje in umikanje vnosov v Novostih"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Beri delovni prostor, člane, nabiralnike in kanale"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Prebrano za predlaganje naslovov vaše ekipe: njena pošta prihaja iz Vse pošte."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Branje dnevnikov sprememb Novosti in njihovih vnosov"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Napišite samodejni odgovor ali ga izklopite."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Napišite uporabniku {first} …"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Pisanje vnosov v Novostih in njihovih prevodov"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

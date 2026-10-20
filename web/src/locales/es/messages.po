@@ -1072,6 +1072,10 @@ msgstr "Una propiedad puede tener como máximo 20 embudos. Elimina uno primero."
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Una página pública que dice a tus clientes si {inboxName} funciona. Sigue sin publicar hasta que la publiques."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Se eliminó una entrada publicada de Novedades"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Un estado enviado que indica su propio estado lo conserva."
@@ -1140,6 +1144,14 @@ msgstr "Un hilo se toma completo cuando su último mensaje está dentro del inte
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Un nombre de usuario requiere TLS o STARTTLS: la contraseña nunca se envía sin cifrar."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Se publicó una entrada de Novedades"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Se despublicó una entrada de Novedades"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Publica este registro TXT en el DNS de tu dominio:"
 msgid "Publish, or submit the draft"
 msgstr "Publicar, o enviar el borrador"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Publicar, programar y despublicar entradas de Novedades"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Leer el espacio de trabajo, los miembros, los buzones y los canales"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Se lee para sugerir las direcciones de tu equipo: su correo viene de Todo el correo."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Leer los registros de cambios de Novedades y sus entradas"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Escribe la respuesta automática o desactívala."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Escribir a {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Escribir entradas de Novedades y sus traducciones"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

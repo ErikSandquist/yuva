@@ -3532,8 +3532,10 @@ export interface paths {
         /**
          * Delete an e-mail image
          * @description Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-         *     not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-         *     article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+         *     not archived uses the image, naming the articles in `used_by.help_articles` while a help
+         *     article's draft, published copy or kept revision shows it, and the entries in
+         *     `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+         *     draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
          *     `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
          *     image. The public URL stops working at once.
          *
@@ -6666,6 +6668,380 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/markdown/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Render Markdown for an editor
+         * @description The editor's preview: the HTML a body would publish as in a help article or a What's new
+         *     entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+         *     minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+         *     use it.
+         *
+         *     Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+         */
+        post: operations["renderMarkdown"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List changelogs
+         * @description The changelogs of the inboxes the caller can see, oldest first.
+         *
+         *     Scope: `changelog:read`.
+         */
+        get: operations["listChangelogs"];
+        put?: never;
+        /**
+         * Create a changelog
+         * @description A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+         *     in its URL, is unique across the server, current and former slugs alike (`409
+         *     slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+         *     to the inbox's and `locales` to the default locale alone; `locales` must hold
+         *     `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+         *     and accent colour of the public pages are the inbox's branding.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+         */
+        post: operations["createChangelog"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A changelog
+         * @description With its counts and public `url`.
+         *
+         *     Scope: `changelog:read`.
+         */
+        get: operations["getChangelog"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a changelog
+         * @description The changelog with its entries and translations; broadcasts made from its entries stay.
+         *     Its images stay e-mail images of the workspace and are swept like any unused one.
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+         */
+        delete: operations["deleteChangelog"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a changelog
+         * @description Changes the given fields; `null` clears the analytics property. `published: false` takes
+         *     the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+         *     `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+         *     the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+         *     changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+         *     an entry has a translation in it (`409 locale_in_use`).
+         *
+         *     Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+         */
+        patch: operations["updateChangelog"];
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a changelog's entries
+         * @description Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+         *     `scheduled` or `published` entries, or `changed`: published entries with a translation
+         *     whose draft differs from its published copy. `label` keeps the entries carrying it.
+         *     `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+         *     one).
+         *
+         *     Scope: `changelog:read`.
+         */
+        get: operations["listChangelogEntries"];
+        put?: never;
+        /**
+         * Write an entry
+         * @description A draft entry with its first translation in `locale`, one of the changelog's `locales`
+         *     (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+         *     `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+         *     most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        post: operations["createChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An entry
+         * @description With every translation, drafts and published copies.
+         *
+         *     Scope: `changelog:read`.
+         */
+        get: operations["getChangelogEntry"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an entry
+         * @description With its translations, and sends `changelog.entry.deleted` when it was published. A
+         *     published or scheduled entry can be deleted only by those who may publish (`403
+         *     forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        delete: operations["deleteChangelogEntry"];
+        options?: never;
+        head?: never;
+        /**
+         * Change an entry's labels or image
+         * @description `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+         *     published entry the change is public at once, so it needs the right to publish
+         *     (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+         *     is when its time comes, so changing it, saving or deleting one of its translations also
+         *     needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        patch: operations["updateChangelogEntry"];
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save a translation's draft
+         * @description Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+         *     (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+         *     translation that does not exist yet; any other is refused with `409 version_conflict`,
+         *     which carries the translation as it is now in `translation`. A save moves `version` by one
+         *     and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+         *     published copy does not change until the translation is published again. On a scheduled
+         *     entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+         *     public when the schedule fires.
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        put: operations["putChangelogEntryTranslation"];
+        post?: never;
+        /**
+         * Delete a translation
+         * @description The last translation of an entry, and the default locale's while the entry is published
+         *     or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+         *     delete the entry instead. A published translation, or any translation of a scheduled
+         *     entry (`403 entry_scheduled`), can be deleted only by those who may
+         *     publish (`403 forbidden`), and API keys also need `changelog:publish`.
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        delete: operations["deleteChangelogEntryTranslation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish an entry
+         * @description Without `locale`, publishes the entry: it needs a translation in the default locale
+         *     (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+         *     the first time, cancels a schedule, tells the inbox's widgets, and sends
+         *     `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+         *     keeps the date. With `locale`, publishes that translation alone, for an entry that is
+         *     already published (`409 not_published` otherwise). With `base_version` (with `locale`
+         *     only), a draft saved since is refused with `409 version_conflict`. The entry is public
+         *     once its changelog is published.
+         *
+         *     Owners, admins and API keys; agents with access to the changelog's inbox when its
+         *     `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+         *     (`403 member_session_required`). Scope: `changelog:publish`.
+         */
+        post: operations["publishChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Schedule an entry
+         * @description Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+         *     to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+         *     at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+         *     default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+         *     time; a published entry cannot be scheduled (`409 already_published`).
+         *
+         *     Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+         */
+        post: operations["scheduleChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/unschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unschedule an entry
+         * @description Returns a scheduled entry to `draft`. Any other state is left as it is.
+         *
+         *     Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+         */
+        post: operations["unscheduleChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish an entry
+         * @description Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+         *     the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+         *     stay, so publishing again keeps the date. A draft is left as it is.
+         *
+         *     Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+         */
+        post: operations["unpublishChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/entries/{entryId}/broadcast": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mail an entry to subscribers
+         * @description Makes a draft broadcast from a published entry on the `product-update` template in
+         *     `locale` (English when the template has no such language): the entry's title, labels and
+         *     date, its text and workspace images as design blocks, its image as the hero, and a button
+         *     to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+         *     changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+         *     sending channel. The broadcast is named "What's new: {title}", has the title as subject
+         *     and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+         *     Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+         *     of every broadcast.
+         *
+         *     A table or code block in the text, which the design cannot hold, becomes a line linking to
+         *     the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+         *     has no published translation in.
+         *
+         *     Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+         */
+        post: operations["broadcastChangelogEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/changelogs/{changelogId}/images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload an image for entries
+         * @description Stores the image as one of the workspace's e-mail images, with the same rules as
+         *     `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+         *     the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+         *     draft or design uses is deleted a week after its upload.
+         *
+         *     Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+         */
+        post: operations["uploadChangelogImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/help-centers": {
         parameters: {
             query?: never;
@@ -7312,6 +7688,54 @@ export interface paths {
          *     pending posts (and their own pending thread) are included.
          */
         get: operations["getClientDiscussion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/whats-new": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The What's new feed
+         * @description The inbox's published changelog with its published entries, newest first by
+         *     `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+         *     language, else the changelog's default (an entry without a published translation there
+         *     comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+         *     creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+         *     without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+         *     minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+         *     `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientWhatsNew"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/whats-new/{entryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A What's new entry
+         * @description One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+         *     a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+         */
+        get: operations["getClientWhatsNewEntry"];
         put?: never;
         post?: never;
         delete?: never;
@@ -9210,6 +9634,68 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "changelog.entry.published": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A What's new entry was published
+         * @description An entry was published by a member, a key or its schedule, or published again. It is
+         *     public when the changelog is published. Endpoints of an inbox get the entries of that
+         *     inbox's changelog.
+         */
+        post: operations["webhookChangelogEntryPublished"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "changelog.entry.unpublished": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A What's new entry was unpublished
+         * @description The entry is no longer on the web; its draft stays.
+         */
+        post: operations["webhookChangelogEntryUnpublished"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "changelog.entry.deleted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A published What's new entry was deleted
+         * @description Sent when the deleted entry was published.
+         */
+        post: operations["webhookChangelogEntryDeleted"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -9491,10 +9977,17 @@ export interface components {
          *     - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
          *       Never implied: a key made without naming its scopes does not hold it.
          *
-         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
+         *     - `changelog:read`: What's new changelogs and their entries.
+         *     - `changelog:write`: write entries and translations, save drafts, upload images, render Markdown.
+         *       Mailing an entry to subscribers also needs `broadcasts:write` and `lists:read`.
+         *     - `changelog:publish`: create, configure and delete changelogs; publish, schedule, unschedule
+         *       and unpublish entries, change or delete published ones. API keys only, and never implied:
+         *       a key made without naming its scopes does not hold it, and OAuth clients are not offered it.
+         *
+         *     `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*`, `roadmap:*` and `changelog:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage" | "help:read" | "help:write" | "help:publish" | "roadmap:read" | "roadmap:write" | "roadmap:stage";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage" | "status:read" | "status:manage" | "help:read" | "help:write" | "help:publish" | "roadmap:read" | "roadmap:write" | "roadmap:stage" | "changelog:read" | "changelog:write" | "changelog:publish";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -10356,7 +10849,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up" | "help.article.published" | "help.article.unpublished" | "help.article.deleted" | "discussion.stage_changed";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "status.component.updated" | "status.incident.created" | "status.incident.updated" | "status.incident.resolved" | "status.monitor.down" | "status.monitor.up" | "help.article.published" | "help.article.unpublished" | "help.article.deleted" | "discussion.stage_changed" | "changelog.entry.published" | "changelog.entry.unpublished" | "changelog.entry.deleted";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -12932,7 +13425,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["HelpArticleEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["ChangelogEntryEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -12951,7 +13444,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["HelpArticleSignal"] | components["schemas"]["RoadmapBoardSignal"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["DiscussionStageEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["StatusComponentEvent"] | components["schemas"]["StatusIncidentEvent"] | components["schemas"]["StatusMonitorEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["StatusNoticeEvent"] | components["schemas"]["StatusPageEvent"] | components["schemas"]["HelpArticleEvent"] | components["schemas"]["HelpArticleSignal"] | components["schemas"]["ChangelogEntryEvent"] | components["schemas"]["ChangelogEntrySignal"] | components["schemas"]["RoadmapBoardSignal"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -12987,6 +13480,8 @@ export interface components {
             greeting: string;
             launcher: components["schemas"]["ChatLauncher"];
             discussions: components["schemas"]["DiscussionMode"];
+            /** @description The widget's launcher shows the number of unread What's new entries while no messages are unread. */
+            announce_updates: boolean;
         };
         ChatChannelInput: {
             allowed_origins: components["schemas"]["Origin"][];
@@ -12998,6 +13493,8 @@ export interface components {
             launcher?: components["schemas"]["ChatLauncher"];
             /** @description Defaults to `moderated`; on an update, absent keeps the current setting. */
             discussions?: components["schemas"]["DiscussionMode"];
+            /** @description Defaults to false; on an update, absent keeps the current setting. */
+            announce_updates?: boolean;
         };
         /** @enum {string} */
         AppPlatform: "ios" | "android";
@@ -13957,6 +14454,11 @@ export interface components {
              * @description The API key that scheduled it.
              */
             scheduled_by_api_key?: string;
+            /**
+             * Format: uuid
+             * @description The What's new entry it was made from with `broadcastChangelogEntry`; absent otherwise or once the entry is deleted.
+             */
+            changelog_entry_id?: string;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -15118,6 +15620,12 @@ export interface components {
             allow_anonymous: boolean;
             /** @description `off` on `app` channels. */
             discussions: components["schemas"]["DiscussionMode"];
+            /**
+             * @description Show the unread count of What's new entries on the launcher while there are no unread
+             *     messages. The Home tile shows the count whatever this says. Servers sent it from the
+             *     release that added What's new on; absent means `false`.
+             */
+            announce_updates?: boolean;
         };
         /**
          * @description The inbox's public settings. `live` inboxes carry `presence`; `async` inboxes never do and
@@ -15165,6 +15673,12 @@ export interface components {
              *     every change.
              */
             roadmap?: components["schemas"]["ClientInboxRoadmap"];
+            /**
+             * @description Absent unless the inbox has a published changelog with a published entry (and on a
+             *     server with `YUVA_WHATS_NEW=off`); show the What's new tile only then. An
+             *     `inbox.updated` frame brings every change.
+             */
+            whats_new?: components["schemas"]["ClientInboxWhatsNew"];
         };
         ClientContact: {
             /** Format: uuid */
@@ -19019,6 +19533,460 @@ export interface components {
         };
         /**
          * @description `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+         * @example acme-news
+         */
+        ChangelogSlug: string;
+        /** @enum {string} */
+        ChangelogLabel: "new" | "improved" | "fixed";
+        /**
+         * @description `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+         *     public once the changelog is published.
+         * @enum {string}
+         */
+        ChangelogEntryState: "draft" | "scheduled" | "published";
+        /**
+         * @description `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+         *     published copy, with a draft saved since that differs.
+         * @enum {string}
+         */
+        ChangelogTranslationState: "draft" | "published" | "changed";
+        /**
+         * @description Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+         *     member who scheduled it may no longer publish, or is gone), `key_revoked`,
+         *     `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+         *     inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+         */
+        ChangelogScheduleFailure: {
+            /** @enum {string} */
+            reason: "lost_right" | "key_revoked" | "key_scope_lost" | "no_default_translation";
+            /** Format: date-time */
+            at: string;
+        };
+        ChangelogCounts: {
+            /** Format: int32 */
+            entries: number;
+            /**
+             * Format: int32
+             * @description Entries that are public once the changelog is.
+             */
+            published: number;
+            /** Format: int32 */
+            scheduled: number;
+        };
+        Changelog: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            /** @description Shown on the changelog's home page. */
+            description: string;
+            slug: components["schemas"]["ChangelogSlug"];
+            /** @description The public home page, `<public URL>/changelog/{slug}`. */
+            url: string;
+            default_locale: components["schemas"]["LanguageTag"];
+            /** @description The locales entries may be written and published in; the default locale is one of them. */
+            locales: components["schemas"]["LanguageTag"][];
+            /**
+             * Format: uuid
+             * @description The analytics property the public pages count cookieless page views in.
+             */
+            analytics_property_id?: string;
+            /** @description Agents with access to the inbox may publish, schedule, unpublish and delete published entries. */
+            agents_may_publish: boolean;
+            published: boolean;
+            /** @description The caller may publish and schedule this changelog's entries. */
+            can_publish: boolean;
+            counts: components["schemas"]["ChangelogCounts"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        ChangelogList: {
+            items: components["schemas"]["Changelog"][];
+        };
+        ChangelogCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            description?: string;
+            slug: components["schemas"]["ChangelogSlug"];
+            default_locale?: components["schemas"]["LanguageTag"];
+            locales?: components["schemas"]["LanguageTag"][];
+            /** Format: uuid */
+            analytics_property_id?: string;
+            /** @description Default `false`. */
+            agents_may_publish?: boolean;
+            /** @description Default `false`. */
+            published?: boolean;
+        };
+        ChangelogUpdate: {
+            name?: string;
+            description?: string;
+            slug?: components["schemas"]["ChangelogSlug"];
+            default_locale?: components["schemas"]["LanguageTag"];
+            locales?: components["schemas"]["LanguageTag"][];
+            /** Format: uuid */
+            analytics_property_id?: string | null;
+            agents_may_publish?: boolean;
+            published?: boolean;
+        };
+        ChangelogEntryTranslationSummary: {
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The draft's title. */
+            title: string;
+            slug: string;
+            state: components["schemas"]["ChangelogTranslationState"];
+            /** Format: int32 */
+            version: number;
+            /** @description The default locale's translation was published after this translation was last saved; always false in the default locale. */
+            outdated: boolean;
+            /**
+             * Format: date-time
+             * @description Absent unless a published copy exists.
+             */
+            published_at?: string;
+            /** @description The public page; absent unless the entry and this translation are published. */
+            url?: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        ChangelogEntrySummary: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            changelog_id: string;
+            /**
+             * Format: int32
+             * @description The entry's number in its changelog's URLs, `/{locale}/entries/{number}-{slug}`.
+             */
+            number: number;
+            labels: components["schemas"]["ChangelogLabel"][];
+            /** @description The entry's picture; absent for none. */
+            image?: components["schemas"]["EmailImage"];
+            state: components["schemas"]["ChangelogEntryState"];
+            /**
+             * Format: date-time
+             * @description `scheduled` only.
+             */
+            publish_at?: string;
+            /**
+             * Format: date-time
+             * @description The date shown, the sort key and the widget's unread mark; set when the entry is first published and kept after unpublishing.
+             */
+            published_at?: string;
+            /** Format: uuid */
+            scheduled_by_member_id?: string;
+            /** Format: uuid */
+            scheduled_by_api_key_id?: string;
+            schedule_failed?: components["schemas"]["ChangelogScheduleFailure"];
+            translations: components["schemas"]["ChangelogEntryTranslationSummary"][];
+            /** Format: uuid */
+            created_by_member_id?: string;
+            /** Format: uuid */
+            created_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        ChangelogEntryPage: {
+            items: components["schemas"]["ChangelogEntrySummary"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        ChangelogPublishedCopy: {
+            title: string;
+            body: string;
+            slug: string;
+            /** @description The body rendered at publish. */
+            html: string;
+            /** @description The start of the rendered body as plain text, at most 300 characters. */
+            excerpt: string;
+            /** Format: date-time */
+            published_at: string;
+            /** Format: uuid */
+            published_by_member_id?: string;
+            /** Format: uuid */
+            published_by_api_key_id?: string;
+        };
+        ChangelogEntryTranslation: {
+            /** Format: uuid */
+            entry_id: string;
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The draft's title. */
+            title: string;
+            /** @description The draft, Markdown. */
+            body: string;
+            slug: string;
+            /**
+             * Format: int32
+             * @description Moves with every save; send it as `base_version`.
+             */
+            version: number;
+            state: components["schemas"]["ChangelogTranslationState"];
+            /** @description The default locale's translation was published after this translation was last saved; always false in the default locale. */
+            outdated: boolean;
+            /** @description The published copy; absent unless there is one. */
+            published?: components["schemas"]["ChangelogPublishedCopy"];
+            /** @description The public page; absent unless the entry and this translation are published. */
+            url?: string;
+            /** Format: uuid */
+            updated_by_member_id?: string;
+            /** Format: uuid */
+            updated_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description When the draft was last saved.
+             */
+            updated_at: string;
+        };
+        ChangelogEntry: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            changelog_id: string;
+            /** Format: int32 */
+            number: number;
+            labels: components["schemas"]["ChangelogLabel"][];
+            image?: components["schemas"]["EmailImage"];
+            state: components["schemas"]["ChangelogEntryState"];
+            /** Format: date-time */
+            publish_at?: string;
+            /** Format: date-time */
+            published_at?: string;
+            /** Format: uuid */
+            scheduled_by_member_id?: string;
+            /** Format: uuid */
+            scheduled_by_api_key_id?: string;
+            schedule_failed?: components["schemas"]["ChangelogScheduleFailure"];
+            translations: components["schemas"]["ChangelogEntryTranslation"][];
+            /** Format: uuid */
+            created_by_member_id?: string;
+            /** Format: uuid */
+            created_by_api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        ChangelogEntryCreate: {
+            locale: components["schemas"]["LanguageTag"];
+            title: string;
+            /** @description Markdown. */
+            body?: string;
+            /** @description Made from the title when absent. */
+            slug?: components["schemas"]["Slug"];
+            labels: components["schemas"]["ChangelogLabel"][];
+            /**
+             * Format: uuid
+             * @description An e-mail image of the workspace.
+             */
+            image_id?: string;
+        };
+        ChangelogEntryUpdate: {
+            labels?: components["schemas"]["ChangelogLabel"][];
+            /** Format: uuid */
+            image_id?: string | null;
+        };
+        ChangelogTranslationWrite: {
+            /**
+             * Format: int32
+             * @description The `version` the editor loaded; `0` for a new translation.
+             */
+            base_version: number;
+            title: string;
+            /** @description Markdown; empty when absent. */
+            body?: string;
+            /** @description Made from the title when absent. */
+            slug?: components["schemas"]["Slug"];
+        };
+        ChangelogEntryPublish: {
+            /** @description Publish this translation alone, for an entry that is already published. */
+            locale?: components["schemas"]["LanguageTag"];
+            /**
+             * Format: int32
+             * @description With `locale`, the `version` the caller reviewed.
+             */
+            base_version?: number;
+        };
+        ChangelogSchedule: {
+            /** Format: date-time */
+            publish_at: string;
+        };
+        ChangelogBroadcast: {
+            /** @description The entry's published translation the mail is written from. */
+            locale: components["schemas"]["LanguageTag"];
+            list_ids: string[];
+            /**
+             * Format: uuid
+             * @description The e-mail channel the broadcast sends through.
+             */
+            channel_id?: string;
+        };
+        ChangelogConflictProblem: components["schemas"]["Problem"] & {
+            /** @description `version_conflict` only: the translation as it is now. */
+            translation?: components["schemas"]["ChangelogEntryTranslation"];
+        };
+        ChangelogRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            url: string;
+        };
+        ChangelogEntryRefTranslation: {
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The published title. */
+            title: string;
+            /** @description The public page; absent unless the changelog is published. */
+            url?: string;
+        };
+        ChangelogEntryRef: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            number: number;
+            labels: components["schemas"]["ChangelogLabel"][];
+            /** Format: date-time */
+            published_at?: string;
+            /** @description The published translations (those the entry had, for `changelog.entry.unpublished` and `changelog.entry.deleted`). */
+            translations: components["schemas"]["ChangelogEntryRefTranslation"][];
+        };
+        ChangelogEntryEventData: {
+            changelog: components["schemas"]["ChangelogRef"];
+            entry: components["schemas"]["ChangelogEntryRef"];
+        };
+        /**
+         * @description `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted`: an
+         *     entry was published (also when a schedule fired, and again on republishing) or
+         *     unpublished, or a published entry was deleted. Delivered to callers who hold
+         *     `changelog:read` and can see the changelog's inbox.
+         */
+        ChangelogEntryEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "changelog.entry.published" | "changelog.entry.unpublished" | "changelog.entry.deleted";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ChangelogEntryEventData"];
+        };
+        WebhookChangelogEntryPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["ChangelogEntryEventData"];
+        };
+        /**
+         * @description `changelog.entry.updated`, on `/v1/realtime` only: an entry or a translation's draft
+         *     changed (created, saved, labels or image changed, scheduled, unscheduled), so an editor
+         *     open on an older `version` can say it changed elsewhere and lists can refresh. Not
+         *     stored, no id, never replayed. Reaches whoever holds `changelog:read` and sees the
+         *     changelog's inbox.
+         */
+        ChangelogEntrySignal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "changelog.entry.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: {
+                /** Format: uuid */
+                changelog_id: string;
+                /** Format: uuid */
+                entry_id: string;
+                /** @description The translation saved; absent for a change to the entry itself. */
+                locale?: components["schemas"]["LanguageTag"];
+                /**
+                 * Format: int32
+                 * @description The translation's new version, with `locale`.
+                 */
+                version?: number;
+                /**
+                 * Format: uuid
+                 * @description The member who made the change, when one did.
+                 */
+                member_id?: string;
+            };
+        };
+        /** @description The inbox's published changelog that has at least one published entry. */
+        ClientInboxWhatsNew: {
+            /** @description The changelog's public home page. */
+            url: string;
+            locales: components["schemas"]["LanguageTag"][];
+            default_locale: components["schemas"]["LanguageTag"];
+            /**
+             * Format: date-time
+             * @description The `published_at` of the newest published entry. The widget fetches the feed only when
+             *     this is newer than the newest entry the visitor has seen.
+             */
+            latest_published_at: string;
+        };
+        ClientChangelog: {
+            name: string;
+            description: string;
+            /** @description The locale served. */
+            locale: components["schemas"]["LanguageTag"];
+            locales: components["schemas"]["LanguageTag"][];
+            default_locale: components["schemas"]["LanguageTag"];
+            /** @description The changelog's public home page in the served locale. */
+            url: string;
+            /**
+             * Format: date-time
+             * @description The `published_at` of the newest published entry; absent when there is none.
+             */
+            latest_published_at?: string;
+        };
+        ClientWhatsNewImage: {
+            /** Format: uri */
+            url: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+        };
+        ClientWhatsNewEntry: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            number: number;
+            /** @description The locale actually served. */
+            locale: components["schemas"]["LanguageTag"];
+            /** @description The entry has no published translation in the requested locale; this is the default locale's. */
+            fallback: boolean;
+            title: string;
+            /** @description Plain text, at most 300 characters. */
+            excerpt: string;
+            /** @description The body rendered and sanitized at publish. */
+            html: string;
+            labels: components["schemas"]["ChangelogLabel"][];
+            image?: components["schemas"]["ClientWhatsNewImage"];
+            /** Format: date-time */
+            published_at: string;
+            /** @description The entry's public page. */
+            url: string;
+        };
+        ClientWhatsNew: {
+            changelog: components["schemas"]["ClientChangelog"];
+            items: components["schemas"]["ClientWhatsNewEntry"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        /**
+         * @description `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
          * @example acme
          */
         HelpCenterSlug: string;
@@ -19712,9 +20680,10 @@ export interface components {
          *     allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
          *     `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
          *     `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+         *     `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
          * @enum {string}
          */
-        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES" | "YUVA_HELP_MAX_ARTICLES" | "YUVA_ROADMAP_MAX_IDEAS";
+        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES" | "YUVA_HELP_MAX_ARTICLES" | "YUVA_ROADMAP_MAX_IDEAS" | "YUVA_CHANGELOG_MAX_ENTRIES";
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -19771,6 +20740,15 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["EmailDesignProblem"];
+            };
+        };
+        /** @description The translation was saved since; `translation` is the translation as it is now. */
+        ChangelogConflictProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["ChangelogConflictProblem"];
             };
         };
         /** @description The translation was saved since; `translation` is the translation as it is now. */
@@ -19902,6 +20880,14 @@ export interface components {
         /** @description One of the center's `locales`. */
         HelpLocale: components["schemas"]["LanguageTag"];
         HelpRevisionId: string;
+        ChangelogId: string;
+        ChangelogEntryId: string;
+        /** @description One of the changelog's `locales`. */
+        ChangelogLocale: components["schemas"]["LanguageTag"];
+        /** @description The public key of a `chat` or `app` channel of the changelog's inbox. */
+        ClientWhatsNewChannelKey: string;
+        /** @description The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale. */
+        ClientWhatsNewLocale: components["schemas"]["LanguageTag"];
         /** @description The public key of a `chat` or `app` channel of the center's inbox. */
         ClientHelpChannelKey: string;
         /** @description The visitor's language; matched to the center's `locales` exactly, then by base language, else the center's default locale. */
@@ -30096,6 +31082,651 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    renderMarkdown: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelpMarkdown"];
+            };
+        };
+        responses: {
+            /** @description The HTML. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpRendered"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    listChangelogs: {
+        parameters: {
+            query?: {
+                /** @description Only the changelog of this inbox. */
+                inbox_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The changelogs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createChangelog: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogCreate"];
+            };
+        };
+        responses: {
+            /** @description The changelog. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Changelog"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getChangelog: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The changelog. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Changelog"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteChangelog: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateChangelog: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated changelog. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Changelog"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    listChangelogEntries: {
+        parameters: {
+            query?: {
+                state?: "draft" | "scheduled" | "published" | "changed";
+                label?: components["schemas"]["ChangelogLabel"];
+                locale?: components["schemas"]["LanguageTag"];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of entries. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntryPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogEntryCreate"];
+            };
+        };
+        responses: {
+            /** @description The entry. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogEntryUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    putChangelogEntryTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+                /** @description One of the changelog's `locales`. */
+                locale: components["parameters"]["ChangelogLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogTranslationWrite"];
+            };
+        };
+        responses: {
+            /** @description The saved translation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntryTranslation"];
+                };
+            };
+            /** @description The new translation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntryTranslation"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["ChangelogConflictProblem"];
+        };
+    };
+    deleteChangelogEntryTranslation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+                /** @description One of the changelog's `locales`. */
+                locale: components["parameters"]["ChangelogLocale"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    publishChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ChangelogEntryPublish"];
+            };
+        };
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["ChangelogConflictProblem"];
+        };
+    };
+    scheduleChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogSchedule"];
+            };
+        };
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    unscheduleChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    unpublishChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangelogEntry"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    broadcastChangelogEntry: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangelogBroadcast"];
+            };
+        };
+        responses: {
+            /** @description The draft broadcast. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    uploadChangelogImage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                changelogId: components["parameters"]["ChangelogId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["EmailImageUpload"];
+            };
+        };
+        responses: {
+            /** @description The same image was already uploaded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpImage"];
+                };
+            };
+            /** @description The image. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpImage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
     listHelpCenters: {
         parameters: {
             query?: {
@@ -31134,6 +32765,69 @@ export interface operations {
                 };
             };
             401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getClientWhatsNew: {
+        parameters: {
+            query?: {
+                /** @description The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale. */
+                locale?: components["parameters"]["ClientWhatsNewLocale"];
+                cursor?: string;
+                /** @description 1 to 50; 20 by default. */
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the changelog's inbox. */
+                channel_key: components["parameters"]["ClientWhatsNewChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The feed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientWhatsNew"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getClientWhatsNewEntry: {
+        parameters: {
+            query?: {
+                /** @description The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale. */
+                locale?: components["parameters"]["ClientWhatsNewLocale"];
+            };
+            header?: never;
+            path: {
+                /** @description The public key of a `chat` or `app` channel of the changelog's inbox. */
+                channel_key: components["parameters"]["ClientWhatsNewChannelKey"];
+                entryId: components["parameters"]["ChangelogEntryId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The entry. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientWhatsNewEntry"];
+                };
+            };
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
@@ -33697,6 +35391,105 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookHelpArticlePayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookChangelogEntryPublished: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookChangelogEntryPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookChangelogEntryUnpublished: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookChangelogEntryPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookChangelogEntryDeleted: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookChangelogEntryPayload"];
             };
         };
         responses: {

@@ -918,6 +918,9 @@ const (
 	BroadcastsSend     ApiKeyScope = "broadcasts:send"
 	BroadcastsWrite    ApiKeyScope = "broadcasts:write"
 	CannedRepliesWrite ApiKeyScope = "canned_replies:write"
+	ChangelogPublish   ApiKeyScope = "changelog:publish"
+	ChangelogRead      ApiKeyScope = "changelog:read"
+	ChangelogWrite     ApiKeyScope = "changelog:write"
 	ContactsRead       ApiKeyScope = "contacts:read"
 	ContactsWrite      ApiKeyScope = "contacts:write"
 	ConversationsRead  ApiKeyScope = "conversations:read"
@@ -960,6 +963,12 @@ func (e ApiKeyScope) Valid() bool {
 	case BroadcastsWrite:
 		return true
 	case CannedRepliesWrite:
+		return true
+	case ChangelogPublish:
+		return true
+	case ChangelogRead:
+		return true
+	case ChangelogWrite:
 		return true
 	case ContactsRead:
 		return true
@@ -1422,6 +1431,129 @@ func (e BroadcastsStatus) Valid() bool {
 	case ApprovalRequired:
 		return true
 	case Suspended:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntryEventType.
+const (
+	ChangelogEntryDeletedEvent     ChangelogEntryEventType = "changelog.entry.deleted"
+	ChangelogEntryPublishedEvent   ChangelogEntryEventType = "changelog.entry.published"
+	ChangelogEntryUnpublishedEvent ChangelogEntryEventType = "changelog.entry.unpublished"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntryEventType enum.
+func (e ChangelogEntryEventType) Valid() bool {
+	switch e {
+	case ChangelogEntryDeletedEvent:
+		return true
+	case ChangelogEntryPublishedEvent:
+		return true
+	case ChangelogEntryUnpublishedEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntrySignalType.
+const (
+	ChangelogEntryUpdated ChangelogEntrySignalType = "changelog.entry.updated"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntrySignalType enum.
+func (e ChangelogEntrySignalType) Valid() bool {
+	switch e {
+	case ChangelogEntryUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntryState.
+const (
+	ChangelogStateDraft     ChangelogEntryState = "draft"
+	ChangelogStatePublished ChangelogEntryState = "published"
+	ChangelogStateScheduled ChangelogEntryState = "scheduled"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntryState enum.
+func (e ChangelogEntryState) Valid() bool {
+	switch e {
+	case ChangelogStateDraft:
+		return true
+	case ChangelogStatePublished:
+		return true
+	case ChangelogStateScheduled:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogLabel.
+const (
+	ChangelogLabelFixed    ChangelogLabel = "fixed"
+	ChangelogLabelImproved ChangelogLabel = "improved"
+	ChangelogLabelNew      ChangelogLabel = "new"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogLabel enum.
+func (e ChangelogLabel) Valid() bool {
+	switch e {
+	case ChangelogLabelFixed:
+		return true
+	case ChangelogLabelImproved:
+		return true
+	case ChangelogLabelNew:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogScheduleFailureReason.
+const (
+	ChangelogFailureKeyRevoked           ChangelogScheduleFailureReason = "key_revoked"
+	ChangelogFailureKeyScopeLost         ChangelogScheduleFailureReason = "key_scope_lost"
+	ChangelogFailureLostRight            ChangelogScheduleFailureReason = "lost_right"
+	ChangelogFailureNoDefaultTranslation ChangelogScheduleFailureReason = "no_default_translation"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogScheduleFailureReason enum.
+func (e ChangelogScheduleFailureReason) Valid() bool {
+	switch e {
+	case ChangelogFailureKeyRevoked:
+		return true
+	case ChangelogFailureKeyScopeLost:
+		return true
+	case ChangelogFailureLostRight:
+		return true
+	case ChangelogFailureNoDefaultTranslation:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogTranslationState.
+const (
+	ChangelogTranslationChanged   ChangelogTranslationState = "changed"
+	ChangelogTranslationDraft     ChangelogTranslationState = "draft"
+	ChangelogTranslationPublished ChangelogTranslationState = "published"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogTranslationState enum.
+func (e ChangelogTranslationState) Valid() bool {
+	switch e {
+	case ChangelogTranslationChanged:
+		return true
+	case ChangelogTranslationDraft:
+		return true
+	case ChangelogTranslationPublished:
 		return true
 	default:
 		return false
@@ -2933,6 +3065,7 @@ func (e HomeSetupItemId) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
+	LimitChangelogMaxEntries     HostedLimit = "YUVA_CHANGELOG_MAX_ENTRIES"
 	LimitHelpMaxArticles         HostedLimit = "YUVA_HELP_MAX_ARTICLES"
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
@@ -2944,6 +3077,8 @@ const (
 // Valid indicates whether the value is a known member of the HostedLimit enum.
 func (e HostedLimit) Valid() bool {
 	switch e {
+	case LimitChangelogMaxEntries:
+		return true
 	case LimitHelpMaxArticles:
 		return true
 	case LimitMigrationMaxActive:
@@ -5663,34 +5798,37 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
-	WebhookEventTypeAnalyticsAlert         WebhookEventType = "analytics.alert"
-	WebhookEventTypeBroadcastUpdated       WebhookEventType = "broadcast.updated"
-	WebhookEventTypeContactDeleted         WebhookEventType = "contact.deleted"
-	WebhookEventTypeContactUpdated         WebhookEventType = "contact.updated"
-	WebhookEventTypeConversationCreated    WebhookEventType = "conversation.created"
-	WebhookEventTypeConversationRated      WebhookEventType = "conversation.rated"
-	WebhookEventTypeConversationUpdated    WebhookEventType = "conversation.updated"
-	WebhookEventTypeDiscussionAnswered     WebhookEventType = "discussion.answered"
-	WebhookEventTypeDiscussionCreated      WebhookEventType = "discussion.created"
-	WebhookEventTypeDiscussionPostCreated  WebhookEventType = "discussion.post_created"
-	WebhookEventTypeDiscussionStageChanged WebhookEventType = "discussion.stage_changed"
-	WebhookEventTypeDiscussionUpdated      WebhookEventType = "discussion.updated"
-	WebhookEventTypeDraftCreated           WebhookEventType = "draft.created"
-	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
-	WebhookEventTypeDraftUpdated           WebhookEventType = "draft.updated"
-	WebhookEventTypeFeedbackCreated        WebhookEventType = "feedback.created"
-	WebhookEventTypeHelpArticleDeleted     WebhookEventType = "help.article.deleted"
-	WebhookEventTypeHelpArticlePublished   WebhookEventType = "help.article.published"
-	WebhookEventTypeHelpArticleUnpublished WebhookEventType = "help.article.unpublished"
-	WebhookEventTypeMessageCreated         WebhookEventType = "message.created"
-	WebhookEventTypeStatusComponentUpdated WebhookEventType = "status.component.updated"
-	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
-	WebhookEventTypeStatusIncidentResolved WebhookEventType = "status.incident.resolved"
-	WebhookEventTypeStatusIncidentUpdated  WebhookEventType = "status.incident.updated"
-	WebhookEventTypeStatusMonitorDown      WebhookEventType = "status.monitor.down"
-	WebhookEventTypeStatusMonitorUp        WebhookEventType = "status.monitor.up"
-	WebhookEventTypeSubscriptionCreated    WebhookEventType = "subscription.created"
-	WebhookEventTypeSubscriptionUpdated    WebhookEventType = "subscription.updated"
+	WebhookEventTypeAnalyticsAlert            WebhookEventType = "analytics.alert"
+	WebhookEventTypeBroadcastUpdated          WebhookEventType = "broadcast.updated"
+	WebhookEventTypeChangelogEntryDeleted     WebhookEventType = "changelog.entry.deleted"
+	WebhookEventTypeChangelogEntryPublished   WebhookEventType = "changelog.entry.published"
+	WebhookEventTypeChangelogEntryUnpublished WebhookEventType = "changelog.entry.unpublished"
+	WebhookEventTypeContactDeleted            WebhookEventType = "contact.deleted"
+	WebhookEventTypeContactUpdated            WebhookEventType = "contact.updated"
+	WebhookEventTypeConversationCreated       WebhookEventType = "conversation.created"
+	WebhookEventTypeConversationRated         WebhookEventType = "conversation.rated"
+	WebhookEventTypeConversationUpdated       WebhookEventType = "conversation.updated"
+	WebhookEventTypeDiscussionAnswered        WebhookEventType = "discussion.answered"
+	WebhookEventTypeDiscussionCreated         WebhookEventType = "discussion.created"
+	WebhookEventTypeDiscussionPostCreated     WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionStageChanged    WebhookEventType = "discussion.stage_changed"
+	WebhookEventTypeDiscussionUpdated         WebhookEventType = "discussion.updated"
+	WebhookEventTypeDraftCreated              WebhookEventType = "draft.created"
+	WebhookEventTypeDraftDeleted              WebhookEventType = "draft.deleted"
+	WebhookEventTypeDraftUpdated              WebhookEventType = "draft.updated"
+	WebhookEventTypeFeedbackCreated           WebhookEventType = "feedback.created"
+	WebhookEventTypeHelpArticleDeleted        WebhookEventType = "help.article.deleted"
+	WebhookEventTypeHelpArticlePublished      WebhookEventType = "help.article.published"
+	WebhookEventTypeHelpArticleUnpublished    WebhookEventType = "help.article.unpublished"
+	WebhookEventTypeMessageCreated            WebhookEventType = "message.created"
+	WebhookEventTypeStatusComponentUpdated    WebhookEventType = "status.component.updated"
+	WebhookEventTypeStatusIncidentCreated     WebhookEventType = "status.incident.created"
+	WebhookEventTypeStatusIncidentResolved    WebhookEventType = "status.incident.resolved"
+	WebhookEventTypeStatusIncidentUpdated     WebhookEventType = "status.incident.updated"
+	WebhookEventTypeStatusMonitorDown         WebhookEventType = "status.monitor.down"
+	WebhookEventTypeStatusMonitorUp           WebhookEventType = "status.monitor.up"
+	WebhookEventTypeSubscriptionCreated       WebhookEventType = "subscription.created"
+	WebhookEventTypeSubscriptionUpdated       WebhookEventType = "subscription.updated"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -5699,6 +5837,12 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeAnalyticsAlert:
 		return true
 	case WebhookEventTypeBroadcastUpdated:
+		return true
+	case WebhookEventTypeChangelogEntryDeleted:
+		return true
+	case WebhookEventTypeChangelogEntryPublished:
+		return true
+	case WebhookEventTypeChangelogEntryUnpublished:
 		return true
 	case WebhookEventTypeContactDeleted:
 		return true
@@ -5988,6 +6132,30 @@ func (e GetAnalyticsRetentionParamsGrain) Valid() bool {
 	case AnalyticsRetentionMonth:
 		return true
 	case AnalyticsRetentionWeek:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListChangelogEntriesParamsState.
+const (
+	ListChangelogEntriesParamsStateChanged   ListChangelogEntriesParamsState = "changed"
+	ListChangelogEntriesParamsStateDraft     ListChangelogEntriesParamsState = "draft"
+	ListChangelogEntriesParamsStatePublished ListChangelogEntriesParamsState = "published"
+	ListChangelogEntriesParamsStateScheduled ListChangelogEntriesParamsState = "scheduled"
+)
+
+// Valid indicates whether the value is a known member of the ListChangelogEntriesParamsState enum.
+func (e ListChangelogEntriesParamsState) Valid() bool {
+	switch e {
+	case ListChangelogEntriesParamsStateChanged:
+		return true
+	case ListChangelogEntriesParamsStateDraft:
+		return true
+	case ListChangelogEntriesParamsStatePublished:
+		return true
+	case ListChangelogEntriesParamsStateScheduled:
 		return true
 	default:
 		return false
@@ -7399,6 +7567,7 @@ type AnalyticsRangeProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7957,7 +8126,14 @@ type ApiKeyList struct {
 //	  - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
 //	    Never implied: a key made without naming its scopes does not hold it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
+//	  - `changelog:read`: What's new changelogs and their entries.
+//	  - `changelog:write`: write entries and translations, save drafts, upload images, render Markdown.
+//	    Mailing an entry to subscribers also needs `broadcasts:write` and `lists:read`.
+//	  - `changelog:publish`: create, configure and delete changelogs; publish, schedule, unschedule
+//	    and unpublish entries, change or delete published ones. API keys only, and never implied:
+//	    a key made without naming its scopes does not hold it, and OAuth clients are not offered it.
+//
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*`, `roadmap:*` and `changelog:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -8033,6 +8209,9 @@ type BotAvatarUrl = string
 // Broadcast defines model for Broadcast.
 type Broadcast struct {
 	Audience BroadcastAudience `json:"audience"`
+
+	// ChangelogEntryId The What's new entry it was made from with `broadcastChangelogEntry`; absent otherwise or once the entry is deleted.
+	ChangelogEntryId *uuid.UUID `json:"changelog_entry_id,omitempty"`
 
 	// ChannelId The inbox's e-mail channel it goes out through; absent until chosen or when removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
@@ -8384,6 +8563,7 @@ type BroadcastProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8660,6 +8840,469 @@ type CannedReplyUpdate struct {
 	Title    *string `json:"title,omitempty"`
 }
 
+// Changelog defines model for Changelog.
+type Changelog struct {
+	// AgentsMayPublish Agents with access to the inbox may publish, schedule, unpublish and delete published entries.
+	AgentsMayPublish bool `json:"agents_may_publish"`
+
+	// AnalyticsPropertyId The analytics property the public pages count cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// CanPublish The caller may publish and schedule this changelog's entries.
+	CanPublish bool            `json:"can_publish"`
+	Counts     ChangelogCounts `json:"counts"`
+	CreatedAt  time.Time       `json:"created_at"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// Description Shown on the changelog's home page.
+	Description string    `json:"description"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locales The locales entries may be written and published in; the default locale is one of them.
+	Locales   []LanguageTag `json:"locales"`
+	Name      string        `json:"name"`
+	Published bool          `json:"published"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug      ChangelogSlug `json:"slug"`
+	UpdatedAt time.Time     `json:"updated_at"`
+
+	// Url The public home page, `<public URL>/changelog/{slug}`.
+	Url string `json:"url"`
+}
+
+// ChangelogBroadcast defines model for ChangelogBroadcast.
+type ChangelogBroadcast struct {
+	// ChannelId The e-mail channel the broadcast sends through.
+	ChannelId *uuid.UUID  `json:"channel_id,omitempty"`
+	ListIds   []uuid.UUID `json:"list_ids"`
+
+	// Locale The entry's published translation the mail is written from.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+}
+
+// ChangelogConflictProblem defines model for ChangelogConflictProblem.
+type ChangelogConflictProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Translation `version_conflict` only: the translation as it is now.
+	Translation *ChangelogEntryTranslation `json:"translation,omitempty"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// ChangelogCounts defines model for ChangelogCounts.
+type ChangelogCounts struct {
+	Entries int32 `json:"entries"`
+
+	// Published Entries that are public once the changelog is.
+	Published int32 `json:"published"`
+	Scheduled int32 `json:"scheduled"`
+}
+
+// ChangelogCreate defines model for ChangelogCreate.
+type ChangelogCreate struct {
+	// AgentsMayPublish Default `false`.
+	AgentsMayPublish    *bool      `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	InboxId       uuid.UUID      `json:"inbox_id"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+	Name          string         `json:"name"`
+
+	// Published Default `false`.
+	Published *bool `json:"published,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug ChangelogSlug `json:"slug"`
+}
+
+// ChangelogEntry defines model for ChangelogEntry.
+type ChangelogEntry struct {
+	ChangelogId       uuid.UUID        `json:"changelog_id"`
+	CreatedAt         time.Time        `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID       `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID       `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID        `json:"id"`
+	Image             *EmailImage      `json:"image,omitempty"`
+	Labels            []ChangelogLabel `json:"labels"`
+	Number            int32            `json:"number"`
+	PublishAt         *time.Time       `json:"publish_at,omitempty"`
+	PublishedAt       *time.Time       `json:"published_at,omitempty"`
+
+	// ScheduleFailed Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+	// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+	// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+	// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+	ScheduleFailed      *ChangelogScheduleFailure `json:"schedule_failed,omitempty"`
+	ScheduledByApiKeyId *uuid.UUID                `json:"scheduled_by_api_key_id,omitempty"`
+	ScheduledByMemberId *uuid.UUID                `json:"scheduled_by_member_id,omitempty"`
+
+	// State `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+	// public once the changelog is published.
+	State        ChangelogEntryState         `json:"state"`
+	Translations []ChangelogEntryTranslation `json:"translations"`
+	UpdatedAt    time.Time                   `json:"updated_at"`
+}
+
+// ChangelogEntryCreate defines model for ChangelogEntryCreate.
+type ChangelogEntryCreate struct {
+	// Body Markdown.
+	Body *string `json:"body,omitempty"`
+
+	// ImageId An e-mail image of the workspace.
+	ImageId *uuid.UUID       `json:"image_id,omitempty"`
+	Labels  []ChangelogLabel `json:"labels"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// ChangelogEntryEvent `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted`: an
+// entry was published (also when a schedule fired, and again on republishing) or
+// unpublished, or a published entry was deleted. Delivered to callers who hold
+// `changelog:read` and can see the changelog's inbox.
+type ChangelogEntryEvent struct {
+	CreatedAt   time.Time               `json:"created_at"`
+	Data        ChangelogEntryEventData `json:"data"`
+	Id          int64                   `json:"id"`
+	InboxId     uuid.UUID               `json:"inbox_id"`
+	Type        ChangelogEntryEventType `json:"type"`
+	WorkspaceId uuid.UUID               `json:"workspace_id"`
+}
+
+// ChangelogEntryEventType defines model for ChangelogEntryEvent.Type.
+type ChangelogEntryEventType string
+
+// ChangelogEntryEventData defines model for ChangelogEntryEventData.
+type ChangelogEntryEventData struct {
+	Changelog ChangelogRef      `json:"changelog"`
+	Entry     ChangelogEntryRef `json:"entry"`
+}
+
+// ChangelogEntryPage defines model for ChangelogEntryPage.
+type ChangelogEntryPage struct {
+	Items []ChangelogEntrySummary `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ChangelogEntryPublish defines model for ChangelogEntryPublish.
+type ChangelogEntryPublish struct {
+	// BaseVersion With `locale`, the `version` the caller reviewed.
+	BaseVersion *int32 `json:"base_version,omitempty"`
+
+	// Locale Publish this translation alone, for an entry that is already published.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+}
+
+// ChangelogEntryRef defines model for ChangelogEntryRef.
+type ChangelogEntryRef struct {
+	Id          uuid.UUID        `json:"id"`
+	Labels      []ChangelogLabel `json:"labels"`
+	Number      int32            `json:"number"`
+	PublishedAt *time.Time       `json:"published_at,omitempty"`
+
+	// Translations The published translations (those the entry had, for `changelog.entry.unpublished` and `changelog.entry.deleted`).
+	Translations []ChangelogEntryRefTranslation `json:"translations"`
+}
+
+// ChangelogEntryRefTranslation defines model for ChangelogEntryRefTranslation.
+type ChangelogEntryRefTranslation struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Title The published title.
+	Title string `json:"title"`
+
+	// Url The public page; absent unless the changelog is published.
+	Url *string `json:"url,omitempty"`
+}
+
+// ChangelogEntrySignal `changelog.entry.updated`, on `/v1/realtime` only: an entry or a translation's draft
+// changed (created, saved, labels or image changed, scheduled, unscheduled), so an editor
+// open on an older `version` can say it changed elsewhere and lists can refresh. Not
+// stored, no id, never replayed. Reaches whoever holds `changelog:read` and sees the
+// changelog's inbox.
+type ChangelogEntrySignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		ChangelogId uuid.UUID `json:"changelog_id"`
+		EntryId     uuid.UUID `json:"entry_id"`
+
+		// Locale The translation saved; absent for a change to the entry itself.
+		//
+		// Examples: en, tr
+		Locale *LanguageTag `json:"locale,omitempty"`
+
+		// MemberId The member who made the change, when one did.
+		MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+		// Version The translation's new version, with `locale`.
+		Version *int32 `json:"version,omitempty"`
+	} `json:"data"`
+	InboxId     uuid.UUID                `json:"inbox_id"`
+	Type        ChangelogEntrySignalType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// ChangelogEntrySignalType defines model for ChangelogEntrySignal.Type.
+type ChangelogEntrySignalType string
+
+// ChangelogEntryState `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+// public once the changelog is published.
+type ChangelogEntryState string
+
+// ChangelogEntrySummary defines model for ChangelogEntrySummary.
+type ChangelogEntrySummary struct {
+	ChangelogId       uuid.UUID  `json:"changelog_id"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Image The entry's picture; absent for none.
+	Image  *EmailImage      `json:"image,omitempty"`
+	Labels []ChangelogLabel `json:"labels"`
+
+	// Number The entry's number in its changelog's URLs, `/{locale}/entries/{number}-{slug}`.
+	Number int32 `json:"number"`
+
+	// PublishAt `scheduled` only.
+	PublishAt *time.Time `json:"publish_at,omitempty"`
+
+	// PublishedAt The date shown, the sort key and the widget's unread mark; set when the entry is first published and kept after unpublishing.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+
+	// ScheduleFailed Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+	// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+	// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+	// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+	ScheduleFailed      *ChangelogScheduleFailure `json:"schedule_failed,omitempty"`
+	ScheduledByApiKeyId *uuid.UUID                `json:"scheduled_by_api_key_id,omitempty"`
+	ScheduledByMemberId *uuid.UUID                `json:"scheduled_by_member_id,omitempty"`
+
+	// State `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+	// public once the changelog is published.
+	State        ChangelogEntryState                `json:"state"`
+	Translations []ChangelogEntryTranslationSummary `json:"translations"`
+	UpdatedAt    time.Time                          `json:"updated_at"`
+}
+
+// ChangelogEntryTranslation defines model for ChangelogEntryTranslation.
+type ChangelogEntryTranslation struct {
+	// Body The draft, Markdown.
+	Body      string    `json:"body"`
+	CreatedAt time.Time `json:"created_at"`
+	EntryId   uuid.UUID `json:"entry_id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// Published The published copy; absent unless there is one.
+	Published *ChangelogPublishedCopy `json:"published,omitempty"`
+	Slug      string                  `json:"slug"`
+
+	// State `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+	// published copy, with a draft saved since that differs.
+	State ChangelogTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title string `json:"title"`
+
+	// UpdatedAt When the draft was last saved.
+	UpdatedAt         time.Time  `json:"updated_at"`
+	UpdatedByApiKeyId *uuid.UUID `json:"updated_by_api_key_id,omitempty"`
+	UpdatedByMemberId *uuid.UUID `json:"updated_by_member_id,omitempty"`
+
+	// Url The public page; absent unless the entry and this translation are published.
+	Url *string `json:"url,omitempty"`
+
+	// Version Moves with every save; send it as `base_version`.
+	Version int32 `json:"version"`
+}
+
+// ChangelogEntryTranslationSummary defines model for ChangelogEntryTranslationSummary.
+type ChangelogEntryTranslationSummary struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// PublishedAt Absent unless a published copy exists.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	Slug        string     `json:"slug"`
+
+	// State `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+	// published copy, with a draft saved since that differs.
+	State ChangelogTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title     string    `json:"title"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The public page; absent unless the entry and this translation are published.
+	Url     *string `json:"url,omitempty"`
+	Version int32   `json:"version"`
+}
+
+// ChangelogEntryUpdate defines model for ChangelogEntryUpdate.
+type ChangelogEntryUpdate struct {
+	ImageId nullable.Nullable[uuid.UUID] `json:"image_id,omitempty"`
+	Labels  *[]ChangelogLabel            `json:"labels,omitempty"`
+}
+
+// ChangelogLabel defines model for ChangelogLabel.
+type ChangelogLabel string
+
+// ChangelogList defines model for ChangelogList.
+type ChangelogList struct {
+	Items []Changelog `json:"items"`
+}
+
+// ChangelogPublishedCopy defines model for ChangelogPublishedCopy.
+type ChangelogPublishedCopy struct {
+	Body string `json:"body"`
+
+	// Excerpt The start of the rendered body as plain text, at most 300 characters.
+	Excerpt string `json:"excerpt"`
+
+	// Html The body rendered at publish.
+	Html                string     `json:"html"`
+	PublishedAt         time.Time  `json:"published_at"`
+	PublishedByApiKeyId *uuid.UUID `json:"published_by_api_key_id,omitempty"`
+	PublishedByMemberId *uuid.UUID `json:"published_by_member_id,omitempty"`
+	Slug                string     `json:"slug"`
+	Title               string     `json:"title"`
+}
+
+// ChangelogRef defines model for ChangelogRef.
+type ChangelogRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+	Url  string    `json:"url"`
+}
+
+// ChangelogSchedule defines model for ChangelogSchedule.
+type ChangelogSchedule struct {
+	PublishAt time.Time `json:"publish_at"`
+}
+
+// ChangelogScheduleFailure Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+type ChangelogScheduleFailure struct {
+	At     time.Time                      `json:"at"`
+	Reason ChangelogScheduleFailureReason `json:"reason"`
+}
+
+// ChangelogScheduleFailureReason defines model for ChangelogScheduleFailure.Reason.
+type ChangelogScheduleFailureReason string
+
+// ChangelogSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme-news
+type ChangelogSlug = string
+
+// ChangelogTranslationState `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+// published copy, with a draft saved since that differs.
+type ChangelogTranslationState string
+
+// ChangelogTranslationWrite defines model for ChangelogTranslationWrite.
+type ChangelogTranslationWrite struct {
+	// BaseVersion The `version` the editor loaded; `0` for a new translation.
+	BaseVersion int32 `json:"base_version"`
+
+	// Body Markdown; empty when absent.
+	Body *string `json:"body,omitempty"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// ChangelogUpdate defines model for ChangelogUpdate.
+type ChangelogUpdate struct {
+	AgentsMayPublish    *bool                        `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+	Name          *string        `json:"name,omitempty"`
+	Published     *bool          `json:"published,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug *ChangelogSlug `json:"slug,omitempty"`
+}
+
 // Channel defines model for Channel.
 type Channel struct {
 	// App Settings of an `app` (mobile SDKs) channel. Native apps send no `Origin`, so the key is not
@@ -8733,6 +9376,9 @@ type ChatChannel struct {
 	// AllowedOrigins The only origins whose pages may use the widget, compared exactly.
 	AllowedOrigins []Origin `json:"allowed_origins"`
 
+	// AnnounceUpdates The widget's launcher shows the number of unread What's new entries while no messages are unread.
+	AnnounceUpdates bool `json:"announce_updates"`
+
 	// AskEmailOffline The widget asks for an e-mail address when nobody is available.
 	AskEmailOffline bool `json:"ask_email_offline"`
 
@@ -8758,6 +9404,9 @@ type ChatChannelInput struct {
 	// AllowAnonymous Defaults to false.
 	AllowAnonymous *bool    `json:"allow_anonymous,omitempty"`
 	AllowedOrigins []Origin `json:"allowed_origins"`
+
+	// AnnounceUpdates Defaults to false; on an update, absent keeps the current setting.
+	AnnounceUpdates *bool `json:"announce_updates,omitempty"`
 
 	// AskEmailOffline Defaults to true.
 	AskEmailOffline *bool `json:"ask_email_offline,omitempty"`
@@ -8791,10 +9440,37 @@ type ClientAttachment struct {
 	Size   int64     `json:"size"`
 }
 
+// ClientChangelog defines model for ClientChangelog.
+type ClientChangelog struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+	Description   string      `json:"description"`
+
+	// LatestPublishedAt The `published_at` of the newest published entry; absent when there is none.
+	LatestPublishedAt *time.Time `json:"latest_published_at,omitempty"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag   `json:"locale"`
+	Locales []LanguageTag `json:"locales"`
+	Name    string        `json:"name"`
+
+	// Url The changelog's public home page in the served locale.
+	Url string `json:"url"`
+}
+
 // ClientChatSettings defines model for ClientChatSettings.
 type ClientChatSettings struct {
-	AllowAnonymous  bool `json:"allow_anonymous"`
-	AskEmailOffline bool `json:"ask_email_offline"`
+	AllowAnonymous bool `json:"allow_anonymous"`
+
+	// AnnounceUpdates Show the unread count of What's new entries on the launcher while there are no unread
+	// messages. The Home tile shows the count whatever this says. Servers sent it from the
+	// release that added What's new on; absent means `false`.
+	AnnounceUpdates *bool `json:"announce_updates,omitempty"`
+	AskEmailOffline bool  `json:"ask_email_offline"`
 
 	// Discussions `off` on `app` channels.
 	Discussions DiscussionMode `json:"discussions"`
@@ -9300,6 +9976,11 @@ type ClientInbox struct {
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
 	Timezone string             `json:"timezone"`
+
+	// WhatsNew Absent unless the inbox has a published changelog with a published entry (and on a
+	// server with `YUVA_WHATS_NEW=off`); show the What's new tile only then. An
+	// `inbox.updated` frame brings every change.
+	WhatsNew *ClientInboxWhatsNew `json:"whats_new,omitempty"`
 }
 
 // ClientInboxHelp The inbox's published help center.
@@ -9357,6 +10038,22 @@ type ClientInboxUpdatedEvent struct {
 
 // ClientInboxUpdatedEventType defines model for ClientInboxUpdatedEvent.Type.
 type ClientInboxUpdatedEventType string
+
+// ClientInboxWhatsNew The inbox's published changelog that has at least one published entry.
+type ClientInboxWhatsNew struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// LatestPublishedAt The `published_at` of the newest published entry. The widget fetches the feed only when
+	// this is newer than the newest entry the visitor has seen.
+	LatestPublishedAt time.Time     `json:"latest_published_at"`
+	Locales           []LanguageTag `json:"locales"`
+
+	// Url The changelog's public home page.
+	Url string `json:"url"`
+}
 
 // ClientMailingList defines model for ClientMailingList.
 type ClientMailingList struct {
@@ -9690,6 +10387,48 @@ type ClientTypingEvent struct {
 
 // ClientTypingEventType defines model for ClientTypingEvent.Type.
 type ClientTypingEventType string
+
+// ClientWhatsNew defines model for ClientWhatsNew.
+type ClientWhatsNew struct {
+	Changelog ClientChangelog       `json:"changelog"`
+	Items     []ClientWhatsNewEntry `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ClientWhatsNewEntry defines model for ClientWhatsNewEntry.
+type ClientWhatsNewEntry struct {
+	// Excerpt Plain text, at most 300 characters.
+	Excerpt string `json:"excerpt"`
+
+	// Fallback The entry has no published translation in the requested locale; this is the default locale's.
+	Fallback bool `json:"fallback"`
+
+	// Html The body rendered and sanitized at publish.
+	Html   string               `json:"html"`
+	Id     uuid.UUID            `json:"id"`
+	Image  *ClientWhatsNewImage `json:"image,omitempty"`
+	Labels []ChangelogLabel     `json:"labels"`
+
+	// Locale The locale actually served.
+	//
+	// Examples: en, tr
+	Locale      LanguageTag `json:"locale"`
+	Number      int32       `json:"number"`
+	PublishedAt time.Time   `json:"published_at"`
+	Title       string      `json:"title"`
+
+	// Url The entry's public page.
+	Url string `json:"url"`
+}
+
+// ClientWhatsNewImage defines model for ClientWhatsNewImage.
+type ClientWhatsNewImage struct {
+	Height int32  `json:"height"`
+	Url    string `json:"url"`
+	Width  int32  `json:"width"`
+}
 
 // ConsentEvent defines model for ConsentEvent.
 type ConsentEvent struct {
@@ -11406,6 +12145,7 @@ type EmailDesignProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11739,6 +12479,7 @@ type EmailImageProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12725,6 +13466,7 @@ type HelpConflictProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -13007,6 +13749,7 @@ type HomeWaitingConversation struct {
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 // `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 // `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 type HostedLimit string
 
 // IdeaRef The idea a feedback conversation is linked to.
@@ -14669,6 +15412,7 @@ type MigrationFileProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -15699,6 +16443,7 @@ type Problem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -17969,6 +18714,19 @@ type WebhookBroadcastPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookChangelogEntryPayload defines model for WebhookChangelogEntryPayload.
+type WebhookChangelogEntryPayload struct {
+	Data ChangelogEntryEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookContact The contact as a host backend needs it.
 type WebhookContact struct {
 	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
@@ -18423,6 +19181,17 @@ type BroadcastId = uuid.UUID
 // CannedReplyId defines model for CannedReplyId.
 type CannedReplyId = uuid.UUID
 
+// ChangelogEntryId defines model for ChangelogEntryId.
+type ChangelogEntryId = uuid.UUID
+
+// ChangelogId defines model for ChangelogId.
+type ChangelogId = uuid.UUID
+
+// ChangelogLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ChangelogLocale = LanguageTag
+
 // ChannelId defines model for ChannelId.
 type ChannelId = uuid.UUID
 
@@ -18436,6 +19205,14 @@ type ClientHelpChannelKey = string
 //
 // Examples: en, tr
 type ClientHelpLocale = LanguageTag
+
+// ClientWhatsNewChannelKey defines model for ClientWhatsNewChannelKey.
+type ClientWhatsNewChannelKey = string
+
+// ClientWhatsNewLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ClientWhatsNewLocale = LanguageTag
 
 // ConsentFormat defines model for ConsentFormat.
 type ConsentFormat string
@@ -18656,6 +19433,22 @@ type SearchClientHelpParams struct {
 	// Limit 1 to 10; 5 by default.
 	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
 	Final *bool  `form:"final,omitempty" json:"final,omitempty"`
+}
+
+// GetClientWhatsNewParams defines parameters for GetClientWhatsNew.
+type GetClientWhatsNewParams struct {
+	// Locale The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale.
+	Locale *ClientWhatsNewLocale `form:"locale,omitempty" json:"locale,omitempty"`
+	Cursor *string               `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit 1 to 50; 20 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetClientWhatsNewEntryParams defines parameters for GetClientWhatsNewEntry.
+type GetClientWhatsNewEntryParams struct {
+	// Locale The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale.
+	Locale *ClientWhatsNewLocale `form:"locale,omitempty" json:"locale,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -19307,6 +20100,154 @@ type DeleteCannedReplyParams struct {
 
 // UpdateCannedReplyParams defines parameters for UpdateCannedReply.
 type UpdateCannedReplyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogsParams defines parameters for ListChangelogs.
+type ListChangelogsParams struct {
+	// InboxId Only the changelog of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateChangelogParams defines parameters for CreateChangelog.
+type CreateChangelogParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogParams defines parameters for DeleteChangelog.
+type DeleteChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetChangelogParams defines parameters for GetChangelog.
+type GetChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateChangelogParams defines parameters for UpdateChangelog.
+type UpdateChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogEntriesParams defines parameters for ListChangelogEntries.
+type ListChangelogEntriesParams struct {
+	State  *ListChangelogEntriesParamsState `form:"state,omitempty" json:"state,omitempty"`
+	Label  *ChangelogLabel                  `form:"label,omitempty" json:"label,omitempty"`
+	Locale *LanguageTag                     `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogEntriesParamsState defines parameters for ListChangelogEntries.
+type ListChangelogEntriesParamsState string
+
+// CreateChangelogEntryParams defines parameters for CreateChangelogEntry.
+type CreateChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogEntryParams defines parameters for DeleteChangelogEntry.
+type DeleteChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetChangelogEntryParams defines parameters for GetChangelogEntry.
+type GetChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateChangelogEntryParams defines parameters for UpdateChangelogEntry.
+type UpdateChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// BroadcastChangelogEntryParams defines parameters for BroadcastChangelogEntry.
+type BroadcastChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PublishChangelogEntryParams defines parameters for PublishChangelogEntry.
+type PublishChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScheduleChangelogEntryParams defines parameters for ScheduleChangelogEntry.
+type ScheduleChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogEntryTranslationParams defines parameters for DeleteChangelogEntryTranslation.
+type DeleteChangelogEntryTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PutChangelogEntryTranslationParams defines parameters for PutChangelogEntryTranslation.
+type PutChangelogEntryTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnpublishChangelogEntryParams defines parameters for UnpublishChangelogEntry.
+type UnpublishChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnscheduleChangelogEntryParams defines parameters for UnscheduleChangelogEntry.
+type UnscheduleChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadChangelogImageParams defines parameters for UploadChangelogImage.
+type UploadChangelogImageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -20653,6 +21594,12 @@ type ResendSubscriptionConfirmationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// RenderMarkdownParams defines parameters for RenderMarkdown.
+type RenderMarkdownParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMentionsParams defines parameters for ListMentions.
 type ListMentionsParams struct {
 	// Cursor The `next_cursor` of the previous page.
@@ -21479,6 +22426,48 @@ type WebhookBroadcastUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookChangelogEntryDeletedParams defines parameters for WebhookChangelogEntryDeleted.
+type WebhookChangelogEntryDeletedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookChangelogEntryPublishedParams defines parameters for WebhookChangelogEntryPublished.
+type WebhookChangelogEntryPublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookChangelogEntryUnpublishedParams defines parameters for WebhookChangelogEntryUnpublished.
+type WebhookChangelogEntryUnpublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookContactDeletedParams defines parameters for WebhookContactDeleted.
 type WebhookContactDeletedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -22014,6 +23003,33 @@ type CreateCannedReplyJSONRequestBody = CannedReplyCreate
 // UpdateCannedReplyJSONRequestBody defines body for UpdateCannedReply for application/json ContentType.
 type UpdateCannedReplyJSONRequestBody = CannedReplyUpdate
 
+// CreateChangelogJSONRequestBody defines body for CreateChangelog for application/json ContentType.
+type CreateChangelogJSONRequestBody = ChangelogCreate
+
+// UpdateChangelogJSONRequestBody defines body for UpdateChangelog for application/json ContentType.
+type UpdateChangelogJSONRequestBody = ChangelogUpdate
+
+// CreateChangelogEntryJSONRequestBody defines body for CreateChangelogEntry for application/json ContentType.
+type CreateChangelogEntryJSONRequestBody = ChangelogEntryCreate
+
+// UpdateChangelogEntryJSONRequestBody defines body for UpdateChangelogEntry for application/json ContentType.
+type UpdateChangelogEntryJSONRequestBody = ChangelogEntryUpdate
+
+// BroadcastChangelogEntryJSONRequestBody defines body for BroadcastChangelogEntry for application/json ContentType.
+type BroadcastChangelogEntryJSONRequestBody = ChangelogBroadcast
+
+// PublishChangelogEntryJSONRequestBody defines body for PublishChangelogEntry for application/json ContentType.
+type PublishChangelogEntryJSONRequestBody = ChangelogEntryPublish
+
+// ScheduleChangelogEntryJSONRequestBody defines body for ScheduleChangelogEntry for application/json ContentType.
+type ScheduleChangelogEntryJSONRequestBody = ChangelogSchedule
+
+// PutChangelogEntryTranslationJSONRequestBody defines body for PutChangelogEntryTranslation for application/json ContentType.
+type PutChangelogEntryTranslationJSONRequestBody = ChangelogTranslationWrite
+
+// UploadChangelogImageMultipartRequestBody defines body for UploadChangelogImage for multipart/form-data ContentType.
+type UploadChangelogImageMultipartRequestBody = EmailImageUpload
+
 // UpdateChannelJSONRequestBody defines body for UpdateChannel for application/json ContentType.
 type UpdateChannelJSONRequestBody = ChannelUpdate
 
@@ -22170,6 +23186,9 @@ type CreateSubscriptionJSONRequestBody = SubscriptionCreate
 // UpdateSubscriptionJSONRequestBody defines body for UpdateSubscription for application/json ContentType.
 type UpdateSubscriptionJSONRequestBody = SubscriptionUpdate
 
+// RenderMarkdownJSONRequestBody defines body for RenderMarkdown for application/json ContentType.
+type RenderMarkdownJSONRequestBody = HelpMarkdown
+
 // DeleteMeJSONRequestBody defines body for DeleteMe for application/json ContentType.
 type DeleteMeJSONRequestBody = AccountDeletion
 
@@ -22298,6 +23317,15 @@ type WebhookAnalyticsAlertJSONRequestBody = WebhookAnalyticsAlertPayload
 
 // WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
 type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
+
+// WebhookChangelogEntryDeletedJSONRequestBody defines body for WebhookChangelogEntryDeleted for application/json ContentType.
+type WebhookChangelogEntryDeletedJSONRequestBody = WebhookChangelogEntryPayload
+
+// WebhookChangelogEntryPublishedJSONRequestBody defines body for WebhookChangelogEntryPublished for application/json ContentType.
+type WebhookChangelogEntryPublishedJSONRequestBody = WebhookChangelogEntryPayload
+
+// WebhookChangelogEntryUnpublishedJSONRequestBody defines body for WebhookChangelogEntryUnpublished for application/json ContentType.
+type WebhookChangelogEntryUnpublishedJSONRequestBody = WebhookChangelogEntryPayload
 
 // WebhookContactDeletedJSONRequestBody defines body for WebhookContactDeleted for application/json ContentType.
 type WebhookContactDeletedJSONRequestBody = WebhookContactDeletedPayload
@@ -24827,6 +25855,58 @@ func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
 	return err
 }
 
+// AsChangelogEntryEvent returns the union data inside the RealtimeMessage as a ChangelogEntryEvent
+func (t RealtimeMessage) AsChangelogEntryEvent() (ChangelogEntryEvent, error) {
+	var body ChangelogEntryEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntryEvent overwrites any union data inside the RealtimeMessage as the provided ChangelogEntryEvent
+func (t *RealtimeMessage) FromChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntryEvent performs a merge with any union data inside the RealtimeMessage, using the provided ChangelogEntryEvent
+func (t *RealtimeMessage) MergeChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsChangelogEntrySignal returns the union data inside the RealtimeMessage as a ChangelogEntrySignal
+func (t RealtimeMessage) AsChangelogEntrySignal() (ChangelogEntrySignal, error) {
+	var body ChangelogEntrySignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntrySignal overwrites any union data inside the RealtimeMessage as the provided ChangelogEntrySignal
+func (t *RealtimeMessage) FromChangelogEntrySignal(v ChangelogEntrySignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntrySignal performs a merge with any union data inside the RealtimeMessage, using the provided ChangelogEntrySignal
+func (t *RealtimeMessage) MergeChangelogEntrySignal(v ChangelogEntrySignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsRoadmapBoardSignal returns the union data inside the RealtimeMessage as a RoadmapBoardSignal
 func (t RealtimeMessage) AsRoadmapBoardSignal() (RoadmapBoardSignal, error) {
 	var body RoadmapBoardSignal
@@ -25081,6 +26161,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsBroadcastProgressEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
+	case "changelog.entry.deleted":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.published":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.unpublished":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.updated":
+		return t.AsChangelogEntrySignal()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.presence":
@@ -25816,6 +26904,32 @@ func (t *StoredEvent) MergeHelpArticleEvent(v HelpArticleEvent) error {
 	return err
 }
 
+// AsChangelogEntryEvent returns the union data inside the StoredEvent as a ChangelogEntryEvent
+func (t StoredEvent) AsChangelogEntryEvent() (ChangelogEntryEvent, error) {
+	var body ChangelogEntryEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntryEvent overwrites any union data inside the StoredEvent as the provided ChangelogEntryEvent
+func (t *StoredEvent) FromChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntryEvent performs a merge with any union data inside the StoredEvent, using the provided ChangelogEntryEvent
+func (t *StoredEvent) MergeChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -25834,6 +26948,12 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsAnalyticsAlertEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
+	case "changelog.entry.deleted":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.published":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.unpublished":
+		return t.AsChangelogEntryEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.read":
@@ -26638,6 +27758,28 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
 	CreateClientSubscription(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientWhatsNew The What's new feed
+	//
+	// The inbox's published changelog with its published entries, newest first by
+	// `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+	// language, else the changelog's default (an entry without a published translation there
+	// comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+	// creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+	// without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+	// minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+	// `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/whats-new (the `GetClientWhatsNew` operationId).
+	GetClientWhatsNew(ctx context.Context, channelKey ClientWhatsNewChannelKey, params *GetClientWhatsNewParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientWhatsNewEntry A What's new entry
+	//
+	// One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+	// a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/whats-new/{entryId} (the `GetClientWhatsNewEntry` operationId).
+	GetClientWhatsNewEntry(ctx context.Context, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params *GetClientWhatsNewEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SetClientContactEmailWithBody Leave an e-mail address for replies
 	//
@@ -28789,6 +29931,388 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/canned-replies/{cannedReplyId} (the `UpdateCannedReply` operationId).
 	UpdateCannedReply(ctx context.Context, cannedReplyId CannedReplyId, params *UpdateCannedReplyParams, body UpdateCannedReplyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListChangelogs List changelogs
+	//
+	// The changelogs of the inboxes the caller can see, oldest first.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Corresponds with GET /v1/changelogs (the `ListChangelogs` operationId).
+	ListChangelogs(ctx context.Context, params *ListChangelogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateChangelogWithBody Create a changelog
+	//
+	// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+	// in its URL, is unique across the server, current and former slugs alike (`409
+	// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+	// to the inbox's and `locales` to the default locale alone; `locales` must hold
+	// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+	// and accent colour of the public pages are the inbox's branding.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+	CreateChangelogWithBody(ctx context.Context, params *CreateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateChangelog Create a changelog
+	//
+	// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+	// in its URL, is unique across the server, current and former slugs alike (`409
+	// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+	// to the inbox's and `locales` to the default locale alone; `locales` must hold
+	// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+	// and accent colour of the public pages are the inbox's branding.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+	CreateChangelog(ctx context.Context, params *CreateChangelogParams, body CreateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteChangelog Delete a changelog
+	//
+	// The changelog with its entries and translations; broadcasts made from its entries stay.
+	// Its images stay e-mail images of the workspace and are swept like any unused one.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId} (the `DeleteChangelog` operationId).
+	DeleteChangelog(ctx context.Context, changelogId ChangelogId, params *DeleteChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetChangelog A changelog
+	//
+	// With its counts and public `url`.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId} (the `GetChangelog` operationId).
+	GetChangelog(ctx context.Context, changelogId ChangelogId, params *GetChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateChangelogWithBody Update a changelog
+	//
+	// Changes the given fields; `null` clears the analytics property. `published: false` takes
+	// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+	// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+	// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+	// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+	// an entry has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+	UpdateChangelogWithBody(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateChangelog Update a changelog
+	//
+	// Changes the given fields; `null` clears the analytics property. `published: false` takes
+	// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+	// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+	// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+	// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+	// an entry has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+	UpdateChangelog(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, body UpdateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListChangelogEntries List a changelog's entries
+	//
+	// Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+	// `scheduled` or `published` entries, or `changed`: published entries with a translation
+	// whose draft differs from its published copy. `label` keeps the entries carrying it.
+	// `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+	// one).
+	//
+	// Scope: `changelog:read`.
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/entries (the `ListChangelogEntries` operationId).
+	ListChangelogEntries(ctx context.Context, changelogId ChangelogId, params *ListChangelogEntriesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateChangelogEntryWithBody Write an entry
+	//
+	// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+	// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+	// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+	CreateChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateChangelogEntry Write an entry
+	//
+	// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+	// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+	// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+	CreateChangelogEntry(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, body CreateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteChangelogEntry Delete an entry
+	//
+	// With its translations, and sends `changelog.entry.deleted` when it was published. A
+	// published or scheduled entry can be deleted only by those who may publish (`403
+	// forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId} (the `DeleteChangelogEntry` operationId).
+	DeleteChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *DeleteChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetChangelogEntry An entry
+	//
+	// With every translation, drafts and published copies.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/entries/{entryId} (the `GetChangelogEntry` operationId).
+	GetChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *GetChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateChangelogEntryWithBody Change an entry's labels or image
+	//
+	// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+	// published entry the change is public at once, so it needs the right to publish
+	// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+	// is when its time comes, so changing it, saving or deleting one of its translations also
+	// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+	UpdateChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateChangelogEntry Change an entry's labels or image
+	//
+	// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+	// published entry the change is public at once, so it needs the right to publish
+	// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+	// is when its time comes, so changing it, saving or deleting one of its translations also
+	// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+	UpdateChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, body UpdateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// BroadcastChangelogEntryWithBody Mail an entry to subscribers
+	//
+	// Makes a draft broadcast from a published entry on the `product-update` template in
+	// `locale` (English when the template has no such language): the entry's title, labels and
+	// date, its text and workspace images as design blocks, its image as the hero, and a button
+	// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+	// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+	// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+	// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+	// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+	// of every broadcast.
+	//
+	// A table or code block in the text, which the design cannot hold, becomes a line linking to
+	// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+	// has no published translation in.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+	BroadcastChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// BroadcastChangelogEntry Mail an entry to subscribers
+	//
+	// Makes a draft broadcast from a published entry on the `product-update` template in
+	// `locale` (English when the template has no such language): the entry's title, labels and
+	// date, its text and workspace images as design blocks, its image as the hero, and a button
+	// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+	// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+	// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+	// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+	// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+	// of every broadcast.
+	//
+	// A table or code block in the text, which the design cannot hold, becomes a line linking to
+	// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+	// has no published translation in.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+	BroadcastChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, body BroadcastChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PublishChangelogEntryWithBody Publish an entry
+	//
+	// Without `locale`, publishes the entry: it needs a translation in the default locale
+	// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+	// the first time, cancels a schedule, tells the inbox's widgets, and sends
+	// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+	// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+	// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+	// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+	// once its changelog is published.
+	//
+	// Owners, admins and API keys; agents with access to the changelog's inbox when its
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+	PublishChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PublishChangelogEntry Publish an entry
+	//
+	// Without `locale`, publishes the entry: it needs a translation in the default locale
+	// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+	// the first time, cancels a schedule, tells the inbox's widgets, and sends
+	// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+	// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+	// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+	// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+	// once its changelog is published.
+	//
+	// Owners, admins and API keys; agents with access to the changelog's inbox when its
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+	PublishChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, body PublishChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ScheduleChangelogEntryWithBody Schedule an entry
+	//
+	// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+	// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+	// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+	// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+	// time; a published entry cannot be scheduled (`409 already_published`).
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+	ScheduleChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ScheduleChangelogEntry Schedule an entry
+	//
+	// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+	// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+	// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+	// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+	// time; a published entry cannot be scheduled (`409 already_published`).
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+	ScheduleChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, body ScheduleChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteChangelogEntryTranslation Delete a translation
+	//
+	// The last translation of an entry, and the default locale's while the entry is published
+	// or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+	// delete the entry instead. A published translation, or any translation of a scheduled
+	// entry (`403 entry_scheduled`), can be deleted only by those who may
+	// publish (`403 forbidden`), and API keys also need `changelog:publish`.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `DeleteChangelogEntryTranslation` operationId).
+	DeleteChangelogEntryTranslation(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *DeleteChangelogEntryTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PutChangelogEntryTranslationWithBody Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one
+	// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+	// published copy does not change until the translation is published again. On a scheduled
+	// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+	// public when the schedule fires.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+	PutChangelogEntryTranslationWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PutChangelogEntryTranslation Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one
+	// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+	// published copy does not change until the translation is published again. On a scheduled
+	// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+	// public when the schedule fires.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+	PutChangelogEntryTranslation(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, body PutChangelogEntryTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnpublishChangelogEntry Unpublish an entry
+	//
+	// Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+	// the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+	// stay, so publishing again keeps the date. A draft is left as it is.
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish (the `UnpublishChangelogEntry` operationId).
+	UnpublishChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnpublishChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnscheduleChangelogEntry Unschedule an entry
+	//
+	// Returns a scheduled entry to `draft`. Any other state is left as it is.
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule (the `UnscheduleChangelogEntry` operationId).
+	UnscheduleChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnscheduleChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UploadChangelogImageWithBody Upload an image for entries
+	//
+	// Stores the image as one of the workspace's e-mail images, with the same rules as
+	// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+	// the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+	// draft or design uses is deleted a week after its upload.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
+	UploadChangelogImageWithBody(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteChannel Remove a channel
 	//
 	// Owners, admins and API keys. Conversations that started on it keep
@@ -30255,8 +31779,10 @@ type ClientInterface interface {
 	// DeleteEmailImage Delete an e-mail image
 	//
 	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-	// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-	// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+	// not archived uses the image, naming the articles in `used_by.help_articles` while a help
+	// article's draft, published copy or kept revision shows it, and the entries in
+	// `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+	// draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
 	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 	// image. The public URL stops working at once.
 	//
@@ -31467,6 +32993,34 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
 	ResendSubscriptionConfirmation(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderMarkdownWithBody Render Markdown for an editor
+	//
+	// The editor's preview: the HTML a body would publish as in a help article or a What's new
+	// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+	// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+	// use it.
+	//
+	// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+	RenderMarkdownWithBody(ctx context.Context, params *RenderMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderMarkdown Render Markdown for an editor
+	//
+	// The editor's preview: the HTML a body would publish as in a help article or a What's new
+	// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+	// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+	// use it.
+	//
+	// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+	RenderMarkdown(ctx context.Context, params *RenderMarkdownParams, body RenderMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteMeWithBody Delete the signed-in person's account
 	//
@@ -34479,6 +36033,48 @@ func (c *Client) CreateClientSubscriptionWithBody(ctx context.Context, channelKe
 // Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
 func (c *Client) CreateClientSubscription(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateClientSubscriptionRequest(c.Server, channelKey, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientWhatsNew The What's new feed
+//
+// The inbox's published changelog with its published entries, newest first by
+// `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+// language, else the changelog's default (an entry without a published translation there
+// comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+// creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+// without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+// minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+// `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/whats-new (the `GetClientWhatsNew` operationId).
+func (c *Client) GetClientWhatsNew(ctx context.Context, channelKey ClientWhatsNewChannelKey, params *GetClientWhatsNewParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientWhatsNewRequest(c.Server, channelKey, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientWhatsNewEntry A What's new entry
+//
+// One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+// a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/whats-new/{entryId} (the `GetClientWhatsNewEntry` operationId).
+func (c *Client) GetClientWhatsNewEntry(ctx context.Context, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params *GetClientWhatsNewEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientWhatsNewEntryRequest(c.Server, channelKey, entryId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -38269,6 +39865,648 @@ func (c *Client) UpdateCannedReply(ctx context.Context, cannedReplyId CannedRepl
 	return c.Client.Do(req)
 }
 
+// ListChangelogs List changelogs
+//
+// The changelogs of the inboxes the caller can see, oldest first.
+//
+// Scope: `changelog:read`.
+//
+// Corresponds with GET /v1/changelogs (the `ListChangelogs` operationId).
+func (c *Client) ListChangelogs(ctx context.Context, params *ListChangelogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListChangelogsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateChangelogWithBody Create a changelog
+//
+// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+// in its URL, is unique across the server, current and former slugs alike (`409
+// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+// to the inbox's and `locales` to the default locale alone; `locales` must hold
+// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+// and accent colour of the public pages are the inbox's branding.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+func (c *Client) CreateChangelogWithBody(ctx context.Context, params *CreateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateChangelogRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateChangelog Create a changelog
+//
+// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+// in its URL, is unique across the server, current and former slugs alike (`409
+// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+// to the inbox's and `locales` to the default locale alone; `locales` must hold
+// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+// and accent colour of the public pages are the inbox's branding.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+func (c *Client) CreateChangelog(ctx context.Context, params *CreateChangelogParams, body CreateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateChangelogRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteChangelog Delete a changelog
+//
+// The changelog with its entries and translations; broadcasts made from its entries stay.
+// Its images stay e-mail images of the workspace and are swept like any unused one.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId} (the `DeleteChangelog` operationId).
+func (c *Client) DeleteChangelog(ctx context.Context, changelogId ChangelogId, params *DeleteChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteChangelogRequest(c.Server, changelogId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetChangelog A changelog
+//
+// With its counts and public `url`.
+//
+// Scope: `changelog:read`.
+//
+// Corresponds with GET /v1/changelogs/{changelogId} (the `GetChangelog` operationId).
+func (c *Client) GetChangelog(ctx context.Context, changelogId ChangelogId, params *GetChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetChangelogRequest(c.Server, changelogId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateChangelogWithBody Update a changelog
+//
+// Changes the given fields; `null` clears the analytics property. `published: false` takes
+// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+// an entry has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+func (c *Client) UpdateChangelogWithBody(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateChangelogRequestWithBody(c.Server, changelogId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateChangelog Update a changelog
+//
+// Changes the given fields; `null` clears the analytics property. `published: false` takes
+// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+// an entry has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+func (c *Client) UpdateChangelog(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, body UpdateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateChangelogRequest(c.Server, changelogId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListChangelogEntries List a changelog's entries
+//
+// Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+// `scheduled` or `published` entries, or `changed`: published entries with a translation
+// whose draft differs from its published copy. `label` keeps the entries carrying it.
+// `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+// one).
+//
+// Scope: `changelog:read`.
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/entries (the `ListChangelogEntries` operationId).
+func (c *Client) ListChangelogEntries(ctx context.Context, changelogId ChangelogId, params *ListChangelogEntriesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListChangelogEntriesRequest(c.Server, changelogId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateChangelogEntryWithBody Write an entry
+//
+// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+func (c *Client) CreateChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateChangelogEntryRequestWithBody(c.Server, changelogId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateChangelogEntry Write an entry
+//
+// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+func (c *Client) CreateChangelogEntry(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, body CreateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateChangelogEntryRequest(c.Server, changelogId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteChangelogEntry Delete an entry
+//
+// With its translations, and sends `changelog.entry.deleted` when it was published. A
+// published or scheduled entry can be deleted only by those who may publish (`403
+// forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId} (the `DeleteChangelogEntry` operationId).
+func (c *Client) DeleteChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *DeleteChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteChangelogEntryRequest(c.Server, changelogId, entryId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetChangelogEntry An entry
+//
+// With every translation, drafts and published copies.
+//
+// Scope: `changelog:read`.
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/entries/{entryId} (the `GetChangelogEntry` operationId).
+func (c *Client) GetChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *GetChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetChangelogEntryRequest(c.Server, changelogId, entryId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateChangelogEntryWithBody Change an entry's labels or image
+//
+// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+// published entry the change is public at once, so it needs the right to publish
+// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+// is when its time comes, so changing it, saving or deleting one of its translations also
+// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+func (c *Client) UpdateChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateChangelogEntryRequestWithBody(c.Server, changelogId, entryId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateChangelogEntry Change an entry's labels or image
+//
+// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+// published entry the change is public at once, so it needs the right to publish
+// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+// is when its time comes, so changing it, saving or deleting one of its translations also
+// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+func (c *Client) UpdateChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, body UpdateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateChangelogEntryRequest(c.Server, changelogId, entryId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// BroadcastChangelogEntryWithBody Mail an entry to subscribers
+//
+// Makes a draft broadcast from a published entry on the `product-update` template in
+// `locale` (English when the template has no such language): the entry's title, labels and
+// date, its text and workspace images as design blocks, its image as the hero, and a button
+// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+// of every broadcast.
+//
+// A table or code block in the text, which the design cannot hold, becomes a line linking to
+// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+// has no published translation in.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+func (c *Client) BroadcastChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewBroadcastChangelogEntryRequestWithBody(c.Server, changelogId, entryId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// BroadcastChangelogEntry Mail an entry to subscribers
+//
+// Makes a draft broadcast from a published entry on the `product-update` template in
+// `locale` (English when the template has no such language): the entry's title, labels and
+// date, its text and workspace images as design blocks, its image as the hero, and a button
+// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+// of every broadcast.
+//
+// A table or code block in the text, which the design cannot hold, becomes a line linking to
+// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+// has no published translation in.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+func (c *Client) BroadcastChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, body BroadcastChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewBroadcastChangelogEntryRequest(c.Server, changelogId, entryId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PublishChangelogEntryWithBody Publish an entry
+//
+// Without `locale`, publishes the entry: it needs a translation in the default locale
+// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+// the first time, cancels a schedule, tells the inbox's widgets, and sends
+// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+// once its changelog is published.
+//
+// Owners, admins and API keys; agents with access to the changelog's inbox when its
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+func (c *Client) PublishChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishChangelogEntryRequestWithBody(c.Server, changelogId, entryId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PublishChangelogEntry Publish an entry
+//
+// Without `locale`, publishes the entry: it needs a translation in the default locale
+// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+// the first time, cancels a schedule, tells the inbox's widgets, and sends
+// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+// once its changelog is published.
+//
+// Owners, admins and API keys; agents with access to the changelog's inbox when its
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+func (c *Client) PublishChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, body PublishChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishChangelogEntryRequest(c.Server, changelogId, entryId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ScheduleChangelogEntryWithBody Schedule an entry
+//
+// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+// time; a published entry cannot be scheduled (`409 already_published`).
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+func (c *Client) ScheduleChangelogEntryWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewScheduleChangelogEntryRequestWithBody(c.Server, changelogId, entryId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ScheduleChangelogEntry Schedule an entry
+//
+// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+// time; a published entry cannot be scheduled (`409 already_published`).
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+func (c *Client) ScheduleChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, body ScheduleChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewScheduleChangelogEntryRequest(c.Server, changelogId, entryId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteChangelogEntryTranslation Delete a translation
+//
+// The last translation of an entry, and the default locale's while the entry is published
+// or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+// delete the entry instead. A published translation, or any translation of a scheduled
+// entry (`403 entry_scheduled`), can be deleted only by those who may
+// publish (`403 forbidden`), and API keys also need `changelog:publish`.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `DeleteChangelogEntryTranslation` operationId).
+func (c *Client) DeleteChangelogEntryTranslation(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *DeleteChangelogEntryTranslationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteChangelogEntryTranslationRequest(c.Server, changelogId, entryId, locale, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PutChangelogEntryTranslationWithBody Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one
+// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+// published copy does not change until the translation is published again. On a scheduled
+// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+// public when the schedule fires.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+func (c *Client) PutChangelogEntryTranslationWithBody(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutChangelogEntryTranslationRequestWithBody(c.Server, changelogId, entryId, locale, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PutChangelogEntryTranslation Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one
+// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+// published copy does not change until the translation is published again. On a scheduled
+// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+// public when the schedule fires.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+func (c *Client) PutChangelogEntryTranslation(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, body PutChangelogEntryTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutChangelogEntryTranslationRequest(c.Server, changelogId, entryId, locale, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnpublishChangelogEntry Unpublish an entry
+//
+// Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+// the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+// stay, so publishing again keeps the date. A draft is left as it is.
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish (the `UnpublishChangelogEntry` operationId).
+func (c *Client) UnpublishChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnpublishChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnpublishChangelogEntryRequest(c.Server, changelogId, entryId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnscheduleChangelogEntry Unschedule an entry
+//
+// Returns a scheduled entry to `draft`. Any other state is left as it is.
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule (the `UnscheduleChangelogEntry` operationId).
+func (c *Client) UnscheduleChangelogEntry(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnscheduleChangelogEntryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnscheduleChangelogEntryRequest(c.Server, changelogId, entryId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UploadChangelogImageWithBody Upload an image for entries
+//
+// Stores the image as one of the workspace's e-mail images, with the same rules as
+// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+// the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+// draft or design uses is deleted a week after its upload.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
+func (c *Client) UploadChangelogImageWithBody(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadChangelogImageRequestWithBody(c.Server, changelogId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteChannel Remove a channel
 //
 // Owners, admins and API keys. Conversations that started on it keep
@@ -40765,8 +43003,10 @@ func (c *Client) UploadEmailImageWithBody(ctx context.Context, params *UploadEma
 // DeleteEmailImage Delete an e-mail image
 //
 // Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+// not archived uses the image, naming the articles in `used_by.help_articles` while a help
+// article's draft, published copy or kept revision shows it, and the entries in
+// `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+// draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
 // `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 // image. The public URL stops working at once.
 //
@@ -42888,6 +45128,54 @@ func (c *Client) UpdateSubscription(ctx context.Context, listId ListId, subscrip
 // Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
 func (c *Client) ResendSubscriptionConfirmation(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewResendSubscriptionConfirmationRequest(c.Server, listId, subscriptionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderMarkdownWithBody Render Markdown for an editor
+//
+// The editor's preview: the HTML a body would publish as in a help article or a What's new
+// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+// use it.
+//
+// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+func (c *Client) RenderMarkdownWithBody(ctx context.Context, params *RenderMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderMarkdownRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderMarkdown Render Markdown for an editor
+//
+// The editor's preview: the HTML a body would publish as in a help article or a What's new
+// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+// use it.
+//
+// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+func (c *Client) RenderMarkdown(ctx context.Context, params *RenderMarkdownParams, body RenderMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderMarkdownRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -47711,6 +49999,159 @@ func NewCreateClientSubscriptionRequestWithBody(server string, channelKey Channe
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetClientWhatsNewRequest constructs an http.Request for the GetClientWhatsNew method
+func NewGetClientWhatsNewRequest(server string, channelKey ClientWhatsNewChannelKey, params *GetClientWhatsNewParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/whats-new", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetClientWhatsNewEntryRequest constructs an http.Request for the GetClientWhatsNewEntry method
+func NewGetClientWhatsNewEntryRequest(server string, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params *GetClientWhatsNewEntryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/whats-new/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -54221,6 +56662,1254 @@ func NewUpdateCannedReplyRequestWithBody(server string, cannedReplyId CannedRepl
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListChangelogsRequest constructs an http.Request for the ListChangelogs method
+func NewListChangelogsRequest(server string, params *ListChangelogsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateChangelogRequest calls the generic CreateChangelog builder with application/json body
+func NewCreateChangelogRequest(server string, params *CreateChangelogParams, body CreateChangelogJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateChangelogRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateChangelogRequestWithBody constructs an http.Request for the CreateChangelog method, with any body, and a specified content type
+func NewCreateChangelogRequestWithBody(server string, params *CreateChangelogParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteChangelogRequest constructs an http.Request for the DeleteChangelog method
+func NewDeleteChangelogRequest(server string, changelogId ChangelogId, params *DeleteChangelogParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetChangelogRequest constructs an http.Request for the GetChangelog method
+func NewGetChangelogRequest(server string, changelogId ChangelogId, params *GetChangelogParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateChangelogRequest calls the generic UpdateChangelog builder with application/json body
+func NewUpdateChangelogRequest(server string, changelogId ChangelogId, params *UpdateChangelogParams, body UpdateChangelogJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateChangelogRequestWithBody(server, changelogId, params, "application/json", bodyReader)
+}
+
+// NewUpdateChangelogRequestWithBody constructs an http.Request for the UpdateChangelog method, with any body, and a specified content type
+func NewUpdateChangelogRequestWithBody(server string, changelogId ChangelogId, params *UpdateChangelogParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListChangelogEntriesRequest constructs an http.Request for the ListChangelogEntries method
+func NewListChangelogEntriesRequest(server string, changelogId ChangelogId, params *ListChangelogEntriesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateChangelogEntryRequest calls the generic CreateChangelogEntry builder with application/json body
+func NewCreateChangelogEntryRequest(server string, changelogId ChangelogId, params *CreateChangelogEntryParams, body CreateChangelogEntryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateChangelogEntryRequestWithBody(server, changelogId, params, "application/json", bodyReader)
+}
+
+// NewCreateChangelogEntryRequestWithBody constructs an http.Request for the CreateChangelogEntry method, with any body, and a specified content type
+func NewCreateChangelogEntryRequestWithBody(server string, changelogId ChangelogId, params *CreateChangelogEntryParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteChangelogEntryRequest constructs an http.Request for the DeleteChangelogEntry method
+func NewDeleteChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *DeleteChangelogEntryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetChangelogEntryRequest constructs an http.Request for the GetChangelogEntry method
+func NewGetChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *GetChangelogEntryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateChangelogEntryRequest calls the generic UpdateChangelogEntry builder with application/json body
+func NewUpdateChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, body UpdateChangelogEntryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateChangelogEntryRequestWithBody(server, changelogId, entryId, params, "application/json", bodyReader)
+}
+
+// NewUpdateChangelogEntryRequestWithBody constructs an http.Request for the UpdateChangelogEntry method, with any body, and a specified content type
+func NewUpdateChangelogEntryRequestWithBody(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewBroadcastChangelogEntryRequest calls the generic BroadcastChangelogEntry builder with application/json body
+func NewBroadcastChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, body BroadcastChangelogEntryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewBroadcastChangelogEntryRequestWithBody(server, changelogId, entryId, params, "application/json", bodyReader)
+}
+
+// NewBroadcastChangelogEntryRequestWithBody constructs an http.Request for the BroadcastChangelogEntry method, with any body, and a specified content type
+func NewBroadcastChangelogEntryRequestWithBody(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/broadcast", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPublishChangelogEntryRequest calls the generic PublishChangelogEntry builder with application/json body
+func NewPublishChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, body PublishChangelogEntryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPublishChangelogEntryRequestWithBody(server, changelogId, entryId, params, "application/json", bodyReader)
+}
+
+// NewPublishChangelogEntryRequestWithBody constructs an http.Request for the PublishChangelogEntry method, with any body, and a specified content type
+func NewPublishChangelogEntryRequestWithBody(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/publish", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewScheduleChangelogEntryRequest calls the generic ScheduleChangelogEntry builder with application/json body
+func NewScheduleChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, body ScheduleChangelogEntryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewScheduleChangelogEntryRequestWithBody(server, changelogId, entryId, params, "application/json", bodyReader)
+}
+
+// NewScheduleChangelogEntryRequestWithBody constructs an http.Request for the ScheduleChangelogEntry method, with any body, and a specified content type
+func NewScheduleChangelogEntryRequestWithBody(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/schedule", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteChangelogEntryTranslationRequest constructs an http.Request for the DeleteChangelogEntryTranslation method
+func NewDeleteChangelogEntryTranslationRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *DeleteChangelogEntryTranslationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/translations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPutChangelogEntryTranslationRequest calls the generic PutChangelogEntryTranslation builder with application/json body
+func NewPutChangelogEntryTranslationRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, body PutChangelogEntryTranslationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPutChangelogEntryTranslationRequestWithBody(server, changelogId, entryId, locale, params, "application/json", bodyReader)
+}
+
+// NewPutChangelogEntryTranslationRequestWithBody constructs an http.Request for the PutChangelogEntryTranslation method, with any body, and a specified content type
+func NewPutChangelogEntryTranslationRequestWithBody(server string, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "locale", locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/translations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnpublishChangelogEntryRequest constructs an http.Request for the UnpublishChangelogEntry method
+func NewUnpublishChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *UnpublishChangelogEntryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/unpublish", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnscheduleChangelogEntryRequest constructs an http.Request for the UnscheduleChangelogEntry method
+func NewUnscheduleChangelogEntryRequest(server string, changelogId ChangelogId, entryId ChangelogEntryId, params *UnscheduleChangelogEntryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "entryId", entryId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/entries/%s/unschedule", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUploadChangelogImageRequestWithBody constructs an http.Request for the UploadChangelogImage method, with any body, and a specified content type
+func NewUploadChangelogImageRequestWithBody(server string, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "changelogId", changelogId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/changelogs/%s/images", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
 		}
 
 	}
@@ -64415,6 +68104,61 @@ func NewResendSubscriptionConfirmationRequest(server string, listId ListId, subs
 	return req, nil
 }
 
+// NewRenderMarkdownRequest calls the generic RenderMarkdown builder with application/json body
+func NewRenderMarkdownRequest(server string, params *RenderMarkdownParams, body RenderMarkdownJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRenderMarkdownRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewRenderMarkdownRequestWithBody constructs an http.Request for the RenderMarkdown method, with any body, and a specified content type
+func NewRenderMarkdownRequestWithBody(server string, params *RenderMarkdownParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/markdown/render")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewDeleteMeRequest calls the generic DeleteMe builder with application/json body
 func NewDeleteMeRequest(server string, body DeleteMeJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -72205,6 +75949,32 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
 	CreateClientSubscriptionWithResponse(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSubscriptionResponse, error)
 
+	// GetClientWhatsNewWithResponse The What's new feed
+	//
+	// The inbox's published changelog with its published entries, newest first by
+	// `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+	// language, else the changelog's default (an entry without a published translation there
+	// comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+	// creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+	// without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+	// minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+	// `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/whats-new (the `GetClientWhatsNew` operationId).
+	GetClientWhatsNewWithResponse(ctx context.Context, channelKey ClientWhatsNewChannelKey, params *GetClientWhatsNewParams, reqEditors ...RequestEditorFn) (*GetClientWhatsNewResponse, error)
+
+	// GetClientWhatsNewEntryWithResponse A What's new entry
+	//
+	// One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+	// a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/whats-new/{entryId} (the `GetClientWhatsNewEntry` operationId).
+	GetClientWhatsNewEntryWithResponse(ctx context.Context, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params *GetClientWhatsNewEntryParams, reqEditors ...RequestEditorFn) (*GetClientWhatsNewEntryResponse, error)
+
 	// SetClientContactEmailWithBodyWithResponse Leave an e-mail address for replies
 	//
 	// Stores the address the contact typed (e.g. when nobody is available), so replies they have
@@ -74497,6 +78267,406 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/canned-replies/{cannedReplyId} (the `UpdateCannedReply` operationId).
 	UpdateCannedReplyWithResponse(ctx context.Context, cannedReplyId CannedReplyId, params *UpdateCannedReplyParams, body UpdateCannedReplyJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCannedReplyResponse, error)
 
+	// ListChangelogsWithResponse List changelogs
+	//
+	// The changelogs of the inboxes the caller can see, oldest first.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/changelogs (the `ListChangelogs` operationId).
+	ListChangelogsWithResponse(ctx context.Context, params *ListChangelogsParams, reqEditors ...RequestEditorFn) (*ListChangelogsResponse, error)
+
+	// CreateChangelogWithBodyWithResponse Create a changelog
+	//
+	// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+	// in its URL, is unique across the server, current and former slugs alike (`409
+	// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+	// to the inbox's and `locales` to the default locale alone; `locales` must hold
+	// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+	// and accent colour of the public pages are the inbox's branding.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+	CreateChangelogWithBodyWithResponse(ctx context.Context, params *CreateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateChangelogResponse, error)
+
+	// CreateChangelogWithResponse Create a changelog
+	//
+	// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+	// in its URL, is unique across the server, current and former slugs alike (`409
+	// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+	// to the inbox's and `locales` to the default locale alone; `locales` must hold
+	// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+	// and accent colour of the public pages are the inbox's branding.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+	CreateChangelogWithResponse(ctx context.Context, params *CreateChangelogParams, body CreateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateChangelogResponse, error)
+
+	// DeleteChangelogWithResponse Delete a changelog
+	//
+	// The changelog with its entries and translations; broadcasts made from its entries stay.
+	// Its images stay e-mail images of the workspace and are swept like any unused one.
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId} (the `DeleteChangelog` operationId).
+	DeleteChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *DeleteChangelogParams, reqEditors ...RequestEditorFn) (*DeleteChangelogResponse, error)
+
+	// GetChangelogWithResponse A changelog
+	//
+	// With its counts and public `url`.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId} (the `GetChangelog` operationId).
+	GetChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *GetChangelogParams, reqEditors ...RequestEditorFn) (*GetChangelogResponse, error)
+
+	// UpdateChangelogWithBodyWithResponse Update a changelog
+	//
+	// Changes the given fields; `null` clears the analytics property. `published: false` takes
+	// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+	// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+	// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+	// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+	// an entry has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+	UpdateChangelogWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateChangelogResponse, error)
+
+	// UpdateChangelogWithResponse Update a changelog
+	//
+	// Changes the given fields; `null` clears the analytics property. `published: false` takes
+	// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+	// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+	// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+	// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+	// an entry has a translation in it (`409 locale_in_use`).
+	//
+	// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+	UpdateChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, body UpdateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateChangelogResponse, error)
+
+	// ListChangelogEntriesWithResponse List a changelog's entries
+	//
+	// Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+	// `scheduled` or `published` entries, or `changed`: published entries with a translation
+	// whose draft differs from its published copy. `label` keeps the entries carrying it.
+	// `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+	// one).
+	//
+	// Scope: `changelog:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/entries (the `ListChangelogEntries` operationId).
+	ListChangelogEntriesWithResponse(ctx context.Context, changelogId ChangelogId, params *ListChangelogEntriesParams, reqEditors ...RequestEditorFn) (*ListChangelogEntriesResponse, error)
+
+	// CreateChangelogEntryWithBodyWithResponse Write an entry
+	//
+	// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+	// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+	// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+	CreateChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateChangelogEntryResponse, error)
+
+	// CreateChangelogEntryWithResponse Write an entry
+	//
+	// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+	// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+	// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+	CreateChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, body CreateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateChangelogEntryResponse, error)
+
+	// DeleteChangelogEntryWithResponse Delete an entry
+	//
+	// With its translations, and sends `changelog.entry.deleted` when it was published. A
+	// published or scheduled entry can be deleted only by those who may publish (`403
+	// forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId} (the `DeleteChangelogEntry` operationId).
+	DeleteChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *DeleteChangelogEntryParams, reqEditors ...RequestEditorFn) (*DeleteChangelogEntryResponse, error)
+
+	// GetChangelogEntryWithResponse An entry
+	//
+	// With every translation, drafts and published copies.
+	//
+	// Scope: `changelog:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/changelogs/{changelogId}/entries/{entryId} (the `GetChangelogEntry` operationId).
+	GetChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *GetChangelogEntryParams, reqEditors ...RequestEditorFn) (*GetChangelogEntryResponse, error)
+
+	// UpdateChangelogEntryWithBodyWithResponse Change an entry's labels or image
+	//
+	// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+	// published entry the change is public at once, so it needs the right to publish
+	// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+	// is when its time comes, so changing it, saving or deleting one of its translations also
+	// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+	UpdateChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateChangelogEntryResponse, error)
+
+	// UpdateChangelogEntryWithResponse Change an entry's labels or image
+	//
+	// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+	// published entry the change is public at once, so it needs the right to publish
+	// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+	// is when its time comes, so changing it, saving or deleting one of its translations also
+	// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+	UpdateChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, body UpdateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateChangelogEntryResponse, error)
+
+	// BroadcastChangelogEntryWithBodyWithResponse Mail an entry to subscribers
+	//
+	// Makes a draft broadcast from a published entry on the `product-update` template in
+	// `locale` (English when the template has no such language): the entry's title, labels and
+	// date, its text and workspace images as design blocks, its image as the hero, and a button
+	// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+	// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+	// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+	// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+	// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+	// of every broadcast.
+	//
+	// A table or code block in the text, which the design cannot hold, becomes a line linking to
+	// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+	// has no published translation in.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+	BroadcastChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*BroadcastChangelogEntryResponse, error)
+
+	// BroadcastChangelogEntryWithResponse Mail an entry to subscribers
+	//
+	// Makes a draft broadcast from a published entry on the `product-update` template in
+	// `locale` (English when the template has no such language): the entry's title, labels and
+	// date, its text and workspace images as design blocks, its image as the hero, and a button
+	// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+	// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+	// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+	// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+	// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+	// of every broadcast.
+	//
+	// A table or code block in the text, which the design cannot hold, becomes a line linking to
+	// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+	// has no published translation in.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+	BroadcastChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, body BroadcastChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*BroadcastChangelogEntryResponse, error)
+
+	// PublishChangelogEntryWithBodyWithResponse Publish an entry
+	//
+	// Without `locale`, publishes the entry: it needs a translation in the default locale
+	// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+	// the first time, cancels a schedule, tells the inbox's widgets, and sends
+	// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+	// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+	// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+	// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+	// once its changelog is published.
+	//
+	// Owners, admins and API keys; agents with access to the changelog's inbox when its
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+	PublishChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishChangelogEntryResponse, error)
+
+	// PublishChangelogEntryWithResponse Publish an entry
+	//
+	// Without `locale`, publishes the entry: it needs a translation in the default locale
+	// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+	// the first time, cancels a schedule, tells the inbox's widgets, and sends
+	// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+	// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+	// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+	// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+	// once its changelog is published.
+	//
+	// Owners, admins and API keys; agents with access to the changelog's inbox when its
+	// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+	// (`403 member_session_required`). Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+	PublishChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, body PublishChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishChangelogEntryResponse, error)
+
+	// ScheduleChangelogEntryWithBodyWithResponse Schedule an entry
+	//
+	// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+	// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+	// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+	// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+	// time; a published entry cannot be scheduled (`409 already_published`).
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+	ScheduleChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ScheduleChangelogEntryResponse, error)
+
+	// ScheduleChangelogEntryWithResponse Schedule an entry
+	//
+	// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+	// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+	// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+	// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+	// time; a published entry cannot be scheduled (`409 already_published`).
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+	ScheduleChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, body ScheduleChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*ScheduleChangelogEntryResponse, error)
+
+	// DeleteChangelogEntryTranslationWithResponse Delete a translation
+	//
+	// The last translation of an entry, and the default locale's while the entry is published
+	// or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+	// delete the entry instead. A published translation, or any translation of a scheduled
+	// entry (`403 entry_scheduled`), can be deleted only by those who may
+	// publish (`403 forbidden`), and API keys also need `changelog:publish`.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `DeleteChangelogEntryTranslation` operationId).
+	DeleteChangelogEntryTranslationWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *DeleteChangelogEntryTranslationParams, reqEditors ...RequestEditorFn) (*DeleteChangelogEntryTranslationResponse, error)
+
+	// PutChangelogEntryTranslationWithBodyWithResponse Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one
+	// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+	// published copy does not change until the translation is published again. On a scheduled
+	// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+	// public when the schedule fires.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+	PutChangelogEntryTranslationWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutChangelogEntryTranslationResponse, error)
+
+	// PutChangelogEntryTranslationWithResponse Save a translation's draft
+	//
+	// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+	// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+	// translation that does not exist yet; any other is refused with `409 version_conflict`,
+	// which carries the translation as it is now in `translation`. A save moves `version` by one
+	// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+	// published copy does not change until the translation is published again. On a scheduled
+	// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+	// public when the schedule fires.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+	PutChangelogEntryTranslationWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, body PutChangelogEntryTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PutChangelogEntryTranslationResponse, error)
+
+	// UnpublishChangelogEntryWithResponse Unpublish an entry
+	//
+	// Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+	// the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+	// stay, so publishing again keeps the date. A draft is left as it is.
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish (the `UnpublishChangelogEntry` operationId).
+	UnpublishChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnpublishChangelogEntryParams, reqEditors ...RequestEditorFn) (*UnpublishChangelogEntryResponse, error)
+
+	// UnscheduleChangelogEntryWithResponse Unschedule an entry
+	//
+	// Returns a scheduled entry to `draft`. Any other state is left as it is.
+	//
+	// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule (the `UnscheduleChangelogEntry` operationId).
+	UnscheduleChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnscheduleChangelogEntryParams, reqEditors ...RequestEditorFn) (*UnscheduleChangelogEntryResponse, error)
+
+	// UploadChangelogImageWithBodyWithResponse Upload an image for entries
+	//
+	// Stores the image as one of the workspace's e-mail images, with the same rules as
+	// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+	// the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+	// draft or design uses is deleted a week after its upload.
+	//
+	// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
+	UploadChangelogImageWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadChangelogImageResponse, error)
+
 	// DeleteChannelWithResponse Remove a channel
 	//
 	// Owners, admins and API keys. Conversations that started on it keep
@@ -76063,8 +80233,10 @@ type ClientWithResponsesInterface interface {
 	// DeleteEmailImageWithResponse Delete an e-mail image
 	//
 	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-	// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-	// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+	// not archived uses the image, naming the articles in `used_by.help_articles` while a help
+	// article's draft, published copy or kept revision shows it, and the entries in
+	// `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+	// draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
 	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 	// image. The public URL stops working at once.
 	//
@@ -77367,6 +81539,34 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
 	ResendSubscriptionConfirmationWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*ResendSubscriptionConfirmationResponse, error)
+
+	// RenderMarkdownWithBodyWithResponse Render Markdown for an editor
+	//
+	// The editor's preview: the HTML a body would publish as in a help article or a What's new
+	// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+	// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+	// use it.
+	//
+	// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+	RenderMarkdownWithBodyWithResponse(ctx context.Context, params *RenderMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderMarkdownResponse, error)
+
+	// RenderMarkdownWithResponse Render Markdown for an editor
+	//
+	// The editor's preview: the HTML a body would publish as in a help article or a What's new
+	// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+	// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+	// use it.
+	//
+	// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+	RenderMarkdownWithResponse(ctx context.Context, params *RenderMarkdownParams, body RenderMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderMarkdownResponse, error)
 
 	// DeleteMeWithBodyWithResponse Delete the signed-in person's account
 	//
@@ -81023,6 +85223,137 @@ func (r CreateClientSubscriptionResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateClientSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientWhatsNewResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientWhatsNew
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientWhatsNewResponse) GetJSON200() *ClientWhatsNew {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetClientWhatsNewResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientWhatsNewResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientWhatsNewResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientWhatsNewResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientWhatsNewResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientWhatsNewResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientWhatsNewResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientWhatsNewResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientWhatsNewEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientWhatsNewEntry
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientWhatsNewEntryResponse) GetJSON200() *ClientWhatsNewEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientWhatsNewEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientWhatsNewEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientWhatsNewEntryResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientWhatsNewEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientWhatsNewEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientWhatsNewEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientWhatsNewEntryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -88642,6 +92973,1290 @@ func (r UpdateCannedReplyResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateCannedReplyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListChangelogsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListChangelogsResponse) GetJSON200() *ChangelogList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListChangelogsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListChangelogsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListChangelogsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListChangelogsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListChangelogsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListChangelogsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListChangelogsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Changelog
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateChangelogResponse) GetJSON201() *Changelog {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateChangelogResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateChangelogResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateChangelogResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateChangelogResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateChangelogResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateChangelogResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateChangelogResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteChangelogResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteChangelogResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteChangelogResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteChangelogResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteChangelogResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Changelog
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetChangelogResponse) GetJSON200() *Changelog {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetChangelogResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetChangelogResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetChangelogResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetChangelogResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetChangelogResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Changelog
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateChangelogResponse) GetJSON200() *Changelog {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UpdateChangelogResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateChangelogResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateChangelogResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListChangelogEntriesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntryPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListChangelogEntriesResponse) GetJSON200() *ChangelogEntryPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListChangelogEntriesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListChangelogEntriesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListChangelogEntriesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListChangelogEntriesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListChangelogEntriesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListChangelogEntriesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListChangelogEntriesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListChangelogEntriesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *ChangelogEntry
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateChangelogEntryResponse) GetJSON201() *ChangelogEntry {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateChangelogEntryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateChangelogEntryResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateChangelogEntryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type BroadcastChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Broadcast
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r BroadcastChangelogEntryResponse) GetJSON201() *Broadcast {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r BroadcastChangelogEntryResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r BroadcastChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r BroadcastChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r BroadcastChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r BroadcastChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PublishChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *ChangelogConflictProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PublishChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PublishChangelogEntryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PublishChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PublishChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PublishChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PublishChangelogEntryResponse) GetApplicationproblemJSON409() *ChangelogConflictProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PublishChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PublishChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PublishChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PublishChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ScheduleChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ScheduleChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ScheduleChangelogEntryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ScheduleChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ScheduleChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ScheduleChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ScheduleChangelogEntryResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r ScheduleChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ScheduleChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ScheduleChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ScheduleChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteChangelogEntryTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteChangelogEntryTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteChangelogEntryTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteChangelogEntryTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteChangelogEntryTranslationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteChangelogEntryTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteChangelogEntryTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteChangelogEntryTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteChangelogEntryTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PutChangelogEntryTranslationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntryTranslation
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *ChangelogEntryTranslation
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *ChangelogConflictProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PutChangelogEntryTranslationResponse) GetJSON200() *ChangelogEntryTranslation {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r PutChangelogEntryTranslationResponse) GetJSON201() *ChangelogEntryTranslation {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r PutChangelogEntryTranslationResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PutChangelogEntryTranslationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PutChangelogEntryTranslationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PutChangelogEntryTranslationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PutChangelogEntryTranslationResponse) GetApplicationproblemJSON409() *ChangelogConflictProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PutChangelogEntryTranslationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PutChangelogEntryTranslationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PutChangelogEntryTranslationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PutChangelogEntryTranslationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnpublishChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnpublishChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnpublishChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnpublishChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnpublishChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnpublishChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnpublishChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnpublishChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnpublishChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnscheduleChangelogEntryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ChangelogEntry
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnscheduleChangelogEntryResponse) GetJSON200() *ChangelogEntry {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnscheduleChangelogEntryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnscheduleChangelogEntryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnscheduleChangelogEntryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnscheduleChangelogEntryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnscheduleChangelogEntryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnscheduleChangelogEntryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnscheduleChangelogEntryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UploadChangelogImageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpImage
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *HelpImage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON415 the response for an HTTP 415 `application/problem+json` response
+	ApplicationproblemJSON415 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UploadChangelogImageResponse) GetJSON200() *HelpImage {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r UploadChangelogImageResponse) GetJSON201() *HelpImage {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON415 returns the response for an HTTP 415 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON415() *Problem {
+	return r.ApplicationproblemJSON415
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UploadChangelogImageResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UploadChangelogImageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UploadChangelogImageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UploadChangelogImageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UploadChangelogImageResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -98686,6 +104301,75 @@ func (r ResendSubscriptionConfirmationResponse) ContentType() string {
 	return ""
 }
 
+type RenderMarkdownResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *HelpRendered
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RenderMarkdownResponse) GetJSON200() *HelpRendered {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RenderMarkdownResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RenderMarkdownResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RenderMarkdownResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r RenderMarkdownResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r RenderMarkdownResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RenderMarkdownResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RenderMarkdownResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RenderMarkdownResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // DeleteMeResponse204Headers the declared response headers of an HTTP 204 response for DeleteMe
 type DeleteMeResponse204Headers struct {
 	SetCookie *string
@@ -107230,6 +112914,44 @@ func (c *ClientWithResponses) CreateClientSubscriptionWithResponse(ctx context.C
 	return ParseCreateClientSubscriptionResponse(rsp)
 }
 
+// GetClientWhatsNewWithResponse The What's new feed
+//
+// The inbox's published changelog with its published entries, newest first by
+// `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+// language, else the changelog's default (an entry without a published translation there
+// comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+// creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+// without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+// minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+// `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/whats-new (the `GetClientWhatsNew` operationId).
+func (c *ClientWithResponses) GetClientWhatsNewWithResponse(ctx context.Context, channelKey ClientWhatsNewChannelKey, params *GetClientWhatsNewParams, reqEditors ...RequestEditorFn) (*GetClientWhatsNewResponse, error) {
+	rsp, err := c.GetClientWhatsNew(ctx, channelKey, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientWhatsNewResponse(rsp)
+}
+
+// GetClientWhatsNewEntryWithResponse A What's new entry
+//
+// One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+// a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/whats-new/{entryId} (the `GetClientWhatsNewEntry` operationId).
+func (c *ClientWithResponses) GetClientWhatsNewEntryWithResponse(ctx context.Context, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params *GetClientWhatsNewEntryParams, reqEditors ...RequestEditorFn) (*GetClientWhatsNewEntryResponse, error) {
+	rsp, err := c.GetClientWhatsNewEntry(ctx, channelKey, entryId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientWhatsNewEntryResponse(rsp)
+}
+
 // SetClientContactEmailWithBodyWithResponse Leave an e-mail address for replies
 //
 // Stores the address the contact typed (e.g. when nobody is available), so replies they have
@@ -110500,6 +116222,562 @@ func (c *ClientWithResponses) UpdateCannedReplyWithResponse(ctx context.Context,
 	return ParseUpdateCannedReplyResponse(rsp)
 }
 
+// ListChangelogsWithResponse List changelogs
+//
+// The changelogs of the inboxes the caller can see, oldest first.
+//
+// Scope: `changelog:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/changelogs (the `ListChangelogs` operationId).
+func (c *ClientWithResponses) ListChangelogsWithResponse(ctx context.Context, params *ListChangelogsParams, reqEditors ...RequestEditorFn) (*ListChangelogsResponse, error) {
+	rsp, err := c.ListChangelogs(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListChangelogsResponse(rsp)
+}
+
+// CreateChangelogWithBodyWithResponse Create a changelog
+//
+// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+// in its URL, is unique across the server, current and former slugs alike (`409
+// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+// to the inbox's and `locales` to the default locale alone; `locales` must hold
+// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+// and accent colour of the public pages are the inbox's branding.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+func (c *ClientWithResponses) CreateChangelogWithBodyWithResponse(ctx context.Context, params *CreateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateChangelogResponse, error) {
+	rsp, err := c.CreateChangelogWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateChangelogResponse(rsp)
+}
+
+// CreateChangelogWithResponse Create a changelog
+//
+// A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+// in its URL, is unique across the server, current and former slugs alike (`409
+// slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+// to the inbox's and `locales` to the default locale alone; `locales` must hold
+// `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+// and accent colour of the public pages are the inbox's branding.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs (the `CreateChangelog` operationId).
+func (c *ClientWithResponses) CreateChangelogWithResponse(ctx context.Context, params *CreateChangelogParams, body CreateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateChangelogResponse, error) {
+	rsp, err := c.CreateChangelog(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateChangelogResponse(rsp)
+}
+
+// DeleteChangelogWithResponse Delete a changelog
+//
+// The changelog with its entries and translations; broadcasts made from its entries stay.
+// Its images stay e-mail images of the workspace and are swept like any unused one.
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId} (the `DeleteChangelog` operationId).
+func (c *ClientWithResponses) DeleteChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *DeleteChangelogParams, reqEditors ...RequestEditorFn) (*DeleteChangelogResponse, error) {
+	rsp, err := c.DeleteChangelog(ctx, changelogId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteChangelogResponse(rsp)
+}
+
+// GetChangelogWithResponse A changelog
+//
+// With its counts and public `url`.
+//
+// Scope: `changelog:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/changelogs/{changelogId} (the `GetChangelog` operationId).
+func (c *ClientWithResponses) GetChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *GetChangelogParams, reqEditors ...RequestEditorFn) (*GetChangelogResponse, error) {
+	rsp, err := c.GetChangelog(ctx, changelogId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetChangelogResponse(rsp)
+}
+
+// UpdateChangelogWithBodyWithResponse Update a changelog
+//
+// Changes the given fields; `null` clears the analytics property. `published: false` takes
+// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+// an entry has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+func (c *ClientWithResponses) UpdateChangelogWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateChangelogResponse, error) {
+	rsp, err := c.UpdateChangelogWithBody(ctx, changelogId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateChangelogResponse(rsp)
+}
+
+// UpdateChangelogWithResponse Update a changelog
+//
+// Changes the given fields; `null` clears the analytics property. `published: false` takes
+// the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+// `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+// the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+// changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+// an entry has a translation in it (`409 locale_in_use`).
+//
+// Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId} (the `UpdateChangelog` operationId).
+func (c *ClientWithResponses) UpdateChangelogWithResponse(ctx context.Context, changelogId ChangelogId, params *UpdateChangelogParams, body UpdateChangelogJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateChangelogResponse, error) {
+	rsp, err := c.UpdateChangelog(ctx, changelogId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateChangelogResponse(rsp)
+}
+
+// ListChangelogEntriesWithResponse List a changelog's entries
+//
+// Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+// `scheduled` or `published` entries, or `changed`: published entries with a translation
+// whose draft differs from its published copy. `label` keeps the entries carrying it.
+// `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+// one).
+//
+// Scope: `changelog:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/entries (the `ListChangelogEntries` operationId).
+func (c *ClientWithResponses) ListChangelogEntriesWithResponse(ctx context.Context, changelogId ChangelogId, params *ListChangelogEntriesParams, reqEditors ...RequestEditorFn) (*ListChangelogEntriesResponse, error) {
+	rsp, err := c.ListChangelogEntries(ctx, changelogId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListChangelogEntriesResponse(rsp)
+}
+
+// CreateChangelogEntryWithBodyWithResponse Write an entry
+//
+// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+func (c *ClientWithResponses) CreateChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateChangelogEntryResponse, error) {
+	rsp, err := c.CreateChangelogEntryWithBody(ctx, changelogId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateChangelogEntryResponse(rsp)
+}
+
+// CreateChangelogEntryWithResponse Write an entry
+//
+// A draft entry with its first translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+// `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+// most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries (the `CreateChangelogEntry` operationId).
+func (c *ClientWithResponses) CreateChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, params *CreateChangelogEntryParams, body CreateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateChangelogEntryResponse, error) {
+	rsp, err := c.CreateChangelogEntry(ctx, changelogId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateChangelogEntryResponse(rsp)
+}
+
+// DeleteChangelogEntryWithResponse Delete an entry
+//
+// With its translations, and sends `changelog.entry.deleted` when it was published. A
+// published or scheduled entry can be deleted only by those who may publish (`403
+// forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId} (the `DeleteChangelogEntry` operationId).
+func (c *ClientWithResponses) DeleteChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *DeleteChangelogEntryParams, reqEditors ...RequestEditorFn) (*DeleteChangelogEntryResponse, error) {
+	rsp, err := c.DeleteChangelogEntry(ctx, changelogId, entryId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteChangelogEntryResponse(rsp)
+}
+
+// GetChangelogEntryWithResponse An entry
+//
+// With every translation, drafts and published copies.
+//
+// Scope: `changelog:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/changelogs/{changelogId}/entries/{entryId} (the `GetChangelogEntry` operationId).
+func (c *ClientWithResponses) GetChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *GetChangelogEntryParams, reqEditors ...RequestEditorFn) (*GetChangelogEntryResponse, error) {
+	rsp, err := c.GetChangelogEntry(ctx, changelogId, entryId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetChangelogEntryResponse(rsp)
+}
+
+// UpdateChangelogEntryWithBodyWithResponse Change an entry's labels or image
+//
+// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+// published entry the change is public at once, so it needs the right to publish
+// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+// is when its time comes, so changing it, saving or deleting one of its translations also
+// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+func (c *ClientWithResponses) UpdateChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateChangelogEntryResponse, error) {
+	rsp, err := c.UpdateChangelogEntryWithBody(ctx, changelogId, entryId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateChangelogEntryResponse(rsp)
+}
+
+// UpdateChangelogEntryWithResponse Change an entry's labels or image
+//
+// `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+// published entry the change is public at once, so it needs the right to publish
+// (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+// is when its time comes, so changing it, saving or deleting one of its translations also
+// needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/changelogs/{changelogId}/entries/{entryId} (the `UpdateChangelogEntry` operationId).
+func (c *ClientWithResponses) UpdateChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UpdateChangelogEntryParams, body UpdateChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateChangelogEntryResponse, error) {
+	rsp, err := c.UpdateChangelogEntry(ctx, changelogId, entryId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateChangelogEntryResponse(rsp)
+}
+
+// BroadcastChangelogEntryWithBodyWithResponse Mail an entry to subscribers
+//
+// Makes a draft broadcast from a published entry on the `product-update` template in
+// `locale` (English when the template has no such language): the entry's title, labels and
+// date, its text and workspace images as design blocks, its image as the hero, and a button
+// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+// of every broadcast.
+//
+// A table or code block in the text, which the design cannot hold, becomes a line linking to
+// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+// has no published translation in.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+func (c *ClientWithResponses) BroadcastChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*BroadcastChangelogEntryResponse, error) {
+	rsp, err := c.BroadcastChangelogEntryWithBody(ctx, changelogId, entryId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseBroadcastChangelogEntryResponse(rsp)
+}
+
+// BroadcastChangelogEntryWithResponse Mail an entry to subscribers
+//
+// Makes a draft broadcast from a published entry on the `product-update` template in
+// `locale` (English when the template has no such language): the entry's title, labels and
+// date, its text and workspace images as design blocks, its image as the hero, and a button
+// to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+// changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+// sending channel. The broadcast is named "What's new: {title}", has the title as subject
+// and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+// Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+// of every broadcast.
+//
+// A table or code block in the text, which the design cannot hold, becomes a line linking to
+// the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+// has no published translation in.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast (the `BroadcastChangelogEntry` operationId).
+func (c *ClientWithResponses) BroadcastChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *BroadcastChangelogEntryParams, body BroadcastChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*BroadcastChangelogEntryResponse, error) {
+	rsp, err := c.BroadcastChangelogEntry(ctx, changelogId, entryId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseBroadcastChangelogEntryResponse(rsp)
+}
+
+// PublishChangelogEntryWithBodyWithResponse Publish an entry
+//
+// Without `locale`, publishes the entry: it needs a translation in the default locale
+// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+// the first time, cancels a schedule, tells the inbox's widgets, and sends
+// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+// once its changelog is published.
+//
+// Owners, admins and API keys; agents with access to the changelog's inbox when its
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+func (c *ClientWithResponses) PublishChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishChangelogEntryResponse, error) {
+	rsp, err := c.PublishChangelogEntryWithBody(ctx, changelogId, entryId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePublishChangelogEntryResponse(rsp)
+}
+
+// PublishChangelogEntryWithResponse Publish an entry
+//
+// Without `locale`, publishes the entry: it needs a translation in the default locale
+// (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+// the first time, cancels a schedule, tells the inbox's widgets, and sends
+// `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+// keeps the date. With `locale`, publishes that translation alone, for an entry that is
+// already published (`409 not_published` otherwise). With `base_version` (with `locale`
+// only), a draft saved since is refused with `409 version_conflict`. The entry is public
+// once its changelog is published.
+//
+// Owners, admins and API keys; agents with access to the changelog's inbox when its
+// `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+// (`403 member_session_required`). Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/publish (the `PublishChangelogEntry` operationId).
+func (c *ClientWithResponses) PublishChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *PublishChangelogEntryParams, body PublishChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishChangelogEntryResponse, error) {
+	rsp, err := c.PublishChangelogEntry(ctx, changelogId, entryId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePublishChangelogEntryResponse(rsp)
+}
+
+// ScheduleChangelogEntryWithBodyWithResponse Schedule an entry
+//
+// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+// time; a published entry cannot be scheduled (`409 already_published`).
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+func (c *ClientWithResponses) ScheduleChangelogEntryWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ScheduleChangelogEntryResponse, error) {
+	rsp, err := c.ScheduleChangelogEntryWithBody(ctx, changelogId, entryId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseScheduleChangelogEntryResponse(rsp)
+}
+
+// ScheduleChangelogEntryWithResponse Schedule an entry
+//
+// Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+// to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+// at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+// default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+// time; a published entry cannot be scheduled (`409 already_published`).
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule (the `ScheduleChangelogEntry` operationId).
+func (c *ClientWithResponses) ScheduleChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *ScheduleChangelogEntryParams, body ScheduleChangelogEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*ScheduleChangelogEntryResponse, error) {
+	rsp, err := c.ScheduleChangelogEntry(ctx, changelogId, entryId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseScheduleChangelogEntryResponse(rsp)
+}
+
+// DeleteChangelogEntryTranslationWithResponse Delete a translation
+//
+// The last translation of an entry, and the default locale's while the entry is published
+// or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+// delete the entry instead. A published translation, or any translation of a scheduled
+// entry (`403 entry_scheduled`), can be deleted only by those who may
+// publish (`403 forbidden`), and API keys also need `changelog:publish`.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `DeleteChangelogEntryTranslation` operationId).
+func (c *ClientWithResponses) DeleteChangelogEntryTranslationWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *DeleteChangelogEntryTranslationParams, reqEditors ...RequestEditorFn) (*DeleteChangelogEntryTranslationResponse, error) {
+	rsp, err := c.DeleteChangelogEntryTranslation(ctx, changelogId, entryId, locale, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteChangelogEntryTranslationResponse(rsp)
+}
+
+// PutChangelogEntryTranslationWithBodyWithResponse Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one
+// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+// published copy does not change until the translation is published again. On a scheduled
+// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+// public when the schedule fires.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+func (c *ClientWithResponses) PutChangelogEntryTranslationWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutChangelogEntryTranslationResponse, error) {
+	rsp, err := c.PutChangelogEntryTranslationWithBody(ctx, changelogId, entryId, locale, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutChangelogEntryTranslationResponse(rsp)
+}
+
+// PutChangelogEntryTranslationWithResponse Save a translation's draft
+//
+// Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+// (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+// translation that does not exist yet; any other is refused with `409 version_conflict`,
+// which carries the translation as it is now in `translation`. A save moves `version` by one
+// and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+// published copy does not change until the translation is published again. On a scheduled
+// entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+// public when the schedule fires.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale} (the `PutChangelogEntryTranslation` operationId).
+func (c *ClientWithResponses) PutChangelogEntryTranslationWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params *PutChangelogEntryTranslationParams, body PutChangelogEntryTranslationJSONRequestBody, reqEditors ...RequestEditorFn) (*PutChangelogEntryTranslationResponse, error) {
+	rsp, err := c.PutChangelogEntryTranslation(ctx, changelogId, entryId, locale, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutChangelogEntryTranslationResponse(rsp)
+}
+
+// UnpublishChangelogEntryWithResponse Unpublish an entry
+//
+// Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+// the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+// stay, so publishing again keeps the date. A draft is left as it is.
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish (the `UnpublishChangelogEntry` operationId).
+func (c *ClientWithResponses) UnpublishChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnpublishChangelogEntryParams, reqEditors ...RequestEditorFn) (*UnpublishChangelogEntryResponse, error) {
+	rsp, err := c.UnpublishChangelogEntry(ctx, changelogId, entryId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnpublishChangelogEntryResponse(rsp)
+}
+
+// UnscheduleChangelogEntryWithResponse Unschedule an entry
+//
+// Returns a scheduled entry to `draft`. Any other state is left as it is.
+//
+// Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule (the `UnscheduleChangelogEntry` operationId).
+func (c *ClientWithResponses) UnscheduleChangelogEntryWithResponse(ctx context.Context, changelogId ChangelogId, entryId ChangelogEntryId, params *UnscheduleChangelogEntryParams, reqEditors ...RequestEditorFn) (*UnscheduleChangelogEntryResponse, error) {
+	rsp, err := c.UnscheduleChangelogEntry(ctx, changelogId, entryId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnscheduleChangelogEntryResponse(rsp)
+}
+
+// UploadChangelogImageWithBodyWithResponse Upload an image for entries
+//
+// Stores the image as one of the workspace's e-mail images, with the same rules as
+// `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+// the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+// draft or design uses is deleted a week after its upload.
+//
+// Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/changelogs/{changelogId}/images (the `UploadChangelogImage` operationId).
+func (c *ClientWithResponses) UploadChangelogImageWithBodyWithResponse(ctx context.Context, changelogId ChangelogId, params *UploadChangelogImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadChangelogImageResponse, error) {
+	rsp, err := c.UploadChangelogImageWithBody(ctx, changelogId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadChangelogImageResponse(rsp)
+}
+
 // DeleteChannelWithResponse Remove a channel
 //
 // Owners, admins and API keys. Conversations that started on it keep
@@ -112684,8 +118962,10 @@ func (c *ClientWithResponses) UploadEmailImageWithBodyWithResponse(ctx context.C
 // DeleteEmailImageWithResponse Delete an e-mail image
 //
 // Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-// not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-// article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+// not archived uses the image, naming the articles in `used_by.help_articles` while a help
+// article's draft, published copy or kept revision shows it, and the entries in
+// `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+// draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
 // `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
 // image. The public URL stops working at once.
 //
@@ -114539,6 +120819,46 @@ func (c *ClientWithResponses) ResendSubscriptionConfirmationWithResponse(ctx con
 		return nil, err
 	}
 	return ParseResendSubscriptionConfirmationResponse(rsp)
+}
+
+// RenderMarkdownWithBodyWithResponse Render Markdown for an editor
+//
+// The editor's preview: the HTML a body would publish as in a help article or a What's new
+// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+// use it.
+//
+// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+func (c *ClientWithResponses) RenderMarkdownWithBodyWithResponse(ctx context.Context, params *RenderMarkdownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderMarkdownResponse, error) {
+	rsp, err := c.RenderMarkdownWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderMarkdownResponse(rsp)
+}
+
+// RenderMarkdownWithResponse Render Markdown for an editor
+//
+// The editor's preview: the HTML a body would publish as in a help article or a What's new
+// entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+// minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+// use it.
+//
+// Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/markdown/render (the `RenderMarkdown` operationId).
+func (c *ClientWithResponses) RenderMarkdownWithResponse(ctx context.Context, params *RenderMarkdownParams, body RenderMarkdownJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderMarkdownResponse, error) {
+	rsp, err := c.RenderMarkdown(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderMarkdownResponse(rsp)
 }
 
 // DeleteMeWithBodyWithResponse Delete the signed-in person's account
@@ -118897,6 +125217,107 @@ func ParseCreateClientSubscriptionResponse(rsp *http.Response) (*CreateClientSub
 			return nil, err
 		}
 		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientWhatsNewResponse parses an HTTP response from a GetClientWhatsNewWithResponse call
+func ParseGetClientWhatsNewResponse(rsp *http.Response) (*GetClientWhatsNewResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientWhatsNewResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientWhatsNew
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientWhatsNewEntryResponse parses an HTTP response from a GetClientWhatsNewEntryWithResponse call
+func ParseGetClientWhatsNewEntryResponse(rsp *http.Response) (*GetClientWhatsNewEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientWhatsNewEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientWhatsNewEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest Problem
@@ -124908,6 +131329,1029 @@ func ParseUpdateCannedReplyResponse(rsp *http.Response) (*UpdateCannedReplyRespo
 			return nil, err
 		}
 		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListChangelogsResponse parses an HTTP response from a ListChangelogsWithResponse call
+func ParseListChangelogsResponse(rsp *http.Response) (*ListChangelogsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListChangelogsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateChangelogResponse parses an HTTP response from a CreateChangelogWithResponse call
+func ParseCreateChangelogResponse(rsp *http.Response) (*CreateChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Changelog
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteChangelogResponse parses an HTTP response from a DeleteChangelogWithResponse call
+func ParseDeleteChangelogResponse(rsp *http.Response) (*DeleteChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetChangelogResponse parses an HTTP response from a GetChangelogWithResponse call
+func ParseGetChangelogResponse(rsp *http.Response) (*GetChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Changelog
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateChangelogResponse parses an HTTP response from a UpdateChangelogWithResponse call
+func ParseUpdateChangelogResponse(rsp *http.Response) (*UpdateChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Changelog
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListChangelogEntriesResponse parses an HTTP response from a ListChangelogEntriesWithResponse call
+func ParseListChangelogEntriesResponse(rsp *http.Response) (*ListChangelogEntriesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListChangelogEntriesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntryPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateChangelogEntryResponse parses an HTTP response from a CreateChangelogEntryWithResponse call
+func ParseCreateChangelogEntryResponse(rsp *http.Response) (*CreateChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteChangelogEntryResponse parses an HTTP response from a DeleteChangelogEntryWithResponse call
+func ParseDeleteChangelogEntryResponse(rsp *http.Response) (*DeleteChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetChangelogEntryResponse parses an HTTP response from a GetChangelogEntryWithResponse call
+func ParseGetChangelogEntryResponse(rsp *http.Response) (*GetChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateChangelogEntryResponse parses an HTTP response from a UpdateChangelogEntryWithResponse call
+func ParseUpdateChangelogEntryResponse(rsp *http.Response) (*UpdateChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseBroadcastChangelogEntryResponse parses an HTTP response from a BroadcastChangelogEntryWithResponse call
+func ParseBroadcastChangelogEntryResponse(rsp *http.Response) (*BroadcastChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &BroadcastChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePublishChangelogEntryResponse parses an HTTP response from a PublishChangelogEntryWithResponse call
+func ParsePublishChangelogEntryResponse(rsp *http.Response) (*PublishChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PublishChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ChangelogConflictProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseScheduleChangelogEntryResponse parses an HTTP response from a ScheduleChangelogEntryWithResponse call
+func ParseScheduleChangelogEntryResponse(rsp *http.Response) (*ScheduleChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ScheduleChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteChangelogEntryTranslationResponse parses an HTTP response from a DeleteChangelogEntryTranslationWithResponse call
+func ParseDeleteChangelogEntryTranslationResponse(rsp *http.Response) (*DeleteChangelogEntryTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteChangelogEntryTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePutChangelogEntryTranslationResponse parses an HTTP response from a PutChangelogEntryTranslationWithResponse call
+func ParsePutChangelogEntryTranslationResponse(rsp *http.Response) (*PutChangelogEntryTranslationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PutChangelogEntryTranslationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntryTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ChangelogEntryTranslation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ChangelogConflictProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnpublishChangelogEntryResponse parses an HTTP response from a UnpublishChangelogEntryWithResponse call
+func ParseUnpublishChangelogEntryResponse(rsp *http.Response) (*UnpublishChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnpublishChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnscheduleChangelogEntryResponse parses an HTTP response from a UnscheduleChangelogEntryWithResponse call
+func ParseUnscheduleChangelogEntryResponse(rsp *http.Response) (*UnscheduleChangelogEntryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnscheduleChangelogEntryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ChangelogEntry
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUploadChangelogImageResponse parses an HTTP response from a UploadChangelogImageWithResponse call
+func ParseUploadChangelogImageResponse(rsp *http.Response) (*UploadChangelogImageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UploadChangelogImageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest HelpImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON415 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 
@@ -132843,6 +140287,60 @@ func ParseResendSubscriptionConfirmationResponse(rsp *http.Response) (*ResendSub
 	return response, nil
 }
 
+// ParseRenderMarkdownResponse parses an HTTP response from a RenderMarkdownWithResponse call
+func ParseRenderMarkdownResponse(rsp *http.Response) (*RenderMarkdownResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RenderMarkdownResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest HelpRendered
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteMeResponse parses an HTTP response from a DeleteMeWithResponse call
 func ParseDeleteMeResponse(rsp *http.Response) (*DeleteMeResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -138992,6 +146490,21 @@ type WebhookInitiatorInterface interface {
 
 	WebhookBroadcastUpdated(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, body WebhookBroadcastUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookChangelogEntryDeletedWithBody fires the changelog.entry.deleted webhook with any body
+	WebhookChangelogEntryDeletedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookChangelogEntryDeleted(ctx context.Context, targetURL string, params *WebhookChangelogEntryDeletedParams, body WebhookChangelogEntryDeletedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookChangelogEntryPublishedWithBody fires the changelog.entry.published webhook with any body
+	WebhookChangelogEntryPublishedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryPublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookChangelogEntryPublished(ctx context.Context, targetURL string, params *WebhookChangelogEntryPublishedParams, body WebhookChangelogEntryPublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookChangelogEntryUnpublishedWithBody fires the changelog.entry.unpublished webhook with any body
+	WebhookChangelogEntryUnpublishedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryUnpublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookChangelogEntryUnpublished(ctx context.Context, targetURL string, params *WebhookChangelogEntryUnpublishedParams, body WebhookChangelogEntryUnpublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookContactDeletedWithBody fires the contact.deleted webhook with any body
 	WebhookContactDeletedWithBody(ctx context.Context, targetURL string, params *WebhookContactDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -139161,6 +146674,78 @@ func (p *WebhookInitiator) WebhookBroadcastUpdatedWithBody(ctx context.Context, 
 
 func (p *WebhookInitiator) WebhookBroadcastUpdated(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, body WebhookBroadcastUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookBroadcastUpdatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryDeletedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryDeletedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryDeleted(ctx context.Context, targetURL string, params *WebhookChangelogEntryDeletedParams, body WebhookChangelogEntryDeletedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryDeletedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryPublishedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryPublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryPublishedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryPublished(ctx context.Context, targetURL string, params *WebhookChangelogEntryPublishedParams, body WebhookChangelogEntryPublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryPublishedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryUnpublishedWithBody(ctx context.Context, targetURL string, params *WebhookChangelogEntryUnpublishedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryUnpublishedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookChangelogEntryUnpublished(ctx context.Context, targetURL string, params *WebhookChangelogEntryUnpublishedParams, body WebhookChangelogEntryUnpublishedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookChangelogEntryUnpublishedWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -139869,6 +147454,189 @@ func NewWebhookBroadcastUpdatedWebhookRequest(targetURL string, params *WebhookB
 
 // NewWebhookBroadcastUpdatedWebhookRequestWithBody builds a POST request for the broadcast.updated webhook with any body
 func NewWebhookBroadcastUpdatedWebhookRequestWithBody(targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookChangelogEntryDeletedWebhookRequest builds a application/json POST request for the changelog.entry.deleted webhook
+func NewWebhookChangelogEntryDeletedWebhookRequest(targetURL string, params *WebhookChangelogEntryDeletedParams, body WebhookChangelogEntryDeletedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookChangelogEntryDeletedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookChangelogEntryDeletedWebhookRequestWithBody builds a POST request for the changelog.entry.deleted webhook with any body
+func NewWebhookChangelogEntryDeletedWebhookRequestWithBody(targetURL string, params *WebhookChangelogEntryDeletedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookChangelogEntryPublishedWebhookRequest builds a application/json POST request for the changelog.entry.published webhook
+func NewWebhookChangelogEntryPublishedWebhookRequest(targetURL string, params *WebhookChangelogEntryPublishedParams, body WebhookChangelogEntryPublishedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookChangelogEntryPublishedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookChangelogEntryPublishedWebhookRequestWithBody builds a POST request for the changelog.entry.published webhook with any body
+func NewWebhookChangelogEntryPublishedWebhookRequestWithBody(targetURL string, params *WebhookChangelogEntryPublishedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookChangelogEntryUnpublishedWebhookRequest builds a application/json POST request for the changelog.entry.unpublished webhook
+func NewWebhookChangelogEntryUnpublishedWebhookRequest(targetURL string, params *WebhookChangelogEntryUnpublishedParams, body WebhookChangelogEntryUnpublishedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookChangelogEntryUnpublishedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookChangelogEntryUnpublishedWebhookRequestWithBody builds a POST request for the changelog.entry.unpublished webhook with any body
+func NewWebhookChangelogEntryUnpublishedWebhookRequestWithBody(targetURL string, params *WebhookChangelogEntryUnpublishedParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

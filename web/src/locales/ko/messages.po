@@ -1072,6 +1072,10 @@ msgstr "속성 하나에는 퍼널을 최대 20개까지 둘 수 있습니다. �
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName}이(가) 작동하는지 고객에게 알려 주는 공개 페이지. 게시하기 전까지는 공개되지 않습니다."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "게시된 '새 소식' 항목이 삭제되었습니다"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "자체 상태를 지정해 보낸 상태는 그 상태를 유지합니다."
@@ -1140,6 +1144,14 @@ msgstr "마지막 메시지가 범위 안에 있는 스레드는 통째로 가�
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "사용자 이름에는 TLS 또는 STARTTLS가 필요합니다. 비밀번호는 암호화 없이 전송되지 않습니다."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "'새 소식' 항목이 게시되었습니다"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "'새 소식' 항목의 게시가 취소되었습니다"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "이 TXT 레코드를 도메인의 DNS에 게시하세요:"
 msgid "Publish, or submit the draft"
 msgstr "게시하거나 초안 제출"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "'새 소식' 항목 게시, 예약, 게시 취소"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "워크스페이스, 멤버, 받은 편지함, 채널 읽기"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "팀 주소를 제안하기 위해 읽습니다. 메일은 전체 메일에서 가져옵니다."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "'새 소식' 변경 내역과 항목 읽기"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "자동 응답을 쓰거나 끄세요."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first}님에게 쓰기…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "'새 소식' 항목과 번역 작성"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

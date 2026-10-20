@@ -1072,6 +1072,10 @@ msgstr "ಒಂದು ಪ್ರಾಪರ್ಟಿಗೆ ಗರಿಷ್ಠ 20 ಫ
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName} ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿದೆಯೇ ಎಂದು ನಿಮ್ಮ ಗ್ರಾಹಕರಿಗೆ ತಿಳಿಸುವ ಸಾರ್ವಜನಿಕ ಪುಟ. ನೀವು ಪ್ರಕಟಿಸುವವರೆಗೆ ಅದು ಪ್ರಕಟವಾಗದೆ ಉಳಿಯುತ್ತದೆ."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "ಪ್ರಕಟಿತ \"ಹೊಸದೇನಿದೆ\" ನಮೂದನ್ನು ಅಳಿಸಲಾಗಿದೆ"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "ತನ್ನದೇ ಸ್ಥಿತಿಯನ್ನು ಹೆಸರಿಸುವ ಕಳುಹಿಸಿದ ಸ್ಥಿತಿ ಅದನ್ನು ಉಳಿಸಿಕೊಳ್ಳುತ್ತದೆ."
@@ -1140,6 +1144,14 @@ msgstr "ಥ್ರೆಡ್‌ನ ಕೊನೆಯ ಸಂದೇಶ ಅವಧಿಯ
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "ಬಳಕೆದಾರ ಹೆಸರಿಗೆ TLS ಅಥವಾ STARTTLS ಬೇಕು: ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಎಂದಿಗೂ ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡದೆ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "\"ಹೊಸದೇನಿದೆ\" ನಮೂದನ್ನು ಪ್ರಕಟಿಸಲಾಗಿದೆ"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "\"ಹೊಸದೇನಿದೆ\" ನಮೂದಿನ ಪ್ರಕಟಣೆಯನ್ನು ಹಿಂಪಡೆಯಲಾಗಿದೆ"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "ಈ TXT ರೆಕಾರ್ಡ್ ಅನ್ನು ನಿಮ್ಮ ಡೊ�
 msgid "Publish, or submit the draft"
 msgstr "ಪ್ರಕಟಿಸಿ, ಅಥವಾ ಕರಡು ಸಲ್ಲಿಸಿ"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "\"ಹೊಸದೇನಿದೆ\" ನಮೂದುಗಳನ್ನು ಪ್ರಕಟಿಸಿ, ವೇಳಾಪಟ್ಟಿ ಮಾಡಿ ಮತ್ತು ಪ್ರಕಟಣೆ ಹಿಂಪಡೆಯಿರಿ"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "ವರ್ಕ್‌ಸ್ಪೇಸ್, ಸದಸ್ಯರು, ಇನ್�
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "ನಿಮ್ಮ ತಂಡದ ವಿಳಾಸಗಳನ್ನು ಸೂಚಿಸಲು ಓದಲಾಗುತ್ತದೆ: ಅದರ ಮೇಲ್ ಎಲ್ಲಾ ಮೇಲ್‌ನಿಂದ ಬರುತ್ತದೆ."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "\"ಹೊಸದೇನಿದೆ\" ಚೇಂಜ್‌ಲಾಗ್‌ಗಳು ಮತ್ತು ಅವುಗಳ ನಮೂದುಗಳನ್ನು ಓದಿ"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "ಸ್ವಯಂ-ಉತ್ತರ ಬರೆಯಿರಿ, ಅಥವಾ ಅ�
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first} ಗೆ ಬರೆಯಿರಿ…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "\"ಹೊಸದೇನಿದೆ\" ನಮೂದುಗಳು ಮತ್ತು ಅನುವಾದಗಳನ್ನು ಬರೆಯಿರಿ"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

@@ -14,10 +14,11 @@ var allScopes = []oas.ApiKeyScope{
 	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage,
 	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage, oas.StatusRead, oas.StatusManage,
 	oas.HelpRead, oas.HelpWrite, oas.HelpPublish, oas.RoadmapRead, oas.RoadmapWrite, oas.RoadmapStage,
+	oas.ChangelogRead, oas.ChangelogWrite, oas.ChangelogPublish,
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
-var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage, oas.HelpPublish, oas.RoadmapStage}
+var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend, oas.StatusManage, oas.HelpPublish, oas.RoadmapStage, oas.ChangelogPublish}
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage, oas.AnalyticsManage}
 
@@ -329,6 +330,26 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UnlinkIdeaConversation":   {oas.RoadmapWrite, oas.ConversationsRead},
 	"ReplyToIdeaConversations": {oas.RoadmapWrite, oas.MessagesWrite},
 	"GetIdeaLinkedReply":       {oas.RoadmapRead, oas.ConversationsRead},
+
+	"ListChangelogs":                  {oas.ChangelogRead},
+	"GetChangelog":                    {oas.ChangelogRead},
+	"ListChangelogEntries":            {oas.ChangelogRead},
+	"GetChangelogEntry":               {oas.ChangelogRead},
+	"CreateChangelogEntry":            {oas.ChangelogWrite},
+	"UpdateChangelogEntry":            {oas.ChangelogWrite},
+	"DeleteChangelogEntry":            {oas.ChangelogWrite},
+	"PutChangelogEntryTranslation":    {oas.ChangelogWrite},
+	"DeleteChangelogEntryTranslation": {oas.ChangelogWrite},
+	"UploadChangelogImage":            {oas.ChangelogWrite},
+	"CreateChangelog":                 {oas.ChangelogPublish},
+	"UpdateChangelog":                 {oas.ChangelogPublish},
+	"DeleteChangelog":                 {oas.ChangelogPublish},
+	"PublishChangelogEntry":           {oas.ChangelogPublish},
+	"ScheduleChangelogEntry":          {oas.ChangelogPublish},
+	"UnscheduleChangelogEntry":        {oas.ChangelogPublish},
+	"UnpublishChangelogEntry":         {oas.ChangelogPublish},
+	"BroadcastChangelogEntry":         {oas.BroadcastsWrite, oas.ListsRead},
+	"RenderMarkdown":                  nil,
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

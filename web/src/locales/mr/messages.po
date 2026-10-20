@@ -1072,6 +1072,10 @@ msgstr "एका प्रॉपर्टीमध्ये जास्ती�
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName} चालू आहे की नाही हे तुमच्या ग्राहकांना सांगणारे सार्वजनिक पेज. तुम्ही प्रकाशित करेपर्यंत ते अप्रकाशित राहते."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "\"नवीन काय आहे\" मधील प्रकाशित नोंद हटवली"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "स्वतःची स्थिती सांगणारी पाठवलेली स्थिती ती कायम ठेवते."
@@ -1140,6 +1144,14 @@ msgstr "थ्रेडचा शेवटचा संदेश रेंजम
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "युजरनेमसाठी TLS किंवा STARTTLS लागते: पासवर्ड कधीही एन्क्रिप्शनशिवाय पाठवला जात नाही."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "\"नवीन काय आहे\" मधील एक नोंद प्रकाशित झाली"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "\"नवीन काय आहे\" मधील एका नोंदीचे प्रकाशन मागे घेतले"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "हा TXT रेकॉर्ड तुमच्या डोमेन�
 msgid "Publish, or submit the draft"
 msgstr "प्रकाशित करा, किंवा मसुदा सादर करा"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "\"नवीन काय आहे\" च्या नोंदी प्रकाशित करा, शेड्यूल करा आणि प्रकाशन मागे घ्या"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "वर्कस्पेस, सदस्य, इनबॉक्स आ�
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "तुमच्या टीमचे पत्ते सुचवण्यासाठी वाचले: त्याचा मेल All mail मधून येतो."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "\"नवीन काय आहे\" चे चेंजलॉग आणि त्यांच्या नोंदी वाचा"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "ऑटो-रिप्लाय लिहा, किंवा बंद 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first} ला लिहा…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "\"नवीन काय आहे\" च्या नोंदी आणि भाषांतरे लिहा"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

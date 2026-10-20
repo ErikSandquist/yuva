@@ -1072,6 +1072,10 @@ msgstr "O proprietate poate avea cel mult 20 de pâlnii. Șterge mai întâi una
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "O pagină publică ce le spune clienților tăi dacă {inboxName} funcționează. Rămâne nepublicată până o publici."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "O intrare publicată din Noutăți a fost ștearsă"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "O stare trimisă care își indică propria stare o păstrează."
@@ -1140,6 +1144,14 @@ msgstr "Un fir este luat în întregime când ultimul său mesaj este în interv
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Un nume de utilizator necesită TLS sau STARTTLS: parola nu este niciodată trimisă necriptat."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "O intrare din Noutăți a fost publicată"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "O intrare din Noutăți a fost retrasă"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Publică această înregistrare TXT în DNS-ul domeniului tău:"
 msgid "Publish, or submit the draft"
 msgstr "Publică sau trimite ciorna"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Publică, programează și retrage intrări din Noutăți"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Citește spațiul de lucru, membrii, căsuțele și canalele"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Citit pentru a sugera adresele echipei tale: e-mailul ei vine din Tot e-mailul."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Citește jurnalele de modificări din Noutăți și intrările lor"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Scrie răspunsul automat sau oprește-l."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Scrie către {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Scrie intrări din Noutăți și traducerile lor"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

@@ -82,6 +82,7 @@ type Server struct {
 	help              HelpSettings
 	roadmapCache      *publicCache
 	roadmap           RoadmapSettings
+	changelog         ChangelogSettings
 	helpCounts        *helpCounters
 	helpCache         *publicCache
 	canaries          canaryGuard
@@ -146,6 +147,7 @@ type Deps struct {
 	Status              StatusSettings
 	Help                HelpSettings
 	Roadmap             RoadmapSettings
+	Changelog           ChangelogSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -275,7 +277,7 @@ func New(d Deps) *Server {
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
 		status: d.Status, statusCache: newStatusCache(), statusDomainCache: newStatusDomainCache(), started: now(),
-		roadmap: d.Roadmap, roadmapCache: newPublicCache(roadmapCacheTTL, roadmapCacheMax), help: d.Help, helpCounts: newHelpCounters(), helpCache: newPublicCache(helpPageCacheTTL, helpPageCacheMax),
+		roadmap: d.Roadmap, changelog: d.Changelog, roadmapCache: newPublicCache(roadmapCacheTTL, roadmapCacheMax), help: d.Help, helpCounts: newHelpCounters(), helpCache: newPublicCache(helpPageCacheTTL, helpPageCacheMax),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()

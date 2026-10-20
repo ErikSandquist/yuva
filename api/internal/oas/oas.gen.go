@@ -920,6 +920,9 @@ const (
 	BroadcastsSend     ApiKeyScope = "broadcasts:send"
 	BroadcastsWrite    ApiKeyScope = "broadcasts:write"
 	CannedRepliesWrite ApiKeyScope = "canned_replies:write"
+	ChangelogPublish   ApiKeyScope = "changelog:publish"
+	ChangelogRead      ApiKeyScope = "changelog:read"
+	ChangelogWrite     ApiKeyScope = "changelog:write"
 	ContactsRead       ApiKeyScope = "contacts:read"
 	ContactsWrite      ApiKeyScope = "contacts:write"
 	ConversationsRead  ApiKeyScope = "conversations:read"
@@ -962,6 +965,12 @@ func (e ApiKeyScope) Valid() bool {
 	case BroadcastsWrite:
 		return true
 	case CannedRepliesWrite:
+		return true
+	case ChangelogPublish:
+		return true
+	case ChangelogRead:
+		return true
+	case ChangelogWrite:
 		return true
 	case ContactsRead:
 		return true
@@ -1424,6 +1433,129 @@ func (e BroadcastsStatus) Valid() bool {
 	case ApprovalRequired:
 		return true
 	case Suspended:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntryEventType.
+const (
+	ChangelogEntryDeletedEvent     ChangelogEntryEventType = "changelog.entry.deleted"
+	ChangelogEntryPublishedEvent   ChangelogEntryEventType = "changelog.entry.published"
+	ChangelogEntryUnpublishedEvent ChangelogEntryEventType = "changelog.entry.unpublished"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntryEventType enum.
+func (e ChangelogEntryEventType) Valid() bool {
+	switch e {
+	case ChangelogEntryDeletedEvent:
+		return true
+	case ChangelogEntryPublishedEvent:
+		return true
+	case ChangelogEntryUnpublishedEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntrySignalType.
+const (
+	ChangelogEntryUpdated ChangelogEntrySignalType = "changelog.entry.updated"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntrySignalType enum.
+func (e ChangelogEntrySignalType) Valid() bool {
+	switch e {
+	case ChangelogEntryUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogEntryState.
+const (
+	ChangelogStateDraft     ChangelogEntryState = "draft"
+	ChangelogStatePublished ChangelogEntryState = "published"
+	ChangelogStateScheduled ChangelogEntryState = "scheduled"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogEntryState enum.
+func (e ChangelogEntryState) Valid() bool {
+	switch e {
+	case ChangelogStateDraft:
+		return true
+	case ChangelogStatePublished:
+		return true
+	case ChangelogStateScheduled:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogLabel.
+const (
+	ChangelogLabelFixed    ChangelogLabel = "fixed"
+	ChangelogLabelImproved ChangelogLabel = "improved"
+	ChangelogLabelNew      ChangelogLabel = "new"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogLabel enum.
+func (e ChangelogLabel) Valid() bool {
+	switch e {
+	case ChangelogLabelFixed:
+		return true
+	case ChangelogLabelImproved:
+		return true
+	case ChangelogLabelNew:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogScheduleFailureReason.
+const (
+	ChangelogFailureKeyRevoked           ChangelogScheduleFailureReason = "key_revoked"
+	ChangelogFailureKeyScopeLost         ChangelogScheduleFailureReason = "key_scope_lost"
+	ChangelogFailureLostRight            ChangelogScheduleFailureReason = "lost_right"
+	ChangelogFailureNoDefaultTranslation ChangelogScheduleFailureReason = "no_default_translation"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogScheduleFailureReason enum.
+func (e ChangelogScheduleFailureReason) Valid() bool {
+	switch e {
+	case ChangelogFailureKeyRevoked:
+		return true
+	case ChangelogFailureKeyScopeLost:
+		return true
+	case ChangelogFailureLostRight:
+		return true
+	case ChangelogFailureNoDefaultTranslation:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ChangelogTranslationState.
+const (
+	ChangelogTranslationChanged   ChangelogTranslationState = "changed"
+	ChangelogTranslationDraft     ChangelogTranslationState = "draft"
+	ChangelogTranslationPublished ChangelogTranslationState = "published"
+)
+
+// Valid indicates whether the value is a known member of the ChangelogTranslationState enum.
+func (e ChangelogTranslationState) Valid() bool {
+	switch e {
+	case ChangelogTranslationChanged:
+		return true
+	case ChangelogTranslationDraft:
+		return true
+	case ChangelogTranslationPublished:
 		return true
 	default:
 		return false
@@ -2935,6 +3067,7 @@ func (e HomeSetupItemId) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
+	LimitChangelogMaxEntries     HostedLimit = "YUVA_CHANGELOG_MAX_ENTRIES"
 	LimitHelpMaxArticles         HostedLimit = "YUVA_HELP_MAX_ARTICLES"
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
 	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
@@ -2946,6 +3079,8 @@ const (
 // Valid indicates whether the value is a known member of the HostedLimit enum.
 func (e HostedLimit) Valid() bool {
 	switch e {
+	case LimitChangelogMaxEntries:
+		return true
 	case LimitHelpMaxArticles:
 		return true
 	case LimitMigrationMaxActive:
@@ -5665,34 +5800,37 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
-	WebhookEventTypeAnalyticsAlert         WebhookEventType = "analytics.alert"
-	WebhookEventTypeBroadcastUpdated       WebhookEventType = "broadcast.updated"
-	WebhookEventTypeContactDeleted         WebhookEventType = "contact.deleted"
-	WebhookEventTypeContactUpdated         WebhookEventType = "contact.updated"
-	WebhookEventTypeConversationCreated    WebhookEventType = "conversation.created"
-	WebhookEventTypeConversationRated      WebhookEventType = "conversation.rated"
-	WebhookEventTypeConversationUpdated    WebhookEventType = "conversation.updated"
-	WebhookEventTypeDiscussionAnswered     WebhookEventType = "discussion.answered"
-	WebhookEventTypeDiscussionCreated      WebhookEventType = "discussion.created"
-	WebhookEventTypeDiscussionPostCreated  WebhookEventType = "discussion.post_created"
-	WebhookEventTypeDiscussionStageChanged WebhookEventType = "discussion.stage_changed"
-	WebhookEventTypeDiscussionUpdated      WebhookEventType = "discussion.updated"
-	WebhookEventTypeDraftCreated           WebhookEventType = "draft.created"
-	WebhookEventTypeDraftDeleted           WebhookEventType = "draft.deleted"
-	WebhookEventTypeDraftUpdated           WebhookEventType = "draft.updated"
-	WebhookEventTypeFeedbackCreated        WebhookEventType = "feedback.created"
-	WebhookEventTypeHelpArticleDeleted     WebhookEventType = "help.article.deleted"
-	WebhookEventTypeHelpArticlePublished   WebhookEventType = "help.article.published"
-	WebhookEventTypeHelpArticleUnpublished WebhookEventType = "help.article.unpublished"
-	WebhookEventTypeMessageCreated         WebhookEventType = "message.created"
-	WebhookEventTypeStatusComponentUpdated WebhookEventType = "status.component.updated"
-	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
-	WebhookEventTypeStatusIncidentResolved WebhookEventType = "status.incident.resolved"
-	WebhookEventTypeStatusIncidentUpdated  WebhookEventType = "status.incident.updated"
-	WebhookEventTypeStatusMonitorDown      WebhookEventType = "status.monitor.down"
-	WebhookEventTypeStatusMonitorUp        WebhookEventType = "status.monitor.up"
-	WebhookEventTypeSubscriptionCreated    WebhookEventType = "subscription.created"
-	WebhookEventTypeSubscriptionUpdated    WebhookEventType = "subscription.updated"
+	WebhookEventTypeAnalyticsAlert            WebhookEventType = "analytics.alert"
+	WebhookEventTypeBroadcastUpdated          WebhookEventType = "broadcast.updated"
+	WebhookEventTypeChangelogEntryDeleted     WebhookEventType = "changelog.entry.deleted"
+	WebhookEventTypeChangelogEntryPublished   WebhookEventType = "changelog.entry.published"
+	WebhookEventTypeChangelogEntryUnpublished WebhookEventType = "changelog.entry.unpublished"
+	WebhookEventTypeContactDeleted            WebhookEventType = "contact.deleted"
+	WebhookEventTypeContactUpdated            WebhookEventType = "contact.updated"
+	WebhookEventTypeConversationCreated       WebhookEventType = "conversation.created"
+	WebhookEventTypeConversationRated         WebhookEventType = "conversation.rated"
+	WebhookEventTypeConversationUpdated       WebhookEventType = "conversation.updated"
+	WebhookEventTypeDiscussionAnswered        WebhookEventType = "discussion.answered"
+	WebhookEventTypeDiscussionCreated         WebhookEventType = "discussion.created"
+	WebhookEventTypeDiscussionPostCreated     WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionStageChanged    WebhookEventType = "discussion.stage_changed"
+	WebhookEventTypeDiscussionUpdated         WebhookEventType = "discussion.updated"
+	WebhookEventTypeDraftCreated              WebhookEventType = "draft.created"
+	WebhookEventTypeDraftDeleted              WebhookEventType = "draft.deleted"
+	WebhookEventTypeDraftUpdated              WebhookEventType = "draft.updated"
+	WebhookEventTypeFeedbackCreated           WebhookEventType = "feedback.created"
+	WebhookEventTypeHelpArticleDeleted        WebhookEventType = "help.article.deleted"
+	WebhookEventTypeHelpArticlePublished      WebhookEventType = "help.article.published"
+	WebhookEventTypeHelpArticleUnpublished    WebhookEventType = "help.article.unpublished"
+	WebhookEventTypeMessageCreated            WebhookEventType = "message.created"
+	WebhookEventTypeStatusComponentUpdated    WebhookEventType = "status.component.updated"
+	WebhookEventTypeStatusIncidentCreated     WebhookEventType = "status.incident.created"
+	WebhookEventTypeStatusIncidentResolved    WebhookEventType = "status.incident.resolved"
+	WebhookEventTypeStatusIncidentUpdated     WebhookEventType = "status.incident.updated"
+	WebhookEventTypeStatusMonitorDown         WebhookEventType = "status.monitor.down"
+	WebhookEventTypeStatusMonitorUp           WebhookEventType = "status.monitor.up"
+	WebhookEventTypeSubscriptionCreated       WebhookEventType = "subscription.created"
+	WebhookEventTypeSubscriptionUpdated       WebhookEventType = "subscription.updated"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -5701,6 +5839,12 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeAnalyticsAlert:
 		return true
 	case WebhookEventTypeBroadcastUpdated:
+		return true
+	case WebhookEventTypeChangelogEntryDeleted:
+		return true
+	case WebhookEventTypeChangelogEntryPublished:
+		return true
+	case WebhookEventTypeChangelogEntryUnpublished:
 		return true
 	case WebhookEventTypeContactDeleted:
 		return true
@@ -5942,6 +6086,30 @@ func (e GetAnalyticsRetentionParamsGrain) Valid() bool {
 	case AnalyticsRetentionMonth:
 		return true
 	case AnalyticsRetentionWeek:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListChangelogEntriesParamsState.
+const (
+	ListChangelogEntriesParamsStateChanged   ListChangelogEntriesParamsState = "changed"
+	ListChangelogEntriesParamsStateDraft     ListChangelogEntriesParamsState = "draft"
+	ListChangelogEntriesParamsStatePublished ListChangelogEntriesParamsState = "published"
+	ListChangelogEntriesParamsStateScheduled ListChangelogEntriesParamsState = "scheduled"
+)
+
+// Valid indicates whether the value is a known member of the ListChangelogEntriesParamsState enum.
+func (e ListChangelogEntriesParamsState) Valid() bool {
+	switch e {
+	case ListChangelogEntriesParamsStateChanged:
+		return true
+	case ListChangelogEntriesParamsStateDraft:
+		return true
+	case ListChangelogEntriesParamsStatePublished:
+		return true
+	case ListChangelogEntriesParamsStateScheduled:
 		return true
 	default:
 		return false
@@ -7353,6 +7521,7 @@ type AnalyticsRangeProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit         *HostedLimit        `json:"limit,omitempty"`
 	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
 
@@ -7911,7 +8080,14 @@ type ApiKeyList struct {
 //	  - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
 //	    Never implied: a key made without naming its scopes does not hold it.
 //
-// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
+//	  - `changelog:read`: What's new changelogs and their entries.
+//	  - `changelog:write`: write entries and translations, save drafts, upload images, render Markdown.
+//	    Mailing an entry to subscribers also needs `broadcasts:write` and `lists:read`.
+//	  - `changelog:publish`: create, configure and delete changelogs; publish, schedule, unschedule
+//	    and unpublish entries, change or delete published ones. API keys only, and never implied:
+//	    a key made without naming its scopes does not hold it, and OAuth clients are not offered it.
+//
+// `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*`, `roadmap:*` and `changelog:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -7987,6 +8163,9 @@ type BotAvatarUrl = string
 // Broadcast defines model for Broadcast.
 type Broadcast struct {
 	Audience BroadcastAudience `json:"audience"`
+
+	// ChangelogEntryId The What's new entry it was made from with `broadcastChangelogEntry`; absent otherwise or once the entry is deleted.
+	ChangelogEntryId *uuid.UUID `json:"changelog_entry_id,omitempty"`
 
 	// ChannelId The inbox's e-mail channel it goes out through; absent until chosen or when removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
@@ -8338,6 +8517,7 @@ type BroadcastProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -8614,6 +8794,469 @@ type CannedReplyUpdate struct {
 	Title    *string `json:"title,omitempty"`
 }
 
+// Changelog defines model for Changelog.
+type Changelog struct {
+	// AgentsMayPublish Agents with access to the inbox may publish, schedule, unpublish and delete published entries.
+	AgentsMayPublish bool `json:"agents_may_publish"`
+
+	// AnalyticsPropertyId The analytics property the public pages count cookieless page views in.
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// CanPublish The caller may publish and schedule this changelog's entries.
+	CanPublish bool            `json:"can_publish"`
+	Counts     ChangelogCounts `json:"counts"`
+	CreatedAt  time.Time       `json:"created_at"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// Description Shown on the changelog's home page.
+	Description string    `json:"description"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+
+	// Locales The locales entries may be written and published in; the default locale is one of them.
+	Locales   []LanguageTag `json:"locales"`
+	Name      string        `json:"name"`
+	Published bool          `json:"published"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug      ChangelogSlug `json:"slug"`
+	UpdatedAt time.Time     `json:"updated_at"`
+
+	// Url The public home page, `<public URL>/changelog/{slug}`.
+	Url string `json:"url"`
+}
+
+// ChangelogBroadcast defines model for ChangelogBroadcast.
+type ChangelogBroadcast struct {
+	// ChannelId The e-mail channel the broadcast sends through.
+	ChannelId *uuid.UUID  `json:"channel_id,omitempty"`
+	ListIds   []uuid.UUID `json:"list_ids"`
+
+	// Locale The entry's published translation the mail is written from.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+}
+
+// ChangelogConflictProblem defines model for ChangelogConflictProblem.
+type ChangelogConflictProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
+	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Translation `version_conflict` only: the translation as it is now.
+	Translation *ChangelogEntryTranslation `json:"translation,omitempty"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// ChangelogCounts defines model for ChangelogCounts.
+type ChangelogCounts struct {
+	Entries int32 `json:"entries"`
+
+	// Published Entries that are public once the changelog is.
+	Published int32 `json:"published"`
+	Scheduled int32 `json:"scheduled"`
+}
+
+// ChangelogCreate defines model for ChangelogCreate.
+type ChangelogCreate struct {
+	// AgentsMayPublish Default `false`.
+	AgentsMayPublish    *bool      `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId *uuid.UUID `json:"analytics_property_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	InboxId       uuid.UUID      `json:"inbox_id"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+	Name          string         `json:"name"`
+
+	// Published Default `false`.
+	Published *bool `json:"published,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug ChangelogSlug `json:"slug"`
+}
+
+// ChangelogEntry defines model for ChangelogEntry.
+type ChangelogEntry struct {
+	ChangelogId       uuid.UUID        `json:"changelog_id"`
+	CreatedAt         time.Time        `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID       `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID       `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID        `json:"id"`
+	Image             *EmailImage      `json:"image,omitempty"`
+	Labels            []ChangelogLabel `json:"labels"`
+	Number            int32            `json:"number"`
+	PublishAt         *time.Time       `json:"publish_at,omitempty"`
+	PublishedAt       *time.Time       `json:"published_at,omitempty"`
+
+	// ScheduleFailed Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+	// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+	// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+	// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+	ScheduleFailed      *ChangelogScheduleFailure `json:"schedule_failed,omitempty"`
+	ScheduledByApiKeyId *uuid.UUID                `json:"scheduled_by_api_key_id,omitempty"`
+	ScheduledByMemberId *uuid.UUID                `json:"scheduled_by_member_id,omitempty"`
+
+	// State `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+	// public once the changelog is published.
+	State        ChangelogEntryState         `json:"state"`
+	Translations []ChangelogEntryTranslation `json:"translations"`
+	UpdatedAt    time.Time                   `json:"updated_at"`
+}
+
+// ChangelogEntryCreate defines model for ChangelogEntryCreate.
+type ChangelogEntryCreate struct {
+	// Body Markdown.
+	Body *string `json:"body,omitempty"`
+
+	// ImageId An e-mail image of the workspace.
+	ImageId *uuid.UUID       `json:"image_id,omitempty"`
+	Labels  []ChangelogLabel `json:"labels"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// ChangelogEntryEvent `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted`: an
+// entry was published (also when a schedule fired, and again on republishing) or
+// unpublished, or a published entry was deleted. Delivered to callers who hold
+// `changelog:read` and can see the changelog's inbox.
+type ChangelogEntryEvent struct {
+	CreatedAt   time.Time               `json:"created_at"`
+	Data        ChangelogEntryEventData `json:"data"`
+	Id          int64                   `json:"id"`
+	InboxId     uuid.UUID               `json:"inbox_id"`
+	Type        ChangelogEntryEventType `json:"type"`
+	WorkspaceId uuid.UUID               `json:"workspace_id"`
+}
+
+// ChangelogEntryEventType defines model for ChangelogEntryEvent.Type.
+type ChangelogEntryEventType string
+
+// ChangelogEntryEventData defines model for ChangelogEntryEventData.
+type ChangelogEntryEventData struct {
+	Changelog ChangelogRef      `json:"changelog"`
+	Entry     ChangelogEntryRef `json:"entry"`
+}
+
+// ChangelogEntryPage defines model for ChangelogEntryPage.
+type ChangelogEntryPage struct {
+	Items []ChangelogEntrySummary `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ChangelogEntryPublish defines model for ChangelogEntryPublish.
+type ChangelogEntryPublish struct {
+	// BaseVersion With `locale`, the `version` the caller reviewed.
+	BaseVersion *int32 `json:"base_version,omitempty"`
+
+	// Locale Publish this translation alone, for an entry that is already published.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+}
+
+// ChangelogEntryRef defines model for ChangelogEntryRef.
+type ChangelogEntryRef struct {
+	Id          uuid.UUID        `json:"id"`
+	Labels      []ChangelogLabel `json:"labels"`
+	Number      int32            `json:"number"`
+	PublishedAt *time.Time       `json:"published_at,omitempty"`
+
+	// Translations The published translations (those the entry had, for `changelog.entry.unpublished` and `changelog.entry.deleted`).
+	Translations []ChangelogEntryRefTranslation `json:"translations"`
+}
+
+// ChangelogEntryRefTranslation defines model for ChangelogEntryRefTranslation.
+type ChangelogEntryRefTranslation struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Title The published title.
+	Title string `json:"title"`
+
+	// Url The public page; absent unless the changelog is published.
+	Url *string `json:"url,omitempty"`
+}
+
+// ChangelogEntrySignal `changelog.entry.updated`, on `/v1/realtime` only: an entry or a translation's draft
+// changed (created, saved, labels or image changed, scheduled, unscheduled), so an editor
+// open on an older `version` can say it changed elsewhere and lists can refresh. Not
+// stored, no id, never replayed. Reaches whoever holds `changelog:read` and sees the
+// changelog's inbox.
+type ChangelogEntrySignal struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		ChangelogId uuid.UUID `json:"changelog_id"`
+		EntryId     uuid.UUID `json:"entry_id"`
+
+		// Locale The translation saved; absent for a change to the entry itself.
+		//
+		// Examples: en, tr
+		Locale *LanguageTag `json:"locale,omitempty"`
+
+		// MemberId The member who made the change, when one did.
+		MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+		// Version The translation's new version, with `locale`.
+		Version *int32 `json:"version,omitempty"`
+	} `json:"data"`
+	InboxId     uuid.UUID                `json:"inbox_id"`
+	Type        ChangelogEntrySignalType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// ChangelogEntrySignalType defines model for ChangelogEntrySignal.Type.
+type ChangelogEntrySignalType string
+
+// ChangelogEntryState `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+// public once the changelog is published.
+type ChangelogEntryState string
+
+// ChangelogEntrySummary defines model for ChangelogEntrySummary.
+type ChangelogEntrySummary struct {
+	ChangelogId       uuid.UUID  `json:"changelog_id"`
+	CreatedAt         time.Time  `json:"created_at"`
+	CreatedByApiKeyId *uuid.UUID `json:"created_by_api_key_id,omitempty"`
+	CreatedByMemberId *uuid.UUID `json:"created_by_member_id,omitempty"`
+	Id                uuid.UUID  `json:"id"`
+
+	// Image The entry's picture; absent for none.
+	Image  *EmailImage      `json:"image,omitempty"`
+	Labels []ChangelogLabel `json:"labels"`
+
+	// Number The entry's number in its changelog's URLs, `/{locale}/entries/{number}-{slug}`.
+	Number int32 `json:"number"`
+
+	// PublishAt `scheduled` only.
+	PublishAt *time.Time `json:"publish_at,omitempty"`
+
+	// PublishedAt The date shown, the sort key and the widget's unread mark; set when the entry is first published and kept after unpublishing.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+
+	// ScheduleFailed Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+	// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+	// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+	// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+	ScheduleFailed      *ChangelogScheduleFailure `json:"schedule_failed,omitempty"`
+	ScheduledByApiKeyId *uuid.UUID                `json:"scheduled_by_api_key_id,omitempty"`
+	ScheduledByMemberId *uuid.UUID                `json:"scheduled_by_member_id,omitempty"`
+
+	// State `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+	// public once the changelog is published.
+	State        ChangelogEntryState                `json:"state"`
+	Translations []ChangelogEntryTranslationSummary `json:"translations"`
+	UpdatedAt    time.Time                          `json:"updated_at"`
+}
+
+// ChangelogEntryTranslation defines model for ChangelogEntryTranslation.
+type ChangelogEntryTranslation struct {
+	// Body The draft, Markdown.
+	Body      string    `json:"body"`
+	CreatedAt time.Time `json:"created_at"`
+	EntryId   uuid.UUID `json:"entry_id"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// Published The published copy; absent unless there is one.
+	Published *ChangelogPublishedCopy `json:"published,omitempty"`
+	Slug      string                  `json:"slug"`
+
+	// State `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+	// published copy, with a draft saved since that differs.
+	State ChangelogTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title string `json:"title"`
+
+	// UpdatedAt When the draft was last saved.
+	UpdatedAt         time.Time  `json:"updated_at"`
+	UpdatedByApiKeyId *uuid.UUID `json:"updated_by_api_key_id,omitempty"`
+	UpdatedByMemberId *uuid.UUID `json:"updated_by_member_id,omitempty"`
+
+	// Url The public page; absent unless the entry and this translation are published.
+	Url *string `json:"url,omitempty"`
+
+	// Version Moves with every save; send it as `base_version`.
+	Version int32 `json:"version"`
+}
+
+// ChangelogEntryTranslationSummary defines model for ChangelogEntryTranslationSummary.
+type ChangelogEntryTranslationSummary struct {
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale LanguageTag `json:"locale"`
+
+	// Outdated The default locale's translation was published after this translation was last saved; always false in the default locale.
+	Outdated bool `json:"outdated"`
+
+	// PublishedAt Absent unless a published copy exists.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	Slug        string     `json:"slug"`
+
+	// State `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+	// published copy, with a draft saved since that differs.
+	State ChangelogTranslationState `json:"state"`
+
+	// Title The draft's title.
+	Title     string    `json:"title"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The public page; absent unless the entry and this translation are published.
+	Url     *string `json:"url,omitempty"`
+	Version int32   `json:"version"`
+}
+
+// ChangelogEntryUpdate defines model for ChangelogEntryUpdate.
+type ChangelogEntryUpdate struct {
+	ImageId nullable.Nullable[uuid.UUID] `json:"image_id,omitempty"`
+	Labels  *[]ChangelogLabel            `json:"labels,omitempty"`
+}
+
+// ChangelogLabel defines model for ChangelogLabel.
+type ChangelogLabel string
+
+// ChangelogList defines model for ChangelogList.
+type ChangelogList struct {
+	Items []Changelog `json:"items"`
+}
+
+// ChangelogPublishedCopy defines model for ChangelogPublishedCopy.
+type ChangelogPublishedCopy struct {
+	Body string `json:"body"`
+
+	// Excerpt The start of the rendered body as plain text, at most 300 characters.
+	Excerpt string `json:"excerpt"`
+
+	// Html The body rendered at publish.
+	Html                string     `json:"html"`
+	PublishedAt         time.Time  `json:"published_at"`
+	PublishedByApiKeyId *uuid.UUID `json:"published_by_api_key_id,omitempty"`
+	PublishedByMemberId *uuid.UUID `json:"published_by_member_id,omitempty"`
+	Slug                string     `json:"slug"`
+	Title               string     `json:"title"`
+}
+
+// ChangelogRef defines model for ChangelogRef.
+type ChangelogRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+	Url  string    `json:"url"`
+}
+
+// ChangelogSchedule defines model for ChangelogSchedule.
+type ChangelogSchedule struct {
+	PublishAt time.Time `json:"publish_at"`
+}
+
+// ChangelogScheduleFailure Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+// member who scheduled it may no longer publish, or is gone), `key_revoked`,
+// `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+// inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+type ChangelogScheduleFailure struct {
+	At     time.Time                      `json:"at"`
+	Reason ChangelogScheduleFailureReason `json:"reason"`
+}
+
+// ChangelogScheduleFailureReason defines model for ChangelogScheduleFailure.Reason.
+type ChangelogScheduleFailureReason string
+
+// ChangelogSlug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+//
+// Examples: acme-news
+type ChangelogSlug = string
+
+// ChangelogTranslationState `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+// published copy, with a draft saved since that differs.
+type ChangelogTranslationState string
+
+// ChangelogTranslationWrite defines model for ChangelogTranslationWrite.
+type ChangelogTranslationWrite struct {
+	// BaseVersion The `version` the editor loaded; `0` for a new translation.
+	BaseVersion int32 `json:"base_version"`
+
+	// Body Markdown; empty when absent.
+	Body *string `json:"body,omitempty"`
+
+	// Slug Made from the title when absent.
+	//
+	// Examples: acme-app
+	Slug  *Slug  `json:"slug,omitempty"`
+	Title string `json:"title"`
+}
+
+// ChangelogUpdate defines model for ChangelogUpdate.
+type ChangelogUpdate struct {
+	AgentsMayPublish    *bool                        `json:"agents_may_publish,omitempty"`
+	AnalyticsPropertyId nullable.Nullable[uuid.UUID] `json:"analytics_property_id,omitempty"`
+
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale *LanguageTag   `json:"default_locale,omitempty"`
+	Description   *string        `json:"description,omitempty"`
+	Locales       *[]LanguageTag `json:"locales,omitempty"`
+	Name          *string        `json:"name,omitempty"`
+	Published     *bool          `json:"published,omitempty"`
+
+	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
+	//
+	// Examples: acme-news
+	Slug *ChangelogSlug `json:"slug,omitempty"`
+}
+
 // Channel defines model for Channel.
 type Channel struct {
 	// App Settings of an `app` (mobile SDKs) channel. Native apps send no `Origin`, so the key is not
@@ -8687,6 +9330,9 @@ type ChatChannel struct {
 	// AllowedOrigins The only origins whose pages may use the widget, compared exactly.
 	AllowedOrigins []Origin `json:"allowed_origins"`
 
+	// AnnounceUpdates The widget's launcher shows the number of unread What's new entries while no messages are unread.
+	AnnounceUpdates bool `json:"announce_updates"`
+
 	// AskEmailOffline The widget asks for an e-mail address when nobody is available.
 	AskEmailOffline bool `json:"ask_email_offline"`
 
@@ -8712,6 +9358,9 @@ type ChatChannelInput struct {
 	// AllowAnonymous Defaults to false.
 	AllowAnonymous *bool    `json:"allow_anonymous,omitempty"`
 	AllowedOrigins []Origin `json:"allowed_origins"`
+
+	// AnnounceUpdates Defaults to false; on an update, absent keeps the current setting.
+	AnnounceUpdates *bool `json:"announce_updates,omitempty"`
 
 	// AskEmailOffline Defaults to true.
 	AskEmailOffline *bool `json:"ask_email_offline,omitempty"`
@@ -8745,10 +9394,37 @@ type ClientAttachment struct {
 	Size   int64     `json:"size"`
 }
 
+// ClientChangelog defines model for ClientChangelog.
+type ClientChangelog struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+	Description   string      `json:"description"`
+
+	// LatestPublishedAt The `published_at` of the newest published entry; absent when there is none.
+	LatestPublishedAt *time.Time `json:"latest_published_at,omitempty"`
+
+	// Locale The locale served.
+	//
+	// Examples: en, tr
+	Locale  LanguageTag   `json:"locale"`
+	Locales []LanguageTag `json:"locales"`
+	Name    string        `json:"name"`
+
+	// Url The changelog's public home page in the served locale.
+	Url string `json:"url"`
+}
+
 // ClientChatSettings defines model for ClientChatSettings.
 type ClientChatSettings struct {
-	AllowAnonymous  bool `json:"allow_anonymous"`
-	AskEmailOffline bool `json:"ask_email_offline"`
+	AllowAnonymous bool `json:"allow_anonymous"`
+
+	// AnnounceUpdates Show the unread count of What's new entries on the launcher while there are no unread
+	// messages. The Home tile shows the count whatever this says. Servers sent it from the
+	// release that added What's new on; absent means `false`.
+	AnnounceUpdates *bool `json:"announce_updates,omitempty"`
+	AskEmailOffline bool  `json:"ask_email_offline"`
 
 	// Discussions `off` on `app` channels.
 	Discussions DiscussionMode `json:"discussions"`
@@ -9254,6 +9930,11 @@ type ClientInbox struct {
 	// empty; an `inbox.updated` frame brings every change.
 	Status   *ClientInboxStatus `json:"status,omitempty"`
 	Timezone string             `json:"timezone"`
+
+	// WhatsNew Absent unless the inbox has a published changelog with a published entry (and on a
+	// server with `YUVA_WHATS_NEW=off`); show the What's new tile only then. An
+	// `inbox.updated` frame brings every change.
+	WhatsNew *ClientInboxWhatsNew `json:"whats_new,omitempty"`
 }
 
 // ClientInboxHelp The inbox's published help center.
@@ -9311,6 +9992,22 @@ type ClientInboxUpdatedEvent struct {
 
 // ClientInboxUpdatedEventType defines model for ClientInboxUpdatedEvent.Type.
 type ClientInboxUpdatedEventType string
+
+// ClientInboxWhatsNew The inbox's published changelog that has at least one published entry.
+type ClientInboxWhatsNew struct {
+	// DefaultLocale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	DefaultLocale LanguageTag `json:"default_locale"`
+
+	// LatestPublishedAt The `published_at` of the newest published entry. The widget fetches the feed only when
+	// this is newer than the newest entry the visitor has seen.
+	LatestPublishedAt time.Time     `json:"latest_published_at"`
+	Locales           []LanguageTag `json:"locales"`
+
+	// Url The changelog's public home page.
+	Url string `json:"url"`
+}
 
 // ClientMailingList defines model for ClientMailingList.
 type ClientMailingList struct {
@@ -9644,6 +10341,48 @@ type ClientTypingEvent struct {
 
 // ClientTypingEventType defines model for ClientTypingEvent.Type.
 type ClientTypingEventType string
+
+// ClientWhatsNew defines model for ClientWhatsNew.
+type ClientWhatsNew struct {
+	Changelog ClientChangelog       `json:"changelog"`
+	Items     []ClientWhatsNewEntry `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ClientWhatsNewEntry defines model for ClientWhatsNewEntry.
+type ClientWhatsNewEntry struct {
+	// Excerpt Plain text, at most 300 characters.
+	Excerpt string `json:"excerpt"`
+
+	// Fallback The entry has no published translation in the requested locale; this is the default locale's.
+	Fallback bool `json:"fallback"`
+
+	// Html The body rendered and sanitized at publish.
+	Html   string               `json:"html"`
+	Id     uuid.UUID            `json:"id"`
+	Image  *ClientWhatsNewImage `json:"image,omitempty"`
+	Labels []ChangelogLabel     `json:"labels"`
+
+	// Locale The locale actually served.
+	//
+	// Examples: en, tr
+	Locale      LanguageTag `json:"locale"`
+	Number      int32       `json:"number"`
+	PublishedAt time.Time   `json:"published_at"`
+	Title       string      `json:"title"`
+
+	// Url The entry's public page.
+	Url string `json:"url"`
+}
+
+// ClientWhatsNewImage defines model for ClientWhatsNewImage.
+type ClientWhatsNewImage struct {
+	Height int32  `json:"height"`
+	Url    string `json:"url"`
+	Width  int32  `json:"width"`
+}
 
 // ConsentEvent defines model for ConsentEvent.
 type ConsentEvent struct {
@@ -11360,6 +12099,7 @@ type EmailDesignProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -11693,6 +12433,7 @@ type EmailImageProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12679,6 +13420,7 @@ type HelpConflictProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12961,6 +13703,7 @@ type HomeWaitingConversation struct {
 // allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 // `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 // `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 type HostedLimit string
 
 // IdeaRef The idea a feedback conversation is linked to.
@@ -14623,6 +15366,7 @@ type MigrationFileProblem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
@@ -15653,6 +16397,7 @@ type Problem struct {
 	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	// `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
 	// `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
+	// `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -17923,6 +18668,19 @@ type WebhookBroadcastPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookChangelogEntryPayload defines model for WebhookChangelogEntryPayload.
+type WebhookChangelogEntryPayload struct {
+	Data ChangelogEntryEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookContact The contact as a host backend needs it.
 type WebhookContact struct {
 	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
@@ -18377,6 +19135,17 @@ type BroadcastId = uuid.UUID
 // CannedReplyId defines model for CannedReplyId.
 type CannedReplyId = uuid.UUID
 
+// ChangelogEntryId defines model for ChangelogEntryId.
+type ChangelogEntryId = uuid.UUID
+
+// ChangelogId defines model for ChangelogId.
+type ChangelogId = uuid.UUID
+
+// ChangelogLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ChangelogLocale = LanguageTag
+
 // ChannelId defines model for ChannelId.
 type ChannelId = uuid.UUID
 
@@ -18390,6 +19159,14 @@ type ClientHelpChannelKey = string
 //
 // Examples: en, tr
 type ClientHelpLocale = LanguageTag
+
+// ClientWhatsNewChannelKey defines model for ClientWhatsNewChannelKey.
+type ClientWhatsNewChannelKey = string
+
+// ClientWhatsNewLocale A BCP 47 language tag.
+//
+// Examples: en, tr
+type ClientWhatsNewLocale = LanguageTag
 
 // ConsentFormat defines model for ConsentFormat.
 type ConsentFormat string
@@ -18610,6 +19387,22 @@ type SearchClientHelpParams struct {
 	// Limit 1 to 10; 5 by default.
 	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
 	Final *bool  `form:"final,omitempty" json:"final,omitempty"`
+}
+
+// GetClientWhatsNewParams defines parameters for GetClientWhatsNew.
+type GetClientWhatsNewParams struct {
+	// Locale The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale.
+	Locale *ClientWhatsNewLocale `form:"locale,omitempty" json:"locale,omitempty"`
+	Cursor *string               `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit 1 to 50; 20 by default.
+	Limit *int32 `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetClientWhatsNewEntryParams defines parameters for GetClientWhatsNewEntry.
+type GetClientWhatsNewEntryParams struct {
+	// Locale The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale.
+	Locale *ClientWhatsNewLocale `form:"locale,omitempty" json:"locale,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -19238,6 +20031,154 @@ type DeleteCannedReplyParams struct {
 
 // UpdateCannedReplyParams defines parameters for UpdateCannedReply.
 type UpdateCannedReplyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogsParams defines parameters for ListChangelogs.
+type ListChangelogsParams struct {
+	// InboxId Only the changelog of this inbox.
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateChangelogParams defines parameters for CreateChangelog.
+type CreateChangelogParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogParams defines parameters for DeleteChangelog.
+type DeleteChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetChangelogParams defines parameters for GetChangelog.
+type GetChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateChangelogParams defines parameters for UpdateChangelog.
+type UpdateChangelogParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogEntriesParams defines parameters for ListChangelogEntries.
+type ListChangelogEntriesParams struct {
+	State  *ListChangelogEntriesParamsState `form:"state,omitempty" json:"state,omitempty"`
+	Label  *ChangelogLabel                  `form:"label,omitempty" json:"label,omitempty"`
+	Locale *LanguageTag                     `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListChangelogEntriesParamsState defines parameters for ListChangelogEntries.
+type ListChangelogEntriesParamsState string
+
+// CreateChangelogEntryParams defines parameters for CreateChangelogEntry.
+type CreateChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogEntryParams defines parameters for DeleteChangelogEntry.
+type DeleteChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetChangelogEntryParams defines parameters for GetChangelogEntry.
+type GetChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateChangelogEntryParams defines parameters for UpdateChangelogEntry.
+type UpdateChangelogEntryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// BroadcastChangelogEntryParams defines parameters for BroadcastChangelogEntry.
+type BroadcastChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PublishChangelogEntryParams defines parameters for PublishChangelogEntry.
+type PublishChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScheduleChangelogEntryParams defines parameters for ScheduleChangelogEntry.
+type ScheduleChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteChangelogEntryTranslationParams defines parameters for DeleteChangelogEntryTranslation.
+type DeleteChangelogEntryTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PutChangelogEntryTranslationParams defines parameters for PutChangelogEntryTranslation.
+type PutChangelogEntryTranslationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnpublishChangelogEntryParams defines parameters for UnpublishChangelogEntry.
+type UnpublishChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnscheduleChangelogEntryParams defines parameters for UnscheduleChangelogEntry.
+type UnscheduleChangelogEntryParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadChangelogImageParams defines parameters for UploadChangelogImage.
+type UploadChangelogImageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -20584,6 +21525,12 @@ type ResendSubscriptionConfirmationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// RenderMarkdownParams defines parameters for RenderMarkdown.
+type RenderMarkdownParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMentionsParams defines parameters for ListMentions.
 type ListMentionsParams struct {
 	// Cursor The `next_cursor` of the previous page.
@@ -21410,6 +22357,48 @@ type WebhookBroadcastUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookChangelogEntryDeletedParams defines parameters for WebhookChangelogEntryDeleted.
+type WebhookChangelogEntryDeletedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookChangelogEntryPublishedParams defines parameters for WebhookChangelogEntryPublished.
+type WebhookChangelogEntryPublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookChangelogEntryUnpublishedParams defines parameters for WebhookChangelogEntryUnpublished.
+type WebhookChangelogEntryUnpublishedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookContactDeletedParams defines parameters for WebhookContactDeleted.
 type WebhookContactDeletedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -21936,6 +22925,33 @@ type CreateCannedReplyJSONRequestBody = CannedReplyCreate
 // UpdateCannedReplyJSONRequestBody defines body for UpdateCannedReply for application/json ContentType.
 type UpdateCannedReplyJSONRequestBody = CannedReplyUpdate
 
+// CreateChangelogJSONRequestBody defines body for CreateChangelog for application/json ContentType.
+type CreateChangelogJSONRequestBody = ChangelogCreate
+
+// UpdateChangelogJSONRequestBody defines body for UpdateChangelog for application/json ContentType.
+type UpdateChangelogJSONRequestBody = ChangelogUpdate
+
+// CreateChangelogEntryJSONRequestBody defines body for CreateChangelogEntry for application/json ContentType.
+type CreateChangelogEntryJSONRequestBody = ChangelogEntryCreate
+
+// UpdateChangelogEntryJSONRequestBody defines body for UpdateChangelogEntry for application/json ContentType.
+type UpdateChangelogEntryJSONRequestBody = ChangelogEntryUpdate
+
+// BroadcastChangelogEntryJSONRequestBody defines body for BroadcastChangelogEntry for application/json ContentType.
+type BroadcastChangelogEntryJSONRequestBody = ChangelogBroadcast
+
+// PublishChangelogEntryJSONRequestBody defines body for PublishChangelogEntry for application/json ContentType.
+type PublishChangelogEntryJSONRequestBody = ChangelogEntryPublish
+
+// ScheduleChangelogEntryJSONRequestBody defines body for ScheduleChangelogEntry for application/json ContentType.
+type ScheduleChangelogEntryJSONRequestBody = ChangelogSchedule
+
+// PutChangelogEntryTranslationJSONRequestBody defines body for PutChangelogEntryTranslation for application/json ContentType.
+type PutChangelogEntryTranslationJSONRequestBody = ChangelogTranslationWrite
+
+// UploadChangelogImageMultipartRequestBody defines body for UploadChangelogImage for multipart/form-data ContentType.
+type UploadChangelogImageMultipartRequestBody = EmailImageUpload
+
 // UpdateChannelJSONRequestBody defines body for UpdateChannel for application/json ContentType.
 type UpdateChannelJSONRequestBody = ChannelUpdate
 
@@ -22092,6 +23108,9 @@ type CreateSubscriptionJSONRequestBody = SubscriptionCreate
 // UpdateSubscriptionJSONRequestBody defines body for UpdateSubscription for application/json ContentType.
 type UpdateSubscriptionJSONRequestBody = SubscriptionUpdate
 
+// RenderMarkdownJSONRequestBody defines body for RenderMarkdown for application/json ContentType.
+type RenderMarkdownJSONRequestBody = HelpMarkdown
+
 // DeleteMeJSONRequestBody defines body for DeleteMe for application/json ContentType.
 type DeleteMeJSONRequestBody = AccountDeletion
 
@@ -22220,6 +23239,15 @@ type WebhookAnalyticsAlertJSONRequestBody = WebhookAnalyticsAlertPayload
 
 // WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
 type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
+
+// WebhookChangelogEntryDeletedJSONRequestBody defines body for WebhookChangelogEntryDeleted for application/json ContentType.
+type WebhookChangelogEntryDeletedJSONRequestBody = WebhookChangelogEntryPayload
+
+// WebhookChangelogEntryPublishedJSONRequestBody defines body for WebhookChangelogEntryPublished for application/json ContentType.
+type WebhookChangelogEntryPublishedJSONRequestBody = WebhookChangelogEntryPayload
+
+// WebhookChangelogEntryUnpublishedJSONRequestBody defines body for WebhookChangelogEntryUnpublished for application/json ContentType.
+type WebhookChangelogEntryUnpublishedJSONRequestBody = WebhookChangelogEntryPayload
 
 // WebhookContactDeletedJSONRequestBody defines body for WebhookContactDeleted for application/json ContentType.
 type WebhookContactDeletedJSONRequestBody = WebhookContactDeletedPayload
@@ -24749,6 +25777,58 @@ func (t *RealtimeMessage) MergeHelpArticleSignal(v HelpArticleSignal) error {
 	return err
 }
 
+// AsChangelogEntryEvent returns the union data inside the RealtimeMessage as a ChangelogEntryEvent
+func (t RealtimeMessage) AsChangelogEntryEvent() (ChangelogEntryEvent, error) {
+	var body ChangelogEntryEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntryEvent overwrites any union data inside the RealtimeMessage as the provided ChangelogEntryEvent
+func (t *RealtimeMessage) FromChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntryEvent performs a merge with any union data inside the RealtimeMessage, using the provided ChangelogEntryEvent
+func (t *RealtimeMessage) MergeChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsChangelogEntrySignal returns the union data inside the RealtimeMessage as a ChangelogEntrySignal
+func (t RealtimeMessage) AsChangelogEntrySignal() (ChangelogEntrySignal, error) {
+	var body ChangelogEntrySignal
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntrySignal overwrites any union data inside the RealtimeMessage as the provided ChangelogEntrySignal
+func (t *RealtimeMessage) FromChangelogEntrySignal(v ChangelogEntrySignal) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntrySignal performs a merge with any union data inside the RealtimeMessage, using the provided ChangelogEntrySignal
+func (t *RealtimeMessage) MergeChangelogEntrySignal(v ChangelogEntrySignal) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsRoadmapBoardSignal returns the union data inside the RealtimeMessage as a RoadmapBoardSignal
 func (t RealtimeMessage) AsRoadmapBoardSignal() (RoadmapBoardSignal, error) {
 	var body RoadmapBoardSignal
@@ -25003,6 +26083,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsBroadcastProgressEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
+	case "changelog.entry.deleted":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.published":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.unpublished":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.updated":
+		return t.AsChangelogEntrySignal()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.presence":
@@ -25738,6 +26826,32 @@ func (t *StoredEvent) MergeHelpArticleEvent(v HelpArticleEvent) error {
 	return err
 }
 
+// AsChangelogEntryEvent returns the union data inside the StoredEvent as a ChangelogEntryEvent
+func (t StoredEvent) AsChangelogEntryEvent() (ChangelogEntryEvent, error) {
+	var body ChangelogEntryEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromChangelogEntryEvent overwrites any union data inside the StoredEvent as the provided ChangelogEntryEvent
+func (t *StoredEvent) FromChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeChangelogEntryEvent performs a merge with any union data inside the StoredEvent, using the provided ChangelogEntryEvent
+func (t *StoredEvent) MergeChangelogEntryEvent(v ChangelogEntryEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -25756,6 +26870,12 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsAnalyticsAlertEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
+	case "changelog.entry.deleted":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.published":
+		return t.AsChangelogEntryEvent()
+	case "changelog.entry.unpublished":
+		return t.AsChangelogEntryEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.read":
@@ -25895,6 +27015,12 @@ type ServerInterface interface {
 	// CreateClientSubscription Subscribe from a form
 	// (POST /client/v1/channels/{channel_key}/subscriptions)
 	CreateClientSubscription(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
+	// GetClientWhatsNew The What's new feed
+	// (GET /client/v1/channels/{channel_key}/whats-new)
+	GetClientWhatsNew(w http.ResponseWriter, r *http.Request, channelKey ClientWhatsNewChannelKey, params GetClientWhatsNewParams)
+	// GetClientWhatsNewEntry A What's new entry
+	// (GET /client/v1/channels/{channel_key}/whats-new/{entryId})
+	GetClientWhatsNewEntry(w http.ResponseWriter, r *http.Request, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params GetClientWhatsNewEntryParams)
 	// SetClientContactEmail Leave an e-mail address for replies
 	// (PUT /client/v1/contact/email)
 	SetClientContactEmail(w http.ResponseWriter, r *http.Request)
@@ -26231,6 +27357,60 @@ type ServerInterface interface {
 	// UpdateCannedReply Update a canned reply
 	// (PATCH /v1/canned-replies/{cannedReplyId})
 	UpdateCannedReply(w http.ResponseWriter, r *http.Request, cannedReplyId CannedReplyId, params UpdateCannedReplyParams)
+	// ListChangelogs List changelogs
+	// (GET /v1/changelogs)
+	ListChangelogs(w http.ResponseWriter, r *http.Request, params ListChangelogsParams)
+	// CreateChangelog Create a changelog
+	// (POST /v1/changelogs)
+	CreateChangelog(w http.ResponseWriter, r *http.Request, params CreateChangelogParams)
+	// DeleteChangelog Delete a changelog
+	// (DELETE /v1/changelogs/{changelogId})
+	DeleteChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params DeleteChangelogParams)
+	// GetChangelog A changelog
+	// (GET /v1/changelogs/{changelogId})
+	GetChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params GetChangelogParams)
+	// UpdateChangelog Update a changelog
+	// (PATCH /v1/changelogs/{changelogId})
+	UpdateChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params UpdateChangelogParams)
+	// ListChangelogEntries List a changelog's entries
+	// (GET /v1/changelogs/{changelogId}/entries)
+	ListChangelogEntries(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params ListChangelogEntriesParams)
+	// CreateChangelogEntry Write an entry
+	// (POST /v1/changelogs/{changelogId}/entries)
+	CreateChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params CreateChangelogEntryParams)
+	// DeleteChangelogEntry Delete an entry
+	// (DELETE /v1/changelogs/{changelogId}/entries/{entryId})
+	DeleteChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params DeleteChangelogEntryParams)
+	// GetChangelogEntry An entry
+	// (GET /v1/changelogs/{changelogId}/entries/{entryId})
+	GetChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params GetChangelogEntryParams)
+	// UpdateChangelogEntry Change an entry's labels or image
+	// (PATCH /v1/changelogs/{changelogId}/entries/{entryId})
+	UpdateChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UpdateChangelogEntryParams)
+	// BroadcastChangelogEntry Mail an entry to subscribers
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast)
+	BroadcastChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params BroadcastChangelogEntryParams)
+	// PublishChangelogEntry Publish an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/publish)
+	PublishChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params PublishChangelogEntryParams)
+	// ScheduleChangelogEntry Schedule an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule)
+	ScheduleChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params ScheduleChangelogEntryParams)
+	// DeleteChangelogEntryTranslation Delete a translation
+	// (DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale})
+	DeleteChangelogEntryTranslation(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params DeleteChangelogEntryTranslationParams)
+	// PutChangelogEntryTranslation Save a translation's draft
+	// (PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale})
+	PutChangelogEntryTranslation(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params PutChangelogEntryTranslationParams)
+	// UnpublishChangelogEntry Unpublish an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish)
+	UnpublishChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UnpublishChangelogEntryParams)
+	// UnscheduleChangelogEntry Unschedule an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule)
+	UnscheduleChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UnscheduleChangelogEntryParams)
+	// UploadChangelogImage Upload an image for entries
+	// (POST /v1/changelogs/{changelogId}/images)
+	UploadChangelogImage(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params UploadChangelogImageParams)
 	// DeleteChannel Remove a channel
 	// (DELETE /v1/channels/{channelId})
 	DeleteChannel(w http.ResponseWriter, r *http.Request, channelId ChannelId, params DeleteChannelParams)
@@ -26672,6 +27852,9 @@ type ServerInterface interface {
 	// ResendSubscriptionConfirmation Mail the confirmation again
 	// (POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation)
 	ResendSubscriptionConfirmation(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params ResendSubscriptionConfirmationParams)
+	// RenderMarkdown Render Markdown for an editor
+	// (POST /v1/markdown/render)
+	RenderMarkdown(w http.ResponseWriter, r *http.Request, params RenderMarkdownParams)
 	// DeleteMe Delete the signed-in person's account
 	// (DELETE /v1/me)
 	DeleteMe(w http.ResponseWriter, r *http.Request)
@@ -27748,6 +28931,125 @@ func (siw *ServerInterfaceWrapper) CreateClientSubscription(w http.ResponseWrite
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateClientSubscription(w, r, channelKey)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientWhatsNew operation middleware
+func (siw *ServerInterfaceWrapper) GetClientWhatsNew(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientWhatsNewChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetClientWhatsNewParams
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientWhatsNew(w, r, channelKey, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientWhatsNewEntry operation middleware
+func (siw *ServerInterfaceWrapper) GetClientWhatsNewEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ClientWhatsNewChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetClientWhatsNewEntryParams
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientWhatsNewEntry(w, r, channelKey, entryId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -33103,6 +34405,1226 @@ func (siw *ServerInterfaceWrapper) UpdateCannedReply(w http.ResponseWriter, r *h
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.UpdateCannedReply(w, r, cannedReplyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListChangelogs operation middleware
+func (siw *ServerInterfaceWrapper) ListChangelogs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListChangelogsParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListChangelogs(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateChangelog operation middleware
+func (siw *ServerInterfaceWrapper) CreateChangelog(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateChangelogParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateChangelog(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteChangelog operation middleware
+func (siw *ServerInterfaceWrapper) DeleteChangelog(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteChangelogParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteChangelog(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetChangelog operation middleware
+func (siw *ServerInterfaceWrapper) GetChangelog(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetChangelogParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetChangelog(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateChangelog operation middleware
+func (siw *ServerInterfaceWrapper) UpdateChangelog(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateChangelogParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateChangelog(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListChangelogEntries operation middleware
+func (siw *ServerInterfaceWrapper) ListChangelogEntries(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListChangelogEntriesParams
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "label" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "label", r.URL.Query(), &params.Label, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "label"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "label", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locale" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locale", r.URL.Query(), &params.Locale, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locale"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListChangelogEntries(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) CreateChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateChangelogEntry(w, r, changelogId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) DeleteChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) GetChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) UpdateChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BroadcastChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) BroadcastChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params BroadcastChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BroadcastChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PublishChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) PublishChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PublishChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PublishChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ScheduleChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) ScheduleChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ScheduleChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ScheduleChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteChangelogEntryTranslation operation middleware
+func (siw *ServerInterfaceWrapper) DeleteChangelogEntryTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale ChangelogLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteChangelogEntryTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteChangelogEntryTranslation(w, r, changelogId, entryId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PutChangelogEntryTranslation operation middleware
+func (siw *ServerInterfaceWrapper) PutChangelogEntryTranslation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "locale" -------------
+	var locale ChangelogLocale
+
+	err = runtime.BindStyledParameterWithOptions("simple", "locale", r.PathValue("locale"), &locale, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locale", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PutChangelogEntryTranslationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PutChangelogEntryTranslation(w, r, changelogId, entryId, locale, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnpublishChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) UnpublishChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnpublishChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnpublishChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnscheduleChangelogEntry operation middleware
+func (siw *ServerInterfaceWrapper) UnscheduleChangelogEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "entryId" -------------
+	var entryId ChangelogEntryId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entryId", r.PathValue("entryId"), &entryId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entryId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnscheduleChangelogEntryParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnscheduleChangelogEntry(w, r, changelogId, entryId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UploadChangelogImage operation middleware
+func (siw *ServerInterfaceWrapper) UploadChangelogImage(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "changelogId" -------------
+	var changelogId ChangelogId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "changelogId", r.PathValue("changelogId"), &changelogId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "changelogId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UploadChangelogImageParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UploadChangelogImage(w, r, changelogId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -42755,6 +45277,47 @@ func (siw *ServerInterfaceWrapper) ResendSubscriptionConfirmation(w http.Respons
 	handler.ServeHTTP(w, r)
 }
 
+// RenderMarkdown operation middleware
+func (siw *ServerInterfaceWrapper) RenderMarkdown(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RenderMarkdownParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RenderMarkdown(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // DeleteMe operation middleware
 func (siw *ServerInterfaceWrapper) DeleteMe(w http.ResponseWriter, r *http.Request) {
 
@@ -49764,6 +52327,25 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/token", wrapper.RotateStatusMonitorToken)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks", wrapper.ListStatusMonitorChecks)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary", wrapper.GetStatusMonitorCheckSummary)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/markdown/render", wrapper.RenderMarkdown)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs", wrapper.ListChangelogs)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs", wrapper.CreateChangelog)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.DeleteChangelog)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.GetChangelog)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/changelogs/{changelogId}", wrapper.UpdateChangelog)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries", wrapper.ListChangelogEntries)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries", wrapper.CreateChangelogEntry)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}", wrapper.DeleteChangelogEntry)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}", wrapper.GetChangelogEntry)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}", wrapper.UpdateChangelogEntry)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale}", wrapper.DeleteChangelogEntryTranslation)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale}", wrapper.PutChangelogEntryTranslation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/publish", wrapper.PublishChangelogEntry)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/schedule", wrapper.ScheduleChangelogEntry)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/unschedule", wrapper.UnscheduleChangelogEntry)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/unpublish", wrapper.UnpublishChangelogEntry)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/entries/{entryId}/broadcast", wrapper.BroadcastChangelogEntry)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/changelogs/{changelogId}/images", wrapper.UploadChangelogImage)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/help-centers", wrapper.ListHelpCenters)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/help-centers", wrapper.CreateHelpCenter)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/help-centers/{centerId}", wrapper.DeleteHelpCenter)
@@ -49796,6 +52378,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/page-ratings", wrapper.CreatePageRating)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions", wrapper.ListClientDiscussions)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions/{discussionId}", wrapper.GetClientDiscussion)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/whats-new", wrapper.GetClientWhatsNew)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/whats-new/{entryId}", wrapper.GetClientWhatsNewEntry)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/roadmap", wrapper.GetClientRoadmap)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/lists", wrapper.ListClientMailingLists)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/subscriptions", wrapper.CreateClientSubscription)
@@ -49851,6 +52435,15 @@ type WebhookReceiverInterface interface {
 	// A broadcast changed state
 	// HandleWebhookBroadcastUpdatedWebhook handles the POST webhook for broadcast.updated.
 	HandleWebhookBroadcastUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookBroadcastUpdatedParams)
+	// A published What's new entry was deleted
+	// HandleWebhookChangelogEntryDeletedWebhook handles the POST webhook for changelog.entry.deleted.
+	HandleWebhookChangelogEntryDeletedWebhook(w http.ResponseWriter, r *http.Request, params WebhookChangelogEntryDeletedParams)
+	// A What's new entry was published
+	// HandleWebhookChangelogEntryPublishedWebhook handles the POST webhook for changelog.entry.published.
+	HandleWebhookChangelogEntryPublishedWebhook(w http.ResponseWriter, r *http.Request, params WebhookChangelogEntryPublishedParams)
+	// A What's new entry was unpublished
+	// HandleWebhookChangelogEntryUnpublishedWebhook handles the POST webhook for changelog.entry.unpublished.
+	HandleWebhookChangelogEntryUnpublishedWebhook(w http.ResponseWriter, r *http.Request, params WebhookChangelogEntryUnpublishedParams)
 	// A contact was deleted
 	// HandleWebhookContactDeletedWebhook handles the POST webhook for contact.deleted.
 	HandleWebhookContactDeletedWebhook(w http.ResponseWriter, r *http.Request, params WebhookContactDeletedParams)
@@ -50112,6 +52705,282 @@ func WebhookBroadcastUpdatedWebhookHandler(si WebhookReceiverInterface, errHandl
 		}
 
 		si.HandleWebhookBroadcastUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookChangelogEntryDeletedWebhookHandler returns the http.Handler for the changelog.entry.deleted webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookChangelogEntryDeletedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookChangelogEntryDeletedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookChangelogEntryDeletedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookChangelogEntryPublishedWebhookHandler returns the http.Handler for the changelog.entry.published webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookChangelogEntryPublishedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookChangelogEntryPublishedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookChangelogEntryPublishedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookChangelogEntryUnpublishedWebhookHandler returns the http.Handler for the changelog.entry.unpublished webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookChangelogEntryUnpublishedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookChangelogEntryUnpublishedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookChangelogEntryUnpublishedWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -52513,6 +55382,8 @@ func WebhookSubscriptionUpdatedWebhookHandler(si WebhookReceiverInterface, errHa
 
 type BroadcastProblemApplicationProblemPlusJSONResponse BroadcastProblem
 
+type ChangelogConflictProblemApplicationProblemPlusJSONResponse ChangelogConflictProblem
+
 type EmailDesignProblemApplicationProblemPlusJSONResponse EmailDesignProblem
 
 type HelpConflictProblemApplicationProblemPlusJSONResponse HelpConflictProblem
@@ -53989,6 +56860,155 @@ func (response CreateClientSubscription404ApplicationProblemPlusJSONResponse) Vi
 type CreateClientSubscription429ApplicationProblemPlusJSONResponse Problem
 
 func (response CreateClientSubscription429ApplicationProblemPlusJSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNewRequestObject struct {
+	ChannelKey ClientWhatsNewChannelKey `json:"channel_key"`
+	Params     GetClientWhatsNewParams
+}
+
+type GetClientWhatsNewResponseObject interface {
+	VisitGetClientWhatsNewResponse(w http.ResponseWriter) error
+}
+
+type GetClientWhatsNew200JSONResponse ClientWhatsNew
+
+func (response GetClientWhatsNew200JSONResponse) VisitGetClientWhatsNewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNew400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientWhatsNew400ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNew403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientWhatsNew403ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNew404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientWhatsNew404ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNew429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientWhatsNew429ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNewEntryRequestObject struct {
+	ChannelKey ClientWhatsNewChannelKey `json:"channel_key"`
+	EntryId    ChangelogEntryId         `json:"entryId"`
+	Params     GetClientWhatsNewEntryParams
+}
+
+type GetClientWhatsNewEntryResponseObject interface {
+	VisitGetClientWhatsNewEntryResponse(w http.ResponseWriter) error
+}
+
+type GetClientWhatsNewEntry200JSONResponse ClientWhatsNewEntry
+
+func (response GetClientWhatsNewEntry200JSONResponse) VisitGetClientWhatsNewEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNewEntry403ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientWhatsNewEntry403ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNewEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientWhatsNewEntry404ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientWhatsNewEntry429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientWhatsNewEntry429ApplicationProblemPlusJSONResponse) VisitGetClientWhatsNewEntryResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -62462,6 +65482,1595 @@ func (response UpdateCannedReply409ApplicationProblemPlusJSONResponse) VisitUpda
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogsRequestObject struct {
+	Params ListChangelogsParams
+}
+
+type ListChangelogsResponseObject interface {
+	VisitListChangelogsResponse(w http.ResponseWriter) error
+}
+
+type ListChangelogs200JSONResponse ChangelogList
+
+func (response ListChangelogs200JSONResponse) VisitListChangelogsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogs401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListChangelogs401ApplicationProblemPlusJSONResponse) VisitListChangelogsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogs403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListChangelogs403ApplicationProblemPlusJSONResponse) VisitListChangelogsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogs404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListChangelogs404ApplicationProblemPlusJSONResponse) VisitListChangelogsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogRequestObject struct {
+	Params CreateChangelogParams
+	Body   *CreateChangelogJSONRequestBody
+}
+
+type CreateChangelogResponseObject interface {
+	VisitCreateChangelogResponse(w http.ResponseWriter) error
+}
+
+type CreateChangelog201JSONResponse Changelog
+
+func (response CreateChangelog201JSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelog400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateChangelog400ApplicationProblemPlusJSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelog401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelog401ApplicationProblemPlusJSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelog403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelog403ApplicationProblemPlusJSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelog404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelog404ApplicationProblemPlusJSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelog409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelog409ApplicationProblemPlusJSONResponse) VisitCreateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      DeleteChangelogParams
+}
+
+type DeleteChangelogResponseObject interface {
+	VisitDeleteChangelogResponse(w http.ResponseWriter) error
+}
+
+type DeleteChangelog204Response struct {
+}
+
+func (response DeleteChangelog204Response) VisitDeleteChangelogResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteChangelog401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteChangelog401ApplicationProblemPlusJSONResponse) VisitDeleteChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelog403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelog403ApplicationProblemPlusJSONResponse) VisitDeleteChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelog404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelog404ApplicationProblemPlusJSONResponse) VisitDeleteChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelogRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      GetChangelogParams
+}
+
+type GetChangelogResponseObject interface {
+	VisitGetChangelogResponse(w http.ResponseWriter) error
+}
+
+type GetChangelog200JSONResponse Changelog
+
+func (response GetChangelog200JSONResponse) VisitGetChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelog401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetChangelog401ApplicationProblemPlusJSONResponse) VisitGetChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelog403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetChangelog403ApplicationProblemPlusJSONResponse) VisitGetChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelog404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetChangelog404ApplicationProblemPlusJSONResponse) VisitGetChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      UpdateChangelogParams
+	Body        *UpdateChangelogJSONRequestBody
+}
+
+type UpdateChangelogResponseObject interface {
+	VisitUpdateChangelogResponse(w http.ResponseWriter) error
+}
+
+type UpdateChangelog200JSONResponse Changelog
+
+func (response UpdateChangelog200JSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateChangelog400ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelog401ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelog403ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelog404ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelog409ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelog429ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelog429ApplicationProblemPlusJSONResponse) VisitUpdateChangelogResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogEntriesRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      ListChangelogEntriesParams
+}
+
+type ListChangelogEntriesResponseObject interface {
+	VisitListChangelogEntriesResponse(w http.ResponseWriter) error
+}
+
+type ListChangelogEntries200JSONResponse ChangelogEntryPage
+
+func (response ListChangelogEntries200JSONResponse) VisitListChangelogEntriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogEntries400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListChangelogEntries400ApplicationProblemPlusJSONResponse) VisitListChangelogEntriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogEntries401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListChangelogEntries401ApplicationProblemPlusJSONResponse) VisitListChangelogEntriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogEntries403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListChangelogEntries403ApplicationProblemPlusJSONResponse) VisitListChangelogEntriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListChangelogEntries404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListChangelogEntries404ApplicationProblemPlusJSONResponse) VisitListChangelogEntriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      CreateChangelogEntryParams
+	Body        *CreateChangelogEntryJSONRequestBody
+}
+
+type CreateChangelogEntryResponseObject interface {
+	VisitCreateChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type CreateChangelogEntry201JSONResponse ChangelogEntry
+
+func (response CreateChangelogEntry201JSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntry400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateChangelogEntry400ApplicationProblemPlusJSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntry401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelogEntry401ApplicationProblemPlusJSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelogEntry403ApplicationProblemPlusJSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelogEntry404ApplicationProblemPlusJSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateChangelogEntry422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateChangelogEntry422ApplicationProblemPlusJSONResponse) VisitCreateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      DeleteChangelogEntryParams
+}
+
+type DeleteChangelogEntryResponseObject interface {
+	VisitDeleteChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type DeleteChangelogEntry204Response struct {
+}
+
+func (response DeleteChangelogEntry204Response) VisitDeleteChangelogEntryResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteChangelogEntry401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteChangelogEntry401ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelogEntry403ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelogEntry404ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      GetChangelogEntryParams
+}
+
+type GetChangelogEntryResponseObject interface {
+	VisitGetChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type GetChangelogEntry200JSONResponse ChangelogEntry
+
+func (response GetChangelogEntry200JSONResponse) VisitGetChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelogEntry401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetChangelogEntry401ApplicationProblemPlusJSONResponse) VisitGetChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetChangelogEntry403ApplicationProblemPlusJSONResponse) VisitGetChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetChangelogEntry404ApplicationProblemPlusJSONResponse) VisitGetChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      UpdateChangelogEntryParams
+	Body        *UpdateChangelogEntryJSONRequestBody
+}
+
+type UpdateChangelogEntryResponseObject interface {
+	VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type UpdateChangelogEntry200JSONResponse ChangelogEntry
+
+func (response UpdateChangelogEntry200JSONResponse) VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogEntry400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateChangelogEntry400ApplicationProblemPlusJSONResponse) VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogEntry401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelogEntry401ApplicationProblemPlusJSONResponse) VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelogEntry403ApplicationProblemPlusJSONResponse) VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateChangelogEntry404ApplicationProblemPlusJSONResponse) VisitUpdateChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      BroadcastChangelogEntryParams
+	Body        *BroadcastChangelogEntryJSONRequestBody
+}
+
+type BroadcastChangelogEntryResponseObject interface {
+	VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type BroadcastChangelogEntry201JSONResponse Broadcast
+
+func (response BroadcastChangelogEntry201JSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response BroadcastChangelogEntry400ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry401ApplicationProblemPlusJSONResponse Problem
+
+func (response BroadcastChangelogEntry401ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response BroadcastChangelogEntry403ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response BroadcastChangelogEntry404ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry409ApplicationProblemPlusJSONResponse Problem
+
+func (response BroadcastChangelogEntry409ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type BroadcastChangelogEntry422ApplicationProblemPlusJSONResponse Problem
+
+func (response BroadcastChangelogEntry422ApplicationProblemPlusJSONResponse) VisitBroadcastChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      PublishChangelogEntryParams
+	Body        *PublishChangelogEntryJSONRequestBody
+}
+
+type PublishChangelogEntryResponseObject interface {
+	VisitPublishChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type PublishChangelogEntry200JSONResponse ChangelogEntry
+
+func (response PublishChangelogEntry200JSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntry400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PublishChangelogEntry400ApplicationProblemPlusJSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntry401ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishChangelogEntry401ApplicationProblemPlusJSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishChangelogEntry403ApplicationProblemPlusJSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response PublishChangelogEntry404ApplicationProblemPlusJSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PublishChangelogEntry409ApplicationProblemPlusJSONResponse struct {
+	ChangelogConflictProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PublishChangelogEntry409ApplicationProblemPlusJSONResponse) VisitPublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      ScheduleChangelogEntryParams
+	Body        *ScheduleChangelogEntryJSONRequestBody
+}
+
+type ScheduleChangelogEntryResponseObject interface {
+	VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type ScheduleChangelogEntry200JSONResponse ChangelogEntry
+
+func (response ScheduleChangelogEntry200JSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntry400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ScheduleChangelogEntry400ApplicationProblemPlusJSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntry401ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleChangelogEntry401ApplicationProblemPlusJSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleChangelogEntry403ApplicationProblemPlusJSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleChangelogEntry404ApplicationProblemPlusJSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleChangelogEntry409ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleChangelogEntry409ApplicationProblemPlusJSONResponse) VisitScheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntryTranslationRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Locale      ChangelogLocale  `json:"locale"`
+	Params      DeleteChangelogEntryTranslationParams
+}
+
+type DeleteChangelogEntryTranslationResponseObject interface {
+	VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error
+}
+
+type DeleteChangelogEntryTranslation204Response struct {
+}
+
+func (response DeleteChangelogEntryTranslation204Response) VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteChangelogEntryTranslation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteChangelogEntryTranslation401ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntryTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelogEntryTranslation403ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntryTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelogEntryTranslation404ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteChangelogEntryTranslation409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteChangelogEntryTranslation409ApplicationProblemPlusJSONResponse) VisitDeleteChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslationRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Locale      ChangelogLocale  `json:"locale"`
+	Params      PutChangelogEntryTranslationParams
+	Body        *PutChangelogEntryTranslationJSONRequestBody
+}
+
+type PutChangelogEntryTranslationResponseObject interface {
+	VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error
+}
+
+type PutChangelogEntryTranslation200JSONResponse ChangelogEntryTranslation
+
+func (response PutChangelogEntryTranslation200JSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation201JSONResponse ChangelogEntryTranslation
+
+func (response PutChangelogEntryTranslation201JSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PutChangelogEntryTranslation400ApplicationProblemPlusJSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation401ApplicationProblemPlusJSONResponse Problem
+
+func (response PutChangelogEntryTranslation401ApplicationProblemPlusJSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation403ApplicationProblemPlusJSONResponse Problem
+
+func (response PutChangelogEntryTranslation403ApplicationProblemPlusJSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation404ApplicationProblemPlusJSONResponse Problem
+
+func (response PutChangelogEntryTranslation404ApplicationProblemPlusJSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PutChangelogEntryTranslation409ApplicationProblemPlusJSONResponse struct {
+	ChangelogConflictProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PutChangelogEntryTranslation409ApplicationProblemPlusJSONResponse) VisitPutChangelogEntryTranslationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      UnpublishChangelogEntryParams
+}
+
+type UnpublishChangelogEntryResponseObject interface {
+	VisitUnpublishChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type UnpublishChangelogEntry200JSONResponse ChangelogEntry
+
+func (response UnpublishChangelogEntry200JSONResponse) VisitUnpublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishChangelogEntry401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnpublishChangelogEntry401ApplicationProblemPlusJSONResponse) VisitUnpublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnpublishChangelogEntry403ApplicationProblemPlusJSONResponse) VisitUnpublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnpublishChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnpublishChangelogEntry404ApplicationProblemPlusJSONResponse) VisitUnpublishChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleChangelogEntryRequestObject struct {
+	ChangelogId ChangelogId      `json:"changelogId"`
+	EntryId     ChangelogEntryId `json:"entryId"`
+	Params      UnscheduleChangelogEntryParams
+}
+
+type UnscheduleChangelogEntryResponseObject interface {
+	VisitUnscheduleChangelogEntryResponse(w http.ResponseWriter) error
+}
+
+type UnscheduleChangelogEntry200JSONResponse ChangelogEntry
+
+func (response UnscheduleChangelogEntry200JSONResponse) VisitUnscheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleChangelogEntry401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnscheduleChangelogEntry401ApplicationProblemPlusJSONResponse) VisitUnscheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleChangelogEntry403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnscheduleChangelogEntry403ApplicationProblemPlusJSONResponse) VisitUnscheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleChangelogEntry404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnscheduleChangelogEntry404ApplicationProblemPlusJSONResponse) VisitUnscheduleChangelogEntryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImageRequestObject struct {
+	ChangelogId ChangelogId `json:"changelogId"`
+	Params      UploadChangelogImageParams
+	Body        *multipart.Reader
+}
+
+type UploadChangelogImageResponseObject interface {
+	VisitUploadChangelogImageResponse(w http.ResponseWriter) error
+}
+
+type UploadChangelogImage200JSONResponse HelpImage
+
+func (response UploadChangelogImage200JSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage201JSONResponse HelpImage
+
+func (response UploadChangelogImage201JSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UploadChangelogImage400ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage401ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage401ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage403ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage403ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage404ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage404ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage409ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage409ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage413ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage413ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(413)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage415ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage415ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(415)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage422ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage422ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadChangelogImage429ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadChangelogImage429ApplicationProblemPlusJSONResponse) VisitUploadChangelogImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -74494,6 +79103,87 @@ func (response ResendSubscriptionConfirmation429ApplicationProblemPlusJSONRespon
 	return err
 }
 
+type RenderMarkdownRequestObject struct {
+	Params RenderMarkdownParams
+	Body   *RenderMarkdownJSONRequestBody
+}
+
+type RenderMarkdownResponseObject interface {
+	VisitRenderMarkdownResponse(w http.ResponseWriter) error
+}
+
+type RenderMarkdown200JSONResponse HelpRendered
+
+func (response RenderMarkdown200JSONResponse) VisitRenderMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderMarkdown400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RenderMarkdown400ApplicationProblemPlusJSONResponse) VisitRenderMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderMarkdown401ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderMarkdown401ApplicationProblemPlusJSONResponse) VisitRenderMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderMarkdown403ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderMarkdown403ApplicationProblemPlusJSONResponse) VisitRenderMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RenderMarkdown429ApplicationProblemPlusJSONResponse Problem
+
+func (response RenderMarkdown429ApplicationProblemPlusJSONResponse) VisitRenderMarkdownResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type DeleteMeRequestObject struct {
 	Body *DeleteMeJSONRequestBody
 }
@@ -83531,6 +88221,12 @@ type StrictServerInterface interface {
 	// CreateClientSubscription Subscribe from a form
 	// (POST /client/v1/channels/{channel_key}/subscriptions)
 	CreateClientSubscription(ctx context.Context, request CreateClientSubscriptionRequestObject) (CreateClientSubscriptionResponseObject, error)
+	// GetClientWhatsNew The What's new feed
+	// (GET /client/v1/channels/{channel_key}/whats-new)
+	GetClientWhatsNew(ctx context.Context, request GetClientWhatsNewRequestObject) (GetClientWhatsNewResponseObject, error)
+	// GetClientWhatsNewEntry A What's new entry
+	// (GET /client/v1/channels/{channel_key}/whats-new/{entryId})
+	GetClientWhatsNewEntry(ctx context.Context, request GetClientWhatsNewEntryRequestObject) (GetClientWhatsNewEntryResponseObject, error)
 	// SetClientContactEmail Leave an e-mail address for replies
 	// (PUT /client/v1/contact/email)
 	SetClientContactEmail(ctx context.Context, request SetClientContactEmailRequestObject) (SetClientContactEmailResponseObject, error)
@@ -83867,6 +88563,60 @@ type StrictServerInterface interface {
 	// UpdateCannedReply Update a canned reply
 	// (PATCH /v1/canned-replies/{cannedReplyId})
 	UpdateCannedReply(ctx context.Context, request UpdateCannedReplyRequestObject) (UpdateCannedReplyResponseObject, error)
+	// ListChangelogs List changelogs
+	// (GET /v1/changelogs)
+	ListChangelogs(ctx context.Context, request ListChangelogsRequestObject) (ListChangelogsResponseObject, error)
+	// CreateChangelog Create a changelog
+	// (POST /v1/changelogs)
+	CreateChangelog(ctx context.Context, request CreateChangelogRequestObject) (CreateChangelogResponseObject, error)
+	// DeleteChangelog Delete a changelog
+	// (DELETE /v1/changelogs/{changelogId})
+	DeleteChangelog(ctx context.Context, request DeleteChangelogRequestObject) (DeleteChangelogResponseObject, error)
+	// GetChangelog A changelog
+	// (GET /v1/changelogs/{changelogId})
+	GetChangelog(ctx context.Context, request GetChangelogRequestObject) (GetChangelogResponseObject, error)
+	// UpdateChangelog Update a changelog
+	// (PATCH /v1/changelogs/{changelogId})
+	UpdateChangelog(ctx context.Context, request UpdateChangelogRequestObject) (UpdateChangelogResponseObject, error)
+	// ListChangelogEntries List a changelog's entries
+	// (GET /v1/changelogs/{changelogId}/entries)
+	ListChangelogEntries(ctx context.Context, request ListChangelogEntriesRequestObject) (ListChangelogEntriesResponseObject, error)
+	// CreateChangelogEntry Write an entry
+	// (POST /v1/changelogs/{changelogId}/entries)
+	CreateChangelogEntry(ctx context.Context, request CreateChangelogEntryRequestObject) (CreateChangelogEntryResponseObject, error)
+	// DeleteChangelogEntry Delete an entry
+	// (DELETE /v1/changelogs/{changelogId}/entries/{entryId})
+	DeleteChangelogEntry(ctx context.Context, request DeleteChangelogEntryRequestObject) (DeleteChangelogEntryResponseObject, error)
+	// GetChangelogEntry An entry
+	// (GET /v1/changelogs/{changelogId}/entries/{entryId})
+	GetChangelogEntry(ctx context.Context, request GetChangelogEntryRequestObject) (GetChangelogEntryResponseObject, error)
+	// UpdateChangelogEntry Change an entry's labels or image
+	// (PATCH /v1/changelogs/{changelogId}/entries/{entryId})
+	UpdateChangelogEntry(ctx context.Context, request UpdateChangelogEntryRequestObject) (UpdateChangelogEntryResponseObject, error)
+	// BroadcastChangelogEntry Mail an entry to subscribers
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/broadcast)
+	BroadcastChangelogEntry(ctx context.Context, request BroadcastChangelogEntryRequestObject) (BroadcastChangelogEntryResponseObject, error)
+	// PublishChangelogEntry Publish an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/publish)
+	PublishChangelogEntry(ctx context.Context, request PublishChangelogEntryRequestObject) (PublishChangelogEntryResponseObject, error)
+	// ScheduleChangelogEntry Schedule an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/schedule)
+	ScheduleChangelogEntry(ctx context.Context, request ScheduleChangelogEntryRequestObject) (ScheduleChangelogEntryResponseObject, error)
+	// DeleteChangelogEntryTranslation Delete a translation
+	// (DELETE /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale})
+	DeleteChangelogEntryTranslation(ctx context.Context, request DeleteChangelogEntryTranslationRequestObject) (DeleteChangelogEntryTranslationResponseObject, error)
+	// PutChangelogEntryTranslation Save a translation's draft
+	// (PUT /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale})
+	PutChangelogEntryTranslation(ctx context.Context, request PutChangelogEntryTranslationRequestObject) (PutChangelogEntryTranslationResponseObject, error)
+	// UnpublishChangelogEntry Unpublish an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/unpublish)
+	UnpublishChangelogEntry(ctx context.Context, request UnpublishChangelogEntryRequestObject) (UnpublishChangelogEntryResponseObject, error)
+	// UnscheduleChangelogEntry Unschedule an entry
+	// (POST /v1/changelogs/{changelogId}/entries/{entryId}/unschedule)
+	UnscheduleChangelogEntry(ctx context.Context, request UnscheduleChangelogEntryRequestObject) (UnscheduleChangelogEntryResponseObject, error)
+	// UploadChangelogImage Upload an image for entries
+	// (POST /v1/changelogs/{changelogId}/images)
+	UploadChangelogImage(ctx context.Context, request UploadChangelogImageRequestObject) (UploadChangelogImageResponseObject, error)
 	// DeleteChannel Remove a channel
 	// (DELETE /v1/channels/{channelId})
 	DeleteChannel(ctx context.Context, request DeleteChannelRequestObject) (DeleteChannelResponseObject, error)
@@ -84308,6 +89058,9 @@ type StrictServerInterface interface {
 	// ResendSubscriptionConfirmation Mail the confirmation again
 	// (POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation)
 	ResendSubscriptionConfirmation(ctx context.Context, request ResendSubscriptionConfirmationRequestObject) (ResendSubscriptionConfirmationResponseObject, error)
+	// RenderMarkdown Render Markdown for an editor
+	// (POST /v1/markdown/render)
+	RenderMarkdown(ctx context.Context, request RenderMarkdownRequestObject) (RenderMarkdownResponseObject, error)
 	// DeleteMe Delete the signed-in person's account
 	// (DELETE /v1/me)
 	DeleteMe(ctx context.Context, request DeleteMeRequestObject) (DeleteMeResponseObject, error)
@@ -85221,6 +89974,61 @@ func (sh *strictHandler) CreateClientSubscription(w http.ResponseWriter, r *http
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateClientSubscriptionResponseObject); ok {
 		if err := validResponse.VisitCreateClientSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientWhatsNew operation middleware
+func (sh *strictHandler) GetClientWhatsNew(w http.ResponseWriter, r *http.Request, channelKey ClientWhatsNewChannelKey, params GetClientWhatsNewParams) {
+	var request GetClientWhatsNewRequestObject
+
+	request.ChannelKey = channelKey
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientWhatsNew(ctx, request.(GetClientWhatsNewRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientWhatsNew")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientWhatsNewResponseObject); ok {
+		if err := validResponse.VisitGetClientWhatsNewResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientWhatsNewEntry operation middleware
+func (sh *strictHandler) GetClientWhatsNewEntry(w http.ResponseWriter, r *http.Request, channelKey ClientWhatsNewChannelKey, entryId ChangelogEntryId, params GetClientWhatsNewEntryParams) {
+	var request GetClientWhatsNewEntryRequestObject
+
+	request.ChannelKey = channelKey
+	request.EntryId = entryId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientWhatsNewEntry(ctx, request.(GetClientWhatsNewEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientWhatsNewEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientWhatsNewEntryResponseObject); ok {
+		if err := validResponse.VisitGetClientWhatsNewEntryResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -88540,6 +93348,568 @@ func (sh *strictHandler) UpdateCannedReply(w http.ResponseWriter, r *http.Reques
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateCannedReplyResponseObject); ok {
 		if err := validResponse.VisitUpdateCannedReplyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListChangelogs operation middleware
+func (sh *strictHandler) ListChangelogs(w http.ResponseWriter, r *http.Request, params ListChangelogsParams) {
+	var request ListChangelogsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListChangelogs(ctx, request.(ListChangelogsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListChangelogs")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListChangelogsResponseObject); ok {
+		if err := validResponse.VisitListChangelogsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateChangelog operation middleware
+func (sh *strictHandler) CreateChangelog(w http.ResponseWriter, r *http.Request, params CreateChangelogParams) {
+	var request CreateChangelogRequestObject
+
+	request.Params = params
+
+	var body CreateChangelogJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateChangelog(ctx, request.(CreateChangelogRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateChangelog")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateChangelogResponseObject); ok {
+		if err := validResponse.VisitCreateChangelogResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteChangelog operation middleware
+func (sh *strictHandler) DeleteChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params DeleteChangelogParams) {
+	var request DeleteChangelogRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteChangelog(ctx, request.(DeleteChangelogRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteChangelog")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteChangelogResponseObject); ok {
+		if err := validResponse.VisitDeleteChangelogResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetChangelog operation middleware
+func (sh *strictHandler) GetChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params GetChangelogParams) {
+	var request GetChangelogRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetChangelog(ctx, request.(GetChangelogRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetChangelog")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetChangelogResponseObject); ok {
+		if err := validResponse.VisitGetChangelogResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateChangelog operation middleware
+func (sh *strictHandler) UpdateChangelog(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params UpdateChangelogParams) {
+	var request UpdateChangelogRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	var body UpdateChangelogJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateChangelog(ctx, request.(UpdateChangelogRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateChangelog")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateChangelogResponseObject); ok {
+		if err := validResponse.VisitUpdateChangelogResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListChangelogEntries operation middleware
+func (sh *strictHandler) ListChangelogEntries(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params ListChangelogEntriesParams) {
+	var request ListChangelogEntriesRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListChangelogEntries(ctx, request.(ListChangelogEntriesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListChangelogEntries")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListChangelogEntriesResponseObject); ok {
+		if err := validResponse.VisitListChangelogEntriesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateChangelogEntry operation middleware
+func (sh *strictHandler) CreateChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params CreateChangelogEntryParams) {
+	var request CreateChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	var body CreateChangelogEntryJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateChangelogEntry(ctx, request.(CreateChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitCreateChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteChangelogEntry operation middleware
+func (sh *strictHandler) DeleteChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params DeleteChangelogEntryParams) {
+	var request DeleteChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteChangelogEntry(ctx, request.(DeleteChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitDeleteChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetChangelogEntry operation middleware
+func (sh *strictHandler) GetChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params GetChangelogEntryParams) {
+	var request GetChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetChangelogEntry(ctx, request.(GetChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitGetChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateChangelogEntry operation middleware
+func (sh *strictHandler) UpdateChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UpdateChangelogEntryParams) {
+	var request UpdateChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	var body UpdateChangelogEntryJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateChangelogEntry(ctx, request.(UpdateChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitUpdateChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// BroadcastChangelogEntry operation middleware
+func (sh *strictHandler) BroadcastChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params BroadcastChangelogEntryParams) {
+	var request BroadcastChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	var body BroadcastChangelogEntryJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.BroadcastChangelogEntry(ctx, request.(BroadcastChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "BroadcastChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(BroadcastChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitBroadcastChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PublishChangelogEntry operation middleware
+func (sh *strictHandler) PublishChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params PublishChangelogEntryParams) {
+	var request PublishChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	var body PublishChangelogEntryJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PublishChangelogEntry(ctx, request.(PublishChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PublishChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PublishChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitPublishChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ScheduleChangelogEntry operation middleware
+func (sh *strictHandler) ScheduleChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params ScheduleChangelogEntryParams) {
+	var request ScheduleChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	var body ScheduleChangelogEntryJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ScheduleChangelogEntry(ctx, request.(ScheduleChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ScheduleChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ScheduleChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitScheduleChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteChangelogEntryTranslation operation middleware
+func (sh *strictHandler) DeleteChangelogEntryTranslation(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params DeleteChangelogEntryTranslationParams) {
+	var request DeleteChangelogEntryTranslationRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Locale = locale
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteChangelogEntryTranslation(ctx, request.(DeleteChangelogEntryTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteChangelogEntryTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteChangelogEntryTranslationResponseObject); ok {
+		if err := validResponse.VisitDeleteChangelogEntryTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PutChangelogEntryTranslation operation middleware
+func (sh *strictHandler) PutChangelogEntryTranslation(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, locale ChangelogLocale, params PutChangelogEntryTranslationParams) {
+	var request PutChangelogEntryTranslationRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Locale = locale
+	request.Params = params
+
+	var body PutChangelogEntryTranslationJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PutChangelogEntryTranslation(ctx, request.(PutChangelogEntryTranslationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutChangelogEntryTranslation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PutChangelogEntryTranslationResponseObject); ok {
+		if err := validResponse.VisitPutChangelogEntryTranslationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnpublishChangelogEntry operation middleware
+func (sh *strictHandler) UnpublishChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UnpublishChangelogEntryParams) {
+	var request UnpublishChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnpublishChangelogEntry(ctx, request.(UnpublishChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnpublishChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnpublishChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitUnpublishChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnscheduleChangelogEntry operation middleware
+func (sh *strictHandler) UnscheduleChangelogEntry(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, entryId ChangelogEntryId, params UnscheduleChangelogEntryParams) {
+	var request UnscheduleChangelogEntryRequestObject
+
+	request.ChangelogId = changelogId
+	request.EntryId = entryId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnscheduleChangelogEntry(ctx, request.(UnscheduleChangelogEntryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnscheduleChangelogEntry")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnscheduleChangelogEntryResponseObject); ok {
+		if err := validResponse.VisitUnscheduleChangelogEntryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UploadChangelogImage operation middleware
+func (sh *strictHandler) UploadChangelogImage(w http.ResponseWriter, r *http.Request, changelogId ChangelogId, params UploadChangelogImageParams) {
+	var request UploadChangelogImageRequestObject
+
+	request.ChangelogId = changelogId
+	request.Params = params
+
+	if reader, err := r.MultipartReader(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode multipart body: %w", err))
+		return
+	} else {
+		request.Body = reader
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UploadChangelogImage(ctx, request.(UploadChangelogImageRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UploadChangelogImage")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UploadChangelogImageResponseObject); ok {
+		if err := validResponse.VisitUploadChangelogImageResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -92888,6 +98258,39 @@ func (sh *strictHandler) ResendSubscriptionConfirmation(w http.ResponseWriter, r
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(ResendSubscriptionConfirmationResponseObject); ok {
 		if err := validResponse.VisitResendSubscriptionConfirmationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RenderMarkdown operation middleware
+func (sh *strictHandler) RenderMarkdown(w http.ResponseWriter, r *http.Request, params RenderMarkdownParams) {
+	var request RenderMarkdownRequestObject
+
+	request.Params = params
+
+	var body RenderMarkdownJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RenderMarkdown(ctx, request.(RenderMarkdownRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RenderMarkdown")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RenderMarkdownResponseObject); ok {
+		if err := validResponse.VisitRenderMarkdownResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

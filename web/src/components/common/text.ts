@@ -64,6 +64,9 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "help.article.unpublished",
   "help.article.deleted",
   "discussion.stage_changed",
+  "changelog.entry.published",
+  "changelog.entry.unpublished",
+  "changelog.entry.deleted",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -97,6 +100,9 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "roadmap:read",
   "roadmap:write",
   "roadmap:stage",
+  "changelog:read",
+  "changelog:write",
+  "changelog:publish",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export type ApiKeyPreset = "read" | "support" | "everything" | "custom"
@@ -209,6 +215,9 @@ export function useEnumText() {
       "help.article.unpublished": t`A help center article was unpublished`,
       "help.article.deleted": t`A help center article was deleted`,
       "discussion.stage_changed": t`A roadmap idea moved to another stage`,
+      "changelog.entry.published": t`A What's new entry was published`,
+      "changelog.entry.unpublished": t`A What's new entry was unpublished`,
+      "changelog.entry.deleted": t`A published What's new entry was deleted`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -242,6 +251,9 @@ export function useEnumText() {
       "roadmap:read": t`Read roadmap boards, ideas and stage history`,
       "roadmap:write": t`Link feedback to ideas, reply to linked customers and manage roadmap boards`,
       "roadmap:stage": t`Move ideas between roadmap stages`,
+      "changelog:read": t`Read What's new changelogs and their entries`,
+      "changelog:write": t`Write What's new entries and translations`,
+      "changelog:publish": t`Publish, schedule and unpublish What's new entries`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,

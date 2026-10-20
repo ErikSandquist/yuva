@@ -116,6 +116,11 @@ type Config struct {
 	Roadmap         bool
 	RoadmapMaxIdeas int
 
+	// WhatsNew is YUVA_WHATS_NEW: off removes What's new changelogs. ChangelogMaxEntries caps a
+	// workspace's entries (YUVA_CHANGELOG_MAX_ENTRIES; 1000 with open signup); 0 is no limit.
+	WhatsNew            bool
+	ChangelogMaxEntries int
+
 	StatusDomains      string
 	StatusCNAME        string
 	StatusDomainLimit  int
@@ -419,6 +424,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadRoadmap(); err != nil {
 		return c, err
 	}
+	if err := c.loadWhatsNew(); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -527,6 +535,25 @@ func (c *Config) loadRoadmap() error {
 	var err error
 	if c.RoadmapMaxIdeas, err = strconv.Atoi(env("YUVA_ROADMAP_MAX_IDEAS", def)); err != nil || c.RoadmapMaxIdeas < 0 {
 		return errors.New("YUVA_ROADMAP_MAX_IDEAS must be a number of ideas, 0 for no limit")
+	}
+	return nil
+}
+
+func (c *Config) loadWhatsNew() error {
+	switch strings.ToLower(env("YUVA_WHATS_NEW", "on")) {
+	case "on":
+		c.WhatsNew = true
+	case "off":
+	default:
+		return errors.New("YUVA_WHATS_NEW must be on or off")
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "1000"
+	}
+	var err error
+	if c.ChangelogMaxEntries, err = strconv.Atoi(env("YUVA_CHANGELOG_MAX_ENTRIES", def)); err != nil || c.ChangelogMaxEntries < 0 {
+		return errors.New("YUVA_CHANGELOG_MAX_ENTRIES must be a number of entries, 0 for no limit")
 	}
 	return nil
 }

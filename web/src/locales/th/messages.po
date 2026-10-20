@@ -1072,6 +1072,10 @@ msgstr "พร็อพเพอร์ตีหนึ่งมีฟันเน
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "หน้าสาธารณะที่บอกลูกค้าว่า {inboxName} ใช้งานได้หรือไม่ จะยังไม่เผยแพร่จนกว่าคุณจะเผยแพร่"
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "ลบรายการที่เผยแพร่ใน \"มีอะไรใหม่\" แล้ว"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "สถานะที่ส่งมาซึ่งระบุสถานะของตัวเองจะคงสถานะนั้นไว้"
@@ -1140,6 +1144,14 @@ msgstr "เธรดจะถูกเลือกทั้งหมดเมื
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "ชื่อผู้ใช้ต้องใช้ TLS หรือ STARTTLS รหัสผ่านจะไม่ถูกส่งโดยไม่เข้ารหัส"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "เผยแพร่รายการใน \"มีอะไรใหม่\" แล้ว"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "ยกเลิกการเผยแพร่รายการใน \"มีอะไรใหม่\" แล้ว"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "เผยแพร่ระเบียน TXT นี้ใน DNS ข�
 msgid "Publish, or submit the draft"
 msgstr "เผยแพร่ หรือส่งฉบับร่าง"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "เผยแพร่ ตั้งเวลา และยกเลิกการเผยแพร่รายการใน \"มีอะไรใหม่\""
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "อ่านพื้นที่ทำงาน สมาชิก ก�
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "อ่านเพื่อแนะนำที่อยู่ของทีมคุณ: อีเมลมาจากอีเมลทั้งหมด"
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "อ่านบันทึกการเปลี่ยนแปลงของ \"มีอะไรใหม่\" และรายการในนั้น"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "เขียนการตอบกลับอัตโนมัติ
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "เขียนถึง {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "เขียนรายการใน \"มีอะไรใหม่\" และคำแปล"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

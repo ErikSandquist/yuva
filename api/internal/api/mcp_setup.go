@@ -491,7 +491,7 @@ func (c *mcpCall) updateChatChannel(ctx context.Context, in updateChatChannelIn)
 	}
 	chat := oas.ChatChannelInput{
 		AllowedOrigins: origins, AllowAnonymous: &cur.Chat.AllowAnonymous, AskEmailOffline: &cur.Chat.AskEmailOffline,
-		Discussions: &cur.Chat.Discussions, Greeting: &cur.Chat.Greeting, Launcher: &cur.Chat.Launcher,
+		Discussions: &cur.Chat.Discussions, Greeting: &cur.Chat.Greeting, Launcher: &cur.Chat.Launcher, AnnounceUpdates: &cur.Chat.AnnounceUpdates,
 	}
 	if in.AllowAnonymous != nil {
 		chat.AllowAnonymous = in.AllowAnonymous

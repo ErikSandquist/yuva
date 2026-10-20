@@ -101,6 +101,9 @@ var operationAccess = map[string]access{
 
 	"GetClientRoadmap": accessPublic,
 
+	"GetClientWhatsNew":      accessPublic,
+	"GetClientWhatsNewEntry": accessPublic,
+
 	"CreateClientDiscussion":       accessDiscussant,
 	"CreateClientDiscussionPost":   accessDiscussant,
 	"AcceptClientDiscussionAnswer": accessDiscussant,

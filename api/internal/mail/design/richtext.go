@@ -203,3 +203,21 @@ func richFields(s string) (fields []Field, bad []string) {
 	}
 	return fields, bad
 }
+
+// SanitizeRich cuts s down to the markup a design's text holds (inline: a heading's).
+func SanitizeRich(s string, inline bool) string {
+	if inline {
+		return inlinePol.Sanitize(s)
+	}
+	return richPolicy.Sanitize(s)
+}
+
+// ValidRich reports whether Validate accepts s as the text of a text block (inline: a heading).
+func ValidRich(s string, inline bool) bool {
+	ok, bad := checkRich(s, inline)
+	if !ok || bad != "" {
+		return false
+	}
+	_, unknown := richFields(s)
+	return len(unknown) == 0
+}

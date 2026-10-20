@@ -231,7 +231,11 @@ func (s *Server) DeleteEmailImage(ctx context.Context, req oas.DeleteEmailImageR
 		if err != nil {
 			return err
 		}
-		if len(users) > 0 || len(articles) > 0 {
+		entries, err := q.ListChangelogEntriesUsingImage(ctx, store.ListChangelogEntriesUsingImageParams{WorkspaceID: p.workspaceID, ImageID: &img.ID})
+		if err != nil {
+			return err
+		}
+		if len(users) > 0 || len(articles) > 0 || len(entries) > 0 {
 			designs := make([]map[string]any, len(users))
 			for i, u := range users {
 				designs[i] = map[string]any{"id": u.ID, "name": u.Name}
@@ -244,7 +248,14 @@ func (s *Server) DeleteEmailImage(ctx context.Context, req oas.DeleteEmailImageR
 				}
 				usedBy["help_articles"] = help
 			}
-			e := problem(http.StatusConflict, "image_in_use", "designs or help articles use this image; take it out of them first")
+			if len(entries) > 0 {
+				news := make([]map[string]any, len(entries))
+				for i, n := range entries {
+					news[i] = map[string]any{"id": n.ID, "changelog_id": n.ChangelogID, "number": n.Number, "title": n.Title}
+				}
+				usedBy["changelog_entries"] = news
+			}
+			e := problem(http.StatusConflict, "image_in_use", "designs, help articles or What's new entries use this image; take it out of them first")
 			e.Extra = map[string]any{"used_by": usedBy}
 			return e
 		}

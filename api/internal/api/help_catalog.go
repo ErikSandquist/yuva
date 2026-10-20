@@ -36,22 +36,26 @@ type helpArt struct {
 // helpServedLocale is the center's locale a visitor's language maps to: exactly, then by base
 // language, else the center's default.
 func helpServedLocale(c store.HelpCenter, requested string) string {
+	return servedLocale(c.Locales, c.DefaultLocale, requested)
+}
+
+func servedLocale(locales []string, def, requested string) string {
 	want := strings.ToLower(strings.ReplaceAll(requested, "_", "-"))
 	if want == "" {
-		return c.DefaultLocale
+		return def
 	}
-	for _, l := range c.Locales {
+	for _, l := range locales {
 		if strings.ToLower(l) == want {
 			return l
 		}
 	}
 	base, _, _ := strings.Cut(want, "-")
-	for _, l := range c.Locales {
+	for _, l := range locales {
 		if b, _, _ := strings.Cut(strings.ToLower(l), "-"); b == base {
 			return l
 		}
 	}
-	return c.DefaultLocale
+	return def
 }
 
 func (s *Server) helpHomeURL(c store.HelpCenter, locale string) string {

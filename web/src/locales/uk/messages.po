@@ -1072,6 +1072,10 @@ msgstr "У ресурсу може бути щонайбільше 20 ворон
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Публічна сторінка, яка повідомляє клієнтам, чи працює {inboxName}. Доки ви її не опублікуєте, вона лишається прихованою."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Опублікований запис у «Що нового» видалено"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Надісланий стан, що вказує власний стан, зберігає його."
@@ -1140,6 +1144,14 @@ msgstr "Гілка береться повністю, якщо її останн
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Для імені користувача потрібен TLS або STARTTLS: пароль ніколи не передається без шифрування."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Запис у «Що нового» опубліковано"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Запис у «Що нового» знято з публікації"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Опублікуйте цей запис TXT у DNS вашого дом�
 msgid "Publish, or submit the draft"
 msgstr "Опублікувати або надіслати чернетку"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Публікація, планування та зняття з публікації записів «Що нового»"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Читати робочий простір, учасників, скри
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Читається, щоб запропонувати адреси вашої команди: її пошта береться з «Уся пошта»."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Читання журналів змін «Що нового» та їхніх записів"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Напишіть автовідповідь або вимкніть її
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Написати {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Написання записів «Що нового» та їхніх перекладів"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

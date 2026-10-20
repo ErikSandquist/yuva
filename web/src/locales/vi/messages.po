@@ -1072,6 +1072,10 @@ msgstr "Một thuộc tính có thể có tối đa 20 phễu. Hãy xóa một p
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Trang công khai cho khách hàng biết {inboxName} có hoạt động không. Trang chưa được xuất bản cho đến khi bạn xuất bản."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Một mục đã xuất bản trong Có gì mới đã bị xóa"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Trạng thái được gửi có nêu trạng thái riêng sẽ giữ trạng thái đó."
@@ -1140,6 +1144,14 @@ msgstr "Một chuỗi được lấy toàn bộ khi tin nhắn cuối của nó 
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Tên người dùng cần TLS hoặc STARTTLS: mật khẩu không bao giờ được gửi dưới dạng không mã hóa."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Một mục trong Có gì mới đã được xuất bản"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Một mục trong Có gì mới đã bị gỡ xuất bản"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Đăng bản ghi TXT này vào DNS của tên miền bạn:"
 msgid "Publish, or submit the draft"
 msgstr "Xuất bản, hoặc gửi bản nháp"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Xuất bản, lên lịch và gỡ xuất bản các mục trong Có gì mới"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Đọc không gian làm việc, thành viên, hộp thư và kênh"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Đọc để gợi ý các địa chỉ của nhóm bạn: thư của nó đến từ Tất cả thư."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Đọc nhật ký thay đổi của Có gì mới và các mục của chúng"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Viết phản hồi tự động, hoặc tắt nó."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Viết cho {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Viết các mục trong Có gì mới và bản dịch của chúng"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

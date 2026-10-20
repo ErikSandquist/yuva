@@ -57,7 +57,7 @@ func chatChannelBody(c store.ChatChannel) *oas.ChatChannel {
 	out := &oas.ChatChannel{
 		PublicKey: c.PublicKey, AllowAnonymous: c.AllowAnonymous, AskEmailOffline: c.AskEmailOffline,
 		Greeting: c.Greeting, AllowedOrigins: make([]oas.Origin, len(c.AllowedOrigins)),
-		Launcher: oas.ChatLauncher{Color: c.LauncherColor}, Discussions: oas.DiscussionMode(c.Discussions),
+		Launcher: oas.ChatLauncher{Color: c.LauncherColor}, Discussions: oas.DiscussionMode(c.Discussions), AnnounceUpdates: c.AnnounceUpdates,
 	}
 	for i, o := range c.AllowedOrigins {
 		out.AllowedOrigins[i] = oas.Origin(o)
@@ -123,6 +123,7 @@ func chatChannelParams(workspaceID, channelID uuid.UUID, in *oas.ChatChannelInpu
 		if cur.Discussions != "" {
 			out.Discussions = cur.Discussions
 		}
+		out.AnnounceUpdates = cur.AnnounceUpdates
 	} else {
 		out.PublicKey = newChatKey()
 	}
@@ -151,6 +152,9 @@ func chatChannelParams(workspaceID, channelID uuid.UUID, in *oas.ChatChannelInpu
 	}
 	if in.AskEmailOffline != nil {
 		out.AskEmailOffline = *in.AskEmailOffline
+	}
+	if in.AnnounceUpdates != nil {
+		out.AnnounceUpdates = *in.AnnounceUpdates
 	}
 	if in.Greeting != nil {
 		g, err := trimmed(*in.Greeting, 0, 500, "chat.greeting")

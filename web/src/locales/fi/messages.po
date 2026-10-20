@@ -1072,6 +1072,10 @@ msgstr "Ominaisuudella voi olla enintään 20 suppiloa. Poista yksi ensin."
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Julkinen sivu, joka kertoo asiakkaillesi, toimiiko {inboxName}. Se pysyy julkaisematta, kunnes julkaiset sen."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Julkaistu Uutta-merkintä poistettiin"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Lähetetty tila, joka ilmoittaa oman tilansa, säilyttää sen."
@@ -1140,6 +1144,14 @@ msgstr "Viestiketju otetaan kokonaisena, kun sen viimeinen viesti on aikavälill
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Käyttäjätunnus vaatii TLS:n tai STARTTLS:n: salasanaa ei koskaan lähetetä salaamattomana."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Uutta-merkintä julkaistiin"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Uutta-merkintä poistettiin julkaisusta"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Julkaise tämä TXT-tietue verkkotunnuksesi DNS:ssä:"
 msgid "Publish, or submit the draft"
 msgstr "Julkaise tai lähetä luonnos"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Julkaise, ajasta ja poista julkaisusta Uutta-merkintöjä"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Lue työtila, jäsenet, postilaatikot ja kanavat"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Luettu ehdottamaan tiimisi osoitteita: sen posti tulee Kaikki posti -kansiosta."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Lue Uutta-muutosloki ja sen merkinnät"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Kirjoita automaattivastaus tai poista se käytöstä."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Kirjoita henkilölle {first} …"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Kirjoita Uutta-merkintöjä ja niiden käännöksiä"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

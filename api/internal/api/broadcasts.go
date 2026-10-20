@@ -268,7 +268,7 @@ func broadcastBody(b store.Broadcast) oas.Broadcast {
 		DesignId: b.DesignID, DesignVersion: b.DesignVersion, Audience: aud, ClickTracking: b.ClickTracking, Utm: b.Utm, UtmCampaign: b.UtmCampaign,
 		State: oas.BroadcastState(b.State), StateDetail: b.StateDetail, ScheduledAt: b.ScheduledAt, WaitingUntil: b.WaitingUntil,
 		StartedAt: b.StartedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt, Counts: parseCounts(b.Counts).body(b.State),
-		CreatedBy: b.CreatedBy, ScheduledBy: b.ScheduledBy, ScheduledByApiKey: b.ScheduledByKey, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
+		CreatedBy: b.CreatedBy, ScheduledBy: b.ScheduledBy, ScheduledByApiKey: b.ScheduledByKey, ChangelogEntryId: b.ChangelogEntryID, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
 	}
 	if b.PauseReason != nil && b.State == bcPaused {
 		r := oas.BroadcastPauseReason(*b.PauseReason)
@@ -575,69 +575,94 @@ func (s *Server) CreateBroadcast(ctx context.Context, req oas.CreateBroadcastReq
 	if err := s.requireBroadcastWriter(p); err != nil {
 		return nil, err
 	}
-	name, err := trimmed(b.Name, 1, 200, "name")
-	if err != nil {
-		return nil, err
-	}
-	subject, preheader := "", ""
-	if b.Subject != nil {
-		if subject, err = trimmed(*b.Subject, 0, 300, "subject"); err != nil {
-			return nil, err
-		}
-	}
-	if b.Preheader != nil {
-		if preheader, err = trimmed(*b.Preheader, 0, 300, "preheader"); err != nil {
-			return nil, err
-		}
-	}
-	id := newID()
-	campaign := campaignOf(name, id)
-	if b.UtmCampaign != nil {
-		if campaign, err = checkCampaign(*b.UtmCampaign); err != nil {
-			return nil, err
-		}
-	}
-	pace, err := checkPace(b.Pace)
+	d, err := checkBroadcastDraft(*b)
 	if err != nil {
 		return nil, err
 	}
 	var out store.Broadcast
-	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
-		if s.broadcastMode() == broadcastsApproval {
-			n, err := q.CountBroadcasts(ctx, p.workspaceID)
-			if err != nil {
-				return err
-			}
-			if n >= hostedBroadcastLimit {
-				return errBroadcastLimit
-			}
-		}
-		if b.ChannelId != nil {
-			if err := s.broadcastChannel(ctx, q, p.workspaceID, in.ID, *b.ChannelId); err != nil {
-				return err
-			}
-		}
-		if b.DesignId != nil {
-			if err := broadcastDesign(ctx, q, p, in.ID, *b.DesignId); err != nil {
-				return err
-			}
-		}
-		aud, err := checkAudience(ctx, q, p.workspaceID, in.ID, b.Audience)
-		if err != nil {
-			return err
-		}
-		out, err = q.CreateBroadcast(ctx, store.CreateBroadcastParams{
-			ID: id, WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: name, Subject: subject,
-			Preheader: preheader, DesignID: b.DesignId, Audience: mustJSON(aud), ClickTracking: boolOr(b.ClickTracking, false),
-			Utm: boolOr(b.Utm, true), UtmCampaign: campaign, CreatedBy: p.memberRef(), PacePerHour: pace.hour,
-			PacePerDay: pace.day, PacePerMonth: pace.month, Now: s.now(),
-		})
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		out, err = s.insertBroadcast(ctx, q, p, in, *b, d, nil, nil)
 		return err
 	})
 	if err != nil {
 		return nil, err
 	}
 	return oas.CreateBroadcast201JSONResponse(broadcastBody(out)), nil
+}
+
+type broadcastDraft struct {
+	id                       uuid.UUID
+	name, subject, preheader string
+	campaign                 string
+	pace                     bcPace
+}
+
+func checkBroadcastDraft(b oas.BroadcastCreate) (broadcastDraft, error) {
+	var d broadcastDraft
+	var err error
+	if d.name, err = trimmed(b.Name, 1, 200, "name"); err != nil {
+		return d, err
+	}
+	if b.Subject != nil {
+		if d.subject, err = trimmed(*b.Subject, 0, 300, "subject"); err != nil {
+			return d, err
+		}
+	}
+	if b.Preheader != nil {
+		if d.preheader, err = trimmed(*b.Preheader, 0, 300, "preheader"); err != nil {
+			return d, err
+		}
+	}
+	d.id = newID()
+	d.campaign = campaignOf(d.name, d.id)
+	if b.UtmCampaign != nil {
+		if d.campaign, err = checkCampaign(*b.UtmCampaign); err != nil {
+			return d, err
+		}
+	}
+	d.pace, err = checkPace(b.Pace)
+	return d, err
+}
+
+// insertBroadcast stores a draft broadcast. A draft made from an entry records it, and its design is
+// made by design in the same transaction, so nothing stays behind when the draft is refused.
+func (s *Server) insertBroadcast(ctx context.Context, q *store.Queries, p principal, in store.Inbox, b oas.BroadcastCreate, d broadcastDraft, entry *uuid.UUID, design func(q *store.Queries) (uuid.UUID, error)) (store.Broadcast, error) {
+	if s.broadcastMode() == broadcastsApproval {
+		n, err := q.CountBroadcasts(ctx, p.workspaceID)
+		if err != nil {
+			return store.Broadcast{}, err
+		}
+		if n >= hostedBroadcastLimit {
+			return store.Broadcast{}, errBroadcastLimit
+		}
+	}
+	if b.ChannelId != nil {
+		if err := s.broadcastChannel(ctx, q, p.workspaceID, in.ID, *b.ChannelId); err != nil {
+			return store.Broadcast{}, err
+		}
+	}
+	if design != nil {
+		designID, err := design(q)
+		if err != nil {
+			return store.Broadcast{}, err
+		}
+		b.DesignId = &designID
+	}
+	if b.DesignId != nil {
+		if err := broadcastDesign(ctx, q, p, in.ID, *b.DesignId); err != nil {
+			return store.Broadcast{}, err
+		}
+	}
+	aud, err := checkAudience(ctx, q, p.workspaceID, in.ID, b.Audience)
+	if err != nil {
+		return store.Broadcast{}, err
+	}
+	return q.CreateBroadcast(ctx, store.CreateBroadcastParams{
+		ID: d.id, WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: d.name, Subject: d.subject,
+		Preheader: d.preheader, DesignID: b.DesignId, Audience: mustJSON(aud), ClickTracking: boolOr(b.ClickTracking, false),
+		Utm: boolOr(b.Utm, true), UtmCampaign: d.campaign, CreatedBy: p.memberRef(), PacePerHour: d.pace.hour,
+		PacePerDay: d.pace.day, PacePerMonth: d.pace.month, ChangelogEntryID: entry, Now: s.now(),
+	})
 }
 
 func (s *Server) GetBroadcast(ctx context.Context, req oas.GetBroadcastRequestObject) (oas.GetBroadcastResponseObject, error) {

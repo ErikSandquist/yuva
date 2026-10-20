@@ -1072,6 +1072,10 @@ msgstr "En property kan ha maks 20 traktere. Slett én først."
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "En offentlig side som forteller kundene dine om {inboxName} fungerer. Den forblir upublisert til du publiserer den."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "En publisert oppføring i Nytt ble slettet"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "En sendt tilstand som oppgir sin egen tilstand, beholder den."
@@ -1140,6 +1144,14 @@ msgstr "En tråd tas med i sin helhet når den siste meldingen ligger innenfor o
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Et brukernavn krever TLS eller STARTTLS: passordet sendes aldri ukryptert."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "En oppføring i Nytt ble publisert"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "En oppføring i Nytt ble avpublisert"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Publiser denne TXT-posten i DNS-en til domenet ditt:"
 msgid "Publish, or submit the draft"
 msgstr "Publiser, eller indsend utkastet"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Publiser, planlegg og avpubliser oppføringer i Nytt"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Les arbeidsområdet, medlemmene, postboksene og kanalene"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Lest for å foreslå teamets adresser: e-posten kommer fra All e-post."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Les endringslogger i Nytt og oppføringene deres"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Skriv autosvaret, eller slå det av."
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Skriv til {first} …"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Skriv oppføringer i Nytt og oversettelsene deres"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

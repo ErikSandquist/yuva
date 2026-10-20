@@ -131,6 +131,12 @@ WHERE i.id IN (
       AND NOT EXISTS (
           SELECT 1 FROM help_article_revisions r
           WHERE r.workspace_id = c.workspace_id AND r.image_ids @> ARRAY[c.id])
+      AND NOT EXISTS (
+          SELECT 1 FROM changelog_entries e
+          WHERE e.workspace_id = c.workspace_id AND e.image_id = c.id)
+      AND NOT EXISTS (
+          SELECT 1 FROM changelog_entry_translations t
+          WHERE t.workspace_id = c.workspace_id AND t.image_ids @> ARRAY[c.id])
     LIMIT @lim)
 RETURNING i.storage_key;
 

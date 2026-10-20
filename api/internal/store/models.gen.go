@@ -499,6 +499,7 @@ type Broadcast struct {
 	PacePerDay         *int32
 	PacePerMonth       *int32
 	PaceNextAt         *time.Time
+	ChangelogEntryID   *uuid.UUID
 }
 
 type BroadcastClick struct {
@@ -560,6 +561,75 @@ type CannedReply struct {
 	UpdatedAt   time.Time
 }
 
+type Changelog struct {
+	ID                  uuid.UUID
+	WorkspaceID         uuid.UUID
+	InboxID             uuid.UUID
+	Name                string
+	Description         string
+	Slug                string
+	DefaultLocale       string
+	Locales             []string
+	AnalyticsPropertyID *uuid.UUID
+	AgentsMayPublish    bool
+	Published           bool
+	NextEntryNumber     int32
+	ChangedAt           time.Time
+	CreatedAt           time.Time
+	UpdatedAt           time.Time
+}
+
+type ChangelogEntry struct {
+	ID                  uuid.UUID
+	WorkspaceID         uuid.UUID
+	ChangelogID         uuid.UUID
+	Number              int32
+	Labels              []string
+	ImageID             *uuid.UUID
+	State               string
+	PublishAt           *time.Time
+	PublishedAt         *time.Time
+	ScheduledByMemberID *uuid.UUID
+	ScheduledByApiKeyID *uuid.UUID
+	ScheduleFailed      *string
+	ScheduleFailedAt    *time.Time
+	CreatedByMemberID   *uuid.UUID
+	CreatedByApiKeyID   *uuid.UUID
+	CreatedAt           time.Time
+	UpdatedAt           time.Time
+}
+
+type ChangelogEntryTranslation struct {
+	WorkspaceID           uuid.UUID
+	EntryID               uuid.UUID
+	Locale                string
+	Title                 string
+	Body                  string
+	Slug                  string
+	Version               int32
+	ImageIds              []uuid.UUID
+	PublishedTitle        *string
+	PublishedBody         *string
+	PublishedSlug         *string
+	PublishedHtml         *string
+	PublishedExcerpt      *string
+	PublishedAt           *time.Time
+	PublishedByMemberID   *uuid.UUID
+	PublishedByApiKeyID   *uuid.UUID
+	HasUnpublishedChanges bool
+	UpdatedByMemberID     *uuid.UUID
+	UpdatedByApiKeyID     *uuid.UUID
+	CreatedAt             time.Time
+	UpdatedAt             time.Time
+}
+
+type ChangelogSlug struct {
+	Slug        string
+	WorkspaceID uuid.UUID
+	ChangelogID uuid.UUID
+	CreatedAt   time.Time
+}
+
 type Channel struct {
 	ID          uuid.UUID
 	WorkspaceID uuid.UUID
@@ -583,6 +653,7 @@ type ChatChannel struct {
 	LauncherColor    *string
 	Platforms        []string
 	Discussions      string
+	AnnounceUpdates  bool
 }
 
 type ChatVisitor struct {

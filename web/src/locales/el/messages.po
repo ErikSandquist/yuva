@@ -1072,6 +1072,10 @@ msgstr "Μια ιδιότητα μπορεί να έχει το πολύ 20 χο
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Μια δημόσια σελίδα που λέει στους πελάτες σας αν λειτουργεί το {inboxName}. Μένει αδημοσίευτη μέχρι να τη δημοσιεύσετε."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "Μια δημοσιευμένη καταχώριση «Τι νέο υπάρχει» διαγράφηκε"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "Μια απεσταλμένη κατάσταση που δηλώνει τη δική της κατάσταση τη διατηρεί."
@@ -1140,6 +1144,14 @@ msgstr "Ένα νήμα λαμβάνεται ολόκληρο όταν το τε
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Ένα όνομα χρήστη απαιτεί TLS ή STARTTLS: ο κωδικός δεν στέλνεται ποτέ μη κρυπτογραφημένος."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "Μια καταχώριση «Τι νέο υπάρχει» δημοσιεύτηκε"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "Μια καταχώριση «Τι νέο υπάρχει» αποσύρθηκε"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "Δημοσιεύστε αυτή την εγγραφή TXT στο DNS τ�
 msgid "Publish, or submit the draft"
 msgstr "Δημοσίευση ή υποβολή του προχείρου"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "Δημοσίευση, προγραμματισμός και απόσυρση καταχωρίσεων «Τι νέο υπάρχει»"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "Ανάγνωση του χώρου εργασίας, των μελών, 
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "Διαβάζεται για να προτείνει τις διευθύνσεις της ομάδας σας: η αλληλογραφία του έρχεται από το Όλη η αλληλογραφία."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "Ανάγνωση των αρχείων αλλαγών «Τι νέο υπάρχει» και των καταχωρίσεών τους"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "Γράψτε την αυτόματη απάντηση ή απενεργ�
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Γράψτε στον/στην {first}…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "Συγγραφή καταχωρίσεων «Τι νέο υπάρχει» και μεταφράσεών τους"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

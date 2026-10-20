@@ -1,10 +1,10 @@
 -- name: CreateBroadcast :one
 INSERT INTO broadcasts (id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, audience,
                         click_tracking, utm, utm_campaign, created_by, pace_per_hour, pace_per_day, pace_per_month,
-                        created_at, updated_at)
+                        changelog_entry_id, created_at, updated_at)
 VALUES (@id, @workspace_id, @inbox_id, sqlc.narg(channel_id), @name, @subject, @preheader, sqlc.narg(design_id), @audience,
         @click_tracking, @utm, @utm_campaign, sqlc.narg(created_by), sqlc.narg(pace_per_hour), sqlc.narg(pace_per_day),
-        sqlc.narg(pace_per_month), @now, @now)
+        sqlc.narg(pace_per_month), sqlc.narg(changelog_entry_id), @now, @now)
 RETURNING *;
 
 -- name: GetBroadcast :one

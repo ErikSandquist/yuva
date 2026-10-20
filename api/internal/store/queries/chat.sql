@@ -1,13 +1,13 @@
 -- name: SaveChatChannel :one
 INSERT INTO chat_channels (workspace_id, channel_id, public_key, allowed_origins, allow_anonymous, ask_email_offline,
-                           greeting, launcher_position, launcher_color, platforms, discussions)
+                           greeting, launcher_position, launcher_color, platforms, discussions, announce_updates)
 VALUES (@workspace_id, @channel_id, @public_key, @allowed_origins, @allow_anonymous, @ask_email_offline,
-        @greeting, sqlc.narg(launcher_position), sqlc.narg(launcher_color), @platforms, @discussions)
+        @greeting, sqlc.narg(launcher_position), sqlc.narg(launcher_color), @platforms, @discussions, @announce_updates)
 ON CONFLICT (workspace_id, channel_id) DO UPDATE SET
     allowed_origins = excluded.allowed_origins, allow_anonymous = excluded.allow_anonymous,
     ask_email_offline = excluded.ask_email_offline, greeting = excluded.greeting,
     launcher_position = excluded.launcher_position, launcher_color = excluded.launcher_color,
-    platforms = excluded.platforms, discussions = excluded.discussions
+    platforms = excluded.platforms, discussions = excluded.discussions, announce_updates = excluded.announce_updates
 RETURNING *;
 
 -- name: GetChatChannel :one

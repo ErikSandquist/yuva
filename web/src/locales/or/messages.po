@@ -1072,6 +1072,10 @@ msgstr "ଗୋଟିଏ ପ୍ରପର୍ଟିରେ ସର୍ବାଧିକ 
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName} ଚାଲୁଛି କି ନାହିଁ ତାହା ଆପଣଙ୍କ ଗ୍ରାହକଙ୍କୁ କହୁଥିବା ଏକ ସାର୍ବଜନୀନ ପୃଷ୍ଠା। ଆପଣ ପ୍ରକାଶ କରିବା ପର୍ଯ୍ୟନ୍ତ ଏହା ଅପ୍ରକାଶିତ ରହେ।"
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "ପ୍ରକାଶିତ \"ନୂଆ କଣ\" ଏଣ୍ଟ୍ରି ଡିଲିଟ୍ ହେଲା"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "ନିଜର ସ୍ଥିତି ଜଣାଉଥିବା ପଠାଯାଇଥିବା ସ୍ଥିତି ତାହା ବଜାୟ ରଖେ।"
@@ -1140,6 +1144,14 @@ msgstr "ଥ୍ରେଡ୍ର ଶେଷ ସଂଦେଶ ସୀମା ମଧ୍�
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "ଏକ ଉପଯୋଗକର୍ତ୍ତା ନାମ ପାଇଁ TLS କିମ୍ବା STARTTLS ଦରକାର: ପାସୱାର୍ଡ କଦାପି ଅଣଏନକ୍ରିପ୍ଟେଡ୍ ପଠାଯାଏ ନାହିଁ।"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "\"ନୂଆ କଣ\" ଏଣ୍ଟ୍ରି ପ୍ରକାଶିତ ହେଲା"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "\"ନୂଆ କଣ\" ଏଣ୍ଟ୍ରିର ପ୍ରକାଶନ ପ୍ରତ୍ୟାହାର ହେଲା"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "ଏହି TXT ରେକର୍ଡ ଆପଣଙ୍କ ଡୋମେନର D
 msgid "Publish, or submit the draft"
 msgstr "ପ୍ରକାଶ କରନ୍ତୁ, କିମ୍ବା ଖସଡ଼ା ଦାଖଲ କରନ୍ତୁ"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "\"ନୂଆ କଣ\" ଏଣ୍ଟ୍ରି ପ୍ରକାଶ, ସୂଚୀବଦ୍ଧ ଓ ପ୍ରକାଶନ ପ୍ରତ୍ୟାହାର କରନ୍ତୁ"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "ୱାର୍କସ୍ପେସ୍, ସଦସ୍ୟ, ଇନବକ୍ସ �
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "ଆପଣଙ୍କ ଦଳର ଠିକଣା ପରାମର୍ଶ ଦେବାକୁ ପଢ଼ାଯାଏ: ଏହାର ମେଲ୍ All mail ରୁ ଆସେ।"
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "\"ନୂଆ କଣ\" ଚେଞ୍ଜଲଗ୍ ଓ ସେଗୁଡ଼ିକର ଏଣ୍ଟ୍ରି ପଢ଼ନ୍ତୁ"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "ଅଟୋ-ରିପ୍ଲାଇ ଲେଖନ୍ତୁ, କିମ୍ବ�
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first} ଙ୍କୁ ଲେଖନ୍ତୁ…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "\"ନୂଆ କଣ\" ଏଣ୍ଟ୍ରି ଓ ଅନୁବାଦ ଲେଖନ୍ତୁ"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

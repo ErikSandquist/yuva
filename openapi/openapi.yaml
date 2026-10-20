@@ -394,6 +394,40 @@ tags:
       limited to inboxes sees the boards of those inboxes; a board or idea the caller cannot see
       answers `404`. A server with `YUVA_ROADMAP=off` answers `404 roadmap_off` on every roadmap
       endpoint and the client inbox has no `roadmap`.
+  - name: changelog
+    description: |
+      What's new: a changelog per inbox (at most one) of dated entries a workspace tells its
+      customers, each labelled `new`, `improved` or `fixed`, with an optional image. An entry has
+      one translation per locale of the changelog; a translation has a working draft (`title`,
+      `body` in Markdown, `slug`, `version`) and, once published, a frozen published copy rendered
+      to HTML. An entry is a `draft`, `scheduled` for a time, or `published`. A published
+      changelog is shown at the server's `/changelog/{slug}` and answers widgets under
+      `/client/v1/channels/{channel_key}/whats-new`; entries never appear in help search. Markdown
+      is the help centers': GFM tables, strikethrough, autolinks and fenced code, raw HTML dropped,
+      and images only when they are this workspace's uploads (`uploadChangelogImage`).
+
+      Drafts are saved with `base_version`; a stale one is refused with `409 version_conflict`
+      carrying the translation as it is now. Another member's open editor learns of a save from
+      `changelog.entry.updated` on `/v1/realtime`. Publishing needs a translation in the default
+      locale, freezes and renders every translation, and sets `published_at` the first time;
+      republishing keeps the date. A scheduled entry is published by the server at `publish_at`
+      with one conditional update, so a duplicate run does nothing; the server checks the
+      scheduler's right to publish again then, and an entry whose scheduler lost it goes back to
+      `draft` with `schedule_failed` set.
+
+      Agents with access to the changelog's inbox read everything and write entries and
+      translations. Owners and admins also create, configure and delete changelogs, and publish,
+      schedule, unpublish and delete published entries; with the changelog's `agents_may_publish`
+      on, agents with access to the inbox may publish, schedule, unpublish and delete too. API
+      keys need `changelog:read`, `changelog:write` or `changelog:publish`; no `changelog:*` scope
+      is added to keys made before they existed, and a key made without naming its scopes holds
+      `changelog:read` and `changelog:write` but not `changelog:publish`. An OAuth token never
+      changes what the public sees: it cannot create, change or delete a changelog, publish,
+      schedule, unpublish, or delete a published entry (`403 member_session_required`), and
+      `changelog:publish` is not offered to OAuth clients. A key limited to inboxes sees the
+      changelogs of those inboxes; a changelog the caller cannot see answers `404`. A server with
+      `YUVA_WHATS_NEW=off` answers `404 whats_new_off` on every What's new endpoint, and the
+      client inbox has no `whats_new`.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -6335,8 +6369,10 @@ paths:
       summary: Delete an e-mail image
       description: |
         Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
-        not archived uses the image, and naming the articles in `used_by.help_articles` while a help
-        article's draft, published copy or kept revision shows it, whatever `force` says. An image that went out in a sent broadcast needs
+        not archived uses the image, naming the articles in `used_by.help_articles` while a help
+        article's draft, published copy or kept revision shows it, and the entries in
+        `used_by.changelog_entries` while a What's new entry has it as its picture or shows it in a
+        draft or published text, whatever `force` says. An image that went out in a sent broadcast needs
         `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
         image. The public URL stops working at once.
 
@@ -11329,6 +11365,692 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/markdown/render:
+    post:
+      operationId: renderMarkdown
+      summary: Render Markdown for an editor
+      description: |
+        The editor's preview: the HTML a body would publish as in a help article or a What's new
+        entry, with the same rules for images (only this workspace's uploads stay). 60 renders a
+        minute per caller (`429 rate_limited`). `renderHelpMarkdown` stays for editors that already
+        use it.
+
+        Agents, owners, admins and API keys. Scope: `help:write` or `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpMarkdown"
+      responses:
+        "200":
+          description: The HTML.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpRendered"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs:
+    get:
+      operationId: listChangelogs
+      summary: List changelogs
+      description: |
+        The changelogs of the inboxes the caller can see, oldest first.
+
+        Scope: `changelog:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          description: Only the changelog of this inbox.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The changelogs.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createChangelog
+      summary: Create a changelog
+      description: |
+        A changelog for an inbox, which has at most one (`409 changelog_exists`). `slug` names it
+        in its URL, is unique across the server, current and former slugs alike (`409
+        slug_taken`), and cannot be one of the reserved words (`400`). `default_locale` defaults
+        to the inbox's and `locales` to the default locale alone; `locales` must hold
+        `default_locale`. A new changelog is unpublished unless `published` is `true`. The logo
+        and accent colour of the public pages are the inbox's branding.
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogCreate"
+      responses:
+        "201":
+          description: The changelog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Changelog"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}:
+    get:
+      operationId: getChangelog
+      summary: A changelog
+      description: |
+        With its counts and public `url`.
+
+        Scope: `changelog:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+      responses:
+        "200":
+          description: The changelog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Changelog"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateChangelog
+      summary: Update a changelog
+      description: |
+        Changes the given fields; `null` clears the analytics property. `published: false` takes
+        the changelog and every entry off the web (`404`) and out of the widgets at once. Changing
+        `slug` keeps the old one reserved for this changelog, and its public addresses redirect to
+        the new one, for 90 days; a changelog keeps its 10 newest former slugs, and its slug
+        changes 10 times a day at most (`429 rate_limited`). A locale cannot leave `locales` while
+        an entry has a translation in it (`409 locale_in_use`).
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogUpdate"
+      responses:
+        "200":
+          description: The updated changelog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Changelog"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteChangelog
+      summary: Delete a changelog
+      description: |
+        The changelog with its entries and translations; broadcasts made from its entries stay.
+        Its images stay e-mail images of the workspace and are swept like any unused one.
+
+        Owners, admins and API keys; not OAuth tokens (`403 member_session_required`). Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries:
+    get:
+      operationId: listChangelogEntries
+      summary: List a changelog's entries
+      description: |
+        Newest first by `number`, with a summary of each translation. `state` keeps `draft`,
+        `scheduled` or `published` entries, or `changed`: published entries with a translation
+        whose draft differs from its published copy. `label` keeps the entries carrying it.
+        `locale` keeps the entries that have a translation in it (with `state=changed`, a changed
+        one).
+
+        Scope: `changelog:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - name: state
+          in: query
+          schema:
+            type: string
+            enum: [draft, scheduled, published, changed]
+        - name: label
+          in: query
+          schema:
+            $ref: "#/components/schemas/ChangelogLabel"
+        - name: locale
+          in: query
+          schema:
+            $ref: "#/components/schemas/LanguageTag"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of entries.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntryPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createChangelogEntry
+      summary: Write an entry
+      description: |
+        A draft entry with its first translation in `locale`, one of the changelog's `locales`
+        (`400 locale_not_offered`). `labels` holds one to three of `new`, `improved` and `fixed`.
+        `image_id` names an e-mail image of the workspace (`400` otherwise). A workspace holds at
+        most `YUVA_CHANGELOG_MAX_ENTRIES` entries (`422 hosted_limit`).
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogEntryCreate"
+      responses:
+        "201":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}:
+    get:
+      operationId: getChangelogEntry
+      summary: An entry
+      description: |
+        With every translation, drafts and published copies.
+
+        Scope: `changelog:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateChangelogEntry
+      summary: Change an entry's labels or image
+      description: |
+        `labels` replaces the labels, `image_id` sets the image and `null` removes it. On a
+        published entry the change is public at once, so it needs the right to publish
+        (`403 forbidden`; API keys also `changelog:publish`). A scheduled entry goes public as it
+        is when its time comes, so changing it, saving or deleting one of its translations also
+        needs that right (`403 entry_scheduled`; OAuth tokens `403 member_session_required`).
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogEntryUpdate"
+      responses:
+        "200":
+          description: The updated entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteChangelogEntry
+      summary: Delete an entry
+      description: |
+        With its translations, and sends `changelog.entry.deleted` when it was published. A
+        published or scheduled entry can be deleted only by those who may publish (`403
+        forbidden`), and API keys also need `changelog:publish`. Broadcasts made from it stay.
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/translations/{locale}:
+    put:
+      operationId: putChangelogEntryTranslation
+      summary: Save a translation's draft
+      description: |
+        Writes the working draft of the translation in `locale`, one of the changelog's `locales`
+        (`400 locale_not_offered`). `base_version` is the `version` the editor loaded, `0` for a
+        translation that does not exist yet; any other is refused with `409 version_conflict`,
+        which carries the translation as it is now in `translation`. A save moves `version` by one
+        and tells other open editors with `changelog.entry.updated` on `/v1/realtime`. The
+        published copy does not change until the translation is published again. On a scheduled
+        entry a save needs the right to publish (`403 entry_scheduled`), since the draft goes
+        public when the schedule fires.
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+        - $ref: "#/components/parameters/ChangelogLocale"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogTranslationWrite"
+      responses:
+        "200":
+          description: The saved translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntryTranslation"
+        "201":
+          description: The new translation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntryTranslation"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/ChangelogConflictProblem"
+    delete:
+      operationId: deleteChangelogEntryTranslation
+      summary: Delete a translation
+      description: |
+        The last translation of an entry, and the default locale's while the entry is published
+        or scheduled, cannot be deleted (`409 last_translation`, `409 default_translation`);
+        delete the entry instead. A published translation, or any translation of a scheduled
+        entry (`403 entry_scheduled`), can be deleted only by those who may
+        publish (`403 forbidden`), and API keys also need `changelog:publish`.
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+        - $ref: "#/components/parameters/ChangelogLocale"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/publish:
+    post:
+      operationId: publishChangelogEntry
+      summary: Publish an entry
+      description: |
+        Without `locale`, publishes the entry: it needs a translation in the default locale
+        (`409 no_default_translation`), freezes and renders every translation, sets `published_at`
+        the first time, cancels a schedule, tells the inbox's widgets, and sends
+        `changelog.entry.published`. Republishing a published entry freezes the drafts again and
+        keeps the date. With `locale`, publishes that translation alone, for an entry that is
+        already published (`409 not_published` otherwise). With `base_version` (with `locale`
+        only), a draft saved since is refused with `409 version_conflict`. The entry is public
+        once its changelog is published.
+
+        Owners, admins and API keys; agents with access to the changelog's inbox when its
+        `agents_may_publish` is on (`403 forbidden` otherwise). OAuth tokens never publish
+        (`403 member_session_required`). Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogEntryPublish"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/ChangelogConflictProblem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/schedule:
+    post:
+      operationId: scheduleChangelogEntry
+      summary: Schedule an entry
+      description: |
+        Sets `publish_at`, in the future and at most 365 days ahead (`400`), and the entry's state
+        to `scheduled`. The server publishes it then, as the caller would have. A changelog holds
+        at most 50 scheduled entries (`409 too_many_scheduled`). Needs a translation in the
+        default locale (`409 no_default_translation`). Scheduling a scheduled entry moves the
+        time; a published entry cannot be scheduled (`409 already_published`).
+
+        Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogSchedule"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/unschedule:
+    post:
+      operationId: unscheduleChangelogEntry
+      summary: Unschedule an entry
+      description: |
+        Returns a scheduled entry to `draft`. Any other state is left as it is.
+
+        Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/unpublish:
+    post:
+      operationId: unpublishChangelogEntry
+      summary: Unpublish an entry
+      description: |
+        Takes the entry off the web (`404`) and out of the widgets, returns it to `draft`, drops
+        the published copies and sends `changelog.entry.unpublished`; the drafts and `published_at`
+        stay, so publishing again keeps the date. A draft is left as it is.
+
+        Who may publish, as for `publishChangelogEntry`. Scope: `changelog:publish`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangelogEntry"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/entries/{entryId}/broadcast:
+    post:
+      operationId: broadcastChangelogEntry
+      summary: Mail an entry to subscribers
+      description: |
+        Makes a draft broadcast from a published entry on the `product-update` template in
+        `locale` (English when the template has no such language): the entry's title, labels and
+        date, its text and workspace images as design blocks, its image as the hero, and a button
+        to its public page. The audience is the lists in `list_ids`, 1 to 10 lists of the
+        changelog's inbox (a status list is refused as for any broadcast), and `channel_id` the
+        sending channel. The broadcast is named "What's new: {title}", has the title as subject
+        and the start of the text as preheader, and records the entry in `changelog_entry_id`.
+        Nothing is scheduled or sent: review, test sends, consent, approval and sending are those
+        of every broadcast.
+
+        A table or code block in the text, which the design cannot hold, becomes a line linking to
+        the entry. `409 not_published` for an entry that is not published, `404` for a locale it
+        has no published translation in.
+
+        Owners, admins and API keys. Scopes: `broadcasts:write` and `lists:read`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangelogBroadcast"
+      responses:
+        "201":
+          description: The draft broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/changelogs/{changelogId}/images:
+    post:
+      operationId: uploadChangelogImage
+      summary: Upload an image for entries
+      description: |
+        Stores the image as one of the workspace's e-mail images, with the same rules as
+        `uploadEmailImage` (types, sizes, re-encoding, the same image answering `200`, the quota and
+        the rate), and answers its public URL with the Markdown that shows it. An image no entry,
+        draft or design uses is deleted a week after its upload.
+
+        Agents with access to the changelog's inbox, owners, admins and API keys. Scope: `changelog:write`.
+      tags: [changelog]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChangelogId"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/EmailImageUpload"
+      responses:
+        "200":
+          description: The same image was already uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpImage"
+        "201":
+          description: The image.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpImage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /v1/help-centers:
     get:
       operationId: listHelpCenters
@@ -12509,6 +13231,78 @@ paths:
                 $ref: "#/components/schemas/DiscussionDetail"
         "401":
           $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/whats-new:
+    get:
+      operationId: getClientWhatsNew
+      summary: The What's new feed
+      description: |
+        The inbox's published changelog with its published entries, newest first by
+        `published_at`, in the served locale: the one that matches `locale` exactly, then by base
+        language, else the changelog's default (an entry without a published translation there
+        comes in the default locale with `fallback: true`). Cursor-paged. Needs no session and
+        creates no contact; a browser must come from an allowed origin. `404 whats_new_off`
+        without a published changelog, and on a server with `YUVA_WHATS_NEW=off`. 120 reads a
+        minute per address and channel, and 2,400 per changelog (`429 rate_limited` with
+        `Retry-After`). Sent with `Cache-Control: public, max-age=60`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientWhatsNewChannelKey"
+        - $ref: "#/components/parameters/ClientWhatsNewLocale"
+        - name: cursor
+          in: query
+          schema:
+            type: string
+            maxLength: 200
+        - name: limit
+          in: query
+          description: 1 to 50; 20 by default.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 50
+      responses:
+        "200":
+          description: The feed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientWhatsNew"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/whats-new/{entryId}:
+    get:
+      operationId: getClientWhatsNewEntry
+      summary: A What's new entry
+      description: |
+        One published entry in the served locale, as for `getClientWhatsNew`. `404` for a draft,
+        a scheduled or an unpublished entry. Sent with `Cache-Control: public, max-age=60`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ClientWhatsNewChannelKey"
+        - $ref: "#/components/parameters/ChangelogEntryId"
+        - $ref: "#/components/parameters/ClientWhatsNewLocale"
+      responses:
+        "200":
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientWhatsNewEntry"
         "403":
           $ref: "#/components/responses/Problem"
         "404":
@@ -15094,6 +15888,69 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  changelog.entry.published:
+    post:
+      operationId: webhookChangelogEntryPublished
+      summary: A What's new entry was published
+      description: |
+        An entry was published by a member, a key or its schedule, or published again. It is
+        public when the changelog is published. Endpoints of an inbox get the entries of that
+        inbox's changelog.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookChangelogEntryPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  changelog.entry.unpublished:
+    post:
+      operationId: webhookChangelogEntryUnpublished
+      summary: A What's new entry was unpublished
+      description: The entry is no longer on the web; its draft stays.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookChangelogEntryPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  changelog.entry.deleted:
+    post:
+      operationId: webhookChangelogEntryDeleted
+      summary: A published What's new entry was deleted
+      description: Sent when the deleted entry was published.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookChangelogEntryPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -15640,6 +16497,41 @@ components:
       schema:
         type: string
         format: uuid
+    ChangelogId:
+      name: changelogId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ChangelogEntryId:
+      name: entryId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ChangelogLocale:
+      name: locale
+      in: path
+      required: true
+      description: One of the changelog's `locales`.
+      schema:
+        $ref: "#/components/schemas/LanguageTag"
+    ClientWhatsNewChannelKey:
+      name: channel_key
+      in: path
+      required: true
+      description: The public key of a `chat` or `app` channel of the changelog's inbox.
+      schema:
+        type: string
+        maxLength: 200
+    ClientWhatsNewLocale:
+      name: locale
+      in: query
+      description: The visitor's language; matched to the changelog's `locales` exactly, then by base language, else the changelog's default locale.
+      schema:
+        $ref: "#/components/schemas/LanguageTag"
     ClientHelpChannelKey:
       name: channel_key
       in: path
@@ -15679,6 +16571,12 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/EmailDesignProblem"
+    ChangelogConflictProblem:
+      description: The translation was saved since; `translation` is the translation as it is now.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ChangelogConflictProblem"
     HelpConflictProblem:
       description: The translation was saved since; `translation` is the translation as it is now.
       content:
@@ -16092,7 +16990,14 @@ components:
         - `roadmap:stage`: move an idea's stage, which sets the progress of its linked feedback.
           Never implied: a key made without naming its scopes does not hold it.
 
-        `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*` and `roadmap:*` are never added to keys made before they existed.
+        - `changelog:read`: What's new changelogs and their entries.
+        - `changelog:write`: write entries and translations, save drafts, upload images, render Markdown.
+          Mailing an entry to subscribers also needs `broadcasts:write` and `lists:read`.
+        - `changelog:publish`: create, configure and delete changelogs; publish, schedule, unschedule
+          and unpublish entries, change or delete published ones. API keys only, and never implied:
+          a key made without naming its scopes does not hold it, and OAuth clients are not offered it.
+
+        `lists:*`, `broadcasts:*`, `migrations:manage`, `analytics:*`, `status:*`, `help:*`, `roadmap:*` and `changelog:*` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -16125,6 +17030,9 @@ components:
         - roadmap:read
         - roadmap:write
         - roadmap:stage
+        - changelog:read
+        - changelog:write
+        - changelog:publish
     BotAvatarUrl:
       type: string
       format: uri
@@ -17483,7 +18391,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved, status.monitor.down, status.monitor.up, help.article.published, help.article.unpublished, help.article.deleted, discussion.stage_changed]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved, status.monitor.down, status.monitor.up, help.article.published, help.article.unpublished, help.article.deleted, discussion.stage_changed, changelog.entry.published, changelog.entry.unpublished, changelog.entry.deleted]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -21162,6 +22070,7 @@ components:
         - $ref: "#/components/schemas/StatusIncidentEvent"
         - $ref: "#/components/schemas/StatusMonitorEvent"
         - $ref: "#/components/schemas/HelpArticleEvent"
+        - $ref: "#/components/schemas/ChangelogEntryEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -21201,6 +22110,9 @@ components:
           help.article.published: "#/components/schemas/HelpArticleEvent"
           help.article.unpublished: "#/components/schemas/HelpArticleEvent"
           help.article.deleted: "#/components/schemas/HelpArticleEvent"
+          changelog.entry.published: "#/components/schemas/ChangelogEntryEvent"
+          changelog.entry.unpublished: "#/components/schemas/ChangelogEntryEvent"
+          changelog.entry.deleted: "#/components/schemas/ChangelogEntryEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -21257,6 +22169,8 @@ components:
         - $ref: "#/components/schemas/StatusPageEvent"
         - $ref: "#/components/schemas/HelpArticleEvent"
         - $ref: "#/components/schemas/HelpArticleSignal"
+        - $ref: "#/components/schemas/ChangelogEntryEvent"
+        - $ref: "#/components/schemas/ChangelogEntrySignal"
         - $ref: "#/components/schemas/RoadmapBoardSignal"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
@@ -21311,6 +22225,10 @@ components:
           help.article.unpublished: "#/components/schemas/HelpArticleEvent"
           help.article.deleted: "#/components/schemas/HelpArticleEvent"
           help.article.updated: "#/components/schemas/HelpArticleSignal"
+          changelog.entry.published: "#/components/schemas/ChangelogEntryEvent"
+          changelog.entry.unpublished: "#/components/schemas/ChangelogEntryEvent"
+          changelog.entry.deleted: "#/components/schemas/ChangelogEntryEvent"
+          changelog.entry.updated: "#/components/schemas/ChangelogEntrySignal"
           roadmap.board.updated: "#/components/schemas/RoadmapBoardSignal"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"
@@ -21347,7 +22265,7 @@ components:
     ChatChannel:
       type: object
       description: Settings of a `chat` (web widget) channel.
-      required: [public_key, allowed_origins, allow_anonymous, ask_email_offline, greeting, launcher, discussions]
+      required: [public_key, allowed_origins, allow_anonymous, ask_email_offline, greeting, launcher, discussions, announce_updates]
       properties:
         public_key:
           type: string
@@ -21372,6 +22290,9 @@ components:
           $ref: "#/components/schemas/ChatLauncher"
         discussions:
           $ref: "#/components/schemas/DiscussionMode"
+        announce_updates:
+          type: boolean
+          description: The widget's launcher shows the number of unread What's new entries while no messages are unread.
     ChatChannelInput:
       type: object
       required: [allowed_origins]
@@ -21396,6 +22317,9 @@ components:
         discussions:
           $ref: "#/components/schemas/DiscussionMode"
           description: Defaults to `moderated`; on an update, absent keeps the current setting.
+        announce_updates:
+          type: boolean
+          description: Defaults to false; on an update, absent keeps the current setting.
     AppPlatform:
       type: string
       enum: [ios, android]
@@ -22824,6 +23748,10 @@ components:
           type: string
           format: uuid
           description: The API key that scheduled it.
+        changelog_entry_id:
+          type: string
+          format: uuid
+          description: The What's new entry it was made from with `broadcastChangelogEntry`; absent otherwise or once the entry is deleted.
         created_at:
           type: string
           format: date-time
@@ -24672,6 +25600,12 @@ components:
         discussions:
           $ref: "#/components/schemas/DiscussionMode"
           description: "`off` on `app` channels."
+        announce_updates:
+          type: boolean
+          description: |
+            Show the unread count of What's new entries on the launcher while there are no unread
+            messages. The Home tile shows the count whatever this says. Servers sent it from the
+            release that added What's new on; absent means `false`.
     ClientInbox:
       type: object
       description: |
@@ -24732,6 +25666,12 @@ components:
             Absent unless the inbox has a public roadmap board (and on a server with
             `YUVA_ROADMAP=off`); show the Roadmap tile only then. An `inbox.updated` frame brings
             every change.
+        whats_new:
+          $ref: "#/components/schemas/ClientInboxWhatsNew"
+          description: |
+            Absent unless the inbox has a published changelog with a published entry (and on a
+            server with `YUVA_WHATS_NEW=off`); show the What's new tile only then. An
+            `inbox.updated` frame brings every change.
     ClientContact:
       type: object
       required: [id, name, identified]
@@ -30758,6 +31698,740 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/EmailTemplateImage"
+    ChangelogSlug:
+      type: string
+      description: "`a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server."
+      pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+      minLength: 3
+      maxLength: 48
+      examples: [acme-news]
+    ChangelogLabel:
+      type: string
+      enum: [new, improved, fixed]
+      x-enum-varnames: [ChangelogLabelNew, ChangelogLabelImproved, ChangelogLabelFixed]
+    ChangelogEntryState:
+      type: string
+      description: |
+        `draft`: not public. `scheduled`: the server publishes it at `publish_at`. `published`:
+        public once the changelog is published.
+      enum: [draft, scheduled, published]
+      x-enum-varnames: [ChangelogStateDraft, ChangelogStateScheduled, ChangelogStatePublished]
+    ChangelogTranslationState:
+      type: string
+      description: |
+        `draft`: no published copy. `published`: the published copy is the draft. `changed`: a
+        published copy, with a draft saved since that differs.
+      enum: [draft, published, changed]
+      x-enum-varnames: [ChangelogTranslationDraft, ChangelogTranslationPublished, ChangelogTranslationChanged]
+    ChangelogScheduleFailure:
+      type: object
+      description: |
+        Why a schedule did not publish the entry, which went back to `draft`: `lost_right` (the
+        member who scheduled it may no longer publish, or is gone), `key_revoked`,
+        `key_scope_lost` (the key no longer holds `changelog:publish` or can no longer see the
+        inbox) or `no_default_translation`. Cleared by the next schedule or publish.
+      required: [reason, at]
+      properties:
+        reason:
+          type: string
+          enum: [lost_right, key_revoked, key_scope_lost, no_default_translation]
+          x-enum-varnames: [ChangelogFailureLostRight, ChangelogFailureKeyRevoked, ChangelogFailureKeyScopeLost, ChangelogFailureNoDefaultTranslation]
+        at:
+          type: string
+          format: date-time
+    ChangelogCounts:
+      type: object
+      required: [entries, published, scheduled]
+      properties:
+        entries:
+          type: integer
+          format: int32
+        published:
+          type: integer
+          format: int32
+          description: Entries that are public once the changelog is.
+        scheduled:
+          type: integer
+          format: int32
+    Changelog:
+      type: object
+      required: [id, inbox_id, name, description, slug, url, default_locale, locales, agents_may_publish, published, can_publish, counts, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          description: Shown on the changelog's home page.
+        slug:
+          $ref: "#/components/schemas/ChangelogSlug"
+        url:
+          type: string
+          description: The public home page, `<public URL>/changelog/{slug}`.
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          description: The locales entries may be written and published in; the default locale is one of them.
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        analytics_property_id:
+          type: string
+          format: uuid
+          description: The analytics property the public pages count cookieless page views in.
+        agents_may_publish:
+          type: boolean
+          description: Agents with access to the inbox may publish, schedule, unpublish and delete published entries.
+        published:
+          type: boolean
+        can_publish:
+          type: boolean
+          description: The caller may publish and schedule this changelog's entries.
+        counts:
+          $ref: "#/components/schemas/ChangelogCounts"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ChangelogList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Changelog"
+    ChangelogCreate:
+      type: object
+      required: [inbox_id, name, slug]
+      properties:
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/ChangelogSlug"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        analytics_property_id:
+          type: string
+          format: uuid
+        agents_may_publish:
+          type: boolean
+          description: Default `false`.
+        published:
+          type: boolean
+          description: Default `false`.
+    ChangelogUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 1000
+        slug:
+          $ref: "#/components/schemas/ChangelogSlug"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        locales:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        analytics_property_id:
+          type: [string, "null"]
+          format: uuid
+        agents_may_publish:
+          type: boolean
+        published:
+          type: boolean
+    ChangelogEntryTranslationSummary:
+      type: object
+      required: [locale, title, slug, state, version, outdated, updated_at]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          description: The draft's title.
+        slug:
+          type: string
+        state:
+          $ref: "#/components/schemas/ChangelogTranslationState"
+        version:
+          type: integer
+          format: int32
+        outdated:
+          type: boolean
+          description: The default locale's translation was published after this translation was last saved; always false in the default locale.
+        published_at:
+          type: string
+          format: date-time
+          description: Absent unless a published copy exists.
+        url:
+          type: string
+          description: The public page; absent unless the entry and this translation are published.
+        updated_at:
+          type: string
+          format: date-time
+    ChangelogEntrySummary:
+      type: object
+      required: [id, changelog_id, number, labels, state, translations, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        changelog_id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+          description: The entry's number in its changelog's URLs, `/{locale}/entries/{number}-{slug}`.
+        labels:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        image:
+          $ref: "#/components/schemas/EmailImage"
+          description: The entry's picture; absent for none.
+        state:
+          $ref: "#/components/schemas/ChangelogEntryState"
+        publish_at:
+          type: string
+          format: date-time
+          description: "`scheduled` only."
+        published_at:
+          type: string
+          format: date-time
+          description: The date shown, the sort key and the widget's unread mark; set when the entry is first published and kept after unpublishing.
+        scheduled_by_member_id:
+          type: string
+          format: uuid
+        scheduled_by_api_key_id:
+          type: string
+          format: uuid
+        schedule_failed:
+          $ref: "#/components/schemas/ChangelogScheduleFailure"
+        translations:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangelogEntryTranslationSummary"
+        created_by_member_id:
+          type: string
+          format: uuid
+        created_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ChangelogEntryPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangelogEntrySummary"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    ChangelogPublishedCopy:
+      type: object
+      required: [title, body, slug, html, excerpt, published_at]
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        slug:
+          type: string
+        html:
+          type: string
+          description: The body rendered at publish.
+        excerpt:
+          type: string
+          description: The start of the rendered body as plain text, at most 300 characters.
+        published_at:
+          type: string
+          format: date-time
+        published_by_member_id:
+          type: string
+          format: uuid
+        published_by_api_key_id:
+          type: string
+          format: uuid
+    ChangelogEntryTranslation:
+      type: object
+      required: [entry_id, locale, title, body, slug, version, state, outdated, created_at, updated_at]
+      properties:
+        entry_id:
+          type: string
+          format: uuid
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          description: The draft's title.
+        body:
+          type: string
+          description: The draft, Markdown.
+        slug:
+          type: string
+        version:
+          type: integer
+          format: int32
+          description: Moves with every save; send it as `base_version`.
+        state:
+          $ref: "#/components/schemas/ChangelogTranslationState"
+        outdated:
+          type: boolean
+          description: The default locale's translation was published after this translation was last saved; always false in the default locale.
+        published:
+          $ref: "#/components/schemas/ChangelogPublishedCopy"
+          description: The published copy; absent unless there is one.
+        url:
+          type: string
+          description: The public page; absent unless the entry and this translation are published.
+        updated_by_member_id:
+          type: string
+          format: uuid
+        updated_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          description: When the draft was last saved.
+    ChangelogEntry:
+      type: object
+      required: [id, changelog_id, number, labels, state, translations, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        changelog_id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        labels:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        image:
+          $ref: "#/components/schemas/EmailImage"
+        state:
+          $ref: "#/components/schemas/ChangelogEntryState"
+        publish_at:
+          type: string
+          format: date-time
+        published_at:
+          type: string
+          format: date-time
+        scheduled_by_member_id:
+          type: string
+          format: uuid
+        scheduled_by_api_key_id:
+          type: string
+          format: uuid
+        schedule_failed:
+          $ref: "#/components/schemas/ChangelogScheduleFailure"
+        translations:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangelogEntryTranslation"
+        created_by_member_id:
+          type: string
+          format: uuid
+        created_by_api_key_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ChangelogEntryCreate:
+      type: object
+      required: [locale, title, labels]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          maxLength: 50000
+          description: Markdown.
+        slug:
+          $ref: "#/components/schemas/Slug"
+          description: Made from the title when absent.
+        labels:
+          type: array
+          minItems: 1
+          maxItems: 3
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        image_id:
+          type: string
+          format: uuid
+          description: An e-mail image of the workspace.
+    ChangelogEntryUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        labels:
+          type: array
+          minItems: 1
+          maxItems: 3
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        image_id:
+          type: [string, "null"]
+          format: uuid
+    ChangelogTranslationWrite:
+      type: object
+      required: [base_version, title]
+      properties:
+        base_version:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The `version` the editor loaded; `0` for a new translation.
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          maxLength: 50000
+          description: Markdown; empty when absent.
+        slug:
+          $ref: "#/components/schemas/Slug"
+          description: Made from the title when absent.
+    ChangelogEntryPublish:
+      type: object
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: Publish this translation alone, for an entry that is already published.
+        base_version:
+          type: integer
+          format: int32
+          minimum: 1
+          description: With `locale`, the `version` the caller reviewed.
+    ChangelogSchedule:
+      type: object
+      required: [publish_at]
+      properties:
+        publish_at:
+          type: string
+          format: date-time
+    ChangelogBroadcast:
+      type: object
+      required: [locale, list_ids]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The entry's published translation the mail is written from.
+        list_ids:
+          type: array
+          minItems: 1
+          maxItems: 10
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        channel_id:
+          type: string
+          format: uuid
+          description: The e-mail channel the broadcast sends through.
+    ChangelogConflictProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            translation:
+              $ref: "#/components/schemas/ChangelogEntryTranslation"
+              description: "`version_conflict` only: the translation as it is now."
+    ChangelogRef:
+      type: object
+      required: [id, name, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+    ChangelogEntryRefTranslation:
+      type: object
+      required: [locale, title]
+      properties:
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        title:
+          type: string
+          description: The published title.
+        url:
+          type: string
+          description: The public page; absent unless the changelog is published.
+    ChangelogEntryRef:
+      type: object
+      required: [id, number, labels, translations]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        published_at:
+          type: string
+          format: date-time
+        translations:
+          type: array
+          description: The published translations (those the entry had, for `changelog.entry.unpublished` and `changelog.entry.deleted`).
+          items:
+            $ref: "#/components/schemas/ChangelogEntryRefTranslation"
+    ChangelogEntryEventData:
+      type: object
+      required: [changelog, entry]
+      properties:
+        changelog:
+          $ref: "#/components/schemas/ChangelogRef"
+        entry:
+          $ref: "#/components/schemas/ChangelogEntryRef"
+    ChangelogEntryEvent:
+      type: object
+      description: |
+        `changelog.entry.published`, `changelog.entry.unpublished`, `changelog.entry.deleted`: an
+        entry was published (also when a schedule fired, and again on republishing) or
+        unpublished, or a published entry was deleted. Delivered to callers who hold
+        `changelog:read` and can see the changelog's inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [changelog.entry.published, changelog.entry.unpublished, changelog.entry.deleted]
+          x-enum-varnames: [ChangelogEntryPublishedEvent, ChangelogEntryUnpublishedEvent, ChangelogEntryDeletedEvent]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/ChangelogEntryEventData"
+    WebhookChangelogEntryPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/ChangelogEntryEventData"
+    ChangelogEntrySignal:
+      type: object
+      description: |
+        `changelog.entry.updated`, on `/v1/realtime` only: an entry or a translation's draft
+        changed (created, saved, labels or image changed, scheduled, unscheduled), so an editor
+        open on an older `version` can say it changed elsewhere and lists can refresh. Not
+        stored, no id, never replayed. Reaches whoever holds `changelog:read` and sees the
+        changelog's inbox.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [changelog.entry.updated]
+          x-enum-varnames: [ChangelogEntryUpdated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          type: object
+          required: [changelog_id, entry_id]
+          properties:
+            changelog_id:
+              type: string
+              format: uuid
+            entry_id:
+              type: string
+              format: uuid
+            locale:
+              $ref: "#/components/schemas/LanguageTag"
+              description: The translation saved; absent for a change to the entry itself.
+            version:
+              type: integer
+              format: int32
+              description: The translation's new version, with `locale`.
+            member_id:
+              type: string
+              format: uuid
+              description: The member who made the change, when one did.
+    ClientInboxWhatsNew:
+      type: object
+      description: The inbox's published changelog that has at least one published entry.
+      required: [url, locales, default_locale, latest_published_at]
+      properties:
+        url:
+          type: string
+          description: The changelog's public home page.
+        locales:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        latest_published_at:
+          type: string
+          format: date-time
+          description: |
+            The `published_at` of the newest published entry. The widget fetches the feed only when
+            this is newer than the newest entry the visitor has seen.
+    ClientChangelog:
+      type: object
+      required: [name, description, locale, locales, default_locale, url]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The locale served.
+        locales:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+        default_locale:
+          $ref: "#/components/schemas/LanguageTag"
+        url:
+          type: string
+          description: The changelog's public home page in the served locale.
+        latest_published_at:
+          type: string
+          format: date-time
+          description: The `published_at` of the newest published entry; absent when there is none.
+    ClientWhatsNewImage:
+      type: object
+      required: [url, width, height]
+      properties:
+        url:
+          type: string
+          format: uri
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+    ClientWhatsNewEntry:
+      type: object
+      required: [id, number, locale, fallback, title, excerpt, html, labels, published_at, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int32
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+          description: The locale actually served.
+        fallback:
+          type: boolean
+          description: The entry has no published translation in the requested locale; this is the default locale's.
+        title:
+          type: string
+        excerpt:
+          type: string
+          description: Plain text, at most 300 characters.
+        html:
+          type: string
+          description: The body rendered and sanitized at publish.
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangelogLabel"
+        image:
+          $ref: "#/components/schemas/ClientWhatsNewImage"
+        published_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+          description: The entry's public page.
+    ClientWhatsNew:
+      type: object
+      required: [changelog, items]
+      properties:
+        changelog:
+          $ref: "#/components/schemas/ClientChangelog"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientWhatsNewEntry"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
     HelpCenterSlug:
       type: string
       description: "`a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server."
@@ -31902,8 +33576,9 @@ components:
         allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
         `YUVA_HELP_MAX_ARTICLES`: the workspace has as many help articles as the server allows.
         `YUVA_ROADMAP_MAX_IDEAS`: the workspace has as many roadmap ideas as the server allows.
-      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES, YUVA_MIGRATION_UPLOAD_MAX_BYTES, YUVA_HELP_MAX_ARTICLES, YUVA_ROADMAP_MAX_IDEAS]
-      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes, LimitMigrationUploadMaxBytes, LimitHelpMaxArticles, LimitRoadmapMaxIdeas]
+        `YUVA_CHANGELOG_MAX_ENTRIES`: the workspace has as many What's new entries as the server allows.
+      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES, YUVA_MIGRATION_UPLOAD_MAX_BYTES, YUVA_HELP_MAX_ARTICLES, YUVA_ROADMAP_MAX_IDEAS, YUVA_CHANGELOG_MAX_ENTRIES]
+      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes, LimitMigrationUploadMaxBytes, LimitHelpMaxArticles, LimitRoadmapMaxIdeas, LimitChangelogMaxEntries]
     Problem:
       type: object
       description: An RFC 9457 problem document.

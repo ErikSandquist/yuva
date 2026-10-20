@@ -1072,6 +1072,10 @@ msgstr "每個屬性最多可有 20 個漏斗。請先刪除一個。"
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "一個公開頁面，告訴客戶 {inboxName} 是否正常運作。發布前不會公開。"
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "已發佈的「最新動態」項目已被刪除"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "自帶狀態的推送狀態會保留該狀態。"
@@ -1140,6 +1144,14 @@ msgstr "最後一條訊息在範圍內的對話串會被整體匯入。"
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "使用者名稱需要 TLS 或 STARTTLS:密碼絕不會以明文傳送。"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "「最新動態」項目已發佈"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "「最新動態」項目已取消發佈"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "在你域名的 DNS 中釋出此 TXT 記錄:"
 msgid "Publish, or submit the draft"
 msgstr "發佈，或提交草稿"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "發佈、排程及取消發佈「最新動態」項目"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "讀取工作區、成員、收件匣和頻道"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "讀取以建議你團隊的地址:其郵件來自「所有郵件」。"
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "讀取「最新動態」更新記錄及其項目"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "撰寫自動回覆,或將其關閉。"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "給 {first} 寫…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "撰寫「最新動態」項目及其翻譯"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."

@@ -283,6 +283,8 @@ func (s *Server) AddWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &roadmapProgressWorker{s: s})
 	river.AddWorker(workers, &statusNoticeWorker{s: s})
 	river.AddWorker(workers, &statusNoticeSweepWorker{s: s})
+	river.AddWorker(workers, &changelogPublishWorker{s: s})
+	river.AddWorker(workers, &changelogSweepWorker{s: s})
 	s.addStatusDomainWorkers(workers)
 	s.addAnalyticsWorkers(workers)
 	s.addSESWorkers(workers)

@@ -90,7 +90,7 @@ func chatChannelOf(ch store.FindChatChannelByKeyRow) store.ChatChannel {
 	return store.ChatChannel{
 		WorkspaceID: ch.WorkspaceID, ChannelID: ch.ChannelID, PublicKey: ch.PublicKey, AllowedOrigins: ch.AllowedOrigins,
 		AllowAnonymous: ch.AllowAnonymous, AskEmailOffline: ch.AskEmailOffline, Greeting: ch.Greeting,
-		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms, Discussions: ch.Discussions,
+		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms, Discussions: ch.Discussions, AnnounceUpdates: ch.AnnounceUpdates,
 	}
 }
 
@@ -433,6 +433,7 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 		Chat: oas.ClientChatSettings{
 			Greeting: chat.Greeting, LauncherPosition: oas.Right, LauncherColor: chat.LauncherColor,
 			AskEmailOffline: chat.AskEmailOffline, AllowAnonymous: chat.AllowAnonymous, Discussions: clientDiscussionMode(chat),
+			AnnounceUpdates: &chat.AnnounceUpdates,
 		},
 		FeedbackCategories: feedbackCategories,
 		AskForRating:       in.AskForRating,
@@ -459,7 +460,10 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 	if out.Help, err = s.clientHelpInbox(ctx, q, in); err != nil {
 		return out, err
 	}
-	out.Roadmap, err = s.clientRoadmapInbox(ctx, q, in)
+	if out.Roadmap, err = s.clientRoadmapInbox(ctx, q, in); err != nil {
+		return out, err
+	}
+	out.WhatsNew, err = s.clientWhatsNewInbox(ctx, q, in)
 	return out, err
 }
 

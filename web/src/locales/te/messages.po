@@ -1072,6 +1072,10 @@ msgstr "ఒక ప్రాపర్టీకి గరిష్టంగా 20 
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName} పనిచేస్తోందో లేదో మీ కస్టమర్లకు చెప్పే పబ్లిక్ పేజీ. మీరు ప్రచురించే వరకు ఇది ప్రచురితం కాకుండా ఉంటుంది."
 
+#: src/components/common/text.ts
+msgid "A published What's new entry was deleted"
+msgstr "ప్రచురితమైన \"కొత్తవి\" ఎంట్రీ తొలగించబడింది"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "A pushed state that names its own state keeps it."
 msgstr "తన స్వంత స్థితిని పేర్కొన్న పంపిన స్థితి దానిని నిలుపుకుంటుంది."
@@ -1140,6 +1144,14 @@ msgstr "థ్రెడ్ చివరి సందేశం పరిధిల
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "వినియోగదారు పేరుకు TLS లేదా STARTTLS అవసరం: పాస్‌వర్డ్ ఎప్పుడూ ఎన్‌క్రిప్ట్ చేయకుండా పంపబడదు."
+
+#: src/components/common/text.ts
+msgid "A What's new entry was published"
+msgstr "\"కొత్తవి\" ఎంట్రీ ప్రచురితమైంది"
+
+#: src/components/common/text.ts
+msgid "A What's new entry was unpublished"
+msgstr "\"కొత్తవి\" ఎంట్రీ ప్రచురణ ఉపసంహరించబడింది"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "A whole number from 1 to 10,000,000"
@@ -9245,6 +9257,10 @@ msgstr "ఈ TXT రికార్డ్‌ను మీ డొమైన్ DNS 
 msgid "Publish, or submit the draft"
 msgstr "ప్రచురించు, లేదా చిత్తుప్రతిని సమర్పించు"
 
+#: src/components/common/text.ts
+msgid "Publish, schedule and unpublish What's new entries"
+msgstr "\"కొత్తవి\" ఎంట్రీలను ప్రచురించండి, షెడ్యూల్ చేయండి, ప్రచురణను ఉపసంహరించండి"
+
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Published"
@@ -9429,6 +9445,10 @@ msgstr "వర్క్‌స్పేస్, సభ్యులు, ఇన్�
 #: src/features/migrations/ChooseStep.tsx
 msgid "Read to suggest your team's addresses: its mail comes from All mail."
 msgstr "మీ బృందం చిరునామాలను సూచించడానికి చదవబడింది: దాని మెయిల్ All mail నుండి వస్తుంది."
+
+#: src/components/common/text.ts
+msgid "Read What's new changelogs and their entries"
+msgstr "\"కొత్తవి\" చేంజ్‌లాగ్‌లను, వాటి ఎంట్రీలను చదవండి"
 
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
@@ -14237,6 +14257,10 @@ msgstr "ఆటో-రిప్లై రాయండి, లేదా ఆఫ్ 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first} కు రాయండి…"
+
+#: src/components/common/text.ts
+msgid "Write What's new entries and translations"
+msgstr "\"కొత్తవి\" ఎంట్రీలను, అనువాదాలను రాయండి"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Write where and when they agreed."
