@@ -116,6 +116,9 @@ A call without the needed scope answers `403 insufficient_scope`.
 | `help:read` | [Help centers](help-center.md): centers, collections, articles with drafts and revisions, search, the report |
 | `help:write` | Create and change collections and articles, save drafts, upload images |
 | `help:publish` | Publish, unpublish and delete published help articles. Not included in any other scope: name it. |
+| `roadmap:read` | [Roadmap boards](roadmap-board.md): boards, stage history, what became of a reply to linked feedback |
+| `roadmap:write` | Create, change and delete boards, link feedback to ideas, reply to linked feedback. Linking and reading ideas also need `conversations:read`. |
+| `roadmap:stage` | Move an idea's stage, which sets the progress of its linked feedback. Not included in any other scope: name it. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Keys

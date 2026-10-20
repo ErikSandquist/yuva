@@ -168,6 +168,15 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_HELP_URL` | unset | Origin that public help centers are served from, such as `https://help.example.com` (scheme and host, no path). It must reach this server and differ from `YUVA_PUBLIC_URL`. Centers are then at `<origin>/{slug}`. Unset, they are at `<YUVA_PUBLIC_URL>/help/{slug}`. |
 | `YUVA_HELP_MAX_ARTICLES` | `500` when `YUVA_SIGNUP=open`, else `0` | Most help articles one workspace may have; `0` is no limit. Beyond it, creating one answers `422 hosted_limit`. |
 
+## Roadmap board
+
+[Roadmap boards](roadmap-board.md).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_ROADMAP` | `on` | `off` removes roadmap boards: their endpoints and public pages answer `404`, and the widget shows no Roadmap app. |
+| `YUVA_ROADMAP_MAX_IDEAS` | `2000` when `YUVA_SIGNUP=open`, else `0` | Most ideas one workspace may have; `0` is no limit. Beyond it, starting one answers `422 hosted_limit`. |
+
 ## Analytics
 
 [Counting your websites](analytics.md).

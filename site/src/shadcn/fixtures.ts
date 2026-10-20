@@ -4,6 +4,8 @@ import type {
   ClientConversation,
   ClientInbox,
   ClientMailingList,
+  ClientRoadmap,
+  IdeaStage,
   ClientMessage,
   ClientRealtimeMessage,
   Discussion,
@@ -550,6 +552,162 @@ export function createHelpFixture(): YuvaClient {
     channel: "fixture",
     on: () => () => undefined,
     help,
+  }
+  return client as unknown as YuvaClient
+}
+
+const ideaSeed: { id: string; title: string; body: string; stage: IdeaStage; votes: number; ago: number }[] = [
+  {
+    id: "i_dark",
+    title: "Dark mode for the panel",
+    body: "The panel is bright at night. A dark theme that follows the system setting would help.",
+    stage: "in_progress",
+    votes: 42,
+    ago: 9000,
+  },
+  {
+    id: "i_csv",
+    title: "Export conversations as CSV",
+    body: "We need a monthly export of conversations with their labels for our own reports.",
+    stage: "planned",
+    votes: 27,
+    ago: 7000,
+  },
+  {
+    id: "i_slack",
+    title: "Slack notifications",
+    body: "Post new conversations of an inbox into a Slack channel.",
+    stage: "ideas",
+    votes: 18,
+    ago: 5000,
+  },
+  {
+    id: "i_sso",
+    title: "Single sign-on for the team",
+    body: "Let the team sign in with our identity provider.",
+    stage: "ideas",
+    votes: 9,
+    ago: 2000,
+  },
+  {
+    id: "i_tags",
+    title: "Bulk edit labels",
+    body: "Select conversations and add or remove a label for all of them at once.",
+    stage: "shipped",
+    votes: 33,
+    ago: 20000,
+  },
+]
+
+export function createRoadmapFixture(): YuvaClient {
+  const base = createDiscussionsFixture() as unknown as Record<string, unknown>
+  const ideas: Discussion[] = []
+  const posts = new Map<string, DiscussionPost[]>()
+  const add = (seed: (typeof ideaSeed)[number], author: DiscussionAuthor) => {
+    const opening = post(seed.id, `${seed.id}_open`, seed.body, author, seed.ago, { opening: true, votes: seed.votes })
+    ideas.push({
+      id: seed.id,
+      page: "",
+      title: seed.title,
+      opening_post_id: opening.id,
+      body: seed.body,
+      body_html: opening.body_html,
+      author,
+      state: "published",
+      locked: false,
+      votes: seed.votes,
+      reply_count: 0,
+      kind: "idea",
+      stage: seed.stage,
+      created_at: opening.created_at,
+      last_activity_at: opening.created_at,
+    } as Discussion)
+    posts.set(seed.id, [opening])
+  }
+  ideaSeed.forEach((seed, index) => add(seed, index % 2 ? authors.sam! : authors.ada!))
+  posts
+    .get("i_dark")!
+    .push(
+      post("i_dark", "i_dark_1", "We start with the inbox and the settings. Conversations follow.", authors.maya!, 4000)
+    )
+  ideas.find((i) => i.id === "i_dark")!.reply_count = 1
+  const count = (stage: IdeaStage) => ideas.filter((i) => i.stage === stage).length
+  const board = (): ClientRoadmap =>
+    ({
+      name: "Acme roadmap",
+      description: "What we are building, and what you asked for.",
+      url: "https://fixture.invalid/roadmap/acme",
+      suggestions: "open",
+      stages: {
+        ideas: count("ideas"),
+        planned: count("planned"),
+        in_progress: count("in_progress"),
+        shipped: count("shipped"),
+      },
+    }) as ClientRoadmap
+  const find = (id: string) => ideas.find((i) => i.id === id)
+  const client = {
+    ...base,
+    roadmap: () => wait(board()),
+    listIdeas: (options: { stage?: IdeaStage; sort?: "top" | "new"; q?: string } = {}) => {
+      const words = (options.q ?? "").toLowerCase().split(/\s+/).filter(Boolean)
+      const items = ideas
+        .filter((i) => !options.stage || i.stage === options.stage)
+        .filter((i) => words.every((w) => i.title.toLowerCase().includes(w)))
+        .sort((a, b) =>
+          options.sort === "new" ? Date.parse(b.created_at) - Date.parse(a.created_at) : b.votes - a.votes
+        )
+      return wait({ items: items.map((i) => ({ ...i })) })
+    },
+    suggestIdea: async (input: { title: string; body: string }) => {
+      const id = nextId("i")
+      const opening = post(id, `${id}_open`, input.body, authors.ada!, 0, { opening: true, mine: true })
+      const created = {
+        id,
+        page: "",
+        title: input.title,
+        opening_post_id: opening.id,
+        body: input.body,
+        body_html: opening.body_html,
+        author: authors.ada!,
+        state: "published",
+        locked: false,
+        votes: 0,
+        reply_count: 0,
+        kind: "idea",
+        stage: "ideas",
+        mine: true,
+        created_at: opening.created_at,
+        last_activity_at: opening.created_at,
+      } as Discussion
+      ideas.unshift(created)
+      posts.set(id, [opening])
+      return wait({ ...created })
+    },
+    getDiscussion: (id: string) => {
+      const idea = find(id)
+      if (!idea) return (base.getDiscussion as (id: string) => Promise<unknown>)(id)
+      return wait({ discussion: { ...idea }, posts: posts.get(id)!.map((p) => ({ ...p })) })
+    },
+    voteDiscussionPost: async (postId: string, voted = true) => {
+      const at = [...posts.values()].flat().find((p) => p.id === postId)
+      if (!at) return (base.voteDiscussionPost as (id: string, voted: boolean) => Promise<unknown>)(postId, voted)
+      if (!!at.voted !== voted) at.votes += voted ? 1 : -1
+      at.voted = voted
+      Object.assign(find(at.discussion_id)!, { votes: at.votes, voted })
+      return wait({ ...at })
+    },
+    replyToDiscussion: async (id: string, input: { body: string; parent_post_id?: string }) => {
+      const idea = find(id)
+      if (!idea) return (base.replyToDiscussion as (id: string, input: unknown) => Promise<unknown>)(id, input)
+      const reply = post(id, nextId("post"), input.body, authors.ada!, 0, {
+        mine: true,
+        parent_post_id: input.parent_post_id,
+      })
+      posts.get(id)!.push(reply)
+      idea.reply_count++
+      return wait({ ...reply })
+    },
   }
   return client as unknown as YuvaClient
 }

@@ -121,6 +121,9 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `help:read` | [Hilfecenter](help-center.md): Center, Sammlungen, Artikel mit Entwürfen und Revisionen, Suche, Bericht |
 | `help:write` | Sammlungen und Artikel anlegen und ändern, Entwürfe speichern, Bilder hochladen |
 | `help:publish` | Hilfe-Artikel veröffentlichen, zurückziehen und veröffentlichte löschen. In keiner anderen Berechtigung enthalten: Nennen Sie sie ausdrücklich. |
+| `roadmap:read` | [Roadmap-Boards](roadmap-board.md): Boards, Phasenverlauf, das Ergebnis einer Antwort an verknüpftes Feedback |
+| `roadmap:write` | Boards anlegen, ändern und löschen, Feedback mit Ideen verknüpfen, an verknüpftes Feedback antworten. Ideen zu lesen und zu verknüpfen braucht zusätzlich `conversations:read`. |
+| `roadmap:stage` | Die Phase einer Idee verschieben, was den Fortschritt ihres verknüpften Feedbacks setzt. In keinem anderen Scope enthalten: Nennen Sie ihn ausdrücklich. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Schlüssel

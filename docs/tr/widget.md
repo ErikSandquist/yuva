@@ -54,7 +54,7 @@ kutusunun yayımlanmış bir [yardım merkezi](help-center.md) olduğunda görü
 arama alanı da belirir: ziyaretçinin bulunduğu sayfaya uyan makaleleri, popüler olanları ve
 koleksiyonları gösterir, makaleleri panelin içinde "Bu yararlı oldu mu?" sorusuyla açar ve bir
 "Bize yazın" düğmesiyle biter. Bir makaleyi okuduktan sonra başlayan konuşma onu kaydeder; ekibinizin
-yanıtta gönderdiği makale de aynı uygulamada açılır.
+yanıtta gönderdiği makale de aynı uygulamada açılır. **Yol haritası**, gelen kutusunun herkese açık bir [yol haritası panosu](roadmap-board.md) olduğunda görünür: aşamaya ve oya göre fikirler, yanıtlarıyla bir fikir ve Fikir öner. Oy vermek ve öneri yazmak giriş ister; ziyaretçinin kimlik token'ı yoksa okuyucu penceresi açılır.
 
 Kimse çevrimiçi değilse ve kanal e-posta adresi istiyorsa konuşma bir adres ister. Ziyaretçi adresi
 kaydedince konuşma onay bağlantısının gönderildiğini söyler (Adresi değiştir ve Tekrar gönder ile),
@@ -122,6 +122,7 @@ Pencere 47 dil konuşur: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, `pt-BR`
 | `unread`, `yuva-unread` olayı | Henüz görülmemiş yanıtlar; olayda `detail.count` bulunur. |
 | `setIdentityToken(fn)`, `signOut()` | Oturum açmış kullanıcılar, yukarıdaki gibi. |
 | `rate(conversationId, "good" \| "bad", comment?)` | Kapalı bir konuşmayı değerlendirir; yapamadığında `409 already_rated` ya da `rating_unavailable`. |
+| `openApp(kind, params?)` | Paneli bir uygulamada açar: `"help"` (`{ article }` ya da `{ query }`), `"feedback"`, `"status"`, `"subscribe"` ya da `"roadmap"` (`{ idea }` o fikri açar). |
 
 ### Kanal ayarları
 

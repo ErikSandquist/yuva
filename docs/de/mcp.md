@@ -159,6 +159,18 @@ wird. Ein Assistent veröffentlicht nie: Er speichert Entwürfe, und ein Mitglie
 veröffentlicht sie in Yuva. In `draft_reply` hängt `article_ids` bis zu drei veröffentlichte Artikel
 als Karten an die Antwort.
 
+## Roadmap aus einem Assistenten
+
+Mit `roadmap:read`, `roadmap:write` und `conversations:read` kann ein Assistent die Ideen eines
+[Roadmap-Boards](roadmap-board.md) auflisten und Feedback mit ihnen verknüpfen. Der Prompt `link_feedback_to_ideas`
+geht das noch nicht verknüpfte Feedback durch, durchsucht das Board und schlägt Verknüpfungen vor; er ändert
+nichts, bis Sie zustimmen, und verschiebt nie eine Phase. Eine Phase zu verschieben erfahren die Kunden:
+`move_idea_stage` wird nur einem Schlüssel oder einer Freigabe gelistet, der den Scope `roadmap:stage` ausdrücklich
+nennt; kein anderer Scope schließt ihn ein. Zusätzlich braucht es `confirm_linked`, die Zahl des verknüpften
+Feedbacks, die `get_roadmap_idea` für diese Phase zeigte (`would_change`) und die Sie gesehen haben; jede andere
+Zahl antwortet mit `409 confirm_mismatch`, und nichts wird verschoben. Kein Werkzeug legt Ideen an, bearbeitet oder
+moderiert sie oder sendet eine Antwort an verknüpftes Feedback.
+
 ## Referenz
 
 ### Tools
@@ -170,7 +182,7 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 |---|---|
 | `get_setup_state`, `report_yuva_issue` | keiner; jede Verbindung |
 | `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts` | `conversations:read` |
-| `list_feedback` (mit `feedback_score`, 1 bis 5, wenn der Kontakt eine Bewertung gab) | `conversations:read` |
+| `list_feedback` (mit `feedback_score`, 1 bis 5, wenn der Kontakt eine Bewertung gab; `without_idea` behält Feedback ohne Verknüpfung mit einer Idee) | `conversations:read` |
 | `list_inboxes` | `inboxes:read` |
 | `get_contact`, `lookup_contact` | `contacts:read` |
 | `draft_reply` | `messages:write` |
@@ -186,6 +198,9 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
 | `set_component_state`, `create_incident` (immer ein Entwurf), `post_incident_update`, `resolve_incident` | `status:manage` |
 | `link_conversation_to_incident` | `status:manage` und `conversations:read` |
+| `list_roadmap_ideas`, `get_roadmap_idea` | `conversations:read` und `roadmap:read` |
+| `link_feedback_to_idea`, `unlink_feedback_from_idea` | `roadmap:write` und `conversations:read` |
+| `move_idea_stage` (nur wenn `roadmap:stage` ausdrücklich genannt ist; braucht `confirm_linked`) | `roadmap:stage` |
 | `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
 | `draft_help_article`, `update_help_article_draft` (nur Entwürfe, mit `base_version`; eine `locale` schreibt eine Übersetzung) | `help:write` |
 | `list_mailing_lists` | `lists:read` |
@@ -205,8 +220,8 @@ Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kan
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`), `yuva://help-center/{id}` (mit `help:read`); Abonnements folgen Änderungen. |
-| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `write_help_article` (Center, optional Unterhaltung oder Thema, Sprache; mit `help:write`), `help_gaps_review` (Center, optional Tage; mit `help:read`). |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`), `yuva://help-center/{id}` (mit `help:read`), `yuva://roadmap/{board_id}` (ein Board mit seinen beliebtesten Ideen; mit `roadmap:read` und `conversations:read`); Abonnements folgen Änderungen. |
+| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `write_help_article` (Center, optional Unterhaltung oder Thema, Sprache; mit `help:write`), `help_gaps_review` (Center, optional Tage; mit `help:read`), `link_feedback_to_ideas` (optional Posteingang und Board; mit `roadmap:write`, `roadmap:read` und `conversations:read`). |
 
 ### Sicherheit und Grenzen
 

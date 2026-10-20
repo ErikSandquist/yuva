@@ -57,7 +57,7 @@ veröffentlichtes [Hilfecenter](help-center.md) hat, zusammen mit einem Suchfeld
 Es zeigt die Artikel, die zur Seite des Besuchers passen, die beliebten und die Sammlungen, öffnet
 Artikel im Panel mit „War das hilfreich?“ und endet mit einer Schaltfläche „Schreiben Sie uns“. Eine
 Unterhaltung, die nach dem Lesen eines Artikels beginnt, hält ihn fest, und ein Artikel, den Ihr Team
-in einer Antwort sendet, öffnet sich in derselben App.
+in einer Antwort sendet, öffnet sich in derselben App. **Roadmap** erscheint, wenn der Posteingang ein öffentliches [Roadmap-Board](roadmap-board.md) hat: Ideen nach Phase und Stimmen, eine Idee mit ihren Antworten und Idee vorschlagen. Abstimmen und Vorschlagen erfordern eine Anmeldung, die das Leserfenster öffnet, sofern der Besucher kein Identitäts-Token hat.
 
 Ist niemand erreichbar und fragt der Kanal nach einer E-Mail-Adresse, bittet die Unterhaltung darum.
 Nach dem Speichern sagt sie, dass ein Bestätigungslink verschickt wurde (mit Adresse ändern und
@@ -127,6 +127,7 @@ Das Widget spricht 47 Sprachen: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, 
 | `unread`, Ereignis `yuva-unread` | Noch nicht gesehene Antworten; das Ereignis hat `detail.count`. |
 | `setIdentityToken(fn)`, `signOut()` | Angemeldete Nutzer, wie oben. |
 | `rate(conversationId, "good" \| "bad", comment?)` | Bewertet eine geschlossene Unterhaltung; `409 already_rated` oder `rating_unavailable`, wenn das nicht geht. |
+| `openApp(kind, params?)` | Öffnet das Panel in einer App: `"help"` (`{ article }` oder `{ query }`), `"feedback"`, `"status"`, `"subscribe"` oder `"roadmap"` (`{ idea }` öffnet diese Idee). |
 
 ### Kanaleinstellungen
 

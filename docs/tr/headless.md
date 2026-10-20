@@ -119,6 +119,9 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `help:read` | [Yardım merkezleri](help-center.md): merkezler, koleksiyonlar, taslakları ve revizyonlarıyla makaleler, arama, rapor |
 | `help:write` | Koleksiyon ve makale oluşturma ve değiştirme, taslak kaydetme, görsel yükleme |
 | `help:publish` | Yardım makalelerini yayınlama, yayından kaldırma ve yayımlanmış olanları silme. Başka hiçbir yetkiye dahil değildir: adıyla verin. |
+| `roadmap:read` | [Yol haritası panoları](roadmap-board.md): panolar, aşama geçmişi, bağlı geri bildirimlere yanıtın sonucu |
+| `roadmap:write` | Pano oluşturma, değiştirme ve silme, geri bildirimleri fikirlere bağlama, bağlı geri bildirimlere yanıt. Fikirleri okumak ve bağlamak ayrıca `conversations:read` ister. |
+| `roadmap:stage` | Bir fikrin aşamasını taşıma; bağlı geri bildirimlerinin ilerlemesini atar. Başka hiçbir yetkiye dahil değildir: adıyla verin. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

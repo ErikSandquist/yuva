@@ -51,7 +51,7 @@ shown. **Help center** appears when the inbox has a published [help center](help
 with a search field on Home: it shows the articles that fit the page the visitor is on, the popular
 ones and the collections, opens articles inside the panel with "Was this helpful?" and ends with a
 "Message us" button. A conversation started after reading an article records it, and an article your
-team sends in a reply opens in the same app.
+team sends in a reply opens in the same app. **Roadmap** appears when the inbox has a public [roadmap board](roadmap-board.md): ideas by stage and votes, an idea with its replies, and Suggest an idea. Voting and suggesting need a sign-in, which opens the reader window unless the visitor has an identity token.
 
 When nobody is available and the channel asks for an e-mail address, the thread asks for one. After
 the visitor saves it, the thread says a confirmation link went out (with Change address and Send
@@ -116,6 +116,7 @@ The widget speaks 47 languages: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, 
 | `unread`, `yuva-unread` event | Replies not yet seen; the event has `detail.count`. |
 | `setIdentityToken(fn)`, `signOut()` | Signed-in users, as above. |
 | `rate(conversationId, "good" \| "bad", comment?)` | Rates a closed conversation; `409 already_rated` or `rating_unavailable` when it cannot. |
+| `openApp(kind, params?)` | Opens the panel on an app: `"help"` (`{ article }` or `{ query }`), `"feedback"`, `"status"`, `"subscribe"` or `"roadmap"` (`{ idea }` opens that idea). |
 
 ### Channel settings
 

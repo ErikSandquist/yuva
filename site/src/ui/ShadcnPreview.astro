@@ -24,6 +24,12 @@ import {
   YuvaHelpPreview,
   YuvaHelpSearchPreview,
 } from "@/shadcn/previews/help"
+import {
+  UseYuvaRoadmapPreview,
+  YuvaIdeaPreview,
+  YuvaIdeaSuggestPreview,
+  YuvaRoadmapPreview,
+} from "@/shadcn/previews/roadmap"
 import { UseYuvaSubscribePreview, YuvaSubscribePreview } from "@/shadcn/previews/subscribe"
 import ShadcnCode from "@/ui/ShadcnCode.astro"
 import ShadcnTabs from "@/ui/ShadcnTabs.astro"
@@ -66,6 +72,10 @@ const t = shadcnCopy(i18nFor(locale))
       {name === "yuva-help-search" && <YuvaHelpSearchPreview client:visible />}
       {name === "yuva-help-article" && <YuvaHelpArticlePreview client:visible />}
       {name === "use-yuva-help" && <UseYuvaHelpPreview client:visible />}
+      {name === "yuva-roadmap" && <YuvaRoadmapPreview client:visible />}
+      {name === "yuva-idea" && <YuvaIdeaPreview client:visible />}
+      {name === "yuva-idea-suggest" && <YuvaIdeaSuggestPreview client:visible />}
+      {name === "use-yuva-roadmap" && <UseYuvaRoadmapPreview client:visible />}
       {name === "yuva-subscribe" && <YuvaSubscribePreview client:visible />}
       {name === "use-yuva-subscribe" && <UseYuvaSubscribePreview client:visible />}
     </div>

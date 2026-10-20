@@ -151,6 +151,17 @@ nothing is written twice. An assistant never publishes: it saves drafts, and a m
 publishes them in Yuva. In `draft_reply`, `article_ids` attaches up to three published articles to the
 reply as cards.
 
+## Roadmap from an assistant
+
+With `roadmap:read`, `roadmap:write` and `conversations:read` an assistant can list the ideas of a
+[roadmap board](roadmap-board.md) and link feedback to them. The `link_feedback_to_ideas` prompt goes
+through feedback that is not linked yet, searches the board and proposes links; it changes nothing until
+you agree and it never moves a stage. Moving a stage tells customers: `move_idea_stage` is listed only to a
+key or grant that names the scope `roadmap:stage`, which no other scope implies. It also needs
+`confirm_linked`, the number of linked feedback that `get_roadmap_idea` showed (`would_change`) for that
+stage, which you have seen; any other number answers `409 confirm_mismatch` and nothing moves. No tool
+creates, edits or moderates ideas or sends a reply to linked feedback.
+
 ## Reference
 
 ### Tools
@@ -162,7 +173,7 @@ answers `insufficient_scope` with the scope to grant.
 |---|---|
 | `get_setup_state`, `report_yuva_issue` | none; every connection |
 | `search_conversations`, `get_conversation`, `list_labels`, `list_canned_replies`, `get_counts` | `conversations:read` |
-| `list_feedback` (with `feedback_score`, 1 to 5, when the contact gave one) | `conversations:read` |
+| `list_feedback` (with `feedback_score`, 1 to 5, when the contact gave one; `without_idea` keeps feedback not linked to an idea) | `conversations:read` |
 | `list_inboxes` | `inboxes:read` |
 | `get_contact`, `lookup_contact` | `contacts:read` |
 | `draft_reply` | `messages:write` |
@@ -178,6 +189,9 @@ answers `insufficient_scope` with the scope to grant.
 | `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
 | `set_component_state`, `create_incident` (always a draft), `post_incident_update`, `resolve_incident` | `status:manage` |
 | `link_conversation_to_incident` | `status:manage` and `conversations:read` |
+| `list_roadmap_ideas`, `get_roadmap_idea` | `conversations:read` and `roadmap:read` |
+| `link_feedback_to_idea`, `unlink_feedback_from_idea` | `roadmap:write` and `conversations:read` |
+| `move_idea_stage` (only when `roadmap:stage` is named; needs `confirm_linked`) | `roadmap:stage` |
 | `list_help_centers`, `search_help_articles`, `get_help_article`, `help_search_gaps` | `help:read` |
 | `draft_help_article`, `update_help_article_draft` (drafts only, with `base_version`; a `locale` writes a translation) | `help:write` |
 | `list_mailing_lists` | `lists:read` |
@@ -197,8 +211,8 @@ With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail 
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`), `yuva://help-center/{id}` (with `help:read`); subscriptions follow changes. |
-| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `write_help_article` (center, optional conversation or topic, locale; with `help:write`), `help_gaps_review` (center, optional days; with `help:read`). |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`), `yuva://help-center/{id}` (with `help:read`), `yuva://roadmap/{board_id}` (a board with its top ideas; with `roadmap:read` and `conversations:read`); subscriptions follow changes. |
+| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `write_help_article` (center, optional conversation or topic, locale; with `help:write`), `help_gaps_review` (center, optional days; with `help:read`), `link_feedback_to_ideas` (optional inbox and board; with `roadmap:write`, `roadmap:read` and `conversations:read`). |
 
 ### Safety and limits
 

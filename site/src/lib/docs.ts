@@ -14,7 +14,7 @@ const groups = [
   {
     key: "channels",
     icon: "mail",
-    slugs: ["email", "widget", "mobile", "documentation-pages", "status-pages", "help-center"],
+    slugs: ["email", "widget", "mobile", "documentation-pages", "status-pages", "help-center", "roadmap-board"],
   },
   { key: "broadcasts", icon: "send", slugs: ["lists", "importing", "designs", "broadcasts", "deliverability"] },
   {

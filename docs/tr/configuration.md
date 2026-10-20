@@ -169,6 +169,15 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_HELP_URL` | atanmamış | Herkese açık yardım merkezlerinin sunulduğu origin, örneğin `https://help.example.com` (şema ve host, yol yok). Bu sunucuya ulaşmalı ve `YUVA_PUBLIC_URL`'den farklı olmalıdır. Merkezler bu durumda `<origin>/{slug}` adresindedir. Atanmamışsa `<YUVA_PUBLIC_URL>/help/{slug}` adresindedir. |
 | `YUVA_HELP_MAX_ARTICLES` | `YUVA_SIGNUP=open` ise `500`, değilse `0` | Bir çalışma alanının en fazla kaç yardım makalesi olabileceği; `0` sınırsız. Aşılırsa makale oluşturmak `422 hosted_limit` verir. |
 
+## Yol haritası panosu
+
+[Yol haritası panoları](roadmap-board.md).
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_ROADMAP` | `on` | `off` yol haritası panolarını kaldırır: uç noktaları ve herkese açık sayfaları `404` verir, widget'ta Yol haritası uygulaması görünmez. |
+| `YUVA_ROADMAP_MAX_IDEAS` | `YUVA_SIGNUP=open` ise `2000`, değilse `0` | Bir çalışma alanının en fazla kaç fikri olabileceği; `0` sınırsız. Aşılırsa fikir başlatmak `422 hosted_limit` verir. |
+
 ## Analitik
 
 [Web sitelerinizi sayma](analytics.md).

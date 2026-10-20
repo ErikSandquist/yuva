@@ -170,6 +170,15 @@ Einstellung nennt.
 | `YUVA_HELP_URL` | nicht gesetzt | Ursprung, von dem öffentliche Hilfecenter ausgeliefert werden, z. B. `https://help.example.com` (Schema und Host, kein Pfad). Er muss diesen Server erreichen und sich von `YUVA_PUBLIC_URL` unterscheiden. Die Center liegen dann unter `<Ursprung>/{slug}`. Nicht gesetzt, liegen sie unter `<YUVA_PUBLIC_URL>/help/{slug}`. |
 | `YUVA_HELP_MAX_ARTICLES` | `500` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl Hilfe-Artikel eines Workspace; `0` heißt unbegrenzt. Darüber antwortet das Anlegen eines Artikels mit `422 hosted_limit`. |
 
+## Roadmap-Board
+
+[Roadmap-Boards](roadmap-board.md).
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_ROADMAP` | `on` | `off` entfernt Roadmap-Boards: ihre Endpunkte und öffentlichen Seiten antworten mit `404`, und das Widget zeigt keine Roadmap-App. |
+| `YUVA_ROADMAP_MAX_IDEAS` | `2000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl der Ideen, die ein Workspace haben darf; `0` ist unbegrenzt. Darüber antwortet das Anlegen einer Idee mit `422 hosted_limit`. |
+
 ## Analytics
 
 [Ihre Websites zählen](analytics.md).

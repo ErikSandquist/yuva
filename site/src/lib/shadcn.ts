@@ -41,6 +41,11 @@ const helpLabels = {
   interface: "YuvaHelpLabels",
   defaults: "defaultYuvaHelpLabels",
 }
+const roadmapLabels = {
+  file: "lib/yuva-roadmap-utils.ts",
+  interface: "YuvaRoadmapLabels",
+  defaults: "defaultYuvaRoadmapLabels",
+}
 const provider = (inner: string) => `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
 
 export function Docs({ children }: { children: React.ReactNode }) {
@@ -468,6 +473,100 @@ export function Results({ query }: { query: string }) {
         <li key={article.id}>{article.title}</li>
       ))}
     </ul>
+  )
+}`,
+  },
+  "yuva-roadmap": {
+    props: [
+      { id: "props", file: "components/yuva-roadmap.tsx", interface: "YuvaRoadmapProps" },
+      { id: "list", file: "components/yuva-roadmap.tsx", interface: "YuvaRoadmapListProps" },
+    ],
+    labels: roadmapLabels,
+    usage: `import { YuvaRoadmap } from "@/components/yuva-roadmap"
+
+<YuvaRoadmap server={server} channel={channel} />`,
+    example: `import { YuvaRoadmap } from "@/components/yuva-roadmap"
+
+export function Roadmap() {
+  return (
+    <YuvaRoadmap
+      ${chatEnv}
+    />
+  )
+}`,
+  },
+  "yuva-idea": {
+    props: [{ id: "props", file: "components/yuva-idea.tsx", interface: "YuvaIdeaProps" }],
+    labelsFrom: "yuva-roadmap",
+    usage: `import { YuvaIdea } from "@/components/yuva-idea"
+
+<YuvaIdea id={ideaId} onBack={() => setIdea(null)} />`,
+    example: `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+import { YuvaIdea } from "@/components/yuva-idea"
+
+export function Idea({ id }: { id: string }) {
+  return (
+    <YuvaDiscussionsProvider
+      ${chatEnv}
+    >
+      <YuvaIdea id={id} />
+    </YuvaDiscussionsProvider>
+  )
+}`,
+  },
+  "yuva-idea-suggest": {
+    props: [{ id: "props", file: "components/yuva-idea-suggest.tsx", interface: "YuvaIdeaSuggestProps" }],
+    labelsFrom: "yuva-roadmap",
+    usage: `import { YuvaIdeaSuggest } from "@/components/yuva-idea-suggest"
+
+<YuvaIdeaSuggest onSuggested={(idea) => setIdea(idea.id)} />`,
+    example: `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+import { YuvaIdeaSuggest } from "@/components/yuva-idea-suggest"
+
+export function Suggest() {
+  return (
+    <YuvaDiscussionsProvider
+      ${chatEnv}
+    >
+      <YuvaIdeaSuggest onSuggested={(idea) => console.log(idea.title)} />
+    </YuvaDiscussionsProvider>
+  )
+}`,
+  },
+  "use-yuva-roadmap": {
+    props: [
+      { id: "board", file: "hooks/use-yuva-roadmap.tsx", interface: "RoadmapResult" },
+      { id: "ideas", file: "hooks/use-yuva-roadmap.tsx", interface: "IdeasResult" },
+    ],
+    labelsFrom: "yuva-roadmap",
+    usage: `import { useIdeas, useRoadmap } from "@/hooks/use-yuva-roadmap"
+
+const { board } = useRoadmap()
+const { ideas, vote } = useIdeas("planned", "top")`,
+    example: `import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions"
+import { useIdeas } from "@/hooks/use-yuva-roadmap"
+
+function Planned() {
+  const { ideas, loading } = useIdeas("planned", "top")
+  if (loading) return null
+  return (
+    <ul>
+      {ideas.map((idea) => (
+        <li key={idea.id}>
+          {idea.title} ({idea.votes})
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export function Roadmap() {
+  return (
+    <YuvaDiscussionsProvider
+      ${chatEnv}
+    >
+      <Planned />
+    </YuvaDiscussionsProvider>
   )
 }`,
   },
