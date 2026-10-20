@@ -169,7 +169,7 @@ func (s *Server) helpBaseView(ctx context.Context, q *store.Queries, c store.Hel
 			return nil, err
 		}
 		if err == nil {
-			v.Chat = &helpChatView{Script: s.auth.PublicURL + "/yuva-chat.js", Server: s.auth.PublicURL, Key: ch.PublicKey}
+			v.Chat = &helpChatView{Script: s.auth.PublicURL + "/yuva.js", Server: s.auth.PublicURL, Key: ch.PublicKey}
 		}
 	}
 	return v, nil
