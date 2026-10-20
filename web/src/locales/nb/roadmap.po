@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nb\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Koblede tilbakemeldinger: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} venter på godkjenning"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} svar"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} stemmer"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 til 48 bokstaver, tall og bindestreker. Unik på denne serveren."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Innleggene til en leser venter på et medlem til ett av hens innlegg er godkjent. Innloggede brukere av appen din publiserer med en gang."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Adresse"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Allerede koblet"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Analyse-property"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Godkjenn"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Godkjent"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Tilbake"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Tavle"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Tavlen er slettet"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Chatkanal"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Kommentar (valgfri)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Teller sidevisninger på den offentlige tavlen uten informasjonskapsler."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Opprett tavle"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Opprett tavle ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Slett"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "Slette {boardName}?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Slett tavle"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Sletter tavlen med idéer, stemmer, svar og fasehistorikk. Koblede tilbakemeldinger og deres fremdrift blir værende. Den offentlige adressen slutter å virke."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Dra {title} til en annen fase"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Alle koblede tilbakemeldinger som ennå ikke har fremdriften {progress}, får den. Koblede tilbakemeldinger: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Alles innlegg publiseres med en gang, unntatt innlegg fra forfattere du har markert som søppelpost."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Skjult"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Skjul"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Idéen er opprettet"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Idéer, stemmer og faser for {inboxName}, med tilbakemeldingene bak hver idé. Den forblir privat til du gjør den offentlig."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Idéer: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "Den er koblet fra idéen."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Idéene, stemmene, svarene og fasehistorikken slettes sammen med den."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Koble denne tilbakemeldingen til en idé…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Koble til en idé"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Koblede tilbakemeldinger"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Koblede tilbakemeldinger satt til {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Koblet til {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Last inn mer"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Gjør privat"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Gjør privat ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Gjør offentlig"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Gjør offentlig ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown fungerer."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "Moderert"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Flytt"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Flytt «{title}»"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Flytt {title} til en fase"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Flytt til en fase"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Idéen er flyttet til {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Navn"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Ny idé fra denne tilbakemeldingen"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Ingen tavle ennå. Eiere og administratorer oppretter den."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Ingen tilbakemeldinger er koblet ennå. Åpne en tilbakemelding og bruk «Koble til en idé»."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Ingen idé passer."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "Ingen innboks å vise en tavle for."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Ingen"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Av"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "På: alle med adressen leser tavlen, og innloggede lesere stemmer og foreslår idéer. Av: bare teamet ditt ser den, som et verktøy for å sortere tilbakemeldinger."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Ett svar, skrevet én gang, går til hver åpne tilbakemeldingssamtale som er koblet til denne idéen, som deg, på hver samtales egen kanal."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Åpne"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Åpne på den offentlige tavlen"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Velg en idé fra tavlen til denne innboksen"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Publiseres som ditt offentlige svar på idéen. Markdown fungerer."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Privat"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Privat, bare teamet ditt ser den"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Offentlig"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Offentlig side"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Lesere kan ikke foreslå idéer. Stemmer og svar fungerer fortsatt."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Veikart"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Veikarttavler"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Lagret"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Søk i idéer"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Vis kundene dine hva du bygger, og koble tilbakemeldingene bak hver idé. Velg tavlen til en innboks for å sortere idéene i faser."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Vises under navnet på den offentlige tavlen."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Fase"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Fasehistorikk"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Start idéen"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Starter en idé i fasen Idéer og kobler denne tilbakemeldingen til den. Av tilbakemeldingen vises bare teksten nedenfor."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Forslag fra lesere"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "Adressen svarer «ikke funnet» til du gjør tavlen offentlig."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "Tavlen ligger på {address}. Den gamle adressen fortsetter å videresende hvis du endrer den."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "Idéen er ikke flyttet ennå."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "Fremdriften til de koblede tilbakemeldingene endres ikke. Koblede tilbakemeldinger: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "Den offentlige tavlen bygger inn denne chatten, og idéer teamet ditt starter, arkiveres på den."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Denne tavlen finnes ikke lenger, eller du kan ikke se den."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Denne innboksen har ingen veikarttavle. Opprett først en under Veikart."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Denne innboksen har ingen webchatkanal. Legg først til en, fordi den offentlige tavlen bygger den inn."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Tittel"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Bruk 3 til 48 bokstaver, tall og indre bindestreker."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Se tavlen"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Synlighet"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Venter på godkjenning"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Venter på godkjenning: {pending}"

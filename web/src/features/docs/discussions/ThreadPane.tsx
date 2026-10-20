@@ -78,17 +78,19 @@ function PostCard({
   selected,
   actions,
   nested,
+  idea,
 }: {
   post: DiscussionPost
   selected: boolean
   actions: PostActions
   nested?: boolean
+  idea?: boolean
 }) {
   const { t, i18n } = useLingui()
   const fmt = new Intl.NumberFormat(i18n.locale)
   const votes = fmt.format(post.votes)
   const when = formatDateTime(post.created_at, i18n.locale)
-  const answerable = !post.opening && !nested && post.state === "published" && !post.deleted
+  const answerable = !idea && !post.opening && !nested && post.state === "published" && !post.deleted
   return (
     <article
       className={cn(
@@ -349,15 +351,33 @@ function Composer({
 export function ThreadPane() {
   const { discussionId = "" } = useParams()
   const location = useLocation()
-  const { t, i18n } = useLingui()
-  const errorText = useErrorText()
-  const detail = useDiscussion(discussionId)
+  const { t } = useLingui()
   const from = (location.state as { from?: string } | null)?.from
   const back = from?.startsWith("/docs/page")
     ? { to: from, label: t`Page` }
     : from === "/docs/discussions/queue"
       ? { to: from, label: t`Waiting for approval` }
       : { to: "/docs/discussions", label: t`Discussions` }
+  return <Thread discussionId={discussionId} back={back} />
+}
+
+export function Thread({
+  discussionId,
+  back,
+  embedded,
+  actions: extraActions,
+  after,
+}: {
+  discussionId: string
+  back?: { to: string; label: string }
+  embedded?: boolean
+  actions?: (d: Discussion) => React.ReactNode
+  after?: (d: Discussion) => React.ReactNode
+}) {
+  const { t, i18n } = useLingui()
+  const errorText = useErrorText()
+  const detail = useDiscussion(discussionId)
+  const Frame = embedded ? Embedded : Pane
   const inboxes = useInboxes().data ?? []
   const d = detail.data?.discussion
   const inbox = d ? inboxes.find((i) => i.id === d.inbox_id) : undefined
@@ -414,28 +434,28 @@ export function ThreadPane() {
         focusComposer()
       },
       [DISCUSSION_KEYS.replyTo]: () => selected && actions.reply(selected),
-      [DISCUSSION_KEYS.answer]: () => selected && actions.answer(selected),
+      [DISCUSSION_KEYS.answer]: () => selected && d?.kind !== "idea" && actions.answer(selected),
       [DISCUSSION_KEYS.approve]: () => selected && actions.moderate(selected, "published"),
       [DISCUSSION_KEYS.hide]: () => selected && actions.moderate(selected, "hidden"),
       [DISCUSSION_KEYS.spam]: () => selected && actions.moderate(selected, "spam"),
       [DISCUSSION_KEYS.title]: () => setEditing(true),
       [DISCUSSION_KEYS.lock]: toggleLock,
-      [DISCUSSION_KEYS.page]: () => d && window.open(d.page, "_blank", "noopener,noreferrer"),
+      [DISCUSSION_KEYS.page]: () => d?.page && window.open(d.page, "_blank", "noopener,noreferrer"),
     },
     !!d && !editing
   )
 
   if (detail.isPending)
     return (
-      <Pane testId="discussion">
+      <Frame testId="discussion">
         <Skeleton className="h-8 w-2/3" />
         <Skeleton className="h-40 rounded-2xl" />
-      </Pane>
+      </Frame>
     )
   if (!d)
     return (
-      <Pane testId="discussion">
-        <PaneBack to={back.to} label={back.label} always />
+      <Frame testId="discussion">
+        {back && <PaneBack to={back.to} label={back.label} always />}
         {isGone(detail.error) ? (
           <p className="text-body text-muted-foreground">
             <Trans>This discussion no longer exists or you cannot see it.</Trans>
@@ -443,15 +463,15 @@ export function ThreadPane() {
         ) : (
           <ErrorLine error={detail.error} />
         )}
-      </Pane>
+      </Frame>
     )
 
   const started = formatDateTime(d.created_at, i18n.locale)
   const starter = authorName(d.author)
   return (
-    <Pane testId="discussion" key={d.id}>
+    <Frame testId="discussion" key={d.id}>
       <header className="flex flex-col gap-2.5">
-        <PaneBack to={back.to} label={back.label} always />
+        {back && <PaneBack to={back.to} label={back.label} always />}
         {editing ? (
           <TitleEditor d={d} onDone={() => setEditing(false)} />
         ) : (
@@ -496,19 +516,22 @@ export function ThreadPane() {
           )}
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            render={<a href={d.page} target="_blank" rel="noreferrer" />}
-            title={hint(t`Open on its page`, DISCUSSION_KEYS.page)}
-            className="min-w-0"
-            data-testid="discussion-page"
-          >
-            <ExternalLinkIcon />
-            <span className="truncate" dir="ltr">
-              {pageLabel(d.page, d.page_title)}
-            </span>
-          </Button>
+          {d.page && (
+            <Button
+              variant="outline"
+              size="sm"
+              render={<a href={d.page} target="_blank" rel="noreferrer" />}
+              title={hint(t`Open on its page`, DISCUSSION_KEYS.page)}
+              className="min-w-0"
+              data-testid="discussion-page"
+            >
+              <ExternalLinkIcon />
+              <span className="truncate" dir="ltr">
+                {pageLabel(d.page, d.page_title)}
+              </span>
+            </Button>
+          )}
+          {extraActions?.(d)}
           <Button
             variant="outline"
             size="sm"
@@ -523,7 +546,7 @@ export function ThreadPane() {
         </div>
       </header>
       <div ref={list} className="flex flex-col gap-3">
-        <PostCard post={flat[0]} selected={cursor === 0} actions={actions} />
+        <PostCard post={flat[0]} selected={cursor === 0} actions={actions} idea={d.kind === "idea"} />
         <h2 className="mx-1 mt-3 inline-flex items-center gap-1.5 text-small font-medium text-faint">
           <MessagesSquareIcon className="size-4" />
           <Plural value={d.reply_count} one="# reply" other="# replies" />
@@ -535,11 +558,23 @@ export function ThreadPane() {
         )}
         {groups.map((g) => (
           <div key={g.post.id} className="flex flex-col gap-2">
-            <PostCard post={g.post} selected={flat[cursor]?.id === g.post.id} actions={actions} />
+            <PostCard
+              post={g.post}
+              selected={flat[cursor]?.id === g.post.id}
+              actions={actions}
+              idea={d.kind === "idea"}
+            />
             {g.replies.length > 0 && (
               <div className="ms-5 flex flex-col gap-2 border-s ps-4 phone:ms-2 phone:ps-3">
                 {g.replies.map((r) => (
-                  <PostCard key={r.id} post={r} nested selected={flat[cursor]?.id === r.id} actions={actions} />
+                  <PostCard
+                    key={r.id}
+                    post={r}
+                    nested
+                    selected={flat[cursor]?.id === r.id}
+                    actions={actions}
+                    idea={d.kind === "idea"}
+                  />
                 ))}
               </div>
             )}
@@ -547,7 +582,16 @@ export function ThreadPane() {
         ))}
       </div>
       <Composer d={d} replyTo={replyTo} onClearReplyTo={() => setReplyTo(null)} inputRef={input} />
+      {after?.(d)}
       {moderation.dialog}
-    </Pane>
+    </Frame>
+  )
+}
+
+function Embedded({ testId, children }: { testId?: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-8" data-testid={testId}>
+      {children}
+    </div>
   )
 }

@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: el\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Συνδεδεμένα σχόλια: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "Σε αναμονή έγκρισης: {pending}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "Απαντήσεις: {replies}"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "Ψήφοι: {votes}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 έως 48 γράμματα, αριθμοί και παύλες. Μοναδικό σε αυτόν τον διακομιστή."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Οι αναρτήσεις ενός αναγνώστη περιμένουν ένα μέλος μέχρι να εγκριθεί μία δική του. Οι συνδεδεμένοι χρήστες της εφαρμογής σας δημοσιεύουν αμέσως."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Είναι ήδη συνδεδεμένη"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Ιδιότητα analytics"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Έγκριση"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Εγκρίθηκε"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Πίσω"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Πίνακας"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Ο πίνακας διαγράφηκε"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Κανάλι συνομιλίας"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Σχόλιο (προαιρετικό)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Μετρά τις προβολές σελίδων του δημόσιου πίνακα χωρίς cookies."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Δημιουργία πίνακα"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Δημιουργία πίνακα ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "Διαγραφή του {boardName};"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Διαγραφή πίνακα"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Διαγράφει τον πίνακα μαζί με τις ιδέες, τις ψήφους, τις απαντήσεις και το ιστορικό σταδίων. Τα συνδεδεμένα σχόλια και η πρόοδός τους παραμένουν. Η δημόσια διεύθυνση σταματά να λειτουργεί."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Σύρετε το {title} σε άλλο στάδιο"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Κάθε συνδεδεμένο σχόλιο που δεν έχει ακόμη την πρόοδο {progress} θα την αποκτήσει. Συνδεδεμένα σχόλια: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Οι αναρτήσεις όλων δημοσιεύονται αμέσως, εκτός από εκείνες των συντακτών που σημάνατε ως spam."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Κρυφό"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Απόκρυψη"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Η ιδέα δημιουργήθηκε"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Ιδέες, ψήφοι και στάδια για το {inboxName}, με τα σχόλια πίσω από κάθε ιδέα. Παραμένει ιδιωτικός μέχρι να τον κάνετε δημόσιο."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Ιδέες: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "Αποσυνδέθηκε από την ιδέα."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Οι ιδέες, οι ψήφοι, οι απαντήσεις και το ιστορικό σταδίων του διαγράφονται μαζί του."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Σύνδεση αυτού του σχολίου με ιδέα…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Σύνδεση με ιδέα"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Συνδεδεμένα σχόλια"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Τα συνδεδεμένα σχόλια ορίστηκαν σε {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Συνδέθηκε με το {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Φόρτωση περισσότερων"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Ορισμός ως ιδιωτικού"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Ορισμός ως ιδιωτικού ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Ορισμός ως δημόσιου"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Ορισμός ως δημόσιου ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Υποστηρίζεται Markdown."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "Με εποπτεία"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Μετακίνηση"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Μετακίνηση του «{title}»"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Μετακίνηση του {title} σε στάδιο"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Μετακίνηση σε στάδιο"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Η ιδέα μετακινήθηκε σε {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Όνομα"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Νέα ιδέα από αυτό το σχόλιο"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Δεν υπάρχει ακόμη πίνακας. Τον δημιουργούν οι ιδιοκτήτες και οι διαχειριστές."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Δεν υπάρχει ακόμη συνδεδεμένο σχόλιο. Ανοίξτε ένα σχόλιο και χρησιμοποιήστε το «Σύνδεση με ιδέα»."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Καμία ιδέα δεν ταιριάζει."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί πίνακας."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Κανένα"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Ανενεργό"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "Ενεργό: όποιος έχει τη διεύθυνση διαβάζει τον πίνακα και οι συνδεδεμένοι αναγνώστες ψηφίζουν και προτείνουν ιδέες. Ανενεργό: τον βλέπει μόνο η ομάδα σας, ως εργαλείο για τη διαλογή σχολίων."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Μία απάντηση, γραμμένη μία φορά, πηγαίνει σε κάθε ανοιχτή συνομιλία σχολίου που είναι συνδεδεμένη με αυτή την ιδέα, ως εσείς, μέσω του δικού της καναλιού κάθε συνομιλίας."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Ανοιχτό"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Άνοιγμα στον δημόσιο πίνακα"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Επιλέξτε μια ιδέα από τον πίνακα αυτού του εισερχομένου"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Δημοσιεύεται ως η δημόσια απάντησή σας στην ιδέα. Το Markdown λειτουργεί."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Ιδιωτικό"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Ιδιωτικός, τον βλέπει μόνο η ομάδα σας"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Δημόσιο"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Δημόσια σελίδα"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Οι αναγνώστες δεν μπορούν να προτείνουν ιδέες. Οι ψήφοι και οι απαντήσεις λειτουργούν κανονικά."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Οδικός χάρτης"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Πίνακες οδικού χάρτη"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Αποθηκεύτηκε"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Αναζήτηση ιδεών"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Δείξτε στους πελάτες σας τι χτίζετε και συνδέστε τα σχόλια πίσω από κάθε ιδέα. Επιλέξτε τον πίνακα ενός εισερχομένου για να ταξινομήσετε τις ιδέες σε στάδια."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Εμφανίζεται κάτω από το όνομα στον δημόσιο πίνακα."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Στάδιο"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Ιστορικό σταδίων"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Έναρξη ιδέας"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Ξεκινά μια ιδέα στο στάδιο Ιδέες και συνδέει αυτό το σχόλιο με αυτήν. Από το σχόλιο εμφανίζεται μόνο το κείμενο παρακάτω."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Προτάσεις αναγνωστών"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "Η διεύθυνση απαντά «δεν βρέθηκε» μέχρι να κάνετε τον πίνακα δημόσιο."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "Ο πίνακας βρίσκεται στη διεύθυνση {address}. Η παλιά διεύθυνση συνεχίζει να ανακατευθύνει αν την αλλάξετε."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "Η ιδέα δεν έχει μετακινηθεί ακόμη."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "Η πρόοδος των συνδεδεμένων σχολίων δεν αλλάζει. Συνδεδεμένα σχόλια: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "Ο δημόσιος πίνακας ενσωματώνει αυτή τη συνομιλία και οι ιδέες που ξεκινά η ομάδα σας αρχειοθετούνται σε αυτήν."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Αυτός ο πίνακας δεν υπάρχει πια ή δεν μπορείτε να τον δείτε."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Αυτό το εισερχόμενο δεν έχει πίνακα οδικού χάρτη. Δημιουργήστε πρώτα έναν στον Οδικό χάρτη."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Αυτό το εισερχόμενο δεν έχει κανάλι web chat. Προσθέστε πρώτα ένα, επειδή ο δημόσιος πίνακας το ενσωματώνει."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Χρησιμοποιήστε 3 έως 48 γράμματα, αριθμούς και εσωτερικές παύλες."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Προβολή πίνακα"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Ορατότητα"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Σε αναμονή έγκρισης"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Σε αναμονή έγκρισης: {pending}"

@@ -79,6 +79,7 @@ function useItems(open: boolean): Item[] {
       act("discussion", t`Turn into a discussion`, SHORTCUTS.discussion)
       act("incident", t`Link to a status incident`, SHORTCUTS.incident)
       act("article", t`Send a help article`, SHORTCUTS.article)
+      act("idea", t`Link to a roadmap idea`, SHORTCUTS.idea)
     }
     if (inboxes.length > 1) {
       list.push({ group: t`Inbox`, label: t`All inboxes`, run: () => setFilter("") })
@@ -104,6 +105,7 @@ function useItems(open: boolean): Item[] {
     go(t`Broadcasts`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
     go(t`Status`, "/status", keyLabel(SHORTCUTS.status))
     go(t`Help`, "/knowledge", keyLabel(SHORTCUTS.helpCenter))
+    go(t`Roadmap`, "/board", keyLabel(SHORTCUTS.roadmap))
     if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")

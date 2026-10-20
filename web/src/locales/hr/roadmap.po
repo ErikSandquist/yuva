@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hr\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Povezane povratne informacije: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "Čeka odobrenje: {pending}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "Odgovora: {replies}"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "Glasova: {votes}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Od 3 do 48 slova, znamenki i crtica. Jedinstveno na ovom poslužitelju."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Objave čitatelja čekaju člana dok se jedna od njih ne odobri. Prijavljeni korisnici vaše aplikacije objavljuju odmah."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Adresa"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Već je povezan"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Analitičko svojstvo"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Odobri"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Odobreno"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Natrag"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Ploča"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Ploča je izbrisana"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Odustani"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Kanal chata"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Komentar (neobavezno)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Broji prikaze stranica javne ploče bez kolačića."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Izradi ploču"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Izradi ploču ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Izbriši"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "Izbrisati {boardName}?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Izbriši ploču"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Briše ploču s njezinim idejama, glasovima, odgovorima i poviješću faza. Povezane povratne informacije i njihov napredak ostaju. Javna adresa prestaje raditi."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Opis"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Povuci {title} u drugu fazu"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Svaka povezana povratna informacija koja još nema napredak {progress} dobit će ga. Povezane povratne informacije: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Objave svih objavljuju se odmah, osim objava autora koje ste označili kao neželjenu poštu."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Skriveno"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Sakrij"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Ideja je izrađena"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Ideje, glasovi i faze za {inboxName} s povratnim informacijama iza svake ideje. Ostaje privatna dok je ne učinite javnom."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Ideje: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "Odvojena je od ideje."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Njezine ideje, glasovi, odgovori i povijest faza brišu se s njom."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Poveži ovu povratnu informaciju s idejom…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Poveži s idejom"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Povezane povratne informacije"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Povezane povratne informacije postavljene na {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Povezano s incidentom {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Učitaj više"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Učini privatnom"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Učini privatnom ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Učini javnom"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Učini javnom ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown radi."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "Moderirano"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Premjesti"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Premjesti „{title}”"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Premjesti {title} u fazu"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Premjesti u fazu"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Ideja premještena u fazu {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Naziv"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Nova ideja iz ove povratne informacije"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Još nema ploče. Izrađuju je vlasnici i administratori."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Još nijedna povratna informacija nije povezana. Otvorite povratnu informaciju i upotrijebite „Poveži s idejom”."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Nijedna ideja ne odgovara."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "Nema pretinca za koji bi se prikazala ploča."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Nema"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Isključeno"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "Uključeno: svatko s adresom čita ploču, a prijavljeni čitatelji glasuju i predlažu ideje. Isključeno: vidi je samo vaš tim, kao alat za razvrstavanje povratnih informacija."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Jedan odgovor, napisan jednom, ide u svaki otvoreni razgovor s povratnom informacijom povezan s ovom idejom, kao vi, kanalom pojedinog razgovora."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Otvoreno"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Otvori na javnoj ploči"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Odaberite ideju s ploče ovog pretinca"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Objavljuje se kao vaš javni odgovor na ideju. Markdown radi."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Privatno"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Privatna, vidi je samo vaš tim"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Javno"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Javna stranica"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Čitatelji ne mogu predlagati ideje. Glasovi i odgovori i dalje rade."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Plan razvoja"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Ploče plana razvoja"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Spremljeno"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Traži ideje"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Postavke"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Pokažite klijentima što gradite i povežite povratne informacije iza svake ideje. Odaberite ploču pretinca kako biste ideje razvrstali po fazama."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Prikazuje se ispod naziva na javnoj ploči."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Faza"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Povijest faza"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Započni ideju"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Započinje ideju u fazi Ideje i povezuje s njom ovu povratnu informaciju. Od povratne informacije prikazuje se samo tekst ispod."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Prijedlozi čitatelja"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "Adresa odgovara „nije pronađeno” dok ploču ne učinite javnom."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "Ploča je na adresi {address}. Stara adresa i dalje preusmjerava ako je promijenite."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "Ideja još nije premještena."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "Napredak povezanih povratnih informacija ne mijenja se. Povezane povratne informacije: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "Javna ploča ugrađuje ovaj chat, a ideje koje pokrene vaš tim arhiviraju se u njemu."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Ova ploča više ne postoji ili je ne možete vidjeti."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Ovaj pretinac nema ploču plana razvoja. Prvo je izradite u odjeljku Plan razvoja."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Ovaj pretinac nema kanal web chata. Prvo dodajte jedan jer ga javna ploča ugrađuje."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Naslov"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Upotrijebite 3 do 48 slova, znamenki i unutarnjih crtica."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Prikaži ploču"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Vidljivost"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Čeka odobrenje"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Čeka odobrenje: {pending}"

@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} je povezan"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# zatvoren} few {# zatvorena} other {# zatvorenih}}"
 
@@ -511,7 +511,7 @@ msgstr "Web-mjesto {name}"
 msgid "{names} will be notified"
 msgstr "Obavijest će dobiti: {names}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# otvoren} few {# otvorena} other {# otvorenih}}"
@@ -892,7 +892,7 @@ msgstr "Kontakt je ocijenio razgovor"
 msgid "A contact was deleted"
 msgstr "Kontakt je izbrisan"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "Razgovor"
 
@@ -2157,10 +2157,10 @@ msgstr "Dostupno do {until}"
 msgid "Away"
 msgstr "Odsutan"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Natrag"
 
@@ -2232,6 +2232,14 @@ msgstr "Blokirano"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Blokirani kontakti"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Ploča"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Postavke ploče"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Mogu li zakazati bilten za svakog pretplatnika posebno?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Mogu li zakazati bilten za svakog pretplatnika posebno?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Odustani"
@@ -2827,7 +2835,7 @@ msgstr "Zatvori sve"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Zatvori razgovore starije od {daysShown} dana"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Zatvori svaki razgovor nakon odgovora"
 
@@ -2874,7 +2882,7 @@ msgstr "danas zatvoreno"
 msgid "Closes"
 msgstr "Zatvara"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Zatvaranje svakog razgovora"
 
@@ -3339,7 +3347,7 @@ msgstr "Poslužitelj nije dostupan. Provjerite vezu i pokušajte ponovno."
 msgid "Count clicks"
 msgstr "Broji klikove"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Brojanje…"
 
@@ -3396,6 +3404,10 @@ msgstr "Izradi stranicu statusa"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Izradi stranicu statusa ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Izradi ploču"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Rasprave na stranicama dokumentacije"
 msgid "Discussions you started or replied to"
 msgstr "Rasprave koje ste započeli ili u kojima ste odgovarali"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Odbaci"
 
@@ -4138,7 +4150,7 @@ msgstr "Svaka komponenta ima ovo stanje dok je incident otvoren."
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Svaka komponenta ima ovo stanje dok održavanje traje."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Svaki se razgovor zatvara nakon odgovora. Klijenti ga dobivaju odmah i ne može se povući."
 
@@ -4521,11 +4533,11 @@ msgstr "Vanjski ID"
 msgid "External ids"
 msgstr "Vanjski ID-ovi"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Neuspjelo"
@@ -4663,8 +4675,8 @@ msgstr "Završiti migraciju?"
 msgid "Finish without checking"
 msgstr "Završi bez provjere"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Završeno"
 
@@ -5307,6 +5319,10 @@ msgstr "Vratio/la sam se"
 msgid "Idea"
 msgstr "Ideja"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Ideje"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Utvrđeno"
@@ -5746,15 +5762,15 @@ msgstr "Zaustavlja se za trenutak. Pretplatnici koje je već dodao ostaju na pop
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Bio je {name} ({total}). Odaberite ga ponovno da pošaljete samo ono što nedostaje."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Zatvoren je prije nego što je došao na red."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Izbrisan je."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "Preskočen je."
 
@@ -5997,7 +6013,7 @@ msgstr "Latencija"
 msgid "Later"
 msgstr "Kasnije"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Posljednji odgovor"
 
@@ -6077,8 +6093,17 @@ msgstr "Poveži ovaj razgovor s incidentom…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Poveži s idejom s plana razvoja"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Poveži sa statusnim incidentom"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Poveži s idejom"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Poveži s incidentom"
 msgid "Link to an incident ({linkKey})"
 msgstr "Poveži s incidentom ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Povezano"
 
@@ -6381,6 +6406,10 @@ msgstr "Učini javnim"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Izradi novu adresu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Postavi ploču kao javnu ili privatnu"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Kreći se kroz masovne poruke"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Kreći se kroz ideje"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Kreći se kroz popis"
 
@@ -6791,9 +6824,17 @@ msgstr "Kreći se kroz objave"
 msgid "Move through the status pages"
 msgstr "Kretanje po stranicama statusa"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Premjesti u fazu"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Premjesti u pretinac"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Premjesti u prethodnu ili sljedeću fazu"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Nova rasprava"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nove rasprave"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Nova ideja"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Otvoreni razgovori"
 msgid "Open conversations assigned"
 msgstr "Otvoreni dodijeljeni razgovori"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Otvoreni razgovori koji će dobiti ovaj odgovor: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Otvori krajnju točku"
 msgid "Open the help article"
 msgstr "Otvori članak pomoći"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Otvori ideju"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Otvori sljedeći ili prethodni razgovor"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Otvori postavke stranice"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Otvori javnu ploču"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Odgovori i riješi"
 msgid "Reply posted"
 msgstr "Odgovor objavljen"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Napredak odgovora"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Tekst odgovora"
 
@@ -9783,18 +9836,22 @@ msgstr "Odgovori korisniku <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Odgovori na masovnu poruku"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Odgovori povezanima"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Odgovori povezanima ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Odgovori na povezane razgovore"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Odgovori na povezane povratne informacije"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Vraćanje na {host}…"
 msgid "Returns you to"
 msgstr "Vraća vas na"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Pregled"
 
@@ -9965,6 +10022,12 @@ msgstr "Opozvano"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Odmah nakon pretplate ljudi dobivaju kratku poruku koja je potvrđuje, s poveznicom za odjavu."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Plan razvoja"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Samo šalji"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Pošalji ili dodaj bilješku, u chatu ili razgovoru u aplikaciji (⇧↵ za novi redak)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Pošalji odgovor"
 
@@ -10511,11 +10574,11 @@ msgstr "Slanje e-poštom…"
 msgid "Sending channel"
 msgstr "Kanal za slanje"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "Slanje nije uspjelo: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "Slanje nije uspjelo."
 
@@ -10523,7 +10586,7 @@ msgstr "Slanje nije uspjelo."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Slanje je već počelo. Umjesto toga ga pauzirajte ili otkažite."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "Slanje je stalno propadalo pa je Yuva odustala."
 
@@ -10549,8 +10612,8 @@ msgstr "Slanje se zaustavlja za nekoliko sekundi i ne može ponovno početi. Po�
 msgid "Sending, then closing…"
 msgstr "Slanje, zatim zatvaranje…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Slanje…"
 
@@ -10578,10 +10641,10 @@ msgstr "šalje preko {0}"
 msgid "sent"
 msgstr "poslano"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Poslano"
@@ -10760,6 +10823,10 @@ msgstr "Koraci postavljanja"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "SHA-256 otisak certifikata koji je poslužitelj poslao"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Isporučeno"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Preskoči ovaj stupac"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Preskoči niti koje sadrže samo automatsku poštu"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Preskočeno"
 
@@ -11771,7 +11838,7 @@ msgstr "Stranica privole označava ono što klijent traži. Izostavite što ne �
 msgid "The contact was deleted"
 msgstr "Kontakt je izbrisan"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Razgovori ostaju otvoreni. Klijenti odgovor dobivaju odmah i ne može se povući."
 
@@ -12049,7 +12116,7 @@ msgstr "Zadnja provjera isporučivosti pronašla je nešto za popraviti."
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Zakon traži da svaka marketinška poruka kaže tko je šalje i kako ga kontaktirati (CAN-SPAM, CASL, turski propis o komercijalnoj komunikaciji). Yuva to stavlja u podnožje svake masovne poruke iz ovog pretinca pa to ispunite prije prve."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "Dosegnuto je ograničenje od 5.000"
 
@@ -13198,10 +13265,11 @@ msgstr "Praćenje prekinuto"
 msgid "Unknown device"
 msgstr "Nepoznat uređaj"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Prekini vezu s {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Prekini vezu s {title}"
@@ -13641,9 +13709,9 @@ msgstr "Posjeti iz ove kampanje"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Posjeti vašim web-mjestima s utm_campaign={campaign} od početka slanja, koje Analitika broji bez kolačića."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Čeka"
 
@@ -13812,7 +13880,7 @@ msgstr "Na što su pristali?"
 msgid "What do customers need to know?"
 msgstr "Što klijenti trebaju znati?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Što ovi klijenti trebaju znati?"
 
@@ -14292,7 +14360,7 @@ msgstr "vi@tvrtka.hr"
 msgid "you@example.com"
 msgstr "vi@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "Vaš je pristup završio prije slanja."
 

@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} on yhdistetty"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# suljettu} other {# suljettua}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} verkkosivusto"
 msgid "{names} will be notified"
 msgstr "{names} saavat ilmoituksen"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# avoin} other {# avointa}}"
@@ -892,7 +892,7 @@ msgstr "Kontakti arvioi keskustelun"
 msgid "A contact was deleted"
 msgstr "Kontakti poistettiin"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "Keskustelu"
 
@@ -2157,10 +2157,10 @@ msgstr "Paikalla {until} asti"
 msgid "Away"
 msgstr "Poissa"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Takaisin"
 
@@ -2232,6 +2232,14 @@ msgstr "Estetty"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Estetyt kontaktit"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Taulu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Taulun asetukset"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Voinko ajastaa uutiskirjeen jokaiselle tilaajalle erikseen?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Voinko ajastaa uutiskirjeen jokaiselle tilaajalle erikseen?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Peruuta"
@@ -2827,7 +2835,7 @@ msgstr "Sulje kaikki"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Sulje yli {daysShown} päivää vanhat keskustelut"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Sulje jokainen keskustelu vastauksen jälkeen"
 
@@ -2874,7 +2882,7 @@ msgstr "suljettu tänään"
 msgid "Closes"
 msgstr "Sulkee"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Suljetaan jokainen keskustelu"
 
@@ -3339,7 +3347,7 @@ msgstr "Palvelinta ei tavoitettu. Tarkista yhteytesi ja yritä uudelleen."
 msgid "Count clicks"
 msgstr "Laske napsautukset"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Lasketaan…"
 
@@ -3396,6 +3404,10 @@ msgstr "Luo tilasivu"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Luo tilasivu ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Luo taulu"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Keskustelut dokumentaatiosivuilla"
 msgid "Discussions you started or replied to"
 msgstr "Keskustelut, jotka aloitit tai joihin vastasit"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Sulje"
 
@@ -4138,7 +4150,7 @@ msgstr "Jokainen komponentti saa tämän tilan niin kauan kuin häiriö on avoin
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Jokainen komponentti saa tämän tilan niin kauan kuin huolto on käynnissä."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Jokainen keskustelu suljetaan vastauksen jälkeen. Asiakkaat saavat vastauksen heti, eikä sitä voi peruuttaa."
 
@@ -4521,11 +4533,11 @@ msgstr "Ulkoinen tunnus"
 msgid "External ids"
 msgstr "Ulkoiset tunnukset"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Epäonnistui"
@@ -4663,8 +4675,8 @@ msgstr "Päätetäänkö siirto?"
 msgid "Finish without checking"
 msgstr "Päätä tarkistamatta"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Päättynyt"
 
@@ -5307,6 +5319,10 @@ msgstr "Olen takaisin"
 msgid "Idea"
 msgstr "Idea"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Ideat"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Tunnistettu"
@@ -5746,15 +5762,15 @@ msgstr "Se pysähtyy hetkessä. Jo lisätyt tilaajat pysyvät listalla."
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Se oli {name} ({total}). Valitse se uudelleen lähettääksesi vain puuttuvan."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Se suljettiin ennen vuoroaan."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Se poistettiin."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "Se ohitettiin."
 
@@ -5997,7 +6013,7 @@ msgstr "Viive"
 msgid "Later"
 msgstr "Myöhemmin"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Viimeisin vastaus"
 
@@ -6077,8 +6093,17 @@ msgstr "Liitä tämä keskustelu häiriöön…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Liitä tiekartan ideaan"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Liitä tilahäiriöön"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Liitä ideaan"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Liitä häiriöön"
 msgid "Link to an incident ({linkKey})"
 msgstr "Liitä häiriöön ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Liitetty"
 
@@ -6381,6 +6406,10 @@ msgstr "Tee julkiseksi"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Luo uusi osoite"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Tee taulusta julkinen tai yksityinen"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Liiku joukkolähetysten läpi"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Liiku ideoiden välillä"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Liiku listassa"
 
@@ -6791,9 +6824,17 @@ msgstr "Liiku viestien läpi"
 msgid "Move through the status pages"
 msgstr "Liiku tilasivuilla"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Siirrä vaiheeseen"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Siirrä postilaatikkoon"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Siirrä edelliseen tai seuraavaan vaiheeseen"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Uusi keskustelu"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "uutta keskustelua"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Uusi idea"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Avoimet keskustelut"
 msgid "Open conversations assigned"
 msgstr "Avoimet osoitetut keskustelut"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Avoimet keskustelut, jotka saavat tämän vastauksen: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Avaa päätepiste"
 msgid "Open the help article"
 msgstr "Avaa ohjeartikkeli"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Avaa idea"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Avaa seuraava tai edellinen keskustelu"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Avaa sivun asetukset"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Avaa julkinen taulu"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Vastaa ja ratkaise"
 msgid "Reply posted"
 msgstr "Vastaus julkaistu"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Vastauksen eteneminen"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Vastauksen teksti"
 
@@ -9783,18 +9836,22 @@ msgstr "Vastaa henkilölle <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Vastaa joukkolähetykseen"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Vastaa liitettyihin"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Vastaa liitettyihin ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Vastaa liitettyihin keskusteluihin"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Vastaa liitettyyn palautteeseen"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Palautetaan sinut sivustolle {host} …"
 msgid "Returns you to"
 msgstr "Palauttaa sinut sivustolle"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Tarkistus"
 
@@ -9965,6 +10022,12 @@ msgstr "Peruttu"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Heti tilauksen jälkeen ihmiset saavat lyhyen viestin, joka vahvistaa sen ja jossa on poistumislinkki."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Tiekartta"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Vain lähetä"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Lähetä tai lisää muistiinpano chat- tai sovelluskeskusteluun (⇧↵ uuteen riviin)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Lähetä vastaus"
 
@@ -10511,11 +10574,11 @@ msgstr "Lähetetään sähköpostitse …"
 msgid "Sending channel"
 msgstr "Lähetyskanava"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "Lähetys epäonnistui: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "Lähetys epäonnistui."
 
@@ -10523,7 +10586,7 @@ msgstr "Lähetys epäonnistui."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Lähetys on jo alkanut. Keskeytä tai peruuta se sen sijaan."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "Lähetys epäonnistui yhä uudelleen, joten Yuva luovutti."
 
@@ -10549,8 +10612,8 @@ msgstr "Lähetys pysähtyy muutamassa sekunnissa eikä voi alkaa uudelleen. Jo l
 msgid "Sending, then closing…"
 msgstr "Lähetetään, sitten suljetaan …"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Lähetetään …"
 
@@ -10578,10 +10641,10 @@ msgstr "lähettää {0} kautta"
 msgid "sent"
 msgstr "lähetetty"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Lähetetty"
@@ -10760,6 +10823,10 @@ msgstr "Asennusvaiheet"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "Palvelimen lähettämän varmenteen SHA-256-sormenjälki"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Julkaistu"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Ohita tämä sarake"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Ohita ketjut, joissa on vain automaattista postia"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Ohitettu"
 
@@ -11771,7 +11838,7 @@ msgstr "Suostumussivu rastittaa sen, mitä asiakas pyytää. Jätä pois, mitä 
 msgid "The contact was deleted"
 msgstr "Kontakti poistettiin"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Keskustelut pysyvät avoimina. Asiakkaat saavat vastauksen heti, eikä sitä voi peruuttaa."
 
@@ -12049,7 +12116,7 @@ msgstr "Viimeisin toimitettavuustarkistus löysi korjattavaa."
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Laki vaatii jokaisen markkinointiviestin kertovan, kuka sen lähettää ja miten häneen saa yhteyden (CAN-SPAM, CASL, Turkin kaupallisen viestinnän asetus). Yuva laittaa tämän jokaisen tämän postilaatikon joukkolähetyksen alatunnisteeseen, joten täytä se ennen ensimmäistä."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "5 000 keskustelun raja on täynnä"
 
@@ -13198,10 +13265,11 @@ msgstr "Seuraaminen lopetettu"
 msgid "Unknown device"
 msgstr "Tuntematon laite"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Poista liitos: {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Poista liitos kohteeseen {title}"
@@ -13641,9 +13709,9 @@ msgstr "Käynnit tästä kampanjasta"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Käynnit sivustoillesi, joilla on utm_campaign={campaign}, lähetyksen alkamisesta lähtien, Analytiikan laskemina ilman evästeitä."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Odottaa"
 
@@ -13812,7 +13880,7 @@ msgstr "Mihin he suostuivat?"
 msgid "What do customers need to know?"
 msgstr "Mitä asiakkaiden tulee tietää?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Mitä näiden asiakkaiden täytyy tietää?"
 
@@ -14292,7 +14360,7 @@ msgstr "sinä@yritys.fi"
 msgid "you@example.com"
 msgstr "sinä@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "Käyttöoikeutesi päättyi ennen lähetystä."
 

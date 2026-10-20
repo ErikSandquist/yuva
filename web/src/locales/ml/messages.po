@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} കണക്റ്റ് ചെയ്തിരിക്കുന്നു"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# അടച്ചു} other {# അടച്ചു}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} വെബ്സൈറ്റ്"
 msgid "{names} will be notified"
 msgstr "{names}-നെ അറിയിക്കും"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# തുറന്നിരിക്കുന്നു} other {# തുറന്നിരിക്കുന്നു}}"
@@ -892,7 +892,7 @@ msgstr "ഒരു കോൺടാക്റ്റ് ഒരു സംഭാഷണ
 msgid "A contact was deleted"
 msgstr "ഒരു കോൺടാക്റ്റ് ഇല്ലാതാക്കി"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "ഒരു സംഭാഷണം"
 
@@ -2157,10 +2157,10 @@ msgstr "{until} വരെ ലഭ്യമാണ്"
 msgid "Away"
 msgstr "അകലെയാണ്"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "തിരികെ"
 
@@ -2232,6 +2232,14 @@ msgstr "തടഞ്ഞു"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "തടഞ്ഞ കോൺടാക്റ്റുകൾ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "ബോർഡ്"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "ബോർഡ് ക്രമീകരണങ്ങൾ"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു ന്യൂസ്‌ലെറ്റർ ഷെഡ്യൂൾ ചെയ്യാമോ?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു ന
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
@@ -2827,7 +2835,7 @@ msgstr "എല്ലാം അടയ്ക്കുക"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} ദിവസത്തിലധികം പഴക്കമുള്ള സംഭാഷണങ്ങൾ അടയ്ക്കുക"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "മറുപടിക്ക് ശേഷം ഓരോ സംഭാഷണവും അടയ്ക്കുക"
 
@@ -2874,7 +2882,7 @@ msgstr "ഇന്ന് അടച്ചു"
 msgid "Closes"
 msgstr "അടയ്ക്കുന്നു"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "ഓരോ സംഭാഷണവും അടയ്ക്കുന്നു"
 
@@ -3339,7 +3347,7 @@ msgstr "സെർവറിൽ എത്താൻ കഴിഞ്ഞില്ല.
 msgid "Count clicks"
 msgstr "ക്ലിക്കുകൾ എണ്ണുക"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "എണ്ണുന്നു…"
 
@@ -3396,6 +3404,10 @@ msgstr "സ്റ്റാറ്റസ് പേജ് സൃഷ്ടിക്�
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "സ്റ്റാറ്റസ് പേജ് സൃഷ്ടിക്കുക ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "ബോർഡ് സൃഷ്ടിക്കുക"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "ഡോക്യുമെന്റേഷൻ പേജുകളിലെ �
 msgid "Discussions you started or replied to"
 msgstr "നിങ്ങൾ ആരംഭിച്ചതോ മറുപടി നൽകിയതോ ആയ ചർച്ചകൾ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "അടയ്ക്കുക"
 
@@ -4138,7 +4150,7 @@ msgstr "സംഭവം തുറന്നിരിക്കുന്നിട�
 msgid "Each component gets this state while the maintenance is open."
 msgstr "അറ്റകുറ്റപ്പണി നടക്കുന്നിടത്തോളം ഓരോ ഘടകവും ഈ അവസ്ഥയിലായിരിക്കും."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "മറുപടിക്ക് ശേഷം ഓരോ സംഭാഷണവും അടയ്ക്കും. ഉപഭോക്താക്കൾക്ക് അത് ഉടൻ ലഭിക്കും, തിരിച്ചെടുക്കാനാകില്ല."
 
@@ -4521,11 +4533,11 @@ msgstr "ബാഹ്യ ഐഡി"
 msgid "External ids"
 msgstr "ബാഹ്യ ഐഡികൾ"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "പരാജയപ്പെട്ടു"
@@ -4663,8 +4675,8 @@ msgstr "മൈഗ്രേഷൻ പൂർത്തിയാക്കണോ?"
 msgid "Finish without checking"
 msgstr "പരിശോധിക്കാതെ പൂർത്തിയാക്കുക"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "പൂർത്തിയായി"
 
@@ -5307,6 +5319,10 @@ msgstr "ഞാൻ തിരിച്ചെത്തി"
 msgid "Idea"
 msgstr "ആശയം"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "ആശയങ്ങൾ"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "കാരണം തിരിച്ചറിഞ്ഞു"
@@ -5746,15 +5762,15 @@ msgstr "ഇത് ഒരു നിമിഷത്തിനുള്ളിൽ ന
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "അത് {name} ({total}) ആയിരുന്നു. കുറവുള്ളത് മാത്രം അയയ്ക്കാൻ അത് വീണ്ടും തിരഞ്ഞെടുക്കുക."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "അതിന്റെ ഊഴം വരുന്നതിനു മുമ്പ് അത് അടച്ചിരുന്നു."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "അത് ഇല്ലാതാക്കിയിരുന്നു."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "അത് ഒഴിവാക്കി."
 
@@ -5997,7 +6013,7 @@ msgstr "ലേറ്റൻസി"
 msgid "Later"
 msgstr "പിന്നീട്"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "ഏറ്റവും പുതിയ മറുപടി"
 
@@ -6077,8 +6093,17 @@ msgstr "ഈ സംഭാഷണം ഒരു സംഭവത്തിലേക്
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "റോഡ്മാപ്പിലെ ഒരു ആശയവുമായി ലിങ്ക് ചെയ്യുക"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "ഒരു സ്റ്റാറ്റസ് സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "ഒരു ആശയവുമായി ലിങ്ക് ചെയ്യുക"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ�
 msgid "Link to an incident ({linkKey})"
 msgstr "സംഭവത്തിലേക്ക് ലിങ്ക് ചെയ്യുക ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "ലിങ്ക് ചെയ്തത്"
 
@@ -6381,6 +6406,10 @@ msgstr "പൊതുവാക്കുക"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "പുതിയ വിലാസം ഉണ്ടാക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "ബോർഡ് പൊതുവായതോ സ്വകാര്യമോ ആക്കുക"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "ബ്രോഡ്കാസ്റ്റുകളിലൂടെ നീങ്ങുക"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "ആശയങ്ങൾക്കിടയിൽ നീങ്ങുക"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "ലിസ്റ്റിലൂടെ നീങ്ങുക"
 
@@ -6791,9 +6824,17 @@ msgstr "പോസ്റ്റുകളിലൂടെ നീങ്ങുക"
 msgid "Move through the status pages"
 msgstr "സ്റ്റാറ്റസ് പേജുകൾക്കിടയിൽ നീങ്ങുക"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "ഒരു ഘട്ടത്തിലേക്ക് നീക്കുക"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "ഇൻബോക്സിലേക്ക് നീക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "മുമ്പത്തെ അല്ലെങ്കിൽ അടുത്ത ഘട്ടത്തിലേക്ക് നീക്കുക"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "പുതിയ ചർച്ച"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "പുതിയ ചർച്ചകൾ"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "പുതിയ ആശയം"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "തുറന്ന സംഭാഷണങ്ങൾ"
 msgid "Open conversations assigned"
 msgstr "നിയോഗിച്ച തുറന്ന സംഭാഷണങ്ങൾ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "ഈ മറുപടി ലഭിക്കുന്ന തുറന്ന സംഭാഷണങ്ങൾ: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "എൻഡ്‌പോയിന്റ് തുറക്കുക"
 msgid "Open the help article"
 msgstr "സഹായ ലേഖനം തുറക്കുക"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "ആശയം തുറക്കുക"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "അടുത്തതോ മുമ്പത്തെയോ സംഭാ�
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "പേജ് ക്രമീകരണങ്ങൾ തുറക്കുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "പൊതു ബോർഡ് തുറക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "മറുപടി പോസ്റ്റ് ചെയ്തു"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "മറുപടിയുടെ പുരോഗതി"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "മറുപടിയുടെ വാചകം"
 
@@ -9783,18 +9836,22 @@ msgstr "<0>{name}</0>-ന് മറുപടി നൽകുക"
 msgid "Reply to a broadcast"
 msgstr "ഒരു ബ്രോഡ്കാസ്റ്റിന് മറുപടി നൽകുക"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "ലിങ്ക് ചെയ്തവയ്ക്ക് മറുപടി നൽകുക"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "ലിങ്ക് ചെയ്തവയ്ക്ക് മറുപടി നൽകുക ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "ലിങ്ക് ചെയ്ത സംഭാഷണങ്ങൾക്ക് മറുപടി നൽകുക"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "ലിങ്ക് ചെയ്ത ഫീഡ്ബാക്കിന് മറുപടി നൽകുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "നിങ്ങളെ {host}-ലേക്ക് തിരികെ ക�
 msgid "Returns you to"
 msgstr "നിങ്ങളെ ഇവിടേക്ക് തിരികെ കൊണ്ടുപോകുന്നു"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "അവലോകനം"
 
@@ -9965,6 +10022,12 @@ msgstr "റദ്ദാക്കി"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "സബ്സ്ക്രൈബ് ചെയ്ത ഉടനെ, ആളുകൾക്ക് അത് സ്ഥിരീകരിക്കുന്ന, അൺസബ്സ്ക്രൈബ് ലിങ്കുള്ള ഒരു ചെറിയ മെയിൽ ലഭിക്കും."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "റോഡ്മാപ്പ്"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "അയയ്ക്കുക മാത്രം"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "ഒരു ചാറ്റ് അല്ലെങ്കിൽ ആപ്പ് സംഭാഷണത്തിൽ കുറിപ്പ് അയയ്ക്കുക അല്ലെങ്കിൽ ചേർക്കുക (പുതിയ വരിക്ക് ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "മറുപടി അയയ്ക്കുക"
 
@@ -10511,11 +10574,11 @@ msgstr "ഇമെയിൽ വഴി അയയ്ക്കുന്നു…"
 msgid "Sending channel"
 msgstr "അയയ്ക്കുന്ന ചാനൽ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "അയയ്ക്കാനായില്ല: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "അയയ്ക്കാനായില്ല."
 
@@ -10523,7 +10586,7 @@ msgstr "അയയ്ക്കാനായില്ല."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "അയയ്ക്കൽ ഇതിനകം ആരംഭിച്ചു. പകരം താൽക്കാലികമായി നിർത്തുക അല്ലെങ്കിൽ റദ്ദാക്കുക."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "അയയ്ക്കൽ വീണ്ടും വീണ്ടും പരാജയപ്പെട്ടതിനാൽ Yuva ശ്രമം ഉപേക്ഷിച്ചു."
 
@@ -10549,8 +10612,8 @@ msgstr "അയയ്ക്കൽ ഏതാനും സെക്കൻഡിന�
 msgid "Sending, then closing…"
 msgstr "അയയ്ക്കുന്നു, പിന്നെ അടയ്ക്കുന്നു…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "അയയ്ക്കുന്നു…"
 
@@ -10578,10 +10641,10 @@ msgstr "{0} വഴി അയയ്ക്കുന്നു"
 msgid "sent"
 msgstr "അയച്ചു"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "അയച്ചു"
@@ -10760,6 +10823,10 @@ msgstr "സെറ്റപ്പ് ഘട്ടങ്ങൾ"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "സെർവർ അയച്ച സർട്ടിഫിക്കറ്റിന്റെ SHA-256 ഫിംഗർപ്രിന്റ്"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "റിലീസ് ചെയ്തു"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "ഈ കോളം ഒഴിവാക്കുക"
 msgid "Skip threads that contain only automatic mail"
 msgstr "ഓട്ടോമാറ്റിക് മെയിൽ മാത്രമുള്ള ത്രെഡുകൾ ഒഴിവാക്കുക"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "ഒഴിവാക്കി"
 
@@ -11771,7 +11838,7 @@ msgstr "ക്ലയന്റ് ആവശ്യപ്പെടുന്നത�
 msgid "The contact was deleted"
 msgstr "കോൺടാക്റ്റ് ഇല്ലാതാക്കി"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "സംഭാഷണങ്ങൾ തുറന്നുതന്നെ നിൽക്കും. ഉപഭോക്താക്കൾക്ക് മറുപടി ഉടൻ ലഭിക്കും, തിരിച്ചെടുക്കാനാകില്ല."
 
@@ -12049,7 +12116,7 @@ msgstr "അവസാന ഡെലിവറബിലിറ്റി പരിശ�
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "ഓരോ മാർക്കറ്റിംഗ് മെയിലും ആര് അയയ്ക്കുന്നുവെന്നും അവരെ എങ്ങനെ ബന്ധപ്പെടാമെന്നും പറയണമെന്ന് നിയമം ആവശ്യപ്പെടുന്നു (CAN-SPAM, CASL, തുർക്കിയുടെ വാണിജ്യ ആശയവിനിമയ ചട്ടം). ഈ ഇൻബോക്സിൽ നിന്നുള്ള ഓരോ ബ്രോഡ്കാസ്റ്റിന്റെയും ഫൂട്ടറിൽ Yuva ഇത് ചേർക്കുന്നു, അതിനാൽ ആദ്യത്തേതിന് മുമ്പ് ഇത് പൂരിപ്പിക്കുക."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "5,000 പരിധി എത്തി"
 
@@ -13198,10 +13265,11 @@ msgstr "പിന്തുടരുന്നത് നിർത്തി"
 msgid "Unknown device"
 msgstr "അജ്ഞാത ഉപകരണം"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "{name}-ന്റെ ലിങ്ക് നീക്കുക"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "{title}-ൽ നിന്ന് ലിങ്ക് നീക്കുക"
@@ -13641,9 +13709,9 @@ msgstr "ഈ ക്യാമ്പെയ്നിൽ നിന്നുള്ള 
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "അയയ്ക്കൽ ആരംഭിച്ചതുമുതൽ utm_campaign={campaign} ഉള്ള നിങ്ങളുടെ സൈറ്റുകളിലെ സന്ദർശനങ്ങൾ, അനലിറ്റിക്സ് കുക്കികളില്ലാതെ എണ്ണുന്നത്."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "കാത്തിരിക്കുന്നു"
 
@@ -13812,7 +13880,7 @@ msgstr "അവർ എന്തിന് സമ്മതിച്ചു?"
 msgid "What do customers need to know?"
 msgstr "ഉപഭോക്താക്കൾ എന്താണ് അറിയേണ്ടത്?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "ഈ ഉപഭോക്താക്കൾ എന്താണ് അറിയേണ്ടത്?"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "അയയ്ക്കുന്നതിനു മുമ്പ് നിങ്ങളുടെ ആക്സസ് അവസാനിച്ചിരുന്നു."
 

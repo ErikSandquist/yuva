@@ -2,6 +2,8 @@ import type {
   BroadcastDeliveryState,
   ConversationQuery,
   DiscussionQuery,
+  DiscussionState,
+  IdeaStage,
   DocsPageSort,
   DraftAuthorKind,
   SubscriptionState,
@@ -26,7 +28,17 @@ export type HelpArticleFilters = {
   q?: string
 }
 
+export type IdeaFilters = { board_id: string; stage?: IdeaStage; state?: DiscussionState; q?: string }
+
 export const keys = {
+  roadmap: (ws: string) => ["ws", ws, "roadmap"] as const,
+  roadmapBoards: (ws: string) => ["ws", ws, "roadmap", "boards"] as const,
+  roadmapIdeas: (ws: string, f: IdeaFilters) => ["ws", ws, "roadmap", "ideas", f] as const,
+  roadmapChanges: (ws: string, id: string) => ["ws", ws, "roadmap", "changes", id] as const,
+  roadmapLinked: (ws: string) => ["ws", ws, "roadmap", "linked"] as const,
+  roadmapLinkedList: (ws: string, id: string) => ["ws", ws, "roadmap", "linked", "list", id] as const,
+  roadmapReply: (ws: string, id: string, reply: string, part: string) =>
+    ["ws", ws, "roadmap", "linked", "reply", id, reply, part] as const,
   help: (ws: string) => ["ws", ws, "help"] as const,
   helpCenters: (ws: string) => ["ws", ws, "help", "centers"] as const,
   helpCenter: (ws: string, id: string) => ["ws", ws, "help", "center", id] as const,

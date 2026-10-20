@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} er tilkoblet"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# lukket} other {# lukkede}}"
 
@@ -511,7 +511,7 @@ msgstr "Nettsted for {name}"
 msgid "{names} will be notified"
 msgstr "{names} får beskjed"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# åpen} other {# åpne}}"
@@ -892,7 +892,7 @@ msgstr "En kontakt vurderte en samtale"
 msgid "A contact was deleted"
 msgstr "En kontakt ble slettet"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "En samtale"
 
@@ -2157,10 +2157,10 @@ msgstr "Tilgjengelig til {until}"
 msgid "Away"
 msgstr "Borte"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Tilbake"
 
@@ -2232,6 +2232,14 @@ msgstr "Blokkert"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Blokkerte kontakter"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Tavle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Tavleinnstillinger"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Kan jeg planlegge et nyhetsbrev for hver abonnent?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Kan jeg planlegge et nyhetsbrev for hver abonnent?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Avbryt"
@@ -2827,7 +2835,7 @@ msgstr "Lukk alle"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Lukk samtaler eldre enn {daysShown} dager"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Lukk hver samtale etter svaret"
 
@@ -2874,7 +2882,7 @@ msgstr "lukket i dag"
 msgid "Closes"
 msgstr "Lukker"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Lukker hver samtale"
 
@@ -3339,7 +3347,7 @@ msgstr "Kunne ikke nå serveren. Sjekk tilkoblingen din og prøv igjen."
 msgid "Count clicks"
 msgstr "Tell klikk"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Teller…"
 
@@ -3396,6 +3404,10 @@ msgstr "Opprett statusside"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Opprett statusside ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Opprett tavlen"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Diskusjoner på dokumentasjonssider"
 msgid "Discussions you started or replied to"
 msgstr "Diskusjoner du startet eller svarte i"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Skjul"
 
@@ -4138,7 +4150,7 @@ msgstr "Hver komponent får denne tilstanden så lenge hendelsen er åpen."
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Hver komponent får denne tilstanden så lenge vedlikeholdet pågår."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Hver samtale lukkes etter svaret. Kundene får det med en gang, og det kan ikke trekkes tilbake."
 
@@ -4521,11 +4533,11 @@ msgstr "Ekstern ID"
 msgid "External ids"
 msgstr "Eksterne ID-er"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Mislyktes"
@@ -4663,8 +4675,8 @@ msgstr "Fullføre migreringen?"
 msgid "Finish without checking"
 msgstr "Fullfør uten å sjekke"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Fullført"
 
@@ -5307,6 +5319,10 @@ msgstr "Jeg er tilbake"
 msgid "Idea"
 msgstr "Idé"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Idéer"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Identifisert"
@@ -5746,15 +5762,15 @@ msgstr "Den stopper om et øyeblikk. Abonnenter den allerede har lagt til, blir 
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Det var {name} ({total}). Velg den på nytt for å sende bare det som mangler."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Den ble lukket før det ble dens tur."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Den ble slettet."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "Den ble hoppet over."
 
@@ -5997,7 +6013,7 @@ msgstr "Ventetid"
 msgid "Later"
 msgstr "Senere"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Siste svar"
 
@@ -6077,8 +6093,17 @@ msgstr "Koble denne samtalen til en hendelse…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Koble til en idé på veikartet"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Koble til en statushendelse"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Koble til en idé"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Koble til en hendelse"
 msgid "Link to an incident ({linkKey})"
 msgstr "Koble til en hendelse ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Koblet"
 
@@ -6381,6 +6406,10 @@ msgstr "Gjør offentlig"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Lag ny adresse"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Gjør tavlen offentlig eller privat"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Gå gjennom utsendelsene"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Gå gjennom idéene"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Gå gjennom listen"
 
@@ -6791,9 +6824,17 @@ msgstr "Gå gjennom innleggene"
 msgid "Move through the status pages"
 msgstr "Gå gjennom statussidene"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Flytt til en fase"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Flytt til postboks"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Flytt til forrige eller neste fase"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Ny diskusjon"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nye diskusjoner"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Ny idé"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Åpne samtaler"
 msgid "Open conversations assigned"
 msgstr "Åpne samtaler tildelt"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Åpne samtaler som får dette svaret: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Åpne endepunktet"
 msgid "Open the help article"
 msgstr "Åbn hjelpeartiklen"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Åpne idéen"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Åpne neste eller forrige samtale"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Åpne sideinnstillingene"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Åpne den offentlige tavlen"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Svar og løs"
 msgid "Reply posted"
 msgstr "Svar publisert"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Svarets fremdrift"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Svartekst"
 
@@ -9783,18 +9836,22 @@ msgstr "Svar <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Svar på en utsendelse"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Svar til de koblede"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Svar til de koblede ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Svar til koblede samtaler"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Svar på koblede tilbakemeldinger"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Sender deg tilbake til {host} …"
 msgid "Returns you to"
 msgstr "Sender deg tilbake til"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Gjennomgang"
 
@@ -9965,6 +10022,12 @@ msgstr "Trukket tilbake"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Rett etter påmeldingen får folk en kort e-post som bekrefter den, med en avmeldingslenke."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Veikart"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Bare send"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Send eller legg til notatet, i en chatte- eller appsamtale (⇧↵ for ny linje)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Send svar"
 
@@ -10511,11 +10574,11 @@ msgstr "Sender per e-post …"
 msgid "Sending channel"
 msgstr "Sendekanal"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "Sendingen mislyktes: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "Sendingen mislyktes."
 
@@ -10523,7 +10586,7 @@ msgstr "Sendingen mislyktes."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Sendingen har allerede startet. Sett den heller på pause, eller avbryt den."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "Sendingen mislyktes gang på gang, så Yuva ga opp."
 
@@ -10549,8 +10612,8 @@ msgstr "Sendingen stopper innen få sekunder og kan ikke starte igjen. E-post so
 msgid "Sending, then closing…"
 msgstr "Sender, lukker deretter …"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Sender …"
 
@@ -10578,10 +10641,10 @@ msgstr "sender via {0}"
 msgid "sent"
 msgstr "sendt"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Sendt"
@@ -10760,6 +10823,10 @@ msgstr "Oppsetttrinn"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "SHA-256-fingeravtrykk for sertifikatet serveren sendte"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Levert"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Hopp over denne kolonnen"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Hopp over tråder som bare inneholder automatisk e-post"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Hoppet over"
 
@@ -11771,7 +11838,7 @@ msgstr "Samtykkesiden krysser av for det klienten ber om. La være det du ikke v
 msgid "The contact was deleted"
 msgstr "Kontakten ble slettet"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Samtalene forblir åpne. Kundene får svaret med en gang, og det kan ikke trekkes tilbake."
 
@@ -12049,7 +12116,7 @@ msgstr "Den siste leveringsevnesjekken fant noe som må rettes."
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Loven krever at hver markedsførings-e-post sier hvem som sender den og hvordan man når dem (CAN-SPAM, CASL, Tyrkias forskrift om kommersiell kommunikasjon). Yuva setter dette i bunnteksten på hver utsendelse fra denne postboksen, så fyll det ut før den første."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "Grensen på 5 000 er nådd"
 
@@ -13198,10 +13265,11 @@ msgstr "Slutt å følge"
 msgid "Unknown device"
 msgstr "Ukjent enhet"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Fjern koblingen til {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Fjern koblingen til {title}"
@@ -13641,9 +13709,9 @@ msgstr "Besøk fra denne kampanjen"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Besøk på nettstedene dine med utm_campaign={campaign} siden sendingen startet, talt av Analytics uten informasjonskapsler."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Venter"
 
@@ -13812,7 +13880,7 @@ msgstr "Hva sa de ja til?"
 msgid "What do customers need to know?"
 msgstr "Hva trenger kundene å vite?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Hva trenger disse kundene å vite?"
 
@@ -14292,7 +14360,7 @@ msgstr "deg@selskap.no"
 msgid "you@example.com"
 msgstr "deg@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "Tilgangen din tok slutt før den ble sendt."
 

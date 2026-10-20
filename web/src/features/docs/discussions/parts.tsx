@@ -90,6 +90,7 @@ export function ThreadTags({ d }: { d: Discussion }) {
   return (
     <span className="flex flex-wrap items-center gap-1.5">
       {d.state === "published" &&
+        d.kind !== "idea" &&
         (d.answer_post_id ? (
           <span
             className="inline-flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-caption font-medium text-success"

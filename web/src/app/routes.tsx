@@ -57,6 +57,9 @@ const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage
 const HelpHome = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.HelpHome })))
 const HelpCenterPane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.CenterPane })))
 const HelpArticlePane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.ArticleEditorPage })))
+const RoadmapHome = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.RoadmapHome })))
+const RoadmapIdeaRedirect = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.IdeaRedirect })))
+const RoadmapBoardPane = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.BoardPane })))
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 const SharePage = lazy(() => import("@/features/analytics/SharePage"))
 const AnalyticsSetup = lazy(() => import("@/features/analytics/NewProperty"))
@@ -201,6 +204,33 @@ export function AppRoutes() {
               </Suspense>
             }
           />
+          <Route
+            path="board"
+            element={
+              <Suspense fallback={<Loading />}>
+                <RoadmapHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="board/ideas/:ideaId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <RoadmapIdeaRedirect />
+              </Suspense>
+            }
+          />
+          {["board/:boardId", "board/:boardId/ideas/:ideaId"].map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <RoadmapBoardPane />
+                </Suspense>
+              }
+            />
+          ))}
           <Route
             path="analytics/*"
             element={

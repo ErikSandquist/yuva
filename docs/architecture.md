@@ -2739,7 +2739,7 @@ posts, votes, follows, moderation, reader accounts, rendering and notifications 
   - The panel's roadmap screens have their own Lingui catalog, `roadmap`, in every panel language.
   - The widget's Roadmap app uses the `apps` catalog.
 - **Panel.**
-  - **Navigation.** A Roadmap entry in the rail (`/roadmap`, shortcut `g r`) follows the inbox filter:
+  - **Navigation.** A Roadmap entry in the rail (`/board`, shortcut `g p`; `/roadmap` is the public pages' path and `g r` is Reports) follows the inbox filter:
     each visible inbox's board, or "Create board" for owners and admins.
   - **The board.** It opens as columns per stage. Cards show votes, linked feedback count and the
     pending mark. Dragging a card or using its stage select moves the stage, after a confirmation that

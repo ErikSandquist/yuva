@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} 已连接"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# 个已关闭}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} 网站"
 msgid "{names} will be notified"
 msgstr "将通知 {names}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# 个未关闭}}"
@@ -892,7 +892,7 @@ msgstr "联系人评价了对话时"
 msgid "A contact was deleted"
 msgstr "联系人被删除时"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "一个对话"
 
@@ -2157,10 +2157,10 @@ msgstr "可用至 {until}"
 msgid "Away"
 msgstr "离开"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "返回"
 
@@ -2232,6 +2232,14 @@ msgstr "已屏蔽"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "已屏蔽的联系人"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "看板"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "看板设置"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "能为每位订阅者单独安排发送新闻简报吗?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "能为每位订阅者单独安排发送新闻简报吗?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "取消"
@@ -2827,7 +2835,7 @@ msgstr "全部关闭"
 msgid "Close conversations older than {daysShown} days"
 msgstr "关闭超过 {daysShown} 天的对话"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "回复后关闭每个对话"
 
@@ -2874,7 +2882,7 @@ msgstr "今日已关闭"
 msgid "Closes"
 msgstr "关闭于"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "正在关闭每个对话"
 
@@ -3339,7 +3347,7 @@ msgstr "无法连接到服务器。请检查网络连接后重试。"
 msgid "Count clicks"
 msgstr "统计点击"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "正在统计…"
 
@@ -3396,6 +3404,10 @@ msgstr "创建状态页"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "创建状态页（{newKey}）"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "创建看板"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "文档页面上的讨论"
 msgid "Discussions you started or replied to"
 msgstr "你发起或回复过的讨论"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "关闭"
 
@@ -4138,7 +4150,7 @@ msgstr "事件处于开启状态时，每个组件都处于此状态。"
 msgid "Each component gets this state while the maintenance is open."
 msgstr "维护进行期间，每个组件都处于此状态。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "回复后每个对话都会关闭。客户会立即收到，且无法撤回。"
 
@@ -4521,11 +4533,11 @@ msgstr "外部 ID"
 msgid "External ids"
 msgstr "外部 ID"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "失败"
@@ -4663,8 +4675,8 @@ msgstr "完成迁移?"
 msgid "Finish without checking"
 msgstr "不检查直接完成"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "已完成"
 
@@ -5307,6 +5319,10 @@ msgstr "我回来了"
 msgid "Idea"
 msgstr "想法"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "想法"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "已确认"
@@ -5746,15 +5762,15 @@ msgstr "它会很快停止。已经添加的订阅者仍留在列表中。"
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "它原来是 {name}({total})。重新选择它,只发送缺少的部分。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "轮到它之前已被关闭。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "它已被删除。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "已跳过。"
 
@@ -5997,7 +6013,7 @@ msgstr "延迟"
 msgid "Later"
 msgstr "稍后"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "最近的回复"
 
@@ -6077,8 +6093,17 @@ msgstr "将此对话关联到事件…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "关联到路线图想法"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "关联到状态事件"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "关联到想法"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "关联到事件"
 msgid "Link to an incident ({linkKey})"
 msgstr "关联到事件 ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "已关联"
 
@@ -6381,6 +6406,10 @@ msgstr "设为公开"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "生成新地址"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "将看板设为公开或私有"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "在群发之间移动"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "在想法之间移动"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "在列表中移动"
 
@@ -6791,9 +6824,17 @@ msgstr "在帖子之间移动"
 msgid "Move through the status pages"
 msgstr "在状态页之间移动"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "移到某个阶段"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "移到收件箱"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "移到上一个或下一个阶段"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "新讨论"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "新讨论"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "新想法"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "未关闭的对话"
 msgid "Open conversations assigned"
 msgstr "已分配的未关闭对话"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "将收到此回复的进行中对话：{open}"
 
@@ -8351,6 +8396,10 @@ msgstr "打开端点"
 msgid "Open the help article"
 msgstr "打开帮助文章"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "打开想法"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "打开下一个或上一个对话"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "打开页面设置"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "打开公开看板"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "回复并解决"
 msgid "Reply posted"
 msgstr "回复已发布"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "回复进度"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "回复内容"
 
@@ -9783,18 +9836,22 @@ msgstr "回复 <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "回复群发"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "回复已关联的对话"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "回复已关联的对话 ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "回复已关联的对话"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "回复已关联的反馈"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "正在返回 {host}…"
 msgid "Returns you to"
 msgstr "将返回到"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "审核"
 
@@ -9965,6 +10022,12 @@ msgstr "已撤销"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "订阅后,人们会立即收到一封带退订链接的简短确认邮件。"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "路线图"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "仅发送"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "在聊天或应用对话中发送或添加备注(换行用 ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "发送回复"
 
@@ -10511,11 +10574,11 @@ msgstr "正在通过邮件发送…"
 msgid "Sending channel"
 msgstr "发送渠道"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "发送失败：{reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "发送失败。"
 
@@ -10523,7 +10586,7 @@ msgstr "发送失败。"
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "发送已经开始。请改为暂停或取消。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "发送一再失败，Yuva 已放弃。"
 
@@ -10549,8 +10612,8 @@ msgstr "发送会在几秒内停止,且无法重新开始。已经发出的邮�
 msgid "Sending, then closing…"
 msgstr "正在发送并关闭…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "发送中…"
 
@@ -10578,10 +10641,10 @@ msgstr "通过 {0} 发送"
 msgid "sent"
 msgstr "已发送"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "已发送"
@@ -10760,6 +10823,10 @@ msgstr "设置步骤"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "服务器发送的证书的 SHA-256 指纹"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "已发布"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "跳过此列"
 msgid "Skip threads that contain only automatic mail"
 msgstr "跳过只包含自动邮件的会话串"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "已跳过"
 
@@ -11771,7 +11838,7 @@ msgstr "同意页面已勾选客户端请求的内容。请取消勾选你不希
 msgid "The contact was deleted"
 msgstr "联系人已被删除"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "对话保持打开。客户会立即收到回复，且无法撤回。"
 
@@ -12049,7 +12116,7 @@ msgstr "上次送达率检查发现有需要修复的地方。"
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "法律要求每封营销邮件说明发件人是谁以及如何联系(CAN-SPAM、CASL、土耳其商业通信条例)。Yuva 会把这些信息放进此收件箱每次群发的页脚,因此请在第一次群发前填写。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "已达到 5,000 的上限"
 
@@ -13198,10 +13265,11 @@ msgstr "已取消关注"
 msgid "Unknown device"
 msgstr "未知设备"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "取消关联 {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "取消与 {title} 的关联"
@@ -13641,9 +13709,9 @@ msgstr "来自此活动的访问"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "发送开始以来带有 utm_campaign={campaign} 的网站访问,由分析在无 Cookie 的情况下统计。"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "等待中"
 
@@ -13812,7 +13880,7 @@ msgstr "他们同意了什么?"
 msgid "What do customers need to know?"
 msgstr "客户需要知道什么？"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "这些客户需要知道什么？"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "在发送之前，你的访问权限已结束。"
 

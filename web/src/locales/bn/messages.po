@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} সংযুক্ত"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {#টি বন্ধ} other {#টি বন্ধ}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} ওয়েবসাইট"
 msgid "{names} will be notified"
 msgstr "{names}-কে জানানো হবে"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {#টি খোলা} other {#টি খোলা}}"
@@ -892,7 +892,7 @@ msgstr "একটি কনট্যাক্ট একটি কথোপকথ
 msgid "A contact was deleted"
 msgstr "একটি কনট্যাক্ট মুছে ফেলা হয়েছে"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "একটি কথোপকথন"
 
@@ -2157,10 +2157,10 @@ msgstr "{until} পর্যন্ত উপলব্ধ"
 msgid "Away"
 msgstr "অনুপস্থিত"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "ফিরে যান"
 
@@ -2232,6 +2232,14 @@ msgstr "ব্লক করা"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "ব্লক করা কনট্যাক্ট"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "বোর্ড"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "বোর্ড সেটিংস"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "আমি কি প্রতিটি সাবস্ক্রাইবারের জন্য নিউজলেটার শিডিউল করতে পারি?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "আমি কি প্রতিটি সাবস্ক্রাইব
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "বাতিল"
@@ -2827,7 +2835,7 @@ msgstr "সব বন্ধ করুন"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} দিনের পুরোনো কথোপকথন বন্ধ করুন"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "উত্তর দেওয়ার পর প্রতিটি কথোপকথন বন্ধ করুন"
 
@@ -2874,7 +2882,7 @@ msgstr "আজ বন্ধ হয়েছে"
 msgid "Closes"
 msgstr "বন্ধ হয়"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "প্রতিটি কথোপকথন বন্ধ করা হচ্ছে"
 
@@ -3339,7 +3347,7 @@ msgstr "সার্ভারে পৌঁছানো যায়নি। আ
 msgid "Count clicks"
 msgstr "ক্লিক গুনুন"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "গণনা চলছে…"
 
@@ -3396,6 +3404,10 @@ msgstr "স্ট্যাটাস পেজ তৈরি করুন"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "স্ট্যাটাস পেজ তৈরি করুন ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "বোর্ড তৈরি করুন"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "ডকুমেন্টেশন পেজে আলোচনা"
 msgid "Discussions you started or replied to"
 msgstr "আপনার শুরু করা বা উত্তর দেওয়া আলোচনা"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "বন্ধ করুন"
 
@@ -4138,7 +4150,7 @@ msgstr "ঘটনা খোলা থাকা পর্যন্ত প্র�
 msgid "Each component gets this state while the maintenance is open."
 msgstr "রক্ষণাবেক্ষণ চলা পর্যন্ত প্রতিটি উপাদান এই অবস্থায় থাকে।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "উত্তর দেওয়ার পর প্রতিটি কথোপকথন বন্ধ হয়। গ্রাহকরা সঙ্গে সঙ্গে উত্তর পান এবং তা ফিরিয়ে নেওয়া যায় না।"
 
@@ -4521,11 +4533,11 @@ msgstr "বাহ্যিক ID"
 msgid "External ids"
 msgstr "বাহ্যিক ID"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "ব্যর্থ"
@@ -4663,8 +4675,8 @@ msgstr "মাইগ্রেশন শেষ করবেন?"
 msgid "Finish without checking"
 msgstr "পরীক্ষা না করেই শেষ করুন"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "শেষ হয়েছে"
 
@@ -5307,6 +5319,10 @@ msgstr "আমি ফিরে এসেছি"
 msgid "Idea"
 msgstr "আইডিয়া"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "আইডিয়া"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "কারণ চিহ্নিত হয়েছে"
@@ -5746,15 +5762,15 @@ msgstr "এটি কিছুক্ষণের মধ্যে থেমে �
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "এটি ছিল {name} ({total})। শুধু যা বাকি আছে তা পাঠাতে এটি আবার বেছে নিন।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "পালা আসার আগেই এটি বন্ধ করা হয়েছিল।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "এটি মুছে ফেলা হয়েছিল।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "এটি বাদ দেওয়া হয়েছে।"
 
@@ -5997,7 +6013,7 @@ msgstr "লেটেন্সি"
 msgid "Later"
 msgstr "পরে"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "সর্বশেষ উত্তর"
 
@@ -6077,8 +6093,17 @@ msgstr "এই কথোপকথনটি একটি ঘটনার সঙ�
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "রোডম্যাপের কোনো আইডিয়ার সঙ্গে যুক্ত করুন"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "একটি স্ট্যাটাস ঘটনার সঙ্গে যুক্ত করুন"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "কোনো আইডিয়ার সঙ্গে যুক্ত করুন"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "ঘটনার সঙ্গে যুক্ত করুন"
 msgid "Link to an incident ({linkKey})"
 msgstr "ঘটনার সঙ্গে যুক্ত করুন ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "যুক্ত"
 
@@ -6381,6 +6406,10 @@ msgstr "পাবলিক করুন"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "নতুন ঠিকানা তৈরি করুন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "বোর্ড পাবলিক বা ব্যক্তিগত করুন"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "ব্রডকাস্টের মধ্যে চলুন"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "আইডিয়ার মধ্যে সরুন"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "তালিকার মধ্যে চলুন"
 
@@ -6791,9 +6824,17 @@ msgstr "পোস্টের মধ্যে চলুন"
 msgid "Move through the status pages"
 msgstr "স্ট্যাটাস পেজগুলোর মধ্যে চলুন"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "কোনো ধাপে সরান"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "ইনবক্সে সরান"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "আগের বা পরের ধাপে সরান"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "নতুন আলোচনা"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "নতুন আলোচনা"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "নতুন আইডিয়া"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "খোলা কথোপকথন"
 msgid "Open conversations assigned"
 msgstr "খোলা কথোপকথন অ্যাসাইন করা"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "যেসব খোলা কথোপকথন এই উত্তর পাবে: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "এন্ডপয়েন্ট খুলুন"
 msgid "Open the help article"
 msgstr "সহায়তা নিবন্ধ খুলুন"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "আইডিয়া খুলুন"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "পরের বা আগের কথোপকথন খুলুন"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "পেজ সেটিংস খুলুন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "পাবলিক বোর্ড খুলুন"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "উত্তর পোস্ট করা হয়েছে"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "উত্তরের অগ্রগতি"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "উত্তরের লেখা"
 
@@ -9783,18 +9836,22 @@ msgstr "<0>{name}</0>-কে উত্তর দিন"
 msgid "Reply to a broadcast"
 msgstr "ব্রডকাস্টের উত্তর"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "যুক্তগুলোতে উত্তর দিন"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "যুক্তগুলোতে উত্তর দিন ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "যুক্ত কথোপকথনগুলোতে উত্তর দিন"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "যুক্ত ফিডব্যাকে উত্তর দিন"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "আপনাকে {host}-এ ফেরানো হচ্ছে…"
 msgid "Returns you to"
 msgstr "আপনাকে ফিরিয়ে নিয়ে যায়"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "পর্যালোচনা করুন"
 
@@ -9965,6 +10022,12 @@ msgstr "বাতিল করা হয়েছে"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "সাবস্ক্রাইব করার সঙ্গে সঙ্গে মানুষ এটি নিশ্চিত করা একটি ছোট মেইল পায়, আনসাবস্ক্রাইব লিংকসহ।"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "রোডম্যাপ"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "শুধু পাঠান"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "চ্যাট বা অ্যাপ কথোপকথনে নোট পাঠান বা যোগ করুন (নতুন লাইনের জন্য ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "উত্তর পাঠান"
 
@@ -10511,11 +10574,11 @@ msgstr "ই-মেইলে পাঠানো হচ্ছে…"
 msgid "Sending channel"
 msgstr "পাঠানোর চ্যানেল"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "পাঠানো যায়নি: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "পাঠানো যায়নি।"
 
@@ -10523,7 +10586,7 @@ msgstr "পাঠানো যায়নি।"
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "পাঠানো ইতিমধ্যে শুরু হয়েছে। এর বদলে থামান বা বাতিল করুন।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "পাঠানো বারবার ব্যর্থ হওয়ায় Yuva হাল ছেড়ে দিয়েছে।"
 
@@ -10549,8 +10612,8 @@ msgstr "পাঠানো কয়েক সেকেন্ডের মধ্
 msgid "Sending, then closing…"
 msgstr "পাঠানো হচ্ছে, তারপর বন্ধ করা হবে…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "পাঠানো হচ্ছে…"
 
@@ -10578,10 +10641,10 @@ msgstr "{0} দিয়ে পাঠায়"
 msgid "sent"
 msgstr "পাঠানো হয়েছে"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "পাঠানো হয়েছে"
@@ -10760,6 +10823,10 @@ msgstr "সেটআপের ধাপ"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "সার্ভারের পাঠানো সার্টিফিকেটের SHA-256 ফিঙ্গারপ্রিন্ট"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "রিলিজ হয়েছে"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "এই কলাম বাদ দিন"
 msgid "Skip threads that contain only automatic mail"
 msgstr "শুধু স্বয়ংক্রিয় মেইল আছে এমন থ্রেড বাদ দিন"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "বাদ পড়েছে"
 
@@ -11771,7 +11838,7 @@ msgstr "সম্মতি পেজ ক্লায়েন্ট যা চ�
 msgid "The contact was deleted"
 msgstr "কনট্যাক্ট মুছে ফেলা হয়েছে"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "কথোপকথনগুলো খোলা থাকে। গ্রাহকরা সঙ্গে সঙ্গে উত্তর পান এবং তা ফিরিয়ে নেওয়া যায় না।"
 
@@ -12049,7 +12116,7 @@ msgstr "শেষ ডেলিভারেবিলিটি পরীক্ষ�
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "আইন প্রতিটি মার্কেটিং মেইলকে বলতে বলে কে পাঠায় এবং তাদের সঙ্গে কীভাবে যোগাযোগ করা যায় (CAN-SPAM, CASL, তুর্কিয়ের বাণিজ্যিক যোগাযোগ বিধিমালা)। Yuva এটি এই ইনবক্সের প্রতিটি ব্রডকাস্টের ফুটারে রাখে, তাই প্রথমটির আগে এটি পূরণ করুন।"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "5,000-এর সীমায় পৌঁছানো হয়েছে"
 
@@ -13198,10 +13265,11 @@ msgstr "অনুসরণ বন্ধ করা হয়েছে"
 msgid "Unknown device"
 msgstr "অজানা ডিভাইস"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "{name}-এর সংযোগ সরান"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "{title} থেকে সংযোগ সরান"
@@ -13641,9 +13709,9 @@ msgstr "এই ক্যাম্পেইন থেকে ভিজিট"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "পাঠানো শুরুর পর থেকে utm_campaign={campaign} সহ আপনার সাইটগুলোর ভিজিট, অ্যানালিটিক্স কুকি ছাড়া গুনেছে।"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "অপেক্ষায়"
 
@@ -13812,7 +13880,7 @@ msgstr "তারা কীসে রাজি হয়েছে?"
 msgid "What do customers need to know?"
 msgstr "গ্রাহকদের কী জানা দরকার?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "এই গ্রাহকদের কী জানা দরকার?"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "পাঠানোর আগেই আপনার অ্যাক্সেস শেষ হয়ে গিয়েছিল।"
 

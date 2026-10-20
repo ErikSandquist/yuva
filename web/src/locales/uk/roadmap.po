@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Прив’язаних відгуків: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "Очікують схвалення: {pending}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "Відповідей: {replies}"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "Голосів: {votes}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "Від 3 до 48 літер, цифр і дефісів. Унікальний на цьому сервері."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Повідомлення читача чекають на учасника, доки не буде схвалено одне з його повідомлень. Користувачі вашого застосунку, що ввійшли, публікують одразу."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Адреса"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Уже пов’язана"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Аналітична властивість"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Схвалити"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Схвалено"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Назад"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Дошка"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Дошку видалено"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Канал чату"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Коментар (необов’язково)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Рахує перегляди сторінок публічної дошки без файлів cookie."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Створити дошку"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Створити дошку ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "Видалити {boardName}?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Видалити дошку"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Видаляє дошку разом з її ідеями, голосами, відповідями та історією етапів. Прив’язані відгуки та їхній стан залишаються. Публічна адреса перестає працювати."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Опис"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Перетягнути {title} на інший етап"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Кожен прив’язаний відгук, який ще не має стану {progress}, отримає його. Прив’язаних відгуків: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Повідомлення всіх публікуються одразу, крім повідомлень авторів, яких ви позначили як спам."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Приховано"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Приховати"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Ідею створено"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Ідеї, голоси та етапи для {inboxName} з відгуками, що стоять за кожною ідеєю. Дошка лишається закритою, доки ви не зробите її публічною."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Ідеї: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "Прив’язку до ідеї знято."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Її ідеї, голоси, відповіді та історія етапів видаляються разом із нею."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Прив’язати цей відгук до ідеї…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Прив’язати до ідеї"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Прив’язані відгуки"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Прив’язаним відгукам встановлено стан {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Прив’язано до інциденту {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Завантажити ще"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Зробити закритою"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Зробити закритою ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Зробити публічною"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Зробити публічною ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown підтримується."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "З модерацією"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Перенести"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Перенести «{title}»"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Перенести {title} на етап"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Перенести на етап"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Ідею перенесено на етап {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Ім'я"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Нова ідея з цього відгуку"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Дошки ще немає. Її створюють власники й адміністратори."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Прив’язаних відгуків ще немає. Відкрийте відгук і виберіть «Прив’язати до ідеї»."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Немає відповідних ідей."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "Немає поштової скриньки, для якої можна показати дошку."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Немає"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Вимк."
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "Увімкнено: кожен, хто знає адресу, читає дошку, а читачі, що ввійшли, голосують і пропонують ідеї. Вимкнено: її бачить лише ваша команда, як інструмент для сортування відгуків."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Одна відповідь, написана один раз, надходить у кожну відкриту розмову з відгуком, прив’язану до цієї ідеї, від вашого імені, власним каналом кожної розмови."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Відкрито"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Відкрити на публічній дошці"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Виберіть ідею з дошки цієї скриньки"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Публікується як ваша публічна відповідь під ідеєю. Markdown підтримується."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Закритий"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Закрита, її бачить лише ваша команда"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Публічний"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Публічна сторінка"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Читачі не можуть пропонувати ідеї. Голоси та відповіді й надалі працюють."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Дорожня карта"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Дошки дорожніх карт"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Збережено"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Шукати ідеї"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Налаштування"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Покажіть клієнтам, над чим ви працюєте, і прив’яжіть відгуки, що стоять за кожною ідеєю. Виберіть дошку скриньки, щоб розкласти ідеї за етапами."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Показується під назвою на публічній дошці."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Етап"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Історія етапів"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Створити ідею"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Створює ідею на етапі «Ідеї» та прив’язує до неї цей відгук. З відгуку показується лише текст нижче."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Пропозиції читачів"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "Адреса відповідає «не знайдено», доки ви не зробите дошку публічною."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "Дошка за адресою {address}. Стара адреса й надалі перенаправлятиме, якщо ви її змінете."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "Ідею ще не переносили."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "Стан прив’язаних відгуків не змінюється. Прив’язаних відгуків: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "Публічна дошка вбудовує цей чат, а ідеї, які розпочинає ваша команда, зберігаються в ньому."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Цієї дошки більше немає, або ви не можете її бачити."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Ця скринька не має дошки дорожньої карти. Спершу створіть її в розділі «Дорожня карта»."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Ця скринька не має каналу веб-чату. Спершу додайте його, бо публічна дошка його вбудовує."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Назва"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Використовуйте від 3 до 48 літер, цифр і внутрішніх дефісів."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Переглянути дошку"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Видимість"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Чекають схвалення"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Чекають схвалення: {pending}"

@@ -13,6 +13,7 @@ import {
   type ConversationStatus,
   type FeedbackCategory,
   type FeedbackProgress,
+  type IdeaStage,
   type InboxMode,
   type MigrationFileRefusal,
   type Priority,
@@ -31,6 +32,7 @@ export const ROLES: Role[] = ["owner", "admin", "agent"]
 export const CHANNEL_KINDS: ChannelKind[] = ["email", "chat", "app", "api"]
 export const MODES: InboxMode[] = ["async", "live"]
 export const WEEKDAYS: Weekday[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+export const IDEA_STAGES: IdeaStage[] = ["ideas", "planned", "in_progress", "shipped", "closed"]
 export const FEEDBACK_CATEGORIES: FeedbackCategory[] = ["bug", "idea", "praise", "other"]
 export const PLATFORMS: AppPlatform[] = ["ios", "android"]
 export const WEBHOOK_EVENTS: WebhookEventType[] = [
@@ -170,6 +172,13 @@ export function useEnumText() {
       done: t({ message: "Done", context: "feedback progress" }),
       wont_do: t`Won't do`,
     } satisfies Record<FeedbackProgress, string>,
+    stage: {
+      ideas: t`Ideas`,
+      planned: t`Planned`,
+      in_progress: t`In progress`,
+      shipped: t`Shipped`,
+      closed: t`Closed`,
+    } satisfies Record<IdeaStage, string>,
     platform: { ios: "iOS", android: "Android" } satisfies Record<AppPlatform, string>,
     event: {
       "conversation.created": t`A conversation started`,

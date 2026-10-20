@@ -5,6 +5,7 @@ import {
   FlagIcon,
   FlameIcon,
   InboxIcon,
+  LightbulbIcon,
   MessagesSquareIcon,
   MailIcon,
   PinIcon,
@@ -53,6 +54,7 @@ export function ConversationMenu({
   onUnread,
   onDiscussion,
   onIncident,
+  onIdea,
   folded,
 }: {
   c: Conversation
@@ -66,6 +68,7 @@ export function ConversationMenu({
   onUnread: () => void
   onDiscussion: () => void
   onIncident: () => void
+  onIdea: () => void
   folded?: { hand: () => void; snooze: () => void; find: () => void }
 }) {
   const { t } = useLingui()
@@ -164,6 +167,15 @@ export function ConversationMenu({
           </span>
           <Kbd>{SHORTCUTS.incident}</Kbd>
         </DropdownMenuItem>
+        {c.kind === "feedback" && (
+          <DropdownMenuItem onClick={onIdea} data-testid="header-idea">
+            <LightbulbIcon />
+            <span className="flex-1">
+              <Trans>Link to an idea</Trans>
+            </span>
+            <Kbd>{SHORTCUTS.idea}</Kbd>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>

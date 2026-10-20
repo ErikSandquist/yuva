@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Feedbackuri legate: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} așteaptă aprobarea"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} răspunsuri"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} voturi"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De la 3 la 48 de litere, cifre și cratime. Unic pe acest server."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Postările unui cititor așteaptă un membru până când una dintre ele este aprobată. Utilizatorii conectați ai aplicației tale publică imediat."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Adresă"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Este deja legată"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Proprietate de analiză"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Aprobă"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Aprobat"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Înapoi"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Panou"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Panou șters"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Anulează"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Canal de chat"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Comentariu (opțional)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Numără vizualizările paginii panoului public fără cookie-uri."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Creează un panou"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Creează un panou ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Șterge"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "Ștergi {boardName}?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Șterge panoul"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Șterge panoul împreună cu ideile, voturile, răspunsurile și istoricul etapelor. Feedbackurile legate și progresul lor rămân. Adresa publică nu mai funcționează."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Descriere"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Trage {title} într-o altă etapă"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Fiecare feedback legat care nu are încă progresul {progress} îl primește. Feedbackuri legate: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Postările tuturor sunt publicate imediat, cu excepția celor ale autorilor pe care i-ai marcat ca spam."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Ascuns"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Ascunde"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Idee creată"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Idei, voturi și etape pentru {inboxName}, cu feedbackurile din spatele fiecărei idei. Rămâne privat până îl faci public."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Idei: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "A fost dezlegat de idee."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Ideile, voturile, răspunsurile și istoricul etapelor sale sunt șterse odată cu el."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Leagă acest feedback de o idee…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Leagă de o idee"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Feedbackuri legate"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Feedbackuri legate setate la {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Legată de {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Încarcă mai multe"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Fă-l privat"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Fă-l privat ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Fă-l public"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Fă-l public ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown funcționează."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "Moderat"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Mută"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Mută „{title}”"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Mută {title} la o etapă"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Mută la o etapă"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Idee mutată la {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Nume"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Idee nouă din acest feedback"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Încă nu există panou. Proprietarii și administratorii îl creează."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Niciun feedback nu este încă legat. Deschide un feedback și folosește „Leagă de o idee”."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Nicio idee nu se potrivește."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "Nicio căsuță de intrare pentru care să se afișeze un panou."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Niciunul"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Oprit"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "Activat: oricine are adresa citește panoul, iar cititorii autentificați votează și propun idei. Dezactivat: îl vede doar echipa ta, ca instrument de triere a feedbackului."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Un răspuns, scris o singură dată, ajunge la fiecare conversație de feedback deschisă și legată de această idee, ca tine, pe canalul propriu al fiecărei conversații."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Deschis"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Deschide pe panoul public"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Alege o idee din panoul acestei căsuțe de intrare"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Publicat ca răspunsul tău public la idee. Markdown funcționează."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Privat"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Privat, îl vede doar echipa ta"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Public"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Pagină publică"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Cititorii nu pot propune idei. Voturile și răspunsurile funcționează în continuare."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Foaie de parcurs"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Panouri de foaie de parcurs"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Salvat"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Caută idei"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Setări"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Arată-le clienților ce construiești și leagă feedbackurile din spatele fiecărei idei. Alege panoul unei căsuțe de intrare pentru a sorta ideile pe etape."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Afișată sub nume pe panoul public."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Etapă"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Istoricul etapelor"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Creează ideea"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Creează o idee în etapa Idei și leagă acest feedback de ea. Din feedback se afișează doar textul de mai jos."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Sugestii de la cititori"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "Adresa răspunde „negăsit” până faci panoul public."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "Panoul se află la {address}. Adresa veche continuă să redirecționeze dacă o schimbi."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "Ideea nu a fost mutată încă."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "Progresul feedbackurilor legate nu se schimbă. Feedbackuri legate: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "Panoul public încorporează acest chat, iar ideile pornite de echipa ta sunt arhivate în el."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Acest panou nu mai există sau nu îl poți vedea."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Această căsuță de intrare nu are panou de foaie de parcurs. Creează mai întâi unul la Foaie de parcurs."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Această căsuță de intrare nu are canal de chat web. Adaugă mai întâi unul, deoarece panoul public îl încorporează."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Titlu"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Folosește de la 3 la 48 de litere, cifre și cratime interioare."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Vezi panoul"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Vizibilitate"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Așteaptă aprobarea"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Așteaptă aprobarea: {pending}"

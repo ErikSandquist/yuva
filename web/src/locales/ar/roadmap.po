@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "الملاحظات المرتبطة: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} بانتظار الموافقة"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} ردود"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} أصوات"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "من 3 إلى 48 حرفًا وأرقامًا وشرطات. فريد على هذا الخادم."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "تنتظر منشورات القارئ أحد الأعضاء إلى أن تُعتمد إحدى مشاركاته. ينشر مستخدمو تطبيقك المسجَّلون فورًا."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "العنوان"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "مرتبطة بالفعل"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "خاصية التحليلات"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "موافقة"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "رجوع"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "اللوحة"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "تم حذف اللوحة"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "قناة محادثة"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "تعليق (اختياري)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "يحصي مشاهدات صفحات اللوحة العامة دون ملفات تعريف الارتباط."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "إنشاء لوحة"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "إنشاء لوحة ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "حذف"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "حذف {boardName}؟"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "حذف اللوحة"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "يحذف اللوحة مع أفكارها وأصواتها وردودها وسجل مراحلها. تبقى الملاحظات المرتبطة وتقدمها. يتوقف العنوان العام عن العمل."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "الوصف"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "اسحب {title} إلى مرحلة أخرى"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "كل ملاحظة مرتبطة ليس لها التقدم {progress} بعد ستحصل عليه. الملاحظات المرتبطة: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "تُنشر منشورات الجميع فورًا، باستثناء منشورات الكتّاب الذين وسمتهم كرسائل غير مرغوبة."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "مخفي"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "إخفاء"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "تم إنشاء الفكرة"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "أفكار وأصوات ومراحل {inboxName}، مع الملاحظات وراء كل فكرة. تبقى خاصة إلى أن تجعلها عامة."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "الأفكار: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "تم فك ارتباطها بالفكرة."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "تُحذف أفكارها وأصواتها وردودها وسجل مراحلها معها."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "اربط هذه الملاحظة بفكرة…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "الربط بفكرة"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "الملاحظات المرتبطة"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "تم ضبط الملاحظات المرتبطة على {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "رُبطت بـ {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "تحميل المزيد"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "جعلها خاصة"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "جعلها خاصة ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "جعلها عامة"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "جعلها عامة ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "يدعم Markdown."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "خاضع للإشراف"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "نقل"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "نقل «{title}»"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "نقل {title} إلى مرحلة"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "النقل إلى مرحلة"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "تم نقل الفكرة إلى {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "الاسم"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "فكرة جديدة من هذه الملاحظة"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "لا توجد لوحة بعد. ينشئها المالكون والمسؤولون."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "لا توجد ملاحظات مرتبطة بعد. افتح ملاحظة واستخدم «الربط بفكرة»."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "لا توجد فكرة مطابقة."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "لا يوجد صندوق وارد لعرض لوحة له."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "بلا"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "متوقف"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "مفعّل: يقرأ اللوحة كل من لديه العنوان، ويصوّت القراء المسجلون ويقترحون أفكارًا. معطّل: يراها فريقك فقط، كأداة لفرز الملاحظات."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "يُرسل رد واحد، يُكتب مرة واحدة، إلى كل محادثة ملاحظات مفتوحة مرتبطة بهذه الفكرة، باسمك، عبر قناة كل محادثة."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "مفتوحة"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "فتح على اللوحة العامة"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "اختر فكرة من لوحة صندوق الوارد هذا"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "يُنشر كردك العام على الفكرة. يعمل Markdown."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "خاص"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "خاصة، يراها فريقك فقط"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "عام"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "الصفحة العامة"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "لا يستطيع القراء اقتراح أفكار. لا تزال الأصوات والردود تعمل."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "خارطة الطريق"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "لوحات خارطة الطريق"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "تم الحفظ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "البحث في الأفكار"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "أظهر لعملائك ما تبنيه، واربط الملاحظات وراء كل فكرة. اختر لوحة صندوق وارد لفرز الأفكار في مراحل."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "تظهر تحت الاسم على اللوحة العامة."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "المرحلة"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "سجل المراحل"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "بدء الفكرة"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "يبدأ فكرة في مرحلة الأفكار ويربط هذه الملاحظة بها. لا يظهر من الملاحظة سوى النص أدناه."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "اقتراحات القراء"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "يرد العنوان بـ«غير موجود» إلى أن تجعل اللوحة عامة."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "اللوحة على {address}. يستمر العنوان القديم في إعادة التوجيه إذا غيّرته."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "لم يتم نقل الفكرة بعد."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "لا يتغير تقدم الملاحظات المرتبطة. الملاحظات المرتبطة: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "تضمّن اللوحة العامة هذه الدردشة، وتُحفظ فيها الأفكار التي يبدؤها فريقك."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "لم تعد هذه اللوحة موجودة أو لا يمكنك رؤيتها."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "ليس لصندوق الوارد هذا لوحة خارطة طريق. أنشئ واحدة أولًا ضمن خارطة الطريق."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "ليس لصندوق الوارد هذا قناة دردشة ويب. أضف واحدة أولًا، لأن اللوحة العامة تضمّنها."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "العنوان"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "استخدم من 3 إلى 48 حرفًا وأرقامًا وشرطات داخلية."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "عرض اللوحة"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "الظهور"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "بانتظار الموافقة"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "بانتظار الموافقة: {pending}"

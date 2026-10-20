@@ -19,6 +19,7 @@ import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 const HelpColumn = lazy(() => import("@/features/help/HelpColumn"))
+const RoadmapColumn = lazy(() => import("@/features/roadmap/RoadmapColumn"))
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
 function LeftColumn({ keepList }: { keepList: boolean }) {
@@ -48,6 +49,11 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
       {section === "knowledge" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <HelpColumn />
+        </Suspense>
+      )}
+      {section === "board" && (
+        <Suspense fallback={<div className="flex-1 bg-background" />}>
+          <RoadmapColumn />
         </Suspense>
       )}
       {section === "analytics" && (

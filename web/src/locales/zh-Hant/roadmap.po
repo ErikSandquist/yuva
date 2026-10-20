@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "已連結的反饋：{linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} 個等待稽覈"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} 條回覆"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} 票"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 到 48 個字母、數字和連字號，在此伺服器上不可重複。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "讀者的帖子會等待成員稽覈,直到其中一篇被批准。已登入你應用程式的使用者會直接釋出。"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "地址"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "已連結"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "分析屬性"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "批准"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "已批准"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "返回"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "看板已刪除"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "聊天管道"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "留言（選填）"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "在不使用 Cookie 的情況下統計公開看板的頁面瀏覽量。"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "建立看板"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "建立看板（{newKey}）"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "刪除"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "刪除 {boardName}？"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "刪除看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "刪除看板及其想法、投票、回覆和階段歷史。已連結的反饋及其進度會保留。公開網址將停止運作。"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "說明"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "將 {title} 拖到其他階段"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "每則尚未處於「{progress}」進度的已連結反饋都會被設為該進度。已連結的反饋：{linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "所有人的帖子都會立即釋出,但你標記為垃圾的作者除外。"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "已隱藏"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "隱藏"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "想法已建立"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "{inboxName} 的想法、投票和階段，以及每個想法背後的反饋。在你將其設為公開之前，它保持私有。"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "想法：{ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "已與該想法取消連結。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "其想法、投票、回覆和階段歷史將一併刪除。"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "將此反饋連結到某個想法…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "連結到想法"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "已連結的反饋"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "已將連結的反饋設為「{progress}」：{set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "已連結到 {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "載入更多"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "設為私有"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "設為私有（{publicKey}）"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "設為公開"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "設為公開（{publicKey}）"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "支援 Markdown。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "需稽覈"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "移動"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "移動「{title}」"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "將 {title} 移到某個階段"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "移到某個階段"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "想法已移到 {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "名稱"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "用此反饋建立新想法"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "還沒有看板。由擁有者和管理員建立。"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "還沒有連結的反饋。開啟一則反饋並使用「連結到想法」。"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "沒有符合的想法。"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "沒有可顯示看板的收件匣。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "無"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "關"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "開啟：任何知道網址的人都可以閱讀看板，已登入的讀者可以投票並提出想法。關閉：只有你的團隊能看到，作為整理反饋的工具。"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "一則回覆只需寫一次，就會以你的名義，透過每個對話各自的管道，傳送給連結到此想法的每個未關閉的反饋對話。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "未關閉"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "在公開看板上開啟"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "從此收件匣的看板中選擇一個想法"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "將作為你對該想法的公開回覆發布。支援 Markdown。"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "私有"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "私有，只有你的團隊能看到"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "公開"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "公開頁面"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "讀者無法提出想法。投票和回覆仍然可用。"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "路線圖"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "路線圖看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "已儲存"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "搜尋想法"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "向客戶展示你正在打造什麼，並連結每個想法背後的反饋。選擇某個收件匣的看板，把想法分到各個階段。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "顯示在公開看板的名稱下方。"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "階段"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "階段歷史"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "建立想法"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "在「想法」階段建立一個想法，並將此反饋連結到它。反饋中只會顯示下方的文字。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "讀者的建議"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "在你將看板設為公開之前，該網址會回傳「找不到」。"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "看板位於 {address}。如果你變更網址，舊網址會繼續重新導向。"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "該想法尚未移動過。"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "已連結反饋的進度不會改變。已連結的反饋：{linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "公開看板會嵌入此聊天，你的團隊建立的想法會歸檔到其中。"
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "此看板已不存在，或你無法檢視。"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "此收件匣沒有路線圖看板。請先在「路線圖」中建立一個。"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "此收件匣沒有網頁聊天管道。請先新增一個，因為公開看板會嵌入它。"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "標題"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "使用 3 到 48 個字母、數字和中間的連字號。"
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "檢視看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "可見度"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "等待稽覈"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "等待稽覈：{pending}"

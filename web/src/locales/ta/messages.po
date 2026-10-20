@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} இணைக்கப்பட்டுள்ளது"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# மூடப்பட்டது} other {# மூடப்பட்டவை}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} இணையதளம்"
 msgid "{names} will be notified"
 msgstr "{names} அறிவிக்கப்படுவார்கள்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# திறந்தது} other {# திறந்தவை}}"
@@ -892,7 +892,7 @@ msgstr "ஒரு தொடர்பு உரையாடலை மதிப்
 msgid "A contact was deleted"
 msgstr "ஒரு தொடர்பு நீக்கப்பட்டது"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "ஒரு உரையாடல்"
 
@@ -2157,10 +2157,10 @@ msgstr "{until} வரை கிடைக்கிறது"
 msgid "Away"
 msgstr "வெளியே"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "பின்"
 
@@ -2232,6 +2232,14 @@ msgstr "தடுக்கப்பட்டது"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "தடுக்கப்பட்ட தொடர்புகள்"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "பலகை"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "பலகை அமைப்புகள்"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "ஒவ்வொரு சந்தாதாரருக்கும் செய்திமடலைத் திட்டமிட முடியுமா?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "ஒவ்வொரு சந்தாதாரருக்கும் �
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "ரத்துசெய்"
@@ -2827,7 +2835,7 @@ msgstr "அனைத்தையும் மூடு"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} நாட்களுக்கு மேல் பழைய உரையாடல்களை மூடு"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "பதிலளித்த பிறகு ஒவ்வொரு உரையாடலையும் மூடு"
 
@@ -2874,7 +2882,7 @@ msgstr "இன்று மூடப்பட்டவை"
 msgid "Closes"
 msgstr "மூடுபவை"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "ஒவ்வொரு உரையாடலும் மூடப்படுகிறது"
 
@@ -3339,7 +3347,7 @@ msgstr "சேவையகத்தை அடைய முடியவில்�
 msgid "Count clicks"
 msgstr "கிளிக்குகளை எண்ணு"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "எண்ணப்படுகிறது…"
 
@@ -3396,6 +3404,10 @@ msgstr "நிலைப் பக்கத்தை உருவாக்கு"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "நிலைப் பக்கத்தை உருவாக்கு ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "பலகையை உருவாக்கு"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "ஆவணப் பக்கங்களில் விவாதங்�
 msgid "Discussions you started or replied to"
 msgstr "நீங்கள் தொடங்கிய அல்லது பதிலளித்த விவாதங்கள்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "மூடு"
 
@@ -4138,7 +4150,7 @@ msgstr "சம்பவம் திறந்திருக்கும் வ�
 msgid "Each component gets this state while the maintenance is open."
 msgstr "பராமரிப்பு நடக்கும் வரை ஒவ்வொரு கூறும் இந்த நிலையில் இருக்கும்."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "பதிலுக்குப் பிறகு ஒவ்வொரு உரையாடலும் மூடப்படும். வாடிக்கையாளர்களுக்கு அது உடனே கிடைக்கும்; திரும்பப் பெற முடியாது."
 
@@ -4521,11 +4533,11 @@ msgstr "வெளி ID"
 msgid "External ids"
 msgstr "வெளி ID-கள்"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "தோல்வி"
@@ -4663,8 +4675,8 @@ msgstr "இடம்பெயர்வை முடிக்கவா?"
 msgid "Finish without checking"
 msgstr "சரிபார்க்காமல் முடி"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "முடிந்தது"
 
@@ -5307,6 +5319,10 @@ msgstr "நான் திரும்பிவிட்டேன்"
 msgid "Idea"
 msgstr "யோசனை"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "யோசனைகள்"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "கண்டறியப்பட்டது"
@@ -5746,15 +5762,15 @@ msgstr "இது சிறிது நேரத்தில் நிற்க
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "இது {name} ({total}) ஆக இருந்தது. விடுபட்டதை மட்டும் அனுப்ப மீண்டும் தேர்ந்தெடுங்கள்."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "அதன் முறை வருவதற்கு முன்பே அது மூடப்பட்டிருந்தது."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "அது நீக்கப்பட்டிருந்தது."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "அது தவிர்க்கப்பட்டது."
 
@@ -5997,7 +6013,7 @@ msgstr "தாமதம்"
 msgid "Later"
 msgstr "பிறகு"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "சமீபத்திய பதில்"
 
@@ -6077,8 +6093,17 @@ msgstr "இந்த உரையாடலை ஒரு சம்பவத்த
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "ரோட்மேப்பில் உள்ள ஒரு யோசனையுடன் இணை"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "நிலை சம்பவத்துடன் இணை"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "ஒரு யோசனையுடன் இணை"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "சம்பவத்துடன் இணை"
 msgid "Link to an incident ({linkKey})"
 msgstr "சம்பவத்துடன் இணை ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "இணைக்கப்பட்டது"
 
@@ -6381,6 +6406,10 @@ msgstr "பொதுவில் வை"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "புதிய முகவரியை உருவாக்கு"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "பலகையைப் பொதுவானதாக அல்லது தனிப்பட்டதாக்கு"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "ஒளிபரப்புகளில் நகருங்கள்"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "யோசனைகளுக்கு இடையே செல்"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "பட்டியலில் நகருங்கள்"
 
@@ -6791,9 +6824,17 @@ msgstr "இடுகைகளில் நகருங்கள்"
 msgid "Move through the status pages"
 msgstr "நிலைப் பக்கங்களுக்கிடையே செல்"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "ஒரு கட்டத்துக்கு நகர்த்து"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "இன்பாக்ஸுக்கு நகர்த்து"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "முந்தைய அல்லது அடுத்த கட்டத்துக்கு நகர்த்து"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "புதிய விவாதம்"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "புதிய விவாதங்கள்"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "புதிய யோசனை"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "திறந்த உரையாடல்கள்"
 msgid "Open conversations assigned"
 msgstr "ஒதுக்கப்பட்ட திறந்த உரையாடல்கள்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "இந்தப் பதிலைப் பெறும் திறந்த உரையாடல்கள்: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "முனையைத் திற"
 msgid "Open the help article"
 msgstr "உதவிக் கட்டுரையைத் திற"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "யோசனையைத் திற"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "அடுத்த அல்லது முந்தைய உரைய
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "பக்க அமைப்புகளைத் திற"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "பொதுப் பலகையைத் திற"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "பதில் இடுகையிடப்பட்டது"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "பதிலின் முன்னேற்றம்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "பதிலின் உரை"
 
@@ -9783,18 +9836,22 @@ msgstr "<0>{name}</0>-க்குப் பதிலளி"
 msgid "Reply to a broadcast"
 msgstr "ஒளிபரப்புக்குப் பதில்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "இணைக்கப்பட்டவற்றுக்குப் பதிலளி"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "இணைக்கப்பட்டவற்றுக்குப் பதிலளி ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "இணைக்கப்பட்ட உரையாடல்களுக்குப் பதிலளி"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "இணைக்கப்பட்ட கருத்துகளுக்குப் பதிலளி"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "உங்களை {host}-க்குத் திருப்புக
 msgid "Returns you to"
 msgstr "உங்களை இங்கே திருப்பும்"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "மதிப்பாய்வு"
 
@@ -9965,6 +10022,12 @@ msgstr "திரும்பப் பெறப்பட்டது"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "சந்தா செய்த உடனே, அதை உறுதிப்படுத்தும் சிறு அஞ்சல் மக்களுக்குக் கிடைக்கும், சந்தா விலகல் இணைப்புடன்."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "ரோட்மேப்"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "அனுப்புவது மட்டும்"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "அரட்டை அல்லது ஆப் உரையாடலில் குறிப்பை அனுப்பு அல்லது சேர் (புதிய வரிக்கு ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "பதிலை அனுப்பு"
 
@@ -10511,11 +10574,11 @@ msgstr "மின்னஞ்சலில் அனுப்புகிறத�
 msgid "Sending channel"
 msgstr "அனுப்பும் சேனல்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "அனுப்ப முடியவில்லை: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "அனுப்ப முடியவில்லை."
 
@@ -10523,7 +10586,7 @@ msgstr "அனுப்ப முடியவில்லை."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "அனுப்புதல் ஏற்கெனவே தொடங்கிவிட்டது. அதற்குப் பதிலாக இடைநிறுத்தவும் அல்லது ரத்துசெய்யவும்."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "அனுப்புதல் தொடர்ந்து தோல்வியடைந்ததால் Yuva முயற்சியைக் கைவிட்டது."
 
@@ -10549,8 +10612,8 @@ msgstr "அனுப்புதல் சில வினாடிகளில�
 msgid "Sending, then closing…"
 msgstr "அனுப்பிப் பிறகு மூடுகிறது…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "அனுப்புகிறது…"
 
@@ -10578,10 +10641,10 @@ msgstr "{0} வழியாக அனுப்புகிறது"
 msgid "sent"
 msgstr "அனுப்பப்பட்டது"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "அனுப்பப்பட்டது"
@@ -10760,6 +10823,10 @@ msgstr "அமைவுப் படிகள்"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "சேவையகம் அனுப்பிய சான்றிதழின் SHA-256 கைரேகை"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "வெளியிடப்பட்டது"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "இந்த நெடுவரிசையைத் தவிர்"
 msgid "Skip threads that contain only automatic mail"
 msgstr "தானியங்கி அஞ்சல் மட்டுமே உள்ள இழைகளைத் தவிர்"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "தவிர்க்கப்பட்டது"
 
@@ -11771,7 +11838,7 @@ msgstr "ஒப்புதல் பக்கம் கிளையன்ட் 
 msgid "The contact was deleted"
 msgstr "தொடர்பு நீக்கப்பட்டது"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "உரையாடல்கள் திறந்தபடியே இருக்கும். வாடிக்கையாளர்களுக்குப் பதில் உடனே கிடைக்கும்; திரும்பப் பெற முடியாது."
 
@@ -12049,7 +12116,7 @@ msgstr "கடைசி விநியோகத் திறன் சோதன
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "ஒவ்வொரு சந்தைப்படுத்தல் அஞ்சலும் யார் அனுப்புகிறார், அவரை எப்படித் தொடர்பு கொள்வது என்று சொல்ல வேண்டும் என்று சட்டம் கேட்கிறது (CAN-SPAM, CASL, துருக்கியின் Regulation on Commercial Communication). Yuva இதை இந்த இன்பாக்ஸின் ஒவ்வொரு ஒளிபரப்பின் அடிக்குறிப்பிலும் வைக்கும்; எனவே முதல் ஒளிபரப்புக்கு முன் இதை நிரப்புங்கள்."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "5,000 வரம்பு எட்டப்பட்டது"
 
@@ -13198,10 +13265,11 @@ msgstr "பின்தொடர்வது நிறுத்தப்பட�
 msgid "Unknown device"
 msgstr "அறியாத சாதனம்"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "{name} இணைப்பை நீக்கு"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "{title} இலிருந்து இணைப்பை நீக்கு"
@@ -13641,9 +13709,9 @@ msgstr "இந்தப் பிரசாரத்திலிருந்த�
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "அனுப்புதல் தொடங்கியதிலிருந்து utm_campaign={campaign} உடன் உங்கள் தளங்களுக்கான வருகைகள், பகுப்பாய்வால் குக்கீகள் இல்லாமல் எண்ணப்பட்டவை."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "காத்திருக்கிறது"
 
@@ -13812,7 +13880,7 @@ msgstr "அவர்கள் எதற்கு ஒப்புக்கொண�
 msgid "What do customers need to know?"
 msgstr "வாடிக்கையாளர்கள் என்ன தெரிந்துகொள்ள வேண்டும்?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "இந்த வாடிக்கையாளர்கள் என்ன தெரிந்துகொள்ள வேண்டும்?"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "அனுப்பப்படுவதற்கு முன்பே உங்கள் அணுகல் முடிவடைந்துவிட்டது."
 

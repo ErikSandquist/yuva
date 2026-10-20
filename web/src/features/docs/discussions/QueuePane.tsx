@@ -13,14 +13,17 @@ import { DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
 import { pageLabel } from "@/features/docs/PageContext"
 import { AuthorName, ListSkeleton, LoadMore, PostBody, TeamTag, useModeration } from "@/features/docs/discussions/parts"
 import { threadLink, useQueue } from "@/features/docs/discussions/queries"
+import { ideaLink } from "@/features/roadmap/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Card, EmptyRow } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
-import type { DiscussionPostItem } from "@/lib/api"
+import type { Discussion, DiscussionPostItem } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 const FROM = "/docs/discussions/queue"
+
+const hrefOf = (d: Discussion) => (d.kind === "idea" && d.board_id ? ideaLink(d.board_id, d.id) : threadLink(d.id))
 
 function QueueItem({
   item,
@@ -42,19 +45,29 @@ function QueueItem({
     >
       <div className="flex min-w-0 flex-col gap-0.5">
         <span className="text-caption font-medium text-faint">
-          {post.opening ? <Trans>New discussion</Trans> : <Trans>Reply</Trans>}
+          {post.opening ? (
+            d.kind === "idea" ? (
+              <Trans>New idea</Trans>
+            ) : (
+              <Trans>New discussion</Trans>
+            )
+          ) : (
+            <Trans>Reply</Trans>
+          )}
         </span>
         <Link
-          to={threadLink(d.id)}
+          to={hrefOf(d)}
           state={{ from: FROM }}
           className="min-w-0 truncate text-body font-medium hover:underline"
           data-testid="queue-thread"
         >
           {d.title}
         </Link>
-        <span className="truncate text-caption text-faint" dir="ltr">
-          {pageLabel(d.page, d.page_title)}
-        </span>
+        {d.page && (
+          <span className="truncate text-caption text-faint" dir="ltr">
+            {pageLabel(d.page, d.page_title)}
+          </span>
+        )}
       </div>
       <div className="flex min-w-0 items-center gap-2 text-body">
         <AuthorAvatar author={post.author} className="size-6" />
@@ -129,7 +142,7 @@ export function QueuePane() {
     [DISCUSSION_KEYS.previous]: up,
     ArrowDown: down,
     ArrowUp: up,
-    Enter: () => target && navigate(threadLink(target.discussion.id), { state: { from: FROM } }),
+    Enter: () => target && navigate(hrefOf(target.discussion), { state: { from: FROM } }),
     [DISCUSSION_KEYS.approve]: () => act("published"),
     [DISCUSSION_KEYS.hide]: () => act("hidden"),
     [DISCUSSION_KEYS.spam]: () => act("spam"),

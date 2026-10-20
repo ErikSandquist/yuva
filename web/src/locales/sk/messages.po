@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} je pripojený"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# uzavretá} few {# uzavreté} many {# uzavretej} other {# uzavretých}}"
 
@@ -511,7 +511,7 @@ msgstr "Web {name}"
 msgid "{names} will be notified"
 msgstr "Upozornenie dostanú: {names}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# otvorená} few {# otvorené} many {# otvorenej} other {# otvorených}}"
@@ -892,7 +892,7 @@ msgstr "Kontakt ohodnotil konverzáciu"
 msgid "A contact was deleted"
 msgstr "Kontakt bol odstránený"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "Konverzácia"
 
@@ -2157,10 +2157,10 @@ msgstr "Dostupné do {until}"
 msgid "Away"
 msgstr "Preč"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Späť"
 
@@ -2232,6 +2232,14 @@ msgstr "Zablokované"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Zablokované kontakty"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Nástenka"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Nastavenia nástenky"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Môžem naplánovať newsletter pre každého odberateľa zvlášť?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Môžem naplánovať newsletter pre každého odberateľa zvlášť?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Zrušiť"
@@ -2827,7 +2835,7 @@ msgstr "Zavrieť všetko"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Zavrieť konverzácie staršie než {daysShown} dní"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Po odpovedi každú konverzáciu zatvoriť"
 
@@ -2874,7 +2882,7 @@ msgstr "dnes uzavreté"
 msgid "Closes"
 msgstr "Uzatvára"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Zatvárame každú konverzáciu"
 
@@ -3339,7 +3347,7 @@ msgstr "Server sa nepodarilo kontaktovať. Skontrolujte pripojenie a skúste to 
 msgid "Count clicks"
 msgstr "Počítať kliknutia"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Počítanie…"
 
@@ -3396,6 +3404,10 @@ msgstr "Vytvoriť stránku stavu"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Vytvoriť stránku stavu ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Vytvoriť nástenku"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Diskusie na stránkach dokumentácie"
 msgid "Discussions you started or replied to"
 msgstr "Diskusie, ktoré ste začali alebo do ktorých ste odpovedali"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Skryť"
 
@@ -4138,7 +4150,7 @@ msgstr "Každý komponent má tento stav, kým je incident otvorený."
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Každý komponent má tento stav, kým údržba prebieha."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Každá konverzácia sa po odpovedi zatvorí. Zákazníci ju dostanú hneď a nedá sa vziať späť."
 
@@ -4521,11 +4533,11 @@ msgstr "Externé ID"
 msgid "External ids"
 msgstr "Externé ID"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Zlyhalo"
@@ -4663,8 +4675,8 @@ msgstr "Dokončiť migráciu?"
 msgid "Finish without checking"
 msgstr "Dokončiť bez kontroly"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Dokončené"
 
@@ -5307,6 +5319,10 @@ msgstr "Som späť"
 msgid "Idea"
 msgstr "Nápad"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Nápady"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Identifikované"
@@ -5746,15 +5762,15 @@ msgstr "Zastaví sa o chvíľu. Odberatelia, ktorých už pridala, zostanú v zo
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Bol to {name} ({total}). Vyberte ho znova, aby sa odoslalo len to, čo chýba."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Bola zatvorená skôr, než prišla na rad."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Bola odstránená."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "Bola preskočená."
 
@@ -5997,7 +6013,7 @@ msgstr "Latencia"
 msgid "Later"
 msgstr "Neskôr"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Posledná odpoveď"
 
@@ -6077,8 +6093,17 @@ msgstr "Prepojiť túto konverzáciu s incidentom…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Prepojiť s nápadom z plánu vývoja"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Prepojiť s incidentom stavu"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Prepojiť s nápadom"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Prepojiť s incidentom"
 msgid "Link to an incident ({linkKey})"
 msgstr "Prepojiť s incidentom ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Prepojené"
 
@@ -6381,6 +6406,10 @@ msgstr "Zverejniť"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Vytvoriť novú adresu"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Nastaviť nástenku ako verejnú alebo súkromnú"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Prechádzať hromadné správy"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Prechádzať nápady"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Prechádzať zoznam"
 
@@ -6791,9 +6824,17 @@ msgstr "Prechádzať príspevky"
 msgid "Move through the status pages"
 msgstr "Prechádzať stránky stavu"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Presunúť do fázy"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Presunúť do schránky"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Presunúť do predchádzajúcej alebo ďalšej fázy"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Nová diskusia"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "nové diskusie"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Nový nápad"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Otvorené konverzácie"
 msgid "Open conversations assigned"
 msgstr "Otvorené pridelené konverzácie"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Otvorené konverzácie, ktoré dostanú túto odpoveď: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Otvoriť koncový bod"
 msgid "Open the help article"
 msgstr "Otvoriť článok pomoci"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Otvoriť nápad"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Otvoriť ďalšiu alebo predchádzajúcu konverzáciu"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Otvoriť nastavenia stránky"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Otvoriť verejnú nástenku"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Odpovedať a vyriešiť"
 msgid "Reply posted"
 msgstr "Odpoveď zverejnená"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Priebeh odpovede"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Text odpovede"
 
@@ -9783,18 +9836,22 @@ msgstr "Odpovedať používateľovi <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Odpovedať na hromadnú správu"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Odpovedať prepojeným"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Odpovedať prepojeným ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Odpovedať na prepojené konverzácie"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Odpovedať na prepojenú spätnú väzbu"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Vracia vás na {host}…"
 msgid "Returns you to"
 msgstr "Vracia vás na"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Prehľad"
 
@@ -9965,6 +10022,12 @@ msgstr "Odvolané"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Hneď po prihlásení na odber ľudia dostanú krátku správu, ktorá to potvrdí, s odkazom na odhlásenie."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Plán vývoja"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Iba odosielať"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Odoslať alebo pridať poznámku, v chate alebo konverzácii v aplikácii (⇧↵ pre nový riadok)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Odoslať odpoveď"
 
@@ -10511,11 +10574,11 @@ msgstr "Odosiela sa e-mailom…"
 msgid "Sending channel"
 msgstr "Odosielací kanál"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "Odoslanie zlyhalo: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "Odoslanie zlyhalo."
 
@@ -10523,7 +10586,7 @@ msgstr "Odoslanie zlyhalo."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Odosielanie sa už začalo. Namiesto toho ho pozastavte alebo zrušte."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "Odosielanie stále zlyhávalo, a tak to Yuva vzdala."
 
@@ -10549,8 +10612,8 @@ msgstr "Odosielanie sa zastaví za niekoľko sekúnd a nemožno ho znova spusti�
 msgid "Sending, then closing…"
 msgstr "Odosiela sa, potom sa zatvára…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Odosiela sa…"
 
@@ -10578,10 +10641,10 @@ msgstr "odosiela cez {0}"
 msgid "sent"
 msgstr "odoslané"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Odoslané"
@@ -10760,6 +10823,10 @@ msgstr "Kroky nastavenia"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "Odtlačok SHA-256 certifikátu, ktorý server poslal"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Dodané"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Preskočiť tento stĺpec"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Preskakovať vlákna, ktoré obsahujú len automatickú poštu"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Preskočené"
 
@@ -11771,7 +11838,7 @@ msgstr "Stránka súhlasu začiarkne to, o čo klient žiada. Vynechajte, čo ne
 msgid "The contact was deleted"
 msgstr "Kontakt bol odstránený"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Konverzácie zostanú otvorené. Zákazníci odpoveď dostanú hneď a nedá sa vziať späť."
 
@@ -12049,7 +12116,7 @@ msgstr "Posledná kontrola doručiteľnosti našla niečo na opravu."
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Zákon požaduje, aby každá marketingová správa uvádzala, kto ju posiela a ako ho kontaktovať (CAN-SPAM, CASL, turecký predpis o obchodnej komunikácii). Yuva to vkladá do pätičky každej hromadnej správy z tejto schránky, takže to vyplňte pred prvou."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "Limit 5 000 je dosiahnutý"
 
@@ -13198,10 +13265,11 @@ msgstr "Sledovanie ukončené"
 msgid "Unknown device"
 msgstr "Neznáme zariadenie"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Odpojiť {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Odpojiť od {title}"
@@ -13641,9 +13709,9 @@ msgstr "Návštevy z tejto kampane"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Návštevy vašich webov s utm_campaign={campaign} od začatia odosielania, započítané Analytikou bez cookies."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Čaká"
 
@@ -13812,7 +13880,7 @@ msgstr "S čím súhlasili?"
 msgid "What do customers need to know?"
 msgstr "Čo majú zákazníci vedieť?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Čo majú títo zákazníci vedieť?"
 
@@ -14292,7 +14360,7 @@ msgstr "vy@firma.sk"
 msgid "you@example.com"
 msgstr "vy@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "Váš prístup skončil skôr, než bola odoslaná."
 

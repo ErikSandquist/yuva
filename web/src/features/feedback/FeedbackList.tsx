@@ -7,6 +7,7 @@ import { formatShort } from "@/components/common/text"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CategoryChip, ProgressChip, ScoreMark } from "@/features/conversation/Feedback"
+import { IdeaMark } from "@/features/conversation/IdeaChip"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListCursor } from "@/features/inbox/listCursor"
@@ -130,6 +131,7 @@ function Row({
         </span>
         <span className="flex min-w-0 items-center gap-2 text-caption text-faint">
           <span className="min-w-0 flex-1 truncate">{where}</span>
+          {c.idea && <IdeaMark idea={c.idea} className="max-w-[45%]" />}
           {f?.progress && <ProgressChip progress={f.progress} />}
           {!!f?.attachment_count && (
             <span

@@ -36,6 +36,7 @@ export type Section =
   | "broadcasts"
   | "status"
   | "knowledge"
+  | "board"
   | "analytics"
   | "settings"
 
@@ -49,6 +50,7 @@ const routed = [
   "broadcasts",
   "status",
   "knowledge",
+  "board",
   "analytics",
   "settings",
 ] as const

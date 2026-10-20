@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} đã được kết nối"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# đã đóng}}"
 
@@ -511,7 +511,7 @@ msgstr "Trang web {name}"
 msgid "{names} will be notified"
 msgstr "{names} sẽ được thông báo"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# đang mở}}"
@@ -892,7 +892,7 @@ msgstr "Một liên hệ đã đánh giá một cuộc trò chuyện"
 msgid "A contact was deleted"
 msgstr "Một liên hệ đã bị xóa"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "Một cuộc trò chuyện"
 
@@ -2157,10 +2157,10 @@ msgstr "Có sẵn đến {until}"
 msgid "Away"
 msgstr "Vắng mặt"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Quay lại"
 
@@ -2232,6 +2232,14 @@ msgstr "Đã chặn"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Liên hệ bị chặn"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Bảng"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Cài đặt bảng"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Tôi có thể lên lịch bản tin cho từng người đăng ký không?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Tôi có thể lên lịch bản tin cho từng người đăng ký khô
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Hủy"
@@ -2827,7 +2835,7 @@ msgstr "Đóng tất cả"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Đóng các cuộc trò chuyện cũ hơn {daysShown} ngày"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Đóng từng cuộc trò chuyện sau khi trả lời"
 
@@ -2874,7 +2882,7 @@ msgstr "đã đóng hôm nay"
 msgid "Closes"
 msgstr "Đóng lúc"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Đang đóng từng cuộc trò chuyện"
 
@@ -3339,7 +3347,7 @@ msgstr "Không thể kết nối tới máy chủ. Hãy kiểm tra kết nối v
 msgid "Count clicks"
 msgstr "Đếm lượt nhấp"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Đang đếm…"
 
@@ -3396,6 +3404,10 @@ msgstr "Tạo trang trạng thái"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Tạo trang trạng thái ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Tạo bảng"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Thảo luận trên các trang tài liệu"
 msgid "Discussions you started or replied to"
 msgstr "Các cuộc thảo luận bạn đã bắt đầu hoặc trả lời"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Bỏ qua"
 
@@ -4138,7 +4150,7 @@ msgstr "Mỗi thành phần ở trạng thái này khi sự cố còn mở."
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Mỗi thành phần ở trạng thái này khi đợt bảo trì còn diễn ra."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Mỗi cuộc trò chuyện được đóng sau khi trả lời. Khách hàng nhận được ngay và không thể thu hồi."
 
@@ -4521,11 +4533,11 @@ msgstr "ID bên ngoài"
 msgid "External ids"
 msgstr "ID bên ngoài"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Thất bại"
@@ -4663,8 +4675,8 @@ msgstr "Hoàn tất việc di chuyển?"
 msgid "Finish without checking"
 msgstr "Hoàn tất mà không kiểm tra"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Đã hoàn tất"
 
@@ -5307,6 +5319,10 @@ msgstr "Tôi đã quay lại"
 msgid "Idea"
 msgstr "Ý tưởng"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Ý tưởng"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Đã xác định"
@@ -5746,15 +5762,15 @@ msgstr "Nó dừng trong giây lát. Những người đăng ký nó đã thêm 
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Đó là {name} ({total}). Hãy chọn lại để chỉ gửi phần còn thiếu."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Nó đã được đóng trước khi đến lượt."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Nó đã bị xóa."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "Nó đã bị bỏ qua."
 
@@ -5997,7 +6013,7 @@ msgstr "Độ trễ"
 msgid "Later"
 msgstr "Sau"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Phản hồi gần nhất"
 
@@ -6077,8 +6093,17 @@ msgstr "Liên kết cuộc trò chuyện này với một sự cố…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Liên kết với ý tưởng trong lộ trình"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Liên kết với sự cố trạng thái"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Liên kết với ý tưởng"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Liên kết với sự cố"
 msgid "Link to an incident ({linkKey})"
 msgstr "Liên kết với sự cố ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Đã liên kết"
 
@@ -6381,6 +6406,10 @@ msgstr "Công khai"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Tạo địa chỉ mới"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Đặt bảng ở chế độ công khai hoặc riêng tư"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Di chuyển giữa các thư hàng loạt"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Duyệt qua các ý tưởng"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Di chuyển trong danh sách"
 
@@ -6791,9 +6824,17 @@ msgstr "Di chuyển giữa các bài đăng"
 msgid "Move through the status pages"
 msgstr "Di chuyển giữa các trang trạng thái"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Chuyển sang giai đoạn"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Chuyển vào hộp thư đến"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Chuyển sang giai đoạn trước hoặc sau"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Thảo luận mới"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "thảo luận mới"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Ý tưởng mới"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Cuộc trò chuyện đang mở"
 msgid "Open conversations assigned"
 msgstr "Cuộc trò chuyện đang mở được giao"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Các cuộc trò chuyện đang mở sẽ nhận câu trả lời này: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Mở endpoint"
 msgid "Open the help article"
 msgstr "Mở bài viết trợ giúp"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Mở ý tưởng"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Mở cuộc trò chuyện tiếp theo hoặc trước đó"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Mở cài đặt trang"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Mở bảng công khai"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Trả lời và giải quyết"
 msgid "Reply posted"
 msgstr "Đã đăng phản hồi"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Tiến độ trả lời"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Nội dung trả lời"
 
@@ -9783,18 +9836,22 @@ msgstr "Phản hồi <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Phản hồi một thư hàng loạt"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Trả lời các cuộc đã liên kết"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Trả lời các cuộc đã liên kết ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Trả lời các cuộc trò chuyện đã liên kết"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Trả lời các phản hồi đã liên kết"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Đang đưa bạn quay lại {host}…"
 msgid "Returns you to"
 msgstr "Đưa bạn quay lại"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Xem lại"
 
@@ -9965,6 +10022,12 @@ msgstr "Đã thu hồi"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Ngay sau khi đăng ký, mọi người nhận một thư ngắn xác nhận, kèm liên kết hủy đăng ký."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Lộ trình"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Chỉ gửi"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Gửi hoặc thêm ghi chú, trong cuộc trò chuyện chat hoặc ứng dụng (⇧↵ để xuống dòng)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Gửi câu trả lời"
 
@@ -10511,11 +10574,11 @@ msgstr "Đang gửi qua email…"
 msgid "Sending channel"
 msgstr "Kênh gửi"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "Gửi không thành công: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "Gửi không thành công."
 
@@ -10523,7 +10586,7 @@ msgstr "Gửi không thành công."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Việc gửi đã bắt đầu. Hãy tạm dừng hoặc hủy thay vào đó."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "Việc gửi liên tục thất bại nên Yuva đã bỏ cuộc."
 
@@ -10549,8 +10612,8 @@ msgstr "Việc gửi dừng trong vài giây và không thể bắt đầu lại
 msgid "Sending, then closing…"
 msgstr "Đang gửi, rồi đóng…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Đang gửi…"
 
@@ -10578,10 +10641,10 @@ msgstr "gửi qua {0}"
 msgid "sent"
 msgstr "đã gửi"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Đã gửi"
@@ -10760,6 +10823,10 @@ msgstr "Các bước thiết lập"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "Dấu vân tay SHA-256 của chứng chỉ mà máy chủ đã gửi"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Đã phát hành"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Bỏ qua cột này"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Bỏ qua các chuỗi chỉ chứa thư tự động"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Đã bỏ qua"
 
@@ -11771,7 +11838,7 @@ msgstr "Trang đồng ý đánh dấu những gì client yêu cầu. Hãy bỏ n
 msgid "The contact was deleted"
 msgstr "Liên hệ đã bị xóa"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Các cuộc trò chuyện vẫn mở. Khách hàng nhận câu trả lời ngay và không thể thu hồi."
 
@@ -12049,7 +12116,7 @@ msgstr "Lần kiểm tra khả năng gửi thư gần nhất tìm thấy điều
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Pháp luật yêu cầu mọi thư tiếp thị phải nêu ai gửi và cách liên hệ họ (CAN-SPAM, CASL, Quy định về Truyền thông Thương mại của Thổ Nhĩ Kỳ). Yuva đặt thông tin này ở chân mọi thư hàng loạt từ hộp thư này, nên hãy điền trước thư đầu tiên."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "Đã đạt giới hạn 5.000"
 
@@ -13198,10 +13265,11 @@ msgstr "Đã bỏ theo dõi"
 msgid "Unknown device"
 msgstr "Thiết bị không xác định"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Hủy liên kết {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Hủy liên kết khỏi {title}"
@@ -13641,9 +13709,9 @@ msgstr "Lượt truy cập từ chiến dịch này"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Lượt truy cập vào các trang của bạn với utm_campaign={campaign} từ khi bắt đầu gửi, được Phân tích đếm mà không dùng cookie."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Đang chờ"
 
@@ -13812,7 +13880,7 @@ msgstr "Họ đã đồng ý điều gì?"
 msgid "What do customers need to know?"
 msgstr "Khách hàng cần biết điều gì?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Những khách hàng này cần biết điều gì?"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "Quyền truy cập của bạn đã kết thúc trước khi gửi."
 

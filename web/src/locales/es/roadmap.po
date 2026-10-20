@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: es\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "Comentarios vinculados: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} esperando aprobación"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} respuestas"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} votos"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "De 3 a 48 letras, números y guiones. Es único en este servidor."
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Las publicaciones de un lector esperan a un miembro hasta que se apruebe una suya. Los usuarios con sesión iniciada en tu app publican al instante."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "Dirección"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "Ya está vinculada"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "Propiedad de analítica"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "Aprobar"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "Aprobado"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "Atrás"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "Tablero"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "Tablero eliminado"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "Canal de chat"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "Comentario (opcional)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "Cuenta las visitas a páginas del tablero público sin cookies."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "Crear tablero"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "Crear tablero ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "¿Eliminar {boardName}?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "Eliminar tablero"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "Elimina el tablero con sus ideas, votos, respuestas e historial de etapas. Los comentarios vinculados y su progreso se conservan. La dirección pública deja de funcionar."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "Descripción"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "Arrastra {title} a otra etapa"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "Todos los comentarios vinculados que aún no tengan el progreso {progress} lo recibirán. Comentarios vinculados: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Las publicaciones de todos se publican al instante, salvo las de autores que marcaste como spam."
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "Oculto"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "Ocultar"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "Idea creada"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "Ideas, votos y etapas de {inboxName}, con los comentarios detrás de cada idea. Sigue siendo privado hasta que lo hagas público."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "Ideas: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "Se desvinculó de la idea."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "Sus ideas, votos, respuestas e historial de etapas se eliminan con él."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "Vincular estos comentarios a una idea…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "Vincular a una idea"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "Comentarios vinculados"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "Comentarios vinculados pasados a {progress}: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "Vinculada a {title}"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "Cargar más"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "Hacer privado"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "Hacer privado ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "Hacer público"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "Hacer público ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown funciona."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "Moderado"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "Mover"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "Mover «{title}»"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "Mover {title} a una etapa"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "Mover a una etapa"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "Idea movida a {stage}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "Nombre"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "Nueva idea a partir de estos comentarios"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "Aún no hay tablero. Lo crean los propietarios y administradores."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "Aún no hay comentarios vinculados. Abre unos comentarios y usa «Vincular a una idea»."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "Ninguna idea coincide."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "No hay ninguna bandeja de entrada para mostrar un tablero."
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "Ninguno"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "Desactivado"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "Activado: cualquiera con la dirección lee el tablero, y los lectores con sesión votan y proponen ideas. Desactivado: solo tu equipo lo ve, como herramienta para ordenar comentarios."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "Una respuesta, escrita una sola vez, llega a cada conversación de comentarios abierta y vinculada a esta idea, como tú, por el canal propio de cada conversación."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "Abiertas"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "Abrir en el tablero público"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "Elige una idea del tablero de esta bandeja de entrada"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "Se publica como tu respuesta pública en la idea. Se admite Markdown."
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "Privada"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "Privado, solo tu equipo lo ve"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "Pública"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "Página pública"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "Los lectores no pueden proponer ideas. Los votos y las respuestas siguen funcionando."
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "Hoja de ruta"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "Tableros de hoja de ruta"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "Guardado"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "Buscar ideas"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "Ajustes"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "Muestra a tus clientes lo que estás construyendo y vincula los comentarios detrás de cada idea. Elige el tablero de una bandeja de entrada para ordenar las ideas por etapas."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "Se muestra bajo el nombre en el tablero público."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "Etapa"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "Historial de etapas"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "Crear la idea"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "Crea una idea en la etapa Ideas y le vincula estos comentarios. De los comentarios solo se muestra el texto de abajo."
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "Sugerencias de los lectores"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "La dirección responde «no encontrado» hasta que hagas público el tablero."
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "El tablero está en {address}. La dirección anterior sigue redirigiendo si la cambias."
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "La idea aún no se ha movido."
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "El progreso de los comentarios vinculados no cambia. Comentarios vinculados: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "El tablero público incrusta este chat, y las ideas que inicie tu equipo se archivan en él."
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "Este tablero ya no existe o no puedes verlo."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "Esta bandeja de entrada no tiene tablero de hoja de ruta. Crea uno antes en Hoja de ruta."
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Esta bandeja de entrada no tiene canal de chat web. Añade uno primero, porque el tablero público lo incrusta."
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "Título"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "Usa de 3 a 48 letras, números y guiones interiores."
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "Ver tablero"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "Visibilidad"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "Esperando aprobación"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "Esperando aprobación: {pending}"

@@ -40,9 +40,11 @@ export const SHORTCUTS = {
   analytics: "g n",
   status: "g s",
   helpCenter: "g k",
+  roadmap: "g p",
   discussion: "P",
   incident: "i",
   article: "H",
+  idea: "b",
   select: "x",
   linkSelected: "I",
 } as const
@@ -111,6 +113,21 @@ export const HELP_KEYS = {
   remove: "X",
   moveUp: "ArrowUp",
   moveDown: "ArrowDown",
+} as const
+
+export const ROADMAP_KEYS = {
+  board: "1",
+  settings: "2",
+  newBoard: "c",
+  nextColumn: "ArrowRight",
+  previousColumn: "ArrowLeft",
+  open: "Enter",
+  move: "m",
+  moveBack: "[",
+  moveForward: "]",
+  openPage: "o",
+  publicBoard: "P",
+  replyLinked: "A",
 } as const
 
 export const DESIGNER_KEYS = {
@@ -182,6 +199,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.discussion), t`Turn into a public discussion`],
         [k(SHORTCUTS.incident), t`Link to a status incident`],
         [k(SHORTCUTS.article), t`Send a help article`],
+        [k(SHORTCUTS.idea), t`Link to a roadmap idea`],
       ],
     },
     {
@@ -299,6 +317,21 @@ export function ShortcutSheet({
       ],
     },
     {
+      title: t`Roadmap`,
+      items: [
+        [["↑", "↓", "←", "→"], t`Move through the ideas`],
+        [["↵"], t`Open the idea`],
+        [k(ROADMAP_KEYS.board), t`Board`],
+        [k(ROADMAP_KEYS.settings), t`Board settings`],
+        [k(ROADMAP_KEYS.newBoard), t`Create the board`],
+        [k(ROADMAP_KEYS.move), t`Move to a stage`],
+        [[ROADMAP_KEYS.moveBack, ROADMAP_KEYS.moveForward], t`Move to the previous or next stage`],
+        [k(ROADMAP_KEYS.openPage), t`Open the public board`],
+        [k(ROADMAP_KEYS.publicBoard), t`Make the board public or private`],
+        [k(ROADMAP_KEYS.replyLinked), t`Reply to linked feedback`],
+      ],
+    },
+    {
       title: t`E-mail designer`,
       items: [
         [[mod, "Z"], t`Undo`],
@@ -333,6 +366,7 @@ export function ShortcutSheet({
         [k(SHORTCUTS.broadcasts), t`Broadcasts`],
         [k(SHORTCUTS.status), t`Status`],
         [k(SHORTCUTS.helpCenter), t`Help`],
+        [k(SHORTCUTS.roadmap), t`Roadmap`],
         [k(SHORTCUTS.analytics), t`Analytics`],
         [k(SHORTCUTS.assistants), t`Assistants`],
         [[mod, "K"], t`Everything`],

@@ -9,7 +9,7 @@ import {
   SearchXIcon,
   XIcon,
 } from "lucide-react"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
 import {
@@ -40,6 +40,7 @@ import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
 import { ConversationMenu } from "@/features/conversation/ConversationMenu"
 import { CategoryChip } from "@/features/conversation/Feedback"
+import { IdeaChip } from "@/features/conversation/IdeaChip"
 import { IncidentChips } from "@/features/status/IncidentChips"
 import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
 import { useConversationIncidents } from "@/features/status/linked"
@@ -94,6 +95,8 @@ type Props = {
   inlinePanel: boolean
   onPanel: (open: boolean) => void
 }
+
+const LinkIdeaDialog = lazy(() => import("@/features/roadmap/LinkIdeaDialog"))
 
 function BackButton({ onBack }: { onBack?: () => void }) {
   const { t } = useLingui()
@@ -256,6 +259,7 @@ function Loaded({
   const pageLine = !!conversationPage(c)
   const [discussing, setDiscussing] = useState(false)
   const [linking, setLinking] = useState(false)
+  const [ideaLinking, setIdeaLinking] = useState(false)
   const incidents = useConversationIncidents(c.id).data ?? []
   const chipLabels = labels.filter((l) => c.labels.includes(l.id))
   const assignee = c.assignee_id ? members.get(c.assignee_id) : undefined
@@ -348,6 +352,7 @@ function Loaded({
     history: () => setHistoryOpen((o) => !o),
     discussion: () => setDiscussing(true),
     incident: () => setLinking(true),
+    idea: () => c.kind === "feedback" && setIdeaLinking(true),
     article: () => reply.current?.article(),
   }
   useCommandHandlers(handlers)
@@ -372,6 +377,7 @@ function Loaded({
     [SHORTCUTS.unread]: markUnread,
     [SHORTCUTS.discussion]: handlers.discussion,
     [SHORTCUTS.incident]: handlers.incident,
+    [SHORTCUTS.idea]: handlers.idea,
     [SHORTCUTS.article]: handlers.article,
   })
 
@@ -552,6 +558,7 @@ function Loaded({
             onUnread={markUnread}
             onDiscussion={handlers.discussion}
             onIncident={handlers.incident}
+            onIdea={handlers.idea}
             folded={phone ? { hand: handlers.hand, snooze: handlers.snooze, find: openFind } : undefined}
           />
         </div>
@@ -563,6 +570,7 @@ function Loaded({
         c.broadcast_id ||
         c.imported ||
         incidents.length > 0 ||
+        !!c.idea ||
         viewers.length > 0 ||
         typingMate) && (
         <div
@@ -592,6 +600,7 @@ function Loaded({
             </>
           )}
           <IncidentChips conversationId={c.id} items={incidents} />
+          {c.idea && <IdeaChip conversationId={c.id} idea={c.idea} />}
           <Watchers conversationId={c.id} />
         </div>
       )}
@@ -724,6 +733,11 @@ function Loaded({
           linked={new Set(incidents.map((i) => i.id))}
           onClose={() => setLinking(false)}
         />
+      )}
+      {ideaLinking && (
+        <Suspense fallback={null}>
+          <LinkIdeaDialog c={c} onClose={() => setIdeaLinking(false)} />
+        </Suspense>
       )}
       {discussing && <FromConversationDialog c={c} messages={shown} onClose={() => setDiscussing(false)} />}
       {!inlinePanel && (

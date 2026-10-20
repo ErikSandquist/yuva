@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} ಸಂಪರ್ಕಗೊಂಡಿದೆ"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# ಮುಚ್ಚಲಾಗಿದೆ} other {# ಮುಚ್ಚಲಾಗಿದೆ}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} ವೆಬ್‌ಸೈಟ್"
 msgid "{names} will be notified"
 msgstr "{names} ಅವರಿಗೆ ಸೂಚನೆ ನೀಡಲಾಗುತ್ತದೆ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# ತೆರೆದಿದೆ} other {# ತೆರೆದಿವೆ}}"
@@ -892,7 +892,7 @@ msgstr "ಒಂದು ಸಂಪರ್ಕ ಸಂಭಾಷಣೆಗೆ ರೇಟ್
 msgid "A contact was deleted"
 msgstr "ಒಂದು ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲಾಯಿತು"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "ಒಂದು ಸಂಭಾಷಣೆ"
 
@@ -2157,10 +2157,10 @@ msgstr "{until} ವರೆಗೆ ಲಭ್ಯ"
 msgid "Away"
 msgstr "ದೂರವಿದ್ದಾರೆ"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "ಹಿಂದೆ"
 
@@ -2232,6 +2232,14 @@ msgstr "ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "ನಿರ್ಬಂಧಿಸಿದ ಸಂಪರ್ಕಗಳು"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "ಬೋರ್ಡ್"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "ಬೋರ್ಡ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "ಪ್ರತಿ ಚಂದಾದಾರರಿಗೆ ನ್ಯೂಸ್‌ಲೆಟರ್ ಶೆಡ್ಯೂಲ್ ಮಾಡಬಹುದೇ?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "ಪ್ರತಿ ಚಂದಾದಾರರಿಗೆ ನ್ಯೂಸ್‌�
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "ರದ್ದುಗೊಳಿಸಿ"
@@ -2827,7 +2835,7 @@ msgstr "ಎಲ್ಲವನ್ನೂ ಮುಚ್ಚಿ"
 msgid "Close conversations older than {daysShown} days"
 msgstr "{daysShown} ದಿನಗಳಿಗಿಂತ ಹಳೆಯ ಸಂಭಾಷಣೆಗಳನ್ನು ಮುಚ್ಚಿ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "ಉತ್ತರಿಸಿದ ನಂತರ ಪ್ರತಿ ಸಂಭಾಷಣೆಯನ್ನು ಮುಚ್ಚಿ"
 
@@ -2874,7 +2882,7 @@ msgstr "ಇಂದು ಮುಚ್ಚಲಾಗಿದೆ"
 msgid "Closes"
 msgstr "ಮುಚ್ಚುತ್ತದೆ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "ಪ್ರತಿ ಸಂಭಾಷಣೆಯನ್ನು ಮುಚ್ಚಲಾಗುತ್ತಿದೆ"
 
@@ -3339,7 +3347,7 @@ msgstr "ಸರ್ವರ್ ಅನ್ನು ತಲುಪಲು ಸಾಧ್ಯವ
 msgid "Count clicks"
 msgstr "ಕ್ಲಿಕ್‌ಗಳನ್ನು ಎಣಿಸಿ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "ಎಣಿಸಲಾಗುತ್ತಿದೆ…"
 
@@ -3396,6 +3404,10 @@ msgstr "ಸ್ಥಿತಿ ಪುಟ ರಚಿಸಿ"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "ಸ್ಥಿತಿ ಪುಟ ರಚಿಸಿ ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "ಬೋರ್ಡ್ ರಚಿಸಿ"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "ಡಾಕ್ಯುಮೆಂಟೇಶನ್ ಪುಟಗಳಲ್ಲಿ �
 msgid "Discussions you started or replied to"
 msgstr "ನೀವು ಆರಂಭಿಸಿದ ಅಥವಾ ಉತ್ತರಿಸಿದ ಚರ್ಚೆಗಳು"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "ಮುಚ್ಚಿ"
 
@@ -4138,7 +4150,7 @@ msgstr "ಘಟನೆ ತೆರೆದಿರುವವರೆಗೆ ಪ್ರತಿ 
 msgid "Each component gets this state while the maintenance is open."
 msgstr "ನಿರ್ವಹಣೆ ನಡೆಯುತ್ತಿರುವವರೆಗೆ ಪ್ರತಿ ಘಟಕವೂ ಈ ಸ್ಥಿತಿಯಲ್ಲಿರುತ್ತದೆ."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "ಉತ್ತರದ ನಂತರ ಪ್ರತಿ ಸಂಭಾಷಣೆ ಮುಚ್ಚಲ್ಪಡುತ್ತದೆ. ಗ್ರಾಹಕರಿಗೆ ಅದು ತಕ್ಷಣ ತಲುಪುತ್ತದೆ ಮತ್ತು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
@@ -4521,11 +4533,11 @@ msgstr "ಬಾಹ್ಯ ID"
 msgid "External ids"
 msgstr "ಬಾಹ್ಯ ID ಗಳು"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "ವಿಫಲವಾಗಿದೆ"
@@ -4663,8 +4675,8 @@ msgstr "ಸ್ಥಳಾಂತರವನ್ನು ಮುಗಿಸಬೇಕೇ?"
 msgid "Finish without checking"
 msgstr "ಪರಿಶೀಲಿಸದೆ ಮುಗಿಸಿ"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "ಮುಗಿದಿದೆ"
 
@@ -5307,6 +5319,10 @@ msgstr "ನಾನು ಮರಳಿದ್ದೇನೆ"
 msgid "Idea"
 msgstr "ಐಡಿಯಾ"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "ಐಡಿಯಾಗಳು"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "ಕಾರಣ ಗುರುತಿಸಲಾಗಿದೆ"
@@ -5746,15 +5762,15 @@ msgstr "ಅದು ಕ್ಷಣದಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ.
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "ಅದು {name} ({total}) ಆಗಿತ್ತು. ಕೊರತೆಯಿರುವುದನ್ನು ಮಾತ್ರ ಕಳುಹಿಸಲು ಅದನ್ನು ಮತ್ತೆ ಆರಿಸಿ."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "ಅದರ ಸರದಿ ಬರುವ ಮೊದಲೇ ಅದನ್ನು ಮುಚ್ಚಲಾಗಿತ್ತು."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "ಅದನ್ನು ಅಳಿಸಲಾಗಿತ್ತು."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "ಅದನ್ನು ಬಿಟ್ಟುಬಿಡಲಾಯಿತು."
 
@@ -5997,7 +6013,7 @@ msgstr "ಲೇಟೆನ್ಸಿ"
 msgid "Later"
 msgstr "ನಂತರ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "ಇತ್ತೀಚಿನ ಉತ್ತರ"
 
@@ -6077,8 +6093,17 @@ msgstr "ಈ ಸಂಭಾಷಣೆಯನ್ನು ಘಟನೆಗೆ ಲಿಂಕ
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "ರೋಡ್‌ಮ್ಯಾಪ್‌ನ ಐಡಿಯಾಗೆ ಲಿಂಕ್ ಮಾಡಿ"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "ಸ್ಥಿತಿ ಘಟನೆಗೆ ಲಿಂಕ್ ಮಾಡಿ"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "ಐಡಿಯಾಗೆ ಲಿಂಕ್ ಮಾಡಿ"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "ಘಟನೆಗೆ ಲಿಂಕ್ ಮಾಡಿ"
 msgid "Link to an incident ({linkKey})"
 msgstr "ಘಟನೆಗೆ ಲಿಂಕ್ ಮಾಡಿ ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "ಲಿಂಕ್ ಆಗಿದೆ"
 
@@ -6381,6 +6406,10 @@ msgstr "ಸಾರ್ವಜನಿಕಗೊಳಿಸಿ"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "ಹೊಸ ವಿಳಾಸ ರಚಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "ಬೋರ್ಡ್ ಅನ್ನು ಸಾರ್ವಜನಿಕ ಅಥವಾ ಖಾಸಗಿ ಮಾಡಿ"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳ ನಡುವೆ ಚಲಿಸಿ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "ಐಡಿಯಾಗಳ ನಡುವೆ ಸಾಗಿ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "ಪಟ್ಟಿಯಲ್ಲಿ ಚಲಿಸಿ"
 
@@ -6791,9 +6824,17 @@ msgstr "ಪೋಸ್ಟ್‌ಗಳ ನಡುವೆ ಚಲಿಸಿ"
 msgid "Move through the status pages"
 msgstr "ಸ್ಥಿತಿ ಪುಟಗಳ ನಡುವೆ ಚಲಿಸಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "ಹಂತಕ್ಕೆ ಸರಿಸಿ"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಸರಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "ಹಿಂದಿನ ಅಥವಾ ಮುಂದಿನ ಹಂತಕ್ಕೆ ಸರಿಸಿ"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "ಹೊಸ ಚರ್ಚೆ"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "ಹೊಸ ಚರ್ಚೆಗಳು"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "ಹೊಸ ಐಡಿಯಾ"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "ತೆರೆದ ಸಂಭಾಷಣೆಗಳು"
 msgid "Open conversations assigned"
 msgstr "ನಿಯೋಜಿತ ತೆರೆದ ಸಂಭಾಷಣೆಗಳು"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "ಈ ಉತ್ತರ ಪಡೆಯುವ ತೆರೆದ ಸಂಭಾಷಣೆಗಳು: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "ಎಂಡ್‌ಪಾಯಿಂಟ್ ತೆರೆಯಿರಿ"
 msgid "Open the help article"
 msgstr "ಸಹಾಯ ಲೇಖನ ತೆರೆಯಿರಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "ಐಡಿಯಾ ತೆರೆಯಿರಿ"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "ಮುಂದಿನ ಅಥವಾ ಹಿಂದಿನ ಸಂಭಾಷಣೆ
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "ಪುಟದ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "ಸಾರ್ವಜನಿಕ ಬೋರ್ಡ್ ತೆರೆಯಿರಿ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Reply and resolve"
 msgid "Reply posted"
 msgstr "ಉತ್ತರ ಪೋಸ್ಟ್ ಮಾಡಲಾಗಿದೆ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "ಉತ್ತರದ ಪ್ರಗತಿ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "ಉತ್ತರದ ಪಠ್ಯ"
 
@@ -9783,18 +9836,22 @@ msgstr "<0>{name}</0> ಗೆ ಉತ್ತರಿಸಿ"
 msgid "Reply to a broadcast"
 msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗೆ ಉತ್ತರಿಸಿ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "ಲಿಂಕ್ ಆದವಕ್ಕೆ ಉತ್ತರಿಸಿ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "ಲಿಂಕ್ ಆದವಕ್ಕೆ ಉತ್ತರಿಸಿ ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "ಲಿಂಕ್ ಆದ ಸಂಭಾಷಣೆಗಳಿಗೆ ಉತ್ತರಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "ಲಿಂಕ್ ಆದ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಗೆ ಉತ್ತರಿಸಿ"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "ನಿಮ್ಮನ್ನು {host} ಗೆ ಹಿಂತಿರುಗಿಸ
 msgid "Returns you to"
 msgstr "ನಿಮ್ಮನ್ನು ಇಲ್ಲಿಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "ಪರಿಶೀಲನೆ"
 
@@ -9965,6 +10022,12 @@ msgstr "ರದ್ದುಪಡಿಸಲಾಗಿದೆ"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "ಚಂದಾದಾರರಾದ ತಕ್ಷಣ, ಜನರಿಗೆ ಅದನ್ನು ದೃಢೀಕರಿಸುವ, ಚಂದಾದಾರಿಕೆ ರದ್ದತಿ ಲಿಂಕ್‌ವುಳ್ಳ ಚಿಕ್ಕ ಮೇಲ್ ಸಿಗುತ್ತದೆ."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "ರೋಡ್‌ಮ್ಯಾಪ್"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "ಕಳುಹಿಸಿ ಮಾತ್ರ"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "ಚಾಟ್ ಅಥವಾ ಆ್ಯಪ್ ಸಂಭಾಷಣೆಯಲ್ಲಿ ಟಿಪ್ಪಣಿಯನ್ನು ಕಳುಹಿಸಿ ಅಥವಾ ಸೇರಿಸಿ (ಹೊಸ ಸಾಲಿಗೆ ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "ಉತ್ತರ ಕಳುಹಿಸಿ"
 
@@ -10511,11 +10574,11 @@ msgstr "ಇಮೇಲ್ ಮೂಲಕ ಕಳುಹಿಸಲಾಗುತ್ತಿ�
 msgid "Sending channel"
 msgstr "ಕಳುಹಿಸುವ ಚಾನೆಲ್"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "ಕಳುಹಿಸಲು ಆಗಲಿಲ್ಲ: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "ಕಳುಹಿಸಲು ಆಗಲಿಲ್ಲ."
 
@@ -10523,7 +10586,7 @@ msgstr "ಕಳುಹಿಸಲು ಆಗಲಿಲ್ಲ."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "ಕಳುಹಿಸುವಿಕೆ ಈಗಾಗಲೇ ಆರಂಭವಾಗಿದೆ. ಬದಲಿಗೆ ವಿರಾಮಗೊಳಿಸಿ ಅಥವಾ ರದ್ದುಪಡಿಸಿ."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "ಕಳುಹಿಸುವುದು ಪದೇ ಪದೇ ವಿಫಲವಾದ್ದರಿಂದ Yuva ಪ್ರಯತ್ನ ಬಿಟ್ಟುಬಿಟ್ಟಿತು."
 
@@ -10549,8 +10612,8 @@ msgstr "ಕಳುಹಿಸುವಿಕೆ ಕೆಲವು ಸೆಕೆಂಡು�
 msgid "Sending, then closing…"
 msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ, ನಂತರ ಮುಚ್ಚಲಾಗುತ್ತಿದೆ…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ…"
 
@@ -10578,10 +10641,10 @@ msgstr "{0} ಮೂಲಕ ಕಳುಹಿಸುತ್ತದೆ"
 msgid "sent"
 msgstr "ಕಳುಹಿಸಲಾಗಿದೆ"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "ಕಳುಹಿಸಲಾಗಿದೆ"
@@ -10760,6 +10823,10 @@ msgstr "ಸೆಟಪ್ ಹಂತಗಳು"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "ಸರ್ವರ್ ಕಳುಹಿಸಿದ ಪ್ರಮಾಣಪತ್ರದ SHA-256 ಫಿಂಗರ್‌ಪ್ರಿಂಟ್"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "ಬಿಡುಗಡೆಯಾಗಿದೆ"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "ಈ ಕಾಲಮ್ ಬಿಟ್ಟುಬಿಡಿ"
 msgid "Skip threads that contain only automatic mail"
 msgstr "ಸ್ವಯಂಚಾಲಿತ ಮೇಲ್ ಮಾತ್ರ ಇರುವ ಥ್ರೆಡ್‌ಗಳನ್ನು ಬಿಟ್ಟುಬಿಡಿ"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "ಬಿಡಲಾಗಿದೆ"
 
@@ -11771,7 +11838,7 @@ msgstr "ಒಪ್ಪಿಗೆ ಪುಟ ಕ್ಲೈಂಟ್ ಕೇಳುವು
 msgid "The contact was deleted"
 msgstr "ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲಾಗಿದೆ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "ಸಂಭಾಷಣೆಗಳು ತೆರೆದಿರುತ್ತವೆ. ಗ್ರಾಹಕರಿಗೆ ಉತ್ತರ ತಕ್ಷಣ ತಲುಪುತ್ತದೆ ಮತ್ತು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
@@ -12049,7 +12116,7 @@ msgstr "ಕೊನೆಯ ವಿತರಣಾ ಸಾಮರ್ಥ್ಯ ಪರಿಶ
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "ಪ್ರತಿ ಮಾರ್ಕೆಟಿಂಗ್ ಮೇಲ್ ಯಾರು ಕಳುಹಿಸುತ್ತಾರೆ ಮತ್ತು ಅವರನ್ನು ಹೇಗೆ ಸಂಪರ್ಕಿಸಬೇಕು ಎಂದು ಹೇಳಬೇಕೆಂದು ಕಾನೂನು ಕೇಳುತ್ತದೆ (CAN-SPAM, CASL, ಟರ್ಕಿಯ ವಾಣಿಜ್ಯ ಸಂವಹನ ನಿಯಮಾವಳಿ). ಈ ಇನ್‌ಬಾಕ್ಸ್‌ನ ಪ್ರತಿ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ನ ಅಡಿಟಿಪ್ಪಣಿಯಲ್ಲಿ Yuva ಇದನ್ನು ಹಾಕುತ್ತದೆ, ಹಾಗಾಗಿ ಮೊದಲನೆಯದರ ಮೊದಲು ಇದನ್ನು ತುಂಬಿ."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "5,000 ಮಿತಿ ತಲುಪಲಾಗಿದೆ"
 
@@ -13198,10 +13265,11 @@ msgstr "ಅನುಸರಿಸುವುದನ್ನು ನಿಲ್ಲಿಸಲ�
 msgid "Unknown device"
 msgstr "ಅಪರಿಚಿತ ಸಾಧನ"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "{name} ಅನ್ನು ಅನ್‌ಲಿಂಕ್ ಮಾಡಿ"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "{title} ನಿಂದ ಅನ್‌ಲಿಂಕ್ ಮಾಡಿ"
@@ -13641,9 +13709,9 @@ msgstr "ಈ ಅಭಿಯಾನದಿಂದ ಭೇಟಿಗಳು"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "ಕಳುಹಿಸುವುದು ಆರಂಭವಾದಾಗಿನಿಂದ utm_campaign={campaign} ಇರುವ ನಿಮ್ಮ ಸೈಟ್‌ಗಳ ಭೇಟಿಗಳು, ಅನಾಲಿಟಿಕ್ಸ್ ಕುಕೀಗಳಿಲ್ಲದೆ ಎಣಿಸಿದ್ದು."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "ಕಾಯುತ್ತಿದೆ"
 
@@ -13812,7 +13880,7 @@ msgstr "ಅವರು ಏನಕ್ಕೆ ಒಪ್ಪಿದರು?"
 msgid "What do customers need to know?"
 msgstr "ಗ್ರಾಹಕರು ಏನು ತಿಳಿದುಕೊಳ್ಳಬೇಕು?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "ಈ ಗ್ರಾಹಕರಿಗೆ ಏನು ತಿಳಿಯಬೇಕು?"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "ಕಳುಹಿಸುವ ಮೊದಲೇ ನಿಮ್ಮ ಪ್ರವೇಶ ಮುಗಿದಿತ್ತು."
 

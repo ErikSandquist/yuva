@@ -455,11 +455,12 @@ function byName(a: Inbox, b: Inbox) {
 }
 
 function refreshLinked(qc: QueryClient, ws: string, id: string) {
-  for (const q of qc.getQueryCache().findAll({ queryKey: keys.statusLinked(ws) })) {
-    const data = q.state.data as { pages?: { items: { id: string }[] }[] } | undefined
-    if (data?.pages?.some((p) => p.items.some((x) => x.id === id)))
-      void qc.invalidateQueries({ queryKey: q.queryKey, exact: true, refetchType: "active" })
-  }
+  for (const root of [keys.statusLinked(ws), keys.roadmapLinked(ws)])
+    for (const q of qc.getQueryCache().findAll({ queryKey: root })) {
+      const data = q.state.data as { pages?: { items: { id: string }[] }[] } | undefined
+      if (data?.pages?.some((p) => p.items.some((x) => x.id === id)))
+        void qc.invalidateQueries({ queryKey: q.queryKey, exact: true, refetchType: "active" })
+    }
 }
 
 export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) {
@@ -651,8 +652,14 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "discussion.post_created":
     case "discussion.answered":
     case "discussion.updated":
+    case "discussion.stage_changed":
       void qc.invalidateQueries({ queryKey: keys.discussions(ctx.ws) })
+      void qc.invalidateQueries({ queryKey: keys.roadmap(ctx.ws) })
       refreshCounts(qc, ctx.ws)
+      return
+    case "roadmap.board.updated":
+      void qc.invalidateQueries({ queryKey: keys.roadmap(ctx.ws) })
+      void qc.invalidateQueries({ queryKey: keys.discussions(ctx.ws) })
       return
     case "status.page.updated":
     case "status.component.updated":

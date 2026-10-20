@@ -66,6 +66,7 @@ export function AppShell() {
     [SHORTCUTS.broadcasts]: () => go("broadcasts"),
     [SHORTCUTS.status]: () => go("status"),
     [SHORTCUTS.helpCenter]: () => go("knowledge"),
+    [SHORTCUTS.roadmap]: () => go("board"),
     [SHORTCUTS.analytics]: () => analytics && go("analytics"),
     [SHORTCUTS.assistants]: () => go("assistants"),
     [SHORTCUTS.mentions]: () => go("mentions"),

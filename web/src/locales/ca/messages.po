@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} està connectat"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# tancada} other {# tancades}}"
 
@@ -511,7 +511,7 @@ msgstr "Lloc web de {name}"
 msgid "{names} will be notified"
 msgstr "Es notificarà {names}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# oberta} other {# obertes}}"
@@ -892,7 +892,7 @@ msgstr "Un contacte ha valorat una conversa"
 msgid "A contact was deleted"
 msgstr "S'ha eliminat un contacte"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "Una conversa"
 
@@ -2157,10 +2157,10 @@ msgstr "Disponible fins al {until}"
 msgid "Away"
 msgstr "Absent"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "Enrere"
 
@@ -2232,6 +2232,14 @@ msgstr "Bloquejat"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Contactes bloquejats"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "Tauler"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "Configuració del tauler"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "Puc programar un butlletí per a cada subscriptor?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "Puc programar un butlletí per a cada subscriptor?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -2827,7 +2835,7 @@ msgstr "Tanca-ho tot"
 msgid "Close conversations older than {daysShown} days"
 msgstr "Tanca les converses de més de {daysShown} dies"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "Tanca cada conversa després de respondre"
 
@@ -2874,7 +2882,7 @@ msgstr "tancades avui"
 msgid "Closes"
 msgstr "Tanca"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "Tancant cada conversa"
 
@@ -3339,7 +3347,7 @@ msgstr "No s'ha pogut abastar el servidor. Comprova la connexió i torna-ho a pr
 msgid "Count clicks"
 msgstr "Compta els clics"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "Comptant…"
 
@@ -3396,6 +3404,10 @@ msgstr "Crea una pàgina d’estat"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "Crea una pàgina d’estat ({newKey})"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "Crea el tauler"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "Debats a les pàgines de documentació"
 msgid "Discussions you started or replied to"
 msgstr "Debats que has iniciat o als quals has respost"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Descarta"
 
@@ -4138,7 +4150,7 @@ msgstr "Cada component té aquest estat mentre l’incident és obert."
 msgid "Each component gets this state while the maintenance is open."
 msgstr "Cada component té aquest estat mentre el manteniment està en curs."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "Cada conversa es tanca després de la resposta. Els clients la reben a l’instant i no es pot retirar."
 
@@ -4521,11 +4533,11 @@ msgstr "ID extern"
 msgid "External ids"
 msgstr "ID externs"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Fallit"
@@ -4663,8 +4675,8 @@ msgstr "Acabes la migració?"
 msgid "Finish without checking"
 msgstr "Acaba sense comprovar"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "Acabat"
 
@@ -5307,6 +5319,10 @@ msgstr "Ja he tornat"
 msgid "Idea"
 msgstr "Idea"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "Idees"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Identificat"
@@ -5746,15 +5762,15 @@ msgstr "S'atura d'aquí a un moment. Els subscriptors que ja ha afegit es queden
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "Era {name} ({total}). Tria'l de nou per enviar només el que falta."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "Es va tancar abans del seu torn."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "Es va eliminar."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "S’ha omès."
 
@@ -5997,7 +6013,7 @@ msgstr "Latència"
 msgid "Later"
 msgstr "Més tard"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "Última resposta"
 
@@ -6077,8 +6093,17 @@ msgstr "Vincula aquesta conversa a un incident…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "Vincula a una idea del full de ruta"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "Vincula a un incident d’estat"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "Vincula a una idea"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "Vincula a un incident"
 msgid "Link to an incident ({linkKey})"
 msgstr "Vincula a un incident ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "Vinculada"
 
@@ -6381,6 +6406,10 @@ msgstr "Fes-la pública"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "Crea una adreça nova"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "Fes el tauler públic o privat"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "Desplaça't pels enviaments massius"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "Mou-te per les idees"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Desplaça't per la llista"
 
@@ -6791,9 +6824,17 @@ msgstr "Desplaça't per les publicacions"
 msgid "Move through the status pages"
 msgstr "Moure’s per les pàgines d’estat"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "Mou a una etapa"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "Mou a la safata d'entrada"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "Mou a l’etapa anterior o següent"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "Debat nou"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "debats nous"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "Idea nova"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "Converses obertes"
 msgid "Open conversations assigned"
 msgstr "Converses obertes assignades"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Converses obertes que rebran aquesta resposta: {open}"
 
@@ -8351,6 +8396,10 @@ msgstr "Obre l'endpoint"
 msgid "Open the help article"
 msgstr "Obre l’article d’ajuda"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "Obre la idea"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "Obre la conversa següent o l'anterior"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "Obre la configuració de la pàgina"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "Obre el tauler públic"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "Respon i resol"
 msgid "Reply posted"
 msgstr "Resposta publicada"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "Progrés de la resposta"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "Text de la resposta"
 
@@ -9783,18 +9836,22 @@ msgstr "Respon a <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "Respon a un enviament massiu"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "Respon a les vinculades"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "Respon a les vinculades ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "Respon a les converses vinculades"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "Respon als comentaris vinculats"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "Tornant-te a {host}…"
 msgid "Returns you to"
 msgstr "Et torna a"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "Revisa"
 
@@ -9965,6 +10022,12 @@ msgstr "Revocat"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "Just després de subscriure's, les persones reben un correu breu que ho confirma, amb un enllaç de baixa."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "Full de ruta"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "Només enviar"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "Envia o afegeix la nota, en una conversa de xat o d'aplicació (⇧↵ per a una línia nova)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "Envia la resposta"
 
@@ -10511,11 +10574,11 @@ msgstr "Enviant per correu…"
 msgid "Sending channel"
 msgstr "Canal d'enviament"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "No s’ha pogut enviar: {reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "No s’ha pogut enviar."
 
@@ -10523,7 +10586,7 @@ msgstr "No s’ha pogut enviar."
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "L'enviament ja ha començat. Posa'l en pausa o cancel·la'l."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "L’enviament va fallar una vegada i una altra, així que Yuva s’ha rendit."
 
@@ -10549,8 +10612,8 @@ msgstr "L'enviament s'atura en pocs segons i no es pot tornar a començar. El co
 msgid "Sending, then closing…"
 msgstr "Enviant i després tancant…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "Enviant…"
 
@@ -10578,10 +10641,10 @@ msgstr "envia per {0}"
 msgid "sent"
 msgstr "enviat"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Enviat"
@@ -10760,6 +10823,10 @@ msgstr "Passos de configuració"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "Empremta SHA-256 del certificat que ha enviat el servidor"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "Lliurat"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "Omet aquesta columna"
 msgid "Skip threads that contain only automatic mail"
 msgstr "Omet els fils que només contenen correu automàtic"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "Omès"
 
@@ -11771,7 +11838,7 @@ msgstr "La pàgina de consentiment marca el que demana el client. Deixa fora el 
 msgid "The contact was deleted"
 msgstr "S'ha eliminat el contacte"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Les converses continuen obertes. Els clients reben la resposta a l’instant i no es pot retirar."
 
@@ -12049,7 +12116,7 @@ msgstr "L'última comprovació de lliurabilitat ha trobat alguna cosa per arregl
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "La llei demana que cada correu de màrqueting digui qui l'envia i com contactar-lo (CAN-SPAM, CASL, el Reglament de Comunicació Comercial de Turquia). Yuva ho posa al peu de cada enviament massiu d'aquesta safata, de manera que omple-ho abans del primer."
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "S’ha arribat al límit de 5.000"
 
@@ -13198,10 +13265,11 @@ msgstr "Deixat de seguir"
 msgid "Unknown device"
 msgstr "Dispositiu desconegut"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Desvincula {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "Desvincula de {title}"
@@ -13641,9 +13709,9 @@ msgstr "Visites d'aquesta campanya"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "Visites als teus llocs amb utm_campaign={campaign} des que va començar l'enviament, comptades per Analítica sense galetes."
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "Esperant"
 
@@ -13812,7 +13880,7 @@ msgstr "A què han accedit?"
 msgid "What do customers need to know?"
 msgstr "Què han de saber els clients?"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "Què necessiten saber aquests clients?"
 
@@ -14292,7 +14360,7 @@ msgstr "tu@empresa.com"
 msgid "you@example.com"
 msgstr "tu@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "El teu accés va acabar abans que s’enviés."
 

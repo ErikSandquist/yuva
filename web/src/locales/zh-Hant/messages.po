@@ -199,7 +199,7 @@ msgid "{clientName} is connected"
 msgstr "{clientName} 已連線"
 
 #: src/app/TeamMenu.tsx
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# 個已關閉}}"
 
@@ -511,7 +511,7 @@ msgstr "{name} 網站"
 msgid "{names} will be notified"
 msgstr "將通知 {names}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# 個未關閉}}"
@@ -892,7 +892,7 @@ msgstr "聯絡人評價了對話時"
 msgid "A contact was deleted"
 msgstr "聯絡人被刪除時"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "A conversation"
 msgstr "一則對話"
 
@@ -2157,10 +2157,10 @@ msgstr "可用至 {until}"
 msgid "Away"
 msgstr "離開"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Back"
 msgstr "返回"
 
@@ -2232,6 +2232,14 @@ msgstr "已遮蔽"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "已遮蔽的聯絡人"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board"
+msgstr "看板"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Board settings"
+msgstr "看板設定"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Body"
@@ -2416,6 +2424,7 @@ msgid "Can I schedule a newsletter for each subscriber?"
 msgstr "能為每位訂閱者單獨安排傳送新聞簡報嗎?"
 
 #: src/components/common/ConfirmDialog.tsx
+#: src/components/common/Linked.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
@@ -2436,7 +2445,6 @@ msgstr "能為每位訂閱者單獨安排傳送新聞簡報嗎?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "取消"
@@ -2827,7 +2835,7 @@ msgstr "全部關閉"
 msgid "Close conversations older than {daysShown} days"
 msgstr "關閉超過 {daysShown} 天的對話"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Close each conversation after replying"
 msgstr "回覆後關閉每則對話"
 
@@ -2874,7 +2882,7 @@ msgstr "今日已關閉"
 msgid "Closes"
 msgstr "關閉於"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Closing each conversation"
 msgstr "正在關閉每則對話"
 
@@ -3339,7 +3347,7 @@ msgstr "無法連線到伺服器。請檢查網路連線後重試。"
 msgid "Count clicks"
 msgstr "統計點選"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Counting…"
 msgstr "正在計算…"
 
@@ -3396,6 +3404,10 @@ msgstr "建立狀態頁"
 #: src/features/status/StatusColumn.tsx
 msgid "Create status page ({newKey})"
 msgstr "建立狀態頁（{newKey}）"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Create the board"
+msgstr "建立看板"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Create the e-mail channel"
@@ -3845,7 +3857,7 @@ msgstr "文件頁面上的討論"
 msgid "Discussions you started or replied to"
 msgstr "你發起或回覆過的討論"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "關閉"
 
@@ -4138,7 +4150,7 @@ msgstr "事件開啟期間，每個元件都處於此狀態。"
 msgid "Each component gets this state while the maintenance is open."
 msgstr "維護進行期間，每個元件都處於此狀態。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Each conversation is closed after the reply. Customers get it right away and it cannot be recalled."
 msgstr "回覆後每則對話都會關閉。客戶會立即收到，且無法收回。"
 
@@ -4521,11 +4533,11 @@ msgstr "外部 ID"
 msgid "External ids"
 msgstr "外部 ID"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "失敗"
@@ -4663,8 +4675,8 @@ msgstr "完成遷移?"
 msgid "Finish without checking"
 msgstr "不檢查直接完成"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Finished"
 msgstr "已完成"
 
@@ -5307,6 +5319,10 @@ msgstr "我回來了"
 msgid "Idea"
 msgstr "想法"
 
+#: src/components/common/text.ts
+msgid "Ideas"
+msgstr "想法"
+
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "已確認"
@@ -5746,15 +5762,15 @@ msgstr "它會很快停止。已經新增的訂閱者仍留在列表中。"
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "它原來是 {name}({total})。重新選擇它,只傳送缺少的部分。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was closed before its turn."
 msgstr "輪到它之前已被關閉。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was deleted."
 msgstr "它已被刪除。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "It was skipped."
 msgstr "已略過。"
 
@@ -5997,7 +6013,7 @@ msgstr "延遲"
 msgid "Later"
 msgstr "稍後"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Latest reply"
 msgstr "最近的回覆"
 
@@ -6077,8 +6093,17 @@ msgstr "將此對話連結到事件…"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+msgid "Link to a roadmap idea"
+msgstr "連結到路線圖想法"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Link to a status incident"
 msgstr "連結到狀態事件"
+
+#: src/features/conversation/ConversationMenu.tsx
+msgid "Link to an idea"
+msgstr "連結到想法"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6090,7 +6115,7 @@ msgstr "連結到事件"
 msgid "Link to an incident ({linkKey})"
 msgstr "連結到事件 ({linkKey})"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Linked"
 msgstr "已連結"
 
@@ -6381,6 +6406,10 @@ msgstr "設為公開"
 #: src/features/status/MonitorsTab.tsx
 msgid "Make new address"
 msgstr "產生新位址"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Make the board public or private"
+msgstr "將看板設為公開或私有"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6780,6 +6809,10 @@ msgid "Move through the broadcasts"
 msgstr "在群發之間移動"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the ideas"
+msgstr "在想法之間移動"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "在列表中移動"
 
@@ -6791,9 +6824,17 @@ msgstr "在帖子之間移動"
 msgid "Move through the status pages"
 msgstr "在狀態頁之間移動"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to a stage"
+msgstr "移到某個階段"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
 msgstr "移到收件匣"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move to the previous or next stage"
+msgstr "移到上一個或下一個階段"
 
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7010,6 +7051,10 @@ msgstr "新討論"
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "新討論"
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New idea"
+msgstr "新想法"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -8253,7 +8298,7 @@ msgstr "未關閉的對話"
 msgid "Open conversations assigned"
 msgstr "已指派的未關閉對話"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "將收到此回覆的進行中對話：{open}"
 
@@ -8351,6 +8396,10 @@ msgstr "開啟端點"
 msgid "Open the help article"
 msgstr "開啟說明文章"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the idea"
+msgstr "開啟想法"
+
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
@@ -8375,6 +8424,10 @@ msgstr "開啟下一個或上一個對話"
 #: src/features/status/SubscribersTab.tsx
 msgid "Open the page settings"
 msgstr "開啟頁面設定"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public board"
+msgstr "開啟公開看板"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the public help center"
@@ -9757,11 +9810,11 @@ msgstr "回覆並標示為已解決"
 msgid "Reply posted"
 msgstr "回覆已釋出"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply progress"
 msgstr "回覆進度"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply text"
 msgstr "回覆內容"
 
@@ -9783,18 +9836,22 @@ msgstr "回覆 <0>{name}</0>"
 msgid "Reply to a broadcast"
 msgstr "回覆群發"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked"
 msgstr "回覆已連結的對話"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Reply to linked ({key})"
 msgstr "回覆已連結的對話 ({key})"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Reply to linked conversations"
 msgstr "回覆已連結的對話"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to linked feedback"
+msgstr "回覆已連結的反饋"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Reply to the discussion"
@@ -9917,11 +9974,11 @@ msgstr "正在返回 {host}…"
 msgid "Returns you to"
 msgstr "將返回到"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Review"
 msgstr "稽覈"
 
@@ -9965,6 +10022,12 @@ msgstr "已撤銷"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Right after subscribing, people get a short mail that confirms it, with an unsubscribe link."
 msgstr "訂閱後,人們會立即收到一封帶退訂連結的簡短確認郵件。"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Roadmap"
+msgstr "路線圖"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Role"
@@ -10437,7 +10500,7 @@ msgstr "僅傳送"
 msgid "Send or add the note, in a chat or app conversation (⇧↵ for a new line)"
 msgstr "在聊天或應用程式對話中傳送或新增備註(換行用 ⇧↵)"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Send reply"
 msgstr "傳送回覆"
 
@@ -10511,11 +10574,11 @@ msgstr "正在透過郵件傳送…"
 msgid "Sending channel"
 msgstr "傳送頻道"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed: {reason}"
 msgstr "傳送失敗：{reason}"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending failed."
 msgstr "傳送失敗。"
 
@@ -10523,7 +10586,7 @@ msgstr "傳送失敗。"
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "傳送已經開始。請改為暫停或取消。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Sending kept failing, so Yuva gave up."
 msgstr "傳送一再失敗，Yuva 已放棄。"
 
@@ -10549,8 +10612,8 @@ msgstr "傳送會在幾秒內停止,且無法重新開始。已經發出的郵�
 msgid "Sending, then closing…"
 msgstr "正在傳送並關閉…"
 
+#: src/components/common/Linked.tsx
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Sending…"
 msgstr "傳送中…"
 
@@ -10578,10 +10641,10 @@ msgstr "透過 {0} 傳送"
 msgid "sent"
 msgstr "已傳送"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
-#: src/features/status/LinkedSection.tsx
 #: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "已傳送"
@@ -10760,6 +10823,10 @@ msgstr "設定步驟"
 #: src/features/migrations/ConnectStep.tsx
 msgid "SHA-256 fingerprint of the certificate the server sent"
 msgstr "伺服器傳送的證書的 SHA-256 指紋"
+
+#: src/components/common/text.ts
+msgid "Shipped"
+msgstr "已發布"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -11102,8 +11169,8 @@ msgstr "跳過此列"
 msgid "Skip threads that contain only automatic mail"
 msgstr "跳過只包含自動郵件的對話串"
 
+#: src/components/common/Linked.tsx
 #: src/components/common/text.ts
-#: src/features/status/LinkedSection.tsx
 msgid "Skipped"
 msgstr "已跳過"
 
@@ -11771,7 +11838,7 @@ msgstr "同意頁面已勾選用戶端請求的內容。請取消勾選你不希
 msgid "The contact was deleted"
 msgstr "聯絡人已被刪除"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "對話維持開啟。客戶會立即收到回覆，且無法收回。"
 
@@ -12049,7 +12116,7 @@ msgstr "上次送達率檢查發現有需要修復的地方。"
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "法律要求每封營銷郵件說明發件人是誰以及如何聯絡(CAN-SPAM、CASL、土耳其商業通訊條例)。Yuva 會把這些資訊放進此收件匣每次群發的頁尾,因此請在第一次群發前填寫。"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "The limit of 5,000 is reached"
 msgstr "已達到 5,000 的上限"
 
@@ -13198,10 +13265,11 @@ msgstr "已取消關注"
 msgid "Unknown device"
 msgstr "未知裝置"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "取消連結 {name}"
 
+#: src/features/conversation/IdeaChip.tsx
 #: src/features/status/IncidentChips.tsx
 msgid "Unlink from {title}"
 msgstr "取消與 {title} 的連結"
@@ -13641,9 +13709,9 @@ msgstr "來自此活動的存取"
 msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 msgstr "傳送開始以來帶有 utm_campaign={campaign} 的網站存取,由分析在無 Cookie 的情況下統計。"
 
+#: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/LinkedSection.tsx
 msgid "Waiting"
 msgstr "等待中"
 
@@ -13812,7 +13880,7 @@ msgstr "他們同意了什麼?"
 msgid "What do customers need to know?"
 msgstr "客戶需要知道什麼？"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "What do these customers need to know?"
 msgstr "這些客戶需要知道什麼？"
 
@@ -14292,7 +14360,7 @@ msgstr "you@company.com"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/features/status/LinkedSection.tsx
+#: src/components/common/Linked.tsx
 msgid "Your access ended before it was sent."
 msgstr "在傳送之前，你的存取權限已結束。"
 

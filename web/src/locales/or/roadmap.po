@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 15:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: or\n"
+
+#: src/features/roadmap/Board.tsx
+msgid "{linked} linked feedback"
+msgstr "ଲିଙ୍କ ହୋଇଥିବା ମତାମତ: {linked}"
+
+#: src/features/roadmap/Board.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} ଅନୁମୋଦନ ଅପେକ୍ଷାରେ"
+
+#: src/features/roadmap/Board.tsx
+msgid "{replies} replies"
+msgstr "{replies} ଉତ୍ତର"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "{votes} votes"
+msgstr "{votes} ଭୋଟ୍"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
+msgstr "3 ରୁ 48 ଅକ୍ଷର, ଅଙ୍କ ଓ ହାଇଫେନ। ଏହି ସର୍ଭରରେ ଅନନ୍ୟ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "ପାଠକଙ୍କ ପୋଷ୍ଟ ସେମାନଙ୍କର ଗୋଟିଏ ଅନୁମୋଦିତ ନହେବା ପର୍ଯ୍ୟନ୍ତ ସଦସ୍ୟଙ୍କ ପାଇଁ ଅପେକ୍ଷା କରେ। ଆପଣଙ୍କ ଆପ୍ରେ ସାଇନ୍ ଇନ୍ କରିଥିବା ଉପଯୋଗକର୍ତ୍ତା ତୁରନ୍ତ ପ୍ରକାଶ କରନ୍ତି।"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Address"
+msgstr "ଠିକଣା"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Already linked"
+msgstr "ପୂର୍ବରୁ ଲିଙ୍କ ହୋଇଛି"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Analytics property"
+msgstr "ଆନାଲିଟିକ୍ସ ପ୍ରପର୍ଟି"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approve"
+msgstr "ଅନୁମୋଦନ କରନ୍ତୁ"
+
+#: src/features/roadmap/Board.tsx
+msgid "Approved"
+msgstr "ଅନୁମୋଦିତ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Back"
+msgstr "ପଛକୁ"
+
+#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Board"
+msgstr "ବୋର୍ଡ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Board deleted"
+msgstr "ବୋର୍ଡ ଡିଲିଟ୍ ହେଲା"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Cancel"
+msgstr "ବାତିଲ"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Chat channel"
+msgstr "ଚାଟ୍ ଚ୍ୟାନେଲ୍"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Comment (optional)"
+msgstr "ମନ୍ତବ୍ୟ (ଇଚ୍ଛାଧୀନ)"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Counts page views of the public board without cookies."
+msgstr "କୁକି ବିନା ସାର୍ବଜନୀନ ବୋର୍ଡର ପୃଷ୍ଠା ଦର୍ଶନ ଗଣେ।"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board"
+msgstr "ବୋର୍ଡ ତିଆରି କରନ୍ତୁ"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Create board ({newKey})"
+msgstr "ବୋର୍ଡ ତିଆରି କରନ୍ତୁ ({newKey})"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete"
+msgstr "ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete {boardName}?"
+msgstr "{boardName} ଡିଲିଟ୍ କରିବେ?"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Delete board"
+msgstr "ବୋର୍ଡ ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Deletes the board with its ideas, votes, replies and stage history. Linked feedback stays, and its progress too. The public address stops working."
+msgstr "ବୋର୍ଡକୁ ତାହାର ଧାରଣା, ଭୋଟ୍, ଉତ୍ତର ଓ ପର୍ଯ୍ୟାୟର ଇତିହାସ ସହ ଡିଲିଟ୍ କରେ। ଲିଙ୍କ ହୋଇଥିବା ମତାମତ ଓ ତାହାର ଅଗ୍ରଗତି ରହିଯାଏ। ସାର୍ବଜନୀନ ଠିକଣା କାମ କରିବା ବନ୍ଦ କରେ।"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Description"
+msgstr "ବିବରଣୀ"
+
+#: src/features/roadmap/Board.tsx
+msgid "Drag {title} to another stage"
+msgstr "{title} କୁ ଅନ୍ୟ ପର୍ଯ୍ୟାୟକୁ ଟାଣନ୍ତୁ"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ ସେପରି ନଥିବା ପ୍ରତ୍ୟେକ ଲିଙ୍କ ହୋଇଥିବା ମତାମତର ଅଗ୍ରଗତି {progress} ହେବ। ଲିଙ୍କ ହୋଇଥିବା ମତାମତ: {linked}"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "ଆପଣ ସ୍ପାମ୍ ଭାବେ ଚିହ୍ନିତ କରିଥିବା ଲେଖକଙ୍କ ବ୍ୟତୀତ ସମସ୍ତଙ୍କ ପୋଷ୍ଟ ତୁରନ୍ତ ପ୍ରକାଶିତ ହୁଏ।"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hidden"
+msgstr "ଲୁଚାଯାଇଛି"
+
+#: src/features/roadmap/Board.tsx
+msgid "Hide"
+msgstr "ଲୁଚାନ୍ତୁ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Idea started"
+msgstr "ଧାରଣା ଆରମ୍ଭ ହେଲା"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
+msgstr "{inboxName} ପାଇଁ ଧାରଣା, ଭୋଟ୍ ଓ ପର୍ଯ୍ୟାୟ, ପ୍ରତ୍ୟେକ ଧାରଣା ପଛର ମତାମତ ସହ। ଆପଣ ସାର୍ବଜନୀନ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଏହା ବ୍ୟକ୍ତିଗତ ରହେ।"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Ideas: {ideas}"
+msgstr "ଧାରଣା: {ideas}"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "It was unlinked from the idea."
+msgstr "ଏହା ଧାରଣାରୁ ଅଲଗା କରାଗଲା।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Its ideas, votes, replies and stage history are deleted with it."
+msgstr "ଏହାର ଧାରଣା, ଭୋଟ୍, ଉତ୍ତର ଓ ପର୍ଯ୍ୟାୟର ଇତିହାସ ମଧ୍ୟ ଏହା ସହ ଡିଲିଟ୍ ହୁଏ।"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link this feedback to an idea…"
+msgstr "ଏହି ମତାମତକୁ କୌଣସି ଧାରଣା ସହ ଲିଙ୍କ କରନ୍ତୁ…"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Link to an idea"
+msgstr "କୌଣସି ଧାରଣା ସହ ଲିଙ୍କ କରନ୍ତୁ"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback"
+msgstr "ଲିଙ୍କ ହୋଇଥିବା ମତାମତ"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Linked feedback set to {progress}: {set}"
+msgstr "ଲିଙ୍କ ହୋଇଥିବା ମତାମତ {progress} କୁ ସେଟ୍ ହେଲା: {set}"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Linked to {title}"
+msgstr "{title} ସହ ଲିଙ୍କ ହେଲା"
+
+#: src/features/roadmap/Board.tsx
+msgid "Load more"
+msgstr "ଆହୁରି ଲୋଡ୍ କରନ୍ତୁ"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private"
+msgstr "ବ୍ୟକ୍ତିଗତ କରନ୍ତୁ"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make private ({publicKey})"
+msgstr "ବ୍ୟକ୍ତିଗତ କରନ୍ତୁ ({publicKey})"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public"
+msgstr "ସାର୍ବଜନୀନ କରନ୍ତୁ"
+
+#: src/features/roadmap/pages.tsx
+msgid "Make public ({publicKey})"
+msgstr "ସାର୍ବଜନୀନ କରନ୍ତୁ ({publicKey})"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Markdown works."
+msgstr "Markdown କାମ କରେ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Moderated"
+msgstr "ମଡରେଟ୍ ହୋଇଛି"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move"
+msgstr "ନିଅନ୍ତୁ"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Move “{title}”"
+msgstr "“{title}” କୁ ନିଅନ୍ତୁ"
+
+#: src/features/roadmap/Board.tsx
+msgid "Move {title} to a stage"
+msgstr "{title} କୁ କୌଣସି ପର୍ଯ୍ୟାୟକୁ ନିଅନ୍ତୁ"
+
+#: src/features/roadmap/Board.tsx
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Move to a stage"
+msgstr "କୌଣସି ପର୍ଯ୍ୟାୟକୁ ନିଅନ୍ତୁ"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Moved to {stage}"
+msgstr "ଧାରଣା {stage} କୁ ନିଆଗଲା"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Name"
+msgstr "ନାମ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "New idea from this feedback"
+msgstr "ଏହି ମତାମତରୁ ନୂଆ ଧାରଣା"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No board yet. Owners and admins create it."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ବୋର୍ଡ ନାହିଁ। ମାଲିକ ଓ ଆଡମିନ୍‌ମାନେ ଏହାକୁ ତିଆରି କରନ୍ତି।"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ମତାମତ ଲିଙ୍କ ହୋଇନାହିଁ। ଗୋଟିଏ ମତାମତ ଖୋଲି “କୌଣସି ଧାରଣା ସହ ଲିଙ୍କ କରନ୍ତୁ” ବ୍ୟବହାର କରନ୍ତୁ।"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "No idea matches."
+msgstr "କୌଣସି ଧାରଣା ମେଳ ଖାଉନାହିଁ।"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "No inbox to show a board for."
+msgstr "ବୋର୍ଡ ଦେଖାଇବା ପାଇଁ କୌଣସି ଇନବକ୍ସ ନାହିଁ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "None"
+msgstr "କିଛି ନାହିଁ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Off"
+msgstr "ବନ୍ଦ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
+msgstr "ଚାଲୁ: ଠିକଣା ଜାଣିଥିବା ଯେକେହି ବୋର୍ଡ ପଢ଼ିପାରିବେ, ଏବଂ ସାଇନ୍ ଇନ୍ କରିଥିବା ପାଠକମାନେ ଭୋଟ୍ ଦିଅନ୍ତି ଓ ଧାରଣା ପ୍ରସ୍ତାବ କରନ୍ତି। ବନ୍ଦ: କେବଳ ଆପଣଙ୍କ ଦଳ ଏହାକୁ ଦେଖେ, ମତାମତ ଛାଣିବା ପାଇଁ ଏକ ଉପକରଣ ଭାବେ।"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
+msgstr "ଥରେ ଲେଖାଯାଇଥିବା ଗୋଟିଏ ଉତ୍ତର ଏହି ଧାରଣା ସହ ଲିଙ୍କ ହୋଇଥିବା ପ୍ରତ୍ୟେକ ଖୋଲା ମତାମତ କଥୋପକଥନକୁ, ଆପଣଙ୍କ ନାମରେ, ପ୍ରତ୍ୟେକ କଥୋପକଥନର ନିଜ ଚ୍ୟାନେଲରେ ଯାଏ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open"
+msgstr "ଖୋଲନ୍ତୁ"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Open on the public board"
+msgstr "ସାର୍ବଜନୀନ ବୋର୍ଡରେ ଖୋଲନ୍ତୁ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Pick an idea of this inbox’s board"
+msgstr "ଏହି ଇନବକ୍ସର ବୋର୍ଡରୁ ଗୋଟିଏ ଧାରଣା ବାଛନ୍ତୁ"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Posted as your public reply on the idea. Markdown works."
+msgstr "ଧାରଣା ଉପରେ ଆପଣଙ୍କ ସାର୍ବଜନୀନ ଉତ୍ତର ଭାବେ ପୋଷ୍ଟ ହୁଏ। Markdown କାମ କରେ।"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Private"
+msgstr "ବ୍ୟକ୍ତିଗତ"
+
+#: src/features/roadmap/pages.tsx
+msgid "Private, only your team sees it"
+msgstr "ବ୍ୟକ୍ତିଗତ, କେବଳ ଆପଣଙ୍କ ଦଳ ଦେଖେ"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "Public"
+msgstr "ସାର୍ବଜନୀନ"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Public page"
+msgstr "ସାର୍ବଜନୀନ ପୃଷ୍ଠା"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Readers cannot suggest ideas. Votes and replies still work."
+msgstr "ପାଠକମାନେ ଧାରଣା ପ୍ରସ୍ତାବ କରିପାରିବେ ନାହିଁ। ଭୋଟ୍ ଓ ଉତ୍ତର ତଥାପି କାମ କରେ।"
+
+#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap"
+msgstr "ରୋଡମ୍ୟାପ୍"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Roadmap boards"
+msgstr "ରୋଡମ୍ୟାପ୍ ବୋର୍ଡ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Saved"
+msgstr "ସେଭ୍ ହେଲା"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Search ideas"
+msgstr "ଧାରଣା ଖୋଜନ୍ତୁ"
+
+#: src/features/roadmap/pages.tsx
+msgid "Settings"
+msgstr "ସେଟିଂସ୍"
+
+#: src/features/roadmap/pages.tsx
+msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
+msgstr "ଆପଣ କ’ଣ ତିଆରି କରୁଛନ୍ତି ତାହା ଗ୍ରାହକମାନଙ୍କୁ ଦେଖାନ୍ତୁ, ଏବଂ ପ୍ରତ୍ୟେକ ଧାରଣା ପଛର ମତାମତ ଲିଙ୍କ କରନ୍ତୁ। ଧାରଣାଗୁଡ଼ିକୁ ପର୍ଯ୍ୟାୟରେ ସଜାଇବା ପାଇଁ ଗୋଟିଏ ଇନବକ୍ସର ବୋର୍ଡ ବାଛନ୍ତୁ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Shown under the name on the public board."
+msgstr "ସାର୍ବଜନୀନ ବୋର୍ଡରେ ନାମ ତଳେ ଦେଖାଯାଏ।"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Stage"
+msgstr "ପର୍ଯ୍ୟାୟ"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "Stage history"
+msgstr "ପର୍ଯ୍ୟାୟର ଇତିହାସ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Start the idea"
+msgstr "ଧାରଣା ଆରମ୍ଭ କରନ୍ତୁ"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Starts an idea in the Ideas stage and links this feedback to it. Nothing of the feedback is shown except the text below."
+msgstr "“ଧାରଣା” ପର୍ଯ୍ୟାୟରେ ଗୋଟିଏ ଧାରଣା ଆରମ୍ଭ କରି ଏହି ମତାମତକୁ ତାହା ସହ ଲିଙ୍କ କରେ। ମତାମତରୁ କେବଳ ତଳର ଲେଖା ଦେଖାଯାଏ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Suggestions from readers"
+msgstr "ପାଠକଙ୍କ ପରାମର୍ଶ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The address answers “not found” until you make the board public."
+msgstr "ଆପଣ ବୋର୍ଡକୁ ସାର୍ବଜନୀନ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଠିକଣା “ମିଳିଲା ନାହିଁ” ବୋଲି ଉତ୍ତର ଦିଏ।"
+
+#: src/features/roadmap/Settings.tsx
+msgid "The board is at {address}. The old address keeps redirecting if you change it."
+msgstr "ବୋର୍ଡ {address} ରେ ଅଛି। ଆପଣ ବଦଳାଇଲେ ମଧ୍ୟ ପୁରୁଣା ଠିକଣା ରିଡାଇରେକ୍ଟ କରୁଥାଏ।"
+
+#: src/features/roadmap/IdeaPane.tsx
+msgid "The idea has not been moved yet."
+msgstr "ଧାରଣାକୁ ଏପର୍ଯ୍ୟନ୍ତ ନିଆଯାଇ ନାହିଁ।"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The progress of the linked feedback does not change. Linked feedback: {linked}"
+msgstr "ଲିଙ୍କ ହୋଇଥିବା ମତାମତର ଅଗ୍ରଗତି ବଦଳେ ନାହିଁ। ଲିଙ୍କ ହୋଇଥିବା ମତାମତ: {linked}"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/Settings.tsx
+msgid "The public board embeds this chat, and ideas your team starts are filed on it."
+msgstr "ସାର୍ବଜନୀନ ବୋର୍ଡ ଏହି ଚାଟ୍ ଏମ୍ବେଡ୍ କରେ, ଏବଂ ଆପଣଙ୍କ ଦଳ ଆରମ୍ଭ କରିଥିବା ଧାରଣା ତାହାରେ ସଂରକ୍ଷିତ ହୁଏ।"
+
+#: src/features/roadmap/pages.tsx
+msgid "This board no longer exists or you cannot see it."
+msgstr "ଏହି ବୋର୍ଡ ଆଉ ନାହିଁ କିମ୍ବା ଆପଣ ଏହାକୁ ଦେଖିପାରିବେ ନାହିଁ।"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "This inbox has no roadmap board. Create one under Roadmap first."
+msgstr "ଏହି ଇନବକ୍ସର କୌଣସି ରୋଡମ୍ୟାପ୍ ବୋର୍ଡ ନାହିଁ। ପ୍ରଥମେ ରୋଡମ୍ୟାପ୍‌ରେ ଗୋଟିଏ ତିଆରି କରନ୍ତୁ।"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
+msgstr "ଏହି ଇନବକ୍ସର କୌଣସି ୱେବ୍ ଚାଟ୍ ଚ୍ୟାନେଲ୍ ନାହିଁ। ପ୍ରଥମେ ଗୋଟିଏ ଯୋଗ କରନ୍ତୁ, କାରଣ ସାର୍ବଜନୀନ ବୋର୍ଡ ତାହାକୁ ଏମ୍ବେଡ୍ କରେ।"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Title"
+msgstr "ଶୀର୍ଷକ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Use 3 to 48 letters, numbers and inner hyphens."
+msgstr "3 ରୁ 48 ଅକ୍ଷର, ଅଙ୍କ ଓ ଭିତରର ହାଇଫେନ ବ୍ୟବହାର କରନ୍ତୁ।"
+
+#: src/features/roadmap/pages.tsx
+msgid "View board"
+msgstr "ବୋର୍ଡ ଦେଖନ୍ତୁ"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Visibility"
+msgstr "ଦୃଶ୍ୟମାନତା"
+
+#: src/features/roadmap/Board.tsx
+msgid "Waiting for approval"
+msgstr "ଅନୁମୋଦନ ଅପେକ୍ଷାରେ"
+
+#: src/features/roadmap/RoadmapColumn.tsx
+msgid "Waiting for approval: {pending}"
+msgstr "ଅନୁମୋଦନ ଅପେକ୍ଷାରେ: {pending}"

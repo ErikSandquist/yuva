@@ -10,7 +10,7 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/messages",
       include: ["src"],
-      exclude: ["src/features/designs", "src/features/analytics", "src/features/help"],
+      exclude: ["src/features/designs", "src/features/analytics", "src/features/help", "src/features/roadmap"],
     },
     {
       path: "<rootDir>/src/locales/{locale}/analytics",
@@ -19,6 +19,10 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/help",
       include: ["src/features/help"],
+    },
+    {
+      path: "<rootDir>/src/locales/{locale}/roadmap",
+      include: ["src/features/roadmap"],
     },
     {
       path: "<rootDir>/src/locales/{locale}/designs",
