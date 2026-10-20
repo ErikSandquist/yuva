@@ -168,6 +168,8 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
 | `/s/{token}`, `/m/{token}`, `/c/{token}`, `/i/{token}` | people who receive list and broadcast mail | a token sealed under the master key; an image token |
 | `/status/{slug}`, `/client/v1/status/{slug}`, a verified status domain | anyone reading a published status page | none |
+| `/roadmap/{slug}` | anyone reading a public roadmap board | none |
+| `/changelog/{slug}` | anyone reading a published What's new feed | none |
 | `/ingress/heartbeat/{token}`, `/ingress/status/{token}` | host jobs and monitoring (heartbeats, Alertmanager, Grafana) | a monitor token |
 | `/v1/realtime`, `/client/v1/realtime` | panel, widget, SDKs | as above |
 
@@ -252,12 +254,18 @@ scoped API keys, and every key-authored message names its bot.
 | `analytics:read` | analytics properties, queries, realtime, goals, funnels, segments, annotations, health, exports (read) |
 | `analytics:write` | server-side analytics events (API keys only) |
 | `analytics:manage` | create, change and delete properties, keys, goals, funnels, shares, exports, data deletion |
+| `roadmap:read` | roadmap boards, stage history, linked counts |
+| `roadmap:write` | links between feedback and ideas, linked replies, board settings for keys |
+| `roadmap:stage` | move an idea's stage (never implied) |
+| `changelog:read` | What's new feeds and entries |
+| `changelog:write` | feeds, entries and translation drafts |
+| `changelog:publish` | publish, schedule, unpublish and delete published entries (never implied) |
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
 before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
-added to existing keys, and `broadcasts:send` and `status:manage` are never implied: a key made without
+added to existing keys, and `broadcasts:send`, `status:manage`, `roadmap:stage` and `changelog:publish` are never implied: a key made without
 naming its scopes holds every scope but those. `yuva api-key create` takes `--scope` (repeatable, default
-every scope but `broadcasts:send` and `status:manage`) and `--inbox` (repeatable).
+every scope but those four) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
 inboxes sees; it cannot hold `inboxes:manage`, `webhooks:manage`, `workspace:manage` or `migrations:manage` (refused when
@@ -770,8 +778,9 @@ inline thread inside a product's own panel.
   (`POST /client/v1/feedback` with the inbox's `feedback_categories`, files as multipart), Status
   (`inbox.status`, and the page JSON at `/client/v1/status/{slug}` with `inbox.status.slug`, which works on a custom domain too)
   and Get updates (`/client/v1/channels/{key}/lists` and `/subscriptions`). A tile appears only when
-  its API answers for the channel; a help center, a roadmap and a changelog have no client API yet and
-  have no tile.
+  its API answers for the channel; a help center has no client API yet and has no tile. The Roadmap tile
+  (`inbox.roadmap`, public boards only) and the What's new tile (`inbox.whats_new`, with an unread count) appear when
+  their APIs answer; `announce_updates` on the channel puts the update count on the launcher badge.
 
 - The server hosts the widget scripts itself at `/yuva.js`, `/yuva-chat.js` and `/yuva-docs.js` (cached
   five minutes, ETag). What a script loads on first use (the discussion thread, composer and preview of
@@ -848,7 +857,8 @@ secret keeps signing next to the new one for 24 hours.
 
 Events: `conversation.created`, `conversation.updated`, `conversation.rated`, `message.created`,
 `feedback.created`, `contact.updated`, `contact.deleted`, `subscription.created`, `subscription.updated`,
-`broadcast.updated`. Payloads follow Standard Webhooks: `{type, timestamp,
+`broadcast.updated`, `discussion.stage_changed`, `changelog.entry.published`,
+`changelog.entry.unpublished`, `changelog.entry.deleted`. Payloads follow Standard Webhooks: `{type, timestamp,
 workspace_id, inbox_id, data}`, with the conversation, message and contact in `data`; the contact
 carries `external_ids` (so the host maps it to its own user) and `online`. `contact.deleted`
 carries the external ids the contact had.
@@ -1270,7 +1280,8 @@ serve both.
 
 Discussions replace page questions and published answers. A documentation page gets a public
 discussion area like GitHub Discussions: threads, replies, votes, an accepted answer, followers.
-Private help stays private: page feedback, live chat and e-mail are unchanged. Decisions:
+Private help stays private: page feedback, live chat and e-mail are unchanged. A `kind` separates page
+threads (`page`) from roadmap ideas (`idea`, M21); page queries and counts see page threads only. Decisions:
 
 - **Model.** Discussions are not conversations: a conversation is one contact and the team,
   private; a discussion is public and has many authors. `discussions` (workspace, inbox, channel,
@@ -1450,7 +1461,8 @@ Decisions:
   a version for concurrent edits and up to 50 snapshots.
 - **Images** are uploaded (PNG, JPEG, GIF, WebP; never SVG), re-encoded without metadata at most 1,200 px
   wide (WebP stored as PNG or JPEG) and served publicly at `/i/{token}` with immutable caching and nothing
-  recorded per request: the one exception to "objects are never public".
+  recorded per request: the one exception to "objects are never public". What's new entries (M22) keep
+  their images too: the weekly cleanup skips images an entry or its draft refers to.
 - **Broadcasts.** A draft names the inbox, the e-mail channel, lists (up to 10) with attribute and
   language conditions, the design, subject and preheader. Scheduling runs a review (sender identity,
   sender ready, approval, merge fields, HTML under Gmail's clipping size, deliverability) and freezes the
@@ -2533,6 +2545,518 @@ and the searches that found nothing say which article to write next.
   decided with the analytics architect before the widget step.
 - **Not in M20.** Own domains for help centers, and importing help articles from Zendesk or Help
   Scout in "Moving to Yuva".
+
+### Roadmap board (M21)
+
+A workspace shows its customers what it is building and lets them say what they need: a roadmap board
+per inbox with ideas in stages, votes and suggestions from readers, and the feedback behind each idea.
+Being the support inbox is the point. A feedback about the same need is linked to the idea instead of
+being answered again. Moving the idea tells every linked customer where it stands, and when the idea
+ships, one reply reaches all of them on their own channel. An idea is a discussion of its own kind, so
+posts, votes, follows, moderation, reader accounts, rendering and notifications are the ones of M12.
+
+- **Concepts.** A *board* belongs to an inbox (one per inbox at most), is switched on by creating it,
+  and is `public` or not. A private board is a triage tool for the team only. An *idea* is a discussion
+  with `kind` `idea` and no page. It has a *stage*: `ideas`, `planned`, `in_progress`, `shipped` or
+  `closed`. A *link* ties one feedback conversation to one idea. An idea has many links, and a feedback
+  has at most one.
+- **Tables.** Every table carries `workspace_id`, with composite foreign keys `(workspace_id, x_id)`.
+  - `roadmap_boards` holds:
+    - `inbox_id` (unique per workspace) and `channel_id` (the chat channel of the inbox that the public
+      page embeds and member-made ideas are filed on; required)
+    - name, description, and `slug` (unique across the server, `a-z0-9-`, 3-48 characters, the reserved
+      words of status pages)
+    - `public` (default false), `suggestions` `off|moderated|open` (default `moderated`) and
+      `analytics_property_id`
+    - `changed_at`, moved by every change the public side shows except votes (the cache key)
+
+    `roadmap_board_slugs` keeps former slugs, which answer `301` as for status pages. Slug checks,
+    reserved words, availability and the redirect are the status pages' helper, made generic for status,
+    help and roadmap. The page's logo and accent colour are the inbox's `branding` (`logo_url`,
+    `color`), so there is no second place to keep them.
+  - `discussions` gains:
+    - `kind` (`page` default, `idea`) and `board_id`, which is set exactly when `kind = 'idea'` (FK to
+      the board, `ON DELETE CASCADE`, so deleting a board deletes its ideas)
+    - `stage`, which is set exactly when `kind = 'idea'`, and `stage_changed_at`
+    - `vote_count`, the opening post's votes, kept on the row in the vote's transaction because the board
+      sorts by it
+    - `search`, a `tsvector` generated from the title with the `simple` configuration (`İ`/`ı` folded)
+
+    `page` becomes nullable, with `CHECK ((kind = 'page') = (page IS NOT NULL))`. An index on
+    `(workspace_id, board_id, stage, vote_count DESC, id)` serves the board. Every existing page query
+    (docs pages, sites, summary, the client page list) adds `kind = 'page'`, so ideas never count as
+    documentation threads.
+  - `roadmap_idea_conversations`: `conversation_id`, `idea_id`, `linked_by_member_id`,
+    `linked_by_api_key_id` and `linked_at`, with primary key `(workspace_id, conversation_id)`, which
+    makes the link many to one. Both FKs cascade. It is shaped like `status_incident_conversations`.
+  - `roadmap_stage_changes`: idea, `from_stage`, `to_stage`, the member or key and the grant, `via`,
+    `progress_set` and `progress_skipped` counts, and time. It is the idea's history in the panel and the
+    "Planned on", "Shipped on" dates on the public page.
+  - `status_incident_replies` and `status_incident_reply_targets` are renamed `linked_replies` and
+    `linked_reply_targets`. `linked_replies.incident_id` becomes nullable next to a new `idea_id`, with
+    `CHECK (num_nonnulls(incident_id, idea_id) = 1)`. "Reply to linked" is one mechanism for incidents
+    and ideas, not two.
+  - `reader_notifications.kind` gains `stage`.
+- **Stages and progress.** Agents with access to the inbox move an idea's stage, and so do owners and
+  admins. A move is `POST /v1/discussions/{id}/stage` with `stage` and an optional `comment`, which is
+  posted as the member's published reply in the same transaction. The move writes a
+  `roadmap_stage_changes` row, moves `changed_at` and stores `discussion.stage_changed`.
+  - **Progress on linked feedback.** For `planned`, `in_progress`, `shipped` and `closed`, the move also
+    queues one `roadmap_progress` River job. It sets every linked feedback's progress: `planned` to
+    `planned`, `in_progress` to `in_progress`, `shipped` to `done` and `closed` to `wont_do`. A move back
+    to `ideas` changes no progress.
+  - **How the job runs.** It walks the links in batches of 500. Each conversation changes in its own
+    transaction through the same code as setting progress on the conversation update, so the timeline
+    gets a `feedback_progress` event (with `idea_id` in its data, shown as "via idea …"), the contact
+    sees the line, and `conversation.updated` goes to webhooks. Feedback that already has that progress,
+    and deleted conversations, are skipped and counted. Before each batch the job reads the idea's stage
+    again and stops when it no longer matches its change, so a newer move wins and two moves never
+    interleave. The job checks its caller again as "Reply to linked" does: a revoked key or grant, a
+    removed member or a lost scope sets nothing.
+  - **Later changes.** A member may still set a linked feedback's progress by hand. It holds until the
+    next move. Linking a feedback to an idea past `ideas` sets its progress at once, in the link's
+    transaction. Unlinking leaves progress as it is.
+  - **Votes and replies after the end.** `shipped` and `closed` ideas take no new votes
+    (`409 idea_closed`). Replies follow the lock rules of M12. Ideas have no accepted answer, and
+    `…/answer` answers `409 not_supported`.
+- **Linking and Reply to linked.**
+  - **Linking.** Only `feedback` conversations link (`409 not_feedback`), and only to an idea of a board
+    of the same inbox (`404` otherwise). A link replaces the feedback's previous link. An idea takes at
+    most 5,000 links (`422 too_many_links`, the incidents' limit and code).
+  - **Starting an idea from feedback.** `POST /v1/conversations/{id}/discussion` takes `kind: idea`. It
+    starts a published idea with the title and body the member writes and links the conversation. The
+    author rule of M12 applies: the contact when it is a known user, else the member. Nothing of the
+    feedback becomes public.
+  - **Reply to linked.** It is the incidents' mechanism, unchanged: one reply written once to every open
+    linked conversation, optionally resolving them, one job per conversation through the normal reply
+    path, with outcomes on `linked_reply_targets`. The River job kind becomes `linked_reply`, and a
+    worker for `status_reply` stays for one release so queued jobs finish. The job's required scope
+    follows the source: `status:manage` for incidents, `roadmap:write` for ideas, plus `messages:write`
+    (and `conversations:write` to close). When an idea moves to `shipped`, the panel offers "Reply to
+    linked" right away.
+- **Suggestions and votes.** These follow the discussion write rule. A reader token, an identity-token
+  contact session or a member writes. Anonymous visitors only read, and there are no anonymous votes.
+  - **Moderation.** A board's `suggestions` mode works as a channel's `discussions` mode does for page
+    threads. `moderated` (the default) holds a reader's idea as `pending` until one of their posts in the
+    workspace has been approved. `open` publishes at once. `off` takes no suggestions, but votes and
+    replies still work. Pending ideas sit in the existing moderation queue (`/v1/discussion-posts`,
+    `state=pending`, items carry `kind`), and spam marking is M12's.
+  - **Votes and following.** A vote is the existing vote on the idea's opening post. Voting follows the
+    idea.
+  - **Notifying followers.** A move to `planned`, `in_progress`, `shipped` or `closed` adds a `stage`
+    reader notification for every follower linked to a person. It queues the existing discussion
+    e-mail job, so the digest lists the stage change next to the replies, with the same delay,
+    unsubscribe and locale rules.
+  - **Reader tokens.** They are issued for a channel when it has discussions on, or when its inbox has a
+    public board. The origin must be one of the channel's, or `YUVA_PUBLIC_URL`, where the server's own
+    pages live, as `/client/v1` already counts it.
+- **Endpoints.** Tag `roadmap`.
+  - **Members.**
+    - Boards: `/v1/roadmap-boards`: list, create, get, update, delete, and `GET …/{id}/preview` (the
+      public page for a sandboxed frame).
+    - Ideas are discussions. `GET /v1/discussions` takes `kind` (default `page`, so existing callers see
+      no change), `board_id`, `stage`, `sort` (`votes`, `new`, `activity`) and `q` (the title search).
+      Members start ideas with `POST /v1/discussions` and `kind: idea`, and retitle, lock, hide and
+      delete them with the existing calls.
+    - Stages: `POST /v1/discussions/{id}/stage` and `GET /v1/discussions/{id}/stage-changes`.
+    - Links: `PUT` and `DELETE /v1/discussions/{id}/conversations/{conversationId}`. Linked feedback is
+      `GET /v1/conversations?idea_id=` with its filters, and `idea=none` lists feedback without one. A
+      `Conversation` carries `idea` (`id`, `title`, `stage`) when linked.
+    - Replies: `POST /v1/discussions/{id}/linked-replies` and `GET …/linked-replies/{replyId}`, the
+      incident schemas made shared (`LinkedReplyCreate`, `LinkedReply`, `LinkedReplyTarget`).
+  - **Client**, for `chat` keys:
+    - `GET /client/v1/channels/{channel_key}/roadmap` returns the board: name, description, URL,
+      `suggestions` and counts per public stage.
+    - The existing `GET …/discussions` and `…/discussions/{id}` take `kind=idea` with `stage`, `sort`
+      (`top`, `new`) and `q` instead of `page`.
+    - `POST /client/v1/discussions` takes `kind: idea` without `page_url`.
+    - Votes, replies, follows, edits and deletes are the existing calls.
+    - Answers: `404 roadmap_off` without a public board. `ClientInbox.roadmap` (`url`, `suggestions`) is
+      present only with a public board, and the Roadmap tile shows only then. `closed` ideas are left out
+      of public lists, while their own URL answers with the stage.
+- **Scopes and access.** `roadmap:read` (boards, stage history, linked counts), `roadmap:write`
+  (links, linked replies, board settings for keys) and `roadmap:stage` (moving a stage). Reading ideas
+  through `/v1/discussions` keeps `conversations:read`, and linking also needs it.
+  - **Which keys hold them.** The first two go to keys made after M21 without named scopes.
+    `roadmap:stage` is never implied and must be named, like `status:manage`. No existing key gains any.
+  - **Roles.** Board settings and deleting a board are for owners and admins. Agents with access to the
+    inbox link feedback, start ideas and move stages. Key inbox limits and OAuth narrowing apply as
+    everywhere, and a board or idea of another inbox answers `404`.
+- **Events and webhooks.** Ideas send the existing `discussion.created`, `.post_created` and `.updated`,
+  with `kind` and `stage` on the discussion. The new `discussion.stage_changed` (`{discussion, from, to,
+  linked}`) is a stored event for members who see the inbox and a webhook type. Links store no event, as
+  with incidents. Progress set by the job sends the usual `conversation.updated`. Board changes reach
+  `/v1/realtime` as `roadmap.board.updated` (not stored).
+- **Public page.** It is rendered by the server with `html/template` and needs no JavaScript. It uses the
+  style, fonts, CSP builder and cache of status and help pages.
+  - **Routes.** `/roadmap/{slug}` shows columns for Ideas, Planned, In progress and Shipped (the last 90
+    days, with "All shipped" at `?stage=shipped`). Ideas are sorted by votes, with title, excerpt, votes,
+    comment count and the stage date. `/roadmap/{slug}/ideas/{id}` shows the idea, its stage history and
+    its published replies, authors by display name and initials only.
+  - **Head tags.** Canonical link, Open Graph and JSON-LD `BreadcrumbList`.
+  - **Not found.** A private board, an unknown slug and a pending or hidden idea answer the plain `404`
+    text of status pages.
+  - **Voting and suggesting.** The page embeds `<yuva-chat>` on the board's channel. "Vote" and "Suggest
+    an idea" open its Roadmap app at that idea through the element's new `openApp("roadmap", {idea})`.
+    Without JavaScript the page reads complete and the buttons are absent.
+  - **Analytics.** With an `analytics_property_id` the page sends cookieless page views as status pages
+    do.
+  - **Later.** Own domains and a separate origin come later, with M20's.
+- **Rendering.** Idea bodies and replies are discussion posts: Markdown rendered by M12's goldmark and
+  sanitized by bluemonday's UGC policy into `body_html`. There is no second renderer. Titles are 3 to 200
+  characters and bodies up to 20,000, as for discussions.
+- **Search.** The title search serves the panel's "Link to idea" picker, the widget's "similar ideas"
+  while a reader types a suggestion, and MCP. It uses M20's query builder: normalized, 8 words, the last
+  one a prefix, parameters only, a 500 ms timeout.
+- **Caching.** It reuses the public pages' in-process cache, keyed on the board's `changed_at` with a
+  60-second TTL. Votes do not move `changed_at`, so a count may lag a minute. Pages are sent with
+  `public, max-age=60, stale-while-revalidate=300, stale-if-error=86400` and an `ETag`. Client JSON is
+  `public, max-age=60` without a session and `private, no-store` with one, as discussions are.
+- **Abuse limits.**
+  - Public pages: 120 a minute per address.
+  - Suggestions and replies: M12's 10 posts a minute and 60 an hour per author, and the client write
+    limits per address and channel.
+  - Moderation queue: at most 200 pending ideas per board, beyond which `429 suggestions_full` is sent
+    with `Retry-After`.
+  - Votes: 120 an hour per author.
+  - Search: 30 a minute per address and channel, queries at most 200 characters.
+  - Links: at most 5,000 per idea.
+  - `YUVA_ROADMAP_MAX_IDEAS` caps ideas per workspace (unset: 2,000 with `YUVA_SIGNUP=open`, else no
+    limit).
+  - `YUVA_ROADMAP=off` removes the feature: its routes answer `404` and the client inbox has no
+    `roadmap`.
+- **Languages.**
+  - Ideas are written by readers in any language and are not translated.
+  - Stage names and page words come from the server's page word map shared with help pages, complete in
+    en, tr and de with English as fallback. `?lang=` and the locale rules are those of status pages.
+  - The panel's roadmap screens have their own Lingui catalog, `roadmap`, in every panel language.
+  - The widget's Roadmap app uses the `apps` catalog.
+- **Panel.**
+  - **Navigation.** A Roadmap entry in the rail (`/roadmap`, shortcut `g r`) follows the inbox filter:
+    each visible inbox's board, or "Create board" for owners and admins.
+  - **The board.** It opens as columns per stage. Cards show votes, linked feedback count and the
+    pending mark. Dragging a card or using its stage select moves the stage, after a confirmation that
+    names how many linked feedback get which progress. A pending strip lists suggestions waiting for
+    approval.
+  - **An idea.** It opens beside the board with the discussion thread (the Docs thread pane, reused), its
+    stage history, its linked feedback (the incidents' linked list and "Reply to linked" dialog, made
+    generic) and, after a move to `shipped`, the "Reply to linked" offer.
+  - **On feedback.** The feedback header gets "Link to idea" (search the inbox's board, or "New idea
+    from this feedback"). The feedback row shows the idea as a chip.
+  - **Settings.** Owners and admins see Settings: public, suggestions, channel, slug, name, description,
+    analytics property and delete.
+  - **Live updates.** The board refreshes on `discussion.*` and `roadmap.board.updated`.
+- **Widget.** Home gets a Roadmap tile when `inbox.roadmap` is present. The Roadmap app is in the apps
+  chunk: tabs by stage, ideas by top votes, the idea view with its body, votes and replies, and "Suggest
+  an idea" with similar ideas while typing.
+  - **Signing in.** An identity-token session votes and suggests at once. An anonymous visitor who votes
+    or suggests gets the reader sign-in popup (`client/reader.ts`, as `<yuva-discussions>` uses).
+  - **After suggesting.** A pending idea shows "Waiting for approval" to its author.
+  - **Reuse.** The thread rendering and composer are the docs ones, imported into the apps chunk; the
+    check reports the gzip size.
+- **shadcn.** Items on the discussion hooks:
+  - `use-yuva-roadmap` wraps `use-yuva-discussions` with `kind=idea`, stage and sort.
+  - `yuva-roadmap` shows stage tabs and the list.
+  - `yuva-idea` shows the detail with vote, built on `yuva-discussion-thread` and
+    `yuva-discussion-composer`.
+  - `yuva-idea-suggest` is the suggest form with similar ideas.
+  - Each item lists its registry dependencies instead of copying them.
+- **MCP.** Yuva's own shapes. Idea titles and bodies and comment text go under `customer_content`,
+  because readers write them.
+  - `list_roadmap_ideas` (board, stage, `q`, sort) and `get_roadmap_idea` (votes, stage history, linked
+    feedback count, and how many linked feedback a move to each stage would change) are read-only with
+    `conversations:read` and `roadmap:read`.
+  - `link_feedback_to_idea` and `unlink_feedback_from_idea` need `roadmap:write` and
+    `conversations:read`, and carry `idempotentHint`.
+  - `move_idea_stage` is listed only to principals holding the named `roadmap:stage`. It carries
+    `openWorldHint` (customers see the progress) and needs `confirm_linked` equal to the count
+    `get_roadmap_idea` showed for that stage; otherwise it answers `409 confirm_mismatch`.
+  - Resource `yuva://roadmap/{board_id}`.
+  - Prompt `link_feedback_to_ideas`: it lists feedback with category `idea` and `idea=none`, searches
+    the board and proposes links. It changes nothing until the person agrees, and it never moves a
+    stage.
+  - No tool creates, edits or moderates ideas, and none sends "Reply to linked".
+- **Elsewhere in this document.** Add `roadmap:read`, `roadmap:write` and `roadmap:stage` to the scopes
+  table and the "never implied" sentence. Add `discussion.stage_changed` to the webhook events. In
+  "Live chat", replace "a roadmap … have no client API yet" with the Roadmap tile. Add `/roadmap/{slug}`
+  to the API surfaces table. In "Discussions (M12)", say that `kind` separates page threads from ideas.
+- **Not in M21.** Merging duplicate ideas, a `<yuva-roadmap>` web component, the roadmap in the Swift and
+  Kotlin SDKs, own domains, and private boards visible to signed-in customers.
+- **Order of work.**
+  Each step is one agent. Changes to the contract, the migration and permissions go through
+  `/code-review` before commit.
+
+  1. **yuva-api, contract.** Add the `roadmap` tag, the board schemas, `kind`, `stage`, `board_id`,
+     `vote_count` and `idea` on `Discussion` and `Conversation`, the `kind` and `stage` params, the stage
+     and link operations, and the shared `LinkedReply*` schemas (incident operations pointed at them).
+     Also `ClientInbox.roadmap`, the client board operation, the three scopes, `discussion.stage_changed`
+     and `ConversationCreateDiscussion.kind`. Check: the redocly lint command.
+  2. **yuva-api, model and API.**
+     - The migration: discussions columns and checks, the board tables, links and stage changes, the
+       rename to `linked_replies` with `idea_id`, and the `stage` notification kind.
+     - `kind = 'page'` on every page query, and the sqlc queries.
+     - The board and idea handlers, stage moves with the `roadmap_progress` job, links, the generic
+       linked-reply job with the `status_reply` alias, the reader-token rule, and the client operations.
+     - Events, webhooks and limits.
+     - Tests for: progress mapping and supersession, the many-to-one link, scope checks with
+       `roadmap:stage` never implied, page queries without ideas, and incidents' "Reply to linked"
+       unchanged.
+
+     Check: in `api/`, `go generate ./... && go vet ./... && go test ./... && go build ./...` with
+     `YUVA_TEST_DATABASE_URL`, then `sdk/go`'s check.
+  3. **yuva-api, public page and MCP.** `/roadmap/{slug}` and the idea page with the shared page shell,
+     words in en, tr and de, cache, rate limit and the slug helper made generic. Then the MCP tools,
+     resource and prompt. Check: as step 2.
+  4. **yuva-panel.** The Roadmap rail entry, board columns, idea pane, Settings, "Link to idea" in the
+     feedback header and the row chip, the generic linked list and "Reply to linked" dialog shared with
+     status, and the `roadmap` catalog. Check: in `web/`,
+     `npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build`.
+  5. **yuva-widget.** The Roadmap tile and app in the apps chunk, `openApp` on `<yuva-chat>`, the reader
+     popup for votes and suggestions, and the four shadcn items. Check: in `sdk/js/`,
+     `bun run check && bun run build`; in `sdk/shadcn/`, `bun run check`; `examples/shadcn-next`
+     `npx next build`.
+  6. **yuva-docs.** A roadmap guide in en, tr and de (board, stages and progress, linking, "Reply to
+     linked", the widget and shadcn items, MCP) and README lines. Check: links resolve, and every
+     documented endpoint exists in `openapi/`.
+
+### What's new (M22)
+
+A workspace tells its customers what changed: a What's new feed per inbox of short entries labelled New,
+Improved or Fixed, shown in the widget's Home with an unread count, on a public page, in an Atom feed,
+and, when the team chooses, mailed to its subscribers as a broadcast. Being the support inbox is the
+point. A customer sees that the bug they reported is fixed where they would have asked about it. The
+mail goes out through the broadcast flow the workspace already trusts, and nothing new sends mail.
+Entries are their own table, not help articles. They are dated, labelled and scheduled, and they never
+appear in help search. Writing, rendering and translating are M20's.
+
+- **Concepts.** A *changelog* belongs to an inbox (one per inbox at most) and has a public slug, the
+  locales it publishes and `published`. An *entry* has labels, an optional image, a state (`draft`,
+  `scheduled` or `published`), and one *translation* per locale. A translation has a working draft and,
+  once published, a frozen published copy, as help articles have. *Unread* is kept in the visitor's
+  browser only.
+- **Tables.** Every table carries `workspace_id`, with composite foreign keys `(workspace_id, x_id)`.
+  - `changelogs` holds:
+    - `inbox_id` (unique per workspace), name, description, and `slug` (unique across the server,
+      `a-z0-9-`, 3-48 characters, the reserved words of status pages)
+    - `default_locale` and `locales` (1-20)
+    - `agents_may_publish` (default false), `analytics_property_id` and `published`
+    - `changed_at`, moved by every change the public side shows (the cache key)
+
+    `changelog_slugs` keeps former slugs, which answer `301` through the slug helper status, help and
+    roadmap share. Logo and accent colour are the inbox's `branding`.
+  - `changelog_entries` holds:
+    - the changelog, a per-changelog `number` for URLs, and `labels` (a non-empty subset of `new`,
+      `improved`, `fixed`)
+    - `image_id` (an `email_images` row of the workspace, `ON DELETE SET NULL`)
+    - `state`, `publish_at` (set exactly when `scheduled`, at most 365 days ahead), `published_at` (the
+      date shown, the sort key and the unread mark) and `scheduled_by` (member or key)
+    - creator and timestamps
+
+    An index on `(workspace_id, changelog_id, published_at DESC, id)` covers published rows.
+  - `changelog_entry_translations` is keyed by `(entry, locale)`. Its fields follow
+    `help_article_translations`: a draft `title` (3-200), `body` (Markdown, 50,000 characters) and
+    `slug`; `version` (writes carry `base_version`, `409 version_conflict`); the `email_images` the draft
+    uses; the frozen `published_*` copy with `published_html` rendered once at publish and an excerpt
+    (300 characters of plain text); and `has_unpublished_changes`. There is no search vector and no
+    revision table: the draft and the published copy are the two versions.
+  - `broadcasts.changelog_entry_id` (nullable, `ON DELETE SET NULL`) records which broadcasts were made
+    from an entry.
+  - `chat_channels.announce_updates` (boolean, default false).
+  - `DeleteUnusedEmailImages` also keeps images referred to by an entry or a translation draft, so the
+    weekly cleanup never removes an entry's picture.
+- **Writing, publishing, scheduling.** Agents with access to the inbox write entries and translations.
+  - **Who publishes.** Publishing, scheduling, unpublishing and deleting a published entry are for owners
+    and admins, unless the changelog's `agents_may_publish` is on, which lets agents with inbox access do
+    them too, exactly as in M20. API keys holding the named `changelog:publish` publish (a release
+    pipeline posting its entry). MCP and OAuth tokens never publish or schedule, whatever the setting.
+  - **Publishing.** It needs a translation in the default locale. It freezes and renders every
+    translation that has a draft, sets `published_at` the first time, moves `changed_at`, signals the
+    inbox's contact connections (an `inbox.updated` through the hint status uses) and stores
+    `changelog.entry.published`. A translation added or edited later is published on its own with
+    `locale`. Republishing keeps the date.
+  - **Scheduling.** It sets `publish_at`. A River job at that time, plus a sweep every minute, publishes
+    with one conditional update (`scheduled` and `publish_at <= now` to `published`), so a duplicate job
+    does nothing. The job checks the scheduler again: a member who lost the right to publish, a revoked
+    key or a lost scope puts the entry back to `draft` with `schedule_failed`, which the panel shows.
+    Unscheduling returns it to `draft`.
+  - **Editor.** As in M20: the default-locale text beside the one being translated, outdated and missing
+    translations marked, and no translation model. A save needs `base_version`, and another member's open
+    editor gets the realtime-only "changed elsewhere" signal.
+- **Mail this to subscribers.** `POST /v1/changelogs/{id}/entries/{entryId}/broadcast` takes `locale`,
+  `list_ids` (1-10 lists of the inbox) and an optional `channel_id`. It is for owners, admins and keys
+  with `broadcasts:write` (`requireBroadcastWriter`), and only for a published entry
+  (`409 not_published`). It builds the draft from existing parts:
+  - **The design.** `documentFromTemplate` with `product-update` in the entry's locale (else English).
+    Then `title` gets the entry's title, `release` the labels and date in the locale, and `intro` and
+    the blocks after it the body. The body is rendered by the M20 renderer and mapped: `h2`/`h3` become
+    heading blocks, workspace images become image blocks, and paragraphs, lists and quotes become text
+    blocks through the design's own rich-text policy. A table or code block the policy cannot carry is
+    replaced by a line linking to the entry. `hero` becomes the entry's image or is removed. `f1`-`f4`
+    are removed. The `changelog` button links to the entry's public page.
+  - **The broadcast.** The existing `CreateBroadcast` with name "What's new: {title}", subject = title,
+    preheader = excerpt, the lists as audience and `changelog_entry_id`. `checkAudience` refuses status
+    lists as for any broadcast.
+  - **What follows.** The answer is the broadcast, and the panel opens it in the broadcast composer.
+    Review, test sends, consent, unsubscribe, approval, pace and sending are M13's, unchanged. Nothing
+    is scheduled by this call, and MCP never makes it.
+- **Endpoints.** Tag `changelog`.
+  - **Members**, under `/v1/changelogs`:
+    - Changelogs: list, create, update, delete, and a preview rendered for a sandboxed frame.
+    - Entries: list with filters for state `draft`, `scheduled`, `published` or `changed`, and for
+      `label` and `locale`; create, update (labels, image) and delete.
+    - Translations: `PUT` and `DELETE`, with `base_version`.
+    - Actions: `publish` (optional `locale`), `schedule` (`publish_at`), `unschedule`, `unpublish`, and
+      the broadcast call above.
+    - Editor support: image upload into `email_images` (same rules and size cap, through
+      `storeEmailImage`) and the Markdown render for the editor, which is M20's. If M20 ships it under a
+      help-center path, step 1 moves it to `POST /v1/markdown/render` for both.
+  - **Client**, for `chat` and `app` keys, under `/client/v1/channels/{channel_key}/whats-new`:
+    - The changelog (name, URL, locales) with published entries newest first: number, title, excerpt,
+      `html`, labels, image URL and size, `published_at`, URL, and the locale actually served (falling
+      back to the default). Cursor-paged.
+    - `…/whats-new/{entryId}` for one entry.
+  - **Client rules.**
+    - Browsers need an allowed origin, and nothing creates a contact.
+    - Without a published changelog the answer is `404 whats_new_off`.
+    - `ClientInbox.whats_new` (`url`, `locales`, `default_locale`, `latest_published_at`) is present only
+      with a published changelog that has an entry. The tile shows only then.
+    - `ClientChatSettings.announce_updates` carries the channel setting.
+    - There are no client writes.
+- **Scopes and access.** `changelog:read`, `changelog:write` and `changelog:publish` are API key scopes.
+  The first two go to keys made after M22 without named scopes. `changelog:publish` is not implied and
+  must be named, and the consent page never offers it, since tokens cannot publish. No existing key gains
+  any. "Mail this to subscribers" also needs `broadcasts:write` and `lists:read`. Key inbox limits and
+  OAuth narrowing apply as everywhere, and a changelog of another inbox answers `404`.
+- **Events and webhooks.** `changelog.entry.published` (also when a schedule fires, and on republish),
+  `changelog.entry.unpublished` and `changelog.entry.deleted` are stored events for members who see the
+  inbox, and webhook types, with `{changelog, entry}` as data. Draft saves reach `/v1/realtime` only.
+- **Public page and feed.** They are rendered by the server with `html/template` and need no JavaScript.
+  They use the style, fonts, CSP builder and cache of status and help pages.
+  - **Routes.** `/changelog/{slug}` redirects to `/{default_locale}/`. Then:
+    - `/{locale}/`: entries newest first, `?label=` and `?before=` for paging
+    - `/{locale}/entries/{number}-{slug}`
+    - `/{locale}/feed.atom`: the newest 50 published entries in that locale, each with its
+      `published_html` as `content type="html"`, its labels as categories and `updated` from its last
+      publish, through the Atom writer of status pages made shared
+    - `/sitemap.xml`
+  - **URLs.** A wrong entry slug answers `301` to the canonical one. There is no `Accept-Language`
+    redirect.
+  - **Head tags.** `hreflang` alternates for published translations, a canonical link, Open Graph (with
+    the entry's image) and JSON-LD `BlogPosting` and `BreadcrumbList`.
+  - **Not found.** An unpublished changelog, a draft or scheduled entry and an unknown locale answer the
+    plain `404` text of status pages.
+  - **Analytics.** With an `analytics_property_id` the pages send cookieless page views as status and
+    help pages do.
+  - **Later.** Own domains come with M20's.
+- **Rendering.** M20's one goldmark instance for members' content and its bluemonday policy: images only
+  from this server's `/i/{token}` of the same workspace, raw HTML dropped, rendered once at publish and
+  stored. The entry image is served from `/i/{token}` with its immutable cache.
+- **Unread and the badge.**
+  - **Where the mark lives.** The widget keeps `whats_new_seen` (the newest `published_at` the visitor
+    opened) in its stored state per channel (`readStored`/`writeStored`, localStorage keyed by channel
+    key). Anonymous visitors get unread state too, and the server stores nothing.
+  - **Counting.** Without a mark, entries older than 30 days count as read. Unread is the number of
+    entries newer than the mark, shown up to "9+". The widget fetches the list only when
+    `latest_published_at` is newer than the mark.
+  - **Clearing.** Opening the app marks everything shown as seen.
+  - **Live updates.** A publish reaches open widgets through `inbox.updated`.
+  - **The badge.** The Home tile always shows the count. The launcher badge shows it only when the
+    channel's `announce_updates` is on, and only while there are no unread messages. Messages keep the
+    badge, and the update count has its own accessible label ("N updates").
+- **Caching.**
+  - In-process: the public pages' cache per changelog, view, locale, label and cursor, keyed on
+    `changed_at` with a 5-minute TTL and the shared entry cap.
+  - Pages and the feed: `public, max-age=60, stale-while-revalidate=300, stale-if-error=86400` with an
+    `ETag`.
+  - Client JSON: `public, max-age=60`. Because the client side has no sessions or writes, every answer
+    is cacheable.
+- **Abuse limits.**
+  - Public pages and feeds: 120 a minute per address.
+  - Client reads: 120 a minute per address and channel, and 2,400 a minute per changelog (`429` with
+    `Retry-After`).
+  - The editor preview and render: 60 a minute per caller.
+  - Image uploads: the `email_images` rules.
+  - Scheduling: at most 50 scheduled entries per changelog.
+  - "Mail this to subscribers": counts as a broadcast draft, inside M13's hosted limits.
+  - `YUVA_CHANGELOG_MAX_ENTRIES` caps entries per workspace (unset: 1,000 with `YUVA_SIGNUP=open`, else
+    no limit).
+  - `YUVA_WHATS_NEW=off` removes the feature: its routes answer `404` and the client inbox has no
+    `whats_new`.
+- **Languages.** Translations exist only in the changelog's locales, following M20's pattern. The widget
+  picks its locale from `locales` (exact, then base language, else the default), and a page uses the
+  locale in its path. Labels and page words come from the server's page word map shared with help pages,
+  complete in en, tr and de with English as fallback. The panel's screens have their own Lingui catalog,
+  `changelog`, in every panel language. The widget's app uses the `apps` catalog. The broadcast takes
+  the template's words in the entry's locale.
+- **Panel.**
+  - **Navigation.** A What's new entry in the rail (`/whats-new`, shortcut `g w`) follows the inbox
+    filter: each visible inbox's changelog, or "Create" for owners and admins.
+  - **The list.** Entries with state, labels, date and translation marks.
+  - **The editor.** M20's Markdown editor and side-by-side translation, the label chips, an image picker
+    over `email_images`, and Publish, Schedule, Unpublish for those allowed. Others see "A member who
+    may publish does it".
+  - **Mailing.** "Mail this to subscribers" for owners and admins on a published entry: a dialog picking
+    lists (the inbox's lists of kind `list`), channel and locale, which then opens the broadcast. The
+    entry lists its broadcasts and their states.
+  - **Settings.** Owners and admins see Settings. The chat channel page gets the `announce_updates`
+    switch.
+  - **Live updates.** Lists refresh on `changelog.*`.
+- **Widget.** Home gets a What's new tile with the unread count when `inbox.whats_new` is present. The
+  app is in the apps chunk: entries newest first with label chips, date, image and body, and a link to
+  the public page. There are no shadcn items or SDK screens in M22. `useyuva`'s client gets
+  `whatsNew()` so React sites can build their own.
+- **MCP.** Yuva's own shapes. Entry text written by members is not `customer_content`.
+  - `list_whats_new_entries` and `get_whats_new_entry` are read-only with `changelog:read`.
+  - `draft_whats_new_entry` (title, body, labels, `locale`) and `update_whats_new_draft`
+    (`base_version`, `locale` for a translation draft) need `changelog:write`. Their result says a
+    member publishes it in Yuva.
+  - Resource `yuva://changelog/{id}`, and prompt `draft_release_notes` (from the commit subjects or
+    notes the person gives, never fetched by Yuva).
+  - No tool publishes, schedules, unpublishes or mails an entry.
+- **Elsewhere in this document.** Add `changelog:read`, `changelog:write` and `changelog:publish` to the
+  scopes table and the "never implied" sentence. Add the three `changelog.entry.*` types to the webhook
+  events. In "Live chat", replace "a changelog … no client API yet" with the What's new tile and add
+  `announce_updates` to the chat channel settings. Add `/changelog/{slug}` to the API surfaces table.
+  Under "Images", say entries keep their images.
+- **Not in M22.** Reactions or comments on entries, per-contact read state on the server, linking entries
+  to shipped ideas, What's new screens in the Swift and Kotlin SDKs, own domains, and mailing without the
+  broadcast composer.
+- **Order of work.**
+  M22 starts after M20's API step, whose renderer, translation and editor code it reuses. Changes to the
+  contract, the migration and permissions go through `/code-review` before commit.
+
+  1. **yuva-api, contract.** Add the `changelog` tag, the changelog, entry and translation schemas and
+     operations, the broadcast-from-entry operation, `ClientInbox.whats_new`, the client operations,
+     `announce_updates` on chat channel settings (member and client), `Broadcast.changelog_entry_id`, the
+     three scopes and the three event types. Move the Markdown render to `/v1/markdown/render` if needed.
+     Check: the redocly lint command.
+  2. **yuva-api, model, API and mail.**
+     - The migration and queries, including the image cleanup that keeps entry images.
+     - The handlers with the M20 publish rules, the schedule job and sweep, and the client operations with
+       the cache.
+     - The Markdown-to-design mapping on `documentFromTemplate`, and the broadcast call through
+       `CreateBroadcast`.
+     - Events, webhooks, limits and the `inbox.updated` hint.
+     - Tests for: the scheduled publish being idempotent and checking the scheduler again, tokens never
+       publishing, the mapping keeping only policy-allowed HTML and the design passing `design.Validate`,
+       and the image cleanup.
+
+     Check: in `api/`, `go generate ./... && go vet ./... && go test ./... && go build ./...` with
+     `YUVA_TEST_DATABASE_URL`, then `sdk/go`'s check. The generated broadcast is also rendered to Mailpit
+     and checked with its html-check.
+  3. **yuva-api, public pages, feed and MCP.** The pages and Atom feed with the shared shell, word map,
+     cache and rate limit, and the Atom writer shared with status. Then the MCP tools, resource and prompt.
+     Check: as step 2.
+  4. **yuva-panel.** The What's new rail entry, list, editor (M20's components), Settings, the "Mail this
+     to subscribers" dialog into the broadcast composer, the `announce_updates` switch, and the `changelog`
+     catalog. Check: in `web/`,
+     `npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build`.
+  5. **yuva-widget.** The What's new tile and app in the apps chunk, unread state in the stored channel
+     state, the launcher badge behind `announce_updates`, and `whatsNew()` on the client. Check: in
+     `sdk/js/`, `bun run check && bun run build`.
+  6. **yuva-docs.** A What's new guide in en, tr and de (writing and translating, scheduling, the widget
+     and badge, the feed, mailing an entry through broadcasts, MCP) and README lines. Check: links resolve,
+     and every documented endpoint exists in `openapi/`.
 
 ### Storage
 

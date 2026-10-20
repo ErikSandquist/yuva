@@ -427,3 +427,66 @@ conversation, and the widget shows a card and the mail a link; a search with no 
 report the next minute without the visitor's address or any id; Claude Code drafts an article through
 MCP and cannot publish it; an agent of another inbox and another workspace see none of it in the
 panel, the API or MCP; 31 searches in a minute from one address get `429`.
+
+## M21 — Roadmap board
+
+Status: planned; issue #104, decisions in `architecture.md` › Roadmap board (M21).
+
+- One board per inbox, private or public. Ideas are discussions of kind `idea` in five stages (Ideas,
+  Planned, In progress, Shipped, Closed), with votes, replies and follows from reader accounts or
+  identity-token users, and suggestions moderated by default.
+- Feedback linked to ideas, many to one. A stage change sets the linked feedback's progress (planned,
+  in progress, done, won't do). "Reply to linked", shared with incidents, is offered when an idea ships.
+- Scopes `roadmap:read`, `roadmap:write` and `roadmap:stage` (never implied). `discussion.stage_changed`
+  as an event and webhook type. MCP tools that list ideas, link feedback and move a stage only with the
+  named scope and a confirmed count.
+- Panel: a Roadmap view with columns per stage and "Link to idea" on feedback. Widget: a Roadmap tile in
+  Home for public boards. shadcn items on the discussion hooks.
+- A public roadmap page rendered by the server at `/roadmap/{slug}`, with words in en, tr and de, cache
+  and rate limits.
+
+Accept: an owner creates a board for an inbox and makes it public. On a test page `<yuva-chat>` shows the
+Roadmap tile, and an anonymous visitor can browse the stages but cannot vote. They sign in with a reader
+account in the popup and suggest an idea, which waits for approval. A member approves it, and a second
+reader with an identity token votes for it at once. In the panel a member links three feedback
+conversations (two from the Swift and Kotlin samples, one page feedback) to the idea and moves it to
+Planned. The confirmation names three feedback, and each app shows Planned in its row and thread within
+a minute. A feedback whose progress a member set by hand afterwards keeps it until the next move. The
+member moves the idea to Shipped and each linked feedback shows Done. "Reply to linked" sends one reply
+that each contact gets on their own channel, and "Reply to linked" on an incident still works as before.
+The followers' digest e-mail says the idea shipped. Signed out, `/roadmap/{slug}` shows the idea under
+Shipped with its date, and a private board answers 404. Claude Code lists ideas and links a feedback
+through MCP. Without the named `roadmap:stage` it cannot move a stage, and with it, it moves one only
+with the confirmed count. A documentation page's discussion list and the Docs counts show no idea. An
+agent of another inbox and another workspace see none of it in the panel, the API or MCP. A 201st
+pending suggestion on one board gets `429`.
+
+## M22 — What's new
+
+Status: planned; issue #105, decisions in `architecture.md` › What's new (M22).
+
+- A What's new feed per inbox. Entries in its own table, written in Markdown in the panel, with labels
+  (New, Improved, Fixed), an optional image, drafts, scheduled publishing and translations per locale.
+  Scopes `changelog:read`, `changelog:write` and `changelog:publish`. Owners and admins publish, or
+  agents with `agents_may_publish`. Events and webhook types. MCP tools that draft and never publish.
+- A What's new tile in the widget's Home with an unread count kept in the visitor's browser per channel.
+  A launcher badge only with the channel setting `announce_updates`.
+- Public pages rendered by the server at `/changelog/{slug}`, with an Atom feed per locale, hreflang,
+  a sitemap, words in en, tr and de, cache and rate limits.
+- "Mail this to subscribers": a broadcast draft from the entry on the product-update template for chosen
+  lists, reviewed and sent by the unchanged broadcast flow.
+
+Accept: an owner creates a What's new feed for an inbox. A member writes an entry in English labelled
+Fixed, with an image, and cannot publish it. An owner schedules it five minutes ahead and it publishes on
+time. A Turkish translation is added and published. Signed out, `/changelog/{slug}/en/` and `/tr/` show
+it with hreflang links, both Atom feeds carry it, and a draft entry answers 404. On a test page
+`<yuva-chat>` shows the What's new tile with 1 unread for an anonymous visitor, and no launcher badge.
+After `announce_updates` is turned on, the launcher shows the badge. Opening the entry clears both, a
+reload keeps them cleared, and a second browser still shows 1. Publishing another entry raises the count
+in the open widget without a reload. An owner mails the entry to a list: a broadcast draft opens in the
+composer from the product-update template with the entry's title, image and text. The review passes, a
+test lands in Mailpit, and the broadcast is sent and unsubscribed from exactly as any broadcast. A status
+list is not offered. Claude Code drafts an entry and a German translation through MCP and cannot publish
+or schedule it. A key with the named `changelog:publish` publishes one. An agent of another inbox and
+another workspace see none of it in the panel, the API or MCP. 121 page requests in a minute from one
+address get `429`.
