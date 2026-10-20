@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: mr\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "सर्व सिस्टम सुरू आहेत"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "जवळजवळ झाले. तुमचा इनबॉक्स तपासा आणि सदस्यत्वाची खात्री करा."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "फाइल्स जोडा"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "बग"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "किमान एक यादी निवडा."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "पूर्ण झाले"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "घटक"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "पाठवता आले नाही. पुन्हा प्रयत्न करा."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "सदस्यत्व घेता आले नाही. पुन्हा प्रयत्न करा."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "कामगिरी घटली आहे"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "झाले"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "बंद"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "ईमेल पत्ता"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "वैध ईमेल पत्ता टाका."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "घटनांची सूचना मिळवा"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "ईमेलवर अपडेट मिळवा"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "मला {inbox} कडून {list} बद्दल ईमेल मिळवायचे आहेत. मी केव्हाही सदस्यत्व रद्द करू शकतो."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "कल्पना"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "कारण ओळखले"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "सुरू आहे"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "घटना"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "तपास सुरू आहे"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "याद्या"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "लोड होत आहे…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "देखभाल"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "मोठा खंड"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "देखरेख सुरू आहे"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "कोणतीही खुली घटना नाही."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "ठीक"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "स्टेटस पेज उघडा"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "इतर"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "अंशतः"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "अंशतः खंड"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "प्रशंसा"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} काढा"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "सोडवले"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "नियोजित"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "अभिप्राय पाठवा"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "पाठवत आहे…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "संथ"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "सदस्यत्व घ्या"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "सदस्यत्व घेत आहे…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "स्क्रीनशॉट घ्या"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "आणखी सांगा"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "तुमच्या प्रतिक्रियेबद्दल धन्यवाद"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "धन्यवाद! तुम्ही सदस्य झाला आहात."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "फाइल खूप मोठी आहे."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "टीम प्रत्येक नोट वाचते. उत्तरे तुमच्या संदेशांमध्ये दिसतील."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "हा फाइल प्रकार स्वीकारला जात नाही."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "सहमत होण्यासाठी बॉक्सवर टिक करा."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "खूप प्रयत्न झाले. थोडा वेळ थांबा आणि पुन्हा प्रयत्न करा."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "अभिप्राय पहा"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "तुम्हाला काय आवडते?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "काय झाले आणि तुम्ही काय अपेक्षित केले होते?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "हे कशाबद्दल आहे?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "तुमच्यासाठी ते कशामुळे चांगले होईल?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "तुमच्या मनात काय आहे?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "तुम्ही ऑफलाइन असल्याचे दिसते."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

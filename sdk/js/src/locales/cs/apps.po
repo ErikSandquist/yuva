@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Všechny systémy fungují"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Skoro hotovo. Zkontrolujte doručenou poštu a potvrďte odběr."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Přiložit soubory"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Chyba"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Vyberte alespoň jeden seznam."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Dokončeno"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Součásti"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Odeslání se nezdařilo. Zkuste to znovu."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Přihlášení k odběru se nezdařilo. Zkuste to znovu."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Snížený výkon"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Hotovo"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Nefunguje"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "E-mailová adresa"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Zadejte platnou e-mailovou adresu."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Dostávat upozornění na incidenty"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Odebírat novinky e-mailem"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Chci dostávat e-maily o tématu {list} od {inbox}. Odběr mohu kdykoli zrušit."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Nápad"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Příčina nalezena"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Probíhá"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Incidenty"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "Zkoumáme"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Seznamy"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Načítání…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Údržba"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Velký výpadek"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Sledujeme"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Žádné otevřené incidenty."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Otevřít stránku stavu"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Jiné"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Částečně"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Částečný výpadek"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Pochvala"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "Odebrat {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Vyřešeno"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Naplánováno"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Odeslat zpětnou vazbu"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Odesílání…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Pomalé"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Odebírat"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Přihlašování k odběru…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Pořídit snímek obrazovky"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Řekněte nám víc"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Děkujeme za zpětnou vazbu"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Děkujeme! Odebíráte."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Soubor je příliš velký."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Tým čte každou zprávu. Odpovědi se zobrazí ve vašich zprávách."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Tento typ souboru není povolen."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Zaškrtnutím souhlasíte."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Příliš mnoho pokusů. Chvíli počkejte a zkuste to znovu."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Zobrazit zpětnou vazbu"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Co se vám líbí?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Co se stalo a co jste očekávali?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Čeho se to týká?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Co by to pro vás zlepšilo?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Co vás trápí?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Zdá se, že jste offline."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

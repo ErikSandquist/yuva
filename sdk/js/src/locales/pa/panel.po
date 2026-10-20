@@ -19,10 +19,18 @@ msgstr "{name} ਲਿਖ ਰਹੇ ਹਨ…"
 msgid "{name} joined the conversation"
 msgstr "{name} ਗੱਲਬਾਤ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਏ"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ਇੱਕ ਬੱਗ, ਇੱਕ ਵਿਚਾਰ, ਇੱਕ ਧੰਨਵਾਦ"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "ਸਾਰੀਆਂ ਗੱਲਬਾਤਾਂ"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "ਸਾਰੇ ਸਿਸਟਮ ਚੱਲ ਰਹੇ ਹਨ"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "ਗੱਲਬਾਤ ਬੰਦ ਹੋ ਗਈ"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "ਤੁਹਾਡਾ ਈਮੇਲ ਪਤਾ ਸੇਵ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "ਤੁਹਾਡੀ ਰੇਟਿੰਗ ਭੇਜੀ ਨਹੀਂ ਜਾ ਸਕੀ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "ਕਾਰਗੁਜ਼ਾਰੀ ਘਟੀ ਹੈ"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "ਇੱਕ ਸਹੀ ਈਮੇਲ ਪਤਾ ਦਰਜ ਕਰੋ।"
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "ਫੀਡਬੈਕ"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "ਅੱਪਡੇਟ ਪ੍ਰਾਪਤ ਕਰੋ"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "ਨਵੀਨਤਮ 'ਤੇ ਜਾਓ"
 msgid "Loading…"
 msgstr "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "ਸਾਂਭ-ਸੰਭਾਲ"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "ਵੱਡੀ ਰੁਕਾਵਟ"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "ਸੁਨੇਹਾ"
@@ -154,9 +186,17 @@ msgstr "ਸੁਨੇਹੇ"
 msgid "Monitoring"
 msgstr "ਨਿਗਰਾਨੀ ਜਾਰੀ ਹੈ"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "ਟੀਮ ਵੱਲੋਂ ਹੋਰ"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "ਨਵੀਂ ਗੱਲਬਾਤ"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ਈਮੇਲ ਰਾਹੀਂ ਖ਼ਬਰਾਂ"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "ਭੇਜਿਆ ਨਹੀਂ ਗਿਆ।"
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ਆਨਲਾਈਨ"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "ਅੰਸ਼ਕ ਰੁਕਾਵਟ"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "ਸਾਡੇ ਨਾਲ ਚੈਟ ਕਰਨ ਲਈ ਸਾਈਨ ਇਨ �
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "ਛੱਡੋ"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "ਸਥਿਤੀ"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

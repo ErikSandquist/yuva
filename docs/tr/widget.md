@@ -44,6 +44,13 @@ ve ziyaretçi yukarı kaydırdığında okunmamış sayısını gösteren "en so
 kutusu dosyaları, yapıştırılan görselleri ve tarayıcı izin veriyorsa sayfanın ekran görüntüsünü kabul
 eder.
 
+Ana ekran ayrıca aynı panelin içinde uygulamalar açar; her biri yalnızca kanalda ihtiyaç duyduğu
+şey varsa görünür ve ilk kullanımda yüklenir. **Geri bildirim** bir kategori, metin ve dosyaları
+ziyaretçinin mesajlarında bulacağı bir geri bildirim konuşması olarak gönderir. **Durum**, gelen
+kutusunun yayımlanmış durum sayfasını gösterir: genel durum, son 60 günüyle bileşenler, açık ve
+yakın zamanlı olaylar. **Güncellemeleri al** ziyaretçiyi gelen kutusunun herkese açık posta
+listelerine abone eder ve onay metnini gösterildiği haliyle gönderir.
+
 Kimse çevrimiçi değilse ve kanal e-posta adresi istiyorsa konuşma bir adres ister. Ziyaretçi adresi
 kaydedince konuşma onay bağlantısının gönderildiğini söyler (Adresi değiştir ve Tekrar gönder ile),
 adres geri döndüğünde ya da bağlantı 24 saat sonra geçersiz olduğunda yeniden adres ister, onaylanınca

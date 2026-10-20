@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: bn\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "সব সিস্টেম চালু আছে"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "প্রায় শেষ। আপনার ইনবক্স দেখুন এবং সাবস্ক্রিপশন নিশ্চিত করুন।"
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "ফাইল সংযুক্ত করুন"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "বাগ"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "কমপক্ষে একটি তালিকা বেছে নিন।"
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "সম্পন্ন"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "উপাদান"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "পাঠানো যায়নি। আবার চেষ্টা করুন।"
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "সাবস্ক্রাইব করা যায়নি। আবার চেষ্টা করুন।"
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "কার্যক্ষমতা কমেছে"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "সম্পন্ন"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "বন্ধ"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "ইমেইল ঠিকানা"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "একটি সঠিক ইমেইল ঠিকানা দিন।"
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "ঘটনার বিজ্ঞপ্তি পান"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "ইমেইলে আপডেট পান"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "আমি {inbox}-এর কাছ থেকে {list} সম্পর্কে ইমেইল পেতে চাই। আমি যেকোনো সময় আনসাবস্ক্রাইব করতে পারি।"
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "ধারণা"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "কারণ শনাক্ত হয়েছে"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "চলছে"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "ঘটনা"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "তদন্ত চলছে"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "তালিকা"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "লোড হচ্ছে…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "রক্ষণাবেক্ষণ"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "বড় বিভ্রাট"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "নজরদারি চলছে"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "কোনো খোলা ঘটনা নেই।"
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "ঠিক আছে"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "স্ট্যাটাস পেজ খুলুন"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "অন্যান্য"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "আংশিক"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "আংশিক বিভ্রাট"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "প্রশংসা"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} সরান"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "সমাধান হয়েছে"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "নির্ধারিত"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "মতামত পাঠান"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "পাঠানো হচ্ছে…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "ধীর"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "সাবস্ক্রাইব করুন"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "সাবস্ক্রাইব হচ্ছে…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "স্ক্রিনশট নিন"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "আরও জানান"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "আপনার মতামতের জন্য ধন্যবাদ"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "ধন্যবাদ! আপনি সাবস্ক্রাইব করেছেন।"
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "ফাইলটি অনেক বড়।"
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "টিম প্রতিটি নোট পড়ে। উত্তর আপনার বার্তায় দেখা যাবে।"
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "এই ধরনের ফাইল গ্রহণযোগ্য নয়।"
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "সম্মত হতে বাক্সে টিক দিন।"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "অনেকবার চেষ্টা করা হয়েছে। একটু অপেক্ষা করে আবার চেষ্টা করুন।"
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "মতামত দেখুন"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "আপনার কী ভালো লাগে?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "কী হয়েছিল এবং আপনি কী আশা করেছিলেন?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "বিষয়টি কী?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "কী হলে এটি আপনার জন্য আরও ভালো হবে?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "আপনার মনে কী আছে?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "মনে হচ্ছে আপনি অফলাইনে আছেন।"
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

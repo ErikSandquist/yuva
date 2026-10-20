@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "כל המערכות פועלות"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "כמעט סיימנו. בדקו את תיבת הדואר ואשרו את ההרשמה."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "צירוף קבצים"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "באג"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "בחרו לפחות רשימה אחת."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "הושלם"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "רכיבים"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "לא ניתן היה לשלוח. נסו שוב."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "ההרשמה נכשלה. נסו שוב."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "ביצועים ירודים"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "סיום"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "מושבת"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "כתובת אימייל"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "הזינו כתובת אימייל תקינה."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "קבלת התראות על תקלות"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "קבלת עדכונים במייל"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "אני רוצה לקבל אימיילים על {list} מאת {inbox}. אפשר לבטל את ההרשמה בכל עת."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "רעיון"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "הסיבה זוהתה"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "בתהליך"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "תקלות"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "בבדיקה"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "רשימות"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "טוען…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "תחזוקה"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "השבתה רחבה"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "במעקב"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "אין תקלות פתוחות."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "תקין"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "פתיחת דף הסטטוס"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "אחר"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "חלקי"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "השבתה חלקית"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "מחמאה"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "הסרת {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "נפתר"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "מתוזמן"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "שליחת משוב"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "שולח…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "איטי"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "הרשמה"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "נרשם…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "צילום מסך"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "ספרו לנו עוד"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "תודה על המשוב"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "תודה! נרשמתם."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "הקובץ גדול מדי."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "הצוות קורא כל הודעה. התשובות יופיעו בהודעות שלכם."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "סוג הקובץ הזה אינו מתקבל."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "סמנו את התיבה כדי להסכים."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "יותר מדי ניסיונות. המתינו רגע ונסו שוב."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "הצגת המשוב"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "מה אהבתם?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "מה קרה ומה ציפיתם שיקרה?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "במה מדובר?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "מה היה משפר את זה עבורכם?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "מה על הלב?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "נראה שאתם לא מחוברים לאינטרנט."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

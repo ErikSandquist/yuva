@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ta\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "அனைத்து அமைப்புகளும் இயங்குகின்றன"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "கிட்டத்தட்ட முடிந்தது. உங்கள் இன்பாக்ஸைப் பார்த்து சந்தாவை உறுதிசெய்யுங்கள்."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "கோப்புகளை இணை"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "பிழை"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "குறைந்தது ஒரு பட்டியலைத் தேர்ந்தெடுங்கள்."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "முடிந்தது"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "கூறுகள்"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "அனுப்ப முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "சந்தாதாரராக முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "செயல்திறன் குறைந்துள்ளது"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "முடிந்தது"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "இயங்கவில்லை"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "மின்னஞ்சல் முகவரி"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "சம்பவங்கள் பற்றிய அறிவிப்பைப் பெறுங்கள்"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "மின்னஞ்சலில் புதுப்பிப்புகளைப் பெறுங்கள்"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{inbox} இடமிருந்து {list} பற்றிய மின்னஞ்சல்களைப் பெற விரும்புகிறேன். எப்போது வேண்டுமானாலும் சந்தாவை ரத்துசெய்யலாம்."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "யோசனை"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "காரணம் கண்டறியப்பட்டது"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "நடைபெறுகிறது"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "சம்பவங்கள்"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "ஆராயப்படுகிறது"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "பட்டியல்கள்"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "ஏற்றுகிறது…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "பராமரிப்பு"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "பெரிய தடங்கல்"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "கண்காணிக்கப்படுகிறது"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "திறந்த சம்பவங்கள் இல்லை."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "சரி"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "நிலைப் பக்கத்தைத் திற"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "மற்றவை"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "பகுதி"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "பகுதி தடங்கல்"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "பாராட்டு"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} ஐ அகற்று"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "தீர்க்கப்பட்டது"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "திட்டமிடப்பட்டது"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "கருத்தை அனுப்பு"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "அனுப்புகிறது…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "மெதுவு"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "சந்தா செலுத்து"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "சந்தா ஆகிறது…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "திரைப்பிடிப்பு எடு"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "மேலும் சொல்லுங்கள்"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "உங்கள் கருத்துக்கு நன்றி"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "நன்றி! நீங்கள் சந்தாதாரராகிவிட்டீர்கள்."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "கோப்பு மிகப் பெரியது."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "குழு ஒவ்வொரு குறிப்பையும் படிக்கிறது. பதில்கள் உங்கள் செய்திகளில் தோன்றும்."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "இந்தக் கோப்பு வகை ஏற்கப்படாது."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "ஒப்புக்கொள்ள பெட்டியில் டிக் செய்யுங்கள்."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "மிக அதிக முயற்சிகள். சிறிது காத்திருந்து மீண்டும் முயலுங்கள்."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "கருத்தைக் காண்க"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "உங்களுக்கு என்ன பிடிக்கும்?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "என்ன நடந்தது, நீங்கள் என்ன எதிர்பார்த்தீர்கள்?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "இது எதைப் பற்றியது?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "இதை உங்களுக்கு எது சிறப்பாக்கும்?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "உங்கள் மனதில் என்ன இருக்கிறது?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

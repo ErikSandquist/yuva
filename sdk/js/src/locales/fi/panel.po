@@ -19,10 +19,18 @@ msgstr "{name} kirjoittaa…"
 msgid "{name} joined the conversation"
 msgstr "{name} liittyi keskusteluun"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Virhe, idea tai kiitos"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Kaikki keskustelut"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Kaikki järjestelmät toimivat"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Keskustelu suljettu"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Lataus epäonnistui. Yritä uudelleen."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Sähköpostiosoitettasi ei voitu tallentaa. Yritä uudelleen."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Arviotasi ei voitu lähettää. Yritä uudelleen."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Heikentynyt suorituskyky"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Anna kelvollinen sähköpostiosoite."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Palaute"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Tilaa päivitykset"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Siirry uusimpaan"
 msgid "Loading…"
 msgstr "Ladataan…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Huolto"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Laaja katkos"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Viesti"
@@ -154,9 +186,17 @@ msgstr "Viestit"
 msgid "Monitoring"
 msgstr "Seurannassa"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Lisää tiimiltä"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Uusi keskustelu"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Uutiset sähköpostiin"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Ei lähetetty."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Paikalla"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Osittainen katkos"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Kirjaudu sisään keskustellaksesi kanssamme."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Ohita"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Tila"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

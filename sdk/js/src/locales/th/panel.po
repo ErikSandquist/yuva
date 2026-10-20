@@ -19,10 +19,18 @@ msgstr "{name} กำลังพิมพ์…"
 msgid "{name} joined the conversation"
 msgstr "{name} เข้าร่วมการสนทนา"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "บั๊ก ไอเดีย หรือคำขอบคุณ"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "การสนทนาทั้งหมด"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "ทุกระบบทำงานปกติ"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "ปิดการสนทนาแล้ว"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "โหลดไม่สำเร็จ ลองอีกครั้ง"
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "ไม่สามารถบันทึกอีเมลของคุณได้ โปรดลองอีกครั้ง"
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "ไม่สามารถส่งคะแนนของคุณได้ โปรดลองอีกครั้ง"
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "ประสิทธิภาพลดลง"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "กรุณากรอกอีเมลที่ถูกต้อง"
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "ความคิดเห็น"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "รับข่าวสารอัปเดต"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "ไปที่ล่าสุด"
 msgid "Loading…"
 msgstr "กำลังโหลด…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "การบำรุงรักษา"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "ระบบขัดข้องรุนแรง"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "ข้อความ"
@@ -154,9 +186,17 @@ msgstr "ข้อความ"
 msgid "Monitoring"
 msgstr "กำลังเฝ้าติดตาม"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "เพิ่มเติมจากทีมงาน"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "การสนทนาใหม่"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ข่าวสารทางอีเมล"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "ยังไม่ได้ส่ง"
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ออนไลน์"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "ขัดข้องบางส่วน"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "ลงชื่อเข้าใช้เพื่อแชตกับ
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "ข้าม"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "สถานะ"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

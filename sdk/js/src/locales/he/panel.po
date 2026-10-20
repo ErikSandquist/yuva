@@ -19,10 +19,18 @@ msgstr "{name} מקליד…"
 msgid "{name} joined the conversation"
 msgstr "{name} הצטרף/ה לשיחה"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "באג, רעיון, תודה"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "כל השיחות"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "כל המערכות פועלות"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "השיחה נסגרה"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "לא ניתן לטעון. נסו שוב."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "לא ניתן היה לשמור את כתובת האימייל שלכם. נסו שוב."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "לא ניתן היה לשלוח את הדירוג שלכם. נסו שוב."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "ביצועים ירודים"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "הזינו כתובת אימייל תקינה."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "משוב"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "קבלת עדכונים"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "מעבר לאחרונה"
 msgid "Loading…"
 msgstr "טוען…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "תחזוקה"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "השבתה רחבה"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "הודעה"
@@ -154,9 +186,17 @@ msgstr "הודעות"
 msgid "Monitoring"
 msgstr "במעקב"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "עוד מהצוות"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "שיחה חדשה"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "חדשות במייל"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "לא נשלחה."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "מחובר"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "השבתה חלקית"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "התחברו כדי לשוחח איתנו."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "דילוג"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "סטטוס"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

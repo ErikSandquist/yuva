@@ -19,10 +19,18 @@ msgstr "{name} is typing…"
 msgid "{name} joined the conversation"
 msgstr "{name} joined the conversation"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "A bug, an idea, a thank-you"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "All conversations"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "All systems operational"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Conversation closed"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Could not load this. Try again."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Could not save your e-mail address. Try again."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Could not send your rating. Try again."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Degraded performance"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Enter a valid e-mail address."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Feedback"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Get updates"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Jump to latest"
 msgid "Loading…"
 msgstr "Loading…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Major outage"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Message"
@@ -154,9 +186,17 @@ msgstr "Messages"
 msgid "Monitoring"
 msgstr "Monitoring"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "More from the team"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "New conversation"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "News by e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Not sent."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Online"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Partial outage"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Sign in to chat with us."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Skip"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Status"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

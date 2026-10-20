@@ -42,6 +42,13 @@ cards (uploading, failed and sent), a typing indicator, "Seen" under the last me
 read, and a jump-to-latest button with the unread count when a visitor has scrolled up. The composer
 takes files, pasted images and, where the browser allows it, a screenshot of the page.
 
+Home also opens apps inside the same panel, each only when the channel has what it needs, and loads
+them on first use. **Feedback** sends a category, text and files as a feedback conversation that
+the visitor finds in their messages. **Status** shows the inbox's published status page: the overall
+state, the components with their last 60 days, and open and recent incidents. **Get updates**
+subscribes the visitor to the inbox's public mailing lists and sends the consent text as it was
+shown.
+
 When nobody is available and the channel asks for an e-mail address, the thread asks for one. After
 the visitor saves it, the thread says a confirmation link went out (with Change address and Send
 again), asks again when the address bounced or the link ran out after 24 hours, and shows a quiet

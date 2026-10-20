@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: kn\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "ಎಲ್ಲಾ ಸಿಸ್ಟಮ್‌ಗಳು ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿವೆ"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "ಬಹುತೇಕ ಮುಗಿಯಿತು. ನಿಮ್ಮ ಇನ್‌ಬಾಕ್ಸ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಚಂದಾದಾರಿಕೆಯನ್ನು ಖಚಿತಪಡಿಸಿ."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "ಫೈಲ್‌ಗಳನ್ನು ಲಗತ್ತಿಸಿ"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "ಬಗ್"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "ಕನಿಷ್ಠ ಒಂದು ಪಟ್ಟಿಯನ್ನು ಆರಿಸಿ."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "ಪೂರ್ಣಗೊಂಡಿದೆ"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "ಘಟಕಗಳು"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "ಕಳುಹಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "ಚಂದಾದಾರರಾಗಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "ಕಾರ್ಯಕ್ಷಮತೆ ಕುಸಿದಿದೆ"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "ಮುಗಿದಿದೆ"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "ಸ್ಥಗಿತ"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "ಇಮೇಲ್ ವಿಳಾಸ"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "ಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "ಘಟನೆಗಳ ಬಗ್ಗೆ ಸೂಚನೆ ಪಡೆಯಿರಿ"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "ಇಮೇಲ್ ಮೂಲಕ ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{inbox} ನಿಂದ {list} ಬಗ್ಗೆ ಇಮೇಲ್‌ಗಳನ್ನು ಪಡೆಯಲು ನಾನು ಬಯಸುತ್ತೇನೆ. ನಾನು ಯಾವಾಗ ಬೇಕಾದರೂ ಚಂದಾದಾರಿಕೆ ರದ್ದುಮಾಡಬಹುದು."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "ಆಲೋಚನೆ"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "ಕಾರಣ ಗುರುತಿಸಲಾಗಿದೆ"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "ಪ್ರಗತಿಯಲ್ಲಿದೆ"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "ಘಟನೆಗಳು"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "ಪಟ್ಟಿಗಳು"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "ಲೋಡ್ ಆಗುತ್ತಿದೆ…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "ನಿರ್ವಹಣೆ"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "ದೊಡ್ಡ ಅಡಚಣೆ"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "ನಿಗಾದಲ್ಲಿದೆ"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "ಯಾವುದೇ ತೆರೆದ ಘಟನೆಗಳಿಲ್ಲ."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "ಸರಿ"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "ಸ್ಟೇಟಸ್ ಪುಟ ತೆರೆಯಿರಿ"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "ಇತರೆ"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "ಭಾಗಶಃ"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "ಭಾಗಶಃ ಅಡಚಣೆ"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "ಪ್ರಶಂಸೆ"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} ತೆಗೆದುಹಾಕಿ"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "ಪರಿಹರಿಸಲಾಗಿದೆ"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "ನಿಗದಿಯಾಗಿದೆ"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "ನಿಧಾನ"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "ಚಂದಾದಾರರಾಗಿ"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "ಚಂದಾದಾರರಾಗಲಾಗುತ್ತಿದೆ…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ತೆಗೆಯಿರಿ"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "ಇನ್ನಷ್ಟು ಹೇಳಿ"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಗೆ ಧನ್ಯವಾದಗಳು"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "ಧನ್ಯವಾದಗಳು! ನೀವು ಚಂದಾದಾರರಾಗಿದ್ದೀರಿ."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "ತಂಡವು ಪ್ರತಿ ಟಿಪ್ಪಣಿಯನ್ನೂ ಓದುತ್ತದೆ. ಉತ್ತರಗಳು ನಿಮ್ಮ ಸಂದೇಶಗಳಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "ಈ ರೀತಿಯ ಫೈಲ್ ಸ್ವೀಕರಿಸಲಾಗುವುದಿಲ್ಲ."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "ಒಪ್ಪಲು ಬಾಕ್ಸ್ ಟಿಕ್ ಮಾಡಿ."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "ತುಂಬಾ ಪ್ರಯತ್ನಗಳು. ಸ್ವಲ್ಪ ಕಾಯಿರಿ ಮತ್ತು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆ ನೋಡಿ"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "ನಿಮಗೆ ಏನು ಇಷ್ಟ?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "ಏನಾಯಿತು, ನೀವು ಏನು ನಿರೀಕ್ಷಿಸಿದ್ದಿರಿ?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "ಇದು ಯಾವುದರ ಬಗ್ಗೆ?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "ಯಾವುದು ಇದನ್ನು ನಿಮಗೆ ಉತ್ತಮಗೊಳಿಸುತ್ತದೆ?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "ನಿಮ್ಮ ಮನಸ್ಸಿನಲ್ಲಿ ಏನಿದೆ?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಂತೆ ತೋರುತ್ತಿದೆ."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

@@ -19,10 +19,18 @@ msgstr "{name} 님이 입력 중…"
 msgid "{name} joined the conversation"
 msgstr "{name}님이 대화에 참여했습니다"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "버그, 아이디어, 감사 인사"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "모든 대화"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "모든 시스템 정상"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "대화가 종료되었습니다"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "불러오지 못했습니다. 다시 시도하세요."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "이메일 주소를 저장하지 못했습니다. 다시 시도해 주세요."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "평가를 보내지 못했습니다. 다시 시도해 주세요."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "성능 저하"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "올바른 이메일 주소를 입력해 주세요."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "피드백"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "업데이트 받기"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "최신으로 이동"
 msgid "Loading…"
 msgstr "불러오는 중…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "점검"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "대규모 장애"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "메시지"
@@ -154,9 +186,17 @@ msgstr "메시지"
 msgid "Monitoring"
 msgstr "모니터링 중"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "팀의 더 많은 소식"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "새 대화"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "이메일로 받는 소식"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "전송되지 않았습니다."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "온라인"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "부분 장애"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "채팅하려면 로그인해 주세요."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "건너뛰기"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "상태"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

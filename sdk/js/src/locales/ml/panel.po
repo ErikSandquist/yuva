@@ -19,10 +19,18 @@ msgstr "{name} ടൈപ്പ് ചെയ്യുന്നു…"
 msgid "{name} joined the conversation"
 msgstr "{name} സംഭാഷണത്തിൽ ചേർന്നു"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ഒരു ബഗ്, ഒരു ആശയം, ഒരു നന്ദി"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "എല്ലാ സംഭാഷണങ്ങളും"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "എല്ലാ സിസ്റ്റങ്ങളും പ്രവർത്തിക്കുന്നു"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "സംഭാഷണം അടച്ചു"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "ലോഡ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കുക."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "നിങ്ങളുടെ ഇമെയിൽ വിലാസം സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "നിങ്ങളുടെ റേറ്റിംഗ് അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "പ്രകടനം കുറഞ്ഞു"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "അഭിപ്രായം"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "അപ്ഡേറ്റുകൾ നേടുക"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "ഏറ്റവും പുതിയതിലേക്ക് പോക�
 msgid "Loading…"
 msgstr "ലോഡ് ചെയ്യുന്നു…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "അറ്റകുറ്റപ്പണി"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "വലിയ തടസ്സം"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "സന്ദേശം"
@@ -154,9 +186,17 @@ msgstr "സന്ദേശങ്ങൾ"
 msgid "Monitoring"
 msgstr "നിരീക്ഷിക്കുന്നു"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "ടീമിൽ നിന്ന് കൂടുതൽ"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "പുതിയ സംഭാഷണം"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ഇമെയിലിൽ വാർത്തകൾ"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "അയച്ചില്ല."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ഓൺലൈൻ"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "ഭാഗിക തടസ്സം"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "ഞങ്ങളുമായി ചാറ്റ് ചെയ്യാൻ 
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "ഒഴിവാക്കുക"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "നില"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

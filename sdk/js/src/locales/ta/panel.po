@@ -19,10 +19,18 @@ msgstr "{name} தட்டச்சு செய்கிறார்…"
 msgid "{name} joined the conversation"
 msgstr "{name} உரையாடலில் இணைந்தார்"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ஒரு பிழை, ஒரு யோசனை, ஒரு நன்றி"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "அனைத்து உரையாடல்களும்"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "அனைத்து அமைப்புகளும் இயங்குகின்றன"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "உரையாடல் மூடப்பட்டது"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "ஏற்ற முடியவில்லை. மீண்டும் முயலவும்."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "உங்கள் மின்னஞ்சல் முகவரியைச் சேமிக்க முடியவில்லை. மீண்டும் முயலுங்கள்."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "உங்கள் மதிப்பீட்டை அனுப்ப முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "செயல்திறன் குறைந்துள்ளது"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "கருத்து"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "புதுப்பிப்புகளைப் பெறுங்கள்"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "சமீபத்தியதற்குச் செல்"
 msgid "Loading…"
 msgstr "ஏற்றுகிறது…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "பராமரிப்பு"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "பெரிய தடங்கல்"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "செய்தி"
@@ -154,9 +186,17 @@ msgstr "செய்திகள்"
 msgid "Monitoring"
 msgstr "கண்காணிக்கப்படுகிறது"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "குழுவிடமிருந்து மேலும்"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "புதிய உரையாடல்"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "மின்னஞ்சலில் செய்திகள்"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "அனுப்பப்படவில்லை."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ஆன்லைன்"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "பகுதி தடங்கல்"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "எங்களுடன் அரட்டையடிக்க உள�
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "தவிர்"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "நிலை"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

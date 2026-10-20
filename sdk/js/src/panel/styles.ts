@@ -142,6 +142,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .link.soft { color: var(--yuva-muted); text-decoration: none; min-block-size: 28px; }
 .link.soft:hover { color: var(--yuva-fg); }
 .link.brand { color: var(--yuva-brand); font-weight: 500; text-decoration: none; min-block-size: 28px; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--yuva-border); border-radius: 12px; overflow: hidden; }
+.tile { display: flex; flex-direction: column; gap: 8px; min-block-size: 44px; padding: 14px; border: 0; background: transparent; text-align: start; cursor: pointer; color: inherit; }
+.tile:hover { background: var(--yuva-deep); }
+.tile + .tile { border-inline-start: 1px solid var(--yuva-border); }
+.tile:only-child { grid-column: 1 / -1; }
+.tile svg { color: var(--yuva-brand); }
+.tile b { font-weight: 500; }
+.tile span { font-size: 12px; color: var(--yuva-muted); }
+.statusrow { display: flex; align-items: center; gap: 10px; inline-size: 100%; min-block-size: 44px; padding: 0 14px; border: 1px solid var(--yuva-border); border-radius: 12px; background: transparent; text-align: start; cursor: pointer; }
+.statusrow:hover { background: var(--yuva-deep); }
+.statusrow .grow { flex: 1; }
+.statusrow svg { color: var(--yuva-faint); }
+.tone { flex: none; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--yuva-ok); }
+.tone.warn { background: var(--yuva-warn); }
+.tone.bad { background: var(--yuva-danger); }
+.tone.maint { background: var(--yuva-info); }
 .foot { min-block-size: 40px; padding: 0; display: flex; align-items: center; justify-content: center; font-family: var(--yuva-mono); font-size: 11px; color: var(--yuva-faint); }
 .page .sec.foot { padding: 0 32px; }
 .day { display: flex; align-items: center; gap: 10px; font-family: var(--yuva-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--yuva-faint); }

@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Mọi hệ thống đang hoạt động"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Sắp xong rồi. Hãy kiểm tra hộp thư đến và xác nhận đăng ký."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Đính kèm tệp"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Lỗi"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Chọn ít nhất một danh sách."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Đã hoàn tất"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Thành phần"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Không thể gửi. Hãy thử lại."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Không thể đăng ký. Hãy thử lại."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Hiệu suất suy giảm"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Xong"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Ngừng hoạt động"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "Địa chỉ email"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Nhập địa chỉ email hợp lệ."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Nhận thông báo sự cố"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Nhận cập nhật qua e-mail"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Tôi muốn nhận email về {list} từ {inbox}. Tôi có thể hủy đăng ký bất cứ lúc nào."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Ý tưởng"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Đã xác định nguyên nhân"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Đang diễn ra"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Sự cố"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "Đang điều tra"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Danh sách"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Bảo trì"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Sự cố nghiêm trọng"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Đang theo dõi"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Không có sự cố đang mở."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "Tốt"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Mở trang trạng thái"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Khác"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Một phần"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Sự cố một phần"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Lời khen"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "Xóa {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Đã giải quyết"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Đã lên lịch"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Gửi phản hồi"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Đang gửi…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Chậm"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Đăng ký"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Đang đăng ký…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Chụp ảnh màn hình"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Cho chúng tôi biết thêm"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Cảm ơn phản hồi của bạn"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Cảm ơn bạn! Bạn đã đăng ký."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Tệp quá lớn."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Đội ngũ đọc mọi ghi chú. Phản hồi sẽ hiển thị trong tin nhắn của bạn."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Không chấp nhận loại tệp này."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Đánh dấu vào ô để đồng ý."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Quá nhiều lần thử. Hãy chờ một lát rồi thử lại."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Xem phản hồi"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Bạn thích điều gì?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Đã xảy ra chuyện gì và bạn mong đợi điều gì?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Về vấn đề gì?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Điều gì sẽ giúp nó tốt hơn cho bạn?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Bạn đang nghĩ gì?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Có vẻ bạn đang ngoại tuyến."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

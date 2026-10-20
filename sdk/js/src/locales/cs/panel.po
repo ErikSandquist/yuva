@@ -19,10 +19,18 @@ msgstr "{name} píše…"
 msgid "{name} joined the conversation"
 msgstr "{name} se připojil(a) ke konverzaci"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Chyba, nápad, poděkování"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Všechny konverzace"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Všechny systémy fungují"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Konverzace uzavřena"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Nepodařilo se načíst. Zkuste to znovu."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Váš e-mail se nepodařilo uložit. Zkuste to znovu."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vaše hodnocení se nepodařilo odeslat. Zkuste to znovu."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Snížený výkon"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Zadejte platnou e-mailovou adresu."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Zpětná vazba"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Odebírat novinky"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Přejít na poslední"
 msgid "Loading…"
 msgstr "Načítání…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Údržba"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Velký výpadek"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Zpráva"
@@ -154,9 +186,17 @@ msgstr "Zprávy"
 msgid "Monitoring"
 msgstr "Sledujeme"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Další od týmu"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Nová konverzace"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Novinky e-mailem"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Neodesláno."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Online"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Částečný výpadek"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Přihlaste se a napište nám."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Přeskočit"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Stav"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

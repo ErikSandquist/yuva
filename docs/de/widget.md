@@ -47,6 +47,13 @@ Schaltfläche "Zur neuesten Nachricht" mit der Zahl ungelesener Nachrichten, wen
 oben gescrollt hat. Das Eingabefeld nimmt Dateien, eingefügte Bilder und, wo der Browser es erlaubt,
 einen Screenshot der Seite entgegen.
 
+Der Startbildschirm öffnet außerdem Apps im selben Panel, jede nur, wenn der Kanal hat, was sie
+braucht, und lädt sie erst bei der ersten Nutzung. **Feedback** sendet eine Kategorie, Text und
+Dateien als Feedback-Unterhaltung, die der Besucher in seinen Nachrichten findet. **Status** zeigt
+die veröffentlichte Statusseite der Inbox: den Gesamtzustand, die Komponenten mit ihren letzten
+60 Tagen sowie offene und aktuelle Störungen. **Updates erhalten** meldet den Besucher bei den
+öffentlichen Mailinglisten der Inbox an und sendet den Einwilligungstext, wie er angezeigt wurde.
+
 Ist niemand erreichbar und fragt der Kanal nach einer E-Mail-Adresse, bittet die Unterhaltung darum.
 Nach dem Speichern sagt sie, dass ein Bestätigungslink verschickt wurde (mit Adresse ändern und
 Erneut senden), fragt erneut, wenn die Adresse unzustellbar war oder der Link nach 24 Stunden

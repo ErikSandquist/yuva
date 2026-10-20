@@ -19,10 +19,18 @@ msgstr "{name} sedang menaip…"
 msgid "{name} joined the conversation"
 msgstr "{name} menyertai perbualan"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Pepijat, idea atau ucapan terima kasih"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Semua perbualan"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Semua sistem berfungsi"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Perbualan ditutup"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Tidak dapat dimuatkan. Cuba lagi."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Alamat e-mel anda tidak dapat disimpan. Cuba lagi."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Penilaian anda tidak dapat dihantar. Cuba lagi."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Prestasi merosot"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Masukkan alamat e-mel yang sah."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Maklum balas"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Dapatkan kemas kini"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Pergi ke terkini"
 msgid "Loading…"
 msgstr "Memuatkan…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Penyelenggaraan"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Gangguan besar"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Mesej"
@@ -154,9 +186,17 @@ msgstr "Mesej"
 msgid "Monitoring"
 msgstr "Sedang dipantau"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Lagi daripada pasukan"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Perbualan baharu"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Berita melalui e-mel"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Tidak dihantar."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Dalam talian"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Gangguan separa"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Log masuk untuk bersembang dengan kami."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Langkau"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Status"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

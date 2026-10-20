@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "ทุกระบบทำงานปกติ"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "เกือบเสร็จแล้ว ตรวจสอบกล่องจดหมายและยืนยันการสมัครรับ"
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "แนบไฟล์"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "บั๊ก"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "เลือกอย่างน้อยหนึ่งรายการ"
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "เสร็จสิ้น"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "ส่วนประกอบ"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "ไม่สามารถส่งได้ โปรดลองอีกครั้ง"
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "ไม่สามารถสมัครรับได้ โปรดลองอีกครั้ง"
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "ประสิทธิภาพลดลง"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "เสร็จสิ้น"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "ขัดข้อง"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "อีเมล"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "กรุณากรอกอีเมลที่ถูกต้อง"
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "รับการแจ้งเตือนเหตุขัดข้อง"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "รับข่าวสารอัปเดตทางอีเมล"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "ฉันต้องการรับอีเมลเกี่ยวกับ {list} จาก {inbox} และยกเลิกการสมัครรับได้ทุกเมื่อ"
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "ไอเดีย"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "พบสาเหตุแล้ว"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "กำลังดำเนินการ"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "เหตุขัดข้อง"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "กำลังตรวจสอบ"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "รายการ"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "กำลังโหลด…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "การบำรุงรักษา"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "ระบบขัดข้องรุนแรง"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "กำลังเฝ้าติดตาม"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "ไม่มีเหตุขัดข้องที่เปิดอยู่"
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "ปกติ"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "เปิดหน้าสถานะ"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "อื่น ๆ"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "บางส่วน"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "ขัดข้องบางส่วน"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "คำชม"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "ลบ {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "แก้ไขแล้ว"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "กำหนดไว้"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "ส่งความคิดเห็น"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "กำลังส่ง…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "ช้า"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "สมัครรับ"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "กำลังสมัครรับ…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "จับภาพหน้าจอ"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "บอกเราเพิ่มเติม"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "ขอบคุณ! คุณสมัครรับเรียบร้อยแล้ว"
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "ไฟล์มีขนาดใหญ่เกินไป"
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "ทีมงานอ่านทุกข้อความ คำตอบจะแสดงในข้อความของคุณ"
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "ไม่รองรับไฟล์ประเภทนี้"
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "ทำเครื่องหมายในช่องเพื่อยอมรับ"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "ลองหลายครั้งเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง"
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "ดูความคิดเห็น"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "คุณชอบอะไร"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "เกิดอะไรขึ้นและคุณคาดหวังอะไร"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "เรื่องอะไร"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "อะไรจะทำให้ดีขึ้นสำหรับคุณ"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "คุณกำลังคิดอะไรอยู่"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "ดูเหมือนว่าคุณออฟไลน์อยู่"
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

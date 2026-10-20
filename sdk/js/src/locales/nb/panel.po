@@ -19,10 +19,18 @@ msgstr "{name} skriver…"
 msgid "{name} joined the conversation"
 msgstr "{name} ble med i samtalen"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "En feil, en idé, en takk"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Alle samtaler"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Alle systemer fungerer"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Samtalen er avsluttet"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Kunne ikke lastes. Prøv igjen."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "E-postadressen din kunne ikke lagres. Prøv igjen."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vurderingen din kunne ikke sendes. Prøv igjen."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Redusert ytelse"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Skriv inn en gyldig e-postadresse."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Tilbakemelding"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Få oppdateringer"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Gå til siste"
 msgid "Loading…"
 msgstr "Laster…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Vedlikehold"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Stort avbrudd"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Melding"
@@ -154,9 +186,17 @@ msgstr "Meldinger"
 msgid "Monitoring"
 msgstr "Overvåker"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Mer fra teamet"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Ny samtale"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Nyheter på e-post"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Ikke sendt."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Pålogget"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Delvis avbrudd"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Logg inn for å chatte med oss."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Hopp over"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Status"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

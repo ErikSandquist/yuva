@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sv\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Alla system fungerar"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Nästan klart. Kolla din inkorg och bekräfta din prenumeration."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Bifoga filer"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Bugg"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Välj minst en lista."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Slutförd"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Komponenter"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Det gick inte att skicka. Försök igen."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Det gick inte att prenumerera. Försök igen."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Försämrad prestanda"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Klart"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Nere"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "E-postadress"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Ange en giltig e-postadress."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Få besked om incidenter"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Få uppdateringar via e-post"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Jag vill ta emot e-post om {list} från {inbox}. Jag kan avsluta prenumerationen när som helst."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Idé"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Orsak funnen"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Pågår"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Incidenter"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "Undersöker"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Listor"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Laddar…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Underhåll"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Stort avbrott"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Övervakar"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Inga öppna incidenter."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Öppna statussidan"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Övrigt"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Delvis"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Delvis avbrott"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Beröm"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "Ta bort {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Löst"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Planerad"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Skicka feedback"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Skickar…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Långsam"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Prenumerera"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Prenumererar…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Ta en skärmbild"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Berätta mer"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Tack för din feedback"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Tack! Du prenumererar nu."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Filen är för stor."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Teamet läser varje meddelande. Svar visas i dina meddelanden."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Den här filtypen accepteras inte."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Bocka i rutan för att godkänna."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "För många försök. Vänta en stund och försök igen."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Visa feedback"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Vad gillar du?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Vad hände och vad förväntade du dig?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Vad gäller det?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Vad skulle göra det bättre för dig?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Vad har du på hjärtat?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Du verkar vara offline."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

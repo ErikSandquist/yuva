@@ -30,14 +30,21 @@ const thread = await chunk("src/docs/thread.ts", "yuva-docs-thread")
 const subscribeClient = await chunk("src/subscribe/client.ts", "yuva-subscribe-client")
 
 const panelLocales: Record<string, string> = {}
+const appsLocales: Record<string, string> = {}
 for (const locale of await readdir("src/locales")) {
   const key = locale.toLowerCase()
   panelLocales[key] = await chunk(`src/locales/${locale}/panel.ts`, `yuva-panel-${key}`)
+  appsLocales[key] = (await chunk(`src/locales/${locale}/apps.ts`, `yuva-apps-${key}`)).replace(/^widget\//, "./")
 }
+const chatApps = await chunk("src/apps/apps.ts", "yuva-chat-apps", {
+  YUVA_APPS_LOCALES: JSON.stringify(JSON.stringify(appsLocales)),
+})
+
 const define = {
   "process.env.NODE_ENV": '"production"',
   YUVA_DOCS_THREAD: JSON.stringify(thread),
   YUVA_SUBSCRIBE_CLIENT: JSON.stringify(subscribeClient),
+  YUVA_CHAT_APPS: JSON.stringify(chatApps),
   YUVA_PANEL_LOCALES: JSON.stringify(JSON.stringify(panelLocales)),
 }
 
@@ -141,6 +148,7 @@ for (const name of [
   "yuva-analytics-consent.js",
   thread,
   subscribeClient,
+  chatApps,
   "esm/index.js",
   "esm/chat.js",
   "esm/docs.js",

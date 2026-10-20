@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nl\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Alle systemen werken"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Bijna klaar. Controleer je inbox en bevestig je abonnement."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Bestanden bijvoegen"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Bug"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Kies minstens één lijst."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Voltooid"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Onderdelen"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Verzenden is niet gelukt. Probeer het opnieuw."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Aanmelden is niet gelukt. Probeer het opnieuw."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Verminderde prestaties"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Klaar"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Storing"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "E-mailadres"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Voer een geldig e-mailadres in."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Meldingen over incidenten ontvangen"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Updates per e-mail ontvangen"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Ik wil e-mails ontvangen over {list} van {inbox}. Ik kan me op elk moment afmelden."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Idee"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Oorzaak gevonden"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Bezig"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Incidenten"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "In onderzoek"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Lijsten"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Laden…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Onderhoud"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Grote storing"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Wordt gevolgd"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Geen openstaande incidenten."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Statuspagina openen"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Overig"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Gedeeltelijk"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Gedeeltelijke storing"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Compliment"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} verwijderen"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Opgelost"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Gepland"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Feedback versturen"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Verzenden…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Traag"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Abonneren"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Abonneren…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Schermafbeelding maken"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Vertel ons meer"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Bedankt voor je feedback"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Bedankt! Je bent geabonneerd."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Het bestand is te groot."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Het team leest elke melding. Antwoorden verschijnen in je berichten."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Dit bestandstype wordt niet geaccepteerd."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Vink het vakje aan om akkoord te gaan."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Te veel pogingen. Wacht even en probeer het opnieuw."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Feedback bekijken"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Wat vind je goed?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Wat is er gebeurd en wat had je verwacht?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Waar gaat het over?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Wat zou het voor jou beter maken?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Waar denk je aan?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Je lijkt offline te zijn."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

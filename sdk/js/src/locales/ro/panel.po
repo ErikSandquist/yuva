@@ -19,10 +19,18 @@ msgstr "{name} scrie…"
 msgid "{name} joined the conversation"
 msgstr "{name} s-a alăturat conversației"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "O eroare, o idee, o mulțumire"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Toate conversațiile"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Toate sistemele funcționează"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Conversația a fost închisă"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Nu s-a putut încărca. Încearcă din nou."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Adresa ta de e-mail nu a putut fi salvată. Încearcă din nou."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Evaluarea ta nu a putut fi trimisă. Încearcă din nou."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Performanță redusă"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Introdu o adresă de e-mail validă."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Feedback"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Primește noutăți"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Mergi la ultimul"
 msgid "Loading…"
 msgstr "Se încarcă…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Mentenanță"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Întrerupere majoră"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Mesaj"
@@ -154,9 +186,17 @@ msgstr "Mesaje"
 msgid "Monitoring"
 msgstr "În monitorizare"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Mai multe de la echipă"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Conversație nouă"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Noutăți prin e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Netrimis."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Online"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Întrerupere parțială"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Autentifică-te ca să vorbești cu noi."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Omite"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Stare"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

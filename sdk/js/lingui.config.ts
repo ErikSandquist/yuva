@@ -62,6 +62,7 @@ export default defineConfig({
       exclude: ["<rootDir>/src/docs/thread.ts"],
     },
     { path: "<rootDir>/src/locales/{locale}/thread", include: ["<rootDir>/src/docs/thread.ts"] },
+    { path: "<rootDir>/src/locales/{locale}/apps", include: ["<rootDir>/src/apps"] },
     { path: "<rootDir>/src/locales/{locale}/subscribe", include: ["<rootDir>/src/subscribe"] },
     { path: "<rootDir>/src/locales/{locale}/status", include: ["<rootDir>/src/status"] },
   ],

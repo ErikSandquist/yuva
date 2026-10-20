@@ -19,10 +19,18 @@ msgstr "{name} sedang mengetik…"
 msgid "{name} joined the conversation"
 msgstr "{name} bergabung ke percakapan"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Bug, ide, atau ucapan terima kasih"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Semua percakapan"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Semua sistem berjalan"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Percakapan ditutup"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Tidak dapat dimuat. Coba lagi."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Alamat e-mail Anda tidak dapat disimpan. Coba lagi."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Penilaian Anda tidak dapat dikirim. Coba lagi."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Kinerja menurun"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Masukkan alamat e-mail yang valid."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Masukan"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Dapatkan pembaruan"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Ke terbaru"
 msgid "Loading…"
 msgstr "Memuat…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Pemeliharaan"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Gangguan besar"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Pesan"
@@ -154,9 +186,17 @@ msgstr "Pesan"
 msgid "Monitoring"
 msgstr "Sedang dipantau"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Lainnya dari tim"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Percakapan baru"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Kabar lewat e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Tidak terkirim."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Online"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Gangguan sebagian"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Masuk untuk mengobrol dengan kami."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Lewati"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Status"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

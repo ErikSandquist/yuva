@@ -760,6 +760,13 @@ inline thread inside a product's own panel.
   address) and `confirmed` (a quiet line).
 - Each panel language is its own content-hashed chunk (`/widget/yuva-panel-<locale>-<hash>.js`), so
   `/yuva-chat.js` carries no catalog and a visitor downloads one.
+- Home offers apps inside the same panel, loaded on first use from a chunk of their own
+  (`/widget/yuva-chat-apps-<hash>.js`, with one catalog chunk per language): Feedback
+  (`POST /client/v1/feedback` with the inbox's `feedback_categories`, files as multipart), Status
+  (`inbox.status`, and the page JSON at `/client/v1/status/{slug}` when the slug is in `status.url`)
+  and Get updates (`/client/v1/channels/{key}/lists` and `/subscriptions`). A tile appears only when
+  its API answers for the channel; a help center, a roadmap and a changelog have no client API yet and
+  have no tile.
 
 - The server hosts the widget scripts itself at `/yuva.js`, `/yuva-chat.js` and `/yuva-docs.js` (cached
   five minutes, ETag). What a script loads on first use (the discussion thread, composer and preview of

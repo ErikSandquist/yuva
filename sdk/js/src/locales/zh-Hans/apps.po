@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hans\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "所有系统运行正常"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "快完成了。请查看收件箱并确认订阅。"
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "添加附件"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "错误"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "请至少选择一个列表。"
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "已完成"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "组件"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "无法发送。请重试。"
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "无法订阅。请重试。"
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "性能下降"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "完成"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "宕机"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "电子邮件地址"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "请输入有效的电子邮件地址。"
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "接收事件通知"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "通过邮件获取更新"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "我愿意接收来自 {inbox} 的有关 {list} 的电子邮件。我可以随时退订。"
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "想法"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "已确定原因"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "进行中"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "事件"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "正在调查"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "列表"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "加载中…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "维护"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "严重故障"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "监控中"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "没有进行中的事件。"
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "正常"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "打开状态页面"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "其他"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "部分"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "部分故障"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "表扬"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "移除 {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "已解决"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "已计划"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "发送反馈"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "正在发送…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "缓慢"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "订阅"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "正在订阅…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "截取屏幕"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "告诉我们更多"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "感谢您的反馈"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "谢谢!您已订阅。"
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "文件太大。"
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "团队会阅读每一条留言，回复会显示在你的消息中。"
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "不支持此文件类型。"
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "请勾选复选框表示同意。"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "尝试次数过多。请稍等片刻后重试。"
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "查看反馈"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "你喜欢什么？"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "发生了什么，你期望的是什么？"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "关于什么？"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "怎样会对你更好？"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "你在想什么？"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "您似乎已离线。"
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

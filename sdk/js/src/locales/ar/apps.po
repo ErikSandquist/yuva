@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "جميع الأنظمة تعمل"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "أوشكت على الانتهاء. تحقق من بريدك الوارد وأكّد اشتراكك."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "إرفاق ملفات"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "خطأ برمجي"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "اختر قائمة واحدة على الأقل."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "اكتمل"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "المكوّنات"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "تعذّر الإرسال. حاول مرة أخرى."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "تعذّر الاشتراك. حاول مرة أخرى."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "أداء متدهور"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "تم"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "متوقف"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "البريد الإلكتروني"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "أدخل بريدًا إلكترونيًا صالحًا."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "احصل على إشعارات الأعطال"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "احصل على التحديثات عبر البريد الإلكتروني"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "أرغب في تلقي رسائل بريد إلكتروني عن {list} من {inbox}. يمكنني إلغاء الاشتراك في أي وقت."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "فكرة"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "تم تحديد السبب"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "قيد التنفيذ"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "الأعطال"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "قيد التحقيق"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "القوائم"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "صيانة"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "انقطاع كبير"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "قيد المراقبة"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "لا توجد أعطال مفتوحة."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "يعمل"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "افتح صفحة الحالة"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "أخرى"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "جزئي"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "انقطاع جزئي"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "إشادة"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "إزالة {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "تم الحل"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "مجدول"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "إرسال الملاحظات"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "جارٍ الإرسال…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "بطيء"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "اشتراك"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "جارٍ الاشتراك…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "التقاط لقطة شاشة"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "أخبرنا بالمزيد"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "شكرًا على ملاحظاتك"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "شكرًا! تم اشتراكك."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "الملف كبير جدًا."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "يقرأ الفريق كل ملاحظة. تظهر الردود في رسائلك."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "نوع الملف هذا غير مقبول."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "ضع علامة في المربع للموافقة."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "محاولات كثيرة جدًا. انتظر قليلًا وحاول مرة أخرى."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "عرض الملاحظات"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "ما الذي يعجبك؟"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "ماذا حدث وماذا كنت تتوقع؟"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "ما الموضوع؟"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "ما الذي سيجعله أفضل بالنسبة لك؟"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "ما الذي يشغل بالك؟"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "يبدو أنك غير متصل بالإنترنت."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

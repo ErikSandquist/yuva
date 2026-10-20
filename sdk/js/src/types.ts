@@ -1,4 +1,4 @@
-import type { IdentityTokenSource } from "./client/client"
+import type { IdentityTokenSource, YuvaClient } from "./client/client"
 import type { components } from "./schema.gen"
 
 export type { IdentityTokenSource }
@@ -56,6 +56,29 @@ export interface PanelController {
 
 export interface PanelModule {
   mount(host: PanelHost): PanelController
+}
+
+export type AppKind = "feedback" | "status" | "subscribe"
+
+export interface AppContext {
+  root: Node
+  client: YuvaClient
+  inbox: components["schemas"]["ClientInbox"]
+  locale: string
+  mailingLists: boolean
+  back(): void
+  open(kind: AppKind): void
+  created(result: components["schemas"]["ClientConversationCreated"]): void
+  viewConversation(id: string): void
+}
+
+export interface AppHandle {
+  element: HTMLElement
+  destroy(): void
+}
+
+export interface AppsModule {
+  mountApp(kind: AppKind, context: AppContext): Promise<AppHandle>
 }
 
 export interface StoredState {

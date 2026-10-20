@@ -19,10 +19,18 @@ msgstr "{name} tipka …"
 msgid "{name} joined the conversation"
 msgstr "{name} se je pridružil(a) pogovoru"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Napaka, ideja, zahvala"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Vsi pogovori"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Vsi sistemi delujejo"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Pogovor je zaprt"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Nalaganje ni uspelo. Poskusite znova."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Vašega e-poštnega naslova ni bilo mogoče shraniti. Poskusite znova."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vaše ocene ni bilo mogoče poslati. Poskusite znova."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Zmanjšana zmogljivost"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Vnesite veljaven e-poštni naslov."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Povratne informacije"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Prejemaj novice"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Pojdi na zadnje"
 msgid "Loading…"
 msgstr "Nalaganje …"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Vzdrževanje"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Velik izpad"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Sporočilo"
@@ -154,9 +186,17 @@ msgstr "Sporočila"
 msgid "Monitoring"
 msgstr "Spremljamo"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Več od ekipe"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Nov pogovor"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Novice po e-pošti"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Ni poslano."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Na spletu"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Delen izpad"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Prijavite se, da se pogovorite z nami."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Preskoči"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Stanje"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: tr\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Tüm sistemler çalışıyor"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Neredeyse bitti. Gelen kutunuza bakın ve aboneliğinizi onaylayın."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Dosya ekle"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Hata"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "En az bir liste seçin."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Tamamlandı"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Bileşenler"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Gönderilemedi. Yeniden deneyin."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Abone olunamadı. Yeniden deneyin."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Performans düştü"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Bitti"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Kapalı"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "E-posta adresi"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Geçerli bir e-posta adresi girin."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Olaylardan haberdar olun"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "E-postayla güncelleme alın"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{list} hakkında {inbox} tarafından gönderilen e-postaları almak istiyorum. Aboneliğimi istediğim zaman bırakabilirim."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Fikir"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Neden belirlendi"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Devam ediyor"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Olaylar"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "İnceleniyor"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Listeler"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Bakım"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Büyük kesinti"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "İzleniyor"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Açık olay yok."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "Tamam"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Durum sayfasını aç"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Diğer"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Kısmi"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Kısmi kesinti"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Övgü"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} kaldır"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Çözüldü"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Planlandı"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Geri bildirim gönder"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Gönderiliyor…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Yavaş"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Abone ol"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Abone olunuyor…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Ekran görüntüsü al"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Daha fazlasını anlatın"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Geri bildiriminiz için teşekkürler"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Teşekkürler! Abone oldunuz."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Dosya çok büyük."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Ekip her notu okur. Yanıtlar mesajlarınızda görünür."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Bu dosya türü kabul edilmiyor."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Onaylamak için kutuyu işaretleyin."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Çok fazla deneme. Biraz bekleyip tekrar deneyin."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Geri bildirimi görüntüle"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Neyi beğeniyorsunuz?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Ne oldu ve ne bekliyordunuz?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Konu nedir?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Sizin için neyi daha iyi yapabiliriz?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Aklınızda ne var?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Çevrimdışı görünüyorsunuz."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "siz@ornek.com"

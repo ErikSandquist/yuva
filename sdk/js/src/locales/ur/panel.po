@@ -19,10 +19,18 @@ msgstr "{name} لکھ رہے ہیں…"
 msgid "{name} joined the conversation"
 msgstr "{name} گفتگو میں شامل ہو گئے"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ایک بگ، ایک خیال، ایک شکریہ"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "تمام گفتگوئیں"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "تمام سسٹم کام کر رہے ہیں"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "گفتگو بند ہو گئی"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "لوڈ نہیں ہو سکا۔ دوبارہ کوشش کریں۔"
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "آپ کا ای میل پتہ محفوظ نہیں ہو سکا۔ دوبارہ کوشش کریں۔"
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "آپ کی ریٹنگ بھیجی نہیں جا سکی۔ دوبارہ کوشش کریں۔"
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "کارکردگی متاثر ہے"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "درست ای میل پتہ درج کریں۔"
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "رائے"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "اپ ڈیٹس حاصل کریں"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "تازہ ترین پر جائیں"
 msgid "Loading…"
 msgstr "لوڈ ہو رہا ہے…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "دیکھ بھال"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "بڑی رکاوٹ"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "پیغام"
@@ -154,9 +186,17 @@ msgstr "پیغامات"
 msgid "Monitoring"
 msgstr "نگرانی جاری ہے"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "ٹیم کی طرف سے مزید"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "نئی گفتگو"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ای میل پر خبریں"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "بھیجا نہیں گیا۔"
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "آن لائن"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "جزوی رکاوٹ"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "ہم سے چیٹ کرنے کے لیے سائن اِن کریں۔"
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "چھوڑیں"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "اسٹیٹس"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

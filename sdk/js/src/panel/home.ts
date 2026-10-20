@@ -1,18 +1,41 @@
 import type { MessageDescriptor } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import type { ClientConversation, ClientInbox } from "../client/api"
+import type { AppKind } from "../types"
 import { el, textButton } from "./helpers"
 import { icons } from "./icons"
 
 export interface HomeData {
   inbox: ClientInbox
   conversations: ClientConversation[]
+  mailingLists: boolean
   locale: string
   t(descriptor: MessageDescriptor): string
   notice: HTMLElement
   openConversation(id: string): void
   allConversations(): void
   newConversation(): void
+  openApp(kind: AppKind): void
+}
+
+const stateText = {
+  operational: msg`All systems operational`,
+  degraded: msg`Degraded performance`,
+  partial_outage: msg`Partial outage`,
+  major_outage: msg`Major outage`,
+  maintenance: msg`Maintenance`,
+}
+
+const tone = {
+  operational: "",
+  degraded: " warn",
+  partial_outage: " bad",
+  major_outage: " bad",
+  maintenance: " maint",
+}
+
+export function appTitle(kind: AppKind): MessageDescriptor {
+  return kind === "feedback" ? msg`Feedback` : kind === "status" ? msg`Status` : msg`Get updates`
 }
 
 function section(label: string): HTMLElement {
@@ -79,6 +102,46 @@ export function buildHome(data: HomeData): HTMLElement {
   send.addEventListener("click", () => data.newConversation())
   talk.append(send)
   page.append(talk)
+
+  const tiles: { app: AppKind; icon: string; title: string; text: string }[] = []
+  if (inbox.feedback_categories.length > 0)
+    tiles.push({
+      app: "feedback",
+      icon: icons.bubble,
+      title: t(msg`Feedback`),
+      text: t(msg`A bug, an idea, a thank-you`),
+    })
+  if (data.mailingLists)
+    tiles.push({ app: "subscribe", icon: icons.bell, title: t(msg`Get updates`), text: t(msg`News by e-mail`) })
+  const status = inbox.status
+  if (tiles.length > 0 || status) {
+    const more = section(`02 — ${t(msg`More from the team`)}`)
+    if (tiles.length > 0) {
+      const grid = el("div", "tiles")
+      for (const tile of tiles) {
+        const button = el("button", "tile")
+        button.type = "button"
+        button.insertAdjacentHTML("beforeend", tile.icon)
+        button.append(el("b", "", tile.title), el("span", "", tile.text))
+        button.addEventListener("click", () => data.openApp(tile.app))
+        grid.append(button)
+      }
+      more.append(grid)
+    }
+    if (status) {
+      const row = el("button", "statusrow")
+      row.type = "button"
+      row.append(
+        el("span", `tone${tone[status.state]}`),
+        el("span", "grow", t(stateText[status.state])),
+        el("span", "label", t(msg`Status`))
+      )
+      row.insertAdjacentHTML("beforeend", icons.chevron)
+      row.addEventListener("click", () => data.openApp("status"))
+      more.append(row)
+    }
+    page.append(more)
+  }
 
   page.append(el("div", "fill"))
   const brand = "Yuva"

@@ -19,10 +19,18 @@ msgstr "{name}が入力中…"
 msgid "{name} joined the conversation"
 msgstr "{name} さんが会話に参加しました"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "不具合、アイデア、ありがとうの声"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "すべての会話"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "すべてのシステムが稼働中"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "会話は終了しました"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "読み込めませんでした。もう一度お試しください。"
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "メールアドレスを保存できませんでした。もう一度お試しください。"
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "評価を送信できませんでした。もう一度お試しください。"
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "パフォーマンス低下"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "有効なメールアドレスを入力してください。"
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "フィードバック"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "最新情報を受け取る"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "最新へ移動"
 msgid "Loading…"
 msgstr "読み込み中…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "メンテナンス"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "大規模な障害"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "メッセージ"
@@ -154,9 +186,17 @@ msgstr "メッセージ"
 msgid "Monitoring"
 msgstr "監視中"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "チームからのお知らせ"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "新しい会話"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "メールでお知らせ"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "未送信です。"
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "オンライン"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "部分的な障害"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "チャットを利用するにはサインインしてください。"
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "スキップ"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "ステータス"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

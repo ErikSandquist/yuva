@@ -389,12 +389,21 @@ export class YuvaClient {
     return this.#authed(`/client/v1/attachments/${encodeURIComponent(id)}`, { blob: true })
   }
 
-  sendFeedback(input: ClientFeedbackCreate): Promise<ClientConversationCreated> {
-    const client_id = input.client_id ?? randomId()
+  sendFeedback(input: ClientFeedbackCreate & { files?: Blob[] }): Promise<ClientConversationCreated> {
+    const { files = [], ...fields } = input
+    const client_id = fields.client_id ?? randomId()
+    const headers = this.#idempotency(client_id)
+    if (files.length === 0)
+      return this.#authed("/client/v1/feedback", { method: "POST", headers, json: { ...fields, client_id } })
+    const scalars = Object.entries({ ...fields, client_id })
+      .filter(([, value]) => value !== undefined && value !== null)
+      .map(([name, value]): [string, string] => [name, String(value)])
+    const boundary = `yuva-${client_id.replace(/[^\w-]/g, "").slice(0, 60)}-${client_id.length}`
+    headers["Content-Type"] = `multipart/form-data; boundary=${boundary}`
     return this.#authed("/client/v1/feedback", {
       method: "POST",
-      headers: this.#idempotency(client_id),
-      json: { ...input, client_id },
+      headers,
+      body: multipart(scalars, files, boundary),
     })
   }
 

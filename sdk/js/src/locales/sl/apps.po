@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sl\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Vsi sistemi delujejo"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Skoraj končano. Preverite prejeto pošto in potrdite naročnino."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Priloži datoteke"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Napaka"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Izberite vsaj en seznam."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Končano"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Komponente"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Pošiljanje ni uspelo. Poskusite znova."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Naročanje ni uspelo. Poskusite znova."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Zmanjšana zmogljivost"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Končano"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Ne deluje"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "E-poštni naslov"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Vnesite veljaven e-poštni naslov."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Prejemaj obvestila o incidentih"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Prejemaj novice po e-pošti"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Želim prejemati e-pošto o temi {list} od {inbox}. Naročnino lahko kadar koli prekličem."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Ideja"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Vzrok ugotovljen"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "V teku"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Incidenti"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "Raziskujemo"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Seznami"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "Nalaganje …"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Vzdrževanje"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Velik izpad"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Spremljamo"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Ni odprtih incidentov."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "V redu"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Odpri stran stanja"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Drugo"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Delno"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Delen izpad"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Pohvala"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "Odstrani {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Rešeno"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Načrtovano"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Pošlji povratne informacije"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "Pošiljanje …"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Počasi"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Naroči se"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "Naročanje …"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Zajemi posnetek zaslona"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Povejte nam več"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Hvala za povratne informacije"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Hvala! Naročeni ste."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "Datoteka je prevelika."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "Ekipa prebere vsako sporočilo. Odgovori se prikažejo v vaših sporočilih."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Ta vrsta datoteke ni sprejeta."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Označite polje, da se strinjate."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Preveč poskusov. Počakajte trenutek in poskusite znova."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Poglej povratne informacije"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Kaj vam je všeč?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "Kaj se je zgodilo in kaj ste pričakovali?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Za kaj gre?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "Kaj bi vam to izboljšalo?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "Kaj vam je na srcu?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Videti je, da ste brez povezave."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ml\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "എല്ലാ സിസ്റ്റങ്ങളും പ്രവർത്തിക്കുന്നു"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "മിക്കവാറും കഴിഞ്ഞു. ഇൻബോക്സ് പരിശോധിച്ച് സബ്സ്ക്രിപ്ഷൻ സ്ഥിരീകരിക്കൂ."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "ഫയലുകൾ അറ്റാച്ച് ചെയ്യുക"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "ബഗ്"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "കുറഞ്ഞത് ഒരു ലിസ്റ്റ് തിരഞ്ഞെടുക്കുക."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "പൂർത്തിയായി"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "ഘടകങ്ങൾ"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "പ്രകടനം കുറഞ്ഞു"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "പൂർത്തിയായി"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "നിലച്ചു"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "ഇമെയിൽ വിലാസം"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "സംഭവങ്ങളെക്കുറിച്ച് അറിയിപ്പ് നേടുക"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "ഇമെയിലിൽ അപ്ഡേറ്റുകൾ നേടുക"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{inbox}-ൽ നിന്ന് {list} സംബന്ധിച്ച ഇമെയിലുകൾ ലഭിക്കാൻ ഞാൻ ആഗ്രഹിക്കുന്നു. എപ്പോൾ വേണമെങ്കിലും എനിക്ക് അൺസബ്സ്ക്രൈബ് ചെയ്യാം."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "ആശയം"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "കാരണം കണ്ടെത്തി"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "പുരോഗമിക്കുന്നു"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "സംഭവങ്ങൾ"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "അന്വേഷിക്കുന്നു"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "ലിസ്റ്റുകൾ"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "ലോഡ് ചെയ്യുന്നു…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "അറ്റകുറ്റപ്പണി"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "വലിയ തടസ്സം"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "നിരീക്ഷിക്കുന്നു"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "തുറന്ന സംഭവങ്ങളൊന്നുമില്ല."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "ശരി"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "സ്റ്റാറ്റസ് പേജ് തുറക്കുക"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "മറ്റുള്ളവ"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "ഭാഗികം"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "ഭാഗിക തടസ്സം"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "പ്രശംസ"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "{0} നീക്കം ചെയ്യുക"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "പരിഹരിച്ചു"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "ഷെഡ്യൂൾ ചെയ്തു"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "അഭിപ്രായം അയയ്ക്കുക"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "അയയ്ക്കുന്നു…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "മന്ദം"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യുക"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യുന്നു…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "സ്ക്രീൻഷോട്ട് എടുക്കുക"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "കൂടുതൽ പറയൂ"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "നിങ്ങളുടെ അഭിപ്രായത്തിന് നന്ദി"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "നന്ദി! നിങ്ങൾ സബ്സ്ക്രൈബ് ചെയ്തു."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "ഫയൽ വളരെ വലുതാണ്."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "ടീം ഓരോ കുറിപ്പും വായിക്കുന്നു. മറുപടികൾ നിങ്ങളുടെ സന്ദേശങ്ങളിൽ കാണാം."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "ഈ തരം ഫയൽ സ്വീകരിക്കില്ല."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "സമ്മതിക്കാൻ ബോക്സിൽ ടിക്ക് ചെയ്യൂ."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "വളരെയധികം ശ്രമങ്ങൾ. അൽപ്പം കാത്തിരുന്ന് വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "അഭിപ്രായം കാണുക"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "നിങ്ങൾക്ക് എന്താണ് ഇഷ്ടം?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "എന്താണ് സംഭവിച്ചത്, നിങ്ങൾ എന്താണ് പ്രതീക്ഷിച്ചത്?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "ഇത് എന്തിനെക്കുറിച്ചാണ്?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "എന്താണ് ഇത് നിങ്ങൾക്ക് മെച്ചപ്പെടുത്തുക?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "നിങ്ങളുടെ മനസ്സിൽ എന്താണ്?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "നിങ്ങൾ ഓഫ്‌ലൈനിലാണെന്ന് തോന്നുന്നു."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

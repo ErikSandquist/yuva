@@ -19,10 +19,18 @@ msgstr "{name} друкує…"
 msgid "{name} joined the conversation"
 msgstr "{name} приєднався(-лася) до розмови"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Помилка, ідея або подяка"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Усі розмови"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Усі системи працюють"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Розмову закрито"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Не вдалося завантажити. Спробуйте ще раз."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Не вдалося зберегти вашу електронну адресу. Спробуйте ще раз."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Не вдалося надіслати вашу оцінку. Спробуйте ще раз."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Знижена продуктивність"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Введіть дійсну електронну адресу."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Відгук"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Отримувати новини"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "До останнього"
 msgid "Loading…"
 msgstr "Завантаження…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Обслуговування"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Серйозний збій"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Повідомлення"
@@ -154,9 +186,17 @@ msgstr "Повідомлення"
 msgid "Monitoring"
 msgstr "Спостерігаємо"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Більше від команди"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Нова розмова"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Новини на e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Не надіслано."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Онлайн"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Частковий збій"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Увійдіть, щоб поспілкуватися з нами."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Пропустити"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Статус"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

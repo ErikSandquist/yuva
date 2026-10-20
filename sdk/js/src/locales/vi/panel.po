@@ -19,10 +19,18 @@ msgstr "{name} đang nhập…"
 msgid "{name} joined the conversation"
 msgstr "{name} đã tham gia cuộc trò chuyện"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Một lỗi, một ý tưởng, một lời cảm ơn"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Tất cả cuộc trò chuyện"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Mọi hệ thống đang hoạt động"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Cuộc trò chuyện đã đóng"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Không thể tải. Hãy thử lại."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Không thể lưu địa chỉ email của bạn. Hãy thử lại."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Không thể gửi đánh giá của bạn. Hãy thử lại."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Hiệu suất suy giảm"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Nhập địa chỉ email hợp lệ."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Phản hồi"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Nhận cập nhật"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Đến tin mới nhất"
 msgid "Loading…"
 msgstr "Đang tải…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Bảo trì"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Sự cố nghiêm trọng"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Tin nhắn"
@@ -154,9 +186,17 @@ msgstr "Tin nhắn"
 msgid "Monitoring"
 msgstr "Đang theo dõi"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Thêm từ đội ngũ"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Cuộc trò chuyện mới"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Tin tức qua e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Chưa gửi."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Trực tuyến"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Sự cố một phần"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Đăng nhập để trò chuyện với chúng tôi."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Bỏ qua"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Trạng thái"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

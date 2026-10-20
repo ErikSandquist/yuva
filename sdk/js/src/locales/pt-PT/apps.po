@@ -1,0 +1,247 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-20 08:46+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pt-PT\n"
+
+#: src/apps/status.ts
+msgid "All systems operational"
+msgstr "Todos os sistemas a funcionar"
+
+#: src/apps/subscribe.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Quase pronto. Verifique a sua caixa de entrada e confirme a subscrição."
+
+#: src/apps/feedback.ts
+msgid "Attach files"
+msgstr "Anexar ficheiros"
+
+#: src/apps/feedback.ts
+msgid "Bug"
+msgstr "Erro"
+
+#: src/apps/subscribe.ts
+msgid "Choose at least one list."
+msgstr "Escolha pelo menos uma lista."
+
+#: src/apps/status.ts
+msgid "Completed"
+msgstr "Concluído"
+
+#: src/apps/status.ts
+msgid "Components"
+msgstr "Componentes"
+
+#: src/apps/feedback.ts
+msgid "Could not send. Try again."
+msgstr "Não foi possível enviar. Tente novamente."
+
+#: src/apps/subscribe.ts
+msgid "Could not subscribe. Try again."
+msgstr "Não foi possível subscrever. Tente novamente."
+
+#: src/apps/status.ts
+msgid "Degraded performance"
+msgstr "Desempenho degradado"
+
+#: src/apps/feedback.ts
+msgid "Done"
+msgstr "Concluído"
+
+#: src/apps/status.ts
+msgid "Down"
+msgstr "Em baixo"
+
+#: src/apps/subscribe.ts
+msgid "E-mail address"
+msgstr "Endereço de e-mail"
+
+#: src/apps/subscribe.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introduza um endereço de e-mail válido."
+
+#: src/apps/status.ts
+msgid "Get notified about incidents"
+msgstr "Receber avisos de incidentes"
+
+#: src/apps/subscribe.ts
+msgid "Get updates by e-mail"
+msgstr "Receber novidades por e-mail"
+
+#: src/apps/subscribe.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Quero receber e-mails sobre {list} de {inbox}. Posso cancelar a subscrição a qualquer momento."
+
+#: src/apps/feedback.ts
+msgid "Idea"
+msgstr "Ideia"
+
+#: src/apps/status.ts
+msgid "Identified"
+msgstr "Causa identificada"
+
+#: src/apps/status.ts
+msgid "In progress"
+msgstr "Em curso"
+
+#: src/apps/status.ts
+msgid "Incidents"
+msgstr "Incidentes"
+
+#: src/apps/status.ts
+msgid "Investigating"
+msgstr "A investigar"
+
+#: src/apps/subscribe.ts
+msgid "Lists"
+msgstr "Listas"
+
+#: src/apps/subscribe.ts
+msgid "Loading…"
+msgstr "A carregar…"
+
+#: src/apps/status.ts
+msgid "Maintenance"
+msgstr "Manutenção"
+
+#: src/apps/status.ts
+msgid "Major outage"
+msgstr "Grande interrupção"
+
+#: src/apps/status.ts
+msgid "Monitoring"
+msgstr "Em monitorização"
+
+#: src/apps/status.ts
+msgid "No open incidents."
+msgstr "Sem incidentes abertos."
+
+#: src/apps/status.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/apps/status.ts
+msgid "Open status page"
+msgstr "Abrir a página de estado"
+
+#: src/apps/feedback.ts
+msgid "Other"
+msgstr "Outro"
+
+#: src/apps/status.ts
+msgid "Partial"
+msgstr "Parcial"
+
+#: src/apps/status.ts
+msgid "Partial outage"
+msgstr "Interrupção parcial"
+
+#: src/apps/feedback.ts
+msgid "Praise"
+msgstr "Elogio"
+
+#. placeholder {0}: file.name
+#: src/apps/feedback.ts
+msgid "Remove {0}"
+msgstr "Remover {0}"
+
+#: src/apps/status.ts
+msgid "Resolved"
+msgstr "Resolvido"
+
+#: src/apps/status.ts
+msgid "Scheduled"
+msgstr "Agendado"
+
+#: src/apps/feedback.ts
+msgid "Send feedback"
+msgstr "Enviar comentários"
+
+#: src/apps/feedback.ts
+msgid "Sending…"
+msgstr "A enviar…"
+
+#: src/apps/status.ts
+msgid "Slow"
+msgstr "Lento"
+
+#: src/apps/subscribe.ts
+msgid "Subscribe"
+msgstr "Subscrever"
+
+#: src/apps/subscribe.ts
+msgid "Subscribing…"
+msgstr "A subscrever…"
+
+#: src/apps/feedback.ts
+msgid "Take a screenshot"
+msgstr "Fazer uma captura de ecrã"
+
+#: src/apps/feedback.ts
+msgid "Tell us more"
+msgstr "Conte-nos mais"
+
+#: src/apps/feedback.ts
+msgid "Thanks for your feedback"
+msgstr "Obrigado pelo seu feedback"
+
+#: src/apps/subscribe.ts
+msgid "Thanks! You are subscribed."
+msgstr "Obrigado! Está subscrito."
+
+#: src/apps/feedback.ts
+msgid "The file is too large."
+msgstr "O ficheiro é demasiado grande."
+
+#: src/apps/feedback.ts
+msgid "The team reads every note. Replies show up in your messages."
+msgstr "A equipa lê todas as mensagens. As respostas aparecem nas suas mensagens."
+
+#: src/apps/feedback.ts
+msgid "This file type is not accepted."
+msgstr "Este tipo de ficheiro não é aceite."
+
+#: src/apps/subscribe.ts
+msgid "Tick the box to agree."
+msgstr "Assinale a caixa para concordar."
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Demasiadas tentativas. Aguarde um momento e tente novamente."
+
+#: src/apps/feedback.ts
+msgid "View feedback"
+msgstr "Ver comentários"
+
+#: src/apps/feedback.ts
+msgid "What do you like?"
+msgstr "Do que gosta?"
+
+#: src/apps/feedback.ts
+msgid "What happened, and what did you expect?"
+msgstr "O que aconteceu e o que esperava?"
+
+#: src/apps/feedback.ts
+msgid "What is it about"
+msgstr "Sobre o que é?"
+
+#: src/apps/feedback.ts
+msgid "What would make this better for you?"
+msgstr "O que melhoraria isto para si?"
+
+#: src/apps/feedback.ts
+msgid "What's on your mind?"
+msgstr "O que tem em mente?"
+
+#: src/apps/feedback.ts
+#: src/apps/subscribe.ts
+msgid "You seem to be offline."
+msgstr "Parece que está offline."
+
+#: src/apps/subscribe.ts
+msgid "you@example.com"
+msgstr "you@example.com"

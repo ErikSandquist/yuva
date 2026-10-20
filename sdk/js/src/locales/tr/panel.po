@@ -19,10 +19,18 @@ msgstr "{name} yazıyor…"
 msgid "{name} joined the conversation"
 msgstr "{name} konuşmaya katıldı"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Bir hata, bir fikir, bir teşekkür"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Tüm konuşmalar"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Tüm sistemler çalışıyor"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Konuşma kapatıldı"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Yüklenemedi. Tekrar deneyin."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "E-posta adresiniz kaydedilemedi. Tekrar deneyin."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Değerlendirmeniz gönderilemedi. Tekrar deneyin."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Performans düştü"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Geçerli bir e-posta adresi girin."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Geri bildirim"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Güncellemeleri al"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "En sona git"
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Bakım"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Büyük kesinti"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Mesaj"
@@ -154,9 +186,17 @@ msgstr "Mesajlar"
 msgid "Monitoring"
 msgstr "İzleniyor"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Ekipten daha fazlası"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Yeni konuşma"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "E-postayla haberler"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Gönderilemedi."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Çevrimiçi"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Kısmi kesinti"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Bizimle sohbet etmek için giriş yapın."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Geç"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Durum"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

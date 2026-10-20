@@ -1,7 +1,16 @@
 import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import { messages as en } from "../locales/en/panel"
-import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types"
+import {
+  launcherOf,
+  readStored,
+  writeStored,
+  type AppHandle,
+  type AppKind,
+  type AppsModule,
+  type PanelController,
+  type PanelHost,
+} from "../types"
 import {
   ApiError,
   type ClientAttachment,
@@ -30,11 +39,12 @@ import {
   time,
 } from "./helpers"
 import { canCapture, captureScreen } from "./capture"
-import { buildHome } from "./home"
+import { appTitle, buildHome } from "./home"
 import { icons } from "./icons"
 import { styles } from "./styles"
 import { richText } from "./text"
 
+declare const YUVA_CHAT_APPS: string | undefined
 declare const YUVA_PANEL_LOCALES: string | undefined
 
 const loadMessages = (locale: string): Promise<Messages> =>
@@ -47,12 +57,17 @@ const loadMessages = (locale: string): Promise<Messages> =>
 const localeFile = (map: string, locale: string): string =>
   (JSON.parse(map) as Record<string, string>)[locale] ?? "about:blank"
 
+const loadApps = (): Promise<AppsModule> =>
+  typeof YUVA_CHAT_APPS === "string"
+    ? (import(/* @vite-ignore */ new URL(YUVA_CHAT_APPS, import.meta.url).href) as Promise<AppsModule>)
+    : import("../apps/apps")
+
 const impactRank = { none: 0, minor: 1, major: 2, critical: 3 }
 const maxFiles = 10
 const groupGap = 5 * 60_000
 const maxTimer = 2 ** 31 - 1
 
-type View = { kind: "home" } | { kind: "list" } | { kind: "thread"; id: string | null }
+type View = { kind: "home" } | { kind: "list" } | { kind: "thread"; id: string | null } | { kind: "app"; app: AppKind }
 
 interface Pending {
   client_id: string
@@ -115,6 +130,11 @@ export class Chat implements PanelController {
   #rateComment = el("textarea")
   #rateKey = ""
   #rateFor: string | null = null
+  #lists = false
+  #listsLoaded = false
+  #app: { kind: AppKind; handle: AppHandle } | null = null
+  #appLoad = 0
+  #appError = false
   #missed = 0
   #loaded = ""
   ready: Promise<void>
@@ -252,6 +272,7 @@ export class Chat implements PanelController {
         : this.#preview()
             .then(() => this.#render())
             .catch(() => undefined))
+      this.#loadLists()
     }
     this.#render()
     this.#scrollToEnd()
@@ -280,6 +301,7 @@ export class Chat implements PanelController {
   destroy(): void {
     this.#client.reset()
     this.#stopTyping()
+    this.#closeApp()
     if (this.#emailTimer) clearTimeout(this.#emailTimer)
     document.removeEventListener("visibilitychange", this.#onVisible)
     window.removeEventListener("online", this.#onVisible)
@@ -288,6 +310,7 @@ export class Chat implements PanelController {
 
   #reset(): void {
     this.#client.reset()
+    this.#closeApp()
     this.#starting = null
     this.#beginning = null
     this.#inbox = null
@@ -299,6 +322,8 @@ export class Chat implements PanelController {
     this.#ratings.clear()
     this.#rateKey = ""
     this.#view = null
+    this.#lists = false
+    this.#listsLoaded = false
     this.#emailSaved = false
     this.#emailEditing = false
     this.#emailKey = ""
@@ -341,6 +366,7 @@ export class Chat implements PanelController {
       }
       this.#phase = "ready"
       this.#view ??= { kind: "home" }
+      this.#loadLists()
       this.#render()
       this.#scrollToEnd()
       this.#markRead()
@@ -352,6 +378,18 @@ export class Chat implements PanelController {
       this.#render()
     })
     return this.#starting
+  }
+
+  #loadLists(): void {
+    if (this.#listsLoaded || !this.#host.config().channel) return
+    this.#listsLoaded = true
+    void this.#client
+      .lists()
+      .then((result) => {
+        this.#lists = (result?.lists.length ?? 0) > 0
+        this.#render()
+      })
+      .catch(() => undefined)
   }
 
   async #preview(): Promise<void> {
@@ -883,12 +921,54 @@ export class Chat implements PanelController {
 
   #go(view: View): void {
     this.#stopTyping()
+    if (view.kind !== "app") this.#closeApp()
     this.#view = view
     this.#render()
     if (view.kind === "thread") {
       this.#scrollToEnd()
       this.#textarea.focus({ preventScroll: true })
     }
+  }
+
+  #closeApp(): void {
+    this.#appLoad++
+    this.#appError = false
+    this.#app?.handle.destroy()
+    this.#app = null
+  }
+
+  async #openApp(kind: AppKind): Promise<void> {
+    this.#closeApp()
+    const load = this.#appLoad
+    this.#view = { kind: "app", app: kind }
+    this.#render()
+    try {
+      const apps = await loadApps()
+      const inbox = this.#inbox
+      if (load !== this.#appLoad || !inbox) return
+      const { locale } = this.#host.config()
+      const handle = await apps.mountApp(kind, {
+        root: this.#host.panel.getRootNode(),
+        client: this.#client,
+        inbox,
+        locale,
+        mailingLists: this.#lists,
+        back: () => this.#go({ kind: "home" }),
+        open: (next) => void this.#openApp(next),
+        created: (result) => {
+          const id = result.conversation.id
+          if (!this.#conversations.has(id)) this.#conversations.set(id, result.conversation)
+          if (!this.#threads.has(id)) this.#threads.set(id, { messages: [], complete: true, loading: false })
+          this.#upsertMessage(result.message, false)
+        },
+        viewConversation: (id) => void this.#openThread(id),
+      })
+      if (load !== this.#appLoad) return handle.destroy()
+      this.#app = { kind, handle }
+    } catch {
+      if (load === this.#appLoad) this.#appError = true
+    }
+    if (load === this.#appLoad) this.#render()
   }
 
   #render(): void {
@@ -920,6 +1000,7 @@ export class Chat implements PanelController {
     const view = this.#view ?? { kind: "home" }
     if (view.kind === "home") this.#renderHome()
     else if (view.kind === "list") this.#renderList()
+    else if (view.kind === "app") this.#renderApp()
     else this.#renderThread()
     this.#syncJump()
   }
@@ -987,7 +1068,9 @@ export class Chat implements PanelController {
         children.push(who, heading)
       } else {
         const heading = el("div", "heading")
-        heading.append(el("h2", "title", this.#t(msg`All conversations`)))
+        heading.append(
+          el("h2", "title", view.kind === "app" ? this.#t(appTitle(view.app)) : this.#t(msg`All conversations`))
+        )
         children.push(heading)
       }
     }
@@ -1020,14 +1103,37 @@ export class Chat implements PanelController {
     const home = buildHome({
       inbox,
       conversations: this.#sorted(),
+      mailingLists: this.#lists,
       locale: this.#host.config().locale,
       t: (descriptor) => this.#t(descriptor),
       notice: this.#notice,
       openConversation: (id) => void this.#openThread(id),
       allConversations: () => this.#go({ kind: "list" }),
       newConversation: () => this.#go({ kind: "thread", id: null }),
+      openApp: (kind) => void this.#openApp(kind),
     })
     this.#body.replaceChildren(home)
+  }
+
+  #renderApp(): void {
+    this.#scrollThread = undefined
+    const app = this.#app
+    if (app) {
+      if (this.#body.firstChild !== app.handle.element || this.#body.childElementCount !== 1)
+        this.#body.replaceChildren(app.handle.element)
+      return
+    }
+    const center = el("div", "center")
+    if (this.#appError) {
+      center.append(
+        el("p", "empty", this.#t(msg`Could not load this. Try again.`)),
+        textButton(this.#t(msg`Try again`), "primary", () => {
+          const view = this.#view
+          if (view?.kind === "app") void this.#openApp(view.app)
+        })
+      )
+    } else center.append(el("p", "hint", this.#t(msg`Loading…`)))
+    this.#body.replaceChildren(center)
   }
 
   #renderList(): void {
@@ -1085,6 +1191,7 @@ export class Chat implements PanelController {
   }
 
   async #openThread(id: string): Promise<void> {
+    this.#closeApp()
     this.#view = { kind: "thread", id }
     this.#render()
     if (!this.#threads.get(id)?.complete && !this.#threads.get(id)?.messages.length)

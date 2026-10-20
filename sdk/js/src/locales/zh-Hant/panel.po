@@ -19,10 +19,18 @@ msgstr "{name} 正在輸入…"
 msgid "{name} joined the conversation"
 msgstr "{name} 加入了對話"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "一個錯誤、一個想法、一聲感謝"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "所有對話"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "所有系統運作正常"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "對話已關閉"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "無法載入，請再試一次。"
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "無法儲存您的電子郵件地址。請再試一次。"
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "無法傳送您的評價。請再試一次。"
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "效能下降"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "請輸入有效的電子郵件地址。"
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "意見回饋"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "取得更新"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "跳至最新"
 msgid "Loading…"
 msgstr "載入中…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "維護"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "嚴重故障"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "訊息"
@@ -154,9 +186,17 @@ msgstr "訊息"
 msgid "Monitoring"
 msgstr "監控中"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "團隊的更多內容"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "新對話"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "透過電子郵件取得消息"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "未傳送。"
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "線上"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "部分故障"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "請登入後與我們聊天。"
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "略過"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "狀態"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

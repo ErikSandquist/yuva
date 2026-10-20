@@ -19,10 +19,18 @@ msgstr "{name} ಟೈಪ್ ಮಾಡುತ್ತಿದ್ದಾರೆ…"
 msgid "{name} joined the conversation"
 msgstr "{name} ಸಂಭಾಷಣೆಗೆ ಸೇರಿದ್ದಾರೆ"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ಒಂದು ಬಗ್, ಒಂದು ಆಲೋಚನೆ, ಒಂದು ಧನ್ಯವಾದ"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "ಎಲ್ಲಾ ಸಂಭಾಷಣೆಗಳು"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "ಎಲ್ಲಾ ಸಿಸ್ಟಮ್‌ಗಳು ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿವೆ"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "ಸಂಭಾಷಣೆ ಮುಚ್ಚಲಾಗಿದೆ"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "ನಿಮ್ಮ ರೇಟಿಂಗ್ ಕಳುಹಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "ಕಾರ್ಯಕ್ಷಮತೆ ಕುಸಿದಿದೆ"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "ಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆ"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "ಇತ್ತೀಚಿನದಕ್ಕೆ ಹೋಗಿ"
 msgid "Loading…"
 msgstr "ಲೋಡ್ ಆಗುತ್ತಿದೆ…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "ನಿರ್ವಹಣೆ"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "ದೊಡ್ಡ ಅಡಚಣೆ"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "ಸಂದೇಶ"
@@ -154,9 +186,17 @@ msgstr "ಸಂದೇಶಗಳು"
 msgid "Monitoring"
 msgstr "ನಿಗಾದಲ್ಲಿದೆ"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "ತಂಡದಿಂದ ಇನ್ನಷ್ಟು"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "ಹೊಸ ಸಂಭಾಷಣೆ"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ಇಮೇಲ್ ಮೂಲಕ ಸುದ್ದಿ"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "ಕಳುಹಿಸಲಾಗಿಲ್ಲ."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ಆನ್‌ಲೈನ್"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "ಭಾಗಶಃ ಅಡಚಣೆ"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "ನಮ್ಮೊಂದಿಗೆ ಚಾಟ್ ಮಾಡಲು ಸೈನ್
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "ಬಿಟ್ಟುಬಿಡಿ"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "ಸ್ಥಿತಿ"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

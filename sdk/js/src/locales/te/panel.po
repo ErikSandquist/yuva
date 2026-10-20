@@ -19,10 +19,18 @@ msgstr "{name} టైప్ చేస్తున్నారు…"
 msgid "{name} joined the conversation"
 msgstr "{name} సంభాషణలో చేరారు"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "ఒక బగ్, ఒక ఆలోచన, ఒక ధన్యవాదం"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "అన్ని సంభాషణలు"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "అన్ని సిస్టమ్‌లు పనిచేస్తున్నాయి"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "సంభాషణ మూసివేయబడింది"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "లోడ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "మీ ఇమెయిల్ చిరునామాను సేవ్ చేయలేకపోయాము. మళ్లీ ప్రయత్నించండి."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "మీ రేటింగ్‌ను పంపలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "పనితీరు తగ్గింది"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "చెల్లుబాటు అయ్యే ఇమెయిల్ చిరునామా నమోదు చేయండి."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "అభిప్రాయం"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "అప్‌డేట్‌లు పొందండి"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "తాజాదానికి వెళ్లండి"
 msgid "Loading…"
 msgstr "లోడ్ అవుతోంది…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "నిర్వహణ"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "పెద్ద అంతరాయం"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "సందేశం"
@@ -154,9 +186,17 @@ msgstr "సందేశాలు"
 msgid "Monitoring"
 msgstr "పర్యవేక్షిస్తున్నాము"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "టీమ్ నుండి మరిన్ని"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "కొత్త సంభాషణ"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ఇమెయిల్‌లో వార్తలు"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "పంపలేదు."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ఆన్‌లైన్"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "పాక్షిక అంతరాయం"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "మాతో చాట్ చేయడానికి సైన్ ఇ�
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "దాటవేయండి"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "స్థితి"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

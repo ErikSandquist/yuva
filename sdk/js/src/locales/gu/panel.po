@@ -19,10 +19,18 @@ msgstr "{name} લખી રહ્યા છે…"
 msgid "{name} joined the conversation"
 msgstr "{name} વાતચીતમાં જોડાયા"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "એક બગ, એક વિચાર, એક આભાર"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "બધી વાતચીત"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "બધી સિસ્ટમ ચાલુ છે"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "વાતચીત બંધ થઈ"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "લોડ થઈ શક્યું નથી. ફરી પ્રયત્ન કરો."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "તમારું ઈમેલ સરનામું સાચવી શકાયું નથી. ફરી પ્રયાસ કરો."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "તમારું રેટિંગ મોકલી શકાયું નથી. ફરી પ્રયાસ કરો."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "પ્રદર્શન ઘટ્યું છે"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "માન્ય ઈમેલ સરનામું દાખલ કરો."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "પ્રતિસાદ"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "અપડેટ મેળવો"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "નવીનતમ પર જાઓ"
 msgid "Loading…"
 msgstr "લોડ થઈ રહ્યું છે…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "જાળવણી"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "મોટી ખામી"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "સંદેશ"
@@ -154,9 +186,17 @@ msgstr "સંદેશા"
 msgid "Monitoring"
 msgstr "નિરીક્ષણ ચાલુ છે"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "ટીમ તરફથી વધુ"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "નવી વાતચીત"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "ઇમેઇલ દ્વારા સમાચાર"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "મોકલાયો નથી."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "ઓનલાઇન"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "આંશિક ખામી"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "અમારી સાથે ચેટ કરવા સાઇન ઇન 
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "છોડી દો"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "સ્થિતિ"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

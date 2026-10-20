@@ -19,10 +19,18 @@ msgstr "Ο/Η {name} πληκτρολογεί…"
 msgid "{name} joined the conversation"
 msgstr "Ο/Η {name} μπήκε στη συνομιλία"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Ένα σφάλμα, μια ιδέα, ένα ευχαριστώ"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Όλες οι συνομιλίες"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Όλα τα συστήματα λειτουργούν"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Η συνομιλία έκλεισε"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Δεν ήταν δυνατή η φόρτωση. Δοκιμάστε ξανά."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Δεν ήταν δυνατή η αποθήκευση της διεύθυνσης email σας. Δοκιμάστε ξανά."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Δεν ήταν δυνατή η αποστολή της αξιολόγησής σας. Δοκιμάστε ξανά."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Μειωμένες επιδόσεις"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Εισαγάγετε μια έγκυρη διεύθυνση email."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Σχόλια"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Λάβετε ενημερώσεις"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Μετάβαση στο τελευταίο"
 msgid "Loading…"
 msgstr "Φόρτωση…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Συντήρηση"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Μεγάλη διακοπή"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Μήνυμα"
@@ -154,9 +186,17 @@ msgstr "Μηνύματα"
 msgid "Monitoring"
 msgstr "Παρακολούθηση"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Περισσότερα από την ομάδα"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Νέα συνομιλία"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Νέα με email"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Δεν στάλθηκε."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Συνδεδεμένος"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Μερική διακοπή"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Συνδεθείτε για να συνομιλήσετε μαζί μα�
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Παράλειψη"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Κατάσταση"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

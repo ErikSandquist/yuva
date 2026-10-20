@@ -19,10 +19,18 @@ msgstr "{name} está a escrever…"
 msgid "{name} joined the conversation"
 msgstr "{name} juntou-se à conversa"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Um erro, uma ideia, um agradecimento"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Todas as conversas"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Todos os sistemas a funcionar"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Conversa encerrada"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Não foi possível carregar. Tente novamente."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Não foi possível guardar o seu e-mail. Tente novamente."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Não foi possível enviar a sua avaliação. Tente novamente."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Desempenho degradado"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Introduza um endereço de e-mail válido."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Comentários"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Receber novidades"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "Ir para a mais recente"
 msgid "Loading…"
 msgstr "A carregar…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Manutenção"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Grande interrupção"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Mensagem"
@@ -154,9 +186,17 @@ msgstr "Mensagens"
 msgid "Monitoring"
 msgstr "Em monitorização"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Mais da equipa"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Nova conversa"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Novidades por e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Não enviada."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "Online"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Interrupção parcial"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Inicie sessão para falar connosco."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Saltar"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Estado"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

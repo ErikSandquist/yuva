@@ -19,10 +19,18 @@ msgstr "{name} печатает…"
 msgid "{name} joined the conversation"
 msgstr "{name} присоединился(-ась) к беседе"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "Ошибка, идея или благодарность"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "Все диалоги"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "Все системы работают"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "Беседа закрыта"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "Не удалось загрузить. Повторите попытку."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "Не удалось сохранить ваш e-mail. Повторите попытку."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Не удалось отправить вашу оценку. Повторите попытку."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "Сниженная производительность"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "Введите корректный адрес e-mail."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "Отзыв"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "Получать новости"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "К последнему"
 msgid "Loading…"
 msgstr "Загрузка…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "Серьёзный сбой"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "Сообщение"
@@ -154,9 +186,17 @@ msgstr "Сообщения"
 msgid "Monitoring"
 msgstr "Наблюдаем"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "Ещё от команды"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "Новый диалог"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "Новости по e-mail"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "Не отправлено."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "В сети"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "Частичный сбой"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "Войдите, чтобы пообщаться с нами."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "Пропустить"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "Статус"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"

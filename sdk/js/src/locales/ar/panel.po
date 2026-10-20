@@ -19,10 +19,18 @@ msgstr "{name} يكتب…"
 msgid "{name} joined the conversation"
 msgstr "انضم {name} إلى المحادثة"
 
+#: src/panel/home.ts
+msgid "A bug, an idea, a thank-you"
+msgstr "خطأ أو فكرة أو شكر"
+
 #: src/panel/chat.ts
 #: src/panel/home.ts
 msgid "All conversations"
 msgstr "كل المحادثات"
+
+#: src/panel/home.ts
+msgid "All systems operational"
+msgstr "جميع الأنظمة تعمل"
 
 #: src/panel/chat.ts
 msgid "Anything you'd like to add? (optional)"
@@ -87,12 +95,20 @@ msgid "Conversation closed"
 msgstr "تم إغلاق المحادثة"
 
 #: src/panel/chat.ts
+msgid "Could not load this. Try again."
+msgstr "تعذّر التحميل. حاول مرة أخرى."
+
+#: src/panel/chat.ts
 msgid "Could not save your e-mail address. Try again."
 msgstr "تعذّر حفظ بريدك الإلكتروني. حاول مرة أخرى."
 
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "تعذّر إرسال تقييمك. حاول مرة أخرى."
+
+#: src/panel/home.ts
+msgid "Degraded performance"
+msgstr "أداء متدهور"
 
 #: src/panel/chat.ts
 msgid "Dismiss"
@@ -109,6 +125,14 @@ msgstr "Enter"
 #: src/panel/chat.ts
 msgid "Enter a valid e-mail address."
 msgstr "أدخل بريدًا إلكترونيًا صالحًا."
+
+#: src/panel/home.ts
+msgid "Feedback"
+msgstr "ملاحظات"
+
+#: src/panel/home.ts
+msgid "Get updates"
+msgstr "احصل على التحديثات"
 
 #: src/panel/chat.ts
 msgid "Good"
@@ -142,6 +166,14 @@ msgstr "الانتقال إلى الأحدث"
 msgid "Loading…"
 msgstr "جارٍ التحميل…"
 
+#: src/panel/home.ts
+msgid "Maintenance"
+msgstr "صيانة"
+
+#: src/panel/home.ts
+msgid "Major outage"
+msgstr "انقطاع كبير"
+
 #: src/panel/chat.ts
 msgid "Message"
 msgstr "رسالة"
@@ -154,9 +186,17 @@ msgstr "الرسائل"
 msgid "Monitoring"
 msgstr "قيد المراقبة"
 
+#: src/panel/home.ts
+msgid "More from the team"
+msgstr "المزيد من الفريق"
+
 #: src/panel/chat.ts
 msgid "New conversation"
 msgstr "محادثة جديدة"
+
+#: src/panel/home.ts
+msgid "News by e-mail"
+msgstr "الأخبار عبر البريد الإلكتروني"
 
 #: src/panel/chat.ts
 msgid "No conversations yet"
@@ -173,6 +213,10 @@ msgstr "لم تُرسل."
 #: src/panel/chat.ts
 msgid "Online"
 msgstr "متصل"
+
+#: src/panel/home.ts
+msgid "Partial outage"
+msgstr "انقطاع جزئي"
 
 #: src/panel/home.ts
 msgid "Powered by {brand}"
@@ -246,6 +290,10 @@ msgstr "سجّل الدخول لتتحدث معنا."
 #: src/panel/chat.ts
 msgid "Skip"
 msgstr "تخطي"
+
+#: src/panel/home.ts
+msgid "Status"
+msgstr "الحالة"
 
 #: src/panel/chat.ts
 msgid "Take a screenshot"
