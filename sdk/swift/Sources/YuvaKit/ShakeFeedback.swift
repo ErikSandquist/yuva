@@ -131,18 +131,21 @@ final class ShakeFeedback {
         hooked = true
         let original = #selector(UIResponder.motionEnded(_:with:))
         let replacement = #selector(UIWindow.yuvaMotionEnded(_:with:))
-        guard let replacementMethod = class_getInstanceMethod(UIWindow.self, replacement) else { return }
-        if class_addMethod(
+        guard let replacementMethod = class_getInstanceMethod(UIWindow.self, replacement),
+              let inherited = class_getInstanceMethod(UIWindow.self, original)
+        else { return }
+        originalMotionEnded = unsafeBitCast(method_getImplementation(inherited), to: MotionEnded.self)
+        if !class_addMethod(
             UIWindow.self, original, method_getImplementation(replacementMethod),
             method_getTypeEncoding(replacementMethod))
         {
-            guard let inherited = class_getInstanceMethod(UIResponder.self, original) else { return }
-            method_setImplementation(replacementMethod, method_getImplementation(inherited))
-        } else if let originalMethod = class_getInstanceMethod(UIWindow.self, original) {
-            method_exchangeImplementations(originalMethod, replacementMethod)
+            method_setImplementation(inherited, method_getImplementation(replacementMethod))
         }
     }
 }
+
+private typealias MotionEnded = @convention(c) (UIWindow, Selector, UIEvent.EventSubtype, UIEvent?) -> Void
+nonisolated(unsafe) private var originalMotionEnded: MotionEnded?
 
 private final class HostBox {
     weak var host: UIViewController?
@@ -157,7 +160,7 @@ final class YuvaFeedbackHost: UIHostingController<YuvaFeedbackView> {
 
 extension UIWindow {
     @objc func yuvaMotionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        yuvaMotionEnded(motion, with: event)
+        originalMotionEnded?(self, #selector(UIResponder.motionEnded(_:with:)), motion, event)
         if motion == .motionShake { ShakeFeedback.shared.shaken(in: self) }
     }
 }
