@@ -3,7 +3,6 @@ import { BookOpenTextIcon, ExternalLinkIcon, GlobeIcon } from "lucide-react"
 import { Link, useSearchParams } from "react-router"
 
 import { ContactAvatar, ErrorLine, hostOf, InboxMark } from "@/components/common"
-import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { formatShort, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import type { ChartConfig } from "@/components/ui/chart"
@@ -11,12 +10,20 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { CategoryChip } from "@/features/conversation/Feedback"
 import { DailyChart, zeroFill } from "@/components/common/DailyChart"
 import { ThreadList } from "@/features/docs/discussions/DiscussionsPane"
-import { DocsGuide, DocsSitePicker, DocsWindow, helpfulShare, usePickedSite } from "@/features/docs/DocsColumn"
+import {
+  DocsFrame,
+  DocsGuide,
+  DocsSitePicker,
+  DocsWindow,
+  helpfulShare,
+  usePickedSite,
+} from "@/features/docs/DocsColumn"
 import { pageLabel, PageRatingMark } from "@/features/docs/PageContext"
 import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary } from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useConversations } from "@/features/inbox/queries"
-import { Card, EmptyRow, PageHeader, Section } from "@/features/settings/ui"
+import { Card, EmptyRow, Section } from "@/features/settings/ui"
+import { framePad } from "@/features/status/PageFrame"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useAnalytics } from "@/features/analytics/queries"
 import type { AnalyticsFilter, ConversationListItem, DocsPageDay } from "@/lib/api"
@@ -33,13 +40,17 @@ export function DocsHome() {
   const none = !!pages.data && pages.data.pages[0]?.items.length === 0
   if (none) {
     return (
-      <PaneEmpty
-        icon={BookOpenTextIcon}
-        title={<Trans>Feedback and discussions from your documentation</Trans>}
-        testId="docs-home"
-      >
-        <DocsGuide />
-      </PaneEmpty>
+      <DocsFrame testId="docs-home">
+        <div className="m-6 flex max-w-xl flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-12 text-center text-body text-muted-foreground">
+          <BookOpenTextIcon className="size-6 text-faint" />
+          <p className="font-medium text-foreground">
+            <Trans>Feedback and discussions from your documentation</Trans>
+          </p>
+          <div>
+            <DocsGuide />
+          </div>
+        </div>
+      </DocsFrame>
     )
   }
   return <DocsOverview />
@@ -49,7 +60,7 @@ function Tiles({ tiles, testId }: { tiles: [string, string, string?][]; testId: 
   return (
     <div className="grid grid-cols-3 gap-2 phone:grid-cols-2" data-testid={testId}>
       {tiles.map(([value, label, tone]) => (
-        <div key={label} className="rounded-2xl border bg-card px-4 py-3.5">
+        <div key={label} className="rounded-xl border bg-card px-4 py-3.5">
           <b className={cn("block text-page tabular-nums", tone)}>{value}</b>
           <span className="text-small text-faint">{label}</span>
         </div>
@@ -72,66 +83,66 @@ export function DocsOverview() {
   const fmt = new Intl.NumberFormat(i18n.locale)
   const s = summary.data
   return (
-    <Pane wide testId="docs-overview" className="gap-6">
-      <PaneBack to="/docs" label={t`Docs`} />
-      <PageHeader
-        back={false}
-        title={<Trans>Documentation pages</Trans>}
-        description={
-          <span className="flex flex-col gap-1">
+    <DocsFrame testId="docs-overview" list>
+      <div className={cn(framePad, "max-w-[900px]")}>
+        <div className="flex flex-col gap-0.5">
+          <h2 className="text-title">
+            <Trans>Documentation pages</Trans>
+          </h2>
+          <p className="text-body text-muted-foreground">
             <Plural
               value={days}
               one="The last day, over the inboxes you can see."
               other="The last # days, over the inboxes you can see."
             />
-            {site && (
-              <span className="inline-flex items-center gap-1.5 text-body" data-testid="docs-site">
-                <GlobeIcon className="size-4 text-faint" />
-                <span dir="ltr">{hostOf(site)}</span>
-              </span>
-            )}
-          </span>
-        }
-      />
-      <DocsSitePicker className="hidden phone:flex" />
-      <DocsWindow className="hidden phone:flex" />
-      {summary.isPending && <Skeleton className="h-28 rounded-2xl" />}
-      <ErrorLine error={summary.error} />
-      {s && (
-        <>
-          <Tiles
-            testId="docs-summary-tiles"
-            tiles={[
-              [fmt.format(s.totals.up), t`helpful`, "text-success"],
-              [fmt.format(s.totals.down), t`not helpful`, "text-destructive"],
-              [helpfulShare(s.totals, i18n.locale), t`helpful share`],
-              [fmt.format(s.totals.feedback), t`feedback`],
-              [fmt.format(s.totals.threads), t`new discussions`],
-              [
-                fmt.format(s.totals.pending_posts),
-                t`waiting for approval`,
-                s.totals.pending_posts ? "text-warning" : undefined,
-              ],
-            ]}
-          />
-          <Section title={<Trans>Ratings per day</Trans>}>
-            <Card>
-              <DailyChart rows={s.days} config={ratings} stacked testId="docs-summary-ratings" />
-            </Card>
-          </Section>
-          <Section title={<Trans>Feedback and discussions per day</Trans>}>
-            <Card>
-              <DailyChart
-                rows={s.days.map(({ day, feedback, threads }) => ({ day, feedback, threads }))}
-                config={conversations}
-                className="h-36"
-                testId="docs-summary-conversations"
-              />
-            </Card>
-          </Section>
-        </>
-      )}
-    </Pane>
+          </p>
+          {site && (
+            <p className="inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
+              <GlobeIcon className="size-4 text-faint" />
+              <span dir="ltr">{hostOf(site)}</span>
+            </p>
+          )}
+        </div>
+        <DocsSitePicker className="hidden phone:flex" />
+        <DocsWindow className="hidden phone:flex" />
+        {summary.isPending && <Skeleton className="h-28 rounded-2xl" />}
+        <ErrorLine error={summary.error} />
+        {s && (
+          <>
+            <Tiles
+              testId="docs-summary-tiles"
+              tiles={[
+                [fmt.format(s.totals.up), t`helpful`, "text-success"],
+                [fmt.format(s.totals.down), t`not helpful`, "text-destructive"],
+                [helpfulShare(s.totals, i18n.locale), t`helpful share`],
+                [fmt.format(s.totals.feedback), t`feedback`],
+                [fmt.format(s.totals.threads), t`new discussions`],
+                [
+                  fmt.format(s.totals.pending_posts),
+                  t`waiting for approval`,
+                  s.totals.pending_posts ? "text-warning" : undefined,
+                ],
+              ]}
+            />
+            <Section title={<Trans>Ratings per day</Trans>}>
+              <Card>
+                <DailyChart rows={s.days} config={ratings} stacked testId="docs-summary-ratings" />
+              </Card>
+            </Section>
+            <Section title={<Trans>Feedback and discussions per day</Trans>}>
+              <Card>
+                <DailyChart
+                  rows={s.days.map(({ day, feedback, threads }) => ({ day, feedback, threads }))}
+                  config={conversations}
+                  className="h-36"
+                  testId="docs-summary-conversations"
+                />
+              </Card>
+            </Section>
+          </>
+        )}
+      </div>
+    </DocsFrame>
   )
 }
 
@@ -333,13 +344,11 @@ export function DocsPagePane() {
       ]
     : []
   return (
-    <Pane wide testId="docs-page" key={`${inboxId} ${page}`} className="gap-6">
-      <PaneBack to="/docs" label={t`Docs`} />
-      <PageHeader
-        back={false}
-        title={d?.title || pageLabel(page)}
-        description={
-          <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body">
+    <DocsFrame testId="docs-page" key={`${inboxId} ${page}`} list>
+      <div className={cn(framePad, "max-w-[900px]")}>
+        <div className="flex flex-col gap-0.5">
+          <h2 className="text-title break-words">{d?.title || pageLabel(page)}</h2>
+          <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
             {inbox && (
               <span className="inline-flex items-center gap-1.5">
                 <InboxMark name={inbox.name} color={inbox.branding.color} className="size-4 text-[9px]" />
@@ -358,42 +367,42 @@ export function DocsPagePane() {
               <ExternalLinkIcon className="size-3.5 shrink-0" />
             </a>
           </span>
-        }
-      />
-      <DocsWindow className="hidden phone:flex" />
-      {detail.isPending && <Skeleton className="h-28 rounded-2xl" />}
-      <ErrorLine error={detail.error} />
-      {d && (
-        <>
-          <Tiles tiles={tiles} testId="docs-tiles" />
-          <PageTraffic inboxId={inboxId} page={page} days={days} ratings={d.up + d.down} />
-          <Section title={<Trans>Ratings per day</Trans>}>
-            <Days days={detail.data?.days ?? []} window={days} />
-          </Section>
-          <Section title={<Trans>Discussions</Trans>}>
-            <ThreadList
-              filters={{ inbox_id: inboxId, page }}
-              showPage={false}
-              from={`/docs/page?${params}`}
-              empty={<Trans>No discussions on this page yet.</Trans>}
+        </div>
+        <DocsWindow className="hidden phone:flex" />
+        {detail.isPending && <Skeleton className="h-28 rounded-2xl" />}
+        <ErrorLine error={detail.error} />
+        {d && (
+          <>
+            <Tiles tiles={tiles} testId="docs-tiles" />
+            <PageTraffic inboxId={inboxId} page={page} days={days} ratings={d.up + d.down} />
+            <Section title={<Trans>Ratings per day</Trans>}>
+              <Days days={detail.data?.days ?? []} window={days} />
+            </Section>
+            <Section title={<Trans>Discussions</Trans>}>
+              <ThreadList
+                filters={{ inbox_id: inboxId, page }}
+                showPage={false}
+                from={`/docs/page?${params}`}
+                empty={<Trans>No discussions on this page yet.</Trans>}
+              />
+            </Section>
+            <Conversations
+              inboxId={inboxId}
+              page={page}
+              kind="conversation"
+              title={<Trans>Conversations</Trans>}
+              empty={<Trans>No conversations from this page.</Trans>}
             />
-          </Section>
-          <Conversations
-            inboxId={inboxId}
-            page={page}
-            kind="conversation"
-            title={<Trans>Conversations</Trans>}
-            empty={<Trans>No conversations from this page.</Trans>}
-          />
-          <Conversations
-            inboxId={inboxId}
-            page={page}
-            kind="feedback"
-            title={<Trans>Feedback</Trans>}
-            empty={<Trans>No feedback from this page.</Trans>}
-          />
-        </>
-      )}
-    </Pane>
+            <Conversations
+              inboxId={inboxId}
+              page={page}
+              kind="feedback"
+              title={<Trans>Feedback</Trans>}
+              empty={<Trans>No feedback from this page.</Trans>}
+            />
+          </>
+        )}
+      </div>
+    </DocsFrame>
   )
 }

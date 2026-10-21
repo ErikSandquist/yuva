@@ -41,6 +41,8 @@ import type { Conversation, ConversationUpdate, Priority } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes, useLabels } from "@/lib/workspace"
 import { Button } from "@/components/ui/button"
+import { look } from "@/features/inbox/PageFrame"
+import { cn } from "@/lib/utils"
 
 export function ConversationMenu({
   c,
@@ -56,6 +58,8 @@ export function ConversationMenu({
   onIncident,
   onIdea,
   folded,
+  onFind,
+  outlined,
 }: {
   c: Conversation
   open: boolean
@@ -70,6 +74,8 @@ export function ConversationMenu({
   onIncident: () => void
   onIdea: () => void
   folded?: { hand: () => void; snooze: () => void; find: () => void }
+  onFind?: () => void
+  outlined?: boolean
 }) {
   const { t } = useLingui()
   const text = useEnumText()
@@ -80,7 +86,13 @@ export function ConversationMenu({
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" size="icon-sm" className="self-start text-faint" />}
+        render={
+          outlined ? (
+            <Button variant="outline" className={cn(look.btnSm, "w-[30px] px-0")} />
+          ) : (
+            <Button variant="ghost" size="icon-sm" className="self-start text-faint" />
+          )
+        }
         aria-label={t`More actions`}
         title={t`More actions`}
         data-testid="conversation-menu"
@@ -118,7 +130,20 @@ export function ConversationMenu({
             <DropdownMenuSeparator />
           </>
         )}
-        <DropdownMenuItem onClick={onContact}>
+        {onFind && (
+          <DropdownMenuItem onClick={onFind} data-testid="find-toggle">
+            <SearchIcon />
+            <span className="flex-1">
+              <Trans>Search in this conversation</Trans>
+            </span>
+            <span className="flex gap-0.5">
+              {keyLabel(SHORTCUTS.find).map((k) => (
+                <Kbd key={k}>{k}</Kbd>
+              ))}
+            </span>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuItem onClick={onContact} data-testid="toggle-contact-panel">
           <UserIcon />
           <span className="flex-1">
             <Trans>Contact details</Trans>

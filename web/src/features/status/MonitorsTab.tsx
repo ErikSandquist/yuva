@@ -6,14 +6,13 @@ import {
   PauseIcon,
   PencilIcon,
   PlayIcon,
-  PlusIcon,
   Trash2Icon,
 } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router"
 
 import { ErrorLine, toast, useConfirm } from "@/components/common"
-import { formatDate, formatDuration, formatMs, formatRelative } from "@/components/common/text"
+import { formatDate, formatDuration, formatRelative } from "@/components/common/text"
 import { keyLabel, STATUS_KEYS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,22 +23,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Card, EmptyRow, Rows, StatusTag } from "@/features/settings/ui"
+import { PagePicker, useStatusScope } from "@/features/status/IncidentsPage"
 import { MonitorChecksDialog } from "@/features/status/MonitorChecks"
 import { MonitorDialog } from "@/features/status/MonitorDialog"
 import { MonitorTokenDialog } from "@/features/status/MonitorToken"
+import { Chip, FrameButton, framePad, PageFrame, Pill, ProductTag } from "@/features/status/PageFrame"
 import {
   incidentLink,
-  useLastCheck,
   useMonitorMutations,
   useMonitorSummary,
-  useStatusComponents,
-  useStatusMonitors,
+  usePagesComponents,
+  usePagesMonitors,
 } from "@/features/status/queries"
 import { useStatusText } from "@/features/status/text"
 import { usePercent } from "@/features/status/UptimeBars"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { StatusComponent, StatusMonitor, StatusMonitorWithToken, StatusPage } from "@/lib/api"
+import type { Inbox, StatusComponent, StatusMonitor, StatusMonitorWithToken, StatusPage } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
@@ -63,59 +62,73 @@ function certDays(m: StatusMonitor) {
   return Math.floor((Date.parse(m.cert_expires_at) - Date.now()) / 86400000)
 }
 
-function Metrics({ pageId, m }: { pageId: string; m: StatusMonitor }) {
-  const { t } = useLingui()
-  const percent = usePercent()
+function useResponseBars(pageId: string, m: StatusMonitor) {
   const summary = useMonitorSummary(pageId, m.id, "24h").data
-  if (!summary || summary.checks === 0) return null
-  const timed = m.kind === "http" || m.kind === "tcp"
-  const size = Math.max(1, Math.ceil(summary.buckets.length / 24))
-  const groups = Array.from({ length: Math.ceil(summary.buckets.length / size) }, (_, i) =>
-    summary.buckets.slice(i * size, i * size + size)
+  const buckets = summary?.buckets ?? []
+  const size = Math.max(1, Math.ceil(buckets.length / 24))
+  const groups = Array.from({ length: Math.ceil(buckets.length / size) }, (_, i) =>
+    buckets.slice(i * size, i * size + size)
   ).map((g) => ({
     ms: Math.max(0, ...g.map((b) => b.p50_ms ?? 0)),
     failed: g.some((b) => b.failures > 0),
     checks: g.reduce((n, b) => n + b.checks, 0),
   }))
+  return { summary, groups }
+}
+
+function Response({ pageId, m }: { pageId: string; m: StatusMonitor }) {
+  const { t } = useLingui()
+  const { groups } = useResponseBars(pageId, m)
+  const timed = m.kind === "http" || m.kind === "tcp"
   const top = Math.max(1, ...groups.map((g) => g.ms))
+  const bars = groups.length > 0 ? groups : Array.from({ length: 24 }, () => ({ ms: 0, failed: false, checks: 0 }))
   return (
-    <div className="flex shrink-0 items-center gap-4 phone:basis-full" data-testid="status-monitor-metrics">
-      {timed && (
-        <span className="flex h-6 w-36 items-end gap-px" title={t`Response time, last 24 hours`} aria-hidden>
-          {groups.map((g, i) => (
-            <span
-              key={i}
-              className={cn(
-                "min-w-px flex-1 rounded-t-[2px]",
-                g.checks === 0 ? "bg-muted" : g.failed ? "bg-warning" : "bg-success/60"
-              )}
-              style={{ height: g.checks === 0 ? 2 : Math.max(2, Math.round((24 * g.ms) / top)) }}
-            />
-          ))}
-        </span>
-      )}
-      {summary.uptime !== undefined && (
-        <span className="w-16 text-end leading-tight">
-          <b className="block text-body font-medium tabular-nums">{percent(summary.uptime)}</b>
-          <span className="text-caption text-faint">
-            <Trans>24 hours</Trans>
-          </span>
-        </span>
-      )}
-    </div>
+    <span
+      className="flex h-6 items-end gap-px"
+      title={timed ? t`Response time, last 24 hours` : t`Results, last 24 hours`}
+      data-testid="status-monitor-metrics"
+      aria-hidden
+    >
+      {bars.map((g, i) => (
+        <span
+          key={i}
+          className={cn(
+            "min-w-px flex-1 rounded-t-[2px]",
+            g.checks === 0 ? "bg-muted" : g.failed ? "bg-warning" : timed ? "bg-success/70" : "bg-success/30",
+            timed && g.checks > 0 && i !== bars.length - 1 && "opacity-70"
+          )}
+          style={{ height: g.checks === 0 ? 2 : timed ? Math.max(3, Math.round((24 * g.ms) / top)) : 24 }}
+        />
+      ))}
+    </span>
   )
 }
 
-function Row({
-  page,
+function Uptime({ pageId, m }: { pageId: string; m: StatusMonitor }) {
+  const percent = usePercent()
+  const { summary } = useResponseBars(pageId, m)
+  return (
+    <span className="text-muted-foreground tabular-nums">
+      {summary?.uptime === undefined ? "–" : percent(summary.uptime)}
+    </span>
+  )
+}
+
+const cols =
+  "grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-4 @4xl:grid-cols-[minmax(0,1.3fr)_90px_minmax(0,1fr)_80px_150px_80px_90px_32px]"
+
+function MonitorRow({
   m,
+  page,
+  inbox,
   component,
   onChecks,
   onEdit,
   onToken,
 }: {
-  page: StatusPage
   m: StatusMonitor
+  page?: StatusPage
+  inbox?: Inbox
   component?: StatusComponent
   onChecks: () => void
   onEdit: () => void
@@ -124,104 +137,91 @@ function Row({
   const { t, i18n } = useLingui()
   const { canManage } = useSession()
   const text = useStatusText()
-  const mut = useMonitorMutations(page.id)
+  const mut = useMonitorMutations(m.page_id)
   const [confirm, dialog] = useConfirm()
   const key = m.paused ? "paused" : m.state
-  const tone = key === "up" ? "success" : key === "down" ? "danger" : key === "paused" ? "warning" : "muted"
   const held = overridden(m, component)
   const name = m.name
-  const failureState = text.component[m.failure_state]
-  const onFailure = text.onFailure[m.on_failure]
   const outside = m.kind === "http" || m.kind === "tcp"
-  const lastCheck = useLastCheck(page.id, m.id, outside)
-  const took = lastCheck.data?.duration_ms === undefined ? "" : formatMs(lastCheck.data.duration_ms, i18n.locale)
-  const goal = target(m)
+  const goal = target(m)?.replace(/^https?:\/\//, "")
   const days = certDays(m)
   const warnDays = Math.max(m.http?.cert_warn_days ?? 0, 14)
-  const certTone = days === null ? "" : days < 0 ? "text-destructive" : days <= warnDays ? "text-warning" : ""
-  const next = m.next_check_at ? formatRelative(m.next_check_at, i18n.locale) : null
   const expires = m.cert_expires_at ? formatDate(m.cert_expires_at, i18n.locale) : null
+  const every = m.interval ? formatDuration(m.interval, i18n.locale) : ""
   const last = m.last_result_at ? formatRelative(m.last_result_at, i18n.locale) : null
-  const lastLabel = last ? (
-    m.kind === "heartbeat" ? (
-      <Trans>Last beat {last}</Trans>
-    ) : outside ? (
-      <Trans>Last check {last}</Trans>
-    ) : (
-      <Trans>Last state {last}</Trans>
-    )
-  ) : (
-    <Trans>No result yet</Trans>
-  )
+  const stateTone = key === "up" ? "success" : key === "down" ? "danger" : "muted"
+  const stateLabel = key === "pending" ? t`Waiting` : text.monitorState[key]
   return (
-    <li className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3" data-testid="status-monitor">
-      <div className="min-w-0 flex-1 basis-56">
-        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body font-medium">
-          <button
-            type="button"
-            onClick={onChecks}
-            className="min-w-0 truncate rounded-sm text-start outline-none hover:underline focus-visible:underline"
-            data-testid="status-monitor-open"
-          >
-            {m.name}
-          </button>
-          <StatusTag tone={tone} data-testid="status-monitor-state">
-            {text.monitorState[key]}
-          </StatusTag>
-        </p>
-        <p className="mt-px text-small text-faint">
-          {text.monitorKind[m.kind]}
-          {component ? ` · ${component.name}` : ""}
-          {(m.kind === "heartbeat" || outside) && m.interval ? ` · ${formatDuration(m.interval, i18n.locale)}` : ""}
-          {" · "}
-          {lastLabel}
-        </p>
-        {outside && (
-          <p className="mt-px flex flex-wrap gap-x-3 text-small text-faint" data-testid="status-monitor-outside">
-            {goal && <span className="min-w-0 font-mono break-all text-muted-foreground">{goal}</span>}
-            {lastCheck.data?.duration_ms !== undefined && (
-              <span data-testid="status-monitor-response">
-                <Trans>Responded in {took}</Trans>
-              </span>
-            )}
-            {next && !m.paused && (
-              <span>
-                <Trans>Next check {next}</Trans>
-              </span>
-            )}
-            {expires && days !== null && (
-              <span className={certTone} data-testid="status-monitor-cert">
-                {days < 0 ? <Trans>Certificate expired {expires}</Trans> : <Trans>Certificate expires {expires}</Trans>}
-              </span>
-            )}
-          </p>
-        )}
-        <p className="text-small text-faint">
-          <Trans>
-            Sets {failureState}. {onFailure}.
-          </Trans>
-        </p>
+    <li
+      className={cn(cols, "border-t px-4 py-3 transition-colors first:border-t-0 hover:bg-muted/50")}
+      data-testid="status-monitor"
+    >
+      <span className="flex min-w-0 flex-col leading-[1.3]">
+        <button
+          type="button"
+          onClick={onChecks}
+          className="min-w-0 truncate rounded-sm text-start font-mono text-[13px] font-medium outline-none hover:underline focus-visible:underline"
+          title={m.name}
+          data-testid="status-monitor-open"
+        >
+          {goal ?? m.name}
+        </button>
+        <span className="truncate text-caption text-faint" data-testid="status-monitor-outside">
+          {m.kind === "heartbeat" ? (
+            <Trans>expects a ping every {every}</Trans>
+          ) : m.kind === "push" ? (
+            <Trans>state pushed by your alerting</Trans>
+          ) : (
+            <Trans>every {every}</Trans>
+          )}
+        </span>
         {m.state === "down" && !m.paused && m.last_message && (
-          <p className="mt-0.5 text-small break-words text-destructive">{m.last_message}</p>
+          <span className="truncate text-caption text-destructive">{m.last_message}</span>
         )}
         {held && (
-          <p className="mt-0.5 text-small text-muted-foreground" data-testid="status-monitor-overridden">
+          <span className="text-caption text-muted-foreground" data-testid="status-monitor-overridden">
             <Trans>A member set the component by hand later, so it stays as they left it.</Trans>
-          </p>
+          </span>
+        )}
+        {expires && days !== null && days <= warnDays && (
+          <span
+            className={cn("text-caption", days < 0 ? "text-destructive" : "text-warning")}
+            data-testid="status-monitor-cert"
+          >
+            {days < 0 ? <Trans>Certificate expired {expires}</Trans> : <Trans>Certificate expires {expires}</Trans>}
+          </span>
         )}
         {m.incident_id && (
           <Link
-            to={incidentLink(page.id, m.incident_id)}
-            className="mt-0.5 inline-block text-small text-brand underline-offset-4 hover:underline"
+            to={incidentLink(m.page_id, m.incident_id)}
+            className="w-fit text-caption text-brand underline-offset-4 hover:underline"
           >
             <Trans>Open incident</Trans>
           </Link>
         )}
-      </div>
-      <Metrics pageId={page.id} m={m} />
+      </span>
+      <span className="hidden @4xl:block">
+        <Chip>{text.monitorKind[m.kind]}</Chip>
+      </span>
+      <span className="hidden min-w-0 items-center gap-1.5 @4xl:flex">
+        {page && <ProductTag name={inbox?.name ?? page.name} color={inbox?.branding.color} />}
+        <span className="truncate text-muted-foreground">{component?.name ?? "–"}</span>
+      </span>
+      <Pill tone={stateTone} data-testid="status-monitor-state">
+        {stateLabel}
+      </Pill>
+      <span className="hidden @4xl:block">
+        <Response pageId={m.page_id} m={m} />
+      </span>
+      <span className="hidden @4xl:block">
+        <Uptime pageId={m.page_id} m={m} />
+      </span>
+      <span className="hidden truncate text-caption text-faint @4xl:block" data-testid="status-monitor-response">
+        {last ?? (outside ? <Trans>No result yet</Trans> : "–")}
+      </span>
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-sm" aria-label={t`More for ${name}`} />}
+          render={<Button variant="ghost" size="icon-xs" className="text-faint" aria-label={t`More for ${name}`} />}
           data-testid="status-monitor-menu"
         >
           <MoreHorizontalIcon />
@@ -275,77 +275,122 @@ function Row({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      <ErrorLine error={mut.update.error ?? mut.remove.error ?? mut.rotate.error} className="basis-full text-caption" />
+      <ErrorLine
+        error={mut.update.error ?? mut.remove.error ?? mut.rotate.error}
+        className="col-span-full text-caption"
+      />
       {dialog}
     </li>
   )
 }
 
-export function MonitorsTab({ page }: { page: StatusPage }) {
+export function MonitorsPage({ pageId }: { pageId: string }) {
+  const { t } = useLingui()
   const { canManage } = useSession()
-  const monitors = useStatusMonitors(page.id)
-  const components = useStatusComponents(page.id)
-  const [dialog, setDialog] = useState<{ edit?: StatusMonitor } | null>(null)
+  const { items: pages, pages: pagesQuery, inboxOf } = useStatusScope()
+  const ids = pages.map((p) => p.id)
+  const monitors = usePagesMonitors(ids)
+  const components = usePagesComponents(ids)
+  const byComponent = new Map(components.map((c) => [c.id, c]))
+  const byPage = new Map(pages.map((p) => [p.id, p]))
+  const [dialog, setDialog] = useState<{ pageId: string; edit?: StatusMonitor } | null>(null)
   const [checks, setChecks] = useState<string | null>(null)
   const [token, setToken] = useState<{ monitor: StatusMonitorWithToken; rotated: boolean } | null>(null)
-  const items = monitors.data ?? []
-  const byId = new Map((components.data ?? []).map((c) => [c.id, c]))
+  const items = [...monitors.data].sort(
+    (a, b) => ids.indexOf(a.page_id) - ids.indexOf(b.page_id) || a.created_at.localeCompare(b.created_at)
+  )
   const checking = items.find((m) => m.id === checks)
+  const fallback = byPage.get(pageId) ?? pages[0]
   const addKey = keyLabel(STATUS_KEYS.addMonitor).join("")
-  const { t } = useLingui()
 
-  useHotkeys(canManage ? { [STATUS_KEYS.addMonitor]: () => setDialog({}) } : {})
+  useHotkeys(
+    canManage && fallback ? { [STATUS_KEYS.addMonitor]: () => setDialog({ pageId: fallback.id }) } : {},
+    !dialog
+  )
 
   return (
-    <div className="flex flex-col gap-4" data-testid="status-monitors">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="min-w-60 flex-1 text-body text-muted-foreground">
-          <Trans>
-            Set a component’s state from outside: Yuva checks a website or a port, a job reports in, or your own
-            monitoring pushes its state.
-          </Trans>
-        </p>
-        {canManage && (
-          <Button
-            size="sm"
-            onClick={() => setDialog({})}
-            title={t`Add monitor (${addKey})`}
-            data-testid="status-add-monitor"
+    <PageFrame
+      testId="status-monitors"
+      title={<Trans>Monitors</Trans>}
+      description={<Trans>Checks that watch your products and set component states</Trans>}
+      actions={
+        canManage &&
+        pages.length > 0 && (
+          <PagePicker
+            pages={pages}
+            inboxOf={inboxOf}
+            onPick={(p) => setDialog({ pageId: p.id })}
+            button={<FrameButton ink title={t`Add monitor (${addKey})`} data-testid="status-add-monitor" />}
           >
-            <PlusIcon />
-            <Trans>Add monitor</Trans>
-          </Button>
+            <Trans>New monitor</Trans>
+          </PagePicker>
+        )
+      }
+    >
+      <div className={cn(framePad, "@container")}>
+        <ErrorLine error={pagesQuery.error ?? monitors.error} />
+        {pagesQuery.isPending || (pages.length > 0 && monitors.isPending) ? (
+          <Skeleton className="h-48 w-full rounded-xl" />
+        ) : (
+          <div className="overflow-hidden rounded-xl border bg-card">
+            <div
+              className={cn(cols, "hidden bg-surface px-4 py-2.5 text-caption font-medium text-faint @4xl:grid")}
+              aria-hidden
+            >
+              <span>
+                <Trans>Monitor</Trans>
+              </span>
+              <span>
+                <Trans>Type</Trans>
+              </span>
+              <span>
+                <Trans>Component</Trans>
+              </span>
+              <span>
+                <Trans>State</Trans>
+              </span>
+              <span>
+                <Trans>Response · 24 h</Trans>
+              </span>
+              <span>
+                <Trans>Uptime</Trans>
+              </span>
+              <span>
+                <Trans>Checked</Trans>
+              </span>
+              <span />
+            </div>
+            {items.length === 0 ? (
+              <p className="border-t px-4 py-10 text-center text-faint @4xl:border-t">
+                <Trans>
+                  No monitors yet. Add one to let a check, a job or your monitoring set a component’s state.
+                </Trans>
+              </p>
+            ) : (
+              <ul className="@4xl:border-t">
+                {items.map((m) => {
+                  const page = byPage.get(m.page_id)
+                  return (
+                    <MonitorRow
+                      key={m.id}
+                      m={m}
+                      page={page}
+                      inbox={inboxOf(page)}
+                      component={byComponent.get(m.component_id)}
+                      onChecks={() => setChecks(m.id)}
+                      onEdit={() => setDialog({ pageId: m.page_id, edit: m })}
+                      onToken={(monitor, rotated) => setToken({ monitor, rotated })}
+                    />
+                  )
+                })}
+              </ul>
+            )}
+          </div>
         )}
       </div>
-      <ErrorLine error={monitors.error} />
-      {monitors.isPending ? (
-        <Skeleton className="h-32 w-full rounded-2xl" />
-      ) : (
-        <Card flush>
-          {items.length === 0 ? (
-            <EmptyRow>
-              <Trans>No monitors yet. Add one to let a check, a job or your monitoring set a component’s state.</Trans>
-            </EmptyRow>
-          ) : (
-            <Rows>
-              {items.map((m) => (
-                <Row
-                  key={m.id}
-                  page={page}
-                  m={m}
-                  component={byId.get(m.component_id)}
-                  onChecks={() => setChecks(m.id)}
-                  onEdit={() => setDialog({ edit: m })}
-                  onToken={(monitor, rotated) => setToken({ monitor, rotated })}
-                />
-              ))}
-            </Rows>
-          )}
-        </Card>
-      )}
       {dialog && (
         <MonitorDialog
-          pageId={page.id}
+          pageId={dialog.pageId}
           edit={dialog.edit}
           onClose={() => setDialog(null)}
           onCreated={(monitor) => {
@@ -355,7 +400,7 @@ export function MonitorsTab({ page }: { page: StatusPage }) {
         />
       )}
       {token && <MonitorTokenDialog monitor={token.monitor} rotated={token.rotated} onClose={() => setToken(null)} />}
-      {checking && <MonitorChecksDialog pageId={page.id} monitor={checking} onClose={() => setChecks(null)} />}
-    </div>
+      {checking && <MonitorChecksDialog pageId={checking.page_id} monitor={checking} onClose={() => setChecks(null)} />}
+    </PageFrame>
   )
 }

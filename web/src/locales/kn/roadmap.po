@@ -8,16 +8,12 @@ msgstr ""
 "Language: kn\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "ಲಿಂಕ್ ಆದ ಪ್ರತಿಕ್ರಿಯೆಗಳು: {linked}"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# ಪ್ರತಿಕ್ರಿಯೆ} other {# ಪ್ರತಿಕ್ರಿಯೆಗಳು}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} ಅನುಮೋದನೆಗೆ ಕಾಯುತ್ತಿದೆ"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "{replies} ಉತ್ತರಗಳು"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "ಅನುಮೋದಿಸಿ"
 msgid "Approved"
 msgstr "ಅನುಮೋದಿಸಲಾಗಿದೆ"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳು."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "ಹಿಂದೆ"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "ಬೋರ್ಡ್ ಅಳಿಸಲಾಗಿದೆ"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "ರದ್ದುಗೊಳಿಸಿ"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "ಕುಕೀಗಳಿಲ್ಲದೆ ಸಾರ್ವಜನಿಕ ಬೋರ್ಡ್‌ನ ಪುಟ ವೀಕ್ಷಣೆಗಳನ್ನು ಎಣಿಸುತ್ತದೆ."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "ಬೋರ್ಡ್ ರಚಿಸಿ"
@@ -93,6 +96,10 @@ msgstr "ಬೋರ್ಡ್ ರಚಿಸಿ"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "ಬೋರ್ಡ್ ರಚಿಸಿ ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "ಕಲ್ಪನೆ ರಚಿಸಿ"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "ಬೋರ್ಡ್ ಅನ್ನು ಅದರ ಐಡಿಯಾಗಳು, ಮತಗಳು, ಉತ್ತರಗಳು ಮತ್ತು ಹಂತಗಳ ಇತಿಹಾಸದೊಂದಿಗೆ ಅಳಿಸುತ್ತದೆ. ಲಿಂಕ್ ಆದ ಪ್ರತಿಕ್ರಿಯೆಗಳು ಮತ್ತು ಅವುಗಳ ಪ್ರಗತಿ ಉಳಿಯುತ್ತವೆ. ಸಾರ್ವಜನಿಕ ವಿಳಾಸ ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "ವಿವರಣೆ"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "{title} ಅನ್ನು ಬೇರೆ ಹಂತಕ್ಕೆ ಎಳೆಯಿರಿ"
+msgid "Done"
+msgstr "ಮುಗಿದಿದೆ"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "{inboxName} ಗಾಗಿ ಐಡಿಯಾಗಳು, ಮತಗಳು ಮ�
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "ಐಡಿಯಾಗಳು: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "ಇದು ಬೋರ್ಡ್‌ನ ಕಲ್ಪನೆಗಳಿಗೆ ಸೇರುತ್ತದೆ, ಅಲ್ಲಿ ಗ್ರಾಹಕರು ಮತ ಹಾಕಬಹುದು."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "ಐಡಿಯಾವನ್ನು {stage} ಗೆ ಸರಿಸಲಾಗಿ�
 msgid "Name"
 msgstr "ಹೆಸರು"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "ಹೊಸ ಐಡಿಯಾ"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "ಈ ಪ್ರತಿಕ್ರಿಯೆಯಿಂದ ಹೊಸ ಐಡಿಯಾ"
@@ -285,6 +302,7 @@ msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ನ ಬೋರ್ಡ್‌ನಿಂ�
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "ಐಡಿಯಾಗೆ ನಿಮ್ಮ ಸಾರ್ವಜನಿಕ ಉತ್ತರವಾಗಿ ಪೋಸ್ಟ್ ಆಗುತ್ತದೆ. Markdown ಕೆಲಸ ಮಾಡುತ್ತದೆ."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "ಖಾಸಗಿ"
@@ -311,11 +329,16 @@ msgstr "ಓದುಗರು ಐಡಿಯಾಗಳನ್ನು ಸೂಚಿಸಲ�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "ಓದುಗರು ಹೊಸ ಆಲೋಚನೆಗಳನ್ನು ಸೂಚಿಸಿದ್ದಾರೆ. ಸಾರ್ವಜನಿಕ ಬೋರ್ಡ್‌ನಲ್ಲಿ ಕಾಣಿಸುವ ಮೊದಲು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "ಪರಿಶೀಲನೆ"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "ರೋಡ್‌ಮ್ಯಾಪ್"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "ರೋಡ್‌ಮ್ಯಾಪ್ ಬೋರ್ಡ್‌ಗಳು"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "ನೀವು ಏನನ್ನು ನಿರ್ಮಿಸುತ್ತಿದ್ದೀರಿ ಎಂದು ಗ್ರಾಹಕರಿಗೆ ತೋರಿಸಿ, ಮತ್ತು ಪ್ರತಿ ಐಡಿಯಾದ ಹಿಂದಿನ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ಲಿಂಕ್ ಮಾಡಿ. ಐಡಿಯಾಗಳನ್ನು ಹಂತಗಳಾಗಿ ವಿಂಗಡಿಸಲು ಒಂದು ಇನ್‌ಬಾಕ್ಸ್‌ನ ಬೋರ್ಡ್ ಆರಿಸಿ."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "ನೀವು ಏನನ್ನು ನಿರ್ಮಿಸುತ್ತಿದ್ದೀರಿ ಎಂದು ಗ್ರಾಹಕರಿಗೆ ತೋರಿಸಿ ಮತ್ತು ಪ್ರತಿ ಕಲ್ಪನೆಯ ಹಿಂದಿನ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಲಿಂಕ್ ಮಾಡಿ. ಕಲ್ಪನೆಗಳನ್ನು ಹಂತಗಳಾಗಿ ವಿಂಗಡಿಸಲು ಇನ್‌ಬಾಕ್ಸ್‌ಗಾಗಿ ಬೋರ್ಡ್ ರಚಿಸಿ."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "ಈ ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ವೆಬ್ ಚಾಟ್ ಚಾನೆಲ್ ಇಲ್ಲ. ಮೊದಲು ಒಂದನ್ನು ಸೇರಿಸಿ, ಏಕೆಂದರೆ ಸಾರ್ವಜನಿಕ ಬೋರ್ಡ್ ಅದನ್ನು ಎಂಬೆಡ್ ಮಾಡುತ್ತದೆ."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "ಶೀರ್ಷಿಕೆ"
 

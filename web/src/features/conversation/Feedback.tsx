@@ -107,7 +107,7 @@ export function ProgressChip({ progress, className }: { progress: FeedbackProgre
   )
 }
 
-function useRows(f: Feedback): [string, string, boolean?][] {
+export function useFeedbackRows(f: Feedback): [string, string, boolean?][] {
   const { t } = useLingui()
   const rows: [string, string, boolean?][] = []
   const app = [f.app_version, f.build && `(${f.build})`].filter(Boolean).join(" ")
@@ -132,7 +132,7 @@ function useRows(f: Feedback): [string, string, boolean?][] {
 export function FeedbackDetails({ feedback }: { feedback: Feedback }) {
   const { t } = useLingui()
   const text = useEnumText()
-  const rows = useRows(feedback)
+  const rows = useFeedbackRows(feedback)
   const [copied, copy] = useCopy()
   const copyAll = () =>
     copy([`${t`Category`}: ${text.category[feedback.category]}`, ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n"))

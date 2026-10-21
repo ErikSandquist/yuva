@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "மின்னஞ்சல் வடிவமைப்புகள்"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "ஒளிபரப்புகளில் நீங்கள் மீண்டும் பயன்படுத்தும் மின்னஞ்சல் அமைப்புகள்."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "ஒளிபரப்புகளில் மீண்டும் பயன்படுத்தும் மின்னஞ்சல் அமைப்புகள்"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "முழு அகலம்"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "தொகுப்பு"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "தொகுப்பு · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "தொலைபேசிகளில் அடுக்கு"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "தொடங்கு"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "வார்ப்புரு அல்லது காலிப் பக்கத்திலிருந்து தொடங்குங்கள். ஒவ்வொரு வடிவமைப்புக்கும் சட்டம் கேட்கும் அடிக்குறிப்பு கிடைக்கும்; மற்ற எல்லாவற்றையும் மாற்றலாம்."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

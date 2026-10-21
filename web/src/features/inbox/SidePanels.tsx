@@ -1,7 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowUpRightIcon, PlugIcon } from "lucide-react"
+import { ArrowUpRightIcon, PlugIcon, SparklesIcon } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 
 import { BotAvatar, ContactAvatar, ErrorLine, PersonAvatar } from "@/components/common"
 import { ColumnHeading } from "@/components/common/Column"
@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { FilterChip, ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
+import { Ago, FrameTabs, look, PageBody, PageTop } from "@/features/inbox/PageFrame"
 import { ProductTag } from "@/features/inbox/ProductTag"
 import { useDrafts, useMentions } from "@/features/inbox/queries"
 import { ASSISTANTS } from "@/features/settings/connected-apps/assistants"
@@ -42,8 +43,10 @@ function useAuthorLabel() {
   }
 }
 
-function AuthorFace({ author, label }: { author: MessageAuthor; label: string }) {
+function AuthorFace({ author, label, large }: { author: MessageAuthor; label: string; large?: boolean }) {
   if (author.type === "bot") return <BotAvatar name={label} url={author.avatar_url} className="size-9" />
+  if (large && author.member_id)
+    return <ContactAvatar id={author.member_id} name={label} className="size-9 font-semibold" />
   return <PersonAvatar name={label} className="size-9 bg-mate text-white" />
 }
 
@@ -310,5 +313,270 @@ export function AssistantsPanel() {
         </ul>
       </div>
     </section>
+  )
+}
+
+function MentionCard({ item }: { item: Mention }) {
+  const navigate = useNavigate()
+  const label = useAuthorLabel()
+  const who = label(item.note.author)
+  const contact = item.conversation.contact.name || item.conversation.contact.email || ""
+  const subject = item.conversation.subject
+  const to = messageLink(item.conversation.id, item.note.id)
+  return (
+    <li className="flex gap-3.5 rounded-xl border bg-background p-4" data-testid="mention-row" data-seen={item.seen}>
+      <AuthorFace author={item.note.author} label={who} large />
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
+          <span className="font-semibold">{who}</span>
+          <span className="text-muted-foreground">
+            <Trans>mentioned you in</Trans>
+          </span>
+          <Link to={to} className="min-w-0 truncate font-medium outline-none hover:underline focus-visible:underline">
+            {subject ? `${contact} · ${subject}` : contact}
+          </Link>
+          <ProductTag id={item.conversation.inbox_id} />
+          <span className="flex-1" />
+          {!item.seen && (
+            <span className="size-2 shrink-0 rounded-full bg-brand" aria-hidden data-testid="mention-unseen" />
+          )}
+          <Ago iso={item.note.created_at} className={look.faint} />
+        </div>
+        <p className="rounded-[10px] border border-note-border bg-note px-3 py-2.5 whitespace-pre-line">
+          {item.note.text}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" className={look.btnSm} render={<Link to={to} />} data-testid="mention-open">
+            <Trans>Open conversation</Trans>
+          </Button>
+          <Button
+            variant="outline"
+            className={look.btnSm}
+            onClick={() => navigate(`${to}&compose=note`)}
+            data-testid="mention-reply"
+          >
+            <Trans>Reply in note</Trans>
+          </Button>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+export function MentionsPage() {
+  const { t } = useLingui()
+  const mentions = useMentions()
+  const all = mentions.data?.pages.flatMap((p) => p.items) ?? []
+  const unseen = Number(mentions.data?.pages[0]?.unseen ?? 0)
+  const [picked, setPicked] = useState<MentionTab | null>(null)
+  const tab: MentionTab = picked ?? (unseen > 0 ? "unread" : "all")
+  const items = tab === "unread" ? all.filter((m) => !m.seen) : all
+  return (
+    <main className="flex min-h-0 flex-1 flex-col" data-testid="mentions-panel">
+      <PageTop
+        title={<Trans>Mentions</Trans>}
+        sub={<Trans>Notes where a teammate mentioned you</Trans>}
+        tabs={
+          <FrameTabs
+            label={t`Show`}
+            value={tab}
+            onChange={setPicked}
+            items={[
+              { key: "unread", label: <Trans>Unread</Trans>, testId: "mentions-tab-unread" },
+              { key: "all", label: <Trans>All</Trans>, testId: "mentions-tab-all" },
+            ]}
+          />
+        }
+      />
+      <PageBody>
+        <div className="flex max-w-[908px] flex-col gap-3.5 p-6">
+          {mentions.isPending && <Skeleton className="h-32 rounded-xl" />}
+          <ErrorLine error={mentions.error} />
+          {mentions.data && items.length === 0 && (
+            <p className="p-12 text-center text-faint" data-testid={all.length ? "mentions-read" : undefined}>
+              {all.length ? (
+                <Trans>No mentions here.</Trans>
+              ) : (
+                <Trans>
+                  No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up
+                  here.
+                </Trans>
+              )}
+            </p>
+          )}
+          <ul className="flex flex-col gap-4" data-testid="mention-list">
+            {items.map((m) => (
+              <MentionCard key={m.note.id} item={m} />
+            ))}
+          </ul>
+          <MoreButton query={mentions} />
+        </div>
+      </PageBody>
+    </main>
+  )
+}
+
+function DraftCard({ item }: { item: DraftItem }) {
+  const label = useAuthorLabel()
+  const d = item.draft
+  const author = label(d.author)
+  const contact = item.conversation.contact.name || item.conversation.contact.email || ""
+  const subject = item.conversation.subject
+  const to = messageLink(item.conversation.id, d.id)
+  return (
+    <li className="flex gap-3.5 rounded-xl border bg-background p-4" data-testid="draft-row">
+      <ContactAvatar id={item.conversation.contact.id} name={contact} className="size-9 font-semibold" />
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
+          <Link to={to} className="min-w-0 truncate font-semibold outline-none hover:underline focus-visible:underline">
+            {subject ? `${contact} · ${subject}` : contact}
+          </Link>
+          <ProductTag id={item.conversation.inbox_id} />
+          <span className="flex-1" />
+          <Ago iso={d.created_at} className={look.faint} />
+        </div>
+        <div className="flex flex-col gap-1.5 rounded-xl border border-dashed border-brand bg-brand-wash px-3.5 py-3">
+          <span className="flex items-center gap-1.5 text-caption font-semibold text-brand">
+            <SparklesIcon className="size-3.5" />
+            <Trans>Draft by {author}</Trans>
+          </span>
+          <p className="line-clamp-4 whitespace-pre-line">{d.body}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button className={look.btnPSm} render={<Link to={to} />} data-testid="draft-open">
+            <Trans>Review draft</Trans>
+          </Button>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+type AssistantTab = "drafts" | "apps"
+
+export function AssistantsPage() {
+  const { t, i18n } = useLingui()
+  const [inboxId] = useInboxFilter()
+  const [tab, setTab] = useState<AssistantTab>("drafts")
+  const [author, setAuthor] = useState<AuthorChip>("all")
+  const drafts = useDrafts({ inbox_id: inboxId || undefined, author: author === "all" ? undefined : author })
+  const items = drafts.data?.pages.flatMap((p) => p.items) ?? []
+  const total = Number(drafts.data?.pages[0]?.total ?? 0)
+  const grants = useGrants()
+  const apps = grants.data ?? []
+  const chips: [AuthorChip, string][] = [
+    ["all", t`All`],
+    ["bot", t`Bots`],
+    ["assistant", t`Assistants`],
+    ["member", t`Members`],
+  ]
+  return (
+    <main className="flex min-h-0 flex-1 flex-col" data-testid="assistants-panel">
+      <PageTop
+        title={<Trans>Assistants</Trans>}
+        sub={<Trans>Drafts waiting for review and the assistants you connected</Trans>}
+        actions={
+          <Button variant="outline" className={look.btn} render={<Link to="/settings/connected-apps" />}>
+            <Trans>Connect</Trans>
+            <ArrowUpRightIcon />
+          </Button>
+        }
+        tabs={
+          <FrameTabs
+            label={t`Show`}
+            value={tab}
+            onChange={setTab}
+            items={[
+              { key: "drafts", label: <Trans>Drafts waiting</Trans>, count: total, testId: "assistants-tab-drafts" },
+              { key: "apps", label: <Trans>Connected apps</Trans>, count: apps.length, testId: "assistants-tab-apps" },
+            ]}
+          />
+        }
+      />
+      <PageBody>
+        <div className="flex max-w-[908px] flex-col gap-3.5 p-6">
+          {tab === "drafts" ? (
+            <>
+              <div
+                className="flex flex-wrap gap-1.5"
+                role="toolbar"
+                aria-label={t`Draft author`}
+                data-testid="draft-chips"
+              >
+                {chips.map(([k, label]) => (
+                  <FilterChip key={k} active={author === k} onClick={() => setAuthor(k)} testId={`draft-chip-${k}`}>
+                    {label}
+                  </FilterChip>
+                ))}
+                <span className="sr-only" data-testid="drafts-total">
+                  {total}
+                </span>
+              </div>
+              {drafts.isPending && <Skeleton className="h-32 rounded-xl" />}
+              <ErrorLine error={drafts.error} />
+              {drafts.data && items.length === 0 && (
+                <p className="p-12 text-center text-faint">
+                  <Trans>
+                    No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone
+                    sends or discards them.
+                  </Trans>
+                </p>
+              )}
+              <ul className="flex flex-col gap-4" data-testid="draft-list">
+                {items.map((x) => (
+                  <DraftCard key={x.draft.id} item={x} />
+                ))}
+              </ul>
+              <MoreButton query={drafts} />
+            </>
+          ) : (
+            <>
+              {grants.isPending && <Skeleton className="h-16 rounded-xl" />}
+              <ErrorLine error={grants.error} />
+              {grants.data && apps.length === 0 && (
+                <p className="p-12 text-center text-faint">
+                  <Trans>
+                    No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read
+                    and draft replies.
+                  </Trans>
+                </p>
+              )}
+              {apps.length > 0 && (
+                <ul className={look.card} data-testid="assistant-grants">
+                  {apps.map((g) => {
+                    const a = ASSISTANTS.find((x) => x.matches(g))
+                    const Icon = a?.icon ?? PlugIcon
+                    const used = g.last_used_at ? formatRelative(g.last_used_at, i18n.locale) : null
+                    return (
+                      <li key={g.id} className="border-b last:border-b-0">
+                        <Link
+                          to={a ? `/settings/connected-apps/${a.id}` : "/settings/connected-apps"}
+                          className="flex items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-surface focus-visible:bg-surface"
+                        >
+                          <span className="grid size-9 shrink-0 place-items-center rounded-full border text-faint">
+                            <Icon className="size-4" />
+                          </span>
+                          <span className="flex min-w-0 flex-1 flex-col">
+                            <span className="truncate font-medium">{g.client.name}</span>
+                            <span className="truncate text-caption text-faint">
+                              {used ? t`Last used ${used}` : t`Not used yet`} ·{" "}
+                              <Plural
+                                value={g.requests_this_month}
+                                one="# request this month"
+                                other="# requests this month"
+                              />
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </>
+          )}
+        </div>
+      </PageBody>
+    </main>
   )
 }

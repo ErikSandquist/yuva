@@ -3,12 +3,14 @@ import {
   BookUserIcon,
   BotIcon,
   CheckIcon,
+  ChevronDownIcon,
   ClockIcon,
   MailIcon,
   MegaphoneIcon,
   MailOpenIcon,
   PinIcon,
   PinOffIcon,
+  PlusIcon,
   CommandIcon,
   EllipsisVerticalIcon,
   FlameIcon,
@@ -29,20 +31,22 @@ import { TeamMenu } from "@/app/TeamMenu"
 import { UserMenu } from "@/app/UserMenu"
 import {
   ContactAvatar,
+  Dot,
   ErrorLine,
   ImportedChip,
   isVisitor,
   Kbd,
   MemberAvatar,
   placeOf,
-  SourceBadge,
   sourceOf,
   toast,
   useContactName,
+  useSourceText,
   VisitorAvatar,
 } from "@/components/common"
 import { keyLabel, mod, SHORTCUTS } from "@/components/common/ShortcutSheet"
-import { formatShort, useErrorText } from "@/components/common/text"
+import { formatDuration, formatShort, useErrorText } from "@/components/common/text"
+import { useNow } from "@/hooks/use-now"
 import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
@@ -50,7 +54,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuCheckboxItem,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -69,25 +76,27 @@ import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { ImportBanner } from "@/features/migrations/ImportBanner"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
-import { ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
-import { ProductTag, useProductTag } from "@/features/inbox/ProductTag"
+import { UnderlineTabs } from "@/features/inbox/ListHead"
+import { ProductTag } from "@/features/inbox/ProductTag"
+import { LabelTag, look } from "@/features/inbox/PageFrame"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
 import { SourceFilter, sourceFilters, useSourceFilter } from "@/features/inbox/SourceFilter"
 import { useBulkUpdateConversations, useConversations, useCounts } from "@/features/inbox/queries"
-import { useIsPhone } from "@/hooks/use-media-query"
 import type { Contact, ConversationListItem } from "@/lib/api"
 import type { ConversationFilters } from "@/lib/keys"
 import { useSetAvailability } from "@/lib/availability"
 import { useSession } from "@/lib/session"
 import { useTyping } from "@/lib/typing"
 import { cn } from "@/lib/utils"
-import { useChannelMap, useInboxes, useMemberMap } from "@/lib/workspace"
+import { useChannelMap, useLabels, useMemberMap } from "@/lib/workspace"
 
-export type Chip = "all" | "unread" | "mine" | "unassigned" | "snoozed" | "done"
-const CHIPS: Chip[] = ["all", "unread", "mine", "unassigned", "snoozed", "done"]
+export type Chip = "waiting" | "all" | "unread" | "mine" | "unassigned" | "snoozed" | "done"
+export const PAGE_CHIPS: Chip[] = ["waiting", "mine", "unassigned", "snoozed", "done", "all"]
+const PHONE_CHIPS: Chip[] = ["waiting", "all", "unread", "mine", "unassigned", "snoozed", "done"]
 
 const chipFilters: Record<Chip, ConversationFilters> = {
+  waiting: { status: ["open"] },
   all: {},
   unread: {},
   mine: { status: ["open"], assignee: "me" },
@@ -96,11 +105,32 @@ const chipFilters: Record<Chip, ConversationFilters> = {
   done: { status: ["closed"] },
 }
 
-let remembered: Chip = "all"
+export function isWaiting(c: ConversationListItem) {
+  return c.status === "open" && c.last_message?.author_type === "contact"
+}
+
+let remembered: Chip = "waiting"
 let focused = 0
 
-function rememberChip(c: Chip) {
+export function rememberedChip() {
+  return remembered
+}
+
+export function rememberChip(c: Chip) {
   remembered = c
+}
+
+export function useChipLabels(): Record<Chip, string> {
+  const { t } = useLingui()
+  return {
+    waiting: t`Waiting`,
+    all: t`All`,
+    unread: t`Unread`,
+    mine: t`Mine`,
+    unassigned: t`Unassigned`,
+    snoozed: t`Snoozed`,
+    done: t`Closed`,
+  }
 }
 
 function useDebounced(value: string, ms: number) {
@@ -112,7 +142,17 @@ function useDebounced(value: string, ms: number) {
   return v
 }
 
-function Preview({ c, current, receipts }: { c: ConversationListItem; current: boolean; receipts: boolean }) {
+function Preview({
+  c,
+  current,
+  receipts,
+  subject,
+}: {
+  c: ConversationListItem
+  current: boolean
+  receipts: boolean
+  subject?: string
+}) {
   const { t } = useLingui()
   const draft = useDraftText(c.id)
   const typing = useTyping(c.id).some((a) => a.type === "contact")
@@ -133,6 +173,7 @@ function Preview({ c, current, receipts }: { c: ConversationListItem; current: b
       </span>
     )
   }
+  if (subject) return <span className="truncate">{subject}</span>
   const m = c.last_message
   if (!m) return <span className="truncate italic">{c.subject || t`No messages yet`}</span>
   return (
@@ -211,19 +252,24 @@ function Row({
   const visitor = isVisitor(c.contact.name, c.contact.email)
   const name = contactName(c, channel, c.contact.name, c.contact.email)
   const source = sourceOf(c, channel)
+  const sourceText = useSourceText()
   const place = placeOf(c, channel)
   const rating = currentRating(c)
-  const product = useProductTag()
+  const labels = useLabels().data ?? []
+  const chips = labels.filter((l) => c.labels.includes(l.id))
+  const waiting = isWaiting(c)
+  const now = useNow(60_000)
+  const subject = c.subject.trim()
   return (
     <ContextMenu>
       <ContextMenuTrigger
         render={<button type="button" />}
         onClick={onOpen}
         className={cn(
-          "group flex w-full items-center gap-3 ps-4 text-start outline-none transition-colors",
-          current ? "bg-muted" : "hover:bg-muted/60",
-          cursor && !current && "bg-muted/60",
-          cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
+          "group flex w-full items-start gap-2.5 border-b px-3.5 py-3 text-start outline-none transition-colors",
+          current ? "bg-surface" : "hover:bg-surface",
+          cursor && !current && "bg-surface",
+          (current || cursor) && "shadow-[inset_2px_0_0_var(--brand)] rtl:shadow-[inset_-2px_0_0_var(--brand)]"
         )}
         aria-current={current || undefined}
         aria-pressed={selecting ? checked : undefined}
@@ -245,11 +291,11 @@ function Row({
             {checked && <CheckIcon className="size-3.5" strokeWidth={3} />}
           </span>
         )}
-        <span className="relative shrink-0 self-start pt-3">
+        <span className="relative shrink-0">
           {visitor ? (
-            <VisitorAvatar className="size-9" />
+            <VisitorAvatar className="size-[34px]" />
           ) : (
-            <ContactAvatar id={c.contact.id} name={name} className="size-9" />
+            <ContactAvatar id={c.contact.id} name={name} className="size-[34px] font-semibold" />
           )}
           {live && (
             <span
@@ -259,56 +305,68 @@ function Row({
             />
           )}
         </span>
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-4 group-last:border-transparent">
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
           <span className="flex min-w-0 items-baseline gap-2">
             <span className={cn("min-w-0 flex-1 truncate text-body", c.unread ? "font-semibold" : "font-medium")}>
               {name}
             </span>
             {c.pinned_at && (
               <PinIcon
-                className="size-3.5 shrink-0 rotate-45 text-faint"
+                className="size-3.5 shrink-0 rotate-45 self-center text-faint"
                 aria-label={t`Pinned`}
                 data-testid="row-pinned"
               />
             )}
+            {c.unread && (
+              <span
+                className="size-2 shrink-0 self-center rounded-full bg-brand"
+                aria-label={t`Unread`}
+                data-testid="row-unread"
+              />
+            )}
             <time
-              className={cn("shrink-0 text-caption", c.unread ? "font-medium text-brand" : "text-faint")}
+              className={cn("shrink-0 text-caption", waiting ? "font-medium text-brand" : "text-faint")}
               dateTime={c.last_activity_at}
             >
-              {formatShort(c.last_activity_at, i18n.locale)}
+              {waiting
+                ? formatDuration(Math.max(60, (now - Date.parse(c.last_activity_at)) / 1000), i18n.locale)
+                : formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
-          <span className="flex min-w-0 items-center gap-1.5 text-small text-muted-foreground">
+          <span className="flex min-w-0 items-center gap-1.5 text-body text-muted-foreground">
             {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
             <span className="flex min-w-0 flex-1">
-              <Preview c={c} current={current} receipts={channel?.kind === "chat" || channel?.kind === "app"} />
+              <Preview
+                c={c}
+                current={current}
+                subject={subject}
+                receipts={channel?.kind === "chat" || channel?.kind === "app"}
+              />
             </span>
-            {c.unread && (
-              <span className="size-2 shrink-0 rounded-full bg-brand" aria-label={t`Unread`} data-testid="row-unread" />
+          </span>
+          <span className="flex min-w-0 items-center gap-1.5 text-caption" data-testid="row-source">
+            <ProductTag id={c.inbox_id} />
+            {c.imported && <ImportedChip at={c.imported.at} />}
+            {source && <span className="shrink-0 text-faint">{sourceText[source]}</span>}
+            {c.broadcast_id && (
+              <MegaphoneIcon
+                className="size-3.5 shrink-0 text-brand"
+                aria-label={t`Reply to a broadcast`}
+                data-testid="row-broadcast"
+              />
+            )}
+            {place && <span className="min-w-0 truncate text-faint">{place}</span>}
+            {chips.map((l) => (
+              <LabelTag key={l.id} name={l.name} />
+            ))}
+            <span className="flex-1" />
+            {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
+            {assignee && (
+              <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
+                <MemberAvatar name={assignee.name || assignee.email} className="size-[18px] text-[8px]" />
+              </span>
             )}
           </span>
-          {(source || place || c.broadcast_id || c.imported || rating || assignee || product(c.inbox_id)) && (
-            <span className="mt-1 flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
-              <ProductTag id={c.inbox_id} />
-              {c.imported && <ImportedChip at={c.imported.at} />}
-              {source && <SourceBadge source={source} />}
-              {c.broadcast_id && (
-                <MegaphoneIcon
-                  className="size-3.5 shrink-0 text-brand"
-                  aria-label={t`Reply to a broadcast`}
-                  data-testid="row-broadcast"
-                />
-              )}
-              {place && <span className="min-w-0 truncate">{place}</span>}
-              <span className="flex-1" />
-              {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
-              {assignee && (
-                <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
-                  <MemberAvatar name={assignee.name || assignee.email} className="size-[18px]" />
-                </span>
-              )}
-            </span>
-          )}
         </span>
       </ContextMenuTrigger>
       <ContextMenuContent className="min-w-52" data-testid="row-menu">
@@ -400,7 +458,7 @@ function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
   )
 }
 
-function StartConversation({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export function StartConversation({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [contact, setContact] = useState<Contact | null>(null)
   return (
     <>
@@ -435,19 +493,15 @@ function StartConversation({ open, onOpenChange }: { open: boolean; onOpenChange
   )
 }
 
-function ListHeader({ onSelect, children }: { onSelect: () => void; children: React.ReactNode }) {
+export function ListMenu({ onSelect, className }: { onSelect: () => void; className?: string }) {
   const { t } = useLingui()
   const navigate = useNavigate()
-  const { membership, canManage } = useSession()
+  const { canManage } = useSession()
   const { openPalette, openShortcuts } = useShell()
-  const [starting, setStarting] = useState(false)
-  const phone = useIsPhone()
-  const [inboxId] = useInboxFilter()
-  const product = useInboxes().data?.find((i) => i.id === inboxId)?.name
-  const menu = (
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" size="icon-sm" />}
+        render={<Button variant="ghost" size="icon-sm" className={className} />}
         aria-label={t`Menu`}
         title={t`Menu`}
         data-testid="list-menu"
@@ -491,67 +545,130 @@ function ListHeader({ onSelect, children }: { onSelect: () => void; children: Re
       </DropdownMenuContent>
     </DropdownMenu>
   )
-  const start = <StartConversation open={starting} onOpenChange={setStarting} />
-  if (phone) {
-    return (
-      <div className="flex shrink-0 flex-col border-b">
-        <div className="flex h-15 shrink-0 items-center gap-1 ps-2 pe-1.5">
-          <UserMenu align="start" />
-          <span className="min-w-0 flex-1 truncate ps-1 text-title" data-testid="workspace-name">
-            {membership.workspace.name}
-          </span>
-          <TeamMenu />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            onClick={() => setStarting(true)}
-            aria-label={t`New conversation`}
-            title={t`New conversation`}
-            data-testid="new-conversation"
-          >
-            <MessageSquarePlusIcon />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            render={<Link to="/settings" />}
-            aria-label={t`Settings`}
-            title={t`Settings (${mod},)`}
-            data-testid="open-settings"
-          >
-            <SettingsIcon />
-          </Button>
-          {menu}
-        </div>
-        <div className="px-3 [&>[role=toolbar]]:mt-0">{children}</div>
-        {start}
-      </div>
-    )
-  }
+}
+
+function PhoneHeader({ onSelect, children }: { onSelect: () => void; children: React.ReactNode }) {
+  const { t } = useLingui()
+  const { membership } = useSession()
+  const [starting, setStarting] = useState(false)
   return (
-    <ListHead
-      title={<Trans>Inbox</Trans>}
-      sub={product ? <Trans>Conversations in {product}</Trans> : <Trans>Conversations from every product</Trans>}
-      action={
-        <>
-          <Button
-            size="sm"
-            onClick={() => setStarting(true)}
-            title={t`New conversation`}
-            data-testid="new-conversation"
-          >
-            <MessageSquarePlusIcon />
-            <span className="@max-sm/list:sr-only">
-              <Trans>New conversation</Trans>
-            </span>
-          </Button>
-          {menu}
-        </>
-      }
-    >
-      {children}
-      {start}
-    </ListHead>
+    <div className="flex shrink-0 flex-col border-b">
+      <div className="flex h-15 shrink-0 items-center gap-1 ps-2 pe-1.5">
+        <UserMenu align="start" />
+        <span className="min-w-0 flex-1 truncate ps-1 text-title" data-testid="workspace-name">
+          {membership.workspace.name}
+        </span>
+        <TeamMenu />
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={() => setStarting(true)}
+          aria-label={t`New conversation`}
+          title={t`New conversation`}
+          data-testid="new-conversation"
+        >
+          <MessageSquarePlusIcon />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          render={<Link to="/settings" />}
+          aria-label={t`Settings`}
+          title={t`Settings (${mod},)`}
+          data-testid="open-settings"
+        >
+          <SettingsIcon />
+        </Button>
+        <ListMenu onSelect={onSelect} />
+      </div>
+      <div className="px-3 [&>[role=toolbar]]:mt-0">{children}</div>
+      <StartConversation open={starting} onOpenChange={setStarting} />
+    </div>
+  )
+}
+
+type Order = "newest" | "oldest"
+
+function OrderChip({
+  order,
+  unreadOnly,
+  onOrder,
+  onUnread,
+}: {
+  order: Order
+  unreadOnly: boolean
+  onOrder: (o: Order) => void
+  onUnread: (on: boolean) => void
+}) {
+  const { t } = useLingui()
+  const names: Record<Order, string> = { newest: t`Newest first`, oldest: t`Waiting longest` }
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<button type="button" className={look.chip} />}
+        aria-label={t`Order and view`}
+        data-testid="list-order"
+      >
+        <span className="truncate">{unreadOnly ? t`Unread · ${names[order]}` : names[order]}</span>
+        <ChevronDownIcon className="size-3.5 shrink-0 text-faint" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="min-w-52">
+        <DropdownMenuRadioGroup value={order} onValueChange={(v) => onOrder(v as Order)}>
+          <DropdownMenuRadioItem value="newest" data-testid="list-order-newest">
+            {names.newest}
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="oldest" data-testid="list-order-oldest">
+            {names.oldest}
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem checked={unreadOnly} onCheckedChange={onUnread} data-testid="chip-unread">
+          <Trans>Unread only</Trans>
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+function LabelChip({ value, onChange }: { value: string; onChange: (id: string) => void }) {
+  const { t } = useLingui()
+  const labels = useLabels().data ?? []
+  const current = labels.find((l) => l.id === value)
+  if (labels.length === 0) return null
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<button type="button" className={current ? look.chipOn : look.chipDash} />}
+        aria-label={t`Filter by label`}
+        title={t`Filter by label`}
+        data-testid="label-filter"
+      >
+        {current ? (
+          <>
+            <Dot color={current.color} className="size-2" />
+            <span className="max-w-24 truncate">{current.name}</span>
+          </>
+        ) : (
+          <>
+            <PlusIcon className="size-3.5" />
+            <Trans>Label</Trans>
+          </>
+        )}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="max-h-[60svh] min-w-48">
+        <DropdownMenuRadioGroup value={value} onValueChange={(v) => onChange(String(v))}>
+          <DropdownMenuRadioItem value="">
+            <Trans>Any label</Trans>
+          </DropdownMenuRadioItem>
+          {labels.map((l) => (
+            <DropdownMenuRadioItem key={l.id} value={l.id}>
+              <Dot color={l.color} />
+              <span className="truncate">{l.name}</span>
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 
@@ -559,16 +676,27 @@ export function ChatList({
   currentId,
   onOpen,
   active = true,
+  chip: controlledChip,
+  onChip,
+  embedded = false,
 }: {
   currentId: string | null
   onOpen: (id: string) => void
   active?: boolean
+  chip?: Chip
+  onChip?: (c: Chip) => void
+  embedded?: boolean
 }) {
   const { t } = useLingui()
-  const { query, focus } = useListSearch()
+  const { query, focus, select } = useListSearch()
   const q = useDebounced(query.trim(), 250)
   const [inboxId] = useInboxFilter()
-  const [chip, setChipState] = useState<Chip>(remembered)
+  const [ownChip, setOwnChip] = useState<Chip>(remembered)
+  const chip = controlledChip ?? ownChip
+  const [order, setOrder] = useState<Order | null>(null)
+  const [unreadOnly, setUnreadOnly] = useState(false)
+  const [labelId, setLabelId] = useState("")
+  const [searching, setSearching] = useState(false)
   const search = useRef<HTMLInputElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const sentinel = useRef<HTMLDivElement>(null)
@@ -576,14 +704,16 @@ export function ChatList({
   const [selecting, setSelecting] = useState(false)
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [linking, setLinking] = useState(false)
+  const sort: Order = order ?? (chip === "waiting" ? "oldest" : "newest")
 
   const [source] = useSourceFilter()
-  const narrowed = !!source.source || !!source.site
+  const narrowed = !!source.source || !!source.site || !!labelId
   const filters = {
     kind: ["conversation" as const],
     ...chipFilters[chip],
     ...sourceFilters(source),
     inbox_id: inboxId || undefined,
+    label_id: labelId || undefined,
     q: q || undefined,
   }
   const list = useConversations(filters)
@@ -591,11 +721,15 @@ export function ChatList({
   const pinnedList = useConversations({ ...filters, pinned: true })
   const loaded = useMemo(() => list.data?.pages.flatMap((p) => p.items) ?? [], [list.data])
   const pinnedLoaded = useMemo(() => pinnedList.data?.pages.flatMap((p) => p.items) ?? [], [pinnedList.data])
-  const keep = (c: ConversationListItem) => chip !== "unread" || c.unread
+  const keep = (c: ConversationListItem) =>
+    (chip !== "unread" && !unreadOnly) || c.unread ? chip !== "waiting" || isWaiting(c) : false
+  const byTime = (a: ConversationListItem, b: ConversationListItem) =>
+    (a.last_activity_at < b.last_activity_at ? 1 : -1) * (sort === "oldest" ? -1 : 1)
   const pinnedRows = [...pinnedLoaded, ...loaded.filter((c) => c.pinned_at && !pinnedLoaded.some((x) => x.id === c.id))]
     .filter((c) => c.pinned_at && keep(c))
-    .sort((a, b) => (a.last_activity_at < b.last_activity_at ? 1 : -1))
+    .sort(byTime)
   const mainRows = loaded.filter((c) => !c.pinned_at && keep(c))
+  if (sort === "oldest") mainRows.sort(byTime)
   const rows = [...pinnedRows, ...mainRows]
   const live = useLiveIds(rows.filter((c) => c.status !== "closed"))
   const { cursorId, setCursorId, moveCursor, openCursor } = useListCursor(rows, currentId, onOpen, active, scroller)
@@ -632,10 +766,21 @@ export function ChatList({
     active
   )
 
+  const [selectSeen, setSelectSeen] = useState(select)
+  if (select !== selectSeen) {
+    setSelectSeen(select)
+    setSelecting(true)
+  }
+
+  const [focusSeen, setFocusSeen] = useState(focused)
+  if (focus > focusSeen) {
+    setFocusSeen(focus)
+    setSearching(true)
+  }
   useEffect(() => {
     if (focus <= focused) return
     focused = focus
-    search.current?.focus()
+    requestAnimationFrame(() => search.current?.focus())
   }, [focus])
 
   useEffect(() => {
@@ -654,29 +799,111 @@ export function ChatList({
     if (nearEnd && hasNextPage && !isFetchingNextPage) void fetchNextPage()
   }, [nearEnd, hasNextPage, isFetchingNextPage, fetchNextPage, loaded.length])
 
-  const setChip = (c: Chip) => {
-    rememberChip(c)
-    setChipState(c)
+  const reset = () => {
     setCursorId(null)
     scroller.current?.scrollTo({ top: 0 })
   }
-
-  const labels: Record<Chip, string> = {
-    all: t`All`,
-    unread: t`Unread`,
-    mine: t`Mine`,
-    unassigned: t`Unassigned`,
-    snoozed: t`Snoozed`,
-    done: t`Done`,
+  const setChip = (c: Chip) => {
+    rememberChip(c)
+    setOwnChip(c)
+    onChip?.(c)
+    reset()
   }
+  const [shownChip, setShownChip] = useState(chip)
+  if (shownChip !== chip) {
+    setShownChip(chip)
+    setCursorId(null)
+  }
+  useEffect(() => {
+    scroller.current?.scrollTo({ top: 0 })
+  }, [chip])
+
+  const labels = useChipLabels()
   const empty: Record<Chip, React.ReactNode> = {
+    waiting: <Trans>Nobody is waiting for a reply.</Trans>,
     all: <Trans>No conversations yet.</Trans>,
     unread: <Trans>You have read everything.</Trans>,
     mine: <Trans>Nothing is assigned to you.</Trans>,
     unassigned: <Trans>Every open conversation has someone.</Trans>,
     snoozed: <Trans>Nothing is snoozed.</Trans>,
-    done: <Trans>Nothing is done yet.</Trans>,
+    done: <Trans>Nothing is closed yet.</Trans>,
   }
+  const showSearch = !embedded || searching || !!query
+
+  const searchBox = (
+    <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
+      <InputGroupAddon>
+        <SearchIcon className="size-[15px] text-faint" />
+      </InputGroupAddon>
+      <InputGroupInput
+        ref={search}
+        name="list-search"
+        value={query}
+        onChange={(e) => {
+          setListQuery(e.target.value)
+          setCursorId(null)
+        }}
+        onBlur={() => !query && setSearching(false)}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault()
+            moveCursor(e.key === "ArrowDown" ? 1 : -1)
+          } else if (e.key === "Enter") {
+            e.preventDefault()
+            openCursor()
+          } else if (e.key === "Escape") {
+            if (query) setListQuery("")
+            else e.currentTarget.blur()
+          }
+        }}
+        placeholder={t`Search`}
+        aria-label={t`Search conversations`}
+        data-testid="list-search"
+      />
+      <InputGroupAddon align="inline-end">
+        {query ? (
+          <InputGroupButton size="icon-xs" onClick={() => setListQuery("")} aria-label={t`Clear the search`}>
+            <XIcon />
+          </InputGroupButton>
+        ) : (
+          <Kbd className="phone:hidden">/</Kbd>
+        )}
+      </InputGroupAddon>
+    </InputGroup>
+  )
+
+  const selection = (
+    <div
+      className="flex h-[30px] min-w-0 flex-1 shrink-0 items-center gap-1.5"
+      role="toolbar"
+      aria-label={t`Selection`}
+      data-testid="selection-bar"
+    >
+      <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
+        {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
+      </span>
+      <Button
+        size="sm"
+        className={look.btnPSm}
+        disabled={chosen.length === 0}
+        onClick={() => setLinking(true)}
+        title={t`Link to an incident (${linkKey})`}
+        data-testid="link-selected"
+      >
+        <FlameIcon />
+        <Trans>Link to an incident</Trans>
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="h-[30px] rounded-lg"
+        onClick={stopSelecting}
+        title={t`Clear the selection (Esc)`}
+      >
+        <Trans>Cancel</Trans>
+      </Button>
+    </div>
+  )
 
   return (
     <nav
@@ -684,101 +911,89 @@ export function ChatList({
       className="@container/list flex h-full min-h-0 flex-col bg-background"
       data-testid="chat-list"
     >
-      <ListHeader onSelect={() => setSelecting(true)}>
-        {selecting ? (
-          <div
-            className="flex h-11.5 shrink-0 items-center gap-1.5"
-            role="toolbar"
-            aria-label={t`Selection`}
-            data-testid="selection-bar"
-          >
-            <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
-              {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
-            </span>
-            <Button
-              size="sm"
-              disabled={chosen.length === 0}
-              onClick={() => setLinking(true)}
-              title={t`Link to an incident (${linkKey})`}
-              data-testid="link-selected"
-            >
-              <FlameIcon />
-              <Trans>Link to an incident</Trans>
-            </Button>
-            <Button variant="ghost" size="sm" onClick={stopSelecting} title={t`Clear the selection (Esc)`}>
-              <Trans>Cancel</Trans>
-            </Button>
-          </div>
-        ) : (
-          <div data-testid="chips">
-            <UnderlineTabs
-              value={chip}
-              onChange={setChip}
-              label={t`Filter`}
-              items={CHIPS.map((k) => ({
-                value: k,
-                label: labels[k],
-                count: inboxId
-                  ? undefined
-                  : k === "mine"
-                    ? counts?.mine
-                    : k === "unassigned"
-                      ? counts?.unassigned
-                      : undefined,
-                testId: `chip-${k}`,
-              }))}
-            />
-          </div>
-        )}
-      </ListHeader>
-      <div className="flex shrink-0 items-center gap-1.5 border-b px-3 py-2">
-        <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
-          <InputGroupAddon>
-            <SearchIcon className="size-[15px] text-faint" />
-          </InputGroupAddon>
-          <InputGroupInput
-            ref={search}
-            name="list-search"
-            value={query}
-            onChange={(e) => {
-              setListQuery(e.target.value)
-              setCursorId(null)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-                e.preventDefault()
-                moveCursor(e.key === "ArrowDown" ? 1 : -1)
-              } else if (e.key === "Enter") {
-                e.preventDefault()
-                openCursor()
-              } else if (e.key === "Escape") {
-                if (query) setListQuery("")
-                else e.currentTarget.blur()
-              }
-            }}
-            placeholder={t`Search`}
-            aria-label={t`Search conversations`}
-            data-testid="list-search"
-          />
-          <InputGroupAddon align="inline-end">
-            {query ? (
-              <InputGroupButton size="icon-xs" onClick={() => setListQuery("")} aria-label={t`Clear the search`}>
-                <XIcon />
-              </InputGroupButton>
+      {embedded ? (
+        <>
+          <div className="flex shrink-0 items-center gap-2 border-b px-4 py-2.5" data-testid="chips">
+            {selecting ? (
+              selection
             ) : (
-              <Kbd className="phone:hidden">/</Kbd>
+              <>
+                <OrderChip
+                  order={sort}
+                  unreadOnly={unreadOnly}
+                  onOrder={(o) => {
+                    setOrder(o)
+                    reset()
+                  }}
+                  onUnread={(on) => {
+                    setUnreadOnly(on)
+                    reset()
+                  }}
+                />
+                <SourceFilter inboxId={inboxId} onChange={reset} placeholder={<Trans>Channel</Trans>} />
+                <LabelChip
+                  value={labelId}
+                  onChange={(id) => {
+                    setLabelId(id)
+                    reset()
+                  }}
+                />
+                <span className="flex-1" />
+                {!showSearch && (
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    className="size-[30px] rounded-lg text-faint"
+                    onClick={() => {
+                      setSearching(true)
+                      requestAnimationFrame(() => search.current?.focus())
+                    }}
+                    aria-label={t`Search conversations`}
+                    title={t`Search conversations (/)`}
+                    data-testid="list-search-open"
+                  >
+                    <SearchIcon />
+                  </Button>
+                )}
+              </>
             )}
-          </InputGroupAddon>
-        </InputGroup>
-        <InboxPicker className="max-w-36" />
-        <SourceFilter
-          inboxId={inboxId}
-          onChange={() => {
-            setCursorId(null)
-            scroller.current?.scrollTo({ top: 0 })
-          }}
-        />
-      </div>
+          </div>
+          {showSearch && <div className="flex shrink-0 items-center border-b px-3 py-2">{searchBox}</div>}
+        </>
+      ) : (
+        <>
+          <PhoneHeader onSelect={() => setSelecting(true)}>
+            {selecting ? (
+              <div className="py-2">{selection}</div>
+            ) : (
+              <div data-testid="chips">
+                <UnderlineTabs
+                  value={chip}
+                  onChange={setChip}
+                  label={t`Filter`}
+                  items={PHONE_CHIPS.map((k) => ({
+                    value: k,
+                    label: labels[k],
+                    count: inboxId
+                      ? undefined
+                      : k === "mine"
+                        ? counts?.mine
+                        : k === "unassigned"
+                          ? counts?.unassigned
+                          : undefined,
+                    testId: `chip-${k}`,
+                  }))}
+                />
+              </div>
+            )}
+          </PhoneHeader>
+          <div className="flex shrink-0 items-center gap-1.5 border-b px-3 py-2">
+            {searchBox}
+            <InboxPicker className="max-w-36" />
+            <SourceFilter inboxId={inboxId} onChange={reset} />
+          </div>
+        </>
+      )}
       <AwayBanner />
       <CleanupBanner onReview={onOpen} />
       <ImportBanner />
@@ -787,7 +1002,7 @@ export function ChatList({
           <div className="grid gap-1 p-3">
             {[0, 1, 2, 3].map((i) => (
               <div key={i} className="flex items-center gap-3 py-1.5">
-                <Skeleton className="size-12 rounded-full" />
+                <Skeleton className="size-9 rounded-full" />
                 <div className="flex flex-1 flex-col gap-2">
                   <Skeleton className="h-4 w-1/2" />
                   <Skeleton className="h-3 w-3/4" />
@@ -796,11 +1011,13 @@ export function ChatList({
             ))}
           </div>
         ) : rows.length === 0 && !hasNextPage ? (
-          <p className="px-6 py-12 text-center text-body text-faint" data-testid="list-empty">
+          <p className="px-4 py-10 text-center text-body text-faint" data-testid="list-empty">
             {q ? (
               <Trans>Nothing matches your search here.</Trans>
             ) : narrowed ? (
               <Trans>Nothing matches these filters.</Trans>
+            ) : unreadOnly ? (
+              empty.unread
             ) : (
               empty[chip]
             )}
@@ -809,7 +1026,7 @@ export function ChatList({
           <>
             {pinnedRows.length > 0 && (
               <div
-                className="flex items-center gap-1.5 px-4 pt-1 pb-0.5 text-caption font-medium text-faint"
+                className="flex items-center gap-1.5 border-b px-4 pt-2 pb-1.5 text-caption font-medium text-faint"
                 data-testid="pinned-heading"
               >
                 <PinIcon className="size-3 rotate-45" />
@@ -828,7 +1045,9 @@ export function ChatList({
                 onOpen={() => (selecting ? toggle(c.id) : onOpen(c.id))}
               />
             ))}
-            {pinnedRows.length > 0 && mainRows.length > 0 && <div className="mt-1 border-t" role="separator" />}
+            {pinnedRows.length > 0 && mainRows.length > 0 && (
+              <div className="h-2 border-b bg-surface" role="separator" />
+            )}
             {mainRows.map((c) => (
               <Row
                 key={c.id}
@@ -846,7 +1065,7 @@ export function ChatList({
         <div ref={sentinel} className="h-px" />
         {isFetchingNextPage && (
           <div className="flex items-center gap-3 px-3 py-2">
-            <Skeleton className="size-12 rounded-full" />
+            <Skeleton className="size-9 rounded-full" />
             <Skeleton className="h-4 w-1/2" />
           </div>
         )}

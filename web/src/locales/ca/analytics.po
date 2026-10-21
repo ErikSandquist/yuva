@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# fila} other {# files}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {visitant avui} other {visitants avui}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} converses"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} dels visitants"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} visitants"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# conversa} other {# converses}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} han acceptat, entre visites i dies"
@@ -121,6 +140,10 @@ msgstr "{overall} dels visitants que han arribat al primer pas han arribat tamb�
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # conversa per 1.000 visualitzacions, davant de {site} a totes les pàgines.} other {{dim} {value}: # converses per 1.000 visualitzacions, davant de {site} a totes les pàgines.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} pts"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} de {limit} esdeveniments d'analítica usats aquest mes. Els esdeveniments per sobre del límit es descarten fins que acabi el mes."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Una contrasenya nova tanca la sessió de tothom qui va desbloquejar l'enllaç."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Una visualització de pàgina, un esdeveniment o una profunditat de desplaçament"
+msgid "a page visit or an event from your site or app"
+msgstr "una visita a una pàgina o un esdeveniment del teu lloc o app"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Propietats d'analítica"
 msgid "Analytics steps"
 msgstr "Passos d'analítica"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Vistes d'analítica"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Qualsevol persona amb l'enllaç veu les vistes que triïs, en només lectura, sense iniciar la sessió."
@@ -376,6 +395,11 @@ msgstr "Bots"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Bots, límits de velocitat, adreces i camins exclosos, el límit mensual o un servidor ocupat."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Rebot"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Taxa de rebot"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Desglossa per propietat"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Desglossament"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Conversions per 100 visitants."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Visitants dels teus llocs i aplicacions, sense galetes."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Visitants sense galetes als teus llocs i apps"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Els registres detallats es conserven des del {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Registres detallats conservats des del"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Detalls"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "se li ha eliminat una adreça"
 msgid "Health"
 msgstr "Estat"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Útil"
@@ -1170,6 +1190,10 @@ msgstr "Com enviar esdeveniments"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "L'he desat"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Millora la pàgina →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Última pantalla"
 msgid "Leave empty to keep the current one"
 msgstr "Deixa-ho buit per conservar l'actual"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Va portar a una conversa"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Enllaç"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Vincula una bústia per comptar-les"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Enllaça la safata"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Lliga els usuaris amb sessió iniciada al seu contacte"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "en directe"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Base de dades de llocs"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Llocs"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Mesos"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Més"
+msgid "More views"
+msgstr "Més vistes"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Nou {kind}: {value} amb {count}, cap en els dies comparats."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Nou {kind}: {value}. {metric}: {now}, cap en els dies comparats."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Nous i recurrents"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Embut nou"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Objectiu nou"
@@ -1477,10 +1509,6 @@ msgstr "Sense comparació"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "No s'ofereix cap funció de consentiment."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "Cap visitant que hagi acceptat en aquest interval."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Res"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "No s'ha comptat res en aquest interval."
 
@@ -1767,6 +1796,10 @@ msgstr "Pàgina o pantalla"
 msgid "Page view of {path}"
 msgstr "Visualització de pàgina de {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Visualitzacions de pàgina"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Pàgines"
@@ -1782,6 +1815,10 @@ msgstr "Pàgines i pantalles vistes."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Pàgines no comptades"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Pàgines ordenades per les preguntes que provoquen. Una pàgina amb molts visitants i moltes converses necessita una resposta millor a la mateixa pàgina."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Les sol·licituds amb Do Not Track o Global Privacy Control, i els esdeveniments sense consentiment en una propietat que el necessita, es reben però ni es desen ni es compten aquí."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retenció"
 
@@ -2257,6 +2293,10 @@ msgstr "Fonts"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Torna a començar"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Va iniciar una conversa"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Cops que la pàgina s'ha valorat com a no útil."
 msgid "To"
 msgstr "Per a"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Avui"
@@ -2630,6 +2671,7 @@ msgstr "Les visualitzacions han pujat a {now} en dues hores, davant de {usual} h
 msgid "Visit duration"
 msgstr "Durada de la visita"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Visitants"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Visitants en els últims 30 minuts"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Visitants ara"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Els visitants amb Do Not Track o Global Privacy Control no envien res, d
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Visites"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Visites i esdeveniments que compten com a èxit"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "D'on vénen les conversions"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "On comença i acaba el dia de la propietat."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Quines pàgines visita la gent i quines porten a preguntes"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

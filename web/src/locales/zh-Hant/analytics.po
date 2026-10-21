@@ -21,6 +21,25 @@ msgstr "{0, plural, other {# 行}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, other {今日訪客}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} 個對話"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "佔訪客的 {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} 位訪客"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, other {# 個對話}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} 位已同意,跨存取和天數"
@@ -121,6 +140,10 @@ msgstr "到達第一步的訪客中有 {overall} 也到達了最後一步,{from}
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, other {{dim} {value}:每 1,000 次瀏覽 # 個對話,所有頁面上的 {site}。}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} 個百分點"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "本月已使用 {used} 個分析事件,上限為 {limit} 個。超出上限的事件會被丟棄,直到月底。"
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "新密碼會讓所有解鎖過該連結的人退出登入。"
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "頁面瀏覽、事件或捲動深度"
+msgid "a page visit or an event from your site or app"
+msgstr "來自你的網站或應用程式的頁面造訪或事件"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "分析屬性"
 msgid "Analytics steps"
 msgstr "分析步驟"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "分析檢視"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "任何拿到連結的人都能只讀檢視你選擇的檢視,無需登入。"
@@ -376,6 +395,11 @@ msgstr "機器人"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "機器人、速率限制、被排除的地址和路徑、月度上限或伺服器繁忙。"
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "跳出"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "跳出率"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "按屬性區隔"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "明細"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "每 100 位訪客的轉化數。"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "不使用 Cookie 統計你的網站和應用程式的訪客。"
+msgid "Cookieless visitors across your sites and apps"
+msgstr "你的網站和應用程式中不使用 Cookie 的訪客"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "詳細記錄自 {rawDay} 起保留。"
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "詳細記錄保留起始日"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "詳情"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "有地址被移除"
 msgid "Health"
 msgstr "健康度"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "有幫助"
@@ -1170,6 +1190,10 @@ msgstr "如何傳送事件"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "我已儲存"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "改進頁面 →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "最後一個螢幕"
 msgid "Leave empty to keep the current one"
 msgstr "留空則保留當前的"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "引發了對話"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "連結"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "關聯一個收件匣即可統計"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "關聯收件匣"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "將已登入使用者關聯到其聯絡人"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "即時"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "位置資料庫"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "位置"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "月"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "更多"
+msgid "More views"
+msgstr "更多檢視"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "新的{kind}:{value},{count} 次,對比的日子裡沒有。"
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "新的{kind}:{value}。{metric}:{now},對比的日子裡沒有。"
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "新訪客和回訪訪客"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "新建漏斗"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "新建目標"
@@ -1477,10 +1509,6 @@ msgstr "不對比"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "未提供同意功能。"
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "此範圍內沒有已同意的訪客。"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "無"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "此範圍內沒有統計到任何內容。"
 
@@ -1767,6 +1796,10 @@ msgstr "頁面或螢幕"
 msgid "Page view of {path}"
 msgstr "{path} 的頁面瀏覽"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "頁面瀏覽量"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "頁面"
@@ -1782,6 +1815,10 @@ msgstr "瀏覽的頁面和螢幕。"
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "不統計的頁面"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "頁面依其引發的問題數量排序。訪客多、對話也多的頁面，需要在頁面本身提供更好的答案。"
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "帶有 Do Not Track 或 Global Privacy Control 的請求,以及在需要同意的屬性上沒有同意的事件,會被接收,但不會在此儲存或統計。"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "留存"
 
@@ -2257,6 +2293,10 @@ msgstr "來源"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "重新開始"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "發起了對話"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "頁面被評為沒有幫助的次數。"
 msgid "To"
 msgstr "收件人"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "今天"
@@ -2630,6 +2671,7 @@ msgstr "最近兩小時的瀏覽量升至 {now},通常為 {usual}。"
 msgid "Visit duration"
 msgstr "存取時長"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "訪客"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "最近 30 分鐘的訪客"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "目前訪客"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "帶有 Do Not Track 或 Global Privacy Control 的訪客不會傳送任�
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "存取"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "算作成功的造訪和事件"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "轉化來自哪裡"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "屬性的一天從何時開始和結束。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "人們造訪了哪些頁面，哪些頁面會引發問題"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

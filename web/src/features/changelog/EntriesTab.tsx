@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router"
 
 import { InboxMark } from "@/components/common"
 import { CHANGELOG_KEYS } from "@/components/common/ShortcutSheet"
-import { formatDate, formatDateTime } from "@/components/common/text"
+import { formatDate, formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,7 +20,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { entryLink, useCreateEntry, useEntries, useEntry } from "@/features/changelog/queries"
 import {
   entryTitle,
-  EntryLabel,
   ErrorLine,
   LABELS,
   LABEL_TONES,
@@ -30,9 +29,10 @@ import {
   useTranslationStateText,
 } from "@/features/changelog/text"
 import { useLocaleName } from "@/features/help/text"
+import { Chip, FrameButton, Pill, ProductTag } from "@/features/status/PageFrame"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { Changelog, ChangelogEntrySummary, ChangelogLabel } from "@/lib/api"
+import type { Changelog, ChangelogEntrySummary, ChangelogLabel, Inbox } from "@/lib/api"
 import type { ChangelogEntryFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
@@ -44,12 +44,6 @@ function chipTone(state: string | undefined) {
   if (state === "changed") return "border-warning/50 bg-warning/10 text-warning"
   if (state === "draft") return "border-border bg-muted text-muted-foreground"
   return "border-dashed border-border text-faint"
-}
-
-function stateTone(state: ChangelogEntrySummary["state"]) {
-  if (state === "published") return "bg-success/12 text-success"
-  if (state === "scheduled") return "bg-brand-wash text-brand"
-  return "bg-muted text-muted-foreground"
 }
 
 function LocaleChips({ e, changelog }: { e: ChangelogEntrySummary; changelog: Changelog }) {
@@ -84,7 +78,7 @@ function LocaleChips({ e, changelog }: { e: ChangelogEntrySummary; changelog: Ch
   )
 }
 
-function NewEntryDialog({ changelog, onClose }: { changelog: Changelog; onClose: () => void }) {
+export function NewEntryDialog({ changelog, onClose }: { changelog: Changelog; onClose: () => void }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const localeName = useLocaleName()
@@ -185,29 +179,8 @@ function plain(md: string) {
     .trim()
 }
 
-function DateBlock({ iso }: { iso: string }) {
+function useEntryText(changelog: Changelog, entry: ChangelogEntrySummary) {
   const { i18n } = useLingui()
-  const d = new Date(iso)
-  return (
-    <time
-      dateTime={iso}
-      className="flex w-11 shrink-0 flex-col items-center rounded-lg border bg-card py-1 leading-tight"
-      title={formatDate(iso, i18n.locale)}
-    >
-      <span className="sr-only">{formatDate(iso, i18n.locale)}</span>
-      <span className="text-[10px] font-medium text-faint uppercase" aria-hidden>
-        {new Intl.DateTimeFormat(i18n.locale, { month: "short" }).format(d)}
-      </span>
-      <span className="text-body font-semibold tabular-nums" aria-hidden>
-        {new Intl.DateTimeFormat(i18n.locale, { day: "numeric" }).format(d)}
-      </span>
-    </time>
-  )
-}
-
-function Preview({ changelog, entry }: { changelog: Changelog; entry: ChangelogEntrySummary }) {
-  const { i18n } = useLingui()
-  const inbox = (useInboxes().data ?? []).find((i) => i.id === changelog.inbox_id)
   const full = useEntry(changelog.id, entry.id).data
   const tr =
     full?.translations.find((x) => x.locale === i18n.locale) ??
@@ -216,39 +189,146 @@ function Preview({ changelog, entry }: { changelog: Changelog; entry: ChangelogE
   const title =
     tr?.published?.title ?? tr?.title ?? entryTitle(entry.translations, i18n.locale, changelog.default_locale)
   const body = tr?.published?.excerpt || plain(tr?.body ?? "")
+  return { title, body, loading: !full }
+}
+
+function DateBlock({ iso }: { iso: string }) {
+  const { i18n } = useLingui()
+  const d = new Date(iso)
+  return (
+    <time
+      dateTime={iso}
+      className="flex w-11 shrink-0 flex-col items-center rounded-lg border bg-background py-1 leading-[1.15]"
+      title={formatDate(iso, i18n.locale)}
+    >
+      <span className="sr-only">{formatDate(iso, i18n.locale)}</span>
+      <span className="text-[10.5px] text-faint uppercase" aria-hidden>
+        {new Intl.DateTimeFormat(i18n.locale, { month: "short" }).format(d)}
+      </span>
+      <span className="text-[15px] font-semibold tabular-nums" aria-hidden>
+        {new Intl.DateTimeFormat(i18n.locale, { day: "2-digit" }).format(d)}
+      </span>
+    </time>
+  )
+}
+
+const pillOf = { published: "success", scheduled: "brand", draft: "muted" } as const
+
+export function EntryRow({
+  e,
+  changelog,
+  inbox,
+  current,
+  onPick,
+  locales,
+}: {
+  e: ChangelogEntrySummary
+  changelog: Changelog
+  inbox?: Inbox
+  current: boolean
+  onPick: () => void
+  locales?: boolean
+}) {
+  const { i18n } = useLingui()
+  const stateText = useEntryStateText()
+  const labelText = useLabelText()
+  const failureText = useFailureText()
+  const { title, body, loading } = useEntryText(changelog, e)
+  return (
+    <li
+      className={cn(
+        "flex items-center gap-4 border-b px-6 py-3 transition-colors phone:px-4",
+        current && "bg-surface shadow-[inset_2px_0_0_var(--brand)]"
+      )}
+      onClick={onPick}
+      data-testid="entry-row"
+    >
+      <DateBlock iso={e.published_at ?? e.publish_at ?? e.created_at} />
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="flex min-w-0 items-center gap-2">
+          <Link
+            to={entryLink(changelog.id, e.id, changelog.default_locale)}
+            className="truncate text-[14.5px] font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {title}
+          </Link>
+          {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
+          {e.labels.map((l) => (
+            <Chip key={l}>{labelText[l]}</Chip>
+          ))}
+        </span>
+        {loading ? (
+          <Skeleton className="my-1 h-3.5 w-72" />
+        ) : (
+          <span className="truncate text-body text-muted-foreground">{body || title}</span>
+        )}
+        {e.schedule_failed && (
+          <span className="flex items-center gap-1.5 text-small text-warning" data-testid="entry-schedule-failed">
+            <TriangleAlertIcon className="size-3.5 shrink-0" />
+            <span>
+              <Trans>Publishing on schedule failed.</Trans> {failureText[e.schedule_failed.reason]}
+            </span>
+          </span>
+        )}
+      </div>
+      {locales && changelog.locales.length > 1 && <LocaleChips e={e} changelog={changelog} />}
+      <Pill tone={pillOf[e.state]} data-testid="entry-state" data-state={e.state}>
+        {stateText[e.state]}
+      </Pill>
+      <span className="w-24 shrink-0 text-end text-small text-faint tabular-nums phone:hidden">
+        {e.state === "published" && e.published_at ? (
+          formatShort(e.published_at, i18n.locale)
+        ) : e.state === "scheduled" && e.publish_at ? (
+          formatShort(e.publish_at, i18n.locale)
+        ) : (
+          <Trans>not published</Trans>
+        )}
+      </span>
+    </li>
+  )
+}
+
+export function EntryPreview({ changelog, entry }: { changelog: Changelog; entry: ChangelogEntrySummary }) {
+  const inbox = (useInboxes().data ?? []).find((i) => i.id === changelog.inbox_id)
+  const labelText = useLabelText()
+  const { title, body } = useEntryText(changelog, entry)
   const color = inbox?.branding.color ?? "var(--brand)"
   const host = changelog.url.replace(/^https?:\/\//, "").replace(/\/$/, "")
   return (
-    <aside className="flex flex-col gap-3" aria-label={title} data-testid="entry-preview">
-      <h3 className="text-caption font-medium tracking-wide text-faint uppercase">
+    <aside
+      className="flex w-[448px] shrink-0 flex-col gap-3 overflow-y-auto border-s bg-surface px-6 py-7"
+      aria-label={title}
+      data-testid="entry-preview"
+    >
+      <h3 className="text-[11px] font-semibold tracking-[0.06em] text-faint uppercase">
         {inbox ? <Trans>How it looks in {inbox.name}</Trans> : <Trans>How it looks</Trans>}
       </h3>
-      <div className="overflow-hidden rounded-2xl border bg-card shadow-[0_10px_30px_-12px_rgb(0_0_0/0.18)]">
-        <div className="flex items-center gap-2 border-b px-4 py-3">
-          {inbox && <InboxMark name={inbox.name} color={inbox.branding.color} className="size-5" />}
+      <div className="overflow-hidden rounded-xl border bg-card shadow-[0_8px_24px_-12px_rgb(0_0_0/0.18)]">
+        <div className="flex items-center gap-2 px-4 py-3">
+          {inbox && <InboxMark name={inbox.name} color={inbox.branding.color} className="size-[22px] text-caption" />}
           <span className="flex-1 text-body font-semibold">
             <Trans>What’s new</Trans>
           </span>
         </div>
-        {entry.image ? (
-          <img src={entry.image.url} alt="" className="aspect-[2/1] w-full object-cover" />
-        ) : (
-          <div
-            className="aspect-[2/1] w-full"
-            style={{ background: `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 35%, transparent))` }}
-          />
-        )}
-        <div className="flex flex-col gap-2 p-4">
-          {entry.labels.length > 0 && (
-            <span className="flex flex-wrap gap-1">
-              {entry.labels.map((l) => (
-                <EntryLabel key={l} label={l} />
-              ))}
+        <div className="relative h-[178px]">
+          {entry.image ? (
+            <img src={entry.image.url} alt="" className="size-full object-cover" />
+          ) : (
+            <div
+              className="size-full"
+              style={{ background: `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 45%, white))` }}
+            />
+          )}
+          {entry.labels[0] && (
+            <span className="absolute start-3.5 bottom-3.5 rounded-full bg-white px-2 py-0.5 text-caption font-semibold text-black">
+              {labelText[entry.labels[0]]}
             </span>
           )}
-          <p className="text-title break-words">{title}</p>
+        </div>
+        <div className="flex flex-col gap-2 p-4">
+          <p className="text-[17px] leading-[1.35] font-semibold break-words">{title}</p>
           {body ? (
-            <p className="line-clamp-6 text-body break-words text-muted-foreground">{body}</p>
+            <p className="line-clamp-6 text-body leading-[1.55] break-words text-muted-foreground">{body}</p>
           ) : (
             <p className="text-body text-faint">
               <Trans>No text yet.</Trans>
@@ -257,19 +337,18 @@ function Preview({ changelog, entry }: { changelog: Changelog; entry: ChangelogE
         </div>
       </div>
       <p className="text-small text-faint">
-        <Trans>Shown in the chat widget and on {host}.</Trans>
+        <Trans>Shown in the chat bubble, the apps and on {host}.</Trans>
       </p>
     </aside>
   )
 }
 
 export function EntriesTab({ changelog }: { changelog: Changelog }) {
-  const { t, i18n } = useLingui()
+  const { t } = useLingui()
   const navigate = useNavigate()
   const stateText = useEntryStateText()
   const translationText = useTranslationStateText()
   const labelText = useLabelText()
-  const failureText = useFailureText()
   const [state, setState] = useState<StateFilter>("all")
   const [label, setLabel] = useState<ChangelogLabel | "">("")
   const [creating, setCreating] = useState(false)
@@ -282,7 +361,6 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
   }
   const entries = useEntries(changelog.id, filters)
   const items = entries.data?.pages.flatMap((p) => p.items) ?? []
-  const prefer = [i18n.locale, changelog.default_locale]
   const shown = items[cursor] ?? items.find((e) => e.id === picked) ?? items[0]
 
   useHotkeys({
@@ -308,131 +386,89 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
   ]
 
   return (
-    <div className="@container flex flex-col gap-4" data-testid="changelog-entries">
-      <div className="flex flex-wrap items-center gap-2">
-        <ChoiceSelect
-          value={state}
-          onChange={(v) => {
-            setState(v)
-            setCursor(-1)
-          }}
-          options={states}
-          label={t`State`}
-          className="w-48"
-        />
-        <ChoiceSelect
-          value={label}
-          onChange={(v) => {
-            setLabel(v)
-            setCursor(-1)
-          }}
-          options={[["", t`All labels`] as const, ...LABELS.map((l) => [l, labelText[l]] as const)]}
-          label={t`Label`}
-          className="w-40"
-        />
-        <span className="flex-1" />
-        <Button size="sm" onClick={() => setCreating(true)} data-testid="new-entry">
-          <PlusIcon />
-          <Trans>New entry</Trans>
-        </Button>
-      </div>
-      {entries.isPending ? (
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-16 w-full rounded-xl" />
-          <Skeleton className="h-16 w-full rounded-xl" />
-          <Skeleton className="h-16 w-full rounded-xl" />
+    <div className="@container flex min-h-0 flex-1" data-testid="changelog-entries">
+      <div className="flex min-w-0 flex-1 flex-col overflow-y-auto">
+        <div className="flex flex-wrap items-center gap-2 border-b px-6 py-3 phone:px-4">
+          <ChoiceSelect
+            value={state}
+            onChange={(v) => {
+              setState(v)
+              setCursor(-1)
+            }}
+            options={states}
+            label={t`State`}
+            className="w-48"
+          />
+          <ChoiceSelect
+            value={label}
+            onChange={(v) => {
+              setLabel(v)
+              setCursor(-1)
+            }}
+            options={[["", t`All labels`] as const, ...LABELS.map((l) => [l, labelText[l]] as const)]}
+            label={t`Label`}
+            className="w-40"
+          />
+          <span className="flex-1" />
+          <FrameButton onClick={() => setCreating(true)} data-testid="new-entry">
+            <PlusIcon />
+            <Trans>New entry</Trans>
+          </FrameButton>
         </div>
-      ) : entries.error ? (
-        <ErrorLine error={entries.error} />
-      ) : items.length === 0 ? (
-        <div
-          className="flex flex-col items-center gap-2 rounded-2xl border border-dashed px-6 py-12 text-center"
-          data-testid="changelog-entries-empty"
-        >
-          <SparklesIcon className="size-6 text-faint" />
-          <p className="text-body text-muted-foreground">
-            {state !== "all" || label ? (
-              <Trans>No entry matches.</Trans>
-            ) : (
-              <Trans>No entries yet. Tell your customers what changed in your latest release.</Trans>
-            )}
-          </p>
-        </div>
-      ) : (
-        <div className="grid items-start gap-6 @min-[720px]:grid-cols-[minmax(0,1fr)_300px]">
-          <ul ref={list} className="flex flex-col divide-y overflow-hidden rounded-2xl border bg-card">
+        {entries.isPending ? (
+          <div className="flex flex-col gap-2 p-6">
+            <Skeleton className="h-14 w-full rounded-xl" />
+            <Skeleton className="h-14 w-full rounded-xl" />
+          </div>
+        ) : entries.error ? (
+          <ErrorLine error={entries.error} className="m-6" />
+        ) : items.length === 0 ? (
+          <div
+            className="m-6 flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-12 text-center"
+            data-testid="changelog-entries-empty"
+          >
+            <SparklesIcon className="size-6 text-faint" />
+            <p className="text-body text-muted-foreground">
+              {state !== "all" || label ? (
+                <Trans>No entry matches.</Trans>
+              ) : (
+                <Trans>No entries yet. Tell your customers what changed in your latest release.</Trans>
+              )}
+            </p>
+          </div>
+        ) : (
+          <ul ref={list} className="flex flex-col">
             {items.map((e, i) => (
-              <li
+              <EntryRow
                 key={e.id}
-                className={cn(
-                  "flex flex-wrap items-center gap-x-3.5 gap-y-1.5 px-4 py-3 transition-colors",
-                  (i === cursor || (cursor < 0 && e.id === shown?.id)) &&
-                    "bg-muted/60 shadow-[inset_2px_0_0_var(--brand)]"
-                )}
-                onClick={() => {
+                e={e}
+                changelog={changelog}
+                locales
+                current={i === cursor || (cursor < 0 && e.id === shown?.id)}
+                onPick={() => {
                   setPicked(e.id)
                   setCursor(-1)
                 }}
-                data-testid="entry-row"
-              >
-                <DateBlock iso={e.published_at ?? e.publish_at ?? e.created_at} />
-                <div className="flex min-w-0 flex-1 basis-48 flex-col gap-1">
-                  <Link
-                    to={entryLink(changelog.id, e.id, changelog.default_locale)}
-                    className="block truncate text-body font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {entryTitle(e.translations, ...prefer)}
-                  </Link>
-                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span
-                      className={cn("inline-flex rounded-full px-2 py-px text-caption font-medium", stateTone(e.state))}
-                      data-testid="entry-state"
-                      data-state={e.state}
-                    >
-                      {stateText[e.state]}
-                    </span>
-                    {e.state === "scheduled" && e.publish_at && (
-                      <span className="text-small text-muted-foreground">
-                        {formatDateTime(e.publish_at, i18n.locale)}
-                      </span>
-                    )}
-                    {e.labels.map((l) => (
-                      <EntryLabel key={l} label={l} />
-                    ))}
-                  </span>
-                  {e.schedule_failed && (
-                    <span
-                      className="flex items-center gap-1.5 text-small text-warning"
-                      data-testid="entry-schedule-failed"
-                    >
-                      <TriangleAlertIcon className="size-3.5 shrink-0" />
-                      <span>
-                        <Trans>Publishing on schedule failed.</Trans> {failureText[e.schedule_failed.reason]}
-                      </span>
-                    </span>
-                  )}
-                </div>
-                <LocaleChips e={e} changelog={changelog} />
-              </li>
+              />
             ))}
           </ul>
-          {shown && (
-            <div className="hidden @min-[720px]:block">
-              <Preview changelog={changelog} entry={shown} />
-            </div>
-          )}
+        )}
+        {entries.hasNextPage && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="m-6 self-center"
+            disabled={entries.isFetchingNextPage}
+            onClick={() => entries.fetchNextPage()}
+          >
+            <Trans>Load more</Trans>
+          </Button>
+        )}
+      </div>
+      {shown && (
+        <div className="hidden min-h-0 @min-[1000px]:flex">
+          <EntryPreview changelog={changelog} entry={shown} />
         </div>
-      )}
-      {entries.hasNextPage && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="self-center"
-          disabled={entries.isFetchingNextPage}
-          onClick={() => entries.fetchNextPage()}
-        >
-          <Trans>Load more</Trans>
-        </Button>
       )}
       {creating && <NewEntryDialog changelog={changelog} onClose={() => setCreating(false)} />}
     </div>

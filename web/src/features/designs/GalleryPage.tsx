@@ -7,16 +7,15 @@ import {
   LanguagesIcon,
   LayoutTemplateIcon,
   LoaderIcon,
-  PlusIcon,
   TriangleAlertIcon,
 } from "lucide-react"
 import { useState } from "react"
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
 import { Dot, ErrorLine, Notice, Segmented } from "@/components/common"
-import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
+import { PaneEmpty } from "@/components/common/Column"
 import { MailFrame } from "@/components/common/MailFrame"
-import { formatRelative } from "@/components/common/text"
+import { formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -41,10 +40,9 @@ import {
 } from "@/features/designs/queries"
 import { useTemplateLocales } from "@/features/designs/text"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { PageHeader, PageTabs } from "@/features/settings/ui"
+import { FrameButton, FrameTabs, framePad, PageFrame } from "@/features/status/PageFrame"
 import type { EmailDesignSummary, EmailTemplate, EmailTemplateLocale } from "@/lib/api"
 import { useSession } from "@/lib/session"
-import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
 const WORKSPACE = "workspace"
@@ -170,43 +168,49 @@ function useCategory() {
   return (c: string) => names[c] ?? c
 }
 
+const sheet = "relative h-[260px] w-[184px] overflow-hidden rounded-t-md bg-white shadow-[0_4px_14px_rgb(0_0_0/0.08)]"
+const box =
+  "relative flex h-[297px] justify-center overflow-hidden rounded-xl border bg-surface pt-[18px] transition-colors group-hover:border-faint"
+
 function TemplateCard({ tpl, locale, onUse }: { tpl: EmailTemplate; locale: EmailTemplateLocale; onUse: () => void }) {
   const { t } = useLingui()
   const category = useCategory()
   const own = tpl.locales.includes(locale)
   const title = tpl.name
+  const kind = category(tpl.category)
   return (
     <li>
       <button
         type="button"
         onClick={onUse}
-        className="group flex w-full flex-col overflow-hidden rounded-2xl border bg-card text-start outline-none transition-[border-color,box-shadow] hover:border-faint hover:shadow-[0_12px_32px_-18px_rgb(0_0_0/0.35)] focus-visible:ring-2 focus-visible:ring-ring"
+        title={tpl.description}
+        className="group flex w-full flex-col gap-2.5 rounded-xl text-start outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid="template-card"
         data-slug={tpl.slug}
       >
-        <span className="relative block aspect-[4/5] overflow-hidden border-b bg-surface">
-          <img
-            src={tpl.preview_url}
-            alt={t`Preview of ${title}`}
-            loading="lazy"
-            className="absolute inset-x-0 top-0 w-full transition-transform duration-500 group-hover:-translate-y-[6%]"
-          />
-          <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/10 to-transparent" />
-        </span>
-        <span className="flex flex-col gap-1 px-4 py-3.5">
-          <span className="flex items-center gap-2">
-            <span className="min-w-0 flex-1 truncate text-body font-semibold">{tpl.name}</span>
-            <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-caption text-muted-foreground">
-              {category(tpl.category)}
-            </span>
+        <span className={box}>
+          <span className={sheet}>
+            <img
+              src={tpl.preview_url}
+              alt={t`Preview of ${title}`}
+              loading="lazy"
+              className="absolute inset-x-0 top-0 w-full transition-transform duration-500 group-hover:-translate-y-[6%]"
+            />
           </span>
-          <span className="line-clamp-2 text-small text-muted-foreground">{tpl.description}</span>
-          {!own && (
-            <span className="mt-1 inline-flex items-center gap-1 text-caption text-faint">
-              <LanguagesIcon className="size-3" />
-              <Trans>Text in English</Trans>
+        </span>
+        <span className="flex min-w-0 flex-col leading-snug">
+          <span className="truncate text-body font-semibold">{tpl.name}</span>
+          <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+            <span className="truncate">
+              <Trans>Gallery · {kind}</Trans>
             </span>
-          )}
+            {!own && (
+              <span className="inline-flex shrink-0 items-center gap-1">
+                <LanguagesIcon className="size-3" />
+                <Trans>Text in English</Trans>
+              </span>
+            )}
+          </span>
         </span>
       </button>
     </li>
@@ -214,7 +218,7 @@ function TemplateCard({ tpl, locale, onUse }: { tpl: EmailTemplate; locale: Emai
 }
 
 const THUMB_WIDTH = 600
-const THUMB_SCALE = 0.3
+const THUMB_SCALE = 184 / 600
 
 function DesignCard({ d }: { d: EmailDesignSummary }) {
   const { t, i18n } = useLingui()
@@ -228,11 +232,11 @@ function DesignCard({ d }: { d: EmailDesignSummary }) {
     <li>
       <Link
         to={designLink(d.id)}
-        className="group flex flex-col gap-2.5 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="group flex flex-col gap-2.5 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid="design-card"
       >
-        <span className="relative flex h-64 justify-center overflow-hidden rounded-2xl border bg-surface pt-4.5 transition-colors group-hover:border-faint">
-          <span className="relative h-full w-[180px] overflow-hidden rounded-t-md bg-white shadow-[0_4px_14px_rgb(0_0_0/0.08)]">
+        <span className={box}>
+          <span className={sheet}>
             {render.data ? (
               <span
                 className="pointer-events-none absolute top-0 start-0 origin-top-left rtl:origin-top-right"
@@ -256,17 +260,16 @@ function DesignCard({ d }: { d: EmailDesignSummary }) {
             </span>
           )}
         </span>
-        <span className="flex min-w-0 flex-col px-1 leading-snug">
-          <span className="truncate text-body font-medium">{d.name}</span>
+        <span className="flex min-w-0 flex-col leading-snug">
+          <span className="truncate text-body font-semibold">{d.name}</span>
           <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
             {inbox && (
               <>
-                <Dot color={inbox.branding.color} className="size-[6px] shrink-0 rounded-[2px]" />
                 <span className="truncate">{inbox.name}</span>
                 <span aria-hidden>·</span>
               </>
             )}
-            <span className="shrink-0">{formatRelative(d.updated_at, i18n.locale)}</span>
+            <span className="shrink-0">{formatShort(d.updated_at, i18n.locale)}</span>
           </span>
         </span>
       </Link>
@@ -281,9 +284,9 @@ function MyDesigns() {
   const items = designs.data?.pages.flatMap((p) => p.items) ?? []
   if (designs.isPending)
     return (
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-4">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-4">
         {[0, 1, 2].map((i) => (
-          <Skeleton key={i} className="h-72 rounded-2xl" />
+          <Skeleton key={i} className="h-[297px] rounded-xl" />
         ))}
       </div>
     )
@@ -292,7 +295,7 @@ function MyDesigns() {
       <ErrorLine error={designs.error} />
       {items.length === 0 ? (
         <div
-          className="flex flex-col items-center gap-3 rounded-2xl border border-dashed px-6 py-12 text-center"
+          className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-12 text-center"
           data-testid="designs-home-empty"
         >
           <LayoutTemplateIcon className="size-6 text-faint" />
@@ -304,7 +307,7 @@ function MyDesigns() {
           </Button>
         </div>
       ) : (
-        <ul className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-x-4 gap-y-6" data-testid="design-grid">
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-x-4 gap-y-5" data-testid="design-grid">
           {items.map((d) => (
             <DesignCard key={d.id} d={d} />
           ))}
@@ -357,77 +360,80 @@ export default function GalleryPage() {
     { key: "gallery", to: "/broadcasts/designs/new", label: t`Gallery`, testId: "designs-tab-gallery" },
   ]
   return (
-    <Pane wide testId="design-gallery" className="gap-6">
-      <PaneBack to="/broadcasts/designs" label={t`Designs`} />
-      <PageHeader
-        back={false}
-        title={<Trans>Designs</Trans>}
-        description={
-          gallery ? (
-            <Trans>
-              Start from a template or an empty page. Every design gets the footer the law asks for, and you can change
-              everything else.
-            </Trans>
-          ) : (
-            <Trans>E-mail layouts you reuse across broadcasts.</Trans>
-          )
-        }
-        action={
-          gallery ? (
+    <PageFrame
+      testId="design-gallery"
+      back={gallery ? { to: "/broadcasts/designs", label: t`Designs` } : undefined}
+      title={<Trans>Designs</Trans>}
+      description={<Trans>E-mail layouts you reuse across broadcasts</Trans>}
+      actions={
+        gallery ? (
+          <>
             <Segmented
               value={locale}
               onChange={setLocale}
               label={t`Template language`}
               items={localeNames.map((l) => ({ ...l, testId: `template-locale-${l.value}` }))}
             />
-          ) : (
-            <Button size="sm" render={<Link to="/broadcasts/designs/new" />} data-testid="designs-home-new">
-              <PlusIcon />
+            <FrameButton ink onClick={() => setChoice({ template: null })} data-testid="designs-home-new">
               <Trans>New design</Trans>
-            </Button>
-          )
-        }
-        tabs={<PageTabs label={t`Designs`} items={tabs} current={gallery ? "gallery" : "mine"} />}
-      />
-      {unknown && (
-        <Notice tone="warning" icon={TriangleAlertIcon} data-testid="template-unknown">
-          <p>
-            <Trans>This server does not have the template “{slug}”. It may need a newer Yuva.</Trans>
-          </p>
-        </Notice>
-      )}
-      {!gallery && <MyDesigns />}
-      {gallery && (
-        <ul className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-4" data-testid="template-grid">
-          <li>
-            <button
-              type="button"
-              onClick={() => setChoice({ template: null })}
-              className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed text-center text-muted-foreground outline-none transition-colors hover:border-brand hover:bg-brand-wash/50 hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
-              data-testid="template-blank"
-            >
-              <FilePlusIcon className="size-7" />
-              <span className="text-body font-semibold">
-                <Trans>Empty page</Trans>
-              </span>
-              <span className="max-w-44 text-small">
-                <Trans>Build it yourself from blocks</Trans>
-              </span>
-            </button>
-          </li>
-          {templates.isPending
-            ? Array.from({ length: 6 }, (_, i) => (
-                <li key={i}>
-                  <Skeleton className={cn("aspect-[4/5] w-full rounded-2xl")} />
-                </li>
-              ))
-            : (templates.data ?? []).map((tpl) => (
-                <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => setChoice({ template: tpl })} />
-              ))}
-        </ul>
-      )}
-      {gallery && <ErrorLine error={templates.error} />}
+            </FrameButton>
+          </>
+        ) : (
+          <FrameButton ink render={<Link to="/broadcasts/designs/new" />} data-testid="designs-home-new">
+            <Trans>New design</Trans>
+          </FrameButton>
+        )
+      }
+      tabs={<FrameTabs label={t`Designs`} items={tabs} current={gallery ? "gallery" : "mine"} />}
+    >
+      <div className={framePad}>
+        {unknown && (
+          <Notice tone="warning" icon={TriangleAlertIcon} data-testid="template-unknown">
+            <p>
+              <Trans>This server does not have the template “{slug}”. It may need a newer Yuva.</Trans>
+            </p>
+          </Notice>
+        )}
+        {!gallery && <MyDesigns />}
+        {gallery && (
+          <ul
+            className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-x-4 gap-y-5"
+            data-testid="template-grid"
+          >
+            {templates.isPending
+              ? Array.from({ length: 6 }, (_, i) => (
+                  <li key={i}>
+                    <Skeleton className="h-[297px] w-full rounded-xl" />
+                  </li>
+                ))
+              : (templates.data ?? []).map((tpl) => (
+                  <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => setChoice({ template: tpl })} />
+                ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => setChoice({ template: null })}
+                className="group flex w-full flex-col gap-2.5 rounded-xl text-start outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                data-testid="template-blank"
+              >
+                <span className="flex h-[297px] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed text-muted-foreground transition-colors group-hover:border-brand group-hover:text-brand">
+                  <FilePlusIcon className="size-7" />
+                </span>
+                <span className="flex min-w-0 flex-col leading-snug">
+                  <span className="truncate text-body font-semibold">
+                    <Trans>Empty page</Trans>
+                  </span>
+                  <span className="truncate text-caption text-faint">
+                    <Trans>Build it yourself from blocks</Trans>
+                  </span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        )}
+        {gallery && <ErrorLine error={templates.error} />}
+      </div>
       {open && <CreateDialog key={open.template?.slug ?? "blank"} choice={open} locale={locale} onClose={close} />}
-    </Pane>
+    </PageFrame>
   )
 }

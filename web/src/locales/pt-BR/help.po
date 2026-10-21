@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: pt-BR\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} rascunhos"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{published} de {total} artigos publicados"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} publicados"
+msgid "{searches} searches"
+msgstr "{searches} pesquisas"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "Final do endereço"
 msgid "Agents may publish"
 msgstr "Agentes podem publicar"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "Todas as coleções"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "Uma chave de API"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Outra central de ajuda usa este endereço, agora ou antes."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "Responda às perguntas comuns uma vez, por escrito. Cada produto tem sua própria central de ajuda com artigos, coleções e um relatório do que as pessoas pesquisam."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "Responda uma vez às perguntas frequentes, por escrito. Escolha a central de ajuda de uma caixa de entrada para escrever artigos, agrupá-los em coleções e ver o que os clientes procuram."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "Qualquer estado"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "Artigos desta coleção"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "Artigos que as pessoas leem antes de escrever para você"
 
@@ -161,6 +162,10 @@ msgstr "Lista com marcadores"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "Alterado"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "Gráfico"
@@ -191,6 +196,7 @@ msgstr "Bloco de código"
 msgid "Collection"
 msgstr "Coleção"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "Coleções"
@@ -213,12 +219,18 @@ msgstr "Criar coleção"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "Criar central de ajuda"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Criar central de ajuda ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "Crie um para {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "Rascunho"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Rascunho enviado. Um proprietário ou administrador pode publicá-lo."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "Rascunhos"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "Versões anteriores desta tradução. Restaurar uma substitui o rascunho; o texto publicado permanece até você publicar."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "Formatação"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "Nada encontrado · 7 dias"
+msgid "Found nothing"
+msgstr "Nada encontrado"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "Agrupe artigos para que os visitantes possam navegar. Uma coleção pode
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "Título"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "Ajuda"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "Idioma principal"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "Mais"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "Nome"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "Novo artigo"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "Novo artigo ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "Nova coleção"
@@ -499,15 +514,21 @@ msgstr "Sem coleção"
 msgid "No collections yet. Articles can stay without one."
 msgstr "Ainda não há coleções. Os artigos podem ficar sem uma."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "Sem rascunhos. Tudo o que foi escrito está publicado."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "Ainda não há versões anteriores."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "Ainda não há central de ajuda. Proprietários e administradores a criam."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "Nenhuma caixa de entrada para mostrar uma central de ajuda."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "sem nome"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "não escrito"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Não escrito"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "Lista numerada"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "de {answers} respostas"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "Pré-visualização"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "Pré-visualização ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "Pré-visualização ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "Salvo"
 msgid "Saving…"
 msgstr "Salvando…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "Pesquisar nos títulos"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "Pesquisar nos títulos ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "Buscas"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "Buscas · 7 dias"
+msgid "searches this week"
+msgstr "pesquisas esta semana"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,8 +787,8 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "Comece com um título. Você escreve o texto depois, e ele continua rascunho até ser publicado."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
-msgstr "Estado"
+msgid "Status"
+msgstr "Status"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Submit draft"
@@ -867,10 +884,6 @@ msgstr "Digite uma palavra para buscar."
 msgid "Unpublish"
 msgstr "Despublicar"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "Despublicar ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Despublicar esta tradução?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "Ver"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "Ver central de ajuda"
+msgid "View site"
+msgstr "Ver site"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "Ver site ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

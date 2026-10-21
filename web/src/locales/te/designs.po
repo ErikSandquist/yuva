@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "ఇమెయిల్ డిజైన్‌లు"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "బ్రాడ్‌కాస్ట్‌లలో మీరు మళ్లీ వాడే ఈమెయిల్ లేఅవుట్‌లు."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "బ్రాడ్‌కాస్ట్‌లలో మళ్లీ ఉపయోగించే ఇమెయిల్ లేఅవుట్‌లు"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "పూర్తి వెడల్పు"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "గ్యాలరీ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "గ్యాలరీ · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "ఫోన్‌లలో స్టాక్ చేయండి"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "ప్రారంభించండి"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "టెంప్లేట్ లేదా ఖాళీ పేజీతో ప్రారంభించండి. ప్రతి డిజైన్‌కు చట్టం కోరే ఫుటర్ వస్తుంది, మరియు మిగతా అన్నీ మీరు మార్చవచ్చు."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

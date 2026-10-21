@@ -1,9 +1,10 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { PlugIcon } from "lucide-react"
+import { Link } from "react-router"
 
 import { ErrorLine, useConfirm } from "@/components/common"
-import { API_KEY_SCOPES, formatDateTime, useEnumText } from "@/components/common/text"
+import { API_KEY_SCOPES, formatDate, formatDateTime, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   ASSISTANTS,
@@ -13,18 +14,7 @@ import {
 } from "@/features/settings/connected-apps/assistants"
 import { useGrants } from "@/features/settings/connected-apps/queries"
 import { DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
-import {
-  Card,
-  EmptyRow,
-  LinkRow,
-  PageHeader,
-  Row,
-  RowIcon,
-  Rows,
-  RowText,
-  Section,
-  StatusTag,
-} from "@/features/settings/ui"
+import { Card, EmptyRow, PageHeader, Pill, Row, Rows, Section } from "@/features/settings/ui"
 import { api, unwrap, type OAuthGrant } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
@@ -106,6 +96,7 @@ function GrantRow({ g, showMember, onRevoke }: { g: OAuthGrant; showMember: bool
 }
 
 function Assistants({ grants }: { grants: OAuthGrant[] | undefined }) {
+  const { i18n } = useLingui()
   const { membership } = useSession()
   const nameOf = useAssistantName()
   const details: Record<AssistantId, React.ReactNode> = {
@@ -118,35 +109,47 @@ function Assistants({ grants }: { grants: OAuthGrant[] | undefined }) {
     other: <Trans>Any client that speaks MCP over HTTP</Trans>,
   }
   return (
-    <Section title={<Trans>Connect an assistant</Trans>}>
-      <Card flush>
-        <Rows>
-          {ASSISTANTS.map((a) => {
-            const Icon = a.icon
-            const connected = grants && grantsFor(a, grants, membership.member_id, new Set()).length > 0
-            return (
-              <LinkRow
-                key={a.id}
-                to={a.id}
-                testId="assistant-row"
-                value={
-                  connected ? (
-                    <StatusTag tone="success">
-                      <Trans>Connected</Trans>
-                    </StatusTag>
-                  ) : undefined
-                }
+    <>
+      <p className="text-muted-foreground">
+        <Trans>
+          Assistants work in Yuva through MCP on this server’s <code className="font-mono">/mcp</code>, with the access
+          you approve.
+        </Trans>
+      </p>
+      <ul className="grid grid-cols-3 gap-4 max-xl:grid-cols-2 phone:grid-cols-1">
+        {ASSISTANTS.map((a) => {
+          const Icon = a.icon
+          const mine = grants ? grantsFor(a, grants, membership.member_id, new Set()) : []
+          const first = mine[0]
+          const since = first ? formatDate(first.created_at, i18n.locale) : ""
+          return (
+            <li key={a.id} className="flex flex-col gap-3 rounded-xl border bg-card p-4" data-testid="assistant-row">
+              <span className="flex min-w-0 items-center gap-3">
+                <span className="grid size-8 shrink-0 place-items-center rounded-lg border bg-surface text-muted-foreground">
+                  <Icon className="size-4" />
+                </span>
+                <span className="min-w-0 flex-1 truncate font-semibold">{nameOf(a)}</span>
+                {first && (
+                  <Pill tone="success">
+                    <Trans>Connected</Trans>
+                  </Pill>
+                )}
+              </span>
+              <span className="truncate text-caption text-faint">
+                {first ? <Trans>Connected on {since}</Trans> : details[a.id]}
+              </span>
+              <Button
+                variant={first ? "outline" : "default"}
+                className={first ? "h-[30px] rounded-lg border-input font-normal" : "h-[30px] rounded-lg"}
+                render={<Link to={a.id} />}
               >
-                <RowIcon>
-                  <Icon />
-                </RowIcon>
-                <RowText title={nameOf(a)} detail={details[a.id]} />
-              </LinkRow>
-            )
-          })}
-        </Rows>
-      </Card>
-    </Section>
+                {first ? <Trans>Manage</Trans> : <Trans>Connect</Trans>}
+              </Button>
+            </li>
+          )
+        })}
+      </ul>
+    </>
   )
 }
 
@@ -167,10 +170,7 @@ export function ConnectedAppsPage() {
         tabs={<DeveloperTabs current="connected-apps" />}
         description={
           canManage ? (
-            <Trans>
-              Assistants and apps that members connected with their own sign-in. Each acts as that member, only within
-              the access they allowed. As an owner or admin you see and can revoke every member's connections.
-            </Trans>
+            <Trans>Keys, webhooks and connected assistants</Trans>
           ) : (
             <Trans>
               Assistants and apps you connected with your sign-in. Each acts as you, only within the access you allowed.

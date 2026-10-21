@@ -13,22 +13,25 @@ import {
   TagIcon,
   UsersIcon,
 } from "lucide-react"
-import { Outlet } from "react-router"
+import { Outlet, useLocation } from "react-router"
 
-import { Column, ColumnHeading, ColumnLink, Pane } from "@/components/common/Column"
+import { Column, ColumnHeading, ColumnLink } from "@/components/common/Column"
 import { initials, useEnumText } from "@/components/common/text"
 import { ProductsHome } from "@/features/settings/ProductsPage"
-import { RowIcon, RowText } from "@/features/settings/ui"
+import { Page, RowIcon, RowText } from "@/features/settings/ui"
 import { api, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { useCannedReplies, useInboxes, useLabels, useMembers } from "@/lib/workspace"
 
+const WIDE = ["/settings/api-keys", "/settings/webhooks", "/settings/connected-apps"]
+
 export function SettingsPane() {
+  const { pathname } = useLocation()
   return (
-    <Pane testId="settings">
+    <Page testId="settings" width={WIDE.includes(pathname) ? "full" : "form"}>
       <Outlet />
-    </Pane>
+    </Page>
   )
 }
 

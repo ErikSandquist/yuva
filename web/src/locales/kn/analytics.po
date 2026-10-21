@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# ಸಾಲು} other {# ಸಾಲುಗಳು}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {ಇಂದು ಸಂದರ್ಶಕ} other {ಇಂದು ಸಂದರ್ಶಕರು}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} ಸಂಭಾಷಣೆಗಳು"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "ಸಂದರ್ಶಕರಲ್ಲಿ {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} ಸಂದರ್ಶಕರು"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# ಸಂಭಾಷಣೆ} other {# ಸಂಭಾಷಣೆಗಳು}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} ಒಪ್ಪಿದ್ದಾರೆ, ಭೇಟಿಗಳು ಮತ್ತು ದಿನಗಳಾದ್ಯಂತ"
@@ -121,6 +140,10 @@ msgstr "ಮೊದಲ ಹಂತ ತಲುಪಿದ ಸಂದರ್ಶಕರಲ್
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: 1,000 ವೀಕ್ಷಣೆಗಳಿಗೆ # ಸಂಭಾಷಣೆ, ಎಲ್ಲಾ ಪುಟಗಳಲ್ಲಿ {site} ವಿರುದ್ಧ.} other {{dim} {value}: 1,000 ವೀಕ್ಷಣೆಗಳಿಗೆ # ಸಂಭಾಷಣೆಗಳು, ಎಲ್ಲಾ ಪುಟಗಳಲ್ಲಿ {site} ವಿರುದ್ಧ.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} ಅಂಕಗಳು"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ಈ ತಿಂಗಳು {limit} ಅನಾಲಿಟಿಕ್ಸ್ ಈವೆಂಟ್‌ಗಳಲ್ಲಿ {used} ಬಳಸಲಾಗಿದೆ. ಮಿತಿ ಮೀರಿದ ಈವೆಂಟ್‌ಗಳನ್ನು ತಿಂಗಳು ಮುಗಿಯುವವರೆಗೆ ಕೈಬಿಡಲಾಗುತ್ತದೆ."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಲಿಂಕ್ ಅನ್‌ಲಾಕ್ ಮಾಡಿದ ಎಲ್ಲರನ್ನೂ ಸೈನ್ ಔಟ್ ಮಾಡುತ್ತದೆ."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "ಒಂದು ಪುಟ ವೀಕ್ಷಣೆ, ಒಂದು ಈವೆಂಟ್ ಅಥವಾ ಸ್ಕ್ರೋಲ್ ಆಳ"
+msgid "a page visit or an event from your site or app"
+msgstr "ನಿಮ್ಮ ಸೈಟ್ ಅಥವಾ ಆ್ಯಪ್‌ನಿಂದ ಪುಟ ಭೇಟಿ ಅಥವಾ ಈವೆಂಟ್"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "ಅನಾಲಿಟಿಕ್ಸ್ ಪ್ರಾಪರ್ಟಿಗಳು"
 msgid "Analytics steps"
 msgstr "ಅನಾಲಿಟಿಕ್ಸ್ ಹಂತಗಳು"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "ಅನಾಲಿಟಿಕ್ಸ್ ನೋಟಗಳು"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "ಲಿಂಕ್ ಇರುವ ಯಾರಾದರೂ ನೀವು ಆರಿಸಿದ ನೋಟಗಳನ್ನು, ಓದಲು-ಮಾತ್ರ, ಸೈನ್ ಇನ್ ಮಾಡದೆ ನೋಡುತ್ತಾರೆ."
@@ -376,6 +395,11 @@ msgstr "ಬಾಟ್‌ಗಳು"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "ಬಾಟ್‌ಗಳು, ದರ ಮಿತಿಗಳು, ಹೊರಗಿಟ್ಟ ವಿಳಾಸಗಳು ಮತ್ತು ಪಾತ್‌ಗಳು, ಮಾಸಿಕ ಮಿತಿ ಅಥವಾ ಬ್ಯುಸಿ ಸರ್ವರ್."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "ಬೌನ್ಸ್"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "ಬೌನ್ಸ್ ದರ"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "ಪ್ರಾಪ್ ಪ್ರಕಾರ ವಿಭಜಿಸಿ"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "ವಿಭಜನೆ"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "100 ಸಂದರ್ಶಕರಿಗೆ ಪರಿವರ್ತನೆಗಳು."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "ನಿಮ್ಮ ಸೈಟ್‌ಗಳು ಮತ್ತು ಆ್ಯಪ್‌ಗಳ ಸಂದರ್ಶಕರು, ಕುಕೀಗಳಿಲ್ಲದೆ."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "ನಿಮ್ಮ ಸೈಟ್‌ಗಳು ಮತ್ತು ಆ್ಯಪ್‌ಗಳಲ್ಲಿ ಕುಕೀ ಇಲ್ಲದ ಸಂದರ್ಶಕರು"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "ವಿವರವಾದ ದಾಖಲೆಗಳನ್ನು {rawDay} ರಿ�
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "ವಿವರವಾದ ದಾಖಲೆಗಳನ್ನು ಇಡಲಾದ ದಿನಾಂಕ"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "ವಿವರಗಳು"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "ವಿಳಾಸ ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
 msgid "Health"
 msgstr "ಆರೋಗ್ಯ"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "ಸಹಾಯಕ"
@@ -1170,6 +1190,10 @@ msgstr "ಈವೆಂಟ್‌ಗಳನ್ನು ಹೇಗೆ ಕಳುಹಿಸ�
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "ನಾನು ಉಳಿಸಿದ್ದೇನೆ"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "ಪುಟವನ್ನು ಸುಧಾರಿಸಿ →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "ಕೊನೆಯ ಪರದೆ"
 msgid "Leave empty to keep the current one"
 msgstr "ಈಗಿರುವುದನ್ನು ಉಳಿಸಲು ಖಾಲಿ ಬಿಡಿ"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "ಸಂಭಾಷಣೆಗೆ ಕಾರಣವಾಯಿತು"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "ಲಿಂಕ್"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "ಎಣಿಸಲು ಇನ್‌ಬಾಕ್ಸ್ ಲಿಂಕ್ ಮಾಡಿ"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "ಇನ್‌ಬಾಕ್ಸ್ ಲಿಂಕ್ ಮಾಡಿ"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "ಸೈನ್ ಇನ್ ಆದ ಬಳಕೆದಾರರನ್ನು ಅವರ ಸಂಪರ್ಕಕ್ಕೆ ಲಿಂಕ್ ಮಾಡಿ"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "ಲೈವ್"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "ಸ್ಥಳ ಡೇಟಾಬೇಸ್"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ಸ್ಥಳಗಳು"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "ತಿಂಗಳುಗಳು"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "ಇನ್ನಷ್ಟು"
+msgid "More views"
+msgstr "ಇನ್ನಷ್ಟು ವೀಕ್ಷಣೆಗಳು"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "ಹೊಸ {kind}: {value}, {count} ರೊಂದಿಗೆ, ಹೋಲಿ�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "ಹೊಸ {kind}: {value}. {metric}: {now}, ಹೋಲಿಸಿದ ದಿನಗಳಲ್ಲಿ ಇಲ್ಲ."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "ಹೊಸ ಮತ್ತು ಮರಳಿದವರು"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "ಹೊಸ ಫನೆಲ್"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "ಹೊಸ ಗುರಿ"
@@ -1477,10 +1509,6 @@ msgstr "ಹೋಲಿಕೆ ಇಲ್ಲ"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "ಯಾವ ಒಪ್ಪಿಗೆ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನೂ ನೀಡಲಾಗಿಲ್ಲ."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "ಈ ಅವಧಿಯಲ್ಲಿ ಒಪ್ಪಿದ ಸಂದರ್ಶಕರಿಲ್ಲ."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "ಏನೂ ಇಲ್ಲ"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "ಈ ಅವಧಿಯಲ್ಲಿ ಏನೂ ಎಣಿಕೆಯಾಗಿಲ್ಲ."
 
@@ -1767,6 +1796,10 @@ msgstr "ಪುಟ ಅಥವಾ ಪರದೆ"
 msgid "Page view of {path}"
 msgstr "{path} ನ ಪುಟ ವೀಕ್ಷಣೆ"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "ಪುಟ ವೀಕ್ಷಣೆಗಳು"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "ಪುಟಗಳು"
@@ -1782,6 +1815,10 @@ msgstr "ವೀಕ್ಷಿಸಿದ ಪುಟಗಳು ಮತ್ತು ಪರದ
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "ಎಣಿಸದ ಪುಟಗಳು"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "ಪುಟಗಳು ಅವು ಉಂಟುಮಾಡುವ ಪ್ರಶ್ನೆಗಳ ಪ್ರಕಾರ ಕ್ರಮದಲ್ಲಿವೆ. ಹೆಚ್ಚು ಸಂದರ್ಶಕರು ಮತ್ತು ಹೆಚ್ಚು ಸಂಭಾಷಣೆಗಳಿರುವ ಪುಟಕ್ಕೆ ಆ ಪುಟದಲ್ಲೇ ಉತ್ತಮ ಉತ್ತರ ಬೇಕು."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track ಅಥವಾ Global Privacy Control ಇರುವ ವಿನಂತಿಗಳು, ಮತ್ತು ಅದು ಬೇಕಾದ ಪ್ರಾಪರ್ಟಿಯಲ್ಲಿ ಒಪ್ಪಿಗೆಯಿಲ್ಲದ ಈವೆಂಟ್‌ಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಲಾಗುತ್ತದೆ ಆದರೆ ಇಲ್ಲಿ ಸಂಗ್ರಹಿಸಲೂ ಇಲ್ಲ ಎಣಿಸಲೂ ಇಲ್ಲ."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "ಉಳಿಕೆ"
 
@@ -2257,6 +2293,10 @@ msgstr "ಮೂಲಗಳು"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "ಸಂಭಾಷಣೆ ಪ್ರಾರಂಭಿಸಿದರು"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "ಪುಟವನ್ನು ಸಹಾಯಕವಲ್ಲ ಎಂದು ರೇ
 msgid "To"
 msgstr "ಇವರಿಗೆ"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "ಇಂದು"
@@ -2630,6 +2671,7 @@ msgstr "ವೀಕ್ಷಣೆಗಳು ಎರಡು ಗಂಟೆಗಳಲ್ಲ�
 msgid "Visit duration"
 msgstr "ಭೇಟಿಯ ಅವಧಿ"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "ಸಂದರ್ಶಕರು"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "ಕಳೆದ 30 ನಿಮಿಷಗಳಲ್ಲಿ ಸಂದರ್ಶಕರು"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "ಈಗಿನ ಸಂದರ್ಶಕರು"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Do Not Track ಅಥವಾ Global Privacy Control ಇರುವ ಸಂದ�
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "ಭೇಟಿಗಳು"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "ಯಶಸ್ಸು ಎಂದು ಪರಿಗಣಿಸುವ ಭೇಟಿಗಳು ಮತ್ತು ಈವೆಂಟ್‌ಗಳು"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "ಪರಿವರ್ತನೆಗಳು ಎಲ್ಲಿಂದ ಬರುತ�
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "ಪ್ರಾಪರ್ಟಿಯ ದಿನ ಎಲ್ಲಿ ಆರಂಭವಾಗಿ ಕೊನೆಗೊಳ್ಳುತ್ತದೆ."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "ಜನರು ಯಾವ ಪುಟಗಳನ್ನು ಭೇಟಿ ಮಾಡುತ್ತಾರೆ ಮತ್ತು ಯಾವವು ಪ್ರಶ್ನೆಗಳಿಗೆ ಕಾರಣವಾಗುತ್ತವೆ"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

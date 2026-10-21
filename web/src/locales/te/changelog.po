@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: te\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "{drafts} డ్రాఫ్ట్‌లు"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}లో {published} ఎంట్రీలు ప్రచురించబడ్డాయి"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "{published} ప్రచురించినవి"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "{scheduled} షెడ్యూల్ చేసినవి"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "చిరునామా ముగింపు"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "ఏజెంట్లు ప్రచురించవచ్చు"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "అన్నీ"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "చిత్తుప్రతి సమర్పించబడింది. యజమాని లేదా అడ్మిన్ దీన్ని ప్రచురించవచ్చు."
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "డ్రాఫ్ట్‌లు"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "ఎంట్రీలు"
 
@@ -268,6 +264,14 @@ msgstr "కొత్త"
 msgid "New entry"
 msgstr "కొత్త ఎంట్రీ"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "కొత్త పోస్ట్"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "కొత్త పోస్ట్ ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "ఇంకా చేంజ్‌లాగ్ లేదు. యజమానులు, అడ్మిన్‌లు దాన్ని సృష్టిస్తారు."
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "ఏదీ లేదు"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "ప్రచురించలేదు"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "రాయలేదు"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "ఇక్కడ ఏమీ లేదు."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "షెడ్యూల్ చేసిన ప్రచురణ విఫలమైంది."
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "మీ ఉత్పత్తులలో, వెబ్‌లో మరియు ఈమెయిల్‌లో చూపే రిలీజ్ నోట్స్."
+msgid "Release notes shown in your products and on the web"
+msgstr "మీ ఉత్పత్తులలో మరియు వెబ్‌లో చూపే విడుదల గమనికలు"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "చూపండి"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "చాట్ విడ్జెట్‌లో మరియు {host} లో చూపబడుతుంది."
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "చాట్ బబుల్, యాప్‌లు మరియు {host}లో చూపబడుతుంది."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "{inboxName} కస్టమర్‌లకు ఏది కొత్తదో, ఏది మెరుగైందో, ఏది సరిచేశారో చెప్పండి. మీరు ప్రచురించే వరకు ఇది ప్రచురించబడకుండా ఉంటుంది."
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "మీ కస్టమర్‌లకు ఏది కొత్తదో, ఏది మెరుగైందో, ఏది సరిచేశారో పబ్లిక్ పేజీలో, చాట్ విడ్జెట్‌లో, ఇమెయిల్ ద్వారా చెప్పండి. ఎంట్రీలు రాయడానికి ఒక ఇన్‌బాక్స్ చేంజ్‌లాగ్‌ను ఎంచుకోండి."
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "పబ్లిక్ పేజీలో, చాట్ విడ్జెట్‌లో మరియు ఇమెయిల్ ద్వారా ఏది కొత్తది, మెరుగైనది, సరిచేసినది అని మీ కస్టమర్‌లకు చెప్పండి."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

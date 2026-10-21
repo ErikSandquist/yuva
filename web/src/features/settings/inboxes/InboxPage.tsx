@@ -59,7 +59,7 @@ function useAutosave(inbox: Inbox) {
 
 type SesState = NonNullable<NonNullable<Channel["email"]>["ses"]>["state"]
 
-function channelState(ch: Channel): "ok" | "receive" | "paused" | "identity_missing" | "error" {
+export function channelState(ch: Channel): "ok" | "receive" | "paused" | "identity_missing" | "error" {
   if (ch.kind !== "email") return "ok"
   if (!ch.email?.smtp) return "receive"
   const ses: SesState | undefined = ch.email.ses?.state

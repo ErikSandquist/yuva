@@ -8,16 +8,12 @@ msgstr ""
 "Language: it\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "Feedback collegati: {linked}"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# feedback} other {# feedback}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} in attesa di approvazione"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "{replies} risposte"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "Approva"
 msgid "Approved"
 msgstr "Approvato"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "Almeno 3 caratteri."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "Indietro"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "Bacheca eliminata"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "Conta le visualizzazioni di pagina della bacheca pubblica senza cookie."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Crea bacheca"
@@ -93,6 +96,10 @@ msgstr "Crea bacheca"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "Crea bacheca ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "Crea idea"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "Elimina la bacheca con le sue idee, i voti, le risposte e la cronologia delle fasi. I feedback collegati e il loro avanzamento restano. L’indirizzo pubblico smette di funzionare."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "Descrizione"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "Trascina {title} in un’altra fase"
+msgid "Done"
+msgstr "Fatto"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "Idee, voti e fasi per {inboxName}, con i feedback dietro ogni idea. Rest
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "Idee: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "Finisce in Idee sulla bacheca, dove i clienti possono votarla."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "Idea spostata in {stage}"
 msgid "Name"
 msgstr "Nome"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "Nuova idea"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "Nuova idea da questo feedback"
@@ -285,6 +302,7 @@ msgstr "Scegli un’idea della bacheca di questa casella"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Pubblicato come tua risposta pubblica all’idea. Il Markdown funziona."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "Privata"
@@ -311,11 +329,16 @@ msgstr "I lettori non possono proporre idee. Voti e risposte continuano a funzio
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "I lettori hanno suggerito nuove idee. Rivedile prima che compaiano sulla bacheca pubblica."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "Revisione"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Roadmap"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "Bacheche roadmap"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "Impostazioni"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "Mostra ai tuoi clienti cosa stai costruendo e collega i feedback dietro ogni idea. Scegli la bacheca di una casella per ordinare le idee in fasi."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "Mostra ai tuoi clienti cosa stai costruendo e collega i feedback dietro ogni idea. Crea una bacheca per una casella per ordinare le idee in fasi."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "Questa casella non ha un canale chat web. Aggiungine prima uno, perché la bacheca pubblica lo incorpora."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Titolo"
 

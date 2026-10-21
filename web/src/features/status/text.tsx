@@ -36,7 +36,15 @@ const stateColor: Record<StatusComponentStateValue, string> = {
   degraded: "bg-warning",
   partial_outage: "bg-warning",
   major_outage: "bg-destructive",
-  maintenance: "bg-brand",
+  maintenance: "bg-blue-600 dark:bg-blue-400",
+}
+
+export const STATE_TONE: Record<StatusComponentStateValue, string> = {
+  operational: "text-success",
+  degraded: "text-warning",
+  partial_outage: "text-warning",
+  major_outage: "text-destructive",
+  maintenance: "text-blue-600 dark:text-blue-400",
 }
 
 export function StateDot({ state, className }: { state: StatusComponentStateValue; className?: string }) {

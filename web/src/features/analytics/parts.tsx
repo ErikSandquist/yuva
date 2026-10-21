@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { DownloadIcon, HistoryIcon, UserCheckIcon } from "lucide-react"
 import { useOutletContext } from "react-router"
 
@@ -8,7 +8,9 @@ import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useGeoAttribution, useShare } from "@/features/analytics/queries"
 import { todayIso, useView } from "@/features/analytics/state"
-import { ApiError, type AnalyticsProperty } from "@/lib/api"
+import { api, ApiError, unwrap, type AnalyticsProperty } from "@/lib/api"
+import { keys } from "@/lib/keys"
+import { useOptionalSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 export function useCurrentProperty() {
@@ -225,4 +227,15 @@ export function ConsentedOnly({ className }: { className?: string }) {
 
 export function offersPersistent(p: Pick<AnalyticsProperty, "consent_features">) {
   return p.consent_features.includes("persistent")
+}
+
+export function usePropertyInbox(inboxId?: string) {
+  const ws = useOptionalSession()?.workspaceId ?? ""
+  const inboxes = useQuery({
+    queryKey: keys.inboxes(ws),
+    queryFn: () => unwrap(api.GET("/v1/inboxes")).then((r) => r.items),
+    staleTime: 60_000,
+    enabled: !!ws && !!inboxId,
+  })
+  return inboxId ? inboxes.data?.find((i) => i.id === inboxId) : undefined
 }

@@ -174,7 +174,7 @@ export function useInsights(id: string, bodies: AnalyticsQuery[], enabled = true
   })
 }
 
-export function useRealtime(id: string) {
+export function useRealtime(id: string, enabled = true) {
   const share = useShare()
   const base = useDataKey(id)
   return useQuery({
@@ -191,6 +191,7 @@ export function useRealtime(id: string) {
         : unwrap(api.GET("/v1/analytics/properties/{propertyId}/realtime", { params: { path: { propertyId: id } } })),
     refetchInterval: 15_000,
     placeholderData: keepPreviousData,
+    enabled,
   })
 }
 

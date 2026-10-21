@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, ListFilterIcon, MegaphoneIcon } from "lucide-react"
+import { CheckIcon, ListFilterIcon, MegaphoneIcon, PlusIcon } from "lucide-react"
 import { useMemo, useSyncExternalStore } from "react"
 
 import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText } from "@/components/common"
@@ -131,7 +131,15 @@ function BroadcastChoices({
   )
 }
 
-export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange: () => void }) {
+export function SourceFilter({
+  inboxId,
+  onChange,
+  placeholder,
+}: {
+  inboxId: string
+  onChange: () => void
+  placeholder?: React.ReactNode
+}) {
   const { t } = useLingui()
   const text = useSourceText()
   const [v, set] = useSourceFilter()
@@ -149,10 +157,11 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
           <button
             type="button"
             className={cn(
-              "inline-flex h-8 max-w-40 min-w-0 shrink items-center gap-1.5 rounded-lg border px-2.5 text-small transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "inline-flex min-w-0 shrink items-center gap-1.5 rounded-lg border px-2.5 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              placeholder ? "h-[30px] max-w-36 shrink-0 gap-1 text-body" : "h-8 max-w-40 text-small",
               active
                 ? "border-brand/40 bg-brand-wash font-medium text-brand"
-                : "border-dashed text-muted-foreground hover:border-faint hover:text-foreground"
+                : "border-dashed border-input text-muted-foreground hover:border-faint hover:text-foreground"
             )}
           />
         }
@@ -160,8 +169,12 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
         title={t`Filter by type, site and broadcast`}
         data-testid="source-filter"
       >
-        <ListFilterIcon className="size-3.5 shrink-0" />
-        <span className="truncate">{active ? summary : <Trans>Filter</Trans>}</span>
+        {placeholder && !active ? (
+          <PlusIcon className="size-3.5 shrink-0" />
+        ) : (
+          <ListFilterIcon className="size-3.5 shrink-0" />
+        )}
+        <span className="truncate">{active ? summary : (placeholder ?? <Trans>Filter</Trans>)}</span>
       </PopoverTrigger>
       <PopoverContent
         align="start"

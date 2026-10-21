@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: sk\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "Konceptov: {drafts}"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "Uverejnených {published} z {total} článkov"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "Zverejnené: {published}"
+msgid "{searches} searches"
+msgstr "Vyhľadávaní: {searches}"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "Koniec adresy"
 msgid "Agents may publish"
 msgstr "Agenti môžu zverejňovať"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "Všetky kolekcie"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "Kľúč API"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Túto adresu už používa iné centrum pomoci, teraz alebo predtým."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "Odpovedzte na časté otázky raz, písomne. Každý produkt má vlastné centrum pomoci s článkami, kolekciami a prehľadom toho, čo ľudia hľadajú."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "Odpovedzte na časté otázky raz, písomne. Vyberte centrum pomoci schránky, napíšte články, zoskupte ich do kolekcií a pozrite, čo zákazníci hľadajú."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "Ľubovoľný stav"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "Články v tejto kolekcii"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "Články, ktoré ľudia čítajú skôr, než vám napíšu"
 
@@ -161,6 +162,10 @@ msgstr "Odrážkový zoznam"
 msgid "Cancel"
 msgstr "Zrušiť"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "Zmenené"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "Graf"
@@ -191,6 +196,7 @@ msgstr "Blok kódu"
 msgid "Collection"
 msgstr "Kolekcia"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "Kolekcie"
@@ -213,12 +219,18 @@ msgstr "Vytvoriť kolekciu"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "Vytvoriť centrum pomoci"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Vytvoriť centrum pomoci ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "Vytvoriť jedno pre {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "Koncept"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Koncept bol odoslaný. Zverejniť ho môže vlastník alebo správca."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "Koncepty"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "Staršie verzie tohto prekladu. Obnovenie jednej nahradí koncept; zverejnený text zostane, kým nezverejníte."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "Formátovanie"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "Nič sa nenašlo · 7 dní"
+msgid "Found nothing"
+msgstr "Nič sa nenašlo"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "Zoskupte články, aby ich návštevníci mohli prehliadať. Kolekcia m�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "Nadpis"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "Pomoc"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "Hlavný jazyk"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "Viac"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "Názov"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "Nový článok"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "Nový článok ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "Nová kolekcia"
@@ -499,15 +514,21 @@ msgstr "Bez kolekcie"
 msgid "No collections yet. Articles can stay without one."
 msgstr "Zatiaľ žiadne kolekcie. Články môžu zostať bez kolekcie."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "Žiadne koncepty. Všetko napísané je zverejnené."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "Zatiaľ žiadne staršie verzie."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "Zatiaľ žiadne centrum pomoci. Vytvárajú ho vlastníci a správcovia."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "Žiadna schránka, pre ktorú by sa zobrazilo centrum pomoci."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "bez názvu"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "nenapísané"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Nenapísané"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "Číslovaný zoznam"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "z {answers} odpovedí"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "Ukážka"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "Ukážka ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "Ukážka ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "Uložené"
 msgid "Saving…"
 msgstr "Ukladá sa…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "Hľadať v názvoch"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "Hľadať v názvoch ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "Hľadania"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "Vyhľadávania · 7 dní"
+msgid "searches this week"
+msgstr "vyhľadávaní tento týždeň"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "Začnite názvom. Text napíšete potom a zostane konceptom, kým sa nezverejní."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "Stav"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "Zadajte slovo na vyhľadanie."
 msgid "Unpublish"
 msgstr "Zrušiť zverejnenie"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "Zrušiť zverejnenie ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Zrušiť zverejnenie tohto prekladu?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "Zobraziť"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "Zobraziť centrum pomoci"
+msgid "View site"
+msgstr "Zobraziť web"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "Zobraziť web ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

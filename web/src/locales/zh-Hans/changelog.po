@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-Hans\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "{drafts} 篇草稿"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "已发布 {published} / {total} 个条目"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "{published} 篇已发布"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "{scheduled} 篇已排期"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "地址结尾"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "客服可以发布"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "全部"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "草稿已提交。所有者或管理员可以发布它。"
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "草稿"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "条目"
 
@@ -268,6 +264,14 @@ msgstr "新"
 msgid "New entry"
 msgstr "新条目"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "新建文章"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "新建文章 ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "还没有更新日志。由所有者和管理员创建。"
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "无"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "未发布"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "未撰写"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "这里什么都没有。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "按计划发布失败。"
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "在你的产品、网页和邮件中展示的发布说明。"
+msgid "Release notes shown in your products and on the web"
+msgstr "在你的产品和网页中显示的发布说明"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "显示"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "显示在聊天小组件和 {host} 上。"
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "显示在聊天气泡、应用和 {host} 上。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "告诉 {inboxName} 的客户有哪些新功能、改进和修复。在你发布之前，它保持未发布状态。"
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "通过公开页面、聊天小组件和邮件，告诉客户有哪些新功能、改进和修复。选择某个收件箱的更新日志来撰写条目。"
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "在公开页面、聊天小组件和邮件中，告诉客户有哪些新功能、改进和修复。"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: pa\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ਡਰਾਫਟ"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} ਵਿੱਚੋਂ {published} ਲੇਖ ਪ੍ਰਕਾਸ਼ਿਤ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} ਪ੍ਰਕਾਸ਼ਿਤ"
+msgid "{searches} searches"
+msgstr "{searches} ਖੋਜਾਂ"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "ਪਤੇ ਦਾ ਅੰਤ"
 msgid "Agents may publish"
 msgstr "ਏਜੰਟ ਪ੍ਰਕਾਸ਼ਿਤ ਕਰ ਸਕਦੇ ਹਨ"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "ਸਾਰੇ ਸੰਗ੍ਰਹਿ"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "ਇੱਕ API ਕੁੰਜੀ"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "ਕੋਈ ਹੋਰ ਮਦਦ ਕੇਂਦਰ ਇਹ ਪਤਾ ਹੁਣ ਜਾਂ ਪਹਿਲਾਂ ਵਰਤਦਾ ਹੈ।"
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "ਆਮ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਇੱਕ ਵਾਰ ਲਿਖ ਕੇ ਦਿਓ। ਹਰ ਉਤਪਾਦ ਨੂੰ ਆਪਣਾ ਹੈਲਪ ਸੈਂਟਰ ਮਿਲਦਾ ਹੈ, ਜਿਸ ਵਿੱਚ ਲੇਖ, ਸੰਗ੍ਰਹਿ ਅਤੇ ਲੋਕ ਕੀ ਖੋਜਦੇ ਹਨ ਦੀ ਰਿਪੋਰਟ ਹੁੰਦੀ ਹੈ।"
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "ਆਮ ਸਵਾਲਾਂ ਦਾ ਜਵਾਬ ਇੱਕ ਵਾਰ, ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਦਿਓ। ਲੇਖ ਲਿਖਣ, ਉਨ੍ਹਾਂ ਨੂੰ ਸੰਗ੍ਰਹਿਆਂ ਵਿੱਚ ਸਮੂਹਬੱਧ ਕਰਨ ਅਤੇ ਗਾਹਕ ਕੀ ਖੋਜਦੇ ਹਨ ਇਹ ਵੇਖਣ ਲਈ ਕਿਸੇ ਇਨਬਾਕਸ ਦਾ ਮਦਦ ਕੇਂਦਰ ਚੁਣੋ।"
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "ਕੋਈ ਵੀ ਸਥਿਤੀ"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "ਇਸ ਸੰਗ੍ਰਹਿ ਦੇ ਲੇਖ"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "ਲੇਖ ਜੋ ਲੋਕ ਤੁਹਾਨੂੰ ਲਿਖਣ ਤੋਂ ਪਹਿਲਾਂ ਪੜ੍ਹਦੇ ਹਨ"
 
@@ -161,6 +162,10 @@ msgstr "ਬੁਲੇਟ ਸੂਚੀ"
 msgid "Cancel"
 msgstr "ਰੱਦ ਕਰੋ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "ਬਦਲਿਆ"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "ਚਾਰਟ"
@@ -191,6 +196,7 @@ msgstr "ਕੋਡ ਬਲਾਕ"
 msgid "Collection"
 msgstr "ਸੰਗ੍ਰਹਿ"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "ਸੰਗ੍ਰਹਿ"
@@ -213,12 +219,18 @@ msgstr "ਸੰਗ੍ਰਹਿ ਬਣਾਓ"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "ਮਦਦ ਕੇਂਦਰ ਬਣਾਓ"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "ਮਦਦ ਕੇਂਦਰ ਬਣਾਓ ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0} ਲਈ ਇੱਕ ਬਣਾਓ"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "ਖਰੜਾ"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "ਖਰੜਾ ਜਮ੍ਹਾਂ ਕੀਤਾ ਗਿਆ। ਮਾਲਕ ਜਾਂ ਐਡਮਿਨ ਇਸ ਨੂੰ ਪ੍ਰਕਾਸ਼ਿਤ ਕਰ ਸਕਦਾ ਹੈ।"
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "ਡਰਾਫਟ"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "ਇਸ ਅਨੁਵਾਦ ਦੇ ਪਿਛਲੇ ਸੰਸਕਰਣ। ਇੱਕ ਨੂੰ ਬਹਾਲ ਕਰਨ ਨਾਲ ਖਰੜਾ ਬਦਲ ਜਾਂਦਾ ਹੈ; ਜਦ ਤੱਕ ਤੁਸੀਂ ਪ੍ਰਕਾਸ਼ਿਤ ਨਹੀਂ ਕਰਦੇ ਪ੍ਰਕਾਸ਼ਿਤ ਪਾਠ ਰਹਿੰਦਾ ਹੈ।"
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "ਫਾਰਮੈਟਿੰਗ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "ਕੁਝ ਨਹੀਂ ਮਿਲਿਆ · 7 ਦਿਨ"
+msgid "Found nothing"
+msgstr "ਕੁਝ ਨਹੀਂ ਮਿਲਿਆ"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "ਲੇਖਾਂ ਨੂੰ ਸਮੂਹਬੱਧ ਕਰੋ ਤਾਂ ਜ�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "ਸਿਰਲੇਖ"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "ਮਦਦ"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "ਮੁੱਖ ਭਾਸ਼ਾ"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "ਹੋਰ"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "ਨਾਮ"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "ਨਵਾਂ ਲੇਖ"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "ਨਵਾਂ ਲੇਖ ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "ਨਵਾਂ ਸੰਗ੍ਰਹਿ"
@@ -499,15 +514,21 @@ msgstr "ਕੋਈ ਸੰਗ੍ਰਹਿ ਨਹੀਂ"
 msgid "No collections yet. Articles can stay without one."
 msgstr "ਅਜੇ ਕੋਈ ਸੰਗ੍ਰਹਿ ਨਹੀਂ। ਲੇਖ ਬਿਨਾਂ ਸੰਗ੍ਰਹਿ ਦੇ ਰਹਿ ਸਕਦੇ ਹਨ।"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "ਕੋਈ ਡਰਾਫਟ ਨਹੀਂ। ਜੋ ਵੀ ਲਿਖਿਆ ਗਿਆ ਹੈ ਉਹ ਪ੍ਰਕਾਸ਼ਿਤ ਹੈ।"
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "ਅਜੇ ਕੋਈ ਪਿਛਲਾ ਸੰਸਕਰਣ ਨਹੀਂ।"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "ਅਜੇ ਕੋਈ ਮਦਦ ਕੇਂਦਰ ਨਹੀਂ। ਮਾਲਕ ਅਤੇ ਐਡਮਿਨ ਇਸ ਨੂੰ ਬਣਾਉਂਦੇ ਹਨ।"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "ਕੋਈ ਇਨਬਾਕਸ ਨਹੀਂ ਜਿਸ ਲਈ ਮਦਦ ਕੇਂਦਰ ਦਿਖਾਇਆ ਜਾਵੇ।"
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "ਬਿਨਾਂ ਨਾਮ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "ਲਿਖਿਆ ਨਹੀਂ ਗਿਆ"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "ਲਿਖਿਆ ਨਹੀਂ ਗਿਆ"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "ਨੰਬਰ ਵਾਲੀ ਸੂਚੀ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "{answers} ਜਵਾਬਾਂ ਵਿੱਚੋਂ"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "ਝਲਕ"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "ਝਲਕ ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "ਝਲਕ ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "ਸੰਭਾਲਿਆ ਗਿਆ"
 msgid "Saving…"
 msgstr "ਸੰਭਾਲਿਆ ਜਾ ਰਿਹਾ ਹੈ…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "ਸਿਰਲੇਖਾਂ ਵਿੱਚ ਖੋਜੋ"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "ਸਿਰਲੇਖਾਂ ਵਿੱਚ ਖੋਜੋ ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "ਖੋਜਾਂ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "ਖੋਜਾਂ · 7 ਦਿਨ"
+msgid "searches this week"
+msgstr "ਇਸ ਹਫ਼ਤੇ ਦੀਆਂ ਖੋਜਾਂ"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "ਸਿਰਲੇਖ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ। ਪਾਠ ਤੁਸੀਂ ਅੱਗੇ ਲਿਖੋਗੇ, ਅਤੇ ਪ੍ਰਕਾਸ਼ਿਤ ਹੋਣ ਤੱਕ ਉਹ ਖਰੜਾ ਰਹਿੰਦਾ ਹੈ।"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "ਸਥਿਤੀ"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "ਖੋਜਣ ਲਈ ਇੱਕ ਸ਼ਬਦ ਟਾਈਪ ਕਰੋ।"
 msgid "Unpublish"
 msgstr "ਪ੍ਰਕਾਸ਼ਨ ਰੱਦ ਕਰੋ"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "ਪ੍ਰਕਾਸ਼ਨ ਰੱਦ ਕਰੋ ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "ਇਸ ਅਨੁਵਾਦ ਦਾ ਪ੍ਰਕਾਸ਼ਨ ਰੱਦ ਕਰਨਾ ਹੈ?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "ਵੇਖੋ"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "ਮਦਦ ਕੇਂਦਰ ਵੇਖੋ"
+msgid "View site"
+msgstr "ਸਾਈਟ ਦੇਖੋ"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "ਸਾਈਟ ਦੇਖੋ ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

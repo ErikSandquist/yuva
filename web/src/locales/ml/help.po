@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ml\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ഡ്രാഫ്റ്റുകൾ"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} ലേഖനങ്ങളിൽ {published} പ്രസിദ്ധീകരിച്ചു"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} പ്രസിദ്ധീകരിച്ചവ"
+msgid "{searches} searches"
+msgstr "{searches} തിരയലുകൾ"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "വിലാസത്തിന്റെ അവസാനം"
 msgid "Agents may publish"
 msgstr "ഏജന്റുമാർക്ക് പ്രസിദ്ധീകരിക്കാം"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "എല്ലാ ശേഖരങ്ങളും"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "ഒരു API കീ"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "മറ്റൊരു സഹായ കേന്ദ്രം ഈ വിലാസം ഇപ്പോൾ അല്ലെങ്കിൽ മുമ്പ് ഉപയോഗിക്കുന്നു."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "സാധാരണ ചോദ്യങ്ങൾക്ക് ഒരിക്കൽ എഴുതി ഉത്തരം നൽകുക. ഓരോ ഉൽപ്പന്നത്തിനും ലേഖനങ്ങൾ, ശേഖരങ്ങൾ, ആളുകൾ എന്താണ് തിരയുന്നതെന്ന റിപ്പോർട്ട് എന്നിവയുള്ള സ്വന്തം ഹെൽപ്പ് സെന്റർ ലഭിക്കും."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "പതിവ് ചോദ്യങ്ങൾക്ക് ഒരിക്കൽ, എഴുതി ഉത്തരം നൽകുക. ലേഖനങ്ങൾ എഴുതാനും ശേഖരങ്ങളായി ഗ്രൂപ്പ് ചെയ്യാനും ഉപഭോക്താക്കൾ എന്താണ് തിരയുന്നതെന്ന് കാണാനും ഒരു ഇൻബോക്സിന്റെ സഹായ കേന്ദ്രം തിരഞ്ഞെടുക്കുക."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "ഏത് അവസ്ഥയും"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "ഈ ശേഖരത്തിലെ ലേഖനങ്ങൾ"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "നിങ്ങൾക്ക് എഴുതുന്നതിന് മുമ്പ് ആളുകൾ വായിക്കുന്ന ലേഖനങ്ങൾ"
 
@@ -161,6 +162,10 @@ msgstr "ബുള്ളറ്റ് പട്ടിക"
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "മാറ്റി"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "ചാർട്ട്"
@@ -191,6 +196,7 @@ msgstr "കോഡ് ബ്ലോക്ക്"
 msgid "Collection"
 msgstr "ശേഖരം"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "ശേഖരങ്ങൾ"
@@ -213,12 +219,18 @@ msgstr "ശേഖരം സൃഷ്ടിക്കുക"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "സഹായ കേന്ദ്രം സൃഷ്ടിക്കുക"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "സഹായ കേന്ദ്രം സൃഷ്ടിക്കുക ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0}-നായി ഒന്ന് സൃഷ്ടിക്കുക"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "കരട്"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "കരട് സമർപ്പിച്ചു. ഉടമയ്ക്കോ അഡ്മിനോ ഇത് പ്രസിദ്ധീകരിക്കാം."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "ഡ്രാഫ്റ്റുകൾ"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "ഈ വിവർത്തനത്തിന്റെ മുൻ പതിപ്പുകൾ. ഒന്ന് പുനഃസ്ഥാപിച്ചാൽ കരട് മാറും; നിങ്ങൾ പ്രസിദ്ധീകരിക്കുന്നതുവരെ പ്രസിദ്ധീകരിച്ച വാചകം തുടരും."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "ഫോർമാറ്റിംഗ്"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "ഒന്നും കണ്ടെത്തിയില്ല · 7 ദിവസം"
+msgid "Found nothing"
+msgstr "ഒന്നും കണ്ടെത്തിയില്ല"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "സന്ദർശകർക്ക് ബ്രൗസ് ചെയ്യ�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "തലക്കെട്ട്"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "സഹായം"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "പ്രധാന ഭാഷ"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "കൂടുതൽ"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "പേര്"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "പുതിയ ലേഖനം"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "പുതിയ ലേഖനം ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "പുതിയ ശേഖരം"
@@ -499,15 +514,21 @@ msgstr "ശേഖരമില്ല"
 msgid "No collections yet. Articles can stay without one."
 msgstr "ഇതുവരെ ശേഖരങ്ങളില്ല. ലേഖനങ്ങൾ ശേഖരമില്ലാതെയും ഇരിക്കാം."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "ഡ്രാഫ്റ്റുകളില്ല. എഴുതിയതെല്ലാം പ്രസിദ്ധീകരിച്ചു."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "ഇതുവരെ മുൻ പതിപ്പുകളില്ല."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "ഇതുവരെ സഹായ കേന്ദ്രമില്ല. ഉടമകളും അഡ്മിനുകളും അത് സൃഷ്ടിക്കുന്നു."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "സഹായ കേന്ദ്രം കാണിക്കാൻ ഇൻബോക്സ് ഇല്ല."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "പേരില്ലാത്തത്"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "എഴുതിയിട്ടില്ല"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "എഴുതിയിട്ടില്ല"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "അക്കമിട്ട പട്ടിക"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "{answers} ഉത്തരങ്ങളിൽ"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "പ്രിവ്യൂ"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "പ്രിവ്യൂ ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "പ്രിവ്യൂ ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "സംരക്ഷിച്ചു"
 msgid "Saving…"
 msgstr "സംരക്ഷിക്കുന്നു…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "തലക്കെട്ടുകളിൽ തിരയുക"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "തലക്കെട്ടുകളിൽ തിരയുക ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "തിരയലുകൾ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "തിരയലുകൾ · 7 ദിവസം"
+msgid "searches this week"
+msgstr "ഈ ആഴ്ചത്തെ തിരയലുകൾ"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,8 +787,8 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "ഒരു തലക്കെട്ടിൽ തുടങ്ങുക. വാചകം പിന്നീട് എഴുതും, പ്രസിദ്ധീകരിക്കുന്നതുവരെ അത് കരടായി തുടരും."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
-msgstr "അവസ്ഥ"
+msgid "Status"
+msgstr "സ്റ്റാറ്റസ്"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Submit draft"
@@ -867,10 +884,6 @@ msgstr "തിരയാൻ ഒരു വാക്ക് ടൈപ്പ് ച�
 msgid "Unpublish"
 msgstr "പ്രസിദ്ധീകരണം റദ്ദാക്കുക"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "പ്രസിദ്ധീകരണം റദ്ദാക്കുക ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "ഈ വിവർത്തനത്തിന്റെ പ്രസിദ്ധീകരണം റദ്ദാക്കണോ?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "കാണുക"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "സഹായ കേന്ദ്രം കാണുക"
+msgid "View site"
+msgstr "സൈറ്റ് കാണുക"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "സൈറ്റ് കാണുക ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

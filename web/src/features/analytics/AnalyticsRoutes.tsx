@@ -1,17 +1,26 @@
 import "@/features/analytics/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ChartLineIcon, ChevronDownIcon, PlusIcon, Share2Icon } from "lucide-react"
-import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router"
+import { ChartLineIcon, ChevronsUpDownIcon, EllipsisIcon, PlusIcon } from "lucide-react"
+import {
+  Link,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router"
 
 import { Dot, ErrorLine } from "@/components/common"
-import { Pane, PaneBack } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { UsageBanner } from "@/features/analytics/AnalyticsColumn"
 import { BreakdownView } from "@/features/analytics/Breakdown"
-import { Controls } from "@/features/analytics/Controls"
+import { Controls, FilterBar, RangePicker } from "@/features/analytics/Controls"
 import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
@@ -26,9 +35,11 @@ import { SupportView } from "@/features/analytics/Support"
 import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { useIsPhone } from "@/hooks/use-media-query"
-import { PageHeader, PageTabs, pageTabClass } from "@/features/settings/ui"
+import { PagesView } from "@/features/analytics/Pages"
+import { headButton, Page, PageHeader } from "@/features/settings/ui"
 import type { SetupState } from "@/features/setup/setup"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
 const VIEWS = [
@@ -47,8 +58,6 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
-const PRIMARY: ViewKey[] = ["overview", "support", "goals", "realtime"]
-
 function AnalyticsHome() {
   const { canManage } = useSession()
   const phone = useIsPhone()
@@ -56,13 +65,13 @@ function AnalyticsHome() {
   const first = list.data?.items[0]
   if (first && !phone) return <Navigate to={`/analytics/${first.id}`} replace />
   return (
-    <Pane wide testId="analytics-home" className="gap-6">
+    <Page testId="analytics-home">
       <PageHeader
         back={false}
         title={<Trans>Analytics</Trans>}
-        description={<Trans>Cookieless visitors across your sites and apps.</Trans>}
+        description={<Trans>Cookieless visitors across your sites and apps</Trans>}
       />
-      <div className="flex flex-col items-center gap-2 rounded-2xl border bg-card px-6 py-12 text-center">
+      <div className="flex flex-col items-center gap-2 rounded-xl border bg-card px-6 py-12 text-center">
         <span className="mb-2 grid size-12 place-items-center rounded-2xl bg-brand-wash text-brand">
           <ChartLineIcon className="size-6" />
         </span>
@@ -82,9 +91,11 @@ function AnalyticsHome() {
           </Button>
         )}
       </div>
-    </Pane>
+    </Page>
   )
 }
+
+const HEADED: ViewKey[] = ["overview", "pages", "goals"]
 
 function PropertyLayout() {
   const { t } = useLingui()
@@ -94,8 +105,11 @@ function PropertyLayout() {
   const navigate = useNavigate()
   const { canManage } = useSession()
   const search = useViewSearch(true)
+  const [params] = useSearchParams()
   const property = useProperty(propertyId)
-  const usage = useAnalyticsProperties().data?.usage
+  const list = useAnalyticsProperties().data
+  const usage = list?.usage
+  const others = list?.items ?? []
   const inbox = (useInboxes().data ?? []).find((i) => i.id === property.data?.inbox_id)
   const last = pathname.split("/")[3] as ViewKey | undefined
   const current: ViewKey = last && VIEWS.includes(last) ? last : "overview"
@@ -116,96 +130,139 @@ function PropertyLayout() {
   const p = property.data
   if (!p) {
     return (
-      <Pane wide>
-        <PaneBack to="/analytics" label={t`Analytics`} />
-        {property.error ? <ErrorLine error={property.error} /> : <Skeleton className="h-64 rounded-2xl" />}
-      </Pane>
+      <Page>
+        <PageHeader back={false} title={<Trans>Analytics</Trans>} />
+        {property.error ? <ErrorLine error={property.error} /> : <Skeleton className="h-64 rounded-xl" />}
+      </Page>
     )
   }
   const controls = current !== "realtime" && current !== "settings" && current !== "retention"
-  const to = (v: ViewKey) => `/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`
-  const more = VIEWS.filter((v) => !PRIMARY.includes(v))
-  const inMore = more.includes(current)
+  const headed = HEADED.includes(current)
+  const to = (v: ViewKey, id = p.id) => `/analytics/${id}${v === "overview" ? "" : `/${v}`}${search}`
+  const where = (
+    <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+      {inbox && (
+        <span className="inline-flex items-center gap-1.5">
+          <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
+          {inbox.name}
+        </span>
+      )}
+      <span className="min-w-0 truncate" dir="ltr">
+        {p.domains.join(", ")}
+      </span>
+      <span aria-hidden>·</span>
+      <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
+    </span>
+  )
+  const head: Partial<Record<ViewKey, { title: React.ReactNode; description: React.ReactNode }>> = {
+    overview: {
+      title: <Trans>Analytics</Trans>,
+      description: <Trans>Cookieless visitors across your sites and apps</Trans>,
+    },
+    pages: { title: names.pages, description: <Trans>Which pages people visit, and which lead to questions</Trans> },
+    goals: { title: names.goals, description: <Trans>Visits and events that count as success</Trans> },
+  }
+  const picked = params.get("goal")
+  const newGoal = new URLSearchParams(search)
+  newGoal.set("goal", "new")
   return (
-    <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
-      <div className="flex flex-col">
-        <PaneBack to="/analytics" label={t`Analytics`} />
-        <PageHeader
-          back={false}
-          title={<span data-testid="analytics-property-name">{p.name}</span>}
-          description={
-            <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-              {inbox && (
-                <span className="inline-flex items-center gap-1.5">
-                  <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-                  {inbox.name}
-                </span>
-              )}
-              <span className="min-w-0 truncate" dir="ltr">
-                {p.domains.join(", ")}
+    <Page testId="analytics-property" key={p.id}>
+      <PageHeader
+        back={false}
+        title={head[current]?.title ?? names[current]}
+        description={head[current]?.description ?? where}
+        action={
+          <>
+            {others.length > 1 ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={<Button variant="outline" className={cn(headButton.secondary, "max-w-56")} />}
+                  data-testid="analytics-property-name"
+                >
+                  <span className="truncate">{p.name}</span>
+                  <ChevronsUpDownIcon className="text-faint" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  {others.map((o) => (
+                    <DropdownMenuItem
+                      key={o.id}
+                      onClick={() => navigate(to(current === "settings" ? "overview" : current, o.id))}
+                      aria-current={o.id === p.id ? "page" : undefined}
+                      className="aria-[current=page]:font-medium"
+                    >
+                      <span className="truncate">{o.name}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <span className="sr-only" data-testid="analytics-property-name">
+                {p.name}
               </span>
-              <span aria-hidden>·</span>
-              <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
-            </span>
-          }
-          action={
-            canManage && (
-              <Button
-                variant="outline"
-                size="sm"
-                render={<Link to={`/analytics/${p.id}/settings?tab=sharing`} />}
-                data-testid="analytics-share"
+            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={<Button variant="outline" size="icon" className={cn(headButton.secondary, "w-[34px] px-0")} />}
+                aria-label={t`More views`}
+                title={t`More views`}
+                data-testid="analytics-tab-more"
               >
-                <Share2Icon />
-                <Trans>Share</Trans>
-              </Button>
-            )
-          }
-          tabs={
-            <PageTabs
-              label={t`Analytics views`}
-              current={current}
-              items={PRIMARY.map((v) => ({ key: v, to: to(v), label: names[v], testId: `analytics-tab-${v}` }))}
-              extra={
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    className={pageTabClass}
-                    aria-current={inMore ? "page" : undefined}
-                    data-testid="analytics-tab-more"
+                <EllipsisIcon />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {VIEWS.map((v) => (
+                  <DropdownMenuItem
+                    key={v}
+                    onClick={() => navigate(to(v))}
+                    aria-current={v === current ? "page" : undefined}
+                    className="aria-[current=page]:font-medium"
+                    data-testid={`analytics-tab-${v}`}
                   >
-                    {inMore ? names[current] : <Trans>More</Trans>}
-                    <ChevronDownIcon className="size-3.5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-48">
-                    {more.map((v) => (
-                      <DropdownMenuItem
-                        key={v}
-                        onClick={() => navigate(to(v))}
-                        aria-current={v === current ? "page" : undefined}
-                        className="aria-[current=page]:font-medium"
-                        data-testid={`analytics-tab-${v}`}
-                      >
-                        {names[v]}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              }
-            />
-          }
-        />
-      </div>
+                    {names[v]}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {controls && current !== "goals" && <RangePicker plain className={headButton.secondary} />}
+            {current === "goals"
+              ? canManage &&
+                picked !== "new" && (
+                  <Button
+                    className={headButton.primary}
+                    render={<Link to={`?${newGoal.toString()}`} />}
+                    data-testid="analytics-goal-new"
+                  >
+                    <Trans>New goal</Trans>
+                  </Button>
+                )
+              : canManage &&
+                current !== "pages" && (
+                  <Button
+                    className={headButton.primary}
+                    render={<Link to={`/analytics/${p.id}/settings?tab=sharing`} />}
+                    data-testid="analytics-share"
+                  >
+                    <Trans>Share</Trans>
+                  </Button>
+                )}
+          </>
+        }
+      />
       {usage && <UsageBanner usage={usage} />}
       {!p.first_event_at && current !== "settings" && <WaitForFirstEvent propertyId={p.id} />}
-      {controls && (
-        <Controls
-          propertyId={p.id}
-          compare={current !== "events" && current !== "funnels"}
-          filters={current !== "funnels"}
-        />
-      )}
+      {controls &&
+        (headed ? (
+          current !== "pages" && <FilterBar />
+        ) : (
+          <Controls
+            propertyId={p.id}
+            range={false}
+            compare={current !== "events" && current !== "funnels"}
+            filters={current !== "funnels"}
+          />
+        ))}
       <Outlet context={{ property: p }} />
-    </Pane>
+    </Page>
   )
 }
 
@@ -229,7 +286,7 @@ export default function AnalyticsRoutes() {
       <Route path=":propertyId" element={<PropertyLayout />}>
         <Route index element={<Overview />} />
         <Route path="realtime" element={<Realtime />} />
-        <Route path="pages" element={<BreakdownView group="pages" />} />
+        <Route path="pages" element={<PagesView />} />
         <Route path="sources" element={<BreakdownView group="sources" />} />
         <Route path="locations" element={<BreakdownView group="locations" />} />
         <Route path="devices" element={<BreakdownView group="devices" />} />

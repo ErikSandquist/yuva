@@ -13,7 +13,7 @@ const tone: Record<StatusComponentStateValue, string> = {
   degraded: "bg-warning",
   partial_outage: "bg-warning",
   major_outage: "bg-destructive",
-  maintenance: "bg-brand/70",
+  maintenance: "bg-blue-600/70 dark:bg-blue-400/70",
 }
 
 export function usePercent() {

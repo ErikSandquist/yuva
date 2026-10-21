@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react"
 
-let state = { query: "", focus: 0 }
+let state = { query: "", focus: 0, select: 0 }
 const listeners = new Set<() => void>()
 
 function set(next: typeof state) {
@@ -14,6 +14,10 @@ export function setListQuery(query: string) {
 
 export function focusListSearch() {
   set({ ...state, focus: state.focus + 1 })
+}
+
+export function requestSelect() {
+  set({ ...state, select: state.select + 1 })
 }
 
 export function useListSearch() {

@@ -13,16 +13,15 @@ import {
   MegaphoneIcon,
   MessageSquareHeartIcon,
   MessagesSquareIcon,
-  SettingsIcon,
   SparklesIcon,
   UsersIcon,
+  MenuIcon,
 } from "lucide-react"
 import { useLocation, useNavigate } from "react-router"
 
 import { inboxRoot, isChats, isFullPage, sectionOf, type Section } from "@/app/shell"
-import { UserMenu } from "@/app/UserMenu"
-import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { SHORTCUTS } from "@/components/common/ShortcutSheet"
+import { useSidebar } from "@/components/ui/sidebar"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useConversations, useCounts, useDrafts, useMentions } from "@/features/inbox/queries"
 import { setRailView, useRailView } from "@/features/inbox/railView"
@@ -148,77 +147,14 @@ export function moveFocus(e: React.KeyboardEvent<HTMLElement>) {
   items[(i + step + items.length) % items.length].focus()
 }
 
-const itemClass =
-  "relative grid size-10 place-items-center rounded-xl text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-brand-wash aria-[current=page]:text-brand"
-
-export function Rail() {
-  const { t } = useLingui()
-  const section = useSection()
-  const go = useGo()
-  const entries = useEntries()
-  return (
-    <nav
-      aria-label={t`Sections`}
-      onKeyDown={moveFocus}
-      className="flex w-16 shrink-0 flex-col items-center gap-1.5 border-e bg-surface py-3"
-      data-testid="rail"
-    >
-      {entries.map((e) => (
-        <Tooltip key={e.key}>
-          <TooltipTrigger
-            render={
-              <button
-                type="button"
-                className={itemClass}
-                aria-current={section === e.key ? "page" : undefined}
-                aria-label={e.badge ? e.badgeLabel : e.label}
-                onClick={() => go(e.key)}
-                data-rail-item
-                data-testid={`rail-${e.key}`}
-              />
-            }
-          >
-            <e.icon className="size-5" />
-            <Badge n={e.badge ?? 0} id={e.key} />
-          </TooltipTrigger>
-          <TooltipContent side="inline-end">
-            {e.label}
-            <span className="text-background/60">{keyLabel(e.shortcut).join(" ")}</span>
-          </TooltipContent>
-        </Tooltip>
-      ))}
-      <span className="flex-1" />
-      <Tooltip>
-        <TooltipTrigger
-          render={
-            <button
-              type="button"
-              className={itemClass}
-              aria-current={section === "settings" ? "page" : undefined}
-              aria-label={t`Settings`}
-              onClick={() => go("settings")}
-              data-rail-item
-              data-testid="rail-settings"
-            />
-          }
-        >
-          <SettingsIcon className="size-5" />
-        </TooltipTrigger>
-        <TooltipContent side="inline-end">
-          {t`Settings`}
-          <span className="text-background/60">{mod} ,</span>
-        </TooltipContent>
-      </Tooltip>
-      <UserMenu align="end" side="inline-end" />
-    </nav>
-  )
-}
-
 export function TabBar() {
   const { t } = useLingui()
   const view = useSection()
   const go = useGo()
-  const entries = useEntries()
+  const all = useEntries()
+  const { setOpenMobile } = useSidebar()
+  const entries = all.slice(0, 4)
+  const elsewhere = !entries.some((e) => e.key === view)
   return (
     <nav
       aria-label={t`Sections`}
@@ -254,6 +190,22 @@ export function TabBar() {
           </span>
         </button>
       ))}
+      <button
+        type="button"
+        onClick={() => setOpenMobile(true)}
+        aria-current={elsewhere ? "page" : undefined}
+        aria-label={t`Menu`}
+        className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-0.5 pt-2 pb-1.5 text-[11px] text-muted-foreground outline-none focus-visible:bg-muted aria-[current=page]:text-brand"
+        data-rail-item
+        data-testid="tab-menu"
+      >
+        <span className={cn("grid h-7 w-full max-w-12 place-items-center rounded-full", elsewhere && "bg-brand-wash")}>
+          <MenuIcon className="size-5" />
+        </span>
+        <span aria-hidden className={cn("font-medium whitespace-nowrap", !elsewhere && "invisible")}>
+          {t`Menu`}
+        </span>
+      </button>
     </nav>
   )
 }

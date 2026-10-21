@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: gu\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ડ્રાફ્ટ"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} માંથી {published} લેખ પ્રકાશિત"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} પ્રકાશિત"
+msgid "{searches} searches"
+msgstr "{searches} શોધો"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "સરનામાનો અંત"
 msgid "Agents may publish"
 msgstr "એજન્ટ પ્રકાશિત કરી શકે છે"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "બધા સંગ્રહ"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "એક API કી"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "બીજું મદદ કેન્દ્ર આ સરનામું હાલમાં અથવા પહેલાં વાપરે છે."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "સામાન્ય પ્રશ્નોના જવાબ એક વાર લખીને આપો. દરેક પ્રોડક્ટને પોતાનું હેલ્પ સેન્ટર મળે છે, જેમાં લેખો, કલેક્શન અને લોકો શું શોધે છે તેનો રિપોર્ટ હોય છે."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "સામાન્ય પ્રશ્નોના જવાબ એક જ વાર, લેખિતમાં આપો. લેખ લખવા, તેમને સંગ્રહમાં જૂથ કરવા અને ગ્રાહકો શું શોધે છે તે જોવા માટે કોઈ ઇનબૉક્સનું મદદ કેન્દ્ર પસંદ કરો."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "કોઈપણ સ્થિતિ"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "આ સંગ્રહના લેખ"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "લેખો જે લોકો તમને લખતા પહેલાં વાંચે છે"
 
@@ -161,6 +162,10 @@ msgstr "બુલેટ યાદી"
 msgid "Cancel"
 msgstr "રદ કરો"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "બદલાયું"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "ચાર્ટ"
@@ -191,6 +196,7 @@ msgstr "કોડ બ્લૉક"
 msgid "Collection"
 msgstr "સંગ્રહ"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "સંગ્રહ"
@@ -213,12 +219,18 @@ msgstr "સંગ્રહ બનાવો"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "મદદ કેન્દ્ર બનાવો"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "મદદ કેન્દ્ર બનાવો ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0} માટે એક બનાવો"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "ડ્રાફ્ટ"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "ડ્રાફ્ટ સબમિટ કર્યો. માલિક અથવા ઍડમિન તેને પ્રકાશિત કરી શકે છે."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "ડ્રાફ્ટ"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "આ અનુવાદની પહેલાંની આવૃત્તિઓ. એક પુનઃસ્થાપિત કરવાથી ડ્રાફ્ટ બદલાય છે; તમે પ્રકાશિત ન કરો ત્યાં સુધી પ્રકાશિત ટેક્સ્ટ રહે છે."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "ફૉર્મેટિંગ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "કંઈ મળ્યું નહીં · 7 દિવસ"
+msgid "Found nothing"
+msgstr "કંઈ મળ્યું નહીં"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "લેખોને જૂથ કરો જેથી મુલાકા�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "મથાળું"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "મદદ"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "મુખ્ય ભાષા"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "વધુ"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "નામ"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "નવો લેખ"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "નવો લેખ ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "નવો સંગ્રહ"
@@ -499,15 +514,21 @@ msgstr "સંગ્રહ નથી"
 msgid "No collections yet. Articles can stay without one."
 msgstr "હજી કોઈ સંગ્રહ નથી. લેખ સંગ્રહ વિના રહી શકે છે."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "કોઈ ડ્રાફ્ટ નથી. જે લખ્યું છે તે બધું પ્રકાશિત છે."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "હજી પહેલાંની કોઈ આવૃત્તિ નથી."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "હજી મદદ કેન્દ્ર નથી. માલિકો અને ઍડમિન તેને બનાવે છે."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "મદદ કેન્દ્ર બતાવવા માટે કોઈ ઇનબૉક્સ નથી."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "નામ વિનાનું"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "લખેલું નથી"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "લખેલું નથી"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "ક્રમાંકિત યાદી"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "{answers} જવાબોમાંથી"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "પૂર્વાવલોકન"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "પૂર્વાવલોકન ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "પૂર્વાવલોકન ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "સાચવ્યું"
 msgid "Saving…"
 msgstr "સાચવી રહ્યા છીએ…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "શીર્ષકોમાં શોધો"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "શીર્ષકોમાં શોધો ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "શોધ"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "શોધો · 7 દિવસ"
+msgid "searches this week"
+msgstr "આ અઠવાડિયાની શોધો"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "શીર્ષકથી શરૂ કરો. ટેક્સ્ટ તમે પછી લખશો, અને પ્રકાશિત થાય ત્યાં સુધી તે ડ્રાફ્ટ રહે છે."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "સ્થિતિ"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "શોધવા માટે એક શબ્દ ટાઇપ કરો.
 msgid "Unpublish"
 msgstr "પ્રકાશન રદ કરો"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "પ્રકાશન રદ કરો ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "આ અનુવાદનું પ્રકાશન રદ કરવું?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "જુઓ"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "મદદ કેન્દ્ર જુઓ"
+msgid "View site"
+msgstr "સાઇટ જુઓ"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "સાઇટ જુઓ ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

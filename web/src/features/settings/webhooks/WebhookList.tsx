@@ -1,7 +1,8 @@
-import { Trans } from "@lingui/react/macro"
-import { useLocation, useNavigate } from "react-router"
+import { Trans, useLingui } from "@lingui/react/macro"
+import { Link, useLocation, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
+import { formatRelative } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, EmptyRow, LinkRow, Rows, Section } from "@/features/settings/ui"
@@ -9,7 +10,100 @@ import { EndpointStatus } from "@/features/settings/webhooks/parts"
 import { useWebhooks } from "@/features/settings/webhooks/queries"
 import { SignatureHint } from "@/features/settings/webhooks/SignatureHint"
 import { useSession } from "@/lib/session"
+import type { WebhookEndpoint } from "@/lib/api"
+import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
+
+function Dot({ e }: { e: WebhookEndpoint }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "size-2.5 shrink-0 rounded-full",
+        !e.enabled ? (e.disabled_reason ? "bg-destructive" : "bg-input") : e.failing_since ? "bg-warning" : "bg-success"
+      )}
+    />
+  )
+}
+
+function StatusText({ e }: { e: WebhookEndpoint }) {
+  const { i18n } = useLingui()
+  const since = e.failing_since ? formatRelative(e.failing_since, i18n.locale) : ""
+  const [status, text] =
+    !e.enabled && e.disabled_reason
+      ? ["disabled", <Trans key="d">Turned off by Yuva</Trans>]
+      : !e.enabled
+        ? ["off", <Trans key="o">Off</Trans>]
+        : e.failing_since
+          ? ["failing", <Trans key="f">Failing since {since} · retrying</Trans>]
+          : ["on", <Trans key="n">Delivering</Trans>]
+  return (
+    <span
+      className={cn(
+        "w-56 shrink-0 truncate text-caption text-muted-foreground",
+        status === "disabled" && "text-destructive"
+      )}
+      data-testid="webhook-status"
+      data-status={status}
+    >
+      {text}
+    </span>
+  )
+}
+
+export function WebhookTable() {
+  const { canManage } = useSession()
+  const inboxes = useInboxes().data ?? []
+  const list = useWebhooks(undefined)
+  if (!canManage) return null
+  return (
+    <>
+      <section className="overflow-hidden rounded-xl border bg-card">
+        {list.isPending ? (
+          <Skeleton className="m-4 h-10" />
+        ) : list.data && list.data.length === 0 ? (
+          <EmptyRow>
+            <Trans>No endpoints yet.</Trans>
+          </EmptyRow>
+        ) : (
+          <ul>
+            {(list.data ?? []).map((e) => {
+              const inbox = e.inbox_id ? inboxes.find((i) => i.id === e.inbox_id) : undefined
+              return (
+                <li key={e.id} className="flex items-center gap-3 border-b px-4 py-[11px] last:border-b-0">
+                  <Dot e={e} />
+                  <Link
+                    to={`/settings/webhooks/${e.id}`}
+                    className="flex min-w-0 flex-1 flex-col leading-[1.3] outline-none focus-visible:underline"
+                    data-testid="webhook-row"
+                  >
+                    <span className="truncate font-mono text-[13px]" dir="ltr">
+                      {e.url}
+                    </span>
+                    <span className="truncate text-caption text-faint">
+                      {inbox && <>{inbox.name} · </>}
+                      {e.events.join(", ")}
+                    </span>
+                  </Link>
+                  <StatusText e={e} />
+                  <Button
+                    variant="outline"
+                    className="h-[30px] rounded-lg border-input px-2.5 font-normal"
+                    render={<Link to={`/settings/webhooks/${e.id}`} />}
+                  >
+                    <Trans>Deliveries</Trans>
+                  </Button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+        <ErrorLine error={list.error} className="px-4 pb-4" />
+      </section>
+      <SignatureHint />
+    </>
+  )
+}
 
 export function WebhookList({ inboxId }: { inboxId?: string }) {
   const { canManage } = useSession()

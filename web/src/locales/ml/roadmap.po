@@ -8,16 +8,12 @@ msgstr ""
 "Language: ml\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "ലിങ്ക് ചെയ്ത ഫീഡ്ബാക്ക്: {linked}"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# ഫീഡ്ബാക്ക്} other {# ഫീഡ്ബാക്കുകൾ}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "{replies} മറുപടികൾ"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "അംഗീകരിക്കുക"
 msgid "Approved"
 msgstr "അംഗീകരിച്ചു"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "കുറഞ്ഞത് 3 അക്ഷരങ്ങൾ."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "തിരികെ"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "ബോർഡ് ഇല്ലാതാക്കി"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "കുക്കികൾ ഇല്ലാതെ പൊതു ബോർഡിന്റെ പേജ് കാഴ്ചകൾ എണ്ണുന്നു."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "ബോർഡ് സൃഷ്ടിക്കുക"
@@ -93,6 +96,10 @@ msgstr "ബോർഡ് സൃഷ്ടിക്കുക"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "ബോർഡ് സൃഷ്ടിക്കുക ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "ആശയം സൃഷ്ടിക്കുക"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "ബോർഡിനെ അതിന്റെ ആശയങ്ങൾ, വോട്ടുകൾ, മറുപടികൾ, ഘട്ടങ്ങളുടെ ചരിത്രം എന്നിവയോടൊപ്പം ഇല്ലാതാക്കുന്നു. ലിങ്ക് ചെയ്ത ഫീഡ്ബാക്കും അതിന്റെ പുരോഗതിയും നിലനിൽക്കും. പൊതു വിലാസം പ്രവർത്തിക്കുന്നത് നിർത്തും."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "വിവരണം"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "{title} മറ്റൊരു ഘട്ടത്തിലേക്ക് വലിക്കുക"
+msgid "Done"
+msgstr "കഴിഞ്ഞു"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "{inboxName}-നുള്ള ആശയങ്ങൾ, വോട്ടുക
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "ആശയങ്ങൾ: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "ഇത് ബോർഡിലെ ആശയങ്ങളിലേക്ക് പോകും, അവിടെ ഉപഭോക്താക്കൾക്ക് വോട്ട് ചെയ്യാം."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "ആശയം {stage}-ലേക്ക് നീക്കി"
 msgid "Name"
 msgstr "പേര്"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "പുതിയ ആശയം"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "ഈ ഫീഡ്ബാക്കിൽ നിന്ന് പുതിയ ആശയം"
@@ -285,6 +302,7 @@ msgstr "ഈ ഇൻബോക്സിന്റെ ബോർഡിൽ നിന്
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "ആശയത്തിലെ നിങ്ങളുടെ പൊതു മറുപടിയായി പോസ്റ്റ് ചെയ്യുന്നു. Markdown പ്രവർത്തിക്കും."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "സ്വകാര്യം"
@@ -311,11 +329,16 @@ msgstr "വായനക്കാർക്ക് ആശയങ്ങൾ നിർ�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "വായനക്കാർ പുതിയ ആശയങ്ങൾ നിർദ്ദേശിച്ചു. പൊതു ബോർഡിൽ കാണിക്കുന്നതിന് മുമ്പ് അവ അവലോകനം ചെയ്യുക."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "അവലോകനം"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "റോഡ്മാപ്പ്"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "റോഡ്മാപ്പ് ബോർഡുകൾ"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "ക്രമീകരണങ്ങൾ"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "നിങ്ങൾ എന്താണ് നിർമ്മിക്കുന്നതെന്ന് ഉപഭോക്താക്കളെ കാണിക്കുക, ഓരോ ആശയത്തിനും പിന്നിലെ ഫീഡ്ബാക്ക് ലിങ്ക് ചെയ്യുക. ആശയങ്ങൾ ഘട്ടങ്ങളായി തരംതിരിക്കാൻ ഒരു ഇൻബോക്സിന്റെ ബോർഡ് തിരഞ്ഞെടുക്കുക."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "നിങ്ങൾ എന്താണ് നിർമ്മിക്കുന്നതെന്ന് ഉപഭോക്താക്കളെ കാണിക്കുക, ഓരോ ആശയത്തിനും പിന്നിലെ ഫീഡ്ബാക്ക് ലിങ്ക് ചെയ്യുക. ആശയങ്ങൾ ഘട്ടങ്ങളായി തരംതിരിക്കാൻ ഒരു ഇൻബോക്സിനായി ബോർഡ് സൃഷ്ടിക്കുക."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "ഈ ഇൻബോക്സിന് വെബ് ചാറ്റ് ചാനൽ ഇല്ല. ആദ്യം ഒന്ന് ചേർക്കുക, കാരണം പൊതു ബോർഡ് അത് എംബെഡ് ചെയ്യുന്നു."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "ശീർഷകം"
 

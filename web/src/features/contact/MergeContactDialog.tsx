@@ -29,15 +29,17 @@ function Who({ name }: { name: string }) {
 
 export function MergeContactDialog({
   target,
+  initialSource = null,
   open,
   onOpenChange,
 }: {
   target: Contact
+  initialSource?: Contact | null
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
   const { t } = useLingui()
-  const [source, setSource] = useState<Contact | null>(null)
+  const [source, setSource] = useState<Contact | null>(initialSource)
   const merge = useMergeContact(target.id)
   const unnamed = t`Unnamed contact`
   const targetName = contactName(target, unnamed)
@@ -45,7 +47,7 @@ export function MergeContactDialog({
 
   const close = (next: boolean) => {
     if (!next) {
-      setSource(null)
+      setSource(initialSource)
       merge.reset()
     }
     onOpenChange(next)

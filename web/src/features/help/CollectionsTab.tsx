@@ -21,6 +21,7 @@ import {
   Trash2Icon,
 } from "lucide-react"
 import { useState } from "react"
+import { useSearchParams } from "react-router"
 
 import { useConfirm } from "@/components/common"
 import { HELP_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
@@ -347,7 +348,10 @@ export function CollectionsTab({ center }: { center: HelpCenter }) {
   const query = useHelpCollections(center.id)
   const m = useCollectionMutations(center.id)
   const [confirm, dialog] = useConfirm()
-  const [dialogState, setDialog] = useState<{ edit?: HelpCollection; parentId?: string } | null>(null)
+  const [params] = useSearchParams()
+  const [dialogState, setDialog] = useState<{ edit?: HelpCollection; parentId?: string } | null>(
+    params.get("new") ? {} : null
+  )
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
   const all = query.data ?? []
   const tops = siblings(all, undefined)

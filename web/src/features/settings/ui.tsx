@@ -1,12 +1,49 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowLeftIcon, ChevronRightIcon } from "lucide-react"
+import { createContext, useContext } from "react"
 import { Link, type To } from "react-router"
 
-import { ErrorLine } from "@/components/common"
+import { colorFor, ErrorLine } from "@/components/common"
+import { initials } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
+
+const Band = createContext(false)
+
+export function Page({
+  testId,
+  width = "full",
+  className,
+  children,
+}: {
+  testId?: string
+  width?: "full" | "form"
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <main className="min-h-0 flex-1 bg-background in-data-frame:overflow-y-auto" data-testid={testId}>
+      <Band.Provider value>
+        <div
+          className={cn(
+            "flex w-full flex-col gap-4 px-6 pb-16 phone:px-4",
+            width === "form" && "[&>:not([data-page-header])]:w-full [&>:not([data-page-header])]:max-w-[760px]",
+            className
+          )}
+        >
+          {children}
+        </div>
+      </Band.Provider>
+    </main>
+  )
+}
+
+export const headButton = {
+  primary: "h-[34px] rounded-lg bg-foreground px-3.5 text-background hover:bg-foreground/85",
+  secondary: "h-[34px] rounded-lg border-input bg-background px-3.5 font-normal hover:border-faint",
+}
 
 export function PageHeader({
   title,
@@ -26,14 +63,23 @@ export function PageHeader({
   children?: React.ReactNode
 }) {
   const { t } = useLingui()
+  const band = useContext(Band)
   const to = back === undefined ? { to: "/settings", label: t`Settings` } : back
   return (
-    <header className="flex flex-col">
+    <header
+      data-page-header
+      className={cn(
+        "flex flex-col",
+        band &&
+          "sticky top-11 z-10 -mx-6 mb-2 gap-3 border-b bg-background px-6 pt-5 in-data-frame:top-0 phone:static phone:-mx-4 phone:px-4 phone:pt-3"
+      )}
+    >
       {to && (
         <Link
           to={to.to}
           className={cn(
-            "mb-4.5 w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground",
+            "w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground",
+            band ? "-mb-1" : "mb-4.5",
             back === undefined ? "hidden phone:inline-flex" : "inline-flex"
           )}
           data-testid="settings-back"
@@ -42,15 +88,15 @@ export function PageHeader({
           {to.label}
         </Link>
       )}
-      {eyebrow && <p className="mb-2.5 text-small text-faint">{eyebrow}</p>}
-      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
-        <div className="min-w-0 flex-1 basis-64">
-          <h1 className="min-w-0 text-page break-words">{title}</h1>
-          {description && <p className="mt-1.5 max-w-2xl text-reading text-muted-foreground">{description}</p>}
+      {eyebrow && <p className={cn("text-small text-faint", !band && "mb-2.5")}>{eyebrow}</p>}
+      <div className={cn("flex flex-wrap items-center gap-3", band && !tabs && "pb-4")}>
+        <div className="flex min-w-0 flex-1 basis-64 flex-col">
+          <h1 className="min-w-0 text-[22px] leading-[1.3] font-semibold tracking-[-0.02em] break-words">{title}</h1>
+          {description && <div className="max-w-2xl text-body leading-[1.3] text-muted-foreground">{description}</div>}
         </div>
-        {action && <div className="flex shrink-0 flex-wrap items-center gap-2">{action}</div>}
+        {action && <div className="flex shrink-0 flex-wrap items-center gap-3">{action}</div>}
       </div>
-      {tabs && <div className="mt-5">{tabs}</div>}
+      {tabs && <div className={cn(!band && "mt-3")}>{tabs}</div>}
       {children}
     </header>
   )
@@ -65,7 +111,7 @@ export type PageTab = {
 }
 
 export const pageTabClass =
-  "flex items-center gap-1.5 rounded-sm pt-1 pb-2.5 text-body whitespace-nowrap text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:shadow-[inset_0_-2px_0_currentColor]"
+  "flex shrink-0 items-center gap-1.5 pt-1.5 pb-2.5 text-body whitespace-nowrap text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:underline aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:shadow-[inset_0_-2px_0_currentColor]"
 
 export function PageTabs({
   items,
@@ -79,9 +125,14 @@ export function PageTabs({
   extra?: React.ReactNode
 }) {
   const { i18n } = useLingui()
+  const band = useContext(Band)
   const fmt = new Intl.NumberFormat(i18n.locale)
   return (
-    <nav aria-label={label} className="-mx-1 overflow-x-auto border-b px-1" data-testid="page-tabs">
+    <nav
+      aria-label={label}
+      className={cn("-mx-1 overflow-x-auto px-1 [scrollbar-width:none]", !band && "border-b")}
+      data-testid="page-tabs"
+    >
       <ul className="flex gap-5">
         {items.map((tab) => (
           <li key={tab.key} className="shrink-0">
@@ -111,6 +162,7 @@ export function StatTile({
   live,
   testId,
   title,
+  hintClassName,
 }: {
   label: React.ReactNode
   value: React.ReactNode
@@ -118,28 +170,268 @@ export function StatTile({
   live?: boolean
   testId?: string
   title?: string
+  hintClassName?: string
 }) {
   return (
-    <div
-      className="flex min-w-0 flex-col gap-1 rounded-2xl border bg-card px-4 py-3.5"
-      title={title}
-      data-testid={testId}
-    >
-      <span className="flex min-w-0 items-center gap-1.5 text-small text-faint">
+    <div className="flex min-w-0 flex-col gap-1 rounded-xl border bg-card p-4" title={title} data-testid={testId}>
+      <span className="flex min-w-0 items-center gap-1.5 text-body text-muted-foreground">
         {live && <span className="size-2 shrink-0 rounded-full bg-success" aria-hidden />}
         <span className="truncate">{label}</span>
       </span>
-      <b className="text-page leading-tight tabular-nums">{value}</b>
-      {hint && <span className="truncate text-caption text-faint">{hint}</span>}
+      <b className="text-[26px] leading-[1.25] font-semibold tracking-[-0.02em] tabular-nums">{value}</b>
+      {hint && <span className={cn("truncate text-caption text-faint", hintClassName)}>{hint}</span>}
     </div>
   )
 }
 
 export function CardHead({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
   return (
-    <div className="flex min-h-12 items-center gap-2 border-b px-4 py-2.5">
-      <h2 className="min-w-0 flex-1 truncate text-body font-medium">{children}</h2>
+    <div className="flex min-h-11 items-center gap-2 border-b px-4 py-2.5">
+      <h2 className="flex min-w-0 flex-1 items-center gap-2 truncate text-body font-semibold">{children}</h2>
       {action}
+    </div>
+  )
+}
+
+export function HeadNote({ children }: { children: React.ReactNode }) {
+  return <span className="shrink-0 text-caption whitespace-nowrap text-faint">{children}</span>
+}
+
+export function HeadLink({ to, children, testId }: { to: To; children: React.ReactNode; testId?: string }) {
+  return (
+    <Link
+      to={to}
+      className="shrink-0 text-body whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground"
+      data-testid={testId}
+    >
+      {children}
+    </Link>
+  )
+}
+
+export function mix(color: string, percent: number) {
+  return `color-mix(in srgb, ${color} ${percent}%, transparent)`
+}
+
+export function ProductTag({ name, color, className }: { name: string; color?: string; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex max-w-32 min-w-0 shrink-0 items-center rounded border px-1.5 text-[11px] leading-[17px] font-medium text-muted-foreground",
+        className
+      )}
+      style={color ? { color, borderColor: mix(color, 25) } : undefined}
+      data-testid="product-tag"
+    >
+      <span className="truncate">{name}</span>
+    </span>
+  )
+}
+
+export function Chip({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center rounded border bg-surface px-1.5 text-[11px] leading-[17px] whitespace-nowrap text-muted-foreground",
+        className
+      )}
+    >
+      {children}
+    </span>
+  )
+}
+
+export function Pill({
+  tone = "success",
+  children,
+  className,
+  ...props
+}: { tone?: "success" | "warning" | "danger" | "muted"; children: React.ReactNode } & React.ComponentProps<"span">) {
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center rounded-full border px-2 py-px text-caption font-medium whitespace-nowrap",
+        tone === "success" && "border-success/35 text-success",
+        tone === "warning" && "border-warning/35 text-warning",
+        tone === "danger" && "border-destructive/35 text-destructive",
+        tone === "muted" && "border-input text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  )
+}
+
+export function Bars({
+  values,
+  color = "var(--brand)",
+  className,
+  barClassName,
+  fade = 0.45,
+  label,
+  min = 2,
+}: {
+  values: number[]
+  color?: string
+  className?: string
+  barClassName?: string
+  fade?: number
+  label?: string
+  min?: number
+}) {
+  const max = Math.max(1, ...values)
+  return (
+    <span
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      className={cn("flex items-end gap-0.5", className)}
+    >
+      {values.map((v, i) => (
+        <span
+          key={i}
+          className={cn("flex-1 rounded-t-[2px]", barClassName)}
+          style={{
+            height: `max(${min}px, ${(v / max) * 100}%)`,
+            backgroundColor: color,
+            opacity: i === values.length - 1 ? 1 : fade,
+          }}
+        />
+      ))}
+    </span>
+  )
+}
+
+export function Meter({
+  value,
+  max,
+  color = "var(--brand)",
+  className,
+}: {
+  value: number
+  max: number
+  color?: string
+  className?: string
+}) {
+  return (
+    <span className={cn("flex h-1.5 overflow-hidden rounded-full bg-border", className)} aria-hidden>
+      <span
+        className="rounded-full"
+        style={{ width: `${max > 0 ? (value / max) * 100 : 0}%`, backgroundColor: color }}
+      />
+    </span>
+  )
+}
+
+export function Face({
+  id,
+  name,
+  online,
+  away,
+  className,
+}: {
+  id: string
+  name: string
+  online?: boolean
+  away?: boolean
+  className?: string
+}) {
+  const here = online && !away
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "relative grid size-8 shrink-0 place-items-center rounded-full text-[11px] font-semibold text-white",
+        className
+      )}
+      style={{ backgroundColor: colorFor(id) }}
+    >
+      {initials(name)}
+      {online !== undefined && (
+        <span
+          className={cn(
+            "absolute -end-px -bottom-px size-[30%] max-h-[11px] min-h-[9px] max-w-[11px] min-w-[9px] rounded-full border-2 border-card",
+            here ? "bg-success" : "bg-input"
+          )}
+        />
+      )}
+    </span>
+  )
+}
+
+export const tableHeadClass = "bg-surface text-caption font-medium text-faint"
+
+export function Block({
+  title,
+  description,
+  footer,
+  tone,
+  children,
+  testId,
+  onSubmit,
+}: {
+  title: React.ReactNode
+  description?: React.ReactNode
+  footer?: React.ReactNode
+  tone?: "danger"
+  children: React.ReactNode
+  testId?: string
+  onSubmit?: () => void
+}) {
+  const body = (
+    <>
+      <div className="flex flex-col border-b px-[18px] py-3.5 leading-[1.3]">
+        <h2 className="font-semibold">{title}</h2>
+        {description && <p className="text-caption text-faint">{description}</p>}
+      </div>
+      {children}
+      {footer && <div className="flex flex-wrap items-center justify-end gap-3 px-[18px] py-3">{footer}</div>}
+    </>
+  )
+  const cls = cn(
+    "flex flex-col overflow-hidden rounded-xl border bg-card",
+    tone === "danger" && "border-destructive/30"
+  )
+  return onSubmit ? (
+    <form
+      className={cls}
+      data-testid={testId}
+      onSubmit={(e) => {
+        e.preventDefault()
+        onSubmit()
+      }}
+    >
+      {body}
+    </form>
+  ) : (
+    <section className={cls} data-testid={testId}>
+      {body}
+    </section>
+  )
+}
+
+export function BlockRow({
+  label,
+  htmlFor,
+  hint,
+  children,
+}: {
+  label: React.ReactNode
+  htmlFor?: string
+  hint?: React.ReactNode
+  children: React.ReactNode
+}) {
+  return (
+    <div className="grid grid-cols-[200px_minmax(0,1fr)] items-center gap-4 border-b px-[18px] py-3 phone:grid-cols-1 phone:gap-1.5">
+      <Label htmlFor={htmlFor} className="font-medium">
+        {label}
+      </Label>
+      <div className="flex min-w-0 flex-col gap-1">
+        {children}
+        {hint && <p className="text-caption text-faint">{hint}</p>}
+      </div>
     </div>
   )
 }
@@ -181,7 +473,7 @@ type CardProps = {
 
 const cardClass = (p: CardProps) =>
   cn(
-    "flex flex-col overflow-hidden rounded-2xl border bg-card",
+    "flex flex-col overflow-hidden rounded-xl border bg-card",
     p.tone === "danger" && "border-destructive/30",
     p.className
   )

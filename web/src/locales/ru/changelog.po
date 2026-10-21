@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "Черновики: {drafts}"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "Опубликовано записей: {published} из {total}"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "Опубликовано: {published}"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "Запланировано: {scheduled}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "Окончание адреса"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "Агенты могут публиковать"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "Все"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Черновик отправлен. Опубликовать его может владелец или администратор."
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "Черновики"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Записи"
 
@@ -268,6 +264,14 @@ msgstr "Новое"
 msgid "New entry"
 msgstr "Новая запись"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "Новая запись"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "Новая запись ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Журнала изменений пока нет. Его создают владельцы и администраторы."
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "Нет"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "не опубликовано"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "не написано"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "Здесь ничего нет."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "Запланированная публикация не удалась."
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "Заметки о выпуске в ваших продуктах, в интернете и по почте."
+msgid "Release notes shown in your products and on the web"
+msgstr "Заметки о релизах, которые показываются в ваших продуктах и в сети"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "Показать"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "Показывается в виджете чата и на {host}."
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "Показывается в пузыре чата, в приложениях и на {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "Расскажите клиентам {inboxName}, что нового, улучшено и исправлено. Он остаётся неопубликованным, пока вы его не опубликуете."
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "Расскажите клиентам, что нового, улучшено и исправлено: на публичной странице, в виджете чата и по почте. Выберите журнал изменений ящика, чтобы писать записи."
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "Расскажите клиентам, что нового, улучшено и исправлено, — на публичной странице, в виджете чата и по почте."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

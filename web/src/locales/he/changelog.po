@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: he\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "טיוטות: {drafts}"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} מתוך {total} רשומות פורסמו"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "פורסמו: {published}"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "מתוזמנות: {scheduled}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "סוף הכתובת"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "נציגים יכולים לפרסם"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "הכול"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "הטיוטה נשלחה. בעלים או מנהל יכולים לפרסם אותה."
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "טיוטות"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "רשומות"
 
@@ -268,6 +264,14 @@ msgstr "חדש"
 msgid "New entry"
 msgstr "רשומה חדשה"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "פוסט חדש"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "פוסט חדש ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "עדיין אין יומן שינויים. בעלים ומנהלים יוצרים אותו."
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "ללא"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "לא פורסם"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "לא נכתב"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "אין כאן כלום."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "הפרסום המתוזמן נכשל."
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "הערות גרסה שמוצגות במוצרים שלך, ברשת ובדואר."
+msgid "Release notes shown in your products and on the web"
+msgstr "הערות גרסה המוצגות במוצרים שלך ובאינטרנט"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "הצגה"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "מוצג בווידג׳ט הצ׳אט וב-{host}."
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "מוצג בבועת הצ׳אט, באפליקציות וב-{host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "ספרו ללקוחות של {inboxName} מה חדש, משופר ומתוקן. הוא נשאר לא מפורסם עד שתפרסמו אותו."
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "ספרו ללקוחות שלכם מה חדש, משופר ומתוקן, בדף ציבורי, בווידג׳ט הצ׳אט ובדוא״ל. בחרו את יומן השינויים של תיבה כדי לכתוב רשומות."
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "ספר ללקוחות שלך מה חדש, משופר ותוקן, בדף ציבורי, בווידג׳ט הצ׳אט ובדואר אלקטרוני."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

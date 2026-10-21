@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ta\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "{drafts} வரைவுகள்"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total} இல் {published} உள்ளீடுகள் வெளியிடப்பட்டன"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "{published} வெளியிடப்பட்டவை"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "{scheduled} திட்டமிடப்பட்டவை"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "முகவரியின் முடிவு"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "முகவர்கள் வெளியிடலாம்"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "அனைத்தும்"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "வரைவு சமர்ப்பிக்கப்பட்டது. உரிமையாளர் அல்லது நிர்வாகி அதை வெளியிடலாம்."
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "வரைவுகள்"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "உள்ளீடுகள்"
 
@@ -268,6 +264,14 @@ msgstr "புதிய"
 msgid "New entry"
 msgstr "புதிய உள்ளீடு"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "புதிய இடுகை"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "புதிய இடுகை ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "மாற்றப் பதிவு இன்னும் இல்லை. உரிமையாளர்களும் நிர்வாகிகளும் அதை உருவாக்குவார்கள்."
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "எதுவுமில்லை"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "வெளியிடப்படவில்லை"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "எழுதப்படவில்லை"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "இங்கே எதுவும் இல்லை."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "திட்டமிட்ட வெளியீடு தோல்வியடைந்தது."
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "உங்கள் தயாரிப்புகளில், இணையத்தில் மற்றும் மின்னஞ்சலில் காட்டப்படும் வெளியீட்டுக் குறிப்புகள்."
+msgid "Release notes shown in your products and on the web"
+msgstr "உங்கள் தயாரிப்புகளிலும் இணையத்திலும் காட்டப்படும் வெளியீட்டுக் குறிப்புகள்"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "காட்டு"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "அரட்டை விட்ஜெட்டிலும் {host} இலும் காட்டப்படும்."
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "அரட்டைக் குமிழி, செயலிகள் மற்றும் {host} இல் காட்டப்படும்."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "{inboxName} வாடிக்கையாளர்களுக்கு எது புதியது, எது மேம்படுத்தப்பட்டது, எது சரிசெய்யப்பட்டது என்பதைச் சொல்லுங்கள். நீங்கள் வெளியிடும் வரை இது வெளியிடப்படாமல் இருக்கும்."
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "உங்கள் வாடிக்கையாளர்களுக்கு எது புதியது, எது மேம்படுத்தப்பட்டது, எது சரிசெய்யப்பட்டது என்பதைப் பொதுப் பக்கத்திலும் அரட்டை விட்ஜெட்டிலும் மின்னஞ்சலிலும் சொல்லுங்கள். உள்ளீடுகளை எழுத ஓர் இன்பாக்ஸின் மாற்றப் பதிவைத் தேர்ந்தெடுங்கள்."
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "பொதுப் பக்கத்திலும், அரட்டை விட்ஜெட்டிலும், மின்னஞ்சலிலும் எது புதிது, மேம்பட்டது, சரிசெய்யப்பட்டது என்பதை உங்கள் வாடிக்கையாளர்களுக்குச் சொல்லுங்கள்."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

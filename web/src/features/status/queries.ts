@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import {
   api,
@@ -225,6 +225,54 @@ export function useStatusIncidents(pageId: string, open: boolean) {
   })
 }
 
+export function usePagesIncidents(pageIds: string[], open: boolean) {
+  const { workspaceId: ws } = useSession()
+  return useQueries({
+    queries: pageIds.map((pageId) => ({
+      queryKey: [...keys.status(ws), "page-incidents", pageId, open],
+      queryFn: () =>
+        unwrap(
+          api.GET("/v1/status-pages/{pageId}/incidents", {
+            params: { path: { pageId }, query: { open: open || undefined, limit: 50 } },
+          })
+        ).then((r) => r.items),
+    })),
+    combine: (results) => ({
+      data: results.flatMap((r) => r.data ?? []),
+      isPending: results.some((r) => r.isPending),
+      error: results.find((r) => r.error)?.error ?? null,
+    }),
+  })
+}
+
+export function usePagesMonitors(pageIds: string[]) {
+  const { workspaceId: ws } = useSession()
+  return useQueries({
+    queries: pageIds.map((pageId) => ({
+      queryKey: keys.statusMonitors(ws, pageId),
+      queryFn: () =>
+        unwrap(api.GET("/v1/status-pages/{pageId}/monitors", { params: { path: { pageId } } })).then((r) => r.items),
+    })),
+    combine: (results) => ({
+      data: results.flatMap((r) => r.data ?? []),
+      isPending: results.some((r) => r.isPending),
+      error: results.find((r) => r.error)?.error ?? null,
+    }),
+  })
+}
+
+export function usePagesComponents(pageIds: string[]) {
+  const { workspaceId: ws } = useSession()
+  return useQueries({
+    queries: pageIds.map((pageId) => ({
+      queryKey: keys.statusComponents(ws, pageId),
+      queryFn: () =>
+        unwrap(api.GET("/v1/status-pages/{pageId}/components", { params: { path: { pageId } } })).then((r) => r.items),
+    })),
+    combine: (results) => results.flatMap((r) => r.data ?? []),
+  })
+}
+
 export function useStatusIncident(pageId: string, id: string) {
   const { workspaceId: ws } = useSession()
   return useQuery({
@@ -338,9 +386,10 @@ export function useLastCheck(pageId: string, monitorId: string, enabled: boolean
   })
 }
 
-export function useMonitorSummary(pageId: string, monitorId: string, range: StatusCheckRange) {
+export function useMonitorSummary(pageId: string, monitorId: string, range: StatusCheckRange, enabled = true) {
   const { workspaceId: ws } = useSession()
   return useQuery({
+    enabled: enabled && !!monitorId,
     queryKey: [...keys.statusChecks(ws, pageId, monitorId), "summary", range],
     queryFn: () =>
       unwrap(

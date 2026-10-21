@@ -36,6 +36,7 @@ import { flag, useAnalyticsText, valueText, type AnalyticsText } from "@/feature
 import { Field } from "@/features/settings/ui"
 import { ApiError, type AnalyticsFilter, type AnalyticsSegment } from "@/lib/api"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 
 const CUSTOM = "custom"
 
@@ -103,7 +104,7 @@ function daysAgo(n: number) {
   return d.toISOString().slice(0, 10)
 }
 
-export function RangePicker() {
+export function RangePicker({ className, plain }: { className?: string; plain?: boolean } = {}) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const { view, setRange } = useView()
@@ -123,8 +124,12 @@ export function RangePicker() {
           else if (v) setRange({ period: v as Period })
         }}
       >
-        <SelectTrigger aria-label={t`Range`} className="max-w-full min-w-0" data-testid="analytics-range">
-          <CalendarRangeIcon className="text-faint" />
+        <SelectTrigger
+          aria-label={t`Range`}
+          className={cn("max-w-full min-w-0", className)}
+          data-testid="analytics-range"
+        >
+          {!plain && <CalendarRangeIcon className="text-faint" />}
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="min-w-52">
@@ -491,15 +496,17 @@ export function Controls({
   propertyId,
   compare = true,
   filters = true,
+  range = true,
 }: {
   propertyId: string
   compare?: boolean
   filters?: boolean
+  range?: boolean
 }) {
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="flex flex-wrap items-center gap-2">
-        <RangePicker />
+      <div className="flex flex-wrap items-center gap-2 empty:hidden">
+        {range && <RangePicker />}
         {compare && <ComparePicker />}
         {filters && <SegmentPicker propertyId={propertyId} />}
       </div>

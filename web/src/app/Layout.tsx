@@ -1,11 +1,11 @@
-import { lazy, Suspense, useCallback, useEffect } from "react"
+import { lazy, Suspense, useCallback, useEffect, useState } from "react"
 import { Outlet, useLocation, useMatch, useNavigate } from "react-router"
 
-import { Rail, TabBar, useSection } from "@/app/Rail"
-import { isFullPage, isInboxRoot, isSectionHome } from "@/app/shell"
-import { Sidebar } from "@/app/Sidebar"
-import { useSidebarCollapsed } from "@/app/sidebarState"
+import { TabBar, useSection } from "@/app/Rail"
+import { isChats, isInboxRoot, isSectionHome } from "@/app/shell"
+import { AppSidebar } from "@/app/Sidebar"
 import { TopBar } from "@/app/TopBar"
+import { SidebarProvider, useSidebar } from "@/components/ui/sidebar"
 import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
 import { DocsColumn } from "@/features/docs/DocsColumn"
@@ -26,21 +26,20 @@ const RoadmapColumn = lazy(() => import("@/features/roadmap/RoadmapColumn"))
 const ChangelogColumn = lazy(() => import("@/features/changelog/ChangelogColumn"))
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
-function LeftColumn({ keepList }: { keepList: boolean }) {
+function LeftColumn() {
   const section = useSection()
   const navigate = useNavigate()
   const currentId = useMatch("/conversations/:conversationId")?.params.conversationId ?? null
   const open = useCallback((id: string) => navigate(`/conversations/${id}`), [navigate])
   const chats = section === "conversations"
-  const columns = !keepList || !isFullPage(section)
   return (
     <>
-      {(chats || keepList) && (
-        <div className={cn("flex min-h-0 flex-1 flex-col", !chats && "hidden")}>
-          <ChatList currentId={currentId} onOpen={open} active={chats} />
+      {chats && (
+        <div className="flex min-h-0 flex-1 flex-col">
+          <ChatList currentId={currentId} onOpen={open} active />
         </div>
       )}
-      {columns && <SectionColumn />}
+      <SectionColumn />
     </>
   )
 }
@@ -94,16 +93,45 @@ function useMentionsView(pathname: string, manager: boolean) {
   }, [pathname, view, manager])
 }
 
-function Desktop({ children }: { children: React.ReactNode }) {
-  const [collapsed] = useSidebarCollapsed()
+function sidebarOpenAtStart() {
+  const saved = document.cookie.match(/(?:^|; )sidebar_state=(true|false)/)?.[1]
+  return saved ? saved === "true" : window.matchMedia("(min-width: 1100px)").matches
+}
+
+function Desktop({ frame, children }: { frame: boolean; children: React.ReactNode }) {
+  const [open] = useState(sidebarOpenAtStart)
   return (
-    <div className="flex h-svh min-h-0" data-testid="shell">
-      {collapsed ? <Rail /> : <Sidebar />}
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-        <TopBar />
-        <div className="flex min-h-0 flex-1">{children}</div>
+    <SidebarProvider defaultOpen={open} className="flex-col" data-testid="shell">
+      <TopBar />
+      <div className="flex min-w-0 flex-1 *:data-[slot=sidebar]:bg-sidebar">
+        <AppSidebar />
+        <div
+          className={cn("flex min-w-0 flex-1 flex-col", frame && "sticky top-11 h-[calc(100svh-2.75rem)]")}
+          data-frame={frame || undefined}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
+  )
+}
+
+function CloseOnNavigate() {
+  const { pathname } = useLocation()
+  const { setOpenMobile } = useSidebar()
+  useEffect(() => setOpenMobile(false), [pathname, setOpenMobile])
+  return null
+}
+
+function Phone({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider className="contents">
+      <AppSidebar />
+      <CloseOnNavigate />
+      <div className="flex h-svh min-h-0 flex-col" data-frame data-testid="shell">
+        {children}
+      </div>
+    </SidebarProvider>
   )
 }
 
@@ -113,58 +141,37 @@ export function Layout() {
   const { canManage } = useSession()
   const section = useSection()
   useMentionsView(pathname, canManage)
-  if (section === "home" && !phone) {
+  if (!phone) {
+    const frame = isChats(pathname, canManage) || pathname === "/feedback" || pathname.startsWith("/feedback/")
     return (
-      <Desktop>
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-          <Outlet />
-        </div>
+      <Desktop frame={frame}>
+        <Outlet />
       </Desktop>
     )
   }
   if (section === "home") {
     return (
-      <div className="flex h-svh min-h-0 flex-col" data-testid="shell">
+      <Phone>
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Outlet />
         </div>
         <TabBar />
-      </div>
+      </Phone>
     )
   }
-  if (phone) {
-    if (!isSectionHome(pathname)) {
-      return (
-        <div className="flex h-svh min-h-0 flex-col" data-testid="shell">
-          <Outlet />
-        </div>
-      )
-    }
+  if (!isSectionHome(pathname)) {
     return (
-      <div className="flex h-svh min-h-0 flex-col" data-testid="shell">
-        <div className="flex min-h-0 flex-1 flex-col">
-          <LeftColumn keepList={false} />
-        </div>
-        <TabBar />
-      </div>
+      <Phone>
+        <Outlet />
+      </Phone>
     )
   }
-  const full = isFullPage(section)
   return (
-    <Desktop>
-      <div className="group/cols flex min-w-0 flex-1">
-        <div
-          className={cn(
-            "flex w-[clamp(288px,30vw,420px)] shrink-0 flex-col border-e group-has-[[data-contact-panel]]/cols:w-[clamp(272px,20vw,360px)]",
-            full && "hidden"
-          )}
-        >
-          <LeftColumn keepList />
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col">
-          <Outlet />
-        </div>
+    <Phone>
+      <div className="flex min-h-0 flex-1 flex-col">
+        <LeftColumn />
       </div>
-    </Desktop>
+      <TabBar />
+    </Phone>
   )
 }

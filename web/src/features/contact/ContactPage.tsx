@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useState } from "react"
-import { useParams } from "react-router"
+import { useParams, useSearchParams } from "react-router"
 
 import { ContactAvatar, ErrorLine } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
@@ -24,7 +24,9 @@ import { ContactNotes } from "@/features/contact/ContactNotes"
 import { ContactSubscriptions } from "@/features/contact/ContactSubscriptions"
 import { ContactVisits } from "@/features/contact/ContactVisits"
 import { useContact, useContactSummary, useContactVisits } from "@/features/contact/queries"
+import { ContactsPage } from "@/features/contact/ContactsPage"
 import { contactName } from "@/features/contact/Section"
+import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
@@ -56,6 +58,13 @@ function Stat({ value, label }: { value: string; label: React.ReactNode }) {
 
 export function ContactPage() {
   const { contactId = "" } = useParams()
+  const [params] = useSearchParams()
+  const phone = useIsPhone()
+  if (!phone && params.get("view") !== "page") return <ContactsPage key="contacts" contactId={contactId} />
+  return <FullPage contactId={contactId} />
+}
+
+function FullPage({ contactId }: { contactId: string }) {
   const { t, i18n } = useLingui()
   const { canManage } = useSession()
   const contact = useContact(contactId)

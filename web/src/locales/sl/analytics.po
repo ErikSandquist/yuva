@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# vrstica} two {# vrstici} few {# vrstice} other {# vrs
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {obiskovalec danes} two {obiskovalca danes} few {obiskovalci danes} other {obiskovalcev danes}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "Pogovorov: {0}"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} obiskovalcev"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "Obiskovalcev: {0}"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# pogovor} two {# pogovora} few {# pogovori} other {# pogovorov}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} je privolilo, prek obiskov in dni"
@@ -121,6 +140,10 @@ msgstr "{overall} obiskovalcev, ki so dosegli prvi korak, je dosegla tudi zadnje
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # pogovor na 1.000 ogledov, v primerjavi z {site} na vseh straneh.} two {{dim} {value}: # pogovora na 1.000 ogledov, v primerjavi z {site} na vseh straneh.} few {{dim} {value}: # pogovori na 1.000 ogledov, v primerjavi z {site} na vseh straneh.} other {{dim} {value}: # pogovorov na 1.000 ogledov, v primerjavi z {site} na vseh straneh.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} o. t."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Ta mesec porabljenih {used} od {limit} analitičnih dogodkov. Dogodki nad omejitvijo se zavržejo do konca meseca."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Novo geslo odjavi vse, ki so odklenili povezavo."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Ogled strani, dogodek ali globina drsenja"
+msgid "a page visit or an event from your site or app"
+msgstr "obisk strani ali dogodek z tvojega spletnega mesta ali aplikacije"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Analitične lastnosti"
 msgid "Analytics steps"
 msgstr "Koraki analitike"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Pogledi analitike"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Kdor koli s povezavo vidi poglede, ki jih izberete, samo za branje, brez prijave."
@@ -376,6 +395,11 @@ msgstr "Boti"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Boti, omejitve hitrosti, izključeni naslovi in poti, mesečna omejitev ali zaseden strežnik."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Zapustitve"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Stopnja odskoka"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Razčleni po propu"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Razčlenitev"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Konverzije na 100 obiskovalcev."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Obiskovalci vaših spletnih mest in aplikacij, brez piškotkov."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Obiskovalci brez piškotkov na tvojih spletnih mestih in v aplikacijah"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Podrobni zapisi se hranijo od {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Podrobni zapisi hranjeni od"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Podrobnosti"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "je imel odstranjen naslov"
 msgid "Health"
 msgstr "Zdravje"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Koristno"
@@ -1170,6 +1190,10 @@ msgstr "Kako pošiljati dogodke"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Shranil(a) sem"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Izboljšaj stran →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Zadnji zaslon"
 msgid "Leave empty to keep the current one"
 msgstr "Pustite prazno, da ohranite trenutnega"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Pripeljalo do pogovora"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Povezava"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Poveži predal, da jih štejem"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Poveži nabiralnik"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Poveži prijavljene uporabnike z njihovim stikom"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "v živo"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Zbirka lokacij"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Lokacije"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Meseci"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Več"
+msgid "More views"
+msgstr "Več pogledov"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Nov {kind}: {value} z {count}, nič v primerjanih dneh."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Nov {kind}: {value}. {metric}: {now}, nič v primerjanih dneh."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Novi in vračajoči se"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Nov lijak"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Nov cilj"
@@ -1477,10 +1509,6 @@ msgstr "Brez primerjave"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Funkcije soglasja se ne ponujajo."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "V tem obdobju ni obiskovalcev, ki so privolili."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Nič"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "V tem obdobju ni bilo nič preštetega."
 
@@ -1767,6 +1796,10 @@ msgstr "Stran ali zaslon"
 msgid "Page view of {path}"
 msgstr "Ogled strani {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Ogledi strani"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Strani"
@@ -1782,6 +1815,10 @@ msgstr "Ogledane strani in zasloni."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Strani, ki se ne štejejo"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Strani, razvrščene po vprašanjih, ki jih sprožijo. Stran z veliko obiskovalci in veliko pogovori potrebuje boljši odgovor na sami strani."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Zahteve z Do Not Track ali Global Privacy Control in dogodki brez soglasja pri lastnosti, ki ga zahteva, se sprejmejo, vendar se tukaj ne shranijo in ne štejejo."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Zadrževanje"
 
@@ -2257,6 +2293,10 @@ msgstr "Viri"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Začni znova"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Začelo pogovor"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Kolikokrat je bila stran ocenjena kot nekoristna."
 msgid "To"
 msgstr "Za"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Danes"
@@ -2630,6 +2671,7 @@ msgstr "Ogledi so v dveh urah narasli na {now}, v primerjavi z običajnimi {usua
 msgid "Visit duration"
 msgstr "Trajanje obiska"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Obiskovalci"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Obiskovalci v zadnjih 30 minutah"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Obiskovalci zdaj"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Obiskovalci z Do Not Track ali Global Privacy Control ne pošljejo niče
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Obiski"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Obiski in dogodki, ki štejejo za uspeh"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Od kod prihajajo konverzije"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Kje se dan lastnosti začne in konča."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Katere strani ljudje obiščejo in katere vodijo do vprašanj"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

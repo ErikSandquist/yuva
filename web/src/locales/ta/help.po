@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ta\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} வரைவுகள்"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} கட்டுரைகளில் {published} வெளியிடப்பட்டன"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} வெளியிடப்பட்டவை"
+msgid "{searches} searches"
+msgstr "{searches} தேடல்கள்"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "முகவரியின் முடிவு"
 msgid "Agents may publish"
 msgstr "முகவர்கள் வெளியிடலாம்"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "அனைத்துத் தொகுப்புகள்"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "ஒரு API விசை"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "வேறொரு உதவி மையம் இந்த முகவரியை இப்போது அல்லது முன்பு பயன்படுத்துகிறது."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "பொதுவான கேள்விகளுக்கு ஒரு முறை எழுத்தில் பதிலளியுங்கள். ஒவ்வொரு தயாரிப்புக்கும் கட்டுரைகள், தொகுப்புகள் மற்றும் மக்கள் தேடுவதன் அறிக்கையுடன் தனி உதவி மையம் கிடைக்கும்."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "பொதுவான கேள்விகளுக்கு ஒருமுறை, எழுத்துவடிவில் பதிலளியுங்கள். கட்டுரைகளை எழுத, தொகுப்புகளாகக் குழுவாக்க, வாடிக்கையாளர்கள் எதைத் தேடுகிறார்கள் என்பதைப் பார்க்க ஓர் இன்பாக்ஸின் உதவி மையத்தைத் தேர்ந்தெடுங்கள்."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "எந்த நிலையும்"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "இந்தத் தொகுப்பிலுள்ள கட்டுரைகள்"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "உங்களுக்கு எழுதும் முன் மக்கள் படிக்கும் கட்டுரைகள்"
 
@@ -161,6 +162,10 @@ msgstr "புள்ளிப் பட்டியல்"
 msgid "Cancel"
 msgstr "ரத்து செய்"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "மாற்றப்பட்டது"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "வரைபடம்"
@@ -191,6 +196,7 @@ msgstr "குறியீட்டுத் தொகுதி"
 msgid "Collection"
 msgstr "தொகுப்பு"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "தொகுப்புகள்"
@@ -213,12 +219,18 @@ msgstr "தொகுப்பை உருவாக்கு"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "உதவி மையத்தை உருவாக்கு"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "உதவி மையத்தை உருவாக்கு ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0}-க்கு ஒன்றை உருவாக்கு"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "வரைவு"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "வரைவு சமர்ப்பிக்கப்பட்டது. உரிமையாளர் அல்லது நிர்வாகி அதை வெளியிடலாம்."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "வரைவுகள்"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "இந்த மொழிபெயர்ப்பின் முந்தைய பதிப்புகள். ஒன்றை மீட்டமைத்தால் வரைவு மாற்றப்படும்; நீங்கள் வெளியிடும் வரை வெளியிடப்பட்ட உரை இருக்கும்."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "வடிவமைப்பு"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "எதுவும் கிடைக்கவில்லை · 7 நாட்கள்"
+msgid "Found nothing"
+msgstr "எதுவும் கிடைக்கவில்லை"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "பார்வையாளர்கள் உலாவ கட்டு�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "தலைப்பு"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "உதவி"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "முதன்மை மொழி"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "மேலும்"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "பெயர்"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "புதிய கட்டுரை"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "புதிய கட்டுரை ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "புதிய தொகுப்பு"
@@ -499,15 +514,21 @@ msgstr "தொகுப்பு இல்லை"
 msgid "No collections yet. Articles can stay without one."
 msgstr "இன்னும் தொகுப்புகள் இல்லை. கட்டுரைகள் தொகுப்பு இல்லாமலும் இருக்கலாம்."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "வரைவுகள் இல்லை. எழுதப்பட்ட அனைத்தும் வெளியிடப்பட்டுள்ளன."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "இன்னும் முந்தைய பதிப்புகள் இல்லை."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "இன்னும் உதவி மையம் இல்லை. உரிமையாளர்களும் நிர்வாகிகளும் அதை உருவாக்குகிறார்கள்."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "உதவி மையத்தைக் காட்ட இன்பாக்ஸ் இல்லை."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "பெயரிடப்படவில்லை"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "எழுதப்படவில்லை"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "எழுதப்படவில்லை"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "எண்ணிட்ட பட்டியல்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "{answers} பதில்களில்"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "முன்னோட்டம்"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "முன்னோட்டம் ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "முன்னோட்டம் ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "சேமிக்கப்பட்டது"
 msgid "Saving…"
 msgstr "சேமிக்கிறது…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "தலைப்புகளில் தேடு"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "தலைப்புகளில் தேடு ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "தேடல்கள்"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "தேடல்கள் · 7 நாட்கள்"
+msgid "searches this week"
+msgstr "இந்த வாரத் தேடல்கள்"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "தலைப்புடன் தொடங்குங்கள். உரையை அடுத்து எழுதுவீர்கள், வெளியிடப்படும் வரை அது வரைவாக இருக்கும்."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "நிலை"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "தேட ஒரு சொல்லை உள்ளிடுங்கள
 msgid "Unpublish"
 msgstr "வெளியீட்டை நீக்கு"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "வெளியீட்டை நீக்கு ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "இந்த மொழிபெயர்ப்பின் வெளியீட்டை நீக்கவா?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "பார்"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "உதவி மையத்தைப் பார்"
+msgid "View site"
+msgstr "தளத்தைப் பார்"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "தளத்தைப் பார் ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

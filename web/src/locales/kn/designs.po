@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "ಇಮೇಲ್ ವಿನ್ಯಾಸಗಳು"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳಲ್ಲಿ ನೀವು ಮರುಬಳಸುವ ಇಮೇಲ್ ವಿನ್ಯಾಸಗಳು."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳಲ್ಲಿ ಮರುಬಳಸುವ ಇಮೇಲ್ ಲೇಔಟ್‌ಗಳು"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "ಪೂರ್ಣ ಅಗಲ"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "ಗ್ಯಾಲರಿ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "ಗ್ಯಾಲರಿ · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "ಫೋನ್‌ಗಳಲ್ಲಿ ಜೋಡಿಸಿ"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "ಆರಂಭಿಸಿ"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "ಟೆಂಪ್ಲೇಟ್ ಅಥವಾ ಖಾಲಿ ಪುಟದಿಂದ ಆರಂಭಿಸಿ. ಪ್ರತಿ ವಿನ್ಯಾಸಕ್ಕೆ ಕಾನೂನು ಕೇಳುವ ಅಡಿಟಿಪ್ಪಣಿ ಸಿಗುತ್ತದೆ, ಮತ್ತು ಉಳಿದೆಲ್ಲವನ್ನೂ ಬದಲಾಯಿಸಬಹುದು."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

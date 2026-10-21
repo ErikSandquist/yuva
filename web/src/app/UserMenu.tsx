@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
+  BellIcon,
   BookUserIcon,
   BuildingIcon,
   DownloadIcon,
-  KeyboardIcon,
   LanguagesIcon,
   LogOutIcon,
   MonitorIcon,
@@ -14,7 +14,6 @@ import {
 } from "lucide-react"
 import { useNavigate } from "react-router"
 
-import { useShell } from "@/app/shell"
 import { PersonAvatar } from "@/components/common"
 import { useChangeLocale } from "@/components/common/LanguageMenu"
 import {
@@ -50,14 +49,15 @@ export function UserMenu({
   align = "end",
   side = "bottom",
   row,
+  bar,
 }: {
   align?: "start" | "end"
   side?: "bottom" | "inline-end" | "top"
   row?: boolean
+  bar?: boolean
 }) {
   const { t, i18n } = useLingui()
   const { me, membership, switchWorkspace } = useSession()
-  const { openShortcuts } = useShell()
   const theme = useTheme()
   const navigate = useNavigate()
   const signOut = useSignOut()
@@ -74,10 +74,15 @@ export function UserMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          row ? (
+          bar ? (
             <button
               type="button"
-              className="flex h-11 w-full min-w-0 items-center gap-2.5 rounded-lg px-1.5 text-start outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring data-popup-open:bg-muted"
+              className="flex h-11 min-w-0 items-center gap-2 px-2.5 text-start text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:bg-sidebar-accent data-popup-open:bg-sidebar-accent"
+            />
+          ) : row ? (
+            <button
+              type="button"
+              className="flex h-11 w-full min-w-0 items-center gap-2.5 rounded-md px-1.5 text-start text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring data-popup-open:bg-sidebar-accent group-data-[collapsible=icon]:size-10 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
             />
           ) : (
             <Button variant="ghost" size="icon" className="relative" />
@@ -87,53 +92,59 @@ export function UserMenu({
         title={statusText}
         data-testid="user-menu"
       >
-        <span className={row ? "relative flex shrink-0" : "contents"}>
-          <PersonAvatar name={name} className="size-[30px] bg-muted-foreground text-background" />
+        <span className={row || bar ? "relative flex shrink-0" : "contents"}>
+          <PersonAvatar
+            name={name}
+            className={cn(
+              bar ? "size-7 text-caption" : "size-[30px]",
+              row || bar ? "bg-sidebar-muted text-sidebar" : "bg-muted-foreground text-background"
+            )}
+          />
           <span
             className={cn(
-              "absolute size-[9px] rounded-full ring-2",
-              row ? "end-[-1px] bottom-[-1px] ring-surface" : "end-px bottom-px ring-background",
+              "absolute rounded-full ring-2",
+              bar ? "end-[-2px] bottom-[-2px] size-[7px]" : "size-[9px]",
+              row || bar ? "ring-sidebar" : "ring-background",
+              !bar && (row ? "end-[-1px] bottom-[-1px]" : "end-px bottom-px"),
               statusClass(availability, live)
             )}
             data-testid="availability-dot"
             data-availability={availability}
           />
         </span>
+        {bar && <span className="max-w-48 truncate text-body font-medium">{name}</span>}
         {row && (
-          <span className="min-w-0 flex-1">
-            <span className="block truncate text-body font-medium">{name}</span>
-            <span className="block truncate text-caption text-faint">{statusText}</span>
+          <span className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+            <span className="block truncate text-body font-medium text-sidebar-accent-foreground">{name}</span>
+            <span className="block truncate text-caption text-sidebar-muted">{statusText}</span>
           </span>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} side={side} className="w-72">
+      <DropdownMenuContent align={align} side={side} className="w-64">
         <DropdownMenuGroup>
-          <DropdownMenuLabel className="truncate">{me.person.email}</DropdownMenuLabel>
+          <DropdownMenuLabel className="flex items-center gap-2.5 py-2">
+            <PersonAvatar name={name} className="size-8 bg-muted-foreground text-background" />
+            <span className="min-w-0">
+              <span className="block truncate text-body font-medium text-foreground">{name}</span>
+              <span className="block truncate text-caption font-normal text-muted-foreground">{me.person.email}</span>
+            </span>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
           <DropdownMenuRadioGroup
             value={availability}
             onValueChange={(v) => {
               if (v !== availability) setAvailability.mutate(v as Availability)
             }}
           >
-            <DropdownMenuRadioItem value="auto" className="items-start" data-testid="availability-auto">
-              <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", statusClass("auto", true))} />
-              <span className="flex flex-col gap-0.5">
-                <Trans>Available</Trans>
-                <span className="text-caption text-muted-foreground">
-                  <Trans>While the panel is open, in business hours</Trans>
-                </span>
-              </span>
+            <DropdownMenuRadioItem value="auto" data-testid="availability-auto">
+              <span className={cn("size-2 shrink-0 rounded-full", statusClass("auto", true))} />
+              <Trans>Available</Trans>
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="away" className="items-start" data-testid="availability-away">
-              <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", statusClass("away", true))} />
-              <span className="flex flex-col gap-0.5">
-                <Trans>Away</Trans>
-                <span className="text-caption text-muted-foreground">
-                  <Trans>
-                    Live chat shows nobody available. Notifications pause, except for conversations assigned to you.
-                  </Trans>
-                </span>
-              </span>
+            <DropdownMenuRadioItem value="away" data-testid="availability-away">
+              <span className={cn("size-2 shrink-0 rounded-full", statusClass("away", true))} />
+              <Trans>Away</Trans>
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
           {setAvailability.error && (
@@ -147,23 +158,50 @@ export function UserMenu({
           <UserIcon />
           <Trans>My profile</Trans>
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/settings/notifications")} data-testid="menu-notifications">
+          <BellIcon />
+          <Trans>Notifications</Trans>
+        </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <LanguagesIcon />
-            <Trans>Language</Trans>
-            <span className="eyebrow ms-auto">{i18n.locale}</span>
+            {theme === "dark" ? <MoonIcon /> : theme === "light" ? <SunIcon /> : <MonitorIcon />}
+            <Trans>Appearance</Trans>
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="max-h-80 min-w-44 overflow-y-auto">
-            <DropdownMenuRadioGroup value={i18n.locale} onValueChange={(v) => changeLocale(v as Locale)}>
-              {Object.entries(locales).map(([k, v]) => (
-                <DropdownMenuRadioItem key={k} value={k}>
-                  {v}
-                </DropdownMenuRadioItem>
-              ))}
+          <DropdownMenuSubContent className="min-w-40">
+            <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as Theme)}>
+              <DropdownMenuRadioItem value="system" data-testid="theme-system">
+                <Trans>System</Trans>
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="light" data-testid="theme-light">
+                <Trans>Light</Trans>
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="dark" data-testid="theme-dark">
+                <Trans>Dark</Trans>
+              </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        {(me.memberships.length > 1 || signup === "open") && (
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <LanguagesIcon />
+            <span className="flex-1">
+              <Trans>Language</Trans>
+            </span>
+            <span className="text-caption text-muted-foreground">{Object.keys(locales).length}</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="max-h-80 min-w-44 overflow-y-auto">
+            <DropdownMenuRadioGroup value={i18n.locale} onValueChange={(v) => changeLocale(v as Locale)}>
+              {Object.entries(locales)
+                .sort(([a], [b]) => Number(b === i18n.locale) - Number(a === i18n.locale))
+                .map(([k, v]) => (
+                  <DropdownMenuRadioItem key={k} value={k}>
+                    {v}
+                  </DropdownMenuRadioItem>
+                ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        {!bar && (me.memberships.length > 1 || signup === "open") && (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <BuildingIcon />
@@ -192,39 +230,16 @@ export function UserMenu({
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         )}
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            {theme === "dark" ? <MoonIcon /> : theme === "light" ? <SunIcon /> : <MonitorIcon />}
-            <Trans>Appearance</Trans>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="max-h-80 min-w-44 overflow-y-auto">
-            <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as Theme)}>
-              <DropdownMenuRadioItem value="system" data-testid="theme-system">
-                <Trans>System</Trans>
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="light" data-testid="theme-light">
-                <Trans>Light</Trans>
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="dark" data-testid="theme-dark">
-                <Trans>Dark</Trans>
-              </DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuItem
-          onClick={() => navigate("/contacts")}
-          className="hidden phone:flex"
-          data-testid="menu-contacts"
-        >
-          <BookUserIcon />
-          <Trans>Contacts</Trans>
-          <span className="ms-auto text-caption text-faint">G C</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={openShortcuts}>
-          <KeyboardIcon />
-          <Trans>Keyboard shortcuts</Trans>
-          <span className="ms-auto text-caption text-faint">?</span>
-        </DropdownMenuItem>
+        {!bar && (
+          <DropdownMenuItem
+            onClick={() => navigate("/contacts")}
+            className="hidden phone:flex"
+            data-testid="menu-contacts"
+          >
+            <BookUserIcon />
+            <Trans>Contacts</Trans>
+          </DropdownMenuItem>
+        )}
         {install && (
           <DropdownMenuItem onClick={() => void install()} data-testid="install-app">
             <DownloadIcon />
@@ -240,12 +255,8 @@ export function UserMenu({
         >
           <LogOutIcon />
           <Trans>Sign out</Trans>
+          {version && <span className="ms-auto text-caption text-faint">{version}</span>}
         </DropdownMenuItem>
-        {version && (
-          <p className="px-2.5 pt-1.5 pb-1 text-caption text-faint">
-            <Trans>Yuva {version}</Trans>
-          </p>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

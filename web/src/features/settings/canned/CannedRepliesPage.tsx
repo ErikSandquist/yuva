@@ -6,6 +6,7 @@ import { useState } from "react"
 import { ErrorLine, useConfirm } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { CannedReplyDialog } from "@/features/settings/canned/CannedReplyDialog"
+import { GeneralTabs } from "@/features/settings/GeneralTabs"
 import { Card, EmptyRow, PageHeader, Row, Rows } from "@/features/settings/ui"
 import { api, unwrap, type CannedReply } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -27,7 +28,8 @@ export function CannedRepliesPage() {
   return (
     <>
       <PageHeader
-        title={<Trans>Canned replies</Trans>}
+        title={<Trans>General</Trans>}
+        tabs={<GeneralTabs current="canned-replies" />}
         description={<Trans>Type / and the shortcut in the composer to insert one.</Trans>}
         action={
           canManage && (

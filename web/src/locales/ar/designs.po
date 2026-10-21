@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "تصاميم البريد الإلكتروني"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "تخطيطات البريد التي تعيد استخدامها في الرسائل الجماعية."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "تصاميم بريد إلكتروني تعيد استخدامها في الرسائل الجماعية"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "العرض الكامل"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "المعرض"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "المعرض · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "تكديس على الهواتف"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "بدء"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "ابدأ من قالب أو صفحة فارغة. يحصل كل تصميم على التذييل الذي يشترطه القانون، ويمكنك تغيير كل شيء آخر."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "Dizajni e-pošte"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "Rasporedi e-pošte koje ponovno koristite u masovnim porukama."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "Izgledi e-pošte koje ponovno koristiš u masovnim porukama"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "Puna širina"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "Galerija"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "Galerija · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "Slaži jedno ispod drugog na telefonima"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "Započni"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "Počnite s predloškom ili praznom stranicom. Svaki dizajn dobiva podnožje koje zakon traži, a sve ostalo možete promijeniti."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# рядок} few {# рядки} many {# рядків} 
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {відвідувач сьогодні} few {відвідувачі сьогодні} many {відвідувачів сьогодні} other {відвідувача сьогодні}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "Розмов: {0}"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} відвідувачів"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "Відвідувачів: {0}"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# розмова} few {# розмови} many {# розмов} other {# розмови}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "погодилися: {consentedCount}, за візитами й днями"
@@ -121,6 +140,10 @@ msgstr "{overall} відвідувачів, що дійшли до першог�
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # розмова на 1000 переглядів, проти {site} за всіма сторінками.} few {{dim} {value}: # розмови на 1000 переглядів, проти {site} за всіма сторінками.} many {{dim} {value}: # розмов на 1000 переглядів, проти {site} за всіма сторінками.} other {{dim} {value}: # розмови на 1000 переглядів, проти {site} за всіма сторінками.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} в. п."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Цього місяця використано подій аналітики: {used} із {limit}. Події понад ліміт відкидаються до кінця місяця."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Новий пароль розлогінює всіх, хто відкрив посилання."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Перегляд сторінки, подія або глибина прокручування"
+msgid "a page visit or an event from your site or app"
+msgstr "відвідування сторінки або подія з вашого сайту чи застосунку"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Ресурси аналітики"
 msgid "Analytics steps"
 msgstr "Кроки аналітики"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Подання аналітики"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Будь-хто з посиланням бачить вибрані вами подання, лише для читання, без входу."
@@ -376,6 +395,11 @@ msgstr "Боти"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Боти, обмеження частоти, виключені адреси й шляхи, місячний ліміт або завантажений сервер."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Відмови"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Показник відмов"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Розбити за параметром"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Розбивка"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Конверсій на 100 відвідувачів."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Відвідувачі ваших сайтів і застосунків, без cookie."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Відвідувачі без cookie на ваших сайтах і в застосунках"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Докладні записи зберігаються з {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Докладні записи зберігаються з"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Подробиці"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "в якого видалено адресу"
 msgid "Health"
 msgstr "Стан"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Корисно"
@@ -1170,6 +1190,10 @@ msgstr "Як надсилати події"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Я зберіг(ла)"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Покращити сторінку →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Останній екран"
 msgid "Leave empty to keep the current one"
 msgstr "Залиште порожнім, щоб зберегти поточний"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Призвело до розмови"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Посилання"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Прив’яжіть скриньку, щоб їх рахувати"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Прив'язати скриньку"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Зв'язувати користувачів, що ввійшли, з їхнім контактом"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "наживо"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "База місцезнаходжень"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Місця"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Місяці"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Ще"
+msgid "More views"
+msgstr "Більше переглядів"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Нове {kind}: {value}, {count}, у порівнюваних днях 
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Нове {kind}: {value}. {metric}: {now}, у порівнюваних днях немає."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Нові та ті, що повернулися"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Нова воронка"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Нова ціль"
@@ -1477,10 +1509,6 @@ msgstr "Без порівняння"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Функції згоди не пропонуються."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "У цьому періоді немає відвідувачів, що дали згоду."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Нічого"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "У цьому періоді нічого не пораховано."
 
@@ -1767,6 +1796,10 @@ msgstr "Сторінка або екран"
 msgid "Page view of {path}"
 msgstr "Перегляд сторінки {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Перегляди сторінок"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Сторінки"
@@ -1782,6 +1815,10 @@ msgstr "Переглянуті сторінки й екрани."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Сторінки не враховуються"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Сторінки, ранжовані за запитаннями, які вони викликають. Сторінці з великою кількістю відвідувачів і розмов потрібна краща відповідь на ній самій."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Запити з Do Not Track чи Global Privacy Control і події без згоди для ресурсу, якому вона потрібна, приймаються, але тут не зберігаються й не рахуються."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Утримання"
 
@@ -2257,6 +2293,10 @@ msgstr "Джерела"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Почати заново"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Розпочали розмову"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Скільки разів сторінку оцінили як неко�
 msgid "To"
 msgstr "Кому"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Сьогодні"
@@ -2630,6 +2671,7 @@ msgstr "Перегляди зросли до {now} за дві години, з�
 msgid "Visit duration"
 msgstr "Тривалість візиту"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Відвідувачі"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Відвідувачі за останні 30 хвилин"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Відвідувачі зараз"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Відвідувачі з Do Not Track чи Global Privacy Control ні�
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Візити"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Візити й події, що вважаються успіхом"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Звідки приходять конверсії"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Де починається й закінчується день ресурсу."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Які сторінки відвідують люди і які призводять до запитань"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

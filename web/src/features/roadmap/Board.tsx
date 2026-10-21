@@ -7,16 +7,8 @@ import {
   useSensors,
   type DragEndEvent,
 } from "@dnd-kit/core"
-import { Trans, useLingui } from "@lingui/react/macro"
-import {
-  ArrowBigUpIcon,
-  ArrowRightLeftIcon,
-  CheckIcon,
-  GripVerticalIcon,
-  HourglassIcon,
-  MessageSquareHeartIcon,
-  MessageSquareIcon,
-} from "lucide-react"
+import { Plural, Trans, useLingui } from "@lingui/react/macro"
+import { ArrowRightLeftIcon, CheckIcon, HourglassIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 
@@ -29,12 +21,25 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Skeleton } from "@/components/ui/skeleton"
 import { useModerate } from "@/features/docs/discussions/queries"
 import { MoveDialog } from "@/features/roadmap/MoveDialog"
-import { ideaLink, useBoardIdeas, useIdeas } from "@/features/roadmap/queries"
+import { ideaLink, useScopeIdeas } from "@/features/roadmap/queries"
+import { FrameButton, ProductTag } from "@/features/status/PageFrame"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { Discussion, IdeaStage, RoadmapBoard } from "@/lib/api"
+import type { Discussion, Inbox, IdeaStage, RoadmapBoard } from "@/lib/api"
 import { cn } from "@/lib/utils"
+import { useInboxes } from "@/lib/workspace"
 
 type Move = { idea: Discussion; to: IdeaStage }
+
+function useScopeLists(scope?: string) {
+  const f = (stage: IdeaStage) => ({ stage, state: "published" as const })
+  return {
+    ideas: useScopeIdeas(scope, f("ideas")),
+    planned: useScopeIdeas(scope, f("planned")),
+    in_progress: useScopeIdeas(scope, f("in_progress")),
+    shipped: useScopeIdeas(scope, f("shipped")),
+    closed: useScopeIdeas(scope, f("closed")),
+  }
+}
 
 const STAGE_DOT: Record<IdeaStage, string> = {
   ideas: "bg-faint",
@@ -46,29 +51,31 @@ const STAGE_DOT: Record<IdeaStage, string> = {
 
 function Card({
   idea,
-  board,
+  inbox,
   current,
   cursor,
   onMove,
 }: {
   idea: Discussion
-  board: string
+  inbox?: Inbox
   current: boolean
   cursor: boolean
   onMove: (to: IdeaStage) => void
 }) {
   const { t, i18n } = useLingui()
   const text = useEnumText()
-  const { setNodeRef, listeners, attributes, isDragging } = useDraggable({ id: idea.id, data: { idea } })
+  const { setNodeRef, listeners, isDragging } = useDraggable({ id: idea.id, data: { idea } })
   const fmt = new Intl.NumberFormat(i18n.locale)
-  const [votes, linked, replies] = [idea.votes, idea.linked_count ?? 0, idea.reply_count].map((n) => fmt.format(n))
+  const votes = fmt.format(idea.votes)
+  const linked = idea.linked_count ?? 0
   const pending = idea.pending_posts ?? 0
   const title = idea.title
   return (
     <li
       ref={setNodeRef}
+      {...listeners}
       className={cn(
-        "group flex items-start gap-1 rounded-xl border bg-card py-2.5 ps-1 pe-1.5 transition-colors hover:border-faint",
+        "group relative flex cursor-grab items-start gap-3 rounded-[10px] border bg-card p-3 transition-colors hover:border-faint active:cursor-grabbing",
         current && "border-brand",
         cursor && "ring-2 ring-ring",
         isDragging && "opacity-40"
@@ -76,48 +83,31 @@ function Card({
       data-testid="idea-card"
       data-idea-id={idea.id}
     >
-      <button
-        type="button"
-        className="grid h-6 w-5 shrink-0 cursor-grab touch-none place-items-center rounded-md text-faint outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"
-        aria-label={t`Drag ${title} to another stage`}
-        {...attributes}
-        {...listeners}
-      >
-        <GripVerticalIcon className="size-4" />
-      </button>
       <span
-        className="flex w-10 shrink-0 flex-col items-center rounded-lg border bg-background py-1 leading-tight tabular-nums"
+        className="flex h-10 w-[42px] shrink-0 flex-col items-center justify-center rounded-lg border bg-background leading-none tabular-nums"
         title={t`${votes} votes`}
         data-testid="idea-card-votes"
       >
-        <ArrowBigUpIcon className="size-3.5 text-faint" aria-hidden />
+        <span className="text-[8px] text-muted-foreground" aria-hidden>
+          ▲
+        </span>
         <span className="sr-only">{t`${votes} votes`}</span>
-        <span className="text-body font-semibold" aria-hidden>
+        <span className="mt-0.5 text-[15px] font-semibold" aria-hidden>
           {votes}
         </span>
       </span>
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5 ps-1.5">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         <Link
-          to={ideaLink(board, idea.id)}
-          className="line-clamp-3 text-body font-medium break-words outline-none hover:underline focus-visible:underline"
+          to={ideaLink(idea.board_id ?? "", idea.id)}
+          className="line-clamp-3 pe-5 text-[14px] leading-[1.35] font-medium break-words outline-none hover:underline focus-visible:underline"
           data-testid="idea-card-link"
         >
           {idea.title}
         </Link>
-        <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-caption text-muted-foreground tabular-nums">
-          <span className="inline-flex items-center gap-1" title={t`${replies} replies`}>
-            <MessageSquareIcon className="size-3.5" />
-            <span className="sr-only">{t`${replies} replies`}</span>
-            <span aria-hidden>{replies}</span>
-          </span>
-          <span
-            className={cn("inline-flex items-center gap-1", (idea.linked_count ?? 0) === 0 && "opacity-45")}
-            title={t`${linked} linked feedback`}
-            data-testid="idea-card-linked"
-          >
-            <MessageSquareHeartIcon className="size-3.5" />
-            <span className="sr-only">{t`${linked} linked feedback`}</span>
-            <span aria-hidden>{linked}</span>
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-small text-faint tabular-nums">
+          {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
+          <span data-testid="idea-card-linked">
+            <Plural value={linked} one="# feedback" other="# feedback" />
           </span>
           {pending > 0 && (
             <span
@@ -133,7 +123,13 @@ function Card({
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-xs" className="shrink-0 text-faint" />}
+          render={
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="absolute end-1.5 top-1.5 text-faint opacity-0 group-hover:opacity-100 focus-visible:opacity-100 aria-expanded:opacity-100"
+            />
+          }
           aria-label={t`Move ${title} to a stage`}
           title={t`Move to a stage`}
           data-testid="idea-card-stage"
@@ -153,33 +149,34 @@ function Card({
   )
 }
 
-type Ideas = ReturnType<typeof useIdeas>
+type Ideas = ReturnType<typeof useScopeIdeas>
 
 function StageColumn({
-  board,
   stage,
+  count,
   list,
   items,
+  inboxOf,
   ideaId,
   cursorId,
   onMove,
 }: {
-  board: RoadmapBoard
   stage: IdeaStage
+  count: number
   list: Ideas
   items: Discussion[]
+  inboxOf: (idea: Discussion) => Inbox | undefined
   ideaId?: string
   cursorId: string | null
   onMove: (m: Move) => void
 }) {
   const text = useEnumText()
   const { setNodeRef, isOver } = useDroppable({ id: stage })
-  const count = board.counts[stage]
   return (
     <section
       ref={setNodeRef}
       className={cn(
-        "flex min-w-56 flex-1 basis-0 snap-start flex-col gap-2 rounded-2xl border bg-surface p-2 transition-colors phone:min-w-[82vw]",
+        "flex min-w-56 flex-1 basis-0 snap-start flex-col gap-2.5 rounded-xl border bg-surface p-3 transition-colors phone:min-w-[82vw]",
         stage === "closed" && "opacity-80",
         isOver && "bg-brand-wash"
       )}
@@ -187,25 +184,25 @@ function StageColumn({
       data-testid="stage-column"
       data-stage={stage}
     >
-      <h2 className="flex items-center gap-2 px-1.5 pt-1 pb-0.5 text-body font-semibold">
-        <span aria-hidden className={cn("size-2 shrink-0 rounded-full", STAGE_DOT[stage])} />
+      <h2 className="flex items-center gap-2 px-0.5 pt-0.5 text-body font-semibold">
+        <span aria-hidden className={cn("size-[7px] shrink-0 rounded-full", STAGE_DOT[stage])} />
         <span className="min-w-0 flex-1 truncate">{text.stage[stage]}</span>
-        <span className="text-caption text-faint tabular-nums" data-testid="stage-count">
+        <span className="text-caption font-normal text-faint tabular-nums" data-testid="stage-count">
           {count}
         </span>
       </h2>
       {list.isPending ? (
         <div className="flex flex-col gap-2">
-          <Skeleton className="h-16 rounded-xl" />
-          <Skeleton className="h-16 rounded-xl" />
+          <Skeleton className="h-16 rounded-[10px]" />
+          <Skeleton className="h-16 rounded-[10px]" />
         </div>
       ) : (
-        <ul className="flex min-h-12 flex-col gap-2">
+        <ul className="flex min-h-12 flex-col gap-2.5">
           {items.map((idea) => (
             <Card
               key={idea.id}
               idea={idea}
-              board={board.id}
+              inbox={inboxOf(idea)}
               current={idea.id === ideaId}
               cursor={idea.id === cursorId}
               onMove={(to) => onMove({ idea, to })}
@@ -223,89 +220,100 @@ function StageColumn({
   )
 }
 
-function Pending({ board }: { board: RoadmapBoard }) {
+function Pending({ scope, inScope }: { scope?: string; inScope: (idea: Discussion) => boolean }) {
   const { t } = useLingui()
   const errorText = useErrorText()
-  const list = useIdeas({ board_id: board.id, state: "pending" })
+  const list = useScopeIdeas(scope, { state: "pending" })
   const moderate = useModerate()
-  const items = list.data?.pages.flatMap((p) => p.items) ?? []
+  const [open, setOpen] = useState(false)
+  const items = (list.data?.pages.flatMap((p) => p.items) ?? []).filter(inScope)
   if (items.length === 0) return null
   return (
     <section
-      className="flex flex-col gap-3 rounded-2xl border p-3 ps-4"
+      className="flex flex-col gap-3 rounded-xl border bg-card px-4 py-3"
       aria-label={t`Waiting for approval`}
       data-testid="pending-strip"
     >
-      <h2 className="flex items-center gap-2.5 text-body">
-        <span className="grid h-5.5 min-w-5.5 place-items-center rounded-full bg-brand px-1.5 text-caption font-semibold text-white tabular-nums">
+      <h2 className="flex items-center gap-3 text-body">
+        <span className="grid h-5.5 min-w-8 place-items-center rounded-full bg-brand px-1.5 text-caption font-semibold text-white tabular-nums">
           {items.length}
         </span>
-        <span className="font-medium">
+        <span className="flex-1">
           <Trans>Readers suggested new ideas. Review them before they show on the public board.</Trans>
         </span>
+        <FrameButton
+          className="h-[30px] px-2.5"
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+          data-testid="pending-review"
+        >
+          {open ? <Trans>Done</Trans> : <Trans>Review</Trans>}
+        </FrameButton>
       </h2>
-      <ul className="flex gap-2 overflow-x-auto pb-1">
-        {items.map((idea) => (
-          <li
-            key={idea.id}
-            className="flex w-64 shrink-0 flex-col gap-1.5 rounded-xl border bg-card p-2.5"
-            data-testid="pending-idea"
-          >
-            <Link
-              to={ideaLink(board.id, idea.id)}
-              className="line-clamp-2 text-body font-medium break-words hover:underline"
+      {open && (
+        <ul className="flex gap-2 overflow-x-auto pb-1">
+          {items.map((idea) => (
+            <li
+              key={idea.id}
+              className="flex w-64 shrink-0 flex-col gap-1.5 rounded-[10px] border bg-card p-2.5"
+              data-testid="pending-idea"
             >
-              {idea.title}
-            </Link>
-            <span className="truncate text-caption text-faint">
-              <AuthorName author={idea.author} className="font-normal" />
-            </span>
-            <span className="-mx-1 flex gap-0.5">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-success hover:text-success"
-                disabled={moderate.isPending}
-                onClick={() =>
-                  moderate.mutate(
-                    { postId: idea.opening_post_id, to: "published" },
-                    { onSuccess: () => toast(t`Approved`), onError: (e) => toast(errorText(e)) }
-                  )
-                }
-                data-testid="pending-approve"
+              <Link
+                to={ideaLink(idea.board_id ?? "", idea.id)}
+                className="line-clamp-2 text-body font-medium break-words hover:underline"
               >
-                <CheckIcon />
-                <Trans>Approve</Trans>
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={moderate.isPending}
-                onClick={() =>
-                  moderate.mutate(
-                    { postId: idea.opening_post_id, to: "hidden" },
-                    { onSuccess: () => toast(t`Hidden`), onError: (e) => toast(errorText(e)) }
-                  )
-                }
-              >
-                <Trans>Hide</Trans>
-              </Button>
-            </span>
-          </li>
-        ))}
-      </ul>
+                {idea.title}
+              </Link>
+              <span className="truncate text-caption text-faint">
+                <AuthorName author={idea.author} className="font-normal" />
+              </span>
+              <span className="-mx-1 flex gap-0.5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-success hover:text-success"
+                  disabled={moderate.isPending}
+                  onClick={() =>
+                    moderate.mutate(
+                      { postId: idea.opening_post_id, to: "published" },
+                      { onSuccess: () => toast(t`Approved`), onError: (e) => toast(errorText(e)) }
+                    )
+                  }
+                  data-testid="pending-approve"
+                >
+                  <CheckIcon />
+                  <Trans>Approve</Trans>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={moderate.isPending}
+                  onClick={() =>
+                    moderate.mutate(
+                      { postId: idea.opening_post_id, to: "hidden" },
+                      { onSuccess: () => toast(t`Hidden`), onError: (e) => toast(errorText(e)) }
+                    )
+                  }
+                >
+                  <Trans>Hide</Trans>
+                </Button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   )
 }
 
 export function Board({
-  board,
+  boards,
   ideaId,
   moving,
   onMoving,
   onMoved,
 }: {
-  board: RoadmapBoard
+  boards: RoadmapBoard[]
   ideaId?: string
   moving: Move | null
   onMoving: (m: Move | null) => void
@@ -313,15 +321,23 @@ export function Board({
 }) {
   const navigate = useNavigate()
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-  const lists = useBoardIdeas(board.id)
-  const columns = IDEA_STAGES.map((stage) => lists[stage].data?.pages.flatMap((p) => p.items) ?? [])
+  const scope = boards.length === 1 ? boards[0].id : undefined
+  const ids = new Set(boards.map((b) => b.id))
+  const inScope = (idea: Discussion) => !!idea.board_id && ids.has(idea.board_id)
+  const inboxes = new Map((useInboxes().data ?? []).map((i) => [i.id, i]))
+  const inboxOfBoard = new Map(boards.map((b) => [b.id, inboxes.get(b.inbox_id)]))
+  const inboxOf = (idea: Discussion) => (idea.board_id ? inboxOfBoard.get(idea.board_id) : undefined)
+  const lists = useScopeLists(scope)
+  const count = (stage: IdeaStage) => boards.reduce((n, b) => n + b.counts[stage], 0)
+  const stages = IDEA_STAGES.filter((s) => s !== "closed" || count(s) > 0)
+  const columns = stages.map((stage) => (lists[stage].data?.pages.flatMap((p) => p.items) ?? []).filter(inScope))
   const [pos, setPos] = useState<{ col: number; row: number } | null>(null)
   const size = (col: number) => columns[col]?.length ?? 0
   const cursorIdea = pos ? columns[pos.col]?.[pos.row] : undefined
   const cursorId = cursorIdea?.id ?? null
   const step = (dc: number, dr: number) => {
     if (!pos) {
-      const first = IDEA_STAGES.findIndex((_, i) => size(i) > 0)
+      const first = stages.findIndex((_, i) => size(i) > 0)
       if (first >= 0) setPos({ col: first, row: 0 })
       return
     }
@@ -330,8 +346,8 @@ export function Board({
       if (len > 0) setPos({ col: pos.col, row: Math.min(Math.max(pos.row + dr, 0), len - 1) })
       return
     }
-    for (let i = 1; i <= IDEA_STAGES.length; i++) {
-      const col = (pos.col + dc * i + IDEA_STAGES.length * i) % IDEA_STAGES.length
+    for (let i = 1; i <= stages.length; i++) {
+      const col = (pos.col + dc * i + stages.length * i) % stages.length
       if (size(col) > 0) return setPos({ col, row: Math.min(pos.row, size(col) - 1) })
     }
   }
@@ -362,7 +378,7 @@ export function Board({
       [ROADMAP_KEYS.previousColumn]: () => step(-1, 0),
       ...(cursorIdea
         ? {
-            [ROADMAP_KEYS.open]: () => navigate(ideaLink(board.id, cursorIdea.id)),
+            [ROADMAP_KEYS.open]: () => navigate(ideaLink(cursorIdea.board_id ?? "", cursorIdea.id)),
             [ROADMAP_KEYS.move]: () => onMoving({ idea: cursorIdea, to: cursorIdea.stage ?? "ideas" }),
             [ROADMAP_KEYS.moveBack]: () => shift(-1),
             [ROADMAP_KEYS.moveForward]: () => shift(1),
@@ -374,18 +390,16 @@ export function Board({
 
   return (
     <>
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 overflow-y-auto px-6 pb-6 phone:px-4">
-        <Pending board={board} />
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto p-6 phone:px-4 phone:pt-4">
+        <Pending scope={scope} inScope={inScope} />
         <DndContext sensors={sensors} onDragEnd={onDragEnd}>
-          <div
-            className="flex min-h-0 flex-1 snap-x items-start gap-3 overflow-x-auto pb-3"
-            data-testid="board-columns"
-          >
-            {IDEA_STAGES.map((stage, i) => (
+          <div className="flex min-h-0 flex-1 snap-x items-stretch gap-4 overflow-x-auto" data-testid="board-columns">
+            {stages.map((stage, i) => (
               <StageColumn
                 key={stage}
-                board={board}
                 stage={stage}
+                count={count(stage)}
+                inboxOf={inboxOf}
                 list={lists[stage]}
                 items={columns[i] ?? []}
                 ideaId={ideaId}

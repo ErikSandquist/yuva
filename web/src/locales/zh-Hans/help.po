@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-Hans\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} 篇草稿"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} 篇文章中已发布 {published} 篇"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} 篇已发布"
+msgid "{searches} searches"
+msgstr "{searches} 次搜索"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "地址结尾"
 msgid "Agents may publish"
 msgstr "客服可以发布"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "所有集合"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "API 密钥"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "另一个帮助中心现在或曾经使用此地址。"
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "常见问题只需用文字回答一次。每个产品都有自己的帮助中心，包含文章、合集，以及人们搜索内容的报告。"
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "把常见问题只回答一次，写成文字。选择某个收件箱的帮助中心，撰写文章、按集合分组，并查看客户在搜索什么。"
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "任意状态"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "此集合中的文章"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "用户联系你之前会阅读的文章"
 
@@ -161,6 +162,10 @@ msgstr "项目符号列表"
 msgid "Cancel"
 msgstr "取消"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "已更改"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "图表"
@@ -191,6 +196,7 @@ msgstr "代码块"
 msgid "Collection"
 msgstr "集合"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "集合"
@@ -213,12 +219,18 @@ msgstr "创建集合"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "创建帮助中心"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "创建帮助中心（{newKey}）"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "为 {0} 创建一个"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "草稿"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "草稿已提交。所有者或管理员可以发布它。"
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "草稿"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "此翻译的早期版本。恢复其中一个会替换草稿；已发布的文本会保留到你再次发布。"
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "格式"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "无结果 · 7 天"
+msgid "Found nothing"
+msgstr "没有找到任何内容"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "将文章分组，方便访客浏览。一个集合可以包含一层子
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "标题"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "帮助"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "主语言"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "更多"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "名称"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "新文章"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "新文章（{newKey}）"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "新集合"
@@ -499,15 +514,21 @@ msgstr "无集合"
 msgid "No collections yet. Articles can stay without one."
 msgstr "还没有集合。文章可以不属于任何集合。"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "没有草稿。所有已写的内容都已发布。"
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "还没有早期版本。"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "还没有帮助中心。由所有者和管理员创建。"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "没有可显示帮助中心的收件箱。"
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "未命名"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "未撰写"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "未撰写"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "编号列表"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "共 {answers} 个回答"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "预览"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "预览（{alt} P）"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "预览（{previewKey}）"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "已保存"
 msgid "Saving…"
 msgstr "正在保存…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "搜索标题"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "搜索标题（{findKey}）"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "搜索"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "搜索 · 7 天"
+msgid "searches this week"
+msgstr "本周搜索"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "从标题开始。接下来再写正文，在发布之前它一直是草稿。"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "状态"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "输入要搜索的词。"
 msgid "Unpublish"
 msgstr "取消发布"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "取消发布（{publishKey}）"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "取消发布此翻译？"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "查看"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "查看帮助中心"
+msgid "View site"
+msgstr "查看站点"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "查看站点 ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

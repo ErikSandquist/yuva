@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ja\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "下書き {drafts} 件"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}件中{published}件のエントリを公開済み"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "公開済み {published} 件"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "予約済み {scheduled} 件"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "アドレスの末尾"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "エージェントによる公開を許可"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "すべて"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "下書きを提出しました。オーナーまたは管理者が公開できます。"
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "ドラフト"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "エントリ"
 
@@ -268,6 +264,14 @@ msgstr "新規"
 msgid "New entry"
 msgstr "新しいエントリ"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "新規投稿"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "新規投稿 ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "更新履歴はまだありません。オーナーと管理者が作成します。"
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "なし"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "未公開"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "未作成"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "何もありません。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "予約公開に失敗しました。"
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "製品内、ウェブ、メールで表示されるリリースノート。"
+msgid "Release notes shown in your products and on the web"
+msgstr "製品とウェブに表示されるリリースノート"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "表示"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "チャットウィジェットと {host} に表示されます。"
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "チャットバブル、アプリ、{host} に表示されます。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "{inboxName}のお客様に、新機能、改善、修正を伝えましょう。公開するまで非公開のままです。"
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "新機能、改善、修正を、公開ページ、チャットウィジェット、メールでお客様に伝えましょう。エントリを書くには、受信トレイの更新履歴を選んでください。"
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "新機能、改善点、修正点を、公開ページ、チャットウィジェット、メールでお客様にお知らせします。"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

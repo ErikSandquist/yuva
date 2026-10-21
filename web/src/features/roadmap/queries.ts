@@ -91,6 +91,30 @@ export function useIdeas(f: IdeaFilters, enabled = true) {
   })
 }
 
+export function useScopeIdeas(boardId: string | undefined, f: { stage?: IdeaStage; state: "published" | "pending" }) {
+  const { workspaceId: ws } = useSession()
+  return useInfiniteQuery({
+    queryKey: [...keys.roadmap(ws), "scope", boardId ?? "", f],
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/discussions", {
+          params: { query: { kind: "idea", sort: "votes", board_id: boardId, ...f, cursor: pageParam, limit: 25 } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor,
+  })
+}
+
+export function useCreateIdea() {
+  const refresh = useRefresh()
+  return useMutation({
+    mutationFn: (body: { board_id: string; title: string; body: string }) =>
+      unwrap(api.POST("/v1/discussions", { body: { kind: "idea", ...body } })),
+    onSuccess: refresh,
+  })
+}
+
 export function useBoardIdeas(boardId: string) {
   const f = (stage: IdeaStage) => ({ board_id: boardId, stage, state: "published" as const })
   return {

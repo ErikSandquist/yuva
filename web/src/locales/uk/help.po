@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "Чернеток: {drafts}"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "Опубліковано статей: {published} з {total}"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "Опубліковано: {published}"
+msgid "{searches} searches"
+msgstr "Пошуків: {searches}"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "Закінчення адреси"
 msgid "Agents may publish"
 msgstr "Агенти можуть публікувати"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "Усі колекції"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "Ключ API"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Цю адресу вже використовує або використовував інший центр довідки."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "Дайте відповідь на поширені запитання один раз, письмово. Кожен продукт має власний центр допомоги зі статтями, добірками та звітом про те, що шукають люди."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "Дайте відповідь на поширені запитання один раз, письмово. Виберіть центр довідки скриньки, щоб писати статті, збирати їх у колекції та бачити, що шукають клієнти."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "Будь-який стан"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "Статті в цій колекції"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "Статті, які люди читають, перш ніж написати вам"
 
@@ -161,6 +162,10 @@ msgstr "Маркований список"
 msgid "Cancel"
 msgstr "Скасувати"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "Змінено"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "Графік"
@@ -191,6 +196,7 @@ msgstr "Блок коду"
 msgid "Collection"
 msgstr "Колекція"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "Колекції"
@@ -213,12 +219,18 @@ msgstr "Створити колекцію"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "Створити центр довідки"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Створити центр довідки ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "Створити для {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "Чернетка"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Чернетку надіслано. Опублікувати її може власник або адміністратор."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "Чернетки"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "Попередні версії цього перекладу. Відновлення однієї замінює чернетку; опублікований текст лишається, доки ви не опублікуєте."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "Форматування"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "Нічого не знайдено · 7 днів"
+msgid "Found nothing"
+msgstr "Нічого не знайдено"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "Згрупуйте статті, щоб відвідувачі могл�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "Заголовок"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "Довідка"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "Основна мова"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "Ще"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "Назва"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "Нова стаття"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "Нова стаття ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "Нова колекція"
@@ -499,15 +514,21 @@ msgstr "Без колекції"
 msgid "No collections yet. Articles can stay without one."
 msgstr "Колекцій ще немає. Статті можуть лишатися без колекції."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "Чернеток немає. Усе написане опубліковано."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "Попередніх версій ще немає."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "Центру довідки ще немає. Його створюють власники й адміністратори."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "Немає скриньки, для якої можна показати центр довідки."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "без назви"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "не написано"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Не написано"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "Нумерований список"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "із {answers} відповідей"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "Попередній перегляд"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "Попередній перегляд ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "Попередній перегляд ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "Збережено"
 msgid "Saving…"
 msgstr "Збереження…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "Шукати в заголовках"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "Шукати в заголовках ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "Пошуки"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "Пошуки · 7 днів"
+msgid "searches this week"
+msgstr "пошуків цього тижня"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,8 +787,8 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "Почніть із заголовка. Текст ви напишете потім, і він лишиться чернеткою, доки його не опублікують."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
-msgstr "Стан"
+msgid "Status"
+msgstr "Статус"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Submit draft"
@@ -867,10 +884,6 @@ msgstr "Введіть слово для пошуку."
 msgid "Unpublish"
 msgstr "Зняти з публікації"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "Зняти з публікації ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Зняти цей переклад з публікації?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "Відкрити"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "Відкрити центр довідки"
+msgid "View site"
+msgstr "Відкрити сайт"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "Відкрити сайт ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

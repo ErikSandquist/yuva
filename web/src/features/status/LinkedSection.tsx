@@ -34,7 +34,7 @@ export function LinkedConversations({
   return (
     <Linked
       list={list}
-      title={<Trans>Conversations</Trans>}
+      title={<Trans>Linked conversations</Trans>}
       empty={
         <Trans>
           No conversation is linked yet. Open one and use Link to an incident, or select several in the list.

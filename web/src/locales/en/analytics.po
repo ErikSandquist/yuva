@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# row} other {# rows}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {visitor today} other {visitors today}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} conversations"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} of visitors"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} visitors"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# conversation} other {# conversations}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} consented, across visits and days"
@@ -121,6 +140,10 @@ msgstr "{overall} of the visitors who reached the first step also reached the la
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} pts"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "A new password signs out everyone who unlocked the link."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "A page view, an event or a scroll depth"
+msgid "a page visit or an event from your site or app"
+msgstr "a page visit or an event from your site or app"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Analytics properties"
 msgid "Analytics steps"
 msgstr "Analytics steps"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Analytics views"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Anyone with the link sees the views you pick, read-only, without signing in."
@@ -376,6 +395,11 @@ msgstr "Bots"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Bounce"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Bounce rate"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Break down by prop"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Breakdown"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Conversions per 100 visitors."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Cookieless visitors across your sites and apps."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Cookieless visitors across your sites and apps"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Detailed records are kept since {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Detailed records kept since"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Details"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "had an address removed"
 msgid "Health"
 msgstr "Health"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Helpful"
@@ -1170,6 +1190,10 @@ msgstr "How to send events"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "I saved it"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Improve page →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Last screen"
 msgid "Leave empty to keep the current one"
 msgstr "Leave empty to keep the current one"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Led to a conversation"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Link"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Link an inbox to count them"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Link inbox"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Link signed-in users to their contact"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "live"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Location database"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Locations"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Months"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "More"
+msgid "More views"
+msgstr "More views"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "New {kind}: {value} with {count}, none in the compared days."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "New {kind}: {value}. {metric}: {now}, none in the compared days."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "New and returning"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "New funnel"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "New goal"
@@ -1477,10 +1509,6 @@ msgstr "No comparison"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "No consent features are offered."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "No consented visitors in this range."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Nothing"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "Nothing counted in this range."
 
@@ -1767,6 +1796,10 @@ msgstr "Page or screen"
 msgid "Page view of {path}"
 msgstr "Page view of {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Page views"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Pages"
@@ -1782,6 +1815,10 @@ msgstr "Pages and screens viewed."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Pages not counted"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retention"
 
@@ -2257,6 +2293,10 @@ msgstr "Sources"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Start over"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Started a conversation"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Times the page was rated not helpful."
 msgid "To"
 msgstr "To"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Today"
@@ -2630,6 +2671,7 @@ msgstr "Views rose to {now} in two hours, against {usual} usually."
 msgid "Visit duration"
 msgstr "Visit duration"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Visitors"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Visitors in the last 30 minutes"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Visitors now"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Visitors with Do Not Track or Global Privacy Control send nothing, so th
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Visits"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Visits and events that count as success"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Where conversions come from"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Where the property’s day starts and ends."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Which pages people visit, and which lead to questions"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

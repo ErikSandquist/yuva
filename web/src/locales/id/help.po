@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: id\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} draf"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{published} dari {total} artikel dipublikasikan"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} diterbitkan"
+msgid "{searches} searches"
+msgstr "{searches} pencarian"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "Akhir alamat"
 msgid "Agents may publish"
 msgstr "Agen boleh mempublikasikan"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "Semua koleksi"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "Kunci API"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Pusat bantuan lain menggunakan alamat ini, sekarang atau sebelumnya."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "Jawab pertanyaan umum sekali saja, secara tertulis. Setiap produk mendapat pusat bantuannya sendiri dengan artikel, koleksi, dan laporan tentang apa yang dicari orang."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "Jawab pertanyaan umum sekali saja, secara tertulis. Pilih pusat bantuan sebuah kotak masuk untuk menulis artikel, mengelompokkannya dalam koleksi, dan melihat apa yang dicari pelanggan."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "Status apa pun"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "Artikel dalam koleksi ini"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "Artikel yang dibaca orang sebelum menghubungi Anda"
 
@@ -161,6 +162,10 @@ msgstr "Daftar berbutir"
 msgid "Cancel"
 msgstr "Batal"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "Diubah"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "Grafik"
@@ -191,6 +196,7 @@ msgstr "Blok kode"
 msgid "Collection"
 msgstr "Koleksi"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "Koleksi"
@@ -213,12 +219,18 @@ msgstr "Buat koleksi"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "Buat pusat bantuan"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Buat pusat bantuan ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "Buat satu untuk {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "Draf"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Draf dikirim. Pemilik atau admin dapat mempublikasikannya."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "Draf"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "Versi sebelumnya dari terjemahan ini. Memulihkan satu versi menggantikan draf; teks yang dipublikasikan tetap ada sampai Anda mempublikasikan."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "Pemformatan"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "Tidak ditemukan · 7 hari"
+msgid "Found nothing"
+msgstr "Tidak menemukan apa pun"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "Kelompokkan artikel agar pengunjung dapat menelusuri. Sebuah koleksi dap
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "Judul"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "Bantuan"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "Bahasa utama"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "Lainnya"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "Nama"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "Artikel baru"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "Artikel baru ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "Koleksi baru"
@@ -499,15 +514,21 @@ msgstr "Tanpa koleksi"
 msgid "No collections yet. Articles can stay without one."
 msgstr "Belum ada koleksi. Artikel boleh tanpa koleksi."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "Tidak ada draf. Semua yang ditulis sudah dipublikasikan."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "Belum ada versi sebelumnya."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "Belum ada pusat bantuan. Pemilik dan admin membuatnya."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "Tidak ada kotak masuk untuk menampilkan pusat bantuan."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "tanpa nama"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "belum ditulis"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Belum ditulis"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "Daftar bernomor"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "dari {answers} jawaban"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "Pratinjau"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "Pratinjau ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "Pratinjau ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "Disimpan"
 msgid "Saving…"
 msgstr "Menyimpan…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "Cari di judul"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "Cari di judul ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "Pencarian"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "Pencarian · 7 hari"
+msgid "searches this week"
+msgstr "pencarian minggu ini"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "Mulai dengan judul. Teksnya Anda tulis berikutnya, dan tetap berupa draf sampai dipublikasikan."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "Status"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "Ketik kata untuk dicari."
 msgid "Unpublish"
 msgstr "Batalkan publikasi"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "Batalkan publikasi ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Batalkan publikasi terjemahan ini?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "Lihat"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "Lihat pusat bantuan"
+msgid "View site"
+msgstr "Lihat situs"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "Lihat situs ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

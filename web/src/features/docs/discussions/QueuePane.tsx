@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
-import { Pane, PaneBack } from "@/components/common/Column"
+import { framePad } from "@/features/status/PageFrame"
 import { AuthorAvatar } from "@/components/common/DiscussionAuthor"
 import { DISCUSSION_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
+import { DocsFrame, DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
 import { pageLabel } from "@/features/docs/PageContext"
 import { AuthorName, ListSkeleton, LoadMore, PostBody, TeamTag, useModeration } from "@/features/docs/discussions/parts"
 import { threadLink, useQueue } from "@/features/docs/discussions/queries"
@@ -119,7 +119,6 @@ function QueueItem({
 }
 
 export function QueuePane() {
-  const { t } = useLingui()
   const navigate = useNavigate()
   const [inboxId] = useInboxFilter()
   const site = usePickedSite(inboxId)
@@ -148,47 +147,43 @@ export function QueuePane() {
     [DISCUSSION_KEYS.spam]: () => act("spam"),
   })
   return (
-    <Pane testId="discussion-queue">
-      <header className="flex flex-col">
-        <PaneBack to="/docs/discussions" label={t`Discussions`} always />
-        <h1 className="min-w-0 text-page break-words">
-          <Trans>Waiting for approval</Trans>
-        </h1>
-        <p className="mt-1.5 text-reading text-muted-foreground">
+    <DocsFrame testId="discussion-queue">
+      <div className={cn(framePad, "max-w-[900px]")}>
+        <p className="text-body text-muted-foreground">
           <Trans>
             Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest
             first.
           </Trans>
         </p>
-      </header>
-      <DocsSitePicker className="hidden phone:flex" />
-      <Card flush data-testid="queue">
-        {queue.isPending ? (
-          <ListSkeleton />
-        ) : queue.error ? (
-          <ErrorLine error={queue.error} className="p-4" />
-        ) : items.length === 0 ? (
-          <EmptyRow>
-            <Trans>Nothing is waiting for approval.</Trans>
-          </EmptyRow>
-        ) : (
-          <ul ref={list} className="divide-y">
-            {items.map((it, i) => (
-              <QueueItem
-                key={it.post.id}
-                item={it}
-                cursor={i === cursor}
-                onAct={(to) => {
-                  setCursor(i)
-                  moderation.act(it.post, to)
-                }}
-              />
-            ))}
-          </ul>
-        )}
-        <LoadMore list={queue} />
-      </Card>
+        <DocsSitePicker className="hidden phone:flex" />
+        <Card flush data-testid="queue">
+          {queue.isPending ? (
+            <ListSkeleton />
+          ) : queue.error ? (
+            <ErrorLine error={queue.error} className="p-4" />
+          ) : items.length === 0 ? (
+            <EmptyRow>
+              <Trans>Nothing is waiting for approval.</Trans>
+            </EmptyRow>
+          ) : (
+            <ul ref={list} className="divide-y">
+              {items.map((it, i) => (
+                <QueueItem
+                  key={it.post.id}
+                  item={it}
+                  cursor={i === cursor}
+                  onAct={(to) => {
+                    setCursor(i)
+                    moderation.act(it.post, to)
+                  }}
+                />
+              ))}
+            </ul>
+          )}
+          <LoadMore list={queue} />
+        </Card>
+      </div>
       {moderation.dialog}
-    </Pane>
+    </DocsFrame>
   )
 }

@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# வரிசை} other {# வரிசைகள்}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {இன்று பார்வையாளர்} other {இன்று பார்வையாளர்கள்}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} உரையாடல்கள்"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "பார்வையாளர்களில் {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} பார்வையாளர்கள்"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# உரையாடல்} other {# உரையாடல்கள்}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} பேர் ஒப்புக்கொண்டனர், வருகைகள் மற்றும் நாட்கள் முழுவதும்"
@@ -121,6 +140,10 @@ msgstr "முதல் படியை அடைந்த பார்வைய
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: 1,000 பார்வைகளுக்கு # உரையாடல், அனைத்துப் பக்கங்களிலும் {site}-க்கு எதிராக.} other {{dim} {value}: 1,000 பார்வைகளுக்கு # உரையாடல்கள், அனைத்துப் பக்கங்களிலும் {site}-க்கு எதிராக.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} புள்ளிகள்"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "இந்த மாதம் {limit}-இல் {used} பகுப்பாய்வு நிகழ்வுகள் பயன்படுத்தப்பட்டன. வரம்பைத் தாண்டிய நிகழ்வுகள் மாதம் முடியும் வரை கைவிடப்படும்."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "புதிய கடவுச்சொல் இணைப்பைத் திறந்த அனைவரையும் வெளியேற்றும்."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "ஒரு பக்கப் பார்வை, ஒரு நிகழ்வு அல்லது உருட்டல் ஆழம்"
+msgid "a page visit or an event from your site or app"
+msgstr "உங்கள் தளம் அல்லது செயலியிலிருந்து ஒரு பக்க வருகை அல்லது நிகழ்வு"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "பகுப்பாய்வு சொத்துகள்"
 msgid "Analytics steps"
 msgstr "பகுப்பாய்வுப் படிகள்"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "பகுப்பாய்வுப் பார்வைகள்"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "இணைப்பு உள்ள எவரும் நீங்கள் தேர்ந்த பார்வைகளை, படிக்க-மட்டும், உள்நுழையாமல் காண்பர்."
@@ -376,6 +395,11 @@ msgstr "பாட்கள்"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "பாட்கள், விகித வரம்புகள், விலக்கிய முகவரிகளும் பாதைகளும், மாதாந்திர வரம்பு அல்லது பரபரப்பான சேவையகம்."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "பவுன்ஸ்"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "திரும்பும் விகிதம்"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "சார்பு வாரியாகப் பிரி"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "பிரிவு"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "100 பார்வையாளர்களுக்கு மாற்றங்கள்."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "உங்கள் தளங்கள் மற்றும் ஆப்களின் பார்வையாளர்கள், குக்கீகள் இல்லாமல்."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "உங்கள் தளங்களிலும் செயலிகளிலும் குக்கி இல்லாத பார்வையாளர்கள்"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "விரிவான பதிவுகள் {rawDay} முதல் 
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "விரிவான பதிவுகள் இதிலிருந்து வைக்கப்படுகின்றன"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "விவரங்கள்"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "ஒரு முகவரி அகற்றப்பட்டது"
 msgid "Health"
 msgstr "நலம்"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "உதவியது"
@@ -1170,6 +1190,10 @@ msgstr "நிகழ்வுகளை எப்படி அனுப்பு�
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "சேமித்துவிட்டேன்"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "பக்கத்தை மேம்படுத்து →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "கடைசித் திரை"
 msgid "Leave empty to keep the current one"
 msgstr "தற்போதையதை வைத்திருக்கக் காலியாக விடுங்கள்"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "உரையாடலுக்கு வழிவகுத்தது"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "இணைப்பு"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "எண்ண ஒரு இன்பாக்ஸை இணைக்கவும்"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "இன்பாக்ஸை இணை"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "உள்நுழைந்த பயனர்களை அவர்களின் தொடர்புடன் இணை"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "நேரலை"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "இடத் தரவுத்தளம்"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "இடங்கள்"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "மாதங்கள்"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "மேலும்"
+msgid "More views"
+msgstr "மேலும் காட்சிகள்"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "புதிய {kind}: {value}, {count} உடன், ஒப்பி�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "புதிய {kind}: {value}. {metric}: {now}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "புதியவர்களும் திரும்பி வருபவர்களும்"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "புதிய புனல்"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "புதிய இலக்கு"
@@ -1477,10 +1509,6 @@ msgstr "ஒப்பீடு இல்லை"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "ஒப்புதல் அம்சங்கள் எதுவும் வழங்கப்படவில்லை."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "இந்த வரம்பில் ஒப்புக்கொண்ட பார்வையாளர்கள் இல்லை."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "எதுவுமில்லை"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "இந்த வரம்பில் எதுவும் எண்ணப்படவில்லை."
 
@@ -1767,6 +1796,10 @@ msgstr "பக்கம் அல்லது திரை"
 msgid "Page view of {path}"
 msgstr "{path}-இன் பக்கப் பார்வை"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "பக்கப் பார்வைகள்"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "பக்கங்கள்"
@@ -1782,6 +1815,10 @@ msgstr "பார்த்த பக்கங்களும் திரைக�
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "எண்ணப்படாத பக்கங்கள்"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "பக்கங்கள் அவை எழுப்பும் கேள்விகளின் அடிப்படையில் வரிசைப்படுத்தப்பட்டுள்ளன. அதிக பார்வையாளர்களும் அதிக உரையாடல்களும் உள்ள பக்கத்துக்கு, அந்தப் பக்கத்திலேயே சிறந்த பதில் தேவை."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track அல்லது Global Privacy Control உள்ள கோரிக்கைகளும், ஒப்புதல் தேவைப்படும் சொத்தில் ஒப்புதல் இல்லாத நிகழ்வுகளும் ஏற்கப்படும், ஆனால் இங்கே சேமிக்கப்படவோ எண்ணப்படவோ மாட்டாது."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "தக்கவைப்பு"
 
@@ -2257,6 +2293,10 @@ msgstr "மூலங்கள்"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "மீண்டும் தொடங்கு"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "உரையாடலைத் தொடங்கியவர்கள்"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "பக்கம் உதவவில்லை என மதிப்ப
 msgid "To"
 msgstr "To"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "இன்று"
@@ -2630,6 +2671,7 @@ msgstr "பார்வைகள் இரண்டு மணி நேரத்
 msgid "Visit duration"
 msgstr "வருகை கால அளவு"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "பார்வையாளர்கள்"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "கடந்த 30 நிமிடங்களில் பார்வையாளர்கள்"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "இப்போதைய பார்வையாளர்கள்"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Do Not Track அல்லது Global Privacy Control உள்ள ப�
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "வருகைகள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "வெற்றியாகக் கணக்கிடப்படும் வருகைகளும் நிகழ்வுகளும்"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "மாற்றங்கள் எங்கிருந்து வர�
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "சொத்தின் நாள் எங்கே தொடங்கி முடிகிறது."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "மக்கள் எந்தப் பக்கங்களைப் பார்க்கிறார்கள், எவை கேள்விகளுக்கு வழிவகுக்கின்றன"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

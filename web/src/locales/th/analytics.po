@@ -21,6 +21,25 @@ msgstr "{0, plural, other {# แถว}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, other {ผู้เข้าชมวันนี้}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} การสนทนา"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} ของผู้เข้าชม"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "ผู้เข้าชม {0} คน"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, other {# การสนทนา}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "ยินยอม {consentedCount} ตลอดการเข้าชมและวัน"
@@ -121,6 +140,10 @@ msgstr "{overall} ของผู้เข้าชมที่ถึงขั�
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, other {{dim} {value}: # การสนทนาต่อ 1,000 การดู เทียบกับ {site} ทั่วทุกหน้า}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} จุด"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ใช้เหตุการณ์การวิเคราะห์ {used} จาก {limit} ในเดือนนี้ เหตุการณ์ที่เกินขีดจำกัดจะถูกทิ้งจนสิ้นเดือน"
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "รหัสผ่านใหม่ทำให้ทุกคนที่ปลดล็อกลิงก์ออกจากระบบ"
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "การดูหน้า เหตุการณ์ หรือระดับการเลื่อน"
+msgid "a page visit or an event from your site or app"
+msgstr "การเข้าชมหน้าหรือเหตุการณ์จากเว็บไซต์หรือแอปของคุณ"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "พร็อพเพอร์ตีการวิเคราะห์
 msgid "Analytics steps"
 msgstr "ขั้นตอนการวิเคราะห์"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "มุมมองการวิเคราะห์"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "ทุกคนที่มีลิงก์เห็นมุมมองที่คุณเลือก แบบอ่านอย่างเดียว โดยไม่ต้องลงชื่อเข้าใช้"
@@ -376,6 +395,11 @@ msgstr "บอท"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "บอท ขีดจำกัดอัตรา ที่อยู่และพาธที่ยกเว้น ขีดจำกัดรายเดือน หรือเซิร์ฟเวอร์ที่ยุ่ง"
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "ออกทันที"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "อัตราตีกลับ"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "แยกย่อยตาม prop"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "การแยกย่อย"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "คอนเวอร์ชันต่อผู้เข้าชม 100 คน"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "ผู้เข้าชมเว็บไซต์และแอปของคุณ โดยไม่ใช้คุกกี้"
+msgid "Cookieless visitors across your sites and apps"
+msgstr "ผู้เข้าชมแบบไม่ใช้คุกกี้ในเว็บไซต์และแอปของคุณ"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "เก็บบันทึกโดยละเอียดตั้ง
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "เก็บบันทึกโดยละเอียดตั้งแต่"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "รายละเอียด"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "ถูกนำที่อยู่ออก"
 msgid "Health"
 msgstr "สุขภาพ"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "เป็นประโยชน์"
@@ -1170,6 +1190,10 @@ msgstr "วิธีส่งเหตุการณ์"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "ฉันบันทึกแล้ว"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "ปรับปรุงหน้า →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "หน้าจอสุดท้าย"
 msgid "Leave empty to keep the current one"
 msgstr "เว้นว่างไว้เพื่อคงอันปัจจุบัน"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "นำไปสู่การสนทนา"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "ลิงก์"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "เชื่อมโยงกล่องข้อความเพื่อนับ"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "เชื่อมโยงกล่องข้อความ"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "เชื่อมโยงผู้ใช้ที่ลงชื่อเข้าใช้กับผู้ติดต่อของตน"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "สด"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "ฐานข้อมูลตำแหน่ง"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ตำแหน่ง"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "เดือน"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "เพิ่มเติม"
+msgid "More views"
+msgstr "มุมมองเพิ่มเติม"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "{kind} ใหม่: {value} ที่ {count} ไม่มีในว�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} ใหม่: {value} {metric}: {now} ไม่มีในวันที่เปรียบเทียบ"
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "ใหม่และกลับมา"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "ฟันเนลใหม่"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "เป้าหมายใหม่"
@@ -1477,10 +1509,6 @@ msgstr "ไม่เปรียบเทียบ"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "ไม่มีคุณลักษณะความยินยอมให้ใช้"
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "ไม่มีผู้เข้าชมที่ยินยอมในช่วงนี้"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "ไม่มีอะไร"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "ไม่มีอะไรถูกนับในช่วงนี้"
 
@@ -1767,6 +1796,10 @@ msgstr "หน้าหรือหน้าจอ"
 msgid "Page view of {path}"
 msgstr "การดูหน้า {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "การดูหน้า"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "หน้า"
@@ -1782,6 +1815,10 @@ msgstr "หน้าและหน้าจอที่ดู"
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "หน้าที่ไม่นับ"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "หน้าเรียงตามคำถามที่เกิดขึ้น หน้าที่มีผู้เข้าชมมากและมีการสนทนามากต้องการคำตอบที่ดีกว่าบนตัวหน้าเอง"
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "คำขอที่มี Do Not Track หรือ Global Privacy Control และเหตุการณ์ที่ไม่มีความยินยอมบนพร็อพเพอร์ตีที่ต้องการ ถูกรับแต่ไม่เก็บและไม่นับที่นี่"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "การเก็บรักษาผู้เข้าชม"
 
@@ -2257,6 +2293,10 @@ msgstr "แหล่งที่มา"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "เริ่มใหม่"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "เริ่มการสนทนา"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "จำนวนครั้งที่หน้าถูกให้ค
 msgid "To"
 msgstr "ถึง"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "วันนี้"
@@ -2630,6 +2671,7 @@ msgstr "การดูเพิ่มขึ้นเป็น {now} ในส�
 msgid "Visit duration"
 msgstr "ระยะเวลาเข้าชม"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "ผู้เข้าชม"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "ผู้เข้าชมใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "ผู้เข้าชมตอนนี้"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "ผู้เข้าชมที่มี Do Not Track หรือ Glo
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "การเข้าชม"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "การเข้าชมและเหตุการณ์ที่นับเป็นความสำเร็จ"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "คอนเวอร์ชันมาจากที่ใด"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "ที่ที่วันของพร็อพเพอร์ตีเริ่มและสิ้นสุด"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "ผู้คนเข้าชมหน้าไหน และหน้าไหนนำไปสู่คำถาม"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

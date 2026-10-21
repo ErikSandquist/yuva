@@ -1,463 +1,949 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, CircleIcon, PlusIcon } from "lucide-react"
-import { Link } from "react-router"
+import { AtSignIcon, CheckIcon, MessageSquareWarningIcon, TriangleIcon } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
+import { Link, useSearchParams } from "react-router"
 
 import { byPresence, useMemberStatus } from "@/app/TeamMenu"
-import { ContactAvatar, Dot, ErrorLine, MemberAvatar, ProgressBar } from "@/components/common"
-import { Pane } from "@/components/common/Column"
-import { formatDateTime, formatDuration } from "@/components/common/text"
+import { ContactAvatar, ErrorLine } from "@/components/common"
+import { formatDuration, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { PropertyCard } from "@/features/home/PropertyCard"
+import { useBroadcasts } from "@/features/broadcasts/broadcastQueries"
 import { useHome } from "@/features/home/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { useConversations, useCounts, useStats } from "@/features/inbox/queries"
-import { Card, LinkRow, PageHeader, Rows, RowText, Section } from "@/features/settings/ui"
+import { useConversations, useCounts, useMentions } from "@/features/inbox/queries"
+import { createdSince, dayKey, dayStart, share, useRecentConversations, useWindowStats } from "@/features/reports/data"
+import {
+  Card,
+  CardHead,
+  Face,
+  HeadLink,
+  HeadNote,
+  headButton,
+  Meter,
+  Page,
+  PageHeader,
+  ProductTag,
+} from "@/features/settings/ui"
 import { hubTarget, useHubPlaces, useHubText } from "@/features/setup/SetupHub"
 import type { SetupState } from "@/features/setup/setup"
+import { usePublicStatus, useStatusPages } from "@/features/status/queries"
+import { useStatusText } from "@/features/status/text"
 import { useNow } from "@/hooks/use-now"
-import type { ConversationListItem, Home } from "@/lib/api"
+import {
+  api,
+  unwrap,
+  type ConversationListItem,
+  type Home,
+  type Inbox,
+  type StatusComponentStateValue,
+  type StatusPage,
+} from "@/lib/api"
+import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes, useMembers } from "@/lib/workspace"
 
-const tileClass =
-  "flex flex-col gap-1 rounded-2xl border bg-card px-4 py-3.5 outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
+const PERIODS = [7, 14, 30] as const
+type Period = (typeof PERIODS)[number]
 
-function More({ to, children, testId }: { to: string; children: React.ReactNode; testId?: string }) {
+function usePeriod(): [Period, (p: Period) => void] {
+  const [params, setParams] = useSearchParams()
+  const raw = Number(params.get("days"))
+  const days = (PERIODS as readonly number[]).includes(raw) ? (raw as Period) : 14
+  const set = (p: Period) =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        if (p === 14) next.delete("days")
+        else next.set("days", String(p))
+        return next
+      },
+      { replace: true }
+    )
+  return [days, set]
+}
+
+function PeriodPicker() {
+  const { t } = useLingui()
+  const [days, setDays] = usePeriod()
+  const items: Record<string, string> = { "7": t`Last 7 days`, "14": t`Last 14 days`, "30": t`Last 30 days` }
   return (
-    <Link to={to} className="text-small text-brand underline-offset-4 hover:underline" data-testid={testId}>
-      {children}
-    </Link>
+    <Select value={String(days)} items={items} onValueChange={(v) => v && setDays(Number(v) as Period)}>
+      <SelectTrigger aria-label={t`Period`} className={cn(headButton.secondary, "gap-1.5")} data-testid="home-period">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="min-w-40">
+        {PERIODS.map((p) => (
+          <SelectItem key={p} value={String(p)}>
+            {items[String(p)]}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 
 type Waiting = { c: ConversationListItem; since: string }
 
-function useInboxNumbers(h: Home | undefined) {
+function useWaiting(h: Home | undefined) {
   const [inboxId] = useInboxFilter()
-  const { membership } = useSession()
-  const counts = useCounts().data
   const open = useConversations({ status: ["open"], inbox_id: inboxId || undefined })
   const rows = open.data?.pages.flatMap((p) => p.items) ?? []
-  const more = !!open.hasNextPage
   const oldest = h?.inbox.oldest_waiting
   const waiting: Waiting[] = rows
     .filter((c) => c.last_message?.author_type === "contact")
     .map((c) => ({ c, since: oldest?.id === c.id ? oldest.since : c.last_message!.created_at }))
     .sort((a, b) => a.since.localeCompare(b.since))
-  const listed = (n: number) => ({ n, more })
-  const filtered = !!inboxId
-  return {
-    filtered,
-    loading: open.isPending,
-    error: open.error,
-    waiting,
-    total: {
-      waiting: filtered || !h ? listed(waiting.length) : { n: h.inbox.waiting, more: false },
-      unassigned:
-        filtered || !h ? listed(rows.filter((c) => !c.assignee_id).length) : { n: h.inbox.unassigned, more: false },
-      open: filtered
-        ? { n: Number(counts?.inboxes.find((i) => i.id === inboxId)?.count ?? 0), more: false }
-        : { n: h?.inbox.open ?? 0, more: false },
-      mine: filtered
-        ? listed(rows.filter((c) => c.assignee_id === membership.member_id).length)
-        : { n: Number(counts?.mine ?? 0), more: false },
-    },
-  }
+  const total = inboxId || !h ? waiting.length : h.inbox.waiting
+  return { waiting, total, loading: open.isPending, error: open.error }
 }
 
-function Tile({
+function Delta({ children, good }: { children: React.ReactNode; good: boolean }) {
+  return (
+    <span
+      className={cn(
+        "rounded-full px-1.5 text-caption font-medium tabular-nums",
+        good ? "bg-success/8 text-success" : "bg-warning/8 text-warning"
+      )}
+    >
+      {children}
+    </span>
+  )
+}
+
+function Spark({ values, color }: { values: number[]; color: string }) {
+  const max = Math.max(1, ...values)
+  return (
+    <span className="flex h-8 shrink-0 items-end gap-0.5" aria-hidden>
+      {values.map((v, i) => (
+        <span
+          key={i}
+          className="w-1 rounded-[1px]"
+          style={{
+            height: Math.max(3, Math.round((32 * v) / max)),
+            backgroundColor: color,
+            opacity: i === values.length - 1 ? 1 : 0.35,
+          }}
+        />
+      ))}
+    </span>
+  )
+}
+
+function Kpi({
   to,
-  label,
+  name,
   value,
   hint,
+  delta,
+  spark,
+  color,
   testId,
 }: {
   to: string
-  label: React.ReactNode
+  name: React.ReactNode
   value: string
-  hint?: React.ReactNode
+  hint: React.ReactNode
+  delta?: React.ReactNode
+  spark?: React.ReactNode
+  color?: string
   testId: string
 }) {
   return (
-    <Link to={to} className={tileClass} data-testid={testId}>
-      <span className="text-small text-faint">{label}</span>
-      <b className="text-page leading-tight tabular-nums">{value}</b>
-      {hint && <span className="truncate text-caption text-faint">{hint}</span>}
+    <Link
+      to={to}
+      className="flex min-w-0 flex-col gap-2.5 rounded-xl border bg-card p-4 outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
+      data-testid={testId}
+    >
+      <span className="flex items-center justify-between gap-2">
+        <span className="truncate text-body text-muted-foreground">{name}</span>
+        {delta}
+      </span>
+      <span className="flex items-end justify-between gap-3">
+        <span className="flex min-w-0 flex-col leading-[1.2]">
+          <b
+            className="text-[28px] leading-[1.2] font-semibold tracking-[-0.02em] tabular-nums"
+            style={color ? { color } : undefined}
+          >
+            {value}
+          </b>
+          <span className="mt-1 truncate text-caption text-faint">{hint}</span>
+        </span>
+        {spark}
+      </span>
     </Link>
   )
 }
 
-function Kpis({ numbers }: { numbers: ReturnType<typeof useInboxNumbers> }) {
+function Kpis({ h, waiting, days }: { h: Home; waiting: ReturnType<typeof useWaiting>; days: number }) {
   const { i18n } = useLingui()
   const [inboxId] = useInboxFilter()
-  const stats = useStats(inboxId).data
+  const inboxes = useInboxes().data ?? []
+  const since = dayStart(days - 1).toISOString()
+  const stats = useWindowStats(inboxId, since).data
+  const now = useNow(60_000)
   const fmt = new Intl.NumberFormat(i18n.locale)
-  const show = ({ n, more }: { n: number; more: boolean }) => (more ? `${fmt.format(n)}+` : fmt.format(n))
+  const pct = new Intl.NumberFormat(i18n.locale, { style: "percent" })
+  const oldest = h.inbox.oldest_waiting
+  const oldestInbox = inboxes.find((i) => i.id === oldest?.inbox_id)?.name
+  const oldestFor = oldest ? formatDuration(Math.max(0, (now - Date.parse(oldest.since)) / 1000), i18n.locale) : ""
   const median = stats?.median_first_reply_seconds
-  const total = numbers.total
+  const rated = stats ? stats.ratings.good + stats.ratings.bad : 0
+  const good = stats ? share(stats.ratings.good, stats.ratings.bad) : undefined
+  const props = (h.analytics?.properties ?? []).filter((p) => !inboxId || p.inbox_id === inboxId)
+  const today = props.reduce((n, p) => n + p.visitors_today, 0)
+  const perDay = Array.from({ length: 7 }, (_, i) => props.reduce((n, p) => n + (p.days[i]?.visitors ?? 0), 0))
+  const yesterday = perDay[5] ?? 0
+  const change = yesterday > 0 ? (today - yesterday) / yesterday : undefined
+  const signed = new Intl.NumberFormat(i18n.locale, { style: "percent", signDisplay: "exceptZero" })
   return (
-    <div className="grid grid-cols-2 gap-2 @3xl:grid-cols-4" data-testid="home-inbox">
-      <Tile
+    <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 phone:gap-3" data-testid="home-inbox">
+      <Kpi
         to="/conversations"
-        label={<Trans>Waiting</Trans>}
-        value={show(total.waiting)}
+        name={<Trans>Waiting for you</Trans>}
+        value={fmt.format(waiting.total)}
+        color={waiting.total > 0 ? "var(--brand)" : "var(--success)"}
+        hint={
+          oldest ? (
+            oldestInbox && inboxes.length > 1 ? (
+              <Trans>
+                oldest {oldestFor}, in {oldestInbox}
+              </Trans>
+            ) : (
+              <Trans>oldest {oldestFor}</Trans>
+            )
+          ) : (
+            <Trans>nothing waiting</Trans>
+          )
+        }
         testId="home-inbox-waiting"
       />
-      <Tile
-        to="/conversations"
-        label={<Trans>Unassigned</Trans>}
-        value={show(total.unassigned)}
-        testId="home-inbox-unassigned"
+      <Kpi
+        to="/reports/today"
+        name={<Trans>First reply</Trans>}
+        value={median !== undefined ? formatDuration(median, i18n.locale) : "–"}
+        hint={<Plural value={days} one="median, last # day" other="median, last # days" />}
+        testId="home-first-reply"
       />
-      <Tile to="/conversations" label={<Trans>Open</Trans>} value={show(total.open)} testId="home-inbox-open" />
-      {median !== undefined ? (
-        <Tile
-          to="/reports/today"
-          label={<Trans>Median first reply</Trans>}
-          value={formatDuration(median, i18n.locale)}
-          testId="home-first-reply"
-        />
-      ) : (
-        <Tile to="/conversations" label={<Trans>Mine</Trans>} value={show(total.mine)} testId="home-inbox-mine" />
-      )}
+      <Kpi
+        to="/reports/ratings"
+        name={<Trans>Rating</Trans>}
+        value={good !== undefined ? pct.format(good) : "–"}
+        hint={<Plural value={rated} _0="no ratings yet" one="# rating" other="# ratings" />}
+        testId="home-rating"
+      />
+      <Kpi
+        to="/analytics"
+        name={<Trans>Visitors today</Trans>}
+        value={h.analytics && props.length > 0 ? fmt.format(today) : "–"}
+        color={h.analytics && props.length > 0 ? undefined : "var(--faint)"}
+        hint={
+          props.length > 0 ? (
+            props.length === 1 ? (
+              props[0].name
+            ) : (
+              <Trans>all sites and apps</Trans>
+            )
+          ) : (
+            <Trans>analytics not set up</Trans>
+          )
+        }
+        delta={change !== undefined && <Delta good={change >= 0}>{signed.format(change)}</Delta>}
+        spark={props.length > 0 && <Spark values={perDay} color="var(--success)" />}
+        testId="home-visitors"
+      />
     </div>
   )
 }
 
-function NeedsYou({ numbers }: { numbers: ReturnType<typeof useInboxNumbers> }) {
-  const { t, i18n } = useLingui()
-  const now = useNow(60_000)
-  const inboxes = useInboxes().data ?? []
-  const color = new Map(inboxes.map((i) => [i.id, i.branding.color]))
-  const shown = numbers.waiting.slice(0, 6)
+function IconBox({ children, tone }: { children: React.ReactNode; tone?: "warning" }) {
   return (
-    <Section
-      title={<Trans>Needs you</Trans>}
-      action={
-        <More to="/conversations" testId="home-inbox-link">
-          <Trans>Open the inbox</Trans>
-        </More>
-      }
+    <span
+      className={cn(
+        "grid size-8 shrink-0 place-items-center rounded-lg text-caption font-semibold [&_svg]:size-4",
+        tone === "warning" ? "bg-warning/10 text-warning" : "bg-surface text-foreground"
+      )}
     >
-      <ErrorLine error={numbers.error} />
-      <Card flush>
-        {numbers.loading ? (
-          <div className="flex flex-col gap-3 p-4">
-            <Skeleton className="h-9 rounded-xl" />
-            <Skeleton className="h-9 rounded-xl" />
-            <Skeleton className="h-9 rounded-xl" />
-          </div>
-        ) : shown.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 px-6 py-10 text-center" data-testid="home-needs-empty">
-            <span className="grid size-10 place-items-center rounded-full bg-success/12 text-success">
-              <CheckIcon className="size-5" />
-            </span>
-            <p className="text-body font-medium">
-              <Trans>Nothing needs you</Trans>
-            </p>
-            <p className="max-w-xs text-small text-faint">
-              <Trans>Nobody is waiting for a reply. Everyone who wrote has an answer.</Trans>
-            </p>
-          </div>
-        ) : (
-          <Rows data-testid="home-needs">
-            {shown.map(({ c, since }, i) => {
-              const name = c.contact.name || c.contact.email || t`Unnamed contact`
-              const waited = formatDuration(Math.max(0, (now - new Date(since).getTime()) / 1000), i18n.locale)
-              return (
-                <LinkRow
-                  key={c.id}
-                  to={`/conversations/${c.id}`}
-                  value={<Trans>for {waited}</Trans>}
-                  testId={i === 0 ? "home-oldest-waiting" : `home-waiting-${c.id}`}
-                >
-                  <ContactAvatar id={c.contact.id} name={name} className="size-8 shrink-0" />
-                  <div className="min-w-0 flex-1">
-                    <p className="flex items-center gap-1.5 text-body">
-                      {inboxes.length > 1 && <Dot color={color.get(c.inbox_id)} className="size-2 rounded-[3px]" />}
-                      <span className="truncate font-medium">{name}</span>
-                    </p>
-                    <p className="mt-px truncate text-small text-faint">{c.subject || c.last_message?.text}</p>
-                  </div>
-                </LinkRow>
-              )
-            })}
-          </Rows>
-        )}
-      </Card>
-    </Section>
+      {children}
+    </span>
   )
 }
 
-function TeamBlock() {
-  const members = useMembers().data
+function NeedRow({
+  icon,
+  title,
+  tag,
+  meta,
+  when,
+  late,
+  to,
+  act,
+  primary,
+  testId,
+}: {
+  icon: React.ReactNode
+  title: React.ReactNode
+  tag?: Inbox
+  meta: React.ReactNode
+  when?: string
+  late?: boolean
+  to: string
+  act: React.ReactNode
+  primary?: boolean
+  testId?: string
+}) {
+  return (
+    <li className="flex items-center gap-3 border-b px-4 py-[11px] last:border-b-0" data-testid={testId}>
+      {icon}
+      <span className="flex min-w-0 flex-1 flex-col leading-[1.35]">
+        <span className="truncate font-medium">{title}</span>
+        <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+          {tag && <ProductTag name={tag.name} color={tag.branding.color} />}
+          <span className="truncate">{meta}</span>
+        </span>
+      </span>
+      {when !== undefined && (
+        <span
+          className={cn(
+            "w-14 shrink-0 text-end text-caption tabular-nums",
+            late ? "font-medium text-brand" : "text-faint"
+          )}
+        >
+          {when}
+        </span>
+      )}
+      <Button
+        size="sm"
+        variant={primary ? "default" : "outline"}
+        className={cn(
+          "h-[30px] rounded-lg px-2.5",
+          primary ? "bg-brand px-3 hover:bg-brand/90" : "border-input font-normal"
+        )}
+        render={<Link to={to} />}
+      >
+        {act}
+      </Button>
+    </li>
+  )
+}
+
+function NeedsYou({ waiting }: { waiting: ReturnType<typeof useWaiting> }) {
+  const { t, i18n } = useLingui()
+  const text = useEnumText()
+  const now = useNow(60_000)
+  const [inboxId] = useInboxFilter()
+  const inboxes = useInboxes().data ?? []
+  const byId = new Map(inboxes.map((i) => [i.id, i]))
+  const many = inboxes.length > 1 && !inboxId
+  const mentions = (useMentions().data?.pages[0]?.items ?? []).filter(
+    (m) => !m.seen && (!inboxId || m.conversation.inbox_id === inboxId)
+  )
+  const feedback = Number(useCounts(["feedback"]).data?.feedback ?? 0)
+  const time = new Intl.DateTimeFormat(i18n.locale, { hour: "2-digit", minute: "2-digit" })
+  const ago = (iso: string) => formatDuration(Math.max(0, (now - Date.parse(iso)) / 1000), i18n.locale)
+  const shown = waiting.waiting.slice(0, 5)
+  const notes = mentions.slice(0, 2)
+  const count = waiting.total + mentions.length + (feedback > 0 ? 1 : 0)
+  return (
+    <Card flush data-testid="home-needs-card">
+      <CardHead action={<HeadLink to="/conversations" testId="home-inbox-link">{t`Open inbox →`}</HeadLink>}>
+        <Trans>Needs you</Trans>
+        <span
+          className={cn(
+            "inline-flex h-[22px] min-w-[22px] items-center justify-center rounded-full px-1.5 text-caption font-semibold text-white tabular-nums dark:text-background",
+            count > 0 ? "bg-brand" : "bg-success"
+          )}
+        >
+          {count}
+        </span>
+      </CardHead>
+      <ErrorLine error={waiting.error} className="px-4 pt-3" />
+      {waiting.loading ? (
+        <div className="flex flex-col gap-3 p-4">
+          <Skeleton className="h-9 rounded-lg" />
+          <Skeleton className="h-9 rounded-lg" />
+          <Skeleton className="h-9 rounded-lg" />
+        </div>
+      ) : count === 0 ? (
+        <div className="flex flex-col items-center gap-1 px-4 py-9 text-center" data-testid="home-needs-empty">
+          <span className="grid size-9 place-items-center rounded-full bg-success text-white dark:text-background">
+            <CheckIcon className="size-4" />
+          </span>
+          <p className="mt-1.5 font-semibold">
+            <Trans>Nothing needs you</Trans>
+          </p>
+          <p className="text-faint">
+            <Trans>New conversations and feedback show up here.</Trans>
+          </p>
+        </div>
+      ) : (
+        <ul data-testid="home-needs">
+          {shown.map(({ c, since }, i) => {
+            const name = c.contact.name || c.contact.email || t`Unnamed contact`
+            const about = c.subject || c.last_message?.text || ""
+            const at = time.format(new Date(since))
+            const channel = c.channel_kind ? text.channel[c.channel_kind] : ""
+            return (
+              <NeedRow
+                key={c.id}
+                icon={<ContactAvatar id={c.contact.id} name={name} className="size-8 text-caption font-semibold" />}
+                title={about ? `${name}: “${about}”` : name}
+                tag={many ? byId.get(c.inbox_id) : undefined}
+                meta={
+                  channel ? (
+                    <Trans>
+                      {channel} · waiting since {at}
+                    </Trans>
+                  ) : (
+                    <Trans>waiting since {at}</Trans>
+                  )
+                }
+                when={ago(since)}
+                late={now - Date.parse(since) > 3_600_000}
+                to={`/conversations/${c.id}`}
+                act={i === 0 ? <Trans>Reply</Trans> : <Trans>Open</Trans>}
+                primary={i === 0}
+                testId={i === 0 ? "home-oldest-waiting" : `home-waiting-${c.id}`}
+              />
+            )
+          })}
+          {notes.map((m) => {
+            const who = m.note.author.name || t`Someone`
+            return (
+              <NeedRow
+                key={m.note.id}
+                icon={
+                  <IconBox>
+                    <AtSignIcon />
+                  </IconBox>
+                }
+                title={
+                  <Trans>
+                    {who} mentioned you: “{m.note.text}”
+                  </Trans>
+                }
+                tag={many ? byId.get(m.conversation.inbox_id) : undefined}
+                meta={<Trans>Note</Trans>}
+                when={ago(m.note.created_at)}
+                to={`/conversations/${m.conversation.id}?m=${m.note.id}`}
+                act={<Trans>View</Trans>}
+                testId="home-mention"
+              />
+            )
+          })}
+          {feedback > 0 && (
+            <NeedRow
+              icon={
+                <IconBox tone="warning">
+                  <MessageSquareWarningIcon />
+                </IconBox>
+              }
+              title={
+                <Plural value={feedback} one="# feedback is not resolved yet" other="# feedback are not resolved yet" />
+              }
+              meta={<Trans>Feedback from your apps and pages</Trans>}
+              to="/feedback"
+              act={<Trans>Triage</Trans>}
+              testId="home-feedback"
+            />
+          )}
+        </ul>
+      )}
+    </Card>
+  )
+}
+
+const stateTone: Record<StatusComponentStateValue, string> = {
+  operational: "var(--success)",
+  degraded: "var(--warning)",
+  partial_outage: "var(--warning)",
+  major_outage: "var(--destructive)",
+  maintenance: "#2563eb",
+}
+
+const worse: StatusComponentStateValue[] = ["operational", "maintenance", "degraded", "partial_outage", "major_outage"]
+
+function Uptime({ page }: { page?: StatusPage }) {
+  const status = usePublicStatus(page).data
+  const days = new Map<string, StatusComponentStateValue>()
+  for (const c of status?.components ?? []) {
+    for (const d of c.days ?? []) {
+      const prev = days.get(d.date)
+      if (!prev || worse.indexOf(d.state) > worse.indexOf(prev)) days.set(d.date, d.state)
+    }
+  }
+  const slots = [...days.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(-30)
+  return (
+    <span className="flex h-4 w-full gap-0.5" aria-hidden>
+      {Array.from({ length: 30 }, (_, i) => {
+        const s = slots[i - (30 - slots.length)]
+        return (
+          <span
+            key={i}
+            className={cn("flex-1 rounded-[2px]", !s && "bg-muted")}
+            style={s ? { backgroundColor: stateTone[s[1]], opacity: s[1] === "operational" ? 0.55 : 1 } : undefined}
+          />
+        )
+      })}
+    </span>
+  )
+}
+
+function Products({ days }: { days: number }) {
+  const { t, i18n } = useLingui()
+  const [inboxId, setFilter] = useInboxFilter()
+  const counts = useCounts().data
+  const openIn = (id: string) => Number(counts?.inboxes.find((c) => c.id === id)?.count ?? 0)
+  const inboxes = (useInboxes().data ?? [])
+    .filter((i) => !inboxId || i.id === inboxId)
+    .sort((a, b) => openIn(b.id) - openIn(a.id))
+  const pages = useStatusPages("").data ?? []
+  const statusText = useStatusText()
+  const since = dayStart(days - 1).toISOString()
+  const ratings = useWindowStats("", since).data?.ratings.inboxes ?? []
+  const pct = new Intl.NumberFormat(i18n.locale, { style: "percent" })
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  return (
+    <Card flush data-testid="home-products">
+      <CardHead action={<HeadNote>{t`uptime · 30 days`}</HeadNote>}>
+        <Trans>Products</Trans>
+      </CardHead>
+      <ul>
+        {inboxes.map((inbox) => {
+          const page = pages.find((p) => p.inbox_id === inbox.id)
+          const open = fmt.format(openIn(inbox.id))
+          const r = ratings.find((x) => x.inbox_id === inbox.id)
+          const good = r ? share(r.good, r.bad) : undefined
+          const rate = good !== undefined ? pct.format(good) : "–"
+          return (
+            <li key={inbox.id} className="border-b last:border-b-0">
+              <button
+                type="button"
+                onClick={() => setFilter(inbox.id)}
+                className="flex w-full flex-col gap-2 px-4 py-3 text-start outline-none transition-colors hover:bg-surface focus-visible:bg-surface"
+                data-testid={`home-product-${inbox.id}`}
+              >
+                <span className="flex w-full items-center gap-2">
+                  <span
+                    className="grid size-[22px] shrink-0 place-items-center rounded-md text-[11px] font-semibold text-white"
+                    style={{ backgroundColor: inbox.branding.color || "var(--faint)" }}
+                  >
+                    {Array.from(inbox.name.trim())[0]?.toLocaleUpperCase()}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate font-medium">{inbox.name}</span>
+                  <span className="shrink-0 text-caption text-faint tabular-nums">
+                    <Trans>
+                      {open} open · {rate} good
+                    </Trans>
+                  </span>
+                  <span
+                    className="w-[76px] shrink-0 truncate text-end text-caption font-medium"
+                    style={page ? { color: stateTone[page.state] } : undefined}
+                  >
+                    {page && statusText.component[page.state]}
+                  </span>
+                </span>
+                <Uptime page={page} />
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    </Card>
+  )
+}
+
+function ConversationsChart({ days }: { days: number }) {
+  const { i18n } = useLingui()
+  const [inboxId] = useInboxFilter()
+  const all = useInboxes().data ?? []
+  const since = dayStart(days - 1).toISOString()
+  const recent = useRecentConversations(since, inboxId)
+  const fresh = createdSince(recent.data?.items ?? [], since)
+  const volume = (id: string) => fresh.filter((c) => c.inbox_id === id).length
+  const inboxes = (inboxId ? all.filter((i) => i.id === inboxId) : all).sort((a, b) => volume(b.id) - volume(a.id))
+  const slots = Array.from({ length: days }, (_, i) => dayKey(dayStart(days - 1 - i)))
+  const series = slots.map((d) =>
+    inboxes.map((inbox) => fresh.filter((c) => c.inbox_id === inbox.id && dayKey(new Date(c.created_at!)) === d).length)
+  )
+  const top = Math.max(1, ...series.map((s) => s.reduce((a, b) => a + b, 0)))
+  const total = fresh.length
+  const label = new Intl.DateTimeFormat(i18n.locale, { day: "numeric", month: "short" })
+  const first = label.format(dayStart(days - 1))
+  const middle = label.format(dayStart(Math.floor((days - 1) / 2)))
+  const shown = new Intl.NumberFormat(i18n.locale).format(total)
+  const more = recent.data && !recent.data.complete ? "+" : ""
+  return (
+    <Card flush data-testid="home-chart">
+      <div className="flex flex-col gap-3.5 p-4">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="flex min-w-0 flex-1 flex-col leading-[1.3]">
+            <span className="font-semibold">
+              <Trans>Conversations</Trans>
+            </span>
+            <span className="text-caption text-faint">
+              <Plural
+                value={days}
+                one={`${shown}${more} in # day · by product`}
+                other={`${shown}${more} in # days · by product`}
+              />
+            </span>
+          </span>
+          {inboxes.map((inbox) => (
+            <span key={inbox.id} className="flex items-center gap-1.5 text-caption text-muted-foreground">
+              <span
+                className="size-2 rounded-[2px]"
+                style={{ backgroundColor: inbox.branding.color || "var(--faint)" }}
+              />
+              {inbox.name}
+            </span>
+          ))}
+        </div>
+        {recent.isPending ? (
+          <Skeleton className="h-[150px] w-full" />
+        ) : (
+          <div className="flex h-[150px] items-end gap-2 border-b" role="img" aria-label={shown}>
+            {series.map((segs, di) => (
+              <span key={slots[di]} className="flex flex-1 flex-col-reverse gap-px">
+                {segs.map((v, i) =>
+                  v === 0 ? null : (
+                    <span
+                      key={inboxes[i].id}
+                      className="last:rounded-t-[3px]"
+                      style={{
+                        height: Math.round((146 * v) / top),
+                        backgroundColor: inboxes[i].branding.color || "var(--faint)",
+                        opacity: di === series.length - 1 ? 1 : 0.85,
+                      }}
+                    />
+                  )
+                )}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="flex justify-between text-caption text-faint">
+          <span>{first}</span>
+          <span>{middle}</span>
+          <span>
+            <Trans>Today</Trans>
+          </span>
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+function TeamCard() {
+  const { t, i18n } = useLingui()
+  const members = useMembers().data ?? []
   const counts = useCounts().data
   const status = useMemberStatus()
-  if (!members) return null
   const load = new Map((counts?.assignees ?? []).map((a) => [a.id, Number(a.count)]))
-  const order = [...members].sort(byPresence).slice(0, 8)
+  const order = [...members].sort(byPresence).slice(0, 6)
+  const online = members.filter((m) => m.online && m.availability === "auto").length
+  const most = Math.max(6, ...load.values())
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  const on = fmt.format(online)
+  const of = fmt.format(members.length)
   return (
-    <Section
-      title={<Trans>Team</Trans>}
-      action={
-        <More to="/team">
-          <Trans>Open the team</Trans>
-        </More>
-      }
-    >
-      <Card flush>
-        <Rows data-testid="home-team">
-          {order.map((m) => {
-            const name = m.name || m.email
-            const open = load.get(m.id) ?? 0
-            return (
-              <LinkRow
-                key={m.id}
+    <Card flush data-testid="home-team">
+      <CardHead action={<HeadNote>{t`${on} of ${of} online`}</HeadNote>}>
+        <Link to="/team" className="hover:underline">
+          <Trans>Team</Trans>
+        </Link>
+      </CardHead>
+      <ul>
+        {order.map((m) => {
+          const name = m.name || m.email
+          const open = load.get(m.id) ?? 0
+          return (
+            <li key={m.id} className="border-b last:border-b-0">
+              <Link
                 to={`/team/${m.id}`}
-                value={open > 0 ? <Plural value={open} one="# open" other="# open" /> : undefined}
-                testId={`home-member-${m.id}`}
+                className="flex items-center gap-2.5 px-4 py-2.5 transition-colors hover:bg-surface"
+                data-testid={`home-member-${m.id}`}
               >
-                <MemberAvatar
+                <Face
+                  id={m.id}
                   name={name}
                   online={m.online}
                   away={m.availability === "away"}
-                  className="size-8"
-                  ring="ring-card"
+                  className="size-[30px]"
                 />
-                <RowText title={name} detail={status(m).text} />
-              </LinkRow>
+                <span className="flex min-w-0 flex-1 flex-col leading-[1.3]">
+                  <span className="truncate font-medium">{name}</span>
+                  <span className="truncate text-caption text-faint">{status(m).text}</span>
+                </span>
+                <span className="flex w-16 shrink-0 flex-col items-end gap-1">
+                  <span className="text-caption whitespace-nowrap text-muted-foreground tabular-nums">
+                    <Plural value={open} one="# open" other="# open" />
+                  </span>
+                  <Meter
+                    value={open}
+                    max={most}
+                    className="h-1 w-16"
+                    color={open >= 4 ? "var(--warning)" : "var(--success)"}
+                  />
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </Card>
+  )
+}
+
+function SmallBox({ top, bottom, brand }: { top: React.ReactNode; bottom: React.ReactNode; brand?: boolean }) {
+  return (
+    <span className="flex w-10 shrink-0 flex-col items-center rounded-lg border bg-card py-1 leading-[1.1]">
+      <span className={cn("text-[10px]", brand ? "font-semibold text-brand uppercase" : "text-faint")}>{top}</span>
+      <span className="font-semibold tabular-nums">{bottom}</span>
+    </span>
+  )
+}
+
+function useTopIdeas(inboxId: string) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: [...keys.roadmap(ws), "top", inboxId],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/discussions", {
+          params: {
+            query: { kind: "idea", sort: "votes", state: "published", inbox_id: inboxId || undefined, limit: 10 },
+          },
+        })
+      ).then((r) => r.items),
+  })
+}
+
+function Asks() {
+  const { t } = useLingui()
+  const text = useEnumText()
+  const [inboxId] = useInboxFilter()
+  const inboxes = new Map((useInboxes().data ?? []).map((i) => [i.id, i]))
+  const ideas = useTopIdeas(inboxId)
+  const top = (ideas.data ?? []).filter((i) => i.stage !== "shipped" && i.stage !== "closed")
+  return (
+    <Card flush data-testid="home-asks">
+      <CardHead action={<HeadLink to="/board">{t`Roadmap →`}</HeadLink>}>
+        <Trans>Most asked for</Trans>
+      </CardHead>
+      {top.length === 0 ? (
+        <p className="px-4 py-5 text-faint">
+          {ideas.isPending ? " " : <Trans>No ideas yet. Customers’ votes show up here.</Trans>}
+        </p>
+      ) : (
+        <ul>
+          {top.slice(0, 3).map((idea) => {
+            const product = idea.inbox_id ? inboxes.get(idea.inbox_id)?.name : undefined
+            const stage = idea.stage ? text.stage[idea.stage] : ""
+            return (
+              <li key={idea.id} className="flex items-center gap-2.5 border-b px-4 py-2.5 last:border-b-0">
+                <SmallBox top={<TriangleIcon className="size-2 fill-current" />} bottom={idea.votes ?? 0} />
+                <span className="flex min-w-0 flex-1 flex-col leading-[1.3]">
+                  <span className="truncate font-medium">{idea.title}</span>
+                  <span className="truncate text-caption text-faint">
+                    {[product, stage].filter(Boolean).join(" · ")}
+                  </span>
+                </span>
+              </li>
             )
           })}
-        </Rows>
-      </Card>
-    </Section>
-  )
-}
-
-function AnalyticsBlock({ analytics }: { analytics: NonNullable<Home["analytics"]> }) {
-  return (
-    <Section
-      title={<Trans>Websites and apps</Trans>}
-      action={
-        analytics.properties.length > 0 && (
-          <More to="/analytics">
-            <Trans>Open analytics</Trans>
-          </More>
-        )
-      }
-    >
-      {analytics.properties.length === 0 ? (
-        <Card>
-          <div className="flex flex-col items-start gap-3" data-testid="home-analytics-empty">
-            <p className="text-body text-muted-foreground">
-              <Trans>
-                No website or app is counted yet. Add one to see its visitors here every day, without cookies.
-              </Trans>
-            </p>
-            <Button
-              size="sm"
-              variant="outline"
-              render={<Link to="/setup/analytics" state={{ back: "/" } satisfies SetupState} />}
-            >
-              <PlusIcon />
-              <Trans>Add a website or app</Trans>
-            </Button>
-          </div>
-        </Card>
-      ) : (
-        <div className="grid gap-2 sm:grid-cols-2" data-testid="home-analytics">
-          {analytics.properties.map((p) => (
-            <Link
-              key={p.id}
-              to={`/analytics/${p.id}`}
-              className="flex rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring [&>div]:transition-colors [&>div]:hover:border-faint"
-              data-testid={`home-property-${p.id}`}
-            >
-              <PropertyCard property={p} />
-            </Link>
-          ))}
-        </div>
+        </ul>
       )}
-    </Section>
+    </Card>
   )
 }
 
-function BroadcastBlock({ broadcasts }: { broadcasts: NonNullable<Home["broadcasts"]> }) {
-  const { t, i18n } = useLingui()
+function ComingUp() {
+  const { i18n } = useLingui()
+  const [inboxId] = useInboxFilter()
+  const scheduled = useBroadcasts(inboxId, ["scheduled"])
+  const items = [...(scheduled.data?.pages.flatMap((p) => p.items) ?? [])]
+    .filter((b) => b.scheduled_at)
+    .sort((a, b) => a.scheduled_at!.localeCompare(b.scheduled_at!))
+    .slice(0, 3)
+  const mon = new Intl.DateTimeFormat(i18n.locale, { month: "short" })
+  const day = new Intl.DateTimeFormat(i18n.locale, { day: "2-digit" })
+  const time = new Intl.DateTimeFormat(i18n.locale, { hour: "2-digit", minute: "2-digit" })
   const fmt = new Intl.NumberFormat(i18n.locale)
-  const b = broadcasts.last_sent
-  const sentAt = b ? formatDateTime(b.sent_at, i18n.locale) : ""
   return (
-    <Section
-      title={<Trans>Last broadcast</Trans>}
-      action={
-        <More to="/broadcasts">
-          <Trans>Open broadcasts</Trans>
-        </More>
-      }
-    >
-      {!b ? (
-        <Card>
-          <div className="flex flex-col items-start gap-3" data-testid="home-broadcast-empty">
-            <p className="text-body text-muted-foreground">
-              <Trans>
-                No broadcast has gone out yet. When one has, its recipients, clicks and replies show up here.
-              </Trans>
-            </p>
-            <Button size="sm" variant="outline" render={<Link to="/broadcasts" />}>
-              <Trans>Write a broadcast</Trans>
-            </Button>
-          </div>
-        </Card>
+    <Card flush data-testid="home-upcoming">
+      <CardHead>
+        <Trans>Coming up</Trans>
+      </CardHead>
+      {items.length === 0 ? (
+        <p className="px-4 py-5 text-faint">{scheduled.isPending ? " " : <Trans>Nothing is scheduled.</Trans>}</p>
       ) : (
-        <Link
-          to={`/broadcasts/${b.id}`}
-          className="flex flex-col gap-4 rounded-2xl border bg-card p-4 transition-colors hover:border-faint"
-          data-testid="home-broadcast"
-        >
-          <div className="min-w-0">
-            <p className="truncate font-medium">{b.name || b.subject}</p>
-            <p className="truncate text-small text-faint">
-              {b.name && b.subject ? <>{b.subject} · </> : null}
-              <Trans>Sent {sentAt}</Trans>
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
-            {(
-              [
-                [fmt.format(b.recipients), t`recipients`],
-                [fmt.format(b.sent), t`sent`],
-                [b.click_tracking ? fmt.format(b.clicked) : "–", b.click_tracking ? t`clicked` : t`clicks not tracked`],
-                [fmt.format(b.replied), t`replied`],
-              ] as const
-            ).map(([value, label]) => (
-              <div key={label}>
-                <b className="block text-title tabular-nums">{value}</b>
-                <span className="text-small text-faint">{label}</span>
-              </div>
-            ))}
-          </div>
-        </Link>
+        <ul>
+          {items.map((b) => {
+            const at = new Date(b.scheduled_at!)
+            const people = fmt.format(b.counts?.recipients ?? 0)
+            const when = time.format(at)
+            return (
+              <li key={b.id} className="border-b last:border-b-0">
+                <Link
+                  to={`/broadcasts/${b.id}`}
+                  className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-surface"
+                >
+                  <SmallBox brand top={mon.format(at)} bottom={day.format(at)} />
+                  <span className="flex min-w-0 flex-1 flex-col leading-[1.3]">
+                    <span className="truncate font-medium">{b.name || b.subject}</span>
+                    <span className="truncate text-caption text-faint">
+                      <Trans>
+                        Broadcast · {people} people · {when}
+                      </Trans>
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
       )}
-    </Section>
+    </Card>
   )
 }
 
-function SetupBlock({ setup }: { setup: NonNullable<Home["setup"]> }) {
+function Setup({ setup }: { setup: NonNullable<Home["setup"]> }) {
   const { t, i18n } = useLingui()
   const text = useHubText()
   const places = useHubPlaces()
   const count = setup.items.length
-  const left = setup.items.filter((i) => !i.done).length
+  const done = setup.items.filter((i) => i.done).length
   const fmt = new Intl.NumberFormat(i18n.locale)
-  const doneText = fmt.format(count - left)
+  const doneText = fmt.format(done)
   const total = fmt.format(count)
   return (
-    <Section
-      title={left > 0 ? <Trans>Not set up yet</Trans> : <Trans>Setup</Trans>}
-      action={
-        <More to="/setup" testId="home-setup-open">
-          <Trans>Open setup</Trans>
-        </More>
-      }
-    >
-      <Card flush>
-        <div className="flex items-center gap-3 border-b px-4 py-3">
-          <ProgressBar
-            value={count ? ((count - left) / count) * 100 : 0}
-            label={t`Setup`}
-            text={t`${doneText} of ${total}`}
-            thin
-            className="flex-1"
-            testId="home-setup-progress"
-          />
-          <span className="shrink-0 text-small text-faint tabular-nums">{t`${doneText} of ${total}`}</span>
-        </div>
-        <Rows data-testid="home-setup">
-          {setup.items.map((item) => (
-            <LinkRow
-              key={item.id}
+    <Card flush className="pb-1" data-testid="home-setup-card">
+      <CardHead
+        action={
+          <Link to="/setup" className="text-caption text-faint hover:text-foreground" data-testid="home-setup-open">
+            {t`${doneText} of ${total}`}
+          </Link>
+        }
+      >
+        <Trans>Finish setup</Trans>
+      </CardHead>
+      <span
+        className="mx-4 mt-3 mb-1.5 flex h-1.5 overflow-hidden rounded-full bg-border"
+        role="progressbar"
+        aria-label={t`Setup`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={count ? Math.round((done / count) * 100) : 0}
+        data-testid="home-setup-progress"
+      >
+        <span className="rounded-full bg-success" style={{ width: `${count ? (done / count) * 100 : 0}%` }} />
+      </span>
+      <ul data-testid="home-setup">
+        {setup.items.map((item) => (
+          <li key={item.id}>
+            <Link
               to={hubTarget(item, places)}
               state={item.done ? undefined : ({ back: "/" } satisfies SetupState)}
-              testId={`home-setup-${item.id}`}
+              className="flex items-center gap-2.5 px-4 py-[7px] transition-colors hover:bg-surface"
+              data-testid={`home-setup-${item.id}`}
             >
               <span
                 className={cn(
-                  "grid size-6 shrink-0 place-items-center rounded-full [&_svg]:size-3.5",
-                  item.done ? "bg-success/12 text-success" : "text-faint"
+                  "grid size-[18px] shrink-0 place-items-center rounded-full",
+                  item.done ? "bg-success text-white dark:text-background" : "border-[1.5px] border-input"
                 )}
               >
-                {item.done ? <CheckIcon /> : <CircleIcon className="size-5!" />}
+                {item.done && <CheckIcon className="size-3" strokeWidth={3} />}
               </span>
-              <RowText
-                title={<span className={cn(item.done && "text-muted-foreground")}>{text.title[item.id]}</span>}
-                detail={item.done ? text.count(item.id, item.count) : text.hint[item.id]}
-              />
-            </LinkRow>
-          ))}
-        </Rows>
-      </Card>
-    </Section>
+              <span className={cn("truncate", item.done ? "text-faint line-through" : "font-medium")}>
+                {text.title[item.id]}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </Card>
   )
+}
+
+function useStatusAction() {
+  const pages = useStatusPages("").data ?? []
+  return pages.length > 0 ? pages : null
 }
 
 export function HomePage() {
   const { t } = useLingui()
-  const { me, membership } = useSession()
+  const { me } = useSession()
   const home = useHome()
   const h = home.data
-  const numbers = useInboxNumbers(h)
+  const waiting = useWaiting(h)
+  const [days] = usePeriod()
   const [inboxId] = useInboxFilter()
-  const product = useInboxes().data?.find((i) => i.id === inboxId)?.name
-  const setupLeft = !!h?.setup?.items.some((i) => !i.done)
+  const inboxes = useInboxes().data ?? []
+  const product = inboxes.find((i) => i.id === inboxId)?.name
+  const status = useStatusAction()
+  const mentions = (useMentions().data?.pages[0]?.items ?? []).filter((m) => !m.seen).length
   const first = (me.person.name || me.person.email).split(/[\s@]/)[0]
-  const waiting = numbers.total.waiting.n
-  const workspace = membership.workspace.name
   const hour = new Date(useNow(60_000)).getHours()
   const greeting =
     hour < 12 ? t`Good morning, ${first}` : hour < 18 ? t`Good afternoon, ${first}` : t`Good evening, ${first}`
+  const needs = waiting.total + mentions
   return (
-    <Pane wide testId="home" className="@container">
+    <Page testId="home">
       <PageHeader
         back={false}
-        eyebrow={product ? `${workspace} · ${product}` : workspace}
-        title={greeting}
+        title={product ?? greeting}
         description={
-          !h && !numbers.filtered ? undefined : waiting > 0 ? (
-            <Plural value={waiting} one="# person is waiting for a reply." other="# people are waiting for a reply." />
+          !h ? undefined : needs > 0 ? (
+            <Plural value={needs} one="# thing needs you today." other="# things need you today." />
           ) : (
-            <Trans>Nothing is waiting.</Trans>
+            <Trans>Nothing needs you today.</Trans>
           )
+        }
+        action={
+          <>
+            <PeriodPicker />
+            {status && (
+              <Button className={headButton.primary} render={<Link to="/status" />} data-testid="home-status-update">
+                <Trans>Post status update</Trans>
+              </Button>
+            )}
+          </>
         }
       />
       <ErrorLine error={home.error} />
       {!h ? (
         !home.error && (
-          <div className="flex flex-col gap-3">
-            <div className="grid grid-cols-2 gap-2 @3xl:grid-cols-4">
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2">
               {[0, 1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-22 rounded-2xl" />
+                <Skeleton key={i} className="h-28 rounded-xl" />
               ))}
             </div>
-            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64 rounded-xl" />
           </div>
         )
       ) : (
         <>
-          <Kpis numbers={numbers} />
-          <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
-            <NeedsYou numbers={numbers} />
-            <div className="flex flex-col gap-8">
-              <TeamBlock />
-              {h.setup && setupLeft && <SetupBlock setup={h.setup} />}
-            </div>
+          <Kpis h={h} waiting={waiting} days={days} />
+          <div className="grid grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] items-start gap-4 max-lg:grid-cols-1">
+            <NeedsYou waiting={waiting} />
+            <Products days={days} />
           </div>
-          {h.analytics && <AnalyticsBlock analytics={h.analytics} />}
-          {h.broadcasts && <BroadcastBlock broadcasts={h.broadcasts} />}
+          <div className="grid grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] items-start gap-4 max-lg:grid-cols-1">
+            <ConversationsChart days={days} />
+            <TeamCard />
+          </div>
+          <div className="grid grid-cols-3 items-start gap-4 max-lg:grid-cols-1">
+            <Asks />
+            <ComingUp />
+            {h.setup && <Setup setup={h.setup} />}
+          </div>
         </>
       )}
-    </Pane>
+    </Page>
   )
 }

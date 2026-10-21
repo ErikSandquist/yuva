@@ -36,6 +36,7 @@ import { useResetState } from "@/hooks/use-reset-state"
 import type { DocsPage, DocsPageSort } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
+import { FrameTabs, PageFrame } from "@/features/status/PageFrame"
 
 export const GUIDE_URL = "https://github.com/productdevbook/yuva/blob/main/docs/documentation-pages.md"
 
@@ -296,22 +297,19 @@ export function DocsSitePicker({ className }: { className?: string }) {
   )
 }
 
-export function DocsColumn() {
-  const { t, i18n } = useLingui()
+export function DocsPageList({ className, keyboard = true }: { className?: string; keyboard?: boolean }) {
+  const { t } = useLingui()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [params] = useSearchParams()
   const [inboxId] = useInboxFilter()
   const [days] = useDocsDays()
   const [sort] = useDocsSort()
-  const phone = useIsPhone()
   const inboxes = useInboxes().data ?? []
   const colors = new Map(inboxes.map((i) => [i.id, i.branding.color]))
   const site = usePickedSite(inboxId)
   const pages = useDocsPages(inboxId, site, days, sort)
   const items = pages.data?.pages.flatMap((p) => p.items) ?? []
-  const pending = useDocsSummary(inboxId, site, days).data?.totals.pending_posts ?? 0
-  const pendingText = new Intl.NumberFormat(i18n.locale).format(pending)
   const currentKey = pathname === "/docs/page" ? `${params.get("inbox")} ${params.get("url")}` : ""
   const [cursor, setCursor] = useResetState(-1, JSON.stringify([inboxId, site, days, sort]))
   const list = useRef<HTMLUListElement>(null)
@@ -324,12 +322,118 @@ export function DocsColumn() {
       ArrowUp: () => setCursor((i) => Math.max(0, i - 1)),
       Enter: () => cursor >= 0 && items[cursor] && navigate(docsPageLink(items[cursor].inbox_id, items[cursor].page)),
     },
-    !pathname.startsWith("/docs/discussions")
+    keyboard && !pathname.startsWith("/docs/discussions")
   )
   useEffect(() => {
     if (cursor >= 0)
       list.current?.querySelectorAll("[data-testid=docs-row]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
+
+  return (
+    <nav aria-label={t`Documentation pages`} className={cn("flex flex-col", className)}>
+      <DocsSort className="mx-1 mb-2" />
+      {pages.isPending ? (
+        <div className="flex flex-col gap-2 p-2">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+        </div>
+      ) : pages.error ? (
+        <ErrorLine error={pages.error} className="p-3" />
+      ) : items.length === 0 ? (
+        <div className="px-4 py-10 text-center text-body text-faint" data-testid="docs-empty">
+          <p className="mb-2 font-medium text-foreground">
+            <Trans>No pages yet</Trans>
+          </p>
+          <DocsGuide />
+        </div>
+      ) : (
+        <ul ref={list} className="flex flex-col">
+          {items.map((p, i) => (
+            <Row
+              key={`${p.inbox_id} ${p.page}`}
+              p={p}
+              current={`${p.inbox_id} ${p.page}` === currentKey}
+              cursor={i === cursor}
+              inboxColor={inboxes.length > 1 && !inboxId ? colors.get(p.inbox_id) : undefined}
+            />
+          ))}
+        </ul>
+      )}
+      {pages.hasNextPage && (
+        <div className="mt-2 flex justify-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => void pages.fetchNextPage()}
+            disabled={pages.isFetchingNextPage}
+          >
+            <Trans>Load more</Trans>
+          </Button>
+        </div>
+      )}
+    </nav>
+  )
+}
+
+export function DocsFrame({ testId, list, children }: { testId: string; list?: boolean; children: React.ReactNode }) {
+  const { t } = useLingui()
+  const { pathname } = useLocation()
+  const phone = useIsPhone()
+  const [inboxId] = useInboxFilter()
+  const [days] = useDocsDays()
+  const site = usePickedSite(inboxId)
+  const pending = useDocsSummary(inboxId, site, days).data?.totals.pending_posts ?? 0
+  const current = pathname.startsWith("/docs/discussions/queue")
+    ? "queue"
+    : pathname.startsWith("/docs/discussions")
+      ? "discussions"
+      : "pages"
+  const tabs = [
+    { key: "pages", to: phone ? "/docs/overview" : "/docs", label: t`Pages`, testId: "docs-overview-link" },
+    { key: "discussions", to: "/docs/discussions", label: t`Discussions`, testId: "docs-discussions-link" },
+    {
+      key: "queue",
+      to: "/docs/discussions/queue",
+      label: t`Waiting for approval`,
+      count: pending > 0 ? pending : undefined,
+      testId: "docs-queue-link",
+    },
+  ]
+  return (
+    <PageFrame
+      testId={testId}
+      title={<Trans>Docs</Trans>}
+      description={<Trans>Ratings, feedback and discussions from your documentation</Trans>}
+      back={phone ? { to: "/docs", label: t`Docs` } : undefined}
+      actions={
+        !phone && (
+          <>
+            <DocsSitePicker className="h-[34px]" />
+            <DocsWindow />
+          </>
+        )
+      }
+      tabs={<FrameTabs label={t`Docs`} items={tabs} current={current} />}
+      bodyClassName="flex overflow-hidden in-data-frame:overflow-hidden"
+    >
+      {list && !phone && (
+        <aside className="w-[340px] shrink-0 overflow-y-auto border-e px-2 py-4">
+          <DocsPageList />
+        </aside>
+      )}
+      <div className="min-w-0 flex-1 overflow-y-auto">{children}</div>
+    </PageFrame>
+  )
+}
+
+export function DocsColumn() {
+  const { i18n } = useLingui()
+  const [inboxId] = useInboxFilter()
+  const [days] = useDocsDays()
+  const phone = useIsPhone()
+  const site = usePickedSite(inboxId)
+  const pending = useDocsSummary(inboxId, site, days).data?.totals.pending_posts ?? 0
+  const pendingText = new Intl.NumberFormat(i18n.locale).format(pending)
 
   return (
     <Column
@@ -338,10 +442,9 @@ export function DocsColumn() {
       actions={<InboxPicker className="max-w-40" />}
       bodyClassName="px-2"
     >
-      <nav aria-label={t`Documentation pages`} className="flex flex-col">
+      <div className="flex flex-col">
         <DocsSitePicker className="mx-1 mb-2.5" />
         <DocsWindow className="mx-1 mb-2.5 flex" />
-        <DocsSort className="mx-1 mb-2" />
         <ColumnLink to={phone ? "/docs/overview" : "/docs"} end testId="docs-overview-link">
           <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground">
             <BarChart3Icon className="size-4" />
@@ -374,46 +477,8 @@ export function DocsColumn() {
             </span>
           )}
         </ColumnLink>
-        {pages.isPending ? (
-          <div className="flex flex-col gap-2 p-2">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-          </div>
-        ) : pages.error ? (
-          <ErrorLine error={pages.error} className="p-3" />
-        ) : items.length === 0 ? (
-          <div className="px-4 py-10 text-center text-body text-faint" data-testid="docs-empty">
-            <p className="mb-2 font-medium text-foreground">
-              <Trans>No pages yet</Trans>
-            </p>
-            <DocsGuide />
-          </div>
-        ) : (
-          <ul ref={list} className="flex flex-col">
-            {items.map((p, i) => (
-              <Row
-                key={`${p.inbox_id} ${p.page}`}
-                p={p}
-                current={`${p.inbox_id} ${p.page}` === currentKey}
-                cursor={i === cursor}
-                inboxColor={inboxes.length > 1 && !inboxId ? colors.get(p.inbox_id) : undefined}
-              />
-            ))}
-          </ul>
-        )}
-        {pages.hasNextPage && (
-          <div className="mt-2 flex justify-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => void pages.fetchNextPage()}
-              disabled={pages.isFetchingNextPage}
-            >
-              <Trans>Load more</Trans>
-            </Button>
-          </div>
-        )}
-      </nav>
+        <DocsPageList className="mt-2" />
+      </div>
     </Column>
   )
 }

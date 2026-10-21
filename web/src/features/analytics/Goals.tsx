@@ -3,7 +3,7 @@ import { ArrowLeftIcon, CalendarClockIcon, PencilIcon, PlusIcon, TargetIcon, Tra
 import { useState } from "react"
 import { useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, Segmented, Sparkline, useConfirm } from "@/components/common"
+import { ErrorLine, Notice, Segmented, useConfirm } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -12,7 +12,14 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { RowLabel } from "@/features/analytics/Breakdown"
 import { RevenueAmounts, RevenueTiles } from "@/features/analytics/Events"
 import { Change, TimeChart } from "@/features/analytics/Overview"
-import { BarList, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
+import {
+  BarList,
+  Panel,
+  PanelProblem,
+  QueryProblem,
+  useCurrentProperty,
+  usePropertyInbox,
+} from "@/features/analytics/parts"
 import {
   useAnalytics,
   useDeleteGoal,
@@ -23,7 +30,7 @@ import {
 } from "@/features/analytics/queries"
 import { grainFor, scopeOf, useView } from "@/features/analytics/state"
 import { formatCompact, formatMetric, num, OTHER, useAnalyticsText, type NumMetric } from "@/features/analytics/text"
-import { Field } from "@/features/settings/ui"
+import { Bars, Field, ProductTag } from "@/features/settings/ui"
 import {
   ApiError,
   type AnalyticsFilterDimension,
@@ -437,7 +444,7 @@ function GoalDetail({ goal, onBack }: { goal: AnalyticsGoal; onBack: () => void 
   )
 }
 
-function GoalSpark({ goal }: { goal: AnalyticsGoal }) {
+function GoalSpark({ goal, color }: { goal: AnalyticsGoal; color: string }) {
   const { t } = useLingui()
   const property = useCurrentProperty()
   const { view } = useView()
@@ -448,9 +455,17 @@ function GoalSpark({ goal }: { goal: AnalyticsGoal }) {
     ...scopeOf(view),
     goal_id: goal.id,
   })
-  if (!q.data) return <Skeleton className="h-10 w-20" />
+  if (!q.data) return <Skeleton className="h-10 w-[120px]" />
   const values = q.data.rows.map((r) => num(r.metrics, "conversions") ?? 0)
-  return <Sparkline values={values.slice(-14)} label={t`Conversions over time`} className="w-20" />
+  return (
+    <Bars
+      values={values.slice(-12)}
+      color={color}
+      label={t`Conversions over time`}
+      className="h-10 w-[120px] shrink-0 gap-[3px]"
+      fade={0.55}
+    />
+  )
 }
 
 function GoalRate({ value }: { value: string }) {
@@ -470,38 +485,44 @@ function GoalList({
   const text = useAnalyticsText()
   const describe = useGoalText()
   const property = useCurrentProperty()
+  const inbox = usePropertyInbox(property.inbox_id)
+  const color = inbox?.branding.color || "var(--brand)"
   const { view } = useView()
   const totals = useGoalTotals(property.id, goals, { range: view.range, ...scopeOf(view) })
   return (
     <>
       <QueryProblem error={totals.error} />
-      <ul className="grid gap-3 @lg:grid-cols-2 @2xl:grid-cols-3" data-testid="goals-table">
+      <ul className="grid grid-cols-3 gap-4 max-xl:grid-cols-2 phone:grid-cols-1" data-testid="goals-table">
         {goals.map((g) => {
           const m = totals.data?.get(g.id)
           return (
             <li key={g.id}>
               <button
                 type="button"
-                className="flex h-full w-full min-w-0 flex-col gap-3 rounded-2xl border bg-card p-4 text-start outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-full w-full min-w-0 flex-col gap-3 rounded-xl border bg-card p-[18px] text-start outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
                 onClick={() => onPick(g.id)}
                 data-testid="goal-row"
               >
-                <span className="flex min-w-0 flex-col">
-                  <span className="truncate font-medium">{g.name}</span>
-                  <span className="truncate font-mono text-caption text-faint" dir="auto">
-                    {describe(g)}
-                  </span>
+                <span className="flex min-w-0 items-center gap-2">
+                  <span className="min-w-0 flex-1 truncate font-semibold">{g.name}</span>
+                  {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
+                </span>
+                <span className="truncate font-mono text-caption text-faint" dir="auto">
+                  {describe(g)}
                 </span>
                 <span className="mt-auto flex items-end justify-between gap-3">
-                  <span className="flex min-w-0 flex-col">
-                    <b className="text-page leading-tight tabular-nums" title={text.metricHelp.conversions}>
+                  <span className="flex min-w-0 flex-col leading-[1.2]">
+                    <b
+                      className="text-[26px] font-semibold tracking-[-0.02em] tabular-nums"
+                      title={text.metricHelp.conversions}
+                    >
                       {m ? (
                         formatMetric("conversions", num(m, "conversions"), i18n.locale)
                       ) : (
                         <Dash pending={totals.isPending} />
                       )}
                     </b>
-                    <span className="truncate text-caption text-faint" title={text.metricHelp.conversion_rate}>
+                    <span className="mt-1 truncate text-caption text-faint" title={text.metricHelp.conversion_rate}>
                       {m && (
                         <GoalRate value={formatMetric("conversion_rate", num(m, "conversion_rate"), i18n.locale)} />
                       )}
@@ -512,7 +533,7 @@ function GoalList({
                       </span>
                     ) : null}
                   </span>
-                  <GoalSpark goal={g} />
+                  <GoalSpark goal={g} color={color} />
                 </span>
               </button>
             </li>
@@ -523,15 +544,15 @@ function GoalList({
             <button
               type="button"
               onClick={onNew}
-              className="flex h-full min-h-36 w-full flex-col items-center justify-center gap-1 rounded-2xl border border-dashed p-4 text-center text-muted-foreground outline-none transition-colors hover:border-faint hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-full min-h-36 w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-input p-[18px] text-center text-muted-foreground outline-none transition-colors hover:border-faint hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
               data-testid="goal-new"
             >
               <PlusIcon className="size-5" />
-              <span className="text-body font-medium">
+              <span>
                 <Trans>New goal</Trans>
               </span>
-              <span className="text-small text-faint">
-                <Trans>A page view, an event or a scroll depth</Trans>
+              <span className="text-caption text-faint">
+                <Trans>a page visit or an event from your site or app</Trans>
               </span>
             </button>
           </li>
@@ -551,9 +572,10 @@ export function GoalsView() {
   const property = useCurrentProperty()
   const goals = useGoals(property.id)
   const [params, setParams] = useSearchParams()
-  const [creating, setCreating] = useState(false)
+  const creating = params.get("goal") === "new"
   const list = goals.data ?? []
   const picked = list.find((g) => g.id === params.get("goal"))
+  const setCreating = (on: boolean) => pick(on ? "new" : null)
   const pick = (id: string | null) =>
     setParams((prev) => {
       const next = new URLSearchParams(prev)

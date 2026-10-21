@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: hi\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ड्राफ़्ट"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{total} में से {published} लेख प्रकाशित"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} प्रकाशित"
+msgid "{searches} searches"
+msgstr "{searches} खोजें"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "पते का अंतिम भाग"
 msgid "Agents may publish"
 msgstr "एजेंट प्रकाशित कर सकते हैं"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "सभी संग्रह"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "एक API कुंजी"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "कोई दूसरा सहायता केंद्र यह पता अभी या पहले इस्तेमाल करता है।"
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "आम सवालों के जवाब एक बार लिखकर दें। हर उत्पाद को अपना हेल्प सेंटर मिलता है, जिसमें लेख, कलेक्शन और लोग क्या खोजते हैं उसकी रिपोर्ट होती है।"
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "आम सवालों का जवाब एक बार, लिखित रूप में दें। लेख लिखने, उन्हें संग्रहों में समूहित करने और यह देखने के लिए कि ग्राहक क्या खोजते हैं, किसी इनबॉक्स का सहायता केंद्र चुनें।"
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "कोई भी स्थिति"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "इस संग्रह के लेख"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "लेख जिन्हें लोग आपको लिखने से पहले पढ़ते हैं"
 
@@ -161,6 +162,10 @@ msgstr "बुलेट सूची"
 msgid "Cancel"
 msgstr "रद्द करें"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "बदला गया"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "चार्ट"
@@ -191,6 +196,7 @@ msgstr "कोड ब्लॉक"
 msgid "Collection"
 msgstr "संग्रह"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "संग्रह"
@@ -213,12 +219,18 @@ msgstr "संग्रह बनाएँ"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "सहायता केंद्र बनाएँ"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "सहायता केंद्र बनाएँ ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0} के लिए एक बनाएँ"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "ड्राफ़्ट"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "ड्राफ़्ट जमा किया गया। कोई स्वामी या एडमिन इसे प्रकाशित कर सकता है।"
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "ड्राफ़्ट"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "इस अनुवाद के पिछले संस्करण। किसी एक को पुनर्स्थापित करने पर ड्राफ़्ट बदल जाता है; प्रकाशित पाठ तब तक रहता है जब तक आप प्रकाशित नहीं करते।"
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "फ़ॉर्मैटिंग"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "कुछ नहीं मिला · 7 दिन"
+msgid "Found nothing"
+msgstr "कुछ नहीं मिला"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "लेखों को समूहित करें ताकि आ�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "शीर्षक"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "सहायता"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "मुख्य भाषा"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "और"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "नाम"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "नया लेख"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "नया लेख ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "नया संग्रह"
@@ -499,15 +514,21 @@ msgstr "कोई संग्रह नहीं"
 msgid "No collections yet. Articles can stay without one."
 msgstr "अभी कोई संग्रह नहीं। लेख बिना संग्रह के रह सकते हैं।"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "कोई ड्राफ़्ट नहीं। जो भी लिखा गया है वह प्रकाशित है।"
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "अभी कोई पिछला संस्करण नहीं।"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "अभी कोई सहायता केंद्र नहीं। स्वामी और एडमिन इसे बनाते हैं।"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "कोई इनबॉक्स नहीं जिसके लिए सहायता केंद्र दिखाया जाए।"
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "बिना नाम"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "लिखा नहीं गया"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "लिखा नहीं गया"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "क्रमांकित सूची"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "{answers} जवाबों में से"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "पूर्वावलोकन"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "पूर्वावलोकन ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "पूर्वावलोकन ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "सहेजा गया"
 msgid "Saving…"
 msgstr "सहेजा जा रहा है…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "शीर्षकों में खोजें"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "शीर्षकों में खोजें ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "खोजें"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "खोजें · 7 दिन"
+msgid "searches this week"
+msgstr "इस हफ़्ते की खोजें"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,8 +787,8 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "शीर्षक से शुरू करें। पाठ आप आगे लिखेंगे, और प्रकाशित होने तक वह ड्राफ़्ट रहता है।"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
-msgstr "स्थिति"
+msgid "Status"
+msgstr "स्टेटस"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Submit draft"
@@ -867,10 +884,6 @@ msgstr "खोजने के लिए एक शब्द टाइप कर
 msgid "Unpublish"
 msgstr "प्रकाशन रद्द करें"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "प्रकाशन रद्द करें ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "इस अनुवाद का प्रकाशन रद्द करें?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "देखें"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "सहायता केंद्र देखें"
+msgid "View site"
+msgstr "साइट देखें"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "साइट देखें ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

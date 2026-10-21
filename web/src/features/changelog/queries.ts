@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import {
   api,
@@ -88,6 +88,26 @@ export function useEntries(changelogId: string, filters: ChangelogEntryFilters, 
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
     enabled: !!changelogId,
+  })
+}
+
+export function useAllEntries(changelogIds: string[], filters: ChangelogEntryFilters) {
+  const { workspaceId: ws } = useSession()
+  return useQueries({
+    queries: changelogIds.map((changelogId) => ({
+      queryKey: [...keys.changelogEntries(ws, changelogId, filters), "all"],
+      queryFn: () =>
+        unwrap(
+          api.GET("/v1/changelogs/{changelogId}/entries", {
+            params: { path: { changelogId }, query: { ...filters, limit: 50 } },
+          })
+        ),
+    })),
+    combine: (rs) => ({
+      data: rs.flatMap((r) => r.data?.items ?? []),
+      isPending: rs.some((r) => r.isPending),
+      error: rs.find((r) => r.error)?.error ?? null,
+    }),
   })
 }
 

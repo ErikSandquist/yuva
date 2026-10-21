@@ -8,16 +8,12 @@ msgstr ""
 "Language: de\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "{linked} verknüpftes Feedback"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# Feedback} other {# Feedbacks}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} warten auf Freigabe"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "{replies} Antworten"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "Freigeben"
 msgid "Approved"
 msgstr "Freigegeben"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "Mindestens 3 Zeichen."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "Zurück"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "Board gelöscht"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "Zählt Seitenaufrufe des öffentlichen Boards ohne Cookies."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Board erstellen"
@@ -93,6 +96,10 @@ msgstr "Board erstellen"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "Board erstellen ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "Idee erstellen"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "Löscht das Board mit seinen Ideen, Stimmen, Antworten und dem Phasenverlauf. Verknüpftes Feedback und sein Fortschritt bleiben erhalten. Die öffentliche Adresse funktioniert nicht mehr."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "Beschreibung"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "{title} in eine andere Phase ziehen"
+msgid "Done"
+msgstr "Fertig"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "Ideen, Stimmen und Phasen für {inboxName}, mit dem Feedback hinter jede
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "Ideen: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "Sie landet unter Ideen auf dem Board, wo Kunden dafür abstimmen können."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "In {stage} verschoben"
 msgid "Name"
 msgstr "Name"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "Neue Idee"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "Neue Idee aus diesem Feedback"
@@ -285,6 +302,7 @@ msgstr "Eine Idee aus dem Board dieses Postfachs wählen"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Wird als Ihre öffentliche Antwort auf die Idee gepostet. Markdown wird unterstützt."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "Privat"
@@ -311,11 +329,16 @@ msgstr "Leser können keine Ideen vorschlagen. Stimmen und Antworten funktionier
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Leser haben neue Ideen vorgeschlagen. Prüfen Sie sie, bevor sie auf dem öffentlichen Board erscheinen."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "Prüfen"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Roadmap"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "Roadmap-Boards"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "Zeigen Sie Ihren Kunden, woran Sie arbeiten, und verknüpfen Sie das Feedback hinter jeder Idee. Wählen Sie das Board eines Postfachs, um Ideen in Phasen einzuordnen."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "Zeig deinen Kunden, woran du arbeitest, und verknüpfe das Feedback hinter jeder Idee. Erstelle ein Board für ein Postfach, um Ideen in Phasen zu sortieren."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "Dieses Postfach hat keinen Web-Chat-Kanal. Fügen Sie zuerst einen hinzu, denn das öffentliche Board bettet ihn ein."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Titel"
 

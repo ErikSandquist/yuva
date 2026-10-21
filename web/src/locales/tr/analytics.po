@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# satır} other {# satır}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} konuşma"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "ziyaretçilerin {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} ziyaretçi"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# konuşma} other {# konuşma}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "İzin veren {consentedCount} kişi, ziyaretler ve günler boyunca"
@@ -121,6 +140,10 @@ msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} k
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.} other {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} puan"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Bu ay {limit} analitik olayın {used} tanesi kullanıldı. Sınırı aşan olaylar ay bitene kadar atılır."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Yeni parola, bağlantıyı açmış herkesin erişimini sonlandırır."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Bir sayfa görüntüleme, bir olay ya da kaydırma derinliği"
+msgid "a page visit or an event from your site or app"
+msgstr "sitenizden veya uygulamanızdan bir sayfa ziyareti ya da olay"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Analitik mülkleri"
 msgid "Analytics steps"
 msgstr "Analitik adımları"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Analitik görünümleri"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Bağlantıya sahip herkes, seçtiğiniz görünümleri oturum açmadan ve salt okunur olarak görür."
@@ -376,6 +395,11 @@ msgstr "Botlar"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Botlar, hız sınırları, hariç tutulan adresler ve yollar, aylık sınır ya da meşgul sunucu."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Hemen çıkma"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Hemen çıkma oranı"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Özelliğe göre dök"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Döküm"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "100 ziyaretçi başına dönüşüm."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Siteleriniz ve uygulamalarınızdaki ziyaretçiler, çerezsiz."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Sitelerinizde ve uygulamalarınızda çerezsiz ziyaretçiler"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Ayrıntılı kayıtlar {rawDay} tarihinden beri tutuluyor."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Ayrıntılı kayıtların başladığı gün"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Ayrıntılar"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "olaydan adres çıkarıldı"
 msgid "Health"
 msgstr "Durum"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Yararlı"
@@ -1170,6 +1190,10 @@ msgstr "Olaylar nasıl gönderilir"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Kaydettim"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Sayfayı iyileştir →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Son ekran"
 msgid "Leave empty to keep the current one"
 msgstr "Geçerli parolayı korumak için boş bırakın"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Konuşmaya yol açtı"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Bağlantı"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Saymak için bir gelen kutusu bağlayın"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Gelen kutusunu bağla"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Oturum açan kullanıcıları kişi kayıtlarına bağla"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "canlı"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Konum veritabanı"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Konumlar"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Aylar"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Daha fazla"
+msgid "More views"
+msgstr "Daha fazla görünüm"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Yeni {kind}: {value}, {count}; karşılaştırılan günlerde hiç yoktu
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Yeni {kind}: {value}. {metric}: {now}; karşılaştırılan günlerde hiç yoktu."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Yeni ve geri dönen"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Yeni huni"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Yeni hedef"
@@ -1477,10 +1509,6 @@ msgstr "Karşılaştırma yok"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Hiçbir izin özelliği sunulmuyor."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "Bu aralıkta izin veren ziyaretçi yok."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Yok"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "Bu aralıkta sayılan bir şey yok."
 
@@ -1767,6 +1796,10 @@ msgstr "Sayfa ya da ekran"
 msgid "Page view of {path}"
 msgstr "{path} sayfasının görüntülenmesi"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Sayfa görüntüleme"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Sayfalar"
@@ -1782,6 +1815,10 @@ msgstr "Görüntülenen sayfalar ve ekranlar."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Sayılmayan sayfalar"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Sayfalar, yol açtıkları sorulara göre sıralanır. Çok ziyaretçisi ve çok konuşması olan bir sayfanın, sayfanın kendisinde daha iyi bir yanıta ihtiyacı vardır."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay isteyen bir mülkte onaysız gelen olaylar alınır, ama ne saklanır ne de burada sayılır."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Geri dönüş"
 
@@ -2257,6 +2293,10 @@ msgstr "Kaynaklar"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Sıfırla"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Konuşma başlattı"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Sayfanın yararlı değil olarak değerlendirilme sayısı."
 msgid "To"
 msgstr "Bitiş"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Bugün"
@@ -2630,6 +2671,7 @@ msgstr "Görüntülemeler iki saatte {now} değerine çıktı; normalde {usual}.
 msgid "Visit duration"
 msgstr "Ziyaret süresi"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Ziyaretçiler"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Son 30 dakikadaki ziyaretçiler"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Şu an ziyaretçiler"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Do Not Track ya da Global Privacy Control kullanan ziyaretçiler hiçbir
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Ziyaretler"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Başarı sayılan ziyaretler ve olaylar"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Dönüşümler nereden geliyor"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Mülkün gününün başladığı ve bittiği yer."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "İnsanların hangi sayfaları ziyaret ettiği ve hangilerinin soruya yol açtığı"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

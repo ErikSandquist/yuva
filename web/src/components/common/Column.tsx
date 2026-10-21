@@ -69,7 +69,7 @@ export function Pane({
   className?: string
 }) {
   return (
-    <main className="min-h-0 flex-1 overflow-y-auto bg-background" data-testid={testId}>
+    <main className="min-h-0 flex-1 bg-background in-data-frame:overflow-y-auto" data-testid={testId}>
       <div
         className={cn(
           "mx-auto flex w-full flex-col gap-8 px-6 pt-6 pb-24 phone:px-4 phone:pt-3",

@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: el\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} πρόχειρα"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "{published} από {total} άρθρα δημοσιευμένα"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "{published} δημοσιευμένα"
+msgid "{searches} searches"
+msgstr "{searches} αναζητήσεις"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "Τέλος διεύθυνσης"
 msgid "Agents may publish"
 msgstr "Οι πράκτορες μπορούν να δημοσιεύουν"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "Όλες οι συλλογές"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "Ένα κλειδί API"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Άλλο κέντρο βοήθειας χρησιμοποιεί αυτή τη διεύθυνση, τώρα ή παλιότερα."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "Απαντήστε μία φορά στις συχνές ερωτήσεις, γραπτά. Κάθε προϊόν έχει το δικό του κέντρο βοήθειας με άρθρα, συλλογές και μια αναφορά για το τι αναζητούν οι άνθρωποι."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "Απαντήστε στις συχνές ερωτήσεις μία φορά, γραπτά. Επιλέξτε το κέντρο βοήθειας ενός εισερχομένων για να γράψετε άρθρα, να τα ομαδοποιήσετε σε συλλογές και να δείτε τι αναζητούν οι πελάτες."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "Οποιαδήποτε κατάσταση"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "Άρθρα σε αυτή τη συλλογή"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "Άρθρα που διαβάζουν οι άνθρωποι πριν σας γράψουν"
 
@@ -161,6 +162,10 @@ msgstr "Λίστα με κουκκίδες"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "Άλλαξε"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "Γράφημα"
@@ -191,6 +196,7 @@ msgstr "Μπλοκ κώδικα"
 msgid "Collection"
 msgstr "Συλλογή"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "Συλλογές"
@@ -213,12 +219,18 @@ msgstr "Δημιουργία συλλογής"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "Δημιουργία κέντρου βοήθειας"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Δημιουργία κέντρου βοήθειας ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "Δημιουργήστε ένα για το {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "Πρόχειρο"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Το πρόχειρο υποβλήθηκε. Ένας ιδιοκτήτης ή διαχειριστής μπορεί να το δημοσιεύσει."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "Πρόχειρα"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "Προηγούμενες εκδόσεις αυτής της μετάφρασης. Η επαναφορά μιας αντικαθιστά το πρόχειρο· το δημοσιευμένο κείμενο μένει μέχρι να δημοσιεύσετε."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "Μορφοποίηση"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "Δεν βρέθηκε τίποτα · 7 ημέρες"
+msgid "Found nothing"
+msgstr "Δεν βρέθηκε τίποτα"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "Ομαδοποιήστε τα άρθρα ώστε οι επισκέπτ�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "Επικεφαλίδα"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "Βοήθεια"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "Κύρια γλώσσα"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "Περισσότερα"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "Όνομα"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "Νέο άρθρο"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "Νέο άρθρο ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "Νέα συλλογή"
@@ -499,15 +514,21 @@ msgstr "Χωρίς συλλογή"
 msgid "No collections yet. Articles can stay without one."
 msgstr "Δεν υπάρχουν συλλογές ακόμη. Τα άρθρα μπορούν να μένουν χωρίς συλλογή."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "Δεν υπάρχουν πρόχειρα. Ό,τι έχει γραφτεί έχει δημοσιευτεί."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "Δεν υπάρχουν προηγούμενες εκδόσεις ακόμη."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "Δεν υπάρχει κέντρο βοήθειας ακόμη. Το δημιουργούν οι ιδιοκτήτες και οι διαχειριστές."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί κέντρο βοήθειας."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "χωρίς όνομα"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "δεν γράφτηκε"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Δεν γράφτηκε"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "Αριθμημένη λίστα"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "από {answers} απαντήσεις"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "Προεπισκόπηση"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "Προεπισκόπηση ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "Προεπισκόπηση ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "Αποθηκεύτηκε"
 msgid "Saving…"
 msgstr "Αποθήκευση…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "Αναζήτηση στους τίτλους"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "Αναζήτηση στους τίτλους ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "Αναζητήσεις"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "Αναζητήσεις · 7 ημέρες"
+msgid "searches this week"
+msgstr "αναζητήσεις αυτή την εβδομάδα"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "Ξεκινήστε με έναν τίτλο. Το κείμενο το γράφετε μετά και μένει πρόχειρο μέχρι να δημοσιευτεί."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "Κατάσταση"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "Πληκτρολογήστε μια λέξη για αναζήτηση."
 msgid "Unpublish"
 msgstr "Αποδημοσίευση"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "Αποδημοσίευση ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Αποδημοσίευση αυτής της μετάφρασης;"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "Προβολή"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "Προβολή κέντρου βοήθειας"
+msgid "View site"
+msgstr "Προβολή ιστότοπου"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "Προβολή ιστότοπου ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

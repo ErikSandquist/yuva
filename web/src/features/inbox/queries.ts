@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { api, unwrap, type ConversationBulkUpdate, type ConversationKind } from "@/lib/api"
+import { api, unwrap, type ConversationBulkUpdate, type ConversationKind, type ConversationListItem } from "@/lib/api"
 import { keys, type ConversationFilters, type DraftFilters } from "@/lib/keys"
 import { applyEvent } from "@/lib/live"
 import { isLive } from "@/lib/realtime"
@@ -17,6 +17,13 @@ export function useConversations(filters: ConversationFilters, enabled = true) {
     getNextPageParam: (last) => last.next_cursor,
     enabled,
   })
+}
+
+export function useLoadedCount(filters: ConversationFilters, keep?: (c: ConversationListItem) => boolean) {
+  const q = useConversations(filters)
+  if (!q.data || q.hasNextPage) return undefined
+  const items = q.data.pages.flatMap((p) => p.items)
+  return keep ? items.filter(keep).length : items.length
 }
 
 export function useCounts(kind?: ConversationKind[]) {

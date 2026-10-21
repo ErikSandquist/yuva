@@ -21,6 +21,25 @@ msgstr "{0, plural, other {# baris}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, other {pengunjung hari ini}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} percakapan"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} dari pengunjung"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} pengunjung"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, other {# percakapan}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} setuju, lintas kunjungan dan hari"
@@ -121,6 +140,10 @@ msgstr "{overall} dari pengunjung yang mencapai langkah pertama juga mencapai ya
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, other {{dim} {value}: # percakapan per 1.000 tayangan, dibanding {site} di semua halaman.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} poin"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} dari {limit} peristiwa analitik terpakai bulan ini. Peristiwa di atas batas dibuang sampai bulan berakhir."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Kata sandi baru mengeluarkan semua orang yang membuka tautan."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Tampilan halaman, peristiwa, atau kedalaman gulir"
+msgid "a page visit or an event from your site or app"
+msgstr "kunjungan halaman atau peristiwa dari situs atau aplikasi Anda"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Properti analitik"
 msgid "Analytics steps"
 msgstr "Langkah analitik"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Tampilan analitik"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Siapa pun yang memiliki tautan melihat tampilan yang Anda pilih, hanya-baca, tanpa masuk."
@@ -376,6 +395,11 @@ msgstr "Bot"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Bot, pembatasan laju, alamat dan path yang dikecualikan, batas bulanan, atau server yang sibuk."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Pentalan"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Rasio pentalan"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Rinci menurut prop"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Rincian"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Konversi per 100 pengunjung."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Pengunjung situs dan aplikasi Anda, tanpa cookie."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Pengunjung tanpa cookie di situs dan aplikasi Anda"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Catatan terperinci disimpan sejak {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Catatan terperinci disimpan sejak"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Detail"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "dihapus alamatnya"
 msgid "Health"
 msgstr "Kesehatan"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Membantu"
@@ -1170,6 +1190,10 @@ msgstr "Cara mengirim peristiwa"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Sudah saya simpan"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Perbaiki halaman →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Layar terakhir"
 msgid "Leave empty to keep the current one"
 msgstr "Kosongkan untuk mempertahankan yang sekarang"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Berujung pada percakapan"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Tautan"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Tautkan kotak masuk untuk menghitungnya"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Tautkan kotak masuk"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Tautkan pengguna yang masuk ke kontak mereka"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "langsung"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Basis data lokasi"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Lokasi"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Bulan"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Lainnya"
+msgid "More views"
+msgstr "Tampilan lainnya"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "{kind} baru: {value} dengan {count}, tidak ada pada hari yang dibandingk
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} baru: {value}. {metric}: {now}, tidak ada pada hari yang dibandingkan."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Baru dan kembali"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Corong baru"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Sasaran baru"
@@ -1477,10 +1509,6 @@ msgstr "Tanpa perbandingan"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Tidak ada fitur persetujuan yang ditawarkan."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "Tidak ada pengunjung yang setuju pada rentang ini."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Tidak ada"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "Tidak ada yang dihitung pada rentang ini."
 
@@ -1767,6 +1796,10 @@ msgstr "Halaman atau layar"
 msgid "Page view of {path}"
 msgstr "Tayangan halaman {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Tampilan halaman"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Halaman"
@@ -1782,6 +1815,10 @@ msgstr "Halaman dan layar yang dilihat."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Halaman yang tidak dihitung"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Halaman diurutkan menurut pertanyaan yang ditimbulkannya. Halaman dengan banyak pengunjung dan banyak percakapan membutuhkan jawaban yang lebih baik di halaman itu sendiri."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Permintaan dengan Do Not Track atau Global Privacy Control, dan peristiwa tanpa persetujuan pada properti yang memerlukannya, diterima tetapi tidak disimpan maupun dihitung di sini."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retensi"
 
@@ -2257,6 +2293,10 @@ msgstr "Sumber"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Mulai dari awal"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Memulai percakapan"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Berapa kali halaman dinilai tidak membantu."
 msgid "To"
 msgstr "Kepada"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Hari ini"
@@ -2630,6 +2671,7 @@ msgstr "Tayangan naik menjadi {now} dalam dua jam, dibanding biasanya {usual}."
 msgid "Visit duration"
 msgstr "Durasi kunjungan"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Pengunjung"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Pengunjung dalam 30 menit terakhir"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Pengunjung saat ini"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Pengunjung dengan Do Not Track atau Global Privacy Control tidak mengiri
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Kunjungan"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Kunjungan dan peristiwa yang dihitung sebagai keberhasilan"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Dari mana konversi berasal"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Tempat hari properti dimulai dan berakhir."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Halaman mana yang dikunjungi orang, dan mana yang memunculkan pertanyaan"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

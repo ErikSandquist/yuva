@@ -2,8 +2,10 @@ import { Trans } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
+import { ErrorLine } from "@/components/common"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Field, FormActions, FormCard, Section } from "@/features/settings/ui"
+import { Block, BlockRow, headButton } from "@/features/settings/ui"
 import { api, unwrap } from "@/lib/api"
 import { meKey, useSession } from "@/lib/session"
 
@@ -20,47 +22,55 @@ export function RetentionForm() {
   })
   const dirty = days !== current
   return (
-    <Section title={<Trans>Data retention</Trans>}>
-      <FormCard
-        onSubmit={() => save.mutate()}
-        footer={
-          isOwner ? (
-            <FormActions
-              pending={save.isPending}
-              disabled={!dirty}
-              saved={save.isSuccess && !dirty}
-              error={save.error}
-            />
-          ) : (
-            <p className="text-body text-muted-foreground">
-              <Trans>Only owners can change this.</Trans>
-            </p>
-          )
+    <Block
+      title={<Trans>Workspace</Trans>}
+      description={<Trans>Shown to your team and in e-mails from Yuva</Trans>}
+      onSubmit={() => save.mutate()}
+      testId="workspace-general"
+      footer={
+        isOwner ? (
+          <>
+            <ErrorLine error={save.error} className="min-w-0 flex-1" />
+            {save.isSuccess && !dirty && !save.error && (
+              <span className="flex-1 text-muted-foreground" role="status">
+                <Trans>Saved</Trans>
+              </span>
+            )}
+            <Button type="submit" className={headButton.primary} disabled={save.isPending || !dirty}>
+              <Trans>Save</Trans>
+            </Button>
+          </>
+        ) : (
+          <p className="me-auto text-muted-foreground">
+            <Trans>Only owners can change this.</Trans>
+          </p>
+        )
+      }
+    >
+      <BlockRow label={<Trans>Name</Trans>}>
+        <span className="truncate">{membership.workspace.name}</span>
+      </BlockRow>
+      <BlockRow
+        label={<Trans>Delete after (days)</Trans>}
+        htmlFor="retention-days"
+        hint={
+          <Trans>
+            Closed conversations untouched for this many days are deleted with their messages and attachments, and raw
+            e-mails older than this are deleted. Leave empty to keep everything.
+          </Trans>
         }
       >
-        <fieldset disabled={!isOwner} className="contents">
-          <Field
-            label={<Trans>Delete after (days)</Trans>}
-            htmlFor="retention-days"
-            hint={
-              <Trans>
-                Closed conversations untouched for this many days are deleted with their messages and attachments, and
-                raw e-mails older than this are deleted. Leave empty to keep everything.
-              </Trans>
-            }
-          >
-            <Input
-              id="retention-days"
-              type="number"
-              min={1}
-              max={36500}
-              value={days}
-              onChange={(e) => setDays(e.target.value)}
-              className="sm:max-w-40"
-            />
-          </Field>
-        </fieldset>
-      </FormCard>
-    </Section>
+        <Input
+          id="retention-days"
+          type="number"
+          min={1}
+          max={36500}
+          value={days}
+          disabled={!isOwner}
+          onChange={(e) => setDays(e.target.value)}
+          className="h-[34px] w-[200px] rounded-lg border-input"
+        />
+      </BlockRow>
+    </Block>
   )
 }

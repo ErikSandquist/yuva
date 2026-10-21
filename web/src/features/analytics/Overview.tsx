@@ -1,29 +1,15 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowDownRightIcon, ArrowUpRightIcon } from "lucide-react"
-import { useState } from "react"
 import { Link } from "react-router"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import { Segmented } from "@/components/common"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
-import { deviceCard, groupDimensions, RowLabel, type Group } from "@/features/analytics/Breakdown"
-import {
-  Attribution,
-  BarList,
-  ConsentedOnly,
-  offersPersistent,
-  CsvButton,
-  Panel,
-  PanelProblem,
-  QueryProblem,
-  useCurrentProperty,
-} from "@/features/analytics/parts"
-import { downloadCsv, useAnalytics, useShare, type Query } from "@/features/analytics/queries"
 import { AddNoteButton, annotationMarks, AnnotationList } from "@/features/analytics/Annotations"
-import { OverviewInsights } from "@/features/analytics/Insights"
-import { useAnnotations } from "@/features/analytics/queries"
-import { grainFor, KPIS, scopeOf, useView, useViewSearch } from "@/features/analytics/state"
+import { deviceCard, RowLabel, type Group } from "@/features/analytics/Breakdown"
+import { Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
+import { useAnalytics, useAnnotations, useRealtime, useShare } from "@/features/analytics/queries"
+import { grainFor, scopeOf, todayIso, useView, useViewSearch, type View } from "@/features/analytics/state"
 import {
   formatCompact,
   formatMetric,
@@ -33,6 +19,7 @@ import {
   useAnalyticsText,
   type NumMetric,
 } from "@/features/analytics/text"
+import { StatTile } from "@/features/settings/ui"
 import type { AnalyticsFilterDimension, AnalyticsMetric } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -61,54 +48,112 @@ export function Change({ now, before, metric }: { now?: number; before?: number;
 }
 
 function Kpis() {
-  const { i18n } = useLingui()
-  const text = useAnalyticsText()
+  const { t, i18n } = useLingui()
   const property = useCurrentProperty()
-  const { view, setMetric } = useView()
-  const q = useAnalytics(property.id, {
-    metrics: KPIS,
+  const share = useShare()
+  const { view } = useView()
+  const live = useRealtime(property.id, !share || share.views.includes("realtime"))
+  const traffic = useAnalytics(property.id, {
+    metrics: ["visitors", "pageviews", "bounce_rate"],
     range: view.range,
     ...scopeOf(view),
-    compare: view.compare,
+    compare: { with: "previous" },
   })
-  const totals = q.data?.totals
-  const before = q.data?.comparison?.totals
+  const support = useAnalytics(
+    property.id,
+    { dataset: "support", metrics: ["conversations"], range: view.range, filters: supportFilters(view) },
+    !!property.inbox_id && !share
+  )
+  const totals = traffic.data?.totals
+  const before = traffic.data?.comparison?.totals
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  const pending = traffic.isPending
+  const value = (m: NumMetric) =>
+    pending ? <Skeleton className="mt-1 h-7 w-16" /> : formatMetric(m, num(totals, m), i18n.locale)
+  const visitors = num(totals, "visitors") ?? 0
+  const conversations = num(support.data?.totals, "conversations")
+  const share1 = new Intl.NumberFormat(i18n.locale, { style: "percent", maximumFractionDigits: 1 })
   return (
     <>
-      <QueryProblem error={q.error} />
-      <div className="grid grid-cols-3 gap-2 phone:grid-cols-2" role="group" data-testid="analytics-kpis">
-        {KPIS.map((m) => (
-          <button
-            key={m}
-            type="button"
-            aria-pressed={view.metric === m}
-            onClick={() => setMetric(m)}
-            title={text.metricHelp[m]}
-            className={cn(
-              "flex min-w-0 flex-col items-start rounded-2xl border bg-card px-4 py-3 text-start outline-none transition-colors hover:border-foreground/20 focus-visible:ring-2 focus-visible:ring-ring phone:px-3",
-              view.metric === m && "border-brand/60 ring-1 ring-brand/30"
-            )}
-            data-testid={`kpi-${m}`}
-          >
-            <span className="max-w-full truncate text-small text-faint">{text.metric[m]}</span>
-            {q.isPending ? (
-              <Skeleton className="mt-1 h-7 w-16" />
-            ) : (
-              <span className="flex flex-wrap items-baseline gap-x-2">
-                <b className="text-page tabular-nums">{formatMetric(m, num(totals, m), i18n.locale)}</b>
-                {view.compare && <Change now={num(totals, m)} before={num(before, m)} metric={m} />}
-              </span>
-            )}
-            {view.compare && !q.isPending && (
-              <span className="max-w-full truncate text-caption text-faint tabular-nums">
-                {formatMetric(m, num(before, m), i18n.locale)}
-              </span>
-            )}
-          </button>
-        ))}
+      <QueryProblem error={traffic.error} />
+      <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 phone:grid-cols-2" data-testid="analytics-kpis">
+        {(!share || share.views.includes("realtime")) && (
+          <StatTile
+            live
+            label={<Trans>Visitors now</Trans>}
+            value={live.data ? fmt.format(live.data.visitors) : <Skeleton className="mt-1 h-7 w-10" />}
+            hint={<Trans>live</Trans>}
+            testId="kpi-realtime"
+          />
+        )}
+        <StatTile
+          label={<Trans>Visitors</Trans>}
+          value={value("visitors")}
+          hint={<Delta now={num(totals, "visitors")} before={num(before, "visitors")} metric="visitors" />}
+          testId="kpi-visitors"
+        />
+        <StatTile
+          label={<Trans>Page views</Trans>}
+          value={value("pageviews")}
+          hint={<Delta now={num(totals, "pageviews")} before={num(before, "pageviews")} metric="pageviews" />}
+          testId="kpi-pageviews"
+        />
+        <StatTile
+          label={<Trans>Bounce</Trans>}
+          value={value("bounce_rate")}
+          hint={<Delta now={num(totals, "bounce_rate")} before={num(before, "bounce_rate")} metric="bounce_rate" />}
+          testId="kpi-bounce_rate"
+        />
+        {!share && (
+          <StatTile
+            label={<Trans>Started a conversation</Trans>}
+            value={
+              !property.inbox_id ? (
+                "–"
+              ) : conversations === undefined ? (
+                <Skeleton className="mt-1 h-7 w-12" />
+              ) : (
+                fmt.format(conversations)
+              )
+            }
+            hint={
+              !property.inbox_id ? (
+                <Link to={`/analytics/${property.id}/support`} className="hover:text-foreground">
+                  <Trans>Link an inbox to count them</Trans>
+                </Link>
+              ) : conversations !== undefined && visitors > 0 ? (
+                <span className="text-success">{t`${share1.format(conversations / visitors)} of visitors`}</span>
+              ) : undefined
+            }
+            testId="kpi-conversations"
+          />
+        )}
       </div>
     </>
   )
+}
+
+function Delta({ now, before, metric }: { now?: number; before?: number; metric: NumMetric }) {
+  const { i18n } = useLingui()
+  if (now === undefined || before === undefined || (before === 0 && metric !== "bounce_rate")) return null
+  const rate = metric === "bounce_rate"
+  const change = rate ? now - before : (now - before) / before
+  if (change === 0) return null
+  const good = lowerIsBetter(metric) ? change < 0 : change > 0
+  const shown = rate
+    ? new Intl.NumberFormat(i18n.locale, { maximumFractionDigits: 0, signDisplay: "always" }).format(change)
+    : new Intl.NumberFormat(i18n.locale, { style: "percent", maximumFractionDigits: 0, signDisplay: "always" }).format(
+        change
+      )
+  return (
+    <span className={cn("tabular-nums", good ? "text-success" : "text-destructive")} data-testid="kpi-change">
+      {rate ? <Trans>{shown} pts</Trans> : shown}
+    </span>
+  )
+}
+
+function supportFilters(view: View) {
+  return view.filters.filter((f) => f.dimension === "page" || f.dimension === "hostname")
 }
 
 function bucketLabel(format: Intl.DateTimeFormat, v: string) {
@@ -257,140 +302,196 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
   )
 }
 
-function BreakdownCard({
+function VisitorsChart() {
+  const { t, i18n } = useLingui()
+  const text = useAnalyticsText()
+  const property = useCurrentProperty()
+  const share = useShare()
+  const { view } = useView()
+  const grain = grainFor(view.range, "visitors")
+  const q = useAnalytics(property.id, {
+    metrics: ["visitors"],
+    dimensions: [grain],
+    range: view.range,
+    ...scopeOf(view),
+  })
+  const support = useAnalytics(
+    property.id,
+    {
+      dataset: "support",
+      metrics: ["conversations"],
+      dimensions: [grain],
+      range: view.range,
+      filters: supportFilters(view),
+    },
+    !!property.inbox_id && !share && grain !== "time:hour"
+  )
+  const hour = grain === "time:hour"
+  const tick = new Intl.DateTimeFormat(
+    i18n.locale,
+    hour ? { timeStyle: "short", timeZone: "UTC" } : { day: "numeric", month: "short", timeZone: "UTC" }
+  )
+  const asked = new Map(
+    (support.data?.rows ?? []).map((r) => [r.dimensions[0] ?? "", num(r.metrics, "conversations") ?? 0])
+  )
+  const rows = (q.data?.rows ?? []).map((r) => ({
+    at: r.dimensions[0] ?? "",
+    visitors: num(r.metrics, "visitors") ?? 0,
+    conversations: asked.get(r.dimensions[0] ?? "") ?? 0,
+  }))
+  const top = Math.max(1, ...rows.map((r) => r.visitors + r.conversations))
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  const middle = rows[Math.floor((rows.length - 1) / 2)]
+  const end = rows[rows.length - 1]
+  const showConversations = !!property.inbox_id && !share && !hour
+  return (
+    <section className="flex flex-col gap-3 rounded-xl border bg-card p-4" data-testid="analytics-chart">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <h2 className="min-w-0 flex-1 font-semibold">{text.metric.visitors}</h2>
+        <span className="flex items-center gap-1.5 text-caption text-faint">
+          <span className="size-2.5 rounded-[2px] bg-brand" aria-hidden />
+          {text.metric.visitors}
+        </span>
+        {showConversations && (
+          <span className="flex items-center gap-1.5 text-caption text-faint">
+            <span className="size-2.5 rounded-[2px] bg-foreground" aria-hidden />
+            <Trans>Started a conversation</Trans>
+          </span>
+        )}
+      </div>
+      {q.isPending ? (
+        <Skeleton className="h-[180px] w-full" />
+      ) : q.error ? (
+        <PanelProblem error={q.error} />
+      ) : (
+        <div className="flex h-[180px] items-end gap-1 border-b" role="img" aria-label={text.metric.visitors}>
+          {rows.map((r, i) => (
+            <span
+              key={r.at}
+              className="flex h-full flex-1 flex-col-reverse gap-px"
+              title={`${bucketLabel(tick, r.at)} · ${t`${fmt.format(r.visitors)} visitors`}${
+                showConversations ? ` · ${t`${fmt.format(r.conversations)} conversations`}` : ""
+              }`}
+            >
+              {r.conversations > 0 && (
+                <span className="bg-foreground" style={{ height: `max(2px, ${(r.conversations / top) * 100}%)` }} />
+              )}
+              <span
+                className="rounded-t-[3px] bg-brand"
+                style={{
+                  height: r.visitors ? `max(2px, ${(r.visitors / top) * 100}%)` : 0,
+                  opacity: i === rows.length - 1 ? 1 : 0.8,
+                }}
+              />
+            </span>
+          ))}
+        </div>
+      )}
+      {rows.length > 0 && (
+        <div className="flex justify-between text-caption text-faint">
+          <span>{bucketLabel(tick, rows[0].at)}</span>
+          {middle && rows.length > 2 && <span>{bucketLabel(tick, middle.at)}</span>}
+          <span>
+            {end && end.at.slice(0, 10) === todayIso() && !hour ? <Trans>Today</Trans> : bucketLabel(tick, end.at)}
+          </span>
+        </div>
+      )}
+    </section>
+  )
+}
+
+function Box({
   group,
   title,
-  dims,
+  dim,
+  mono,
   testId,
 }: {
   group: Group
   title: React.ReactNode
-  dims: AnalyticsFilterDimension[]
+  dim: AnalyticsFilterDimension
+  mono?: boolean
   testId: string
 }) {
-  const { t, i18n } = useLingui()
-  const text = useAnalyticsText()
-  const property = useCurrentProperty()
-  const search = useViewSearch()
-  const { view, addFilter } = useView()
-  const share = useShare()
-  const [dim, setDim] = useState(dims[0])
-  const by = dims.includes(dim) ? dim : dims[0]
-  const body: Query = {
-    metrics: ["visitors"],
-    dimensions: [by],
-    range: view.range,
-    ...scopeOf(view),
-    limit: 8,
-  }
-  const q = useAnalytics(property.id, body)
-  const rows = q.data?.rows ?? []
-  const join = search ? `${search}&by=${by}` : `?by=${by}`
-  const details = share ? `/share/${share.token}/${group}${join}` : `/analytics/${property.id}/${group}${join}`
-  return (
-    <Panel
-      title={title}
-      testId={testId}
-      action={
-        dims.length > 1 && (
-          <Segmented
-            value={by}
-            onChange={setDim}
-            label={t`Breakdown`}
-            itemClassName="h-6 px-2 text-small"
-            items={dims.map((d) => ({ value: d, label: text.dimension[d] }))}
-          />
-        )
-      }
-      footer={
-        <>
-          <Link to={details} className="text-small text-brand underline-offset-4 hover:underline">
-            <Trans>Details</Trans>
-          </Link>
-          <span className="flex-1" />
-          {group === "locations" && <Attribution propertyId={property.id} />}
-          <CsvButton run={() => downloadCsv(property.id, body, `${property.name}-${by}`)} />
-        </>
-      }
-    >
-      {q.isPending ? (
-        <Skeleton className="h-40 w-full" />
-      ) : q.error ? (
-        <PanelProblem error={q.error} />
-      ) : rows.length === 0 ? (
-        <p className="px-2 py-6 text-center text-body text-faint">
-          <Trans>Nothing counted in this range.</Trans>
-        </p>
-      ) : (
-        <BarList
-          head={[text.dimension[by], text.metric.visitors]}
-          items={rows.map((r, i) => {
-            const value = r.dimensions[0] ?? ""
-            return {
-              key: `${value}${i}`,
-              label: <RowLabel dim={by} row={r} value={value} text={text} />,
-              value: num(r.metrics, "visitors") ?? 0,
-              display: formatCompact(num(r.metrics, "visitors") ?? 0, i18n.locale),
-              onClick: value === OTHER || share ? undefined : () => addFilter(by, value),
-            }
-          })}
-        />
-      )}
-    </Panel>
-  )
-}
-
-function VisitorTypeCard() {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
   const property = useCurrentProperty()
+  const share = useShare()
+  const search = useViewSearch()
   const { view, addFilter } = useView()
   const q = useAnalytics(property.id, {
     metrics: ["visitors"],
-    dimensions: ["visitor_type"],
+    dimensions: [dim],
     range: view.range,
     ...scopeOf(view),
+    limit: 5,
   })
-  const rows = (q.data?.rows ?? []).filter((r) => r.dimensions[0] === "new" || r.dimensions[0] === "returning")
+  const rows = q.data?.rows ?? []
+  const max = Math.max(1, ...rows.map((r) => num(r.metrics, "visitors") ?? 0))
+  const join = search ? `${search}&by=${dim}` : `?by=${dim}`
+  const details = share ? `/share/${share.token}/${group}${join}` : `/analytics/${property.id}/${group}${join}`
   return (
-    <Panel
-      title={<Trans>New and returning</Trans>}
-      action={<ConsentedOnly />}
-      testId="card-visitor-type"
-      footer={
-        <Link
-          to={`/analytics/${property.id}/retention`}
-          className="text-small text-brand underline-offset-4 hover:underline"
-        >
-          <Trans>Retention</Trans>
-        </Link>
-      }
-    >
+    <section className="flex min-w-0 flex-col overflow-hidden rounded-xl border bg-card" data-testid={testId}>
+      <div className="flex min-h-11 items-center gap-2 border-b px-4 py-2.5">
+        <h2 className="min-w-0 flex-1 truncate font-semibold">
+          <Link to={details} className="hover:underline">
+            {title}
+          </Link>
+        </h2>
+        <span className="text-caption text-faint">{text.metric.visitors.toLocaleLowerCase(i18n.locale)}</span>
+      </div>
       {q.isPending ? (
-        <Skeleton className="h-16 w-full" />
+        <Skeleton className="m-4 h-36" />
       ) : q.error ? (
         <PanelProblem error={q.error} />
       ) : rows.length === 0 ? (
-        <p className="px-2 py-6 text-center text-body text-faint">
-          <Trans>No consented visitors in this range.</Trans>
+        <p className="px-4 py-8 text-center text-body text-faint">
+          <Trans>Nothing counted in this range.</Trans>
         </p>
       ) : (
-        <BarList
-          head={[text.dimension.visitor_type, text.metric.visitors]}
-          items={rows.map((r) => {
+        <ul className="py-px">
+          {rows.map((r, i) => {
             const value = r.dimensions[0] ?? ""
             const v = num(r.metrics, "visitors") ?? 0
-            return {
-              key: value,
-              label: text.visitorType[value],
-              value: v,
-              display: formatCompact(v, i18n.locale),
-              onClick: () => addFilter("visitor_type", value),
-            }
+            const click = value === OTHER || share ? undefined : () => addFilter(dim, value)
+            const inner = (
+              <>
+                <span
+                  aria-hidden
+                  className="absolute inset-y-[3px] start-0 rounded-e-md bg-brand/8"
+                  style={{ width: `${Math.max(1.5, (v / max) * 100)}%` }}
+                />
+                <span className={cn("relative min-w-0 flex-1 truncate text-start", mono && "font-mono text-[13px]")}>
+                  <RowLabel dim={dim} row={r} value={value} text={text} />
+                </span>
+                <span className="relative shrink-0 text-muted-foreground tabular-nums">
+                  {formatCompact(v, i18n.locale)}
+                </span>
+              </>
+            )
+            const cls = "relative flex w-full items-center gap-3 px-4 py-[9px] outline-none"
+            return (
+              <li key={`${value}${i}`}>
+                {click ? (
+                  <button
+                    type="button"
+                    onClick={click}
+                    className={cn(cls, "transition-colors hover:bg-surface focus-visible:bg-surface")}
+                    data-testid="analytics-bar"
+                  >
+                    {inner}
+                  </button>
+                ) : (
+                  <div className={cls} data-testid="analytics-bar">
+                    {inner}
+                  </div>
+                )}
+              </li>
+            )
           })}
-        />
+        </ul>
       )}
-    </Panel>
+    </section>
   )
 }
 
@@ -398,45 +499,17 @@ export function Overview() {
   const property = useCurrentProperty()
   const text = useAnalyticsText()
   const share = useShare()
-  const { view } = useView()
   const shown = (g: Group) => !share || share.views.includes(g)
-  const sources: AnalyticsFilterDimension[] = ["channel", "source", "utm_campaign"]
+  const devices = deviceCard(property)[0]
   return (
     <div className="flex flex-col gap-4" data-testid="analytics-overview">
       <Kpis />
-      {!share && <OverviewInsights property={property} view={view} />}
-      <TimeChart />
-      <div className="grid gap-4 md:grid-cols-2">
-        {shown("pages") && (
-          <BreakdownCard
-            group="pages"
-            title={text.title.top}
-            dims={["page", "entry_page", "exit_page"]}
-            testId="card-pages"
-          />
-        )}
-        {shown("sources") && (
-          <BreakdownCard group="sources" title={<Trans>Sources</Trans>} dims={sources} testId="card-sources" />
-        )}
-        {shown("locations") && (
-          <BreakdownCard
-            group="locations"
-            title={<Trans>Locations</Trans>}
-            dims={groupDimensions("locations", property)}
-            testId="card-locations"
-          />
-        )}
-        {shown("devices") && (
-          <BreakdownCard
-            group="devices"
-            title={<Trans>Devices</Trans>}
-            dims={deviceCard(property)}
-            testId="card-devices"
-          />
-        )}
-        {!share && offersPersistent(property) && <VisitorTypeCard />}
+      <VisitorsChart />
+      <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4 max-lg:grid-cols-1">
+        {shown("pages") && <Box group="pages" title={text.title.top} dim="page" mono testId="card-pages" />}
+        {shown("sources") && <Box group="sources" title={<Trans>Sources</Trans>} dim="source" testId="card-sources" />}
+        {shown("devices") && <Box group="devices" title={<Trans>Devices</Trans>} dim={devices} testId="card-devices" />}
       </div>
-      <p className="mx-1 text-caption text-faint">{text.metricHelp.visitors}</p>
     </div>
   )
 }

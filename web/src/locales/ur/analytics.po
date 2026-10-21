@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# قطار} other {# قطاریں}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {آج کا وزیٹر} other {آج کے وزیٹرز}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} گفتگوئیں"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "وزیٹرز کا {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} وزیٹرز"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# گفتگو} other {# گفتگوئیں}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} نے رضامندی دی، وزٹس اور دنوں میں"
@@ -121,6 +140,10 @@ msgstr "پہلے مرحلے تک پہنچنے والے وزیٹرز میں سے 
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: فی 1,000 ویوز # گفتگو، تمام صفحات پر {site} کے مقابلے میں۔} other {{dim} {value}: فی 1,000 ویوز # گفتگوئیں، تمام صفحات پر {site} کے مقابلے میں۔}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} پوائنٹس"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "اس مہینے {limit} میں سے {used} اینالیٹکس واقعات استعمال ہوئے۔ حد سے زیادہ واقعات مہینہ ختم ہونے تک چھوڑ دیے جاتے ہیں۔"
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "نیا پاس ورڈ ان سب کو سائن آؤٹ کر دیتا ہے جنہوں نے لنک کھولا۔"
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "ایک صفحے کا ملاحظہ، ایک ایونٹ یا اسکرول کی گہرائی"
+msgid "a page visit or an event from your site or app"
+msgstr "آپ کی سائٹ یا ایپ سے صفحے کا دورہ یا ایونٹ"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "اینالیٹکس پراپرٹیز"
 msgid "Analytics steps"
 msgstr "اینالیٹکس کے مراحل"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "اینالیٹکس ویوز"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "لنک رکھنے والا ہر شخص آپ کے چنے ہوئے ویوز دیکھتا ہے، صرف پڑھنے کے لیے، بغیر سائن ان کے۔"
@@ -376,6 +395,11 @@ msgstr "بوٹس"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "بوٹس، ریٹ لمٹس، خارج شدہ پتے اور پاتھ، ماہانہ حد یا مصروف سرور۔"
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "باؤنس"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "باؤنس ریٹ"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "پراپ کے لحاظ سے تقسیم کریں"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "تقسیم"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "فی 100 وزیٹرز کنورژنز۔"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "آپ کی سائٹس اور ایپس کے وزیٹرز، کوکیز کے بغیر۔"
+msgid "Cookieless visitors across your sites and apps"
+msgstr "آپ کی سائٹس اور ایپس پر کوکیز کے بغیر وزیٹرز"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "تفصیلی ریکارڈ {rawDay} سے رکھے جاتے ہیں۔"
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "تفصیلی ریکارڈ جب سے رکھے جاتے ہیں"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "تفصیلات"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "ایک پتہ ہٹایا گیا"
 msgid "Health"
 msgstr "صحت"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "مفید"
@@ -1170,6 +1190,10 @@ msgstr "واقعات کیسے بھیجیں"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "میں نے محفوظ کر لیا"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "صفحہ بہتر کریں ←"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "آخری اسکرین"
 msgid "Leave empty to keep the current one"
 msgstr "موجودہ رکھنے کے لیے خالی چھوڑیں"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "گفتگو تک پہنچایا"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "لنک"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "گننے کے لیے ایک ان باکس منسلک کریں"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "ان باکس جوڑیں"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "سائن ان صارفین کو ان کے رابطے سے جوڑیں"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "لائیو"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "مقام کا ڈیٹا بیس"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "مقامات"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "مہینے"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "مزید"
+msgid "More views"
+msgstr "مزید مناظر"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "نیا {kind}: {value} کے ساتھ {count}، موازنہ کیے گئ�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "نیا {kind}: {value}۔ {metric}: {now}، موازنہ کیے گئے دنوں میں کوئی نہیں۔"
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "نئے اور واپس آنے والے"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "نیا فنل"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "نیا ہدف"
@@ -1477,10 +1509,6 @@ msgstr "کوئی موازنہ نہیں"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "رضامندی کی کوئی خصوصیت پیش نہیں کی جاتی۔"
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "اس مدت میں کوئی رضامند وزیٹر نہیں۔"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "کچھ نہیں"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "اس مدت میں کچھ نہیں گنا گیا۔"
 
@@ -1767,6 +1796,10 @@ msgstr "صفحہ یا اسکرین"
 msgid "Page view of {path}"
 msgstr "{path} کا صفحہ ویو"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "صفحے کے ملاحظات"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "صفحات"
@@ -1782,6 +1815,10 @@ msgstr "دیکھے گئے صفحات اور اسکرینز۔"
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "نہ گنے گئے صفحات"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "صفحات ان سوالات کے مطابق ترتیب دیے گئے ہیں جو وہ پیدا کرتے ہیں۔ جس صفحے پر بہت وزیٹرز اور بہت گفتگوئیں ہوں اسے خود صفحے پر بہتر جواب چاہیے۔"
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track یا Global Privacy Control والی درخواستیں، اور جس پراپرٹی کو رضامندی چاہیے اس پر رضامندی کے بغیر واقعات، لیے جاتے ہیں لیکن یہاں نہ محفوظ ہوتے ہیں نہ گنے جاتے ہیں۔"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "برقراری"
 
@@ -2257,6 +2293,10 @@ msgstr "ماخذ"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "دوبارہ شروع کریں"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "گفتگو شروع کی"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "صفحہ کتنی بار مفید نہیں ریٹ ہوا۔"
 msgid "To"
 msgstr "کو"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "آج"
@@ -2630,6 +2671,7 @@ msgstr "ویوز دو گھنٹے میں {now} تک بڑھ گئے، عام طور
 msgid "Visit duration"
 msgstr "وزٹ کا دورانیہ"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "وزیٹرز"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "پچھلے 30 منٹ میں وزیٹرز"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "اس وقت کے وزیٹرز"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Do Not Track یا Global Privacy Control والے وزیٹرز کچھ ن
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "وزٹس"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "کامیابی کے طور پر شمار ہونے والے دورے اور ایونٹس"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "کنورژنز کہاں سے آتے ہیں"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "پراپرٹی کا دن کہاں شروع اور ختم ہوتا ہے۔"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "لوگ کون سے صفحات دیکھتے ہیں اور کون سے سوالات تک لے جاتے ہیں"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

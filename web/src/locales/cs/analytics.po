@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# řádek} few {# řádky} many {# řádku} other {# ř
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {návštěvník dnes} few {návštěvníci dnes} many {návštěvníka dnes} other {návštěvníků dnes}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "Konverzací: {0}"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "{0} návštěvníků"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "Návštěvníků: {0}"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# konverzace} few {# konverzace} many {# konverzace} other {# konverzací}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} souhlasilo, napříč návštěvami a dny"
@@ -121,6 +140,10 @@ msgstr "{overall} návštěvníků, kteří dosáhli prvního kroku, dosáhlo i 
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # konverzace na 1 000 zobrazení, oproti {site} napříč všemi stránkami.} few {{dim} {value}: # konverzace na 1 000 zobrazení, oproti {site} napříč všemi stránkami.} many {{dim} {value}: # konverzace na 1 000 zobrazení, oproti {site} napříč všemi stránkami.} other {{dim} {value}: # konverzací na 1 000 zobrazení, oproti {site} napříč všemi stránkami.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} b."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Tento měsíc využito {used} z {limit} analytických událostí. Události nad limit se do konce měsíce zahazují."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Nové heslo odhlásí všechny, kdo odkaz odemkli."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Zobrazení stránky, událost nebo hloubka posunu"
+msgid "a page visit or an event from your site or app"
+msgstr "návštěva stránky nebo událost z vašeho webu či aplikace"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Analytické vlastnosti"
 msgid "Analytics steps"
 msgstr "Kroky analytiky"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Zobrazení analytiky"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Kdokoli s odkazem uvidí zobrazení, která vyberete, jen pro čtení, bez přihlášení."
@@ -376,6 +395,11 @@ msgstr "Boti"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Boti, limity četnosti, vyloučené adresy a cesty, měsíční limit nebo vytížený server."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Míra opuštění"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Míra opuštění"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Rozdělit podle propu"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Rozdělení"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Konverze na 100 návštěvníků."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Návštěvníci vašich webů a aplikací, bez cookies."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Návštěvníci bez cookies na vašich webech a v aplikacích"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "Podrobné záznamy se uchovávají od {rawDay}."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "Podrobné záznamy uchovávány od"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Podrobnosti"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "měl odebranou adresu"
 msgid "Health"
 msgstr "Zdraví"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Užitečné"
@@ -1170,6 +1190,10 @@ msgstr "Jak posílat události"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Uložil(a) jsem to"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Vylepšit stránku →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Poslední obrazovka"
 msgid "Leave empty to keep the current one"
 msgstr "Nechte prázdné, chcete-li ponechat současný"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Vedlo ke konverzaci"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Odkaz"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Propojte schránku, aby se počítaly"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Propojit schránku"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Propojit přihlášené uživatele s jejich kontaktem"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "živě"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Databáze poloh"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Polohy"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Měsíce"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Více"
+msgid "More views"
+msgstr "Další zobrazení"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Nový {kind}: {value} s {count}, žádné v porovnávaných dnech."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Nový {kind}: {value}. {metric}: {now}, žádné v porovnávaných dnech."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Noví a vracející se"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Nový trychtýř"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Nový cíl"
@@ -1477,10 +1509,6 @@ msgstr "Bez porovnání"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Funkce souhlasu nejsou nabízeny."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "V tomto rozsahu nejsou žádní návštěvníci, kteří souhlasili."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Nic"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "V tomto rozsahu se nic nespočítalo."
 
@@ -1767,6 +1796,10 @@ msgstr "Stránka nebo obrazovka"
 msgid "Page view of {path}"
 msgstr "Zobrazení stránky {path}"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Zobrazení stránek"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Stránky"
@@ -1782,6 +1815,10 @@ msgstr "Zobrazené stránky a obrazovky."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Stránky, které se nepočítají"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "Stránky seřazené podle otázek, které vyvolávají. Stránka s mnoha návštěvníky a mnoha konverzacemi potřebuje lepší odpověď přímo na stránce."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Požadavky s Do Not Track nebo Global Privacy Control a události bez souhlasu u vlastnosti, která ho vyžaduje, se přijímají, ale zde se neukládají ani nepočítají."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retence"
 
@@ -2257,6 +2293,10 @@ msgstr "Zdroje"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Začít znovu"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Zahájilo konverzaci"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Kolikrát byla stránka ohodnocena jako neužitečná."
 msgid "To"
 msgstr "Komu"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Dnes"
@@ -2630,6 +2671,7 @@ msgstr "Zobrazení vzrostla za dvě hodiny na {now}, oproti obvyklým {usual}."
 msgid "Visit duration"
 msgstr "Délka návštěvy"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Návštěvníci"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Návštěvníci za posledních 30 minut"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Návštěvníci právě teď"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Návštěvníci s Do Not Track nebo Global Privacy Control nic neposíla
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Návštěvy"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Návštěvy a události, které se počítají jako úspěch"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Odkud konverze pocházejí"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Kde začíná a končí den vlastnosti."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Které stránky lidé navštěvují a které vedou k otázkám"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

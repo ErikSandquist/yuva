@@ -18,14 +18,14 @@ export function senderState(ch: Channel): SenderState {
 }
 
 const tones: Record<BroadcastState, string> = {
-  draft: "bg-muted text-muted-foreground",
-  scheduled: "bg-brand-wash text-brand",
-  preparing: "bg-brand-wash text-brand",
-  sending: "bg-brand-wash text-brand",
-  paused: "bg-warning/12 text-warning",
-  sent: "bg-success/12 text-success",
-  cancelled: "bg-muted text-muted-foreground",
-  failed: "bg-destructive/10 text-destructive",
+  draft: "border-faint/40 text-faint",
+  scheduled: "border-blue-600/35 text-blue-600 dark:border-blue-400/35 dark:text-blue-400",
+  preparing: "border-brand/35 text-brand",
+  sending: "border-brand/35 text-brand",
+  paused: "border-warning/40 text-warning",
+  sent: "border-success/35 text-success",
+  cancelled: "border-faint/40 text-faint",
+  failed: "border-destructive/35 text-destructive",
 }
 
 export function StateBadge({ state, className }: { state: BroadcastState; className?: string }) {
@@ -33,7 +33,7 @@ export function StateBadge({ state, className }: { state: BroadcastState; classN
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-px text-caption font-medium",
+        "inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-px text-caption font-medium",
         tones[state],
         className
       )}

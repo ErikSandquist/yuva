@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# అడ్డు వరుస} other {# అడ్డ�
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {ఈ రోజు సందర్శకుడు} other {ఈ రోజు సందర్శకులు}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} సంభాషణలు"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "సందర్శకులలో {0}"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} సందర్శకులు"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# సంభాషణ} other {# సంభాషణలు}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} మంది అంగీకరించారు, సందర్శనలు మరియు రోజుల్లో"
@@ -121,6 +140,10 @@ msgstr "మొదటి దశకు చేరిన సందర్శకుల
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: 1,000 వీక్షణలకు # సంభాషణ, అన్ని పేజీల్లో {site} కు వ్యతిరేకంగా.} other {{dim} {value}: 1,000 వీక్షణలకు # సంభాషణలు, అన్ని పేజీల్లో {site} కు వ్యతిరేకంగా.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} పాయింట్లు"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ఈ నెల {limit} లో {used} అనలిటిక్స్ ఈవెంట్‌లు ఉపయోగించబడ్డాయి. పరిమితి దాటిన ఈవెంట్‌లు నెల ముగిసే వరకు వదిలివేయబడతాయి."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "కొత్త పాస్‌వర్డ్ లింక్‌ను అన్‌లాక్ చేసిన ప్రతి ఒక్కరినీ సైన్ అవుట్ చేస్తుంది."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "ఒక పేజీ వ్యూ, ఒక ఈవెంట్ లేదా స్క్రోల్ లోతు"
+msgid "a page visit or an event from your site or app"
+msgstr "మీ సైట్ లేదా యాప్ నుండి పేజీ సందర్శన లేదా ఈవెంట్"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "అనలిటిక్స్ ప్రాపర్టీలు"
 msgid "Analytics steps"
 msgstr "అనలిటిక్స్ దశలు"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "అనలిటిక్స్ వీక్షణలు"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "లింక్ ఉన్న ఎవరైనా మీరు ఎంచుకున్న వీక్షణలను, చదవడానికి-మాత్రమే, సైన్ ఇన్ చేయకుండా చూస్తారు."
@@ -376,6 +395,11 @@ msgstr "బాట్‌లు"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "బాట్‌లు, రేట్ పరిమితులు, మినహాయించిన చిరునామాలు మరియు పాత్‌లు, నెలవారీ పరిమితి లేదా బిజీగా ఉన్న సర్వర్."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "బౌన్స్"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "బౌన్స్ రేటు"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "ప్రాప్ ద్వారా విభజించండి"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "విభజన"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "100 మంది సందర్శకులకు కన్వర్షన్‌లు."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "మీ సైట్‌లు మరియు యాప్‌ల సందర్శకులు, కుకీలు లేకుండా."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "మీ సైట్‌లు మరియు యాప్‌లలో కుకీలు లేని సందర్శకులు"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "వివరణాత్మక రికార్డ్‌లు {rawDay
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "వివరణాత్మక రికార్డ్‌లు దీని నుండి ఉంచబడ్డాయి"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "వివరాలు"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "ఒక చిరునామా తొలగించబడింది"
 msgid "Health"
 msgstr "ఆరోగ్యం"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "ఉపయోగకరం"
@@ -1170,6 +1190,10 @@ msgstr "ఈవెంట్‌లను ఎలా పంపాలి"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "నేను సేవ్ చేశాను"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "పేజీని మెరుగుపరచండి →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "చివరి స్క్రీన్"
 msgid "Leave empty to keep the current one"
 msgstr "ప్రస్తుతదాన్ని ఉంచడానికి ఖాళీగా వదలండి"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "సంభాషణకు దారితీసింది"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "లింక్"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "లెక్కించడానికి ఇన్‌బాక్స్‌ను లింక్ చేయండి"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "ఇన్‌బాక్స్‌ను లింక్ చేయండ�
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "సైన్ ఇన్ చేసిన వినియోగదారులను వారి కాంటాక్ట్‌కు లింక్ చేయండి"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "లైవ్"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "స్థాన డేటాబేస్"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "స్థలాలు"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "నెలలు"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "మరిన్ని"
+msgid "More views"
+msgstr "మరిన్ని వీక్షణలు"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "కొత్త {kind}: {value}, {count} తో, పోల్చిన �
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "కొత్త {kind}: {value}. {metric}: {now}, పోల్చిన రోజుల్లో ఏదీ లేదు."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "కొత్తవారు మరియు తిరిగి వచ్చేవారు"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "కొత్త ఫన్నెల్"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "కొత్త లక్ష్యం"
@@ -1477,10 +1509,6 @@ msgstr "పోలిక లేదు"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "సమ్మతి ఫీచర్‌లు ఏవీ అందించబడలేదు."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "ఈ పరిధిలో అంగీకరించిన సందర్శకులు లేరు."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "ఏదీ లేదు"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "ఈ పరిధిలో ఏదీ లెక్కించబడలేదు."
 
@@ -1767,6 +1796,10 @@ msgstr "పేజీ లేదా స్క్రీన్"
 msgid "Page view of {path}"
 msgstr "{path} పేజీ వీక్షణ"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "పేజీ వీక్షణలు"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "పేజీలు"
@@ -1782,6 +1815,10 @@ msgstr "చూసిన పేజీలు మరియు స్క్రీన
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "లెక్కించని పేజీలు"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "పేజీలు అవి కలిగించే ప్రశ్నల ప్రకారం క్రమబద్ధీకరించబడ్డాయి. ఎక్కువ సందర్శకులు మరియు ఎక్కువ సంభాషణలు ఉన్న పేజీకి ఆ పేజీలోనే మెరుగైన సమాధానం అవసరం."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track లేదా Global Privacy Control ఉన్న అభ్యర్థనలు, మరియు సమ్మతి అవసరమైన ప్రాపర్టీలో సమ్మతి లేని ఈవెంట్‌లు, తీసుకోబడతాయి కానీ ఇక్కడ నిల్వ చేయబడవు లేదా లెక్కించబడవు."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "నిలుపుదల"
 
@@ -2257,6 +2293,10 @@ msgstr "మూలాలు"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "మళ్లీ మొదలుపెట్టండి"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "సంభాషణ ప్రారంభించారు"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "పేజీ ఉపయోగకరం కాదని రేట్ చ�
 msgid "To"
 msgstr "To"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "ఈ రోజు"
@@ -2630,6 +2671,7 @@ msgstr "వీక్షణలు రెండు గంటల్లో {now} క
 msgid "Visit duration"
 msgstr "సందర్శన వ్యవధి"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "సందర్శకులు"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "గత 30 నిమిషాల్లో సందర్శకులు"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "ఇప్పటి సందర్శకులు"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "Do Not Track లేదా Global Privacy Control ఉన్న సంద�
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "సందర్శనలు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "విజయంగా లెక్కించే సందర్శనలు మరియు ఈవెంట్‌లు"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "కన్వర్షన్‌లు ఎక్కడి నుండి 
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "ప్రాపర్టీ రోజు ఎక్కడ మొదలై ముగుస్తుంది."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "ప్రజలు ఏ పేజీలను సందర్శిస్తారు, ఏవి ప్రశ్నలకు దారితీస్తాయి"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

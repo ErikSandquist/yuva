@@ -364,7 +364,7 @@ export function Composer({
                 disabled={readOnly}
                 onChange={(audience) => set({ audience }, { audience: audienceInput(audience) })}
               />
-              <div className="@2xl:sticky @2xl:top-4 @2xl:self-start">
+              <div className="@2xl:sticky @2xl:top-15 @2xl:self-start">
                 <AudienceCount
                   count={d.audience.list_ids.length ? count.data : undefined}
                   loading={count.isPending && d.audience.list_ids.length > 0}
@@ -565,7 +565,7 @@ export function Composer({
           </Section>
         )}
       </div>
-      <div className="@4xl:sticky @4xl:top-0 @4xl:self-start">
+      <div className="@4xl:sticky @4xl:top-11 @4xl:self-start">
         <ReviewPanel
           b={b}
           review={review.data}

@@ -7,21 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: da\n"
 
-#: src/features/changelog/pages.tsx
-msgid "{drafts} drafts"
-msgstr "{drafts} kladder"
-
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} af {total} indlæg udgivet"
-
-#: src/features/changelog/pages.tsx
-msgid "{published} published"
-msgstr "{published} udgivet"
-
-#: src/features/changelog/pages.tsx
-msgid "{scheduled} scheduled"
-msgstr "{scheduled} planlagt"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -47,6 +35,10 @@ msgstr "Adressens slutning"
 #: src/features/changelog/SettingsTab.tsx
 msgid "Agents may publish"
 msgstr "Agenter må udgive"
+
+#: src/features/changelog/pages.tsx
+msgid "All"
+msgstr "Alle"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "All labels"
@@ -167,6 +159,10 @@ msgid "Draft submitted. An owner or admin can publish it."
 msgstr "Kladden er indsendt. En ejer eller administrator kan udgive den."
 
 #: src/features/changelog/pages.tsx
+msgid "Drafts"
+msgstr "Kladder"
+
+#: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Indlæg"
 
@@ -268,6 +264,14 @@ msgstr "Ny"
 msgid "New entry"
 msgstr "Nyt indlæg"
 
+#: src/features/changelog/pages.tsx
+msgid "New post"
+msgstr "Nyt opslag"
+
+#: src/features/changelog/pages.tsx
+msgid "New post ({newKey})"
+msgstr "Nyt opslag ({newKey})"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Ingen ændringslog endnu. Ejere og administratorer opretter den."
@@ -293,8 +297,16 @@ msgid "None"
 msgstr "Ingen"
 
 #: src/features/changelog/EntriesTab.tsx
+msgid "not published"
+msgstr "ikke udgivet"
+
+#: src/features/changelog/EntriesTab.tsx
 msgid "not written"
 msgstr "ikke skrevet"
+
+#: src/features/changelog/pages.tsx
+msgid "Nothing here."
+msgstr "Her er intet."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish, schedule and unpublish too."
@@ -385,8 +397,8 @@ msgid "Publishing on schedule failed."
 msgstr "Den planlagte udgivelse mislykkedes."
 
 #: src/features/changelog/pages.tsx
-msgid "Release notes shown in your products, on the web and by mail."
-msgstr "Udgivelsesnoter vist i dine produkter, på nettet og på mail."
+msgid "Release notes shown in your products and on the web"
+msgstr "Udgivelsesnoter vist i dine produkter og på nettet"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
@@ -436,8 +448,8 @@ msgid "Show"
 msgstr "Vis"
 
 #: src/features/changelog/EntriesTab.tsx
-msgid "Shown in the chat widget and on {host}."
-msgstr "Vises i chatwidgetten og på {host}."
+msgid "Shown in the chat bubble, the apps and on {host}."
+msgstr "Vises i chatboblen, apperne og på {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -476,8 +488,8 @@ msgid "Tell the customers of {inboxName} what is new, improved and fixed. It sta
 msgstr "Fortæl kunderne i {inboxName}, hvad der er nyt, forbedret og rettet. Den forbliver uudgivet, indtil du udgiver den."
 
 #: src/features/changelog/pages.tsx
-msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail. Pick an inbox’s changelog to write entries."
-msgstr "Fortæl dine kunder, hvad der er nyt, forbedret og rettet, på en offentlig side, i chatwidgetten og på mail. Vælg en indbakkes ændringslog for at skrive indlæg."
+msgid "Tell your customers what is new, improved and fixed, on a public page, in the chat widget and by mail."
+msgstr "Fortæl dine kunder, hvad der er nyt, forbedret og rettet, på en offentlig side, i chatwidgetten og på mail."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Text"

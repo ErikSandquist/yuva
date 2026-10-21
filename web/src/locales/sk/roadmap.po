@@ -8,16 +8,12 @@ msgstr ""
 "Language: sk\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "Prepojená spätná väzba: {linked}"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# spätná väzba} few {# spätné väzby} many {# spätnej väzby} other {# spätných väzieb}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "Čaká na schválenie: {pending}"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "Odpovedí: {replies}"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "Schváliť"
 msgid "Approved"
 msgstr "Schválené"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "Aspoň 3 znaky."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "Späť"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "Nástenka bola odstránená"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "Počíta zobrazenia stránok verejnej nástenky bez cookies."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Vytvoriť nástenku"
@@ -93,6 +96,10 @@ msgstr "Vytvoriť nástenku"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "Vytvoriť nástenku ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "Vytvoriť nápad"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "Odstráni nástenku s jej nápadmi, hlasmi, odpoveďami a históriou fáz. Prepojená spätná väzba a jej priebeh zostanú. Verejná adresa prestane fungovať."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "Popis"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "Presunúť {title} do inej fázy"
+msgid "Done"
+msgstr "Hotovo"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "Nápady, hlasy a fázy pre {inboxName} so spätnou väzbou za každým n
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "Nápady: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "Dostane sa do Nápadov na nástenke, kde za neho môžu zákazníci hlasovať."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "Nápad presunutý do fázy {stage}"
 msgid "Name"
 msgstr "Názov"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "Nový nápad"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "Nový nápad z tejto spätnej väzby"
@@ -285,6 +302,7 @@ msgstr "Vyberte nápad z nástenky tejto schránky"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Zverejní sa ako vaša verejná odpoveď pri nápade. Markdown funguje."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "Súkromný"
@@ -311,11 +329,16 @@ msgstr "Čitatelia nemôžu navrhovať nápady. Hlasy a odpovede fungujú ďalej
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Čitatelia navrhli nové nápady. Skontrolujte ich skôr, než sa objavia na verejnej nástenke."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "Prehľad"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Plán vývoja"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "Nástenky plánu vývoja"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "Nastavenia"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "Ukážte zákazníkom, čo budujete, a prepojte spätnú väzbu za každým nápadom. Vyberte nástenku schránky a rozdeľte nápady do fáz."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "Ukážte zákazníkom, čo vytvárate, a prepojte spätnú väzbu za každým nápadom. Vytvorte nástenku pre schránku a zoraďte nápady do fáz."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "Táto schránka nemá kanál webového chatu. Najprv jeden pridajte, pretože ho verejná nástenka vkladá."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Názov"
 

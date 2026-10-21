@@ -12,7 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useContactDirectory, type DirectoryFilter } from "@/features/contact/queries"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
+import { ContactsPage } from "@/features/contact/ContactsPage"
 import { contactName } from "@/features/contact/Section"
+import { useIsPhone } from "@/hooks/use-media-query"
 import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useInboxes } from "@/lib/workspace"
@@ -218,6 +220,8 @@ export function ContactsColumn() {
 }
 
 export function ContactsHome() {
+  const phone = useIsPhone()
+  if (!phone) return <ContactsPage />
   return (
     <PaneEmpty icon={BookUserIcon} title={<Trans>Pick a contact</Trans>} testId="contacts-home">
       <Trans>

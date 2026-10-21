@@ -17,6 +17,7 @@ import {
   sinceText,
   useContactConversations,
 } from "@/features/contact/ContactDetails"
+import { ContactAside } from "@/features/contact/ContactCard"
 import { ConversationMedia } from "@/features/contact/ConversationMedia"
 import { MergeContactDialog } from "@/features/contact/MergeContactDialog"
 import { Presence } from "@/features/contact/Presence"
@@ -276,7 +277,7 @@ export function ContactPanel({
       className="flex h-full min-h-0 flex-col bg-background"
       data-testid="contact-panel"
     >
-      <Body contactId={contactId} conversationId={conversationId} onClose={onClose} inline />
+      <ContactAside contactId={contactId} conversationId={conversationId} onClose={onClose} />
     </aside>
   )
 }

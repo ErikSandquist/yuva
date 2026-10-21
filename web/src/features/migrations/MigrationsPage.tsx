@@ -31,6 +31,7 @@ import {
 } from "@/features/migrations/parts"
 import { useDeleteMigration, useMigrations, useMigrationStep, usePresets } from "@/features/migrations/queries"
 import { guideUrl } from "@/features/migrations/text"
+import { GeneralTabs } from "@/features/settings/GeneralTabs"
 import { Card, PageHeader, RowIcon, Rows, Section } from "@/features/settings/ui"
 import type { Migration } from "@/lib/api"
 import { useSession } from "@/lib/session"
@@ -48,7 +49,8 @@ export function MigrationsPage() {
   return (
     <>
       <PageHeader
-        title={<Trans>Move to Yuva</Trans>}
+        title={<Trans>General</Trans>}
+        tabs={<GeneralTabs current="migrations" />}
         description={
           <Trans>
             Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the

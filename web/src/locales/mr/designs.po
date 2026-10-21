@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "ई-मेल डिझाइन"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "ईमेल लेआउट जे तुम्ही ब्रॉडकास्टमध्ये पुन्हा वापरता."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "ब्रॉडकास्टमध्ये पुन्हा वापरले जाणारे ईमेल लेआउट"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "पूर्ण रुंदी"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "गॅलरी"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "गॅलरी · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "फोनवर एकावर एक ठेवा"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "सुरू करा"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "टेम्पलेट किंवा रिकाम्या पेजपासून सुरू करा. प्रत्येक डिझाइनला कायद्याने मागितलेला फूटर मिळतो, आणि बाकी सर्व काही तुम्ही बदलू शकता."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

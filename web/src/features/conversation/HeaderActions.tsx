@@ -32,6 +32,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator"
 import { firstName, type ConversationActions } from "@/features/conversation/actions"
 import { progressIcons } from "@/features/conversation/Feedback"
+import { look } from "@/features/inbox/PageFrame"
 import { useCounts } from "@/features/inbox/queries"
 import type { Conversation, ConversationUpdate, FeedbackProgress } from "@/lib/api"
 import { useSession } from "@/lib/session"
@@ -68,23 +69,25 @@ export function SnoozeMenu({
   open,
   onOpenChange,
   anchor,
+  labelled,
 }: {
   name: string
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
   anchor?: RefObject<Element | null>
+  labelled?: boolean
 }) {
   const { t } = useLingui()
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
-        render={iconButton}
-        aria-label={t`Snooze (S)`}
+        render={labelled ? <Button variant="outline" className={look.btnSm} /> : iconButton}
+        aria-label={labelled ? undefined : t`Snooze (S)`}
         title={t`Snooze (S)`}
         data-testid="snooze-menu"
       >
-        <ClockIcon />
+        {labelled ? <Trans>Snooze</Trans> : <ClockIcon />}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" anchor={anchor} className="w-[280px] max-w-[calc(100vw-32px)]">
         <SnoozeTimes name={name} actions={actions} />
@@ -120,12 +123,14 @@ export function HandMenu({
   open,
   onOpenChange,
   anchor,
+  labelled,
 }: {
   c: Conversation
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
   anchor?: RefObject<Element | null>
+  labelled?: React.ReactNode
 }) {
   const { t } = useLingui()
   const { membership } = useSession()
@@ -145,8 +150,20 @@ export function HandMenu({
         if (!o) setNote("")
       }}
     >
-      <PopoverTrigger render={iconButton} aria-label={t`Assign (A)`} title={t`Assign (A)`} data-testid="hand-menu">
-        <UserRoundPlusIcon />
+      <PopoverTrigger
+        render={labelled ? <Button variant="outline" className={cn(look.btnSm, "max-w-44 gap-1")} /> : iconButton}
+        aria-label={labelled ? undefined : t`Assign (A)`}
+        title={t`Assign (A)`}
+        data-testid="hand-menu"
+      >
+        {labelled ? (
+          <>
+            <span className="min-w-0 truncate">{labelled}</span>
+            <ChevronDownIcon className="text-faint" />
+          </>
+        ) : (
+          <UserRoundPlusIcon />
+        )}
       </PopoverTrigger>
       <PopoverContent
         align="end"
@@ -344,9 +361,28 @@ export function ProgressMenu({
   )
 }
 
-export function CloseButton({ c, actions }: { c: Conversation; actions: ConversationActions }) {
+export function CloseButton({ c, actions, ink }: { c: Conversation; actions: ConversationActions; ink?: boolean }) {
   const { t } = useLingui()
   const feedback = c.kind === "feedback"
+  if (ink) {
+    const closed = c.status === "closed"
+    return (
+      <Button
+        className={look.btnInkSm}
+        onClick={closed ? actions.reopen : actions.close}
+        title={closed ? undefined : feedback ? t`Resolve (E)` : t`Close (E)`}
+        data-testid={closed ? "reopen-conversation" : "close-conversation"}
+      >
+        {closed ? (
+          <Trans>Reopen</Trans>
+        ) : feedback ? (
+          <Trans>Resolve</Trans>
+        ) : (
+          <Trans context="conversation">Close</Trans>
+        )}
+      </Button>
+    )
+  }
   if (c.status === "closed") {
     return (
       <Button variant="outline" size="sm" onClick={actions.reopen} data-testid="reopen-conversation">

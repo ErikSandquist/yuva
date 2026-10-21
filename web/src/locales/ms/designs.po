@@ -418,8 +418,8 @@ msgid "E-mail designs"
 msgstr "Reka bentuk e-mel"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "E-mail layouts you reuse across broadcasts."
-msgstr "Susun atur e-mel yang anda guna semula dalam siaran."
+msgid "E-mail layouts you reuse across broadcasts"
+msgstr "Reka letak e-mel yang anda guna semula dalam siaran"
 
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
@@ -486,6 +486,10 @@ msgstr "Lebar penuh"
 #: src/features/designs/GalleryPage.tsx
 msgid "Gallery"
 msgstr "Galeri"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery · {kind}"
+msgstr "Galeri · {kind}"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -1078,10 +1082,6 @@ msgstr "Susun pada telefon"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Start"
 msgstr "Mula"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
-msgstr "Mulakan daripada templat atau halaman kosong. Setiap reka bentuk mendapat pengaki yang dikehendaki undang-undang, dan anda boleh mengubah segalanya yang lain."
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Start from an empty mail with simple colours."

@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Dot, ErrorLine, useConfirm } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { LabelDialog } from "@/features/settings/labels/LabelDialog"
+import { GeneralTabs } from "@/features/settings/GeneralTabs"
 import { Card, EmptyRow, PageHeader, Row, Rows, RowText } from "@/features/settings/ui"
 import { api, unwrap, type Label } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -26,7 +27,8 @@ export function LabelsPage() {
   return (
     <>
       <PageHeader
-        title={<Trans>Labels</Trans>}
+        title={<Trans>General</Trans>}
+        tabs={<GeneralTabs current="labels" />}
         description={<Trans>Sort conversations by topic. Each label also gets its own view in the sidebar.</Trans>}
         action={
           canManage && (

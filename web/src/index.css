@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/inter";
 @import "@fontsource-variable/geist-mono";
 @import "shadcn/tailwind.css";
 
@@ -25,6 +25,51 @@
   --text-page--font-weight: 600;
 }
 
+@utility cursor-split {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M8 8l-4 4 4 4M4 12h5M16 8l4 4-4 4M20 12h-5' stroke='white' stroke-width='4.5'/%3E%3Cpath d='M12 5v14M8 8l-4 4 4 4M4 12h5M16 8l4 4-4 4M20 12h-5' stroke='%23c2410c' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") 12 12,
+    col-resize;
+}
+
+body:has([data-separator="active"]) * {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M8 8l-4 4 4 4M4 12h5M16 8l4 4-4 4M20 12h-5' stroke='white' stroke-width='4.5'/%3E%3Cpath d='M12 5v14M8 8l-4 4 4 4M4 12h5M16 8l4 4-4 4M20 12h-5' stroke='%23c2410c' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") 12 12,
+    col-resize !important;
+  user-select: none;
+}
+
+.split-handle > div {
+  --pull: max(var(--grip-dx, 0px), -1 * var(--grip-dx, 0px));
+  position: absolute;
+  top: var(--grip-y, 50%);
+  left: 50%;
+  width: 6px;
+  height: 24px;
+  border-radius: 9999px;
+  background: var(--brand);
+  opacity: 0;
+  translate: -50% -50%;
+  scale: 1 0.5;
+  transition-property: top, height, width, translate, scale, opacity;
+  transition-duration: 120ms, 300ms, 300ms, 450ms, 300ms, 200ms;
+  transition-delay: 0ms, 0ms, 0ms, 0ms, 0ms, 140ms;
+  transition-timing-function: cubic-bezier(0.34, 1.7, 0.5, 1);
+}
+.split-handle[data-separator="hover"] > div {
+  width: calc(6px + var(--pull) * 0.25);
+  height: calc(40px - var(--pull) * 0.6);
+  translate: calc(-50% + var(--grip-dx, 0px) * 0.55) -50%;
+  scale: 1;
+  opacity: 1;
+  transition-delay: 0ms;
+}
+.split-handle[data-separator="active"] > div {
+  height: 56px;
+  scale: 1;
+  opacity: 1;
+  transition-delay: 0ms;
+}
+
 @utility eyebrow {
   font-size: var(--text-caption);
   line-height: var(--text-caption--line-height);
@@ -35,7 +80,7 @@
 }
 
 @theme inline {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -65,12 +110,16 @@
   --color-note-border: var(--note-border);
   --color-note-ink: var(--note-ink);
   --color-mate: var(--mate);
-  --color-sidebar: var(--surface);
-  --color-sidebar-foreground: var(--foreground);
-  --color-sidebar-accent: var(--muted);
-  --color-sidebar-accent-foreground: var(--foreground);
-  --color-sidebar-border: var(--border);
-  --color-sidebar-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-badge: var(--sidebar-badge);
 }
 
 :root {
@@ -96,6 +145,16 @@
   --note-border: #f1e3bd;
   --note-ink: #8a6100;
   --mate: #0e7490;
+  --sidebar: #1d2327;
+  --sidebar-foreground: #dcdcde;
+  --sidebar-muted: #a7aaad;
+  --sidebar-primary: #d4431c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c3338;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2c3338;
+  --sidebar-ring: #ff8a5c;
+  --sidebar-badge: #d63638;
 }
 
 :root.dark {
@@ -120,6 +179,16 @@
   --note-border: #3a3115;
   --note-ink: #e3b54a;
   --mate: #0891b2;
+  --sidebar: #1d2327;
+  --sidebar-foreground: #dcdcde;
+  --sidebar-muted: #a7aaad;
+  --sidebar-primary: #d4431c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c3338;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2c3338;
+  --sidebar-ring: #ff8a5c;
+  --sidebar-badge: #d63638;
 }
 
 @layer base {
@@ -128,6 +197,7 @@
   }
   html {
     @apply bg-background font-sans text-foreground antialiased;
+    overscroll-behavior: none;
   }
   body {
     @apply bg-background text-body;

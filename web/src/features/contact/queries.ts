@@ -79,10 +79,15 @@ export function useClearUndeliverable(contactId: string) {
 
 export type DirectoryFilter = "all" | "open" | "known" | "visitor"
 
-export function useContactDirectory(q: string, filter: DirectoryFilter, inboxId?: string) {
+export function useContactDirectory(
+  q: string,
+  filter: DirectoryFilter,
+  inboxId?: string,
+  sort: "created" | "last_seen" = "last_seen"
+) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
-    queryKey: [...keys.contactSearch(ws), "directory", q, filter, inboxId ?? ""],
+    queryKey: [...keys.contactSearch(ws), "directory", q, filter, inboxId ?? "", sort],
     queryFn: ({ pageParam }) =>
       unwrap(
         api.GET("/v1/contacts", {
@@ -92,7 +97,7 @@ export function useContactDirectory(q: string, filter: DirectoryFilter, inboxId?
               inbox_id: inboxId || undefined,
               kind: filter === "known" || filter === "visitor" ? filter : undefined,
               has_open: filter === "open" ? true : undefined,
-              sort: q ? undefined : "last_seen",
+              sort: q ? undefined : sort,
               cursor: pageParam,
               limit: 50,
             },
@@ -155,6 +160,15 @@ export function useUpdateContact(contactId: string) {
     mutationFn: (body: ContactUpdate) =>
       unwrap(api.PATCH("/v1/contacts/{contactId}", { params: { path: { contactId } }, body })),
     onSuccess: (data) => applyEvent(qc, live, { type: "contact.updated", data }),
+  })
+}
+
+export function useCreateContact() {
+  const qc = useQueryClient()
+  const { workspaceId: ws } = useSession()
+  return useMutation({
+    mutationFn: (body: { name?: string; emails?: string[] }) => unwrap(api.POST("/v1/contacts", { body })),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: keys.contactSearch(ws) }),
   })
 }
 

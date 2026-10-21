@@ -1,76 +1,185 @@
-import { useLingui } from "@lingui/react/macro"
-import { PlusIcon, SettingsIcon } from "lucide-react"
-import { useEffect, useRef } from "react"
-import { useLocation, useMatch, useNavigate } from "react-router"
+import { Trans, useLingui } from "@lingui/react/macro"
+import { CheckIcon, ChevronDownIcon, ChevronRightIcon, PlusIcon, SettingsIcon, XIcon } from "lucide-react"
+import { useState } from "react"
+import { Link, useLocation, useMatch, useNavigate } from "react-router"
 
 import { moveFocus, useEntries, useGo, useSection } from "@/app/Rail"
 import type { Section } from "@/app/shell"
-import { UserMenu } from "@/app/UserMenu"
 import { keyLabel, mod } from "@/components/common/ShortcutSheet"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarRail,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
-import { changelogLink, useChangelogs } from "@/features/changelog/queries"
+import { useViewSearch } from "@/features/analytics/state"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { ProductSwitcher } from "@/features/inbox/ProductSwitcher"
 import { statusLink, useStatusPages } from "@/features/status/queries"
-import { StateDot } from "@/features/status/text"
+import { useVersion } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
+function useOpenGroups(section: string) {
+  const [state, setState] = useState<{ section: string; open: Record<string, boolean> }>({ section, open: {} })
+  const open = state.section === section ? state.open : {}
+  const set = (key: string, value: boolean) => setState({ section, open: { ...open, [key]: value } })
+  return [open, set] as const
+}
+
 const rowClass =
-  "relative flex h-9 w-full shrink-0 items-center gap-2.5 rounded-lg px-2.5 text-start text-body text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-brand-wash aria-[current=page]:font-medium aria-[current=page]:text-brand"
+  "h-8 gap-2.5 px-2.5 text-body in-data-[mobile=true]:h-12 in-data-[mobile=true]:gap-3.5 in-data-[mobile=true]:px-3 in-data-[mobile=true]:text-base in-data-[mobile=true]:[&_svg]:size-5 text-sidebar-foreground data-active:bg-sidebar-primary data-active:font-medium data-active:text-sidebar-primary-foreground data-active:hover:bg-sidebar-primary data-active:hover:text-sidebar-primary-foreground [&_svg]:size-4.5"
 
 function Count({ n, id }: { n: number; id: string }) {
   if (!n) return null
   return (
-    <span
-      className="ms-auto grid h-[18px] min-w-[18px] place-items-center rounded-full bg-brand px-1.5 text-[11px] leading-none font-semibold text-white tabular-nums"
+    <SidebarMenuBadge
+      className="right-1.5 h-[18px] in-data-[mobile=true]:top-3.5! in-data-[mobile=true]:right-3 in-data-[mobile=true]:h-5 in-data-[mobile=true]:min-w-5 in-data-[mobile=true]:text-xs min-w-[18px] rounded-full bg-sidebar-badge px-1.5 text-[11px] leading-none font-semibold text-white peer-hover/menu-button:text-white peer-data-active/menu-button:text-white group-data-[collapsible=icon]:-right-1 group-data-[collapsible=icon]:-top-1! group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:min-w-4 group-data-[collapsible=icon]:px-1 group-data-[collapsible=icon]:text-[10px]"
       data-testid={`rail-badge-${id}`}
     >
       {n > 99 ? "99+" : n}
+    </SidebarMenuBadge>
+  )
+}
+
+function WorkspaceMark({ name, className }: { name: string; className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "grid size-6 shrink-0 place-items-center rounded-md bg-brand text-caption font-semibold text-white uppercase",
+        className
+      )}
+    >
+      {Array.from(name.trim())[0] ?? ""}
     </span>
   )
 }
 
-function GroupHeading({ children }: { children: React.ReactNode }) {
-  return <h3 className="px-2.5 pt-4 pb-1 text-caption font-medium text-faint">{children}</h3>
-}
-
-type Child = { key: string; label: React.ReactNode; to: string; current: boolean; mark?: React.ReactNode }
-
-function Children({ section, items }: { section: string; items: Child[] }) {
+function WorkspaceSwitcher() {
+  const { t } = useLingui()
   const navigate = useNavigate()
-  const { pathname, search } = useLocation()
-  const ref = useRef<HTMLDivElement>(null)
-  const shown = items.length > 0
-  useEffect(() => {
-    if (shown) ref.current?.scrollIntoView({ block: "nearest" })
-  }, [shown])
-  if (!shown) return null
+  const { me, membership, switchWorkspace } = useSession()
+  const signup = useVersion().data?.signup
+  const name = membership.workspace.name
   return (
-    <div
-      ref={ref}
-      className="ms-4.5 mt-0.5 mb-1 flex flex-col gap-px border-s ps-2"
-      data-testid={`rail-${section}-children`}
-    >
-      {items.map((c) => (
-        <button
-          key={c.key}
-          type="button"
-          className={cn(rowClass, "h-8 gap-2 text-small")}
-          aria-current={c.current ? "page" : undefined}
-          onClick={() => pathname + search !== c.to && navigate(c.to)}
-          data-rail-item
-          data-testid={`rail-${section}-${c.key}`}
-        >
-          {c.mark}
-          <span className="min-w-0 truncate">{c.label}</span>
-        </button>
-      ))}
-    </div>
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <SidebarMenuButton
+                size="lg"
+                className="h-10 gap-2.5 px-2 data-popup-open:bg-sidebar-accent in-data-[mobile=true]:h-12 in-data-[mobile=true]:text-base group-data-[collapsible=icon]:justify-center"
+              />
+            }
+            aria-label={t`Workspace: ${name}`}
+            data-testid="workspace-switcher"
+          >
+            <WorkspaceMark name={name} />
+            <span
+              className="min-w-0 flex-1 truncate font-semibold text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden"
+              data-testid="sidebar-workspace"
+            >
+              {name}
+            </span>
+            <ChevronDownIcon className="text-sidebar-muted group-data-[collapsible=icon]:hidden" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-(--anchor-width) min-w-60" data-testid="workspace-menu">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <Trans>Workspaces</Trans>
+              </DropdownMenuLabel>
+              {me.memberships.map((m) => {
+                const current = m.workspace.id === membership.workspace.id
+                return (
+                  <DropdownMenuItem
+                    key={m.workspace.id}
+                    onClick={() => !current && switchWorkspace(m.workspace.id)}
+                    aria-current={current ? "true" : undefined}
+                    data-testid="workspace-option"
+                  >
+                    <WorkspaceMark name={m.workspace.name} className="size-5 rounded-[5px] text-[10px]" />
+                    <span className="min-w-0 flex-1 truncate">{m.workspace.name}</span>
+                    <CheckIcon className={cn("size-3.5 text-foreground", !current && "invisible")} />
+                  </DropdownMenuItem>
+                )
+              })}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            {signup === "open" && (
+              <DropdownMenuItem onClick={() => navigate("/workspaces/new")} data-testid="workspace-create">
+                <PlusIcon />
+                <Trans>Create a workspace</Trans>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem onClick={() => navigate("/settings/workspace")} data-testid="workspace-settings">
+              <SettingsIcon />
+              <Trans>Workspace settings</Trans>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
   )
 }
 
-function BroadcastChildren() {
+export type Child = { key: string; label: string; to: string; current: boolean }
+
+function useStatusChildren(): Child[] {
+  const { t } = useLingui()
+  const { pathname, search } = useLocation()
+  const [inboxId] = useInboxFilter()
+  const pages = useStatusPages(inboxId).data ?? []
+  const pageId = useMatch("/status-pages/:pageId/*")?.params.pageId
+  const target = pageId ?? pages[0]?.id
+  const tab = pageId
+    ? (new URLSearchParams(search).get("tab") ?? (pathname.endsWith("/monitors") ? "monitors" : "incidents"))
+    : ""
+  return [
+    {
+      key: "pages",
+      label: t`Pages`,
+      to: "/status",
+      current: pathname === "/status" || (!!pageId && tab !== "incidents" && tab !== "monitors"),
+    },
+    {
+      key: "incidents",
+      label: t`Incidents`,
+      to: target ? statusLink(target) : "/status",
+      current: tab === "incidents",
+    },
+    {
+      key: "monitors",
+      label: t`Monitors`,
+      to: target ? statusLink(target, "monitors") : "/status",
+      current: tab === "monitors",
+    },
+  ]
+}
+
+function useBroadcastChildren(): Child[] {
   const { t } = useLingui()
   const { pathname } = useLocation()
   const current = pathname.startsWith("/broadcasts/lists")
@@ -78,21 +187,39 @@ function BroadcastChildren() {
     : pathname.startsWith("/broadcasts/designs")
       ? "designs"
       : "broadcasts"
-  const items = [
+  return [
     { key: "broadcasts", label: t`Broadcasts`, to: "/broadcasts" },
     { key: "lists", label: t`Lists`, to: "/broadcasts/lists" },
     { key: "designs", label: t`Designs`, to: "/broadcasts/designs" },
-  ]
-  return <Children section="broadcasts" items={items.map((c) => ({ ...c, current: current === c.key }))} />
+  ].map((c) => ({ ...c, current: pathname.startsWith("/broadcasts") && current === c.key }))
 }
 
-function SettingsChildren() {
+function useAnalyticsChildren(): Child[] {
+  const { t } = useLingui()
+  const { pathname } = useLocation()
+  const search = useViewSearch(true)
+  const [inboxId] = useInboxFilter()
+  const properties = (useAnalyticsProperties().data?.items ?? []).filter((p) => !inboxId || p.inbox_id === inboxId)
+  const matched = useMatch("/analytics/:propertyId/*")?.params.propertyId
+  const propertyId = matched && matched !== "new" ? matched : undefined
+  const target = propertyId ?? properties[0]?.id
+  const view = propertyId ? (pathname.split("/")[3] ?? "overview") : pathname === "/analytics" ? "overview" : ""
+  const keep = propertyId ? search : ""
+  const to = (v: string) => (target ? `/analytics/${target}${v ? `/${v}` : ""}${keep}` : "/analytics")
+  return [
+    { key: "overview", label: t`Overview`, to: to(""), current: view === "overview" },
+    { key: "pages", label: t`Pages`, to: to("pages"), current: view === "pages" },
+    { key: "goals", label: t`Goals`, to: to("goals"), current: view === "goals" },
+  ]
+}
+
+function useSettingsChildren(): Child[] {
   const { t } = useLingui()
   const { pathname, search } = useLocation()
   const { canManage } = useSession()
   const channels = pathname.includes("/channels/") || (pathname === "/settings" && search.includes("view=channels"))
   const at = (...paths: string[]) => paths.some((p) => pathname === p || pathname.startsWith(`${p}/`))
-  const items: Child[] = [
+  return [
     {
       key: "products",
       label: t`Products`,
@@ -100,124 +227,65 @@ function SettingsChildren() {
       current: !channels && (pathname === "/settings" || at("/settings/inboxes")),
     },
     { key: "channels", label: t`Channels`, to: "/settings?view=channels", current: channels },
-    { key: "members", label: t`Members`, to: "/settings/members", current: at("/settings/members") },
-    {
-      key: "canned-replies",
-      label: t`Canned replies`,
-      to: "/settings/canned-replies",
-      current: at("/settings/canned-replies"),
-    },
-    { key: "labels", label: t`Labels`, to: "/settings/labels", current: at("/settings/labels") },
     {
       key: "developer",
       label: canManage ? t`API & MCP` : t`Connected apps`,
       to: canManage ? "/settings/api-keys" : "/settings/connected-apps",
       current: at("/settings/api-keys", "/settings/webhooks", "/settings/connected-apps"),
     },
-    { key: "workspace", label: t`General`, to: "/settings/workspace", current: at("/settings/workspace") },
-    ...(canManage
-      ? [
-          {
-            key: "migrations",
-            label: t`Move to Yuva`,
-            to: "/settings/migrations",
-            current: at("/settings/migrations"),
-          },
-        ]
-      : []),
-    { key: "profile", label: t`Profile`, to: "/settings/profile", current: at("/settings/profile") },
     {
-      key: "notifications",
-      label: t`Notifications`,
-      to: "/settings/notifications",
-      current: at("/settings/notifications"),
+      key: "workspace",
+      label: t`General`,
+      to: "/settings/workspace",
+      current: at("/settings/workspace", "/settings/labels", "/settings/canned-replies", "/settings/migrations"),
     },
-    { key: "appearance", label: t`Appearance`, to: "/settings/appearance", current: at("/settings/appearance") },
   ]
-  return <Children section="settings" items={items} />
 }
 
-function StatusChildren() {
-  const [inboxId] = useInboxFilter()
-  const pages = useStatusPages(inboxId).data ?? []
-  const current = useMatch("/status-pages/:pageId/*")?.params.pageId
-  return (
-    <Children
-      section="status"
-      items={pages.map((p) => ({
-        key: p.id,
-        label: p.name,
-        to: statusLink(p.id),
-        current: p.id === current,
-        mark: <StateDot state={p.state} />,
-      }))}
-    />
-  )
+export type NavRow = {
+  key: Section
+  label: string
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  badge?: number
+  badgeLabel?: string
+  children?: Child[]
 }
 
-function ChangelogChildren() {
-  const [inboxId] = useInboxFilter()
-  const changelogs = (useChangelogs().data ?? []).filter((c) => !inboxId || c.inbox_id === inboxId)
-  const current = useMatch("/updates/:changelogId/*")?.params.changelogId
-  return (
-    <Children
-      section="updates"
-      items={changelogs.map((c) => ({ key: c.id, label: c.name, to: changelogLink(c.id), current: c.id === current }))}
-    />
-  )
-}
+export type NavGroup = { title?: string; rows: NavRow[] }
 
-function AnalyticsChildren() {
+export function useNavGroups(): NavGroup[] {
   const { t } = useLingui()
-  const { canManage } = useSession()
-  const [inboxId] = useInboxFilter()
-  const properties = (useAnalyticsProperties().data?.items ?? []).filter((p) => !inboxId || p.inbox_id === inboxId)
-  const current = useMatch("/analytics/:propertyId/*")?.params.propertyId
-  return (
-    <Children
-      section="analytics"
-      items={properties
-        .map<Child>((p) => ({
-          key: p.id,
-          label: p.name,
-          to: `/analytics/${p.id}`,
-          current: p.id === current,
-        }))
-        .concat(
-          canManage
-            ? [
-                {
-                  key: "add",
-                  label: t`Add a website`,
-                  to: "/analytics/new",
-                  current: false,
-                  mark: <PlusIcon className="size-3.5 shrink-0" />,
-                },
-              ]
-            : []
-        )}
-    />
-  )
-}
-
-const nested: Partial<Record<Section, () => React.ReactNode>> = {
-  broadcasts: BroadcastChildren,
-  status: StatusChildren,
-  updates: ChangelogChildren,
-  analytics: AnalyticsChildren,
-}
-
-export function Sidebar() {
-  const { t } = useLingui()
-  const section = useSection()
-  const go = useGo()
   const entries = useEntries()
-  const { membership } = useSession()
+  const children: Partial<Record<Section, Child[]>> = {
+    status: useStatusChildren(),
+    broadcasts: useBroadcastChildren(),
+    analytics: useAnalyticsChildren(),
+    settings: useSettingsChildren(),
+  }
   const labels: Partial<Record<Section, string>> = {
     conversations: t`Inbox`,
     knowledge: t`Help center`,
     status: t`Status pages`,
   }
+  const rows = new Map<Section, NavRow>(
+    entries.map((e) => [
+      e.key,
+      {
+        ...e,
+        label: labels[e.key] ?? e.label,
+        title: keyLabel(e.shortcut).join(" "),
+        children: children[e.key],
+      },
+    ])
+  )
+  rows.set("settings", {
+    key: "settings",
+    label: t`Settings`,
+    icon: SettingsIcon,
+    title: `${mod} ,`,
+    children: children.settings,
+  })
   const groups: { title?: string; keys: Section[] }[] = [
     { keys: ["home", "conversations", "mentions", "assistants"] },
     { title: t`Customers`, keys: ["contacts", "feedback", "knowledge"] },
@@ -226,84 +294,176 @@ export function Sidebar() {
       keys: ["status", "updates", "board", "broadcasts", "docs"],
     },
     { title: t`Insights`, keys: ["analytics", "reports"] },
-    { title: t`Workspace`, keys: ["team"] },
+    { title: t`Workspace`, keys: ["team", "settings"] },
   ]
-  const byKey = new Map(entries.map((e) => [e.key, e]))
-  const workspace = membership.workspace.name
+  return groups
+    .map((g) => ({ title: g.title, rows: g.keys.flatMap((k) => rows.get(k) ?? []) }))
+    .filter((g) => g.rows.length > 0)
+}
+
+function Children({ section, items }: { section: string; items: Child[] }) {
   return (
-    <aside className="flex w-62 shrink-0 flex-col border-e bg-surface" data-testid="sidebar">
-      <div className="flex h-13 shrink-0 items-center gap-2.5 px-4">
-        <span
-          aria-hidden
-          className="grid size-7 shrink-0 place-items-center rounded-lg bg-brand text-small font-semibold text-white uppercase"
+    <SidebarMenuSub
+      className="mx-0 mt-0.5 mb-1 translate-x-0 gap-px rounded-md border-s-0 bg-sidebar-accent py-1 ps-8 pe-1 in-data-[mobile=true]:ps-11"
+      data-testid={`rail-${section}-children`}
+    >
+      {items.map((c) => (
+        <SidebarMenuSubItem key={c.key}>
+          <SidebarMenuSubButton
+            render={<Link to={c.to} />}
+            isActive={c.current}
+            aria-current={c.current ? "page" : undefined}
+            className="h-7 translate-x-0 text-small in-data-[mobile=true]:h-11 in-data-[mobile=true]:text-base text-sidebar-foreground/80 hover:bg-transparent hover:text-sidebar-accent-foreground data-active:bg-transparent data-active:font-semibold data-active:text-sidebar-accent-foreground"
+            data-rail-item
+            data-testid={`rail-${section}-${c.key}`}
+          >
+            <span>{c.label}</span>
+          </SidebarMenuSubButton>
+        </SidebarMenuSubItem>
+      ))}
+    </SidebarMenuSub>
+  )
+}
+
+function Row({
+  row,
+  active,
+  open,
+  onOpen,
+}: {
+  row: NavRow
+  active: boolean
+  open: boolean
+  onOpen: (open: boolean) => void
+}) {
+  const go = useGo()
+  const { state } = useSidebar()
+  const collapsed = state === "collapsed"
+  const kids = row.children
+  const tooltip = {
+    children: (
+      <>
+        {row.label}
+        <span className="text-background/60">{row.title}</span>
+      </>
+    ),
+  }
+  const common = {
+    tooltip,
+    title: collapsed ? undefined : `${row.label} · ${row.title}`,
+    "aria-label": row.badge ? row.badgeLabel : undefined,
+    "data-rail-item": true,
+    "data-testid": `rail-${row.key}`,
+  }
+  if (!kids)
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          {...common}
+          className={rowClass}
+          isActive={active}
+          aria-current={active ? "page" : undefined}
+          onClick={() => go(row.key)}
         >
-          {Array.from(workspace.trim())[0] ?? ""}
-        </span>
-        <span className="min-w-0 flex-1 truncate font-medium" data-testid="sidebar-workspace">
-          {workspace}
-        </span>
-      </div>
-      <div className="px-3 pb-1 empty:hidden">
-        <ProductSwitcher />
-      </div>
-      <nav
-        aria-label={t`Sections`}
-        onKeyDown={moveFocus}
-        className="flex min-h-0 flex-1 flex-col gap-px overflow-y-auto px-3 pt-2 pb-3"
-        data-testid="rail"
+          <row.icon />
+          <span>{row.label}</span>
+        </SidebarMenuButton>
+        <Count n={row.badge ?? 0} id={row.key} />
+      </SidebarMenuItem>
+    )
+  return (
+    <Collapsible
+      open={open && !collapsed}
+      onOpenChange={(next) => !collapsed && onOpen(next)}
+      render={<SidebarMenuItem />}
+    >
+      <CollapsibleTrigger
+        render={
+          <SidebarMenuButton
+            {...common}
+            className={cn(rowClass, active && "font-medium text-sidebar-accent-foreground")}
+            onClick={collapsed ? () => go(row.key) : undefined}
+          />
+        }
       >
-        {groups.map((g, gi) => {
-          const items = g.keys.flatMap((k) => byKey.get(k) ?? [])
-          const settings = gi === groups.length - 1
-          if (items.length === 0 && !settings) return null
-          return (
-            <div key={g.title ?? "main"} className="flex flex-col gap-px" role="group" aria-label={g.title}>
-              {g.title && <GroupHeading>{g.title}</GroupHeading>}
-              {items.map((e) => {
-                const label = labels[e.key] ?? e.label
-                const Nested = section === e.key ? nested[e.key] : undefined
-                return (
-                  <div key={e.key} className="flex flex-col gap-px">
-                    <button
-                      type="button"
-                      className={rowClass}
-                      aria-current={section === e.key ? "page" : undefined}
-                      aria-label={e.badge ? e.badgeLabel : undefined}
-                      title={`${label} · ${keyLabel(e.shortcut).join(" ")}`}
-                      onClick={() => go(e.key)}
-                      data-rail-item
-                      data-testid={`rail-${e.key}`}
-                    >
-                      <e.icon className="size-4.5 shrink-0" />
-                      <span className="min-w-0 truncate">{label}</span>
-                      <Count n={e.badge ?? 0} id={e.key} />
-                    </button>
-                    {Nested && <Nested />}
-                  </div>
-                )
-              })}
-              {settings && (
-                <button
-                  type="button"
-                  className={rowClass}
-                  aria-current={section === "settings" ? "page" : undefined}
-                  title={`${t`Settings`} · ${mod} ,`}
-                  onClick={() => go("settings")}
-                  data-rail-item
-                  data-testid="rail-settings"
-                >
-                  <SettingsIcon className="size-4.5 shrink-0" />
-                  <span className="min-w-0 truncate">{t`Settings`}</span>
-                </button>
+        <row.icon />
+        <span className="min-w-0 flex-1 truncate">{row.label}</span>
+        <ChevronRightIcon
+          aria-hidden
+          className="ms-auto size-4! text-sidebar-muted transition-transform group-data-panel-open/menu-button:rotate-90 rtl:-scale-x-100 rtl:group-data-panel-open/menu-button:-rotate-90"
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <Children section={row.key} items={kids} />
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+export function AppSidebar() {
+  const { t } = useLingui()
+  const section = useSection()
+  const groups = useNavGroups()
+  const [open, setOpen] = useOpenGroups(section)
+  const { state, isMobile, setOpenMobile } = useSidebar()
+  const collapsed = state === "collapsed"
+  const toggleLabel = collapsed ? t`Expand the sidebar` : t`Collapse the sidebar`
+  return (
+    <Sidebar
+      collapsible="icon"
+      className="relative h-auto group-data-[side=left]:border-r-0 group-data-[side=right]:border-l-0"
+      data-testid="sidebar"
+    >
+      {isMobile && (
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-sidebar-border ps-5 pe-2 pt-[env(safe-area-inset-top)]">
+          <span className="text-base font-semibold text-sidebar-accent-foreground">{t`Menu`}</span>
+          <button
+            type="button"
+            onClick={() => setOpenMobile(false)}
+            className="grid size-11 place-items-center rounded-md text-sidebar-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+            aria-label={t`Close`}
+            data-testid="sidebar-close"
+          >
+            <XIcon className="size-5" />
+          </button>
+        </div>
+      )}
+      <SidebarHeader className="gap-2 px-3 pt-3 pb-1 group-data-[collapsible=icon]:px-2">
+        <WorkspaceSwitcher />
+        <div className="empty:hidden group-data-[collapsible=icon]:hidden">
+          <ProductSwitcher />
+        </div>
+      </SidebarHeader>
+      <SidebarContent className="overflow-visible in-data-[mobile=true]:overflow-y-auto in-data-[mobile=true]:pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <nav aria-label={t`Sections`} onKeyDown={moveFocus} className="flex flex-col" data-testid="rail">
+          {groups.map((g) => (
+            <SidebarGroup
+              key={g.title ?? "main"}
+              className="px-3 py-1 group-data-[collapsible=icon]:px-2"
+              role="group"
+              aria-label={g.title}
+            >
+              {g.title && (
+                <SidebarGroupLabel className="h-7 px-2.5 text-[11px] tracking-[0.06em] text-sidebar-muted uppercase">
+                  {g.title}
+                </SidebarGroupLabel>
               )}
-              {settings && section === "settings" && <SettingsChildren />}
-            </div>
-          )
-        })}
-      </nav>
-      <div className="flex shrink-0 items-center border-t px-2 py-2">
-        <UserMenu align="start" side="top" row />
-      </div>
-    </aside>
+              <SidebarMenu className="gap-px">
+                {g.rows.map((r) => (
+                  <Row
+                    key={r.key}
+                    row={r}
+                    active={section === r.key}
+                    open={open[r.key] ?? section === r.key}
+                    onOpen={(v) => setOpen(r.key, v)}
+                  />
+                ))}
+              </SidebarMenu>
+            </SidebarGroup>
+          ))}
+        </nav>
+      </SidebarContent>
+      <SidebarRail aria-label={toggleLabel} title={`${toggleLabel} · ${mod} \\`} />
+    </Sidebar>
   )
 }

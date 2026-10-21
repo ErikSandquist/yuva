@@ -8,16 +8,12 @@ msgstr ""
 "Language: gu\n"
 
 #: src/features/roadmap/Board.tsx
-msgid "{linked} linked feedback"
-msgstr "જોડાયેલા ફીડબૅક: {linked}"
+msgid "{linked, plural, one {# feedback} other {# feedback}}"
+msgstr "{linked, plural, one {# ફીડબૅક} other {# ફીડબૅક}}"
 
 #: src/features/roadmap/Board.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} મંજૂરીની રાહ જુએ છે"
-
-#: src/features/roadmap/Board.tsx
-msgid "{replies} replies"
-msgstr "{replies} જવાબો"
 
 #: src/features/roadmap/Board.tsx
 #: src/features/roadmap/LinkIdeaDialog.tsx
@@ -53,11 +49,16 @@ msgstr "મંજૂર કરો"
 msgid "Approved"
 msgstr "મંજૂર"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "At least 3 characters."
+msgstr "ઓછામાં ઓછા 3 અક્ષરો."
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Back"
 msgstr "પાછળ"
 
 #: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Board"
@@ -69,6 +70,7 @@ msgstr "બોર્ડ કાઢી નાખ્યું"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/MoveDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Cancel"
 msgstr "રદ કરો"
 
@@ -86,6 +88,7 @@ msgid "Counts page views of the public board without cookies."
 msgstr "કૂકી વગર જાહેર બોર્ડના પેજ વ્યૂ ગણે છે."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "બોર્ડ બનાવો"
@@ -93,6 +96,10 @@ msgstr "બોર્ડ બનાવો"
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board ({newKey})"
 msgstr "બોર્ડ બનાવો ({newKey})"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "Create idea"
+msgstr "આઇડિયા બનાવો"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Delete"
@@ -111,13 +118,14 @@ msgid "Deletes the board with its ideas, votes, replies and stage history. Linke
 msgstr "બોર્ડને તેના વિચારો, મતો, જવાબો અને તબક્કાઓના ઇતિહાસ સાથે કાઢી નાખે છે. જોડાયેલા ફીડબૅક અને તેની પ્રગતિ રહે છે. જાહેર સરનામું કામ કરવાનું બંધ કરે છે."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Description"
 msgstr "વર્ણન"
 
 #: src/features/roadmap/Board.tsx
-msgid "Drag {title} to another stage"
-msgstr "{title} ને બીજા તબક્કામાં ખેંચો"
+msgid "Done"
+msgstr "થઈ ગયું"
 
 #: src/features/roadmap/MoveDialog.tsx
 msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
@@ -150,6 +158,10 @@ msgstr "{inboxName} માટેના વિચારો, મતો અને �
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Ideas: {ideas}"
 msgstr "વિચારો: {ideas}"
+
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board, where customers can vote on it."
+msgstr "તે બોર્ડ પર આઇડિયામાં જાય છે, જ્યાં ગ્રાહકો મત આપી શકે છે."
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "It was unlinked from the idea."
@@ -233,6 +245,11 @@ msgstr "વિચાર {stage} માં ખસેડાયો"
 msgid "Name"
 msgstr "નામ"
 
+#: src/features/roadmap/NewIdeaDialog.tsx
+#: src/features/roadmap/pages.tsx
+msgid "New idea"
+msgstr "નવો વિચાર"
+
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "New idea from this feedback"
 msgstr "આ ફીડબૅકમાંથી નવો વિચાર"
@@ -285,6 +302,7 @@ msgstr "આ ઇનબૉક્સના બોર્ડમાંથી કોઈ
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "વિચાર પર તમારા જાહેર જવાબ તરીકે પોસ્ટ થાય છે. Markdown કામ કરે છે."
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Private"
 msgstr "ખાનગી"
@@ -311,11 +329,16 @@ msgstr "વાચકો વિચારો સૂચવી શકતા નથ�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "વાચકોએ નવા વિચારો સૂચવ્યા. જાહેર બોર્ડ પર દેખાય તે પહેલાં તેમની સમીક્ષા કરો."
 
+#: src/features/roadmap/Board.tsx
+msgid "Review"
+msgstr "સમીક્ષા"
+
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "રોડમેપ"
 
+#: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap boards"
 msgstr "રોડમેપ બોર્ડ"
@@ -333,8 +356,8 @@ msgid "Settings"
 msgstr "સેટિંગ્સ"
 
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Pick an inbox’s board to sort ideas into stages."
-msgstr "તમારા ગ્રાહકોને બતાવો કે તમે શું બનાવી રહ્યા છો, અને દરેક વિચાર પાછળના ફીડબૅકને જોડો. વિચારોને તબક્કાઓમાં ગોઠવવા કોઈ ઇનબૉક્સનું બોર્ડ પસંદ કરો."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
+msgstr "તમે શું બનાવી રહ્યા છો તે ગ્રાહકોને બતાવો અને દરેક આઇડિયા પાછળનો ફીડબૅક લિંક કરો. આઇડિયાને તબક્કામાં ગોઠવવા ઇનબૉક્સ માટે બોર્ડ બનાવો."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -394,6 +417,7 @@ msgid "This inbox has no web chat channel. Add one first, because the public boa
 msgstr "આ ઇનબૉક્સની કોઈ વેબ ચૅટ ચૅનલ નથી. પહેલાં એક ઉમેરો, કારણ કે જાહેર બોર્ડ તેને એમ્બેડ કરે છે."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "શીર્ષક"
 

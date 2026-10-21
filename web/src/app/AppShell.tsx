@@ -5,14 +5,12 @@ import { ConnectionBanner } from "@/app/ConnectionBanner"
 import { Palette } from "@/app/Palette"
 import { useGo } from "@/app/Rail"
 import { inboxRoot, isChats, ShellContext } from "@/app/shell"
-import { useSidebarCollapsed } from "@/app/sidebarState"
 import { Toaster } from "@/components/common"
 import { SHORTCUTS, ShortcutSheet } from "@/components/common/ShortcutSheet"
 import { focusListSearch } from "@/features/inbox/listSearch"
 import { useCounts } from "@/features/inbox/queries"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import { useLatest } from "@/hooks/use-latest"
 import { useRegisterPushOnStart } from "@/lib/push"
 import { useRealtime } from "@/lib/realtime"
 import { useSession } from "@/lib/session"
@@ -46,8 +44,6 @@ export function AppShell() {
   const chats = isChats(pathname, canManage)
   const go = useGo()
   const analytics = useAnalyticsVisible()
-  const [, toggleSidebar] = useSidebarCollapsed()
-  const toggleRef = useLatest(toggleSidebar)
   useHotkeys({
     [SHORTCUTS.help]: () => setShortcuts(true),
     [SHORTCUTS.search]: () => {
@@ -87,14 +83,11 @@ export function AppShell() {
       } else if (key === ",") {
         e.preventDefault()
         navigate("/settings")
-      } else if (key === "\\") {
-        e.preventDefault()
-        toggleRef.current()
       }
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [navigate, toggleRef])
+  }, [navigate])
 
   return (
     <ShellContext.Provider value={shell}>

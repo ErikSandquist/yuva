@@ -21,6 +21,25 @@ msgstr "{0, plural, one {# sor} other {# sor}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {látogató ma} other {látogató ma}}"
 
+#. placeholder {0}: fmt.format(r.conversations)
+#: src/features/analytics/Overview.tsx
+msgid "{0} conversations"
+msgstr "{0} beszélgetés"
+
+#. placeholder {0}: share1.format(conversations / visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} of visitors"
+msgstr "a látogatók {0}-a"
+
+#. placeholder {0}: fmt.format(r.visitors)
+#: src/features/analytics/Overview.tsx
+msgid "{0} visitors"
+msgstr "{0} látogató"
+
+#: src/features/analytics/Pages.tsx
+msgid "{asked, plural, one {# conversation} other {# conversations}}"
+msgstr "{asked, plural, one {# beszélgetés} other {# beszélgetés}}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{consentedCount} consented, across visits and days"
 msgstr "{consentedCount} beleegyezett, látogatásokon és napokon át"
@@ -121,6 +140,10 @@ msgstr "Az első lépést elérő látogatók {overall}-a az utolsót is elérte
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # beszélgetés 1000 megtekintésre, szemben a(z) {site} értékkel az összes oldalon.} other {{dim} {value}: # beszélgetés 1000 megtekintésre, szemben a(z) {site} értékkel az összes oldalon.}}"
 
+#: src/features/analytics/Overview.tsx
+msgid "{shown} pts"
+msgstr "{shown} százalékpont"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Ebben a hónapban {used} / {limit} analitikai esemény használva. A korláton túli események a hónap végéig elvetésre kerülnek."
@@ -182,8 +205,8 @@ msgid "A new password signs out everyone who unlocked the link."
 msgstr "Az új jelszó kijelentkeztet mindenkit, aki feloldotta a linket."
 
 #: src/features/analytics/Goals.tsx
-msgid "A page view, an event or a scroll depth"
-msgstr "Oldalmegtekintés, esemény vagy görgetési mélység"
+msgid "a page visit or an event from your site or app"
+msgstr "egy oldallátogatás vagy esemény a webhelyedről vagy alkalmazásodból"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -328,10 +351,6 @@ msgstr "Analitikai tulajdonságok"
 msgid "Analytics steps"
 msgstr "Analitikai lépések"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Analytics views"
-msgstr "Analitikai nézetek"
-
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Bárki, akinél ott a link, látja a kiválasztott nézeteket, csak olvashatóan, bejelentkezés nélkül."
@@ -376,6 +395,11 @@ msgstr "Botok"
 msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
 msgstr "Botok, sebességkorlátok, kizárt címek és útvonalak, a havi korlát vagy egy túlterhelt szerver."
 
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
+msgid "Bounce"
+msgstr "Visszafordulás"
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Visszafordulási arány"
@@ -385,7 +409,6 @@ msgid "Break down by prop"
 msgstr "Bontás propok szerint"
 
 #: src/features/analytics/Goals.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Bontás"
 
@@ -573,8 +596,8 @@ msgid "Conversions per 100 visitors."
 msgstr "Konverziók 100 látogatóra."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "Cookieless visitors across your sites and apps."
-msgstr "Webhelyeid és alkalmazásaid látogatói, sütik nélkül."
+msgid "Cookieless visitors across your sites and apps"
+msgstr "Cookie nélküli látogatók a webhelyeiden és alkalmazásaidban"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -773,10 +796,6 @@ msgstr "A részletes rekordokat {rawDay} óta őrizzük meg."
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
 msgstr "A részletes rekordok megőrzése ettől"
-
-#: src/features/analytics/Overview.tsx
-msgid "Details"
-msgstr "Részletek"
 
 #: src/features/analytics/text.ts
 msgid "Device"
@@ -1131,6 +1150,7 @@ msgstr "eltávolították a címét"
 msgid "Health"
 msgstr "Állapot"
 
+#: src/features/analytics/Pages.tsx
 #: src/features/analytics/text.ts
 msgid "Helpful"
 msgstr "Hasznos"
@@ -1170,6 +1190,10 @@ msgstr "Hogyan küldj eseményeket"
 #: src/features/analytics/Sharing.tsx
 msgid "I saved it"
 msgstr "Elmentettem"
+
+#: src/features/analytics/Pages.tsx
+msgid "Improve page →"
+msgstr "Oldal javítása →"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1295,9 +1319,17 @@ msgstr "Utolsó képernyő"
 msgid "Leave empty to keep the current one"
 msgstr "Hagyd üresen a jelenlegi megtartásához"
 
+#: src/features/analytics/Pages.tsx
+msgid "Led to a conversation"
+msgstr "Beszélgetéshez vezetett"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Link"
 msgstr "Link"
+
+#: src/features/analytics/Overview.tsx
+msgid "Link an inbox to count them"
+msgstr "Kapcsolj hozzá egy postafiókot, hogy számolhassuk őket"
 
 #: src/features/analytics/Support.tsx
 msgid "Link an inbox to see support per page"
@@ -1310,6 +1342,10 @@ msgstr "Postafiók összekapcsolása"
 #: src/features/analytics/Settings.tsx
 msgid "Link signed-in users to their contact"
 msgstr "Bejelentkezett felhasználók összekapcsolása a kontaktjukkal"
+
+#: src/features/analytics/Overview.tsx
+msgid "live"
+msgstr "élő"
 
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -1324,7 +1360,6 @@ msgstr "Helyadatbázis"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Helyek"
@@ -1382,8 +1417,8 @@ msgid "Months"
 msgstr "Hónapok"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-msgid "More"
-msgstr "Továbbiak"
+msgid "More views"
+msgstr "További nézetek"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1434,14 +1469,11 @@ msgstr "Új {kind}: {value} {count} értékkel, egy sem az összehasonlított na
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Új {kind}: {value}. {metric}: {now}, egy sem az összehasonlított napokon."
 
-#: src/features/analytics/Overview.tsx
-msgid "New and returning"
-msgstr "Új és visszatérő"
-
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Új tölcsér"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Goals.tsx
 msgid "New goal"
 msgstr "Új cél"
@@ -1477,10 +1509,6 @@ msgstr "Nincs összehasonlítás"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Hozzájárulási funkciók nem érhetők el."
-
-#: src/features/analytics/Overview.tsx
-msgid "No consented visitors in this range."
-msgstr "Ebben a tartományban nincsenek beleegyező látogatók."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -1590,6 +1618,7 @@ msgstr "Semmi"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Pages.tsx
 msgid "Nothing counted in this range."
 msgstr "Ebben a tartományban semmi sem lett számolva."
 
@@ -1767,6 +1796,10 @@ msgstr "Oldal vagy képernyő"
 msgid "Page view of {path}"
 msgstr "{path} oldalmegtekintése"
 
+#: src/features/analytics/Overview.tsx
+msgid "Page views"
+msgstr "Oldalmegtekintések"
+
 #: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Oldalak"
@@ -1782,6 +1815,10 @@ msgstr "Megtekintett oldalak és képernyők."
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
 msgstr "Nem számolt oldalak"
+
+#: src/features/analytics/Pages.tsx
+msgid "Pages ranked by the questions they cause. A page with many visitors and many conversations needs a better answer on the page itself."
+msgstr "A kiváltott kérdések szerint rangsorolt oldalak. Az sok látogatóval és sok beszélgetéssel rendelkező oldalnak jobb válaszra van szüksége magán az oldalon."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
@@ -2049,7 +2086,6 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "A Do Not Track vagy Global Privacy Control kéréseket, és a hozzájárulást igénylő tulajdonságnál a hozzájárulás nélküli eseményeket fogadjuk, de itt nem tároljuk és nem számoljuk."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Megtartás"
 
@@ -2257,6 +2293,10 @@ msgstr "Források"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Újrakezdés"
+
+#: src/features/analytics/Overview.tsx
+msgid "Started a conversation"
+msgstr "Beszélgetést kezdett"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2484,6 +2524,7 @@ msgstr "Hányszor értékelték az oldalt nem hasznosnak."
 msgid "To"
 msgstr "Címzett"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/text.ts
 msgid "Today"
 msgstr "Ma"
@@ -2630,6 +2671,7 @@ msgstr "A megtekintések két óra alatt {now}-ra nőttek, szemben a szokásos {
 msgid "Visit duration"
 msgstr "Látogatás időtartama"
 
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
@@ -2638,6 +2680,10 @@ msgstr "Látogatók"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Látogatók az elmúlt 30 percben"
+
+#: src/features/analytics/Overview.tsx
+msgid "Visitors now"
+msgstr "Látogatók most"
 
 #: src/features/analytics/Retention.tsx
 msgid "Visitors who came back"
@@ -2654,6 +2700,10 @@ msgstr "A Do Not Track vagy Global Privacy Control beállítású látogatók ne
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Látogatások"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Visits and events that count as success"
+msgstr "Sikernek számító látogatások és események"
 
 #: src/features/analytics/text.ts
 msgid "Visits with one page or screen view and nothing else."
@@ -2730,6 +2780,10 @@ msgstr "Honnan jönnek a konverziók"
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."
 msgstr "Hol kezdődik és végződik a tulajdonság napja."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Which pages people visit, and which lead to questions"
+msgstr "Mely oldalakat látogatják az emberek, és melyek vezetnek kérdésekhez"
 
 #: src/features/analytics/Install.tsx
 msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."

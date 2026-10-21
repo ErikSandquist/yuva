@@ -5,9 +5,10 @@ import { useNavigate } from "react-router"
 
 import { ErrorLine, TypeToConfirmDialog } from "@/components/common"
 import { Button } from "@/components/ui/button"
-import { Card, RowText, Section } from "@/features/settings/ui"
+import { Block, BlockRow, headButton } from "@/features/settings/ui"
 import { api, setWorkspace, unwrap } from "@/lib/api"
 import { meKey, useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 
 export function DeleteWorkspace() {
   const qc = useQueryClient()
@@ -26,30 +27,17 @@ export function DeleteWorkspace() {
     },
   })
   return (
-    <Section
-      title={<Trans>Danger zone</Trans>}
-      description={
-        <Trans>
-          Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys
-          for everyone, at once. Members keep their accounts. This cannot be undone.
-        </Trans>
-      }
-    >
-      <Card tone="danger">
-        <div className="flex flex-wrap items-center gap-3">
-          <RowText
-            title={
-              <span className="font-medium text-destructive">
-                <Trans>Delete this workspace</Trans>
-              </span>
-            }
-            detail={<Trans>Removes every inbox, conversation and contact for everyone.</Trans>}
-          />
-          {membership.role === "owner" ? (
+    <>
+      <Block
+        title={<Trans>Danger zone</Trans>}
+        description={<Trans>These cannot be undone</Trans>}
+        tone="danger"
+        footer={
+          membership.role === "owner" ? (
             <Button
               type="button"
-              variant="destructive"
-              size="sm"
+              variant="outline"
+              className={cn(headButton.secondary, "border-destructive/35 text-destructive hover:border-destructive")}
               onClick={() => {
                 remove.reset()
                 setOpen(true)
@@ -59,12 +47,21 @@ export function DeleteWorkspace() {
               <Trans>Delete workspace…</Trans>
             </Button>
           ) : (
-            <p className="text-small text-faint">
+            <p className="me-auto text-caption text-faint">
               <Trans>Only owners can delete the workspace.</Trans>
             </p>
-          )}
-        </div>
-      </Card>
+          )
+        }
+      >
+        <BlockRow label={<Trans>Delete workspace</Trans>}>
+          <span className="text-destructive">
+            <Trans>
+              Removes {name} with its products, channels, conversations, contacts, files, labels, webhooks and API keys
+              for everyone. Members keep their accounts.
+            </Trans>
+          </span>
+        </BlockRow>
+      </Block>
       <TypeToConfirmDialog
         open={open}
         onOpenChange={setOpen}
@@ -82,6 +79,6 @@ export function DeleteWorkspace() {
         error={<ErrorLine error={remove.error} />}
         onConfirm={() => remove.mutate()}
       />
-    </Section>
+    </>
   )
 }

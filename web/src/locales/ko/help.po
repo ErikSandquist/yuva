@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{drafts} drafts"
+msgstr "초안 {drafts}개"
+
 #: src/features/help/HelpColumn.tsx
 msgid "{published} of {total} articles published"
 msgstr "문서 {total}개 중 {published}개 게시됨"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "{published} published"
-msgstr "게시됨 {published}개"
+msgid "{searches} searches"
+msgstr "검색 {searches}회"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -56,10 +60,6 @@ msgstr "주소 끝부분"
 msgid "Agents may publish"
 msgstr "상담원이 게시할 수 있음"
 
-#: src/features/help/ArticlesTab.tsx
-msgid "All collections"
-msgstr "모든 컬렉션"
-
 #: src/features/help/Revisions.tsx
 msgid "An API key"
 msgstr "API 키"
@@ -77,12 +77,12 @@ msgid "Another help center already uses this address, now or before."
 msgstr "다른 도움말 센터가 현재 또는 이전에 이 주소를 사용합니다."
 
 #: src/features/help/pages.tsx
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
+msgstr "자주 묻는 질문에는 한 번만 글로 답하세요. 제품마다 문서, 컬렉션, 사람들이 검색하는 내용에 대한 보고서를 갖춘 별도의 고객센터가 제공됩니다."
+
+#: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
 msgstr "자주 묻는 질문에 한 번만 글로 답하세요. 받은편지함의 도움말 센터를 선택해 문서를 작성하고, 컬렉션으로 묶고, 고객이 무엇을 검색하는지 확인하세요."
-
-#: src/features/help/ArticlesTab.tsx
-msgid "Any state"
-msgstr "모든 상태"
 
 #: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
@@ -120,6 +120,7 @@ msgid "Articles in this collection"
 msgstr "이 컬렉션의 문서"
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Articles people read before they write to you"
 msgstr "문의하기 전에 사람들이 읽는 글"
 
@@ -161,6 +162,10 @@ msgstr "글머리 기호 목록"
 msgid "Cancel"
 msgstr "취소"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Changed"
+msgstr "변경됨"
+
 #: src/features/help/text.tsx
 msgid "Chart"
 msgstr "차트"
@@ -191,6 +196,7 @@ msgstr "코드 블록"
 msgid "Collection"
 msgstr "컬렉션"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Collections"
 msgstr "컬렉션"
@@ -213,12 +219,18 @@ msgstr "컬렉션 만들기"
 
 #: src/features/help/CreateCenterDialog.tsx
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "Create help center"
 msgstr "도움말 센터 만들기"
 
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "도움말 센터 만들기 ({newKey})"
+
+#. placeholder {0}: inbox.name
+#: src/features/help/pages.tsx
+msgid "Create one for {0}"
+msgstr "{0}용으로 만들기"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -278,6 +290,10 @@ msgstr "초안"
 msgid "Draft submitted. An owner or admin can publish it."
 msgstr "초안을 제출했습니다. 소유자 또는 관리자가 게시할 수 있습니다."
 
+#: src/features/help/pages.tsx
+msgid "Drafts"
+msgstr "초안"
+
 #: src/features/help/Revisions.tsx
 msgid "Earlier versions of this translation. Restoring one replaces the draft; the published text stays until you publish."
 msgstr "이 번역의 이전 버전입니다. 복원하면 초안이 대체되며, 게시된 텍스트는 다시 게시할 때까지 유지됩니다."
@@ -307,8 +323,8 @@ msgid "Formatting"
 msgstr "서식"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Found nothing · 7 days"
-msgstr "결과 없음 · 7일"
+msgid "Found nothing"
+msgstr "찾지 못함"
 
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
@@ -325,10 +341,6 @@ msgstr "방문자가 둘러볼 수 있도록 문서를 묶으세요. 컬렉션�
 #: src/features/help/EditorToolbar.tsx
 msgid "Heading"
 msgstr "제목"
-
-#: src/features/help/pages.tsx
-msgid "Help"
-msgstr "도움말"
 
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
@@ -433,6 +445,7 @@ msgid "Main language"
 msgstr "기본 언어"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/pages.tsx
 msgid "More"
 msgstr "더 보기"
 
@@ -459,13 +472,15 @@ msgid "Name"
 msgstr "이름"
 
 #: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article"
 msgstr "새 문서"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "New article ({newKey})"
 msgstr "새 문서 ({newKey})"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/CollectionsTab.tsx
 msgid "New collection"
 msgstr "새 컬렉션"
@@ -499,15 +514,21 @@ msgstr "컬렉션 없음"
 msgid "No collections yet. Articles can stay without one."
 msgstr "아직 컬렉션이 없습니다. 문서는 컬렉션 없이 둘 수 있습니다."
 
+#: src/features/help/ArticlesTab.tsx
+msgid "No drafts. Everything written is published."
+msgstr "초안이 없습니다. 작성한 모든 것이 게시되었습니다."
+
 #: src/features/help/Revisions.tsx
 msgid "No earlier versions yet."
 msgstr "이전 버전이 아직 없습니다."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
 msgstr "아직 도움말 센터가 없습니다. 소유자와 관리자가 만듭니다."
 
 #: src/features/help/HelpColumn.tsx
+#: src/features/help/pages.tsx
 msgid "No inbox to show a help center for."
 msgstr "도움말 센터를 표시할 받은편지함이 없습니다."
 
@@ -520,16 +541,16 @@ msgid "not named"
 msgstr "이름 없음"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "not written"
-msgstr "작성 안 됨"
-
-#: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "작성 안 됨"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Numbered list"
 msgstr "번호 목록"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "of {answers} answers"
+msgstr "답변 {answers}개 중"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
@@ -596,10 +617,6 @@ msgstr "미리보기"
 #: src/features/help/ArticleEditor.tsx
 msgid "Preview ({alt} P)"
 msgstr "미리보기 ({alt} P)"
-
-#: src/features/help/pages.tsx
-msgid "Preview ({previewKey})"
-msgstr "미리보기 ({previewKey})"
 
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
@@ -696,11 +713,11 @@ msgstr "저장됨"
 msgid "Saving…"
 msgstr "저장 중…"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles"
 msgstr "제목 검색"
 
-#: src/features/help/ArticlesTab.tsx
+#: src/features/help/pages.tsx
 msgid "Search titles ({findKey})"
 msgstr "제목 검색 ({findKey})"
 
@@ -717,8 +734,8 @@ msgid "Searches"
 msgstr "검색"
 
 #: src/features/help/ArticlesTab.tsx
-msgid "Searches · 7 days"
-msgstr "검색 · 7일"
+msgid "searches this week"
+msgstr "이번 주 검색"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -770,7 +787,7 @@ msgid "Start with a title. You write the text next, and it stays a draft until i
 msgstr "제목으로 시작하세요. 본문은 그다음에 쓰며, 게시되기 전까지 초안으로 유지됩니다."
 
 #: src/features/help/ArticlesTab.tsx
-msgid "State"
+msgid "Status"
 msgstr "상태"
 
 #: src/features/help/ArticleEditor.tsx
@@ -867,10 +884,6 @@ msgstr "검색할 단어를 입력하세요."
 msgid "Unpublish"
 msgstr "게시 취소"
 
-#: src/features/help/pages.tsx
-msgid "Unpublish ({publishKey})"
-msgstr "게시 취소 ({publishKey})"
-
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "이 번역의 게시를 취소할까요?"
@@ -917,8 +930,12 @@ msgid "View"
 msgstr "보기"
 
 #: src/features/help/pages.tsx
-msgid "View help center"
-msgstr "도움말 센터 보기"
+msgid "View site"
+msgstr "사이트 보기"
+
+#: src/features/help/pages.tsx
+msgid "View site ({openKey})"
+msgstr "사이트 보기 ({openKey})"
 
 #: src/features/help/ReportTab.tsx
 msgid "Views"

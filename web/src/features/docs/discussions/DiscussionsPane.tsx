@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine, hostOf } from "@/components/common"
-import { Pane, PaneBack } from "@/components/common/Column"
+import { framePad } from "@/features/status/PageFrame"
 import { DISCUSSION_KEYS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
-import { DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
+import { DocsFrame, DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
 import { useDocsDays, useDocsSummary } from "@/features/docs/queries"
 import { ListSkeleton, LoadMore, ThreadRow } from "@/features/docs/discussions/parts"
 import {
@@ -160,48 +160,51 @@ export function DiscussionsPane() {
     ...viewFilters(view),
   }
   return (
-    <Pane testId="discussions">
-      <header className="flex flex-col">
-        <PaneBack to="/docs" label={t`Docs`} />
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <h1 className="min-w-0 text-page break-words">
-            <Trans>Discussions</Trans>
-          </h1>
-          {pending > 0 && (
-            <Button variant="outline" size="sm" render={<Link to="/docs/discussions/queue" />} data-testid="queue-link">
-              <HourglassIcon className="text-warning" />
-              <Trans>{pending} waiting for approval</Trans>
-            </Button>
+    <DocsFrame testId="discussions">
+      <div className={cn(framePad, "max-w-[900px]")}>
+        <header className="flex flex-col gap-0.5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-body text-muted-foreground">
+              <Trans>Public threads under your documentation pages, in every state.</Trans>
+            </p>
+            {pending > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                render={<Link to="/docs/discussions/queue" />}
+                data-testid="queue-link"
+              >
+                <HourglassIcon className="text-warning" />
+                <Trans>{pending} waiting for approval</Trans>
+              </Button>
+            )}
+          </div>
+          {site && (
+            <p className="inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
+              <GlobeIcon className="size-4 text-faint" />
+              <span dir="ltr">{hostOf(site)}</span>
+            </p>
           )}
+        </header>
+        <DocsSitePicker className="hidden phone:flex" />
+        <div className="flex flex-col gap-2.5">
+          <Chips
+            value={view}
+            onChange={setView}
+            label={t`Show`}
+            testId="thread-view"
+            items={THREAD_VIEWS.map((v) => ({ value: v, label: viewText[v] }))}
+          />
+          <Chips
+            value={sort}
+            onChange={setSort}
+            label={t`Sort`}
+            testId="thread-sort"
+            items={THREAD_SORTS.map((s) => ({ value: s, label: sortText[s] }))}
+          />
         </div>
-        <p className="mt-1.5 text-reading text-muted-foreground">
-          <Trans>Public threads under your documentation pages, in every state.</Trans>
-        </p>
-        {site && (
-          <p className="mt-1 inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
-            <GlobeIcon className="size-4 text-faint" />
-            <span dir="ltr">{hostOf(site)}</span>
-          </p>
-        )}
-      </header>
-      <DocsSitePicker className="hidden phone:flex" />
-      <div className="flex flex-col gap-2.5">
-        <Chips
-          value={view}
-          onChange={setView}
-          label={t`Show`}
-          testId="thread-view"
-          items={THREAD_VIEWS.map((v) => ({ value: v, label: viewText[v] }))}
-        />
-        <Chips
-          value={sort}
-          onChange={setSort}
-          label={t`Sort`}
-          testId="thread-sort"
-          items={THREAD_SORTS.map((s) => ({ value: s, label: sortText[s] }))}
-        />
+        <ThreadList filters={filters} showPage from="/docs/discussions" keyboard empty={empty[view]} />
       </div>
-      <ThreadList filters={filters} showPage from="/docs/discussions" keyboard empty={empty[view]} />
-    </Pane>
+    </DocsFrame>
   )
 }
