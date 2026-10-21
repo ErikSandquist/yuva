@@ -88,6 +88,10 @@ step that you control.
 
 - Grant `lists:read`, `broadcasts:read` and `broadcasts:write` when you connect (an API key needs them
   too). The `draft_newsletter` prompt starts from a brief and never schedules.
+- `get_broadcast` shows the same review as the broadcast page: each check with ok, warning or blocking.
+  The assistant fixes design problems with `update_design` and everything else on the draft (subject,
+  preheader, channel, lists, click tracking, UTM tags, pace) with `update_broadcast`, which answers with
+  the review again. Approval and the channel's domain checks stay with you.
 - A test sent through a connected assistant goes only to you. An API key names the members who get it.
 - `schedule_broadcast` is listed only when the key or token has `broadcasts:send` **and** an owner or
   admin has switched on "Keys and assistants may send broadcasts" ([Keys and
@@ -203,7 +207,7 @@ answers `insufficient_scope` with the scope to grant.
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
-| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
 | `schedule_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (owners and admins) | `migrations:manage` |
 

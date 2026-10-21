@@ -91,6 +91,10 @@ okuyabilir. İzin vermedikçe abonelerinize gönderemez: zamanlama ayrı bir ad�
 
 - Bağlanırken `lists:read`, `broadcasts:read` ve `broadcasts:write` yetkilerini verin (API anahtarının da
   bunlara ihtiyacı var). `draft_newsletter` prompt'u bir özetle başlar ve asla zamanlamaz.
+- `get_broadcast`, bülten sayfasındaki kontrolün aynısını gösterir: her kontrol tamam, uyarı ya da engel
+  olarak gelir. Asistan tasarım sorunlarını `update_design` ile, taslaktaki diğer her şeyi (konu, ön
+  metin, kanal, listeler, tıklama takibi, UTM etiketleri, hız) `update_broadcast` ile düzeltir; bu araç
+  kontrolü yeniden döndürür. Onay ve kanalın alan adı kontrolleri sizde kalır.
 - Bağlı bir asistanla gönderilen deneme yalnızca size gider. API anahtarı, denemeyi alacak üyeleri adıyla belirtir.
 - `schedule_broadcast` yalnızca anahtar ya da belirteçte `broadcasts:send` varsa **ve** bir sahip veya
   yönetici "Anahtarlar ve asistanlar bülten gönderebilir" seçeneğini açtıysa listelenir ([Anahtarlar ve
@@ -208,7 +212,7 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
-| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
 | `schedule_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (sahipler ve yöneticiler) | `migrations:manage` |
 

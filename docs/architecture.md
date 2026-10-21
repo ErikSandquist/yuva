@@ -486,7 +486,8 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   audience for a draft) and `get_broadcast_report` are listed by scope (`lists:read`,
   `broadcasts:read`); `list_email_templates` and `preview_design` (the HTML as an embedded resource)
   with `broadcasts:read`, and `create_design`, `update_design` (with `base_version`),
-  `create_broadcast_draft` and `send_test_broadcast` with `broadcasts:write`, are listed only to
+  `create_broadcast_draft`, `update_broadcast` (the draft's fields or a running broadcast's pace; it
+  answers with the review again) and `send_test_broadcast` with `broadcasts:write`, are listed only to
   owners, admins and keys. A test through an OAuth token goes to the caller only; keys name members. `schedule_broadcast` is listed only to principals
   with `broadcasts:send` while the workspace allows `broadcasts_by_keys`, and needs `send_at` and
   `confirm_recipients` equal to the audience count it was shown; the approval gate applies. Reply

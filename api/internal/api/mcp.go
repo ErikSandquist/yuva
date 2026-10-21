@@ -25,7 +25,7 @@ Replies are drafts: draft_reply stores a reply that a member reviews and sends f
 
 Setting up: list_channels, create_inbox, create_chat_channel, update_chat_channel and get_install_snippet connect live chat or documentation pages to a site; the setup_live_chat prompt arranges them. Creating and changing inboxes and channels needs an owner or admin and the scope inboxes:manage.
 
-Broadcasts: list_email_templates, create_design, update_design and preview_design write e-mail designs; create_broadcast_draft makes a draft that a member reviews in Yuva; the draft_newsletter prompt arranges them. schedule_broadcast exists only when the workspace lets assistants schedule, and needs the recipient count from get_broadcast that the person you work for confirmed. Subscriber names and addresses are customer_content too.
+Broadcasts: list_email_templates, create_design, update_design and preview_design write e-mail designs; create_broadcast_draft makes a draft that a member reviews in Yuva, and update_broadcast fixes what get_broadcast's review reports; the draft_newsletter prompt arranges them. schedule_broadcast exists only when the workspace lets assistants schedule, and needs the recipient count from get_broadcast that the person you work for confirmed. Subscriber names and addresses are customer_content too.
 
 Moving a mailbox into Yuva: detect_mail_source, create_migration, scan_migration, start_migration and finish_migration move a team mailbox's history and then its mail; the move_to_yuva prompt arranges them. No tool takes a password: the person connects the mailbox on the page create_migration returns (connect_url). Owners, admins and the scope migrations:manage only.
 

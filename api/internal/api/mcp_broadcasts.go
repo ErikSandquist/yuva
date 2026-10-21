@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
 	"uuid"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/oapi-codegen/nullable"
 
 	"github.com/productdevbook/yuva/api/internal/oas"
 )
@@ -349,6 +351,82 @@ type createBroadcastIn struct {
 	PacePerMonth  *int32                  `json:"pace_per_month,omitempty" jsonschema:"at most this many mails in any 30 days, 1 to 10,000,000; optional"`
 }
 
+func audienceIn(listIDs []uuid.UUID, locales []string, conditions []mcpBroadcastCondition) oas.BroadcastAudienceInput {
+	aud := oas.BroadcastAudienceInput{ListIds: listIDs}
+	if aud.ListIds == nil {
+		aud.ListIds = []uuid.UUID{}
+	}
+	if len(locales) > 0 {
+		tags := make([]oas.LanguageTag, len(locales))
+		for i, l := range locales {
+			tags[i] = oas.LanguageTag(l)
+		}
+		aud.Locales = &tags
+	}
+	if len(conditions) > 0 {
+		conds := make([]oas.BroadcastCondition, len(conditions))
+		for i, cd := range conditions {
+			conds[i] = oas.BroadcastCondition{Attribute: cd.Attribute, Op: oas.BroadcastConditionOp(cd.Op), Value: optString[string](cd.Value)}
+			if cd.Values != nil {
+				conds[i].Values = &cd.Values
+			}
+		}
+		aud.Conditions = &conds
+	}
+	return aud
+}
+
+type updateBroadcastIn struct {
+	BroadcastID   uuid.UUID               `json:"broadcast_id"`
+	Name          *string                 `json:"name,omitempty" jsonschema:"shown to members"`
+	Subject       *string                 `json:"subject,omitempty" jsonschema:"the mail's subject; merge fields need a fallback"`
+	Preheader     *string                 `json:"preheader,omitempty" jsonschema:"the line inboxes show after the subject; empty removes it"`
+	ChannelID     *uuid.UUID              `json:"channel_id,omitempty" jsonschema:"the inbox's e-mail channel to send through, which sets the sender"`
+	DesignID      *uuid.UUID              `json:"design_id,omitempty"`
+	ListIDs       []uuid.UUID             `json:"list_ids,omitempty" jsonschema:"1 to 10 lists of the inbox; replaces the whole audience together with locales and conditions"`
+	Locales       []string                `json:"locales,omitempty" jsonschema:"with list_ids: only contacts with these languages, BCP 47 tags"`
+	Conditions    []mcpBroadcastCondition `json:"conditions,omitempty" jsonschema:"with list_ids: contact attribute conditions every recipient must meet"`
+	ClickTracking *bool                   `json:"click_tracking,omitempty" jsonschema:"count unique clicks on links; links then point at this server"`
+	UTM           *bool                   `json:"utm,omitempty" jsonschema:"add utm_source, utm_medium and utm_campaign to links"`
+	UTMCampaign   string                  `json:"utm_campaign,omitempty" jsonschema:"lowercase letters, digits, -, _ and ."`
+	PacePerHour   *int32                  `json:"pace_per_hour,omitempty" jsonschema:"at most this many mails in any 60 minutes, 1 to 10,000,000"`
+	PacePerDay    *int32                  `json:"pace_per_day,omitempty" jsonschema:"at most this many mails in any 24 hours, 1 to 10,000,000"`
+	PacePerMonth  *int32                  `json:"pace_per_month,omitempty" jsonschema:"at most this many mails in any 30 days, 1 to 10,000,000"`
+	RemovePace    bool                    `json:"remove_pace,omitempty" jsonschema:"send as fast as the channel and the daily limit allow"`
+}
+
+var errNothingToUpdate = problem(http.StatusBadRequest, "invalid_request", "name at least one field to change")
+
+var errAudienceWithoutLists = problem(http.StatusBadRequest, "invalid_request", "locales and conditions replace the audience together with list_ids; pass list_ids too")
+
+func (in updateBroadcastIn) body() (oas.BroadcastUpdate, *apiError) {
+	body := oas.BroadcastUpdate{
+		Name: in.Name, Subject: in.Subject, Preheader: in.Preheader, ClickTracking: in.ClickTracking, Utm: in.UTM,
+		UtmCampaign: optString[string](in.UTMCampaign),
+	}
+	if in.ChannelID != nil {
+		body.ChannelId = nullable.NewNullableWithValue(*in.ChannelID)
+	}
+	if in.DesignID != nil {
+		body.DesignId = nullable.NewNullableWithValue(*in.DesignID)
+	}
+	if in.ListIDs != nil {
+		aud := audienceIn(in.ListIDs, in.Locales, in.Conditions)
+		body.Audience = &aud
+	} else if len(in.Locales) > 0 || len(in.Conditions) > 0 {
+		return body, errAudienceWithoutLists
+	}
+	if in.PacePerHour != nil || in.PacePerDay != nil || in.PacePerMonth != nil {
+		body.Pace = &oas.BroadcastPace{PerHour: in.PacePerHour, PerDay: in.PacePerDay, PerMonth: in.PacePerMonth}
+	} else if in.RemovePace {
+		body.Pace = &oas.BroadcastPace{}
+	}
+	if reflect.DeepEqual(body, oas.BroadcastUpdate{}) {
+		return body, errNothingToUpdate
+	}
+	return body, nil
+}
+
 type sendTestIn struct {
 	BroadcastID uuid.UUID   `json:"broadcast_id"`
 	MemberIDs   []uuid.UUID `json:"member_ids,omitempty" jsonschema:"with an API key only: 1 to 5 members to send it to; a signed-in assistant sends it to you"`
@@ -556,27 +634,7 @@ var mcpBroadcastTools = []mcpTool{
 		additive, map[string][]any{"conditions.op": conditionOps},
 		mcpTool{ops: []string{"CreateBroadcast"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
 		func(ctx context.Context, c *mcpCall, in createBroadcastIn) (mcpBroadcast, error) {
-			aud := oas.BroadcastAudienceInput{ListIds: in.ListIDs}
-			if aud.ListIds == nil {
-				aud.ListIds = []uuid.UUID{}
-			}
-			if len(in.Locales) > 0 {
-				locales := make([]oas.LanguageTag, len(in.Locales))
-				for i, l := range in.Locales {
-					locales[i] = oas.LanguageTag(l)
-				}
-				aud.Locales = &locales
-			}
-			if len(in.Conditions) > 0 {
-				conds := make([]oas.BroadcastCondition, len(in.Conditions))
-				for i, cd := range in.Conditions {
-					conds[i] = oas.BroadcastCondition{Attribute: cd.Attribute, Op: oas.BroadcastConditionOp(cd.Op), Value: optString[string](cd.Value)}
-					if cd.Values != nil {
-						conds[i].Values = &cd.Values
-					}
-				}
-				aud.Conditions = &conds
-			}
+			aud := audienceIn(in.ListIDs, in.Locales, in.Conditions)
 			body := oas.BroadcastCreate{
 				InboxId: in.InboxID, ChannelId: in.ChannelID, Name: in.Name, Subject: &in.Subject, DesignId: in.DesignID,
 				Audience: &aud, ClickTracking: &in.ClickTracking,
@@ -592,6 +650,20 @@ var mcpBroadcastTools = []mcpTool{
 				return mcpBroadcast{}, err
 			}
 			return c.broadcastOut(oas.Broadcast(res.(oas.CreateBroadcast201JSONResponse))), nil
+		}),
+	defineTool("update_broadcast", "Change a draft broadcast",
+		"Changes the fields you pass on a draft: name, subject, preheader, the e-mail channel (the sender), the design, the audience (list_ids with optional locales and conditions, replacing the whole audience), click tracking, UTM tags and the pace (the pace fields replace the whole pace; remove_pace drops it). While a broadcast is scheduled or sending only the pace can change. Returns the broadcast with the review again, so you see what still blocks it. Nothing is sent. Owners, admins and keys only. Maps to PATCH /v1/broadcasts/{id}.",
+		idempotent, map[string][]any{"conditions.op": conditionOps},
+		mcpTool{ops: []string{"UpdateBroadcast", "GetBroadcast", "ReviewBroadcast", "CountBroadcastAudience"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in updateBroadcastIn) (getBroadcastOut, error) {
+			body, perr := in.body()
+			if perr != nil {
+				return getBroadcastOut{}, perr
+			}
+			if _, err := c.s.UpdateBroadcast(ctx, oas.UpdateBroadcastRequestObject{BroadcastId: in.BroadcastID, Body: &body}); err != nil {
+				return getBroadcastOut{}, err
+			}
+			return c.getBroadcast(ctx, in.BroadcastID)
 		}),
 	defineTool("send_test_broadcast", "Send a test of a broadcast",
 		"Sends a test of a draft to you (with an API key, to the members named), never to subscribers; at most 20 tests an hour per workspace. Owners, admins and keys only. Maps to POST /v1/broadcasts/{id}/test.",

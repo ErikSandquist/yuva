@@ -94,6 +94,10 @@ Planen ist ein eigener Schritt, den Sie steuern.
 
 - Geben Sie beim Verbinden `lists:read`, `broadcasts:read` und `broadcasts:write` frei (ein API-Key braucht
   sie ebenfalls). Der Prompt `draft_newsletter` geht von einem Briefing aus und plant nie.
+- `get_broadcast` zeigt dieselbe Prüfung wie die Seite des Newsletters: jeden Punkt als ok, Warnung oder
+  blockierend. Der Assistent behebt Probleme im Design mit `update_design` und alles andere am Entwurf
+  (Betreff, Vorschautext, Kanal, Listen, Klick-Tracking, UTM-Parameter, Tempo) mit `update_broadcast`,
+  das die Prüfung erneut zurückgibt. Freigabe und die Domain-Prüfungen des Kanals bleiben bei Ihnen.
 - Ein Test über einen verbundenen Assistenten geht nur an Sie. Ein API-Key nennt die Mitglieder, die ihn bekommen.
 - `schedule_broadcast` wird nur aufgelistet, wenn der Key oder das Token `broadcasts:send` hat **und** ein
   Inhaber oder Admin „Keys and assistants may send broadcasts“ eingeschaltet hat ([Keys und
@@ -212,7 +216,7 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
-| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
 | `schedule_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (Owner und Admins) | `migrations:manage` |
 
