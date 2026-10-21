@@ -530,7 +530,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 	v := statusPageView{W: w, Dir: w.direction(), View: view, Name: pg.Name, Description: pg.Description, Home: snap.link(""),
 		HistoryURL: snap.link("/history"), FeedURL: snap.url("/feed.atom"), BadgeURL: snap.url("/badge.svg"),
 		JSONURL: s.auth.PublicURL + clientStatusPrefix + pg.Slug, State: w.States[state], StateClass: state,
-		Headline: w.Headlines[state], Updated: snap.at(pg.ChangedAt), Script: template.JS(statusScript),
+		Headline: w.Headlines[state], Updated: snap.at(snap.now), Script: template.JS(statusScript),
 		FontSans: snap.url(publicFontPath("Geist")), FontMono: snap.url(publicFontPath("GeistMono")),
 		Mark: yuvaMark, YuvaSite: yuvaSite}
 	v.FeedPath, v.JSONPath = urlPath(v.FeedURL), clientStatusPrefix+pg.Slug
@@ -634,7 +634,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 		affectedText = fill1(w.AffectedMany, affected)
 	}
 	all := snap.pageDays()
-	updated := snap.at(pg.ChangedAt)
+	updated := snap.at(snap.now)
 	switch view {
 	case "history":
 		v.Months, v.Cells = snap.historyMonths(all)
@@ -650,7 +650,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 			}
 		}
 		v.Cells = append(v.Cells, cellView{Label: w.AffectedNow, Value: affectedText},
-			cellView{Label: w.Updated, Value: w.ago(snap.now.Sub(pg.ChangedAt)), Time: &updated})
+			cellView{Label: w.Updated, Value: w.JustNow, Time: &updated})
 		response := ""
 		if len(snap.monitored) > 0 {
 			response = "response"
