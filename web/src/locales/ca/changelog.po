@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ca\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} esborranys"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} de {total} entrades publicades"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} publicades"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} programades"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Canvia l’hora"
 msgid "Changelog"
 msgstr "Registre de canvis"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Registres de canvis"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Tria una imatge"
@@ -86,8 +102,13 @@ msgstr "Compta les visites a les pàgines del registre de canvis sense galetes."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Crea un registre de canvis"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Crea el registre de canvis ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "S’eliminen totes les traduccions. Els enviaments creats a partir d’e
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Corregit"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Com es veu"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Com es veu a {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Cap entrada coincideix."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "No hi ha cap safata d’entrada per mostrar un registre de canvis."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Encara no hi ha text."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Publicada"
 msgid "Publishing on schedule failed."
 msgstr "La publicació programada ha fallat."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Notes de versió que es mostren als teus productes, al web i per correu."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Elimina"
@@ -396,6 +434,10 @@ msgstr "Configuració"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Mostra"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Es mostra al giny de xat i a {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Vols retirar aquesta entrada?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Sense publicar"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Mostra el registre de canvis"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

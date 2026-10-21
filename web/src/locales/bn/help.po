@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total}টির মধ্যে {published}টি নিবন্ধ প্রকাশিত"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published}টি প্রকাশিত"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "৩ থেকে ৪৮টি অক্ষর, সংখ্যা ও হাইফেন। এই সার্ভারে অনন্য।"
@@ -80,6 +84,7 @@ msgstr "সাধারণ প্রশ্নের উত্তর একবা
 msgid "Any state"
 msgstr "যেকোনো অবস্থা"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "নিবন্ধ"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "নিবন্ধ দেখার সংখ্যা"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "নিবন্ধ"
@@ -112,6 +118,10 @@ msgstr "এই ভাষাগুলোতে নিবন্ধ লেখা �
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "এই সংগ্রহের নিবন্ধ"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "আপনাকে লেখার আগে মানুষ যে নিবন্ধগুলো পড়ে"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "সব অনুবাদ, তাদের সংশোধন ও কা
 msgid "Formatting"
 msgstr "ফরম্যাটিং"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "কিছু পাওয়া যায়নি · ৭ দিন"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "শুরু করা"
@@ -312,11 +326,11 @@ msgstr "নিবন্ধ সাজান যাতে দর্শকেরা
 msgid "Heading"
 msgstr "শিরোনাম"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "সহায়তা"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "সহায়তা কেন্দ্র"
 msgid "Help centers are turned off on this server."
 msgstr "এই সার্ভারে সহায়তা কেন্দ্র বন্ধ আছে।"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "সহায়ক"
@@ -384,6 +399,10 @@ msgstr "ভাষা"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "গত {d} দিন"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "গত ৭ দিন"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "শিরোনামে খুঁজুন ({findKey})"
 msgid "Search words"
 msgstr "অনুসন্ধানের শব্দ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "খোঁজা হয়েছে, কিছু পাওয়া যায়নি"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "অনুসন্ধান"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "সার্চ · ৭ দিন"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "অপ্রকাশিত, শুধু আপনার টিম প�
 msgid "Unsaved changes"
 msgstr "সংরক্ষণ না করা পরিবর্তন"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "আপডেট হয়েছে"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "৩ থেকে ৪৮টি অক্ষর, সংখ্যা ও ভেতরের হাইফেন ব্যবহার করুন।"
@@ -893,6 +924,10 @@ msgstr "সহায়তা কেন্দ্র দেখুন"
 msgid "Views"
 msgstr "দেখা"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "ভিউ · ৭ দিন"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "দর্শকেরা কী পড়েন ও খোঁজেন। দেখার সংখ্যা আনুমানিক, এবং সংখ্যা এক মিনিটের মধ্যে এই পৃষ্ঠায় পৌঁছায়।"
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "দর্শকেরা যে শব্দ টাইপ করে কিছু পাননি। প্রতিটির জন্য একটি নতুন নিবন্ধ সবচেয়ে দ্রুত সমাধান।"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "লিখুন"
 

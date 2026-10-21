@@ -139,6 +139,10 @@ msgstr "Nascondi"
 msgid "Idea started"
 msgstr "Idea creata"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Idee votate dai tuoi clienti, con il feedback che le sostiene"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Idee, voti e fasi per {inboxName}, con i feedback dietro ogni idea. Resta privata finché non la rendi pubblica."
@@ -302,6 +306,10 @@ msgstr "Pagina pubblica"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "I lettori non possono proporre idee. Voti e risposte continuano a funzionare."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "I lettori hanno suggerito nuove idee. Rivedile prima che compaiano sulla bacheca pubblica."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

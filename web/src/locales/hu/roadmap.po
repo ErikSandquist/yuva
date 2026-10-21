@@ -139,6 +139,10 @@ msgstr "Elrejtés"
 msgid "Idea started"
 msgstr "Ötlet létrehozva"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Ötletek, amelyekre az ügyfeleid szavaznak, a mögöttük álló visszajelzésekkel"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ötletek, szavazatok és szakaszok ehhez: {inboxName}, az egyes ötletek mögötti visszajelzésekkel. Privát marad, amíg nyilvánossá nem teszi."
@@ -302,6 +306,10 @@ msgstr "Nyilvános oldal"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Az olvasók nem javasolhatnak ötleteket. A szavazatok és a válaszok továbbra is működnek."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Az olvasók új ötleteket javasoltak. Nézd át őket, mielőtt megjelennek a nyilvános táblán."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

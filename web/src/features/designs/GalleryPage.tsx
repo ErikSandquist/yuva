@@ -1,12 +1,22 @@
 import "@/features/designs/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
-import { FilePlusIcon, LanguagesIcon, LayoutTemplateIcon, LoaderIcon, TriangleAlertIcon } from "lucide-react"
+import {
+  ArchiveIcon,
+  FilePlusIcon,
+  LanguagesIcon,
+  LayoutTemplateIcon,
+  LoaderIcon,
+  PlusIcon,
+  TriangleAlertIcon,
+} from "lucide-react"
 import { useState } from "react"
-import { useNavigate, useSearchParams } from "react-router"
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
 import { Dot, ErrorLine, Notice, Segmented } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
+import { MailFrame } from "@/components/common/MailFrame"
+import { formatRelative } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,9 +30,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { designLink, useCreateDesign, useTemplates } from "@/features/designs/queries"
+import {
+  designLink,
+  useCreateDesign,
+  useDesign,
+  useDesigns,
+  useRender,
+  useShowArchivedDesigns,
+  useTemplates,
+} from "@/features/designs/queries"
 import { useTemplateLocales } from "@/features/designs/text"
-import type { EmailTemplate, EmailTemplateLocale } from "@/lib/api"
+import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { PageHeader, PageTabs } from "@/features/settings/ui"
+import type { EmailDesignSummary, EmailTemplate, EmailTemplateLocale } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
@@ -193,6 +213,118 @@ function TemplateCard({ tpl, locale, onUse }: { tpl: EmailTemplate; locale: Emai
   )
 }
 
+const THUMB_WIDTH = 600
+const THUMB_SCALE = 0.3
+
+function DesignCard({ d }: { d: EmailDesignSummary }) {
+  const { t, i18n } = useLingui()
+  const inbox = (useInboxes().data ?? []).find((i) => i.id === d.inbox_id)
+  const design = useDesign(d.id)
+  const render = useRender(
+    design.data ? { document: design.data.document, ...(d.inbox_id ? { inbox_id: d.inbox_id } : {}) } : null
+  )
+  const name = d.name
+  return (
+    <li>
+      <Link
+        to={designLink(d.id)}
+        className="group flex flex-col gap-2.5 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        data-testid="design-card"
+      >
+        <span className="relative flex h-64 justify-center overflow-hidden rounded-2xl border bg-surface pt-4.5 transition-colors group-hover:border-faint">
+          <span className="relative h-full w-[180px] overflow-hidden rounded-t-md bg-white shadow-[0_4px_14px_rgb(0_0_0/0.08)]">
+            {render.data ? (
+              <span
+                className="pointer-events-none absolute top-0 start-0 origin-top-left rtl:origin-top-right"
+                style={{ width: THUMB_WIDTH, transform: `scale(${THUMB_SCALE})` }}
+                aria-hidden
+              >
+                <MailFrame html={render.data.html} width={THUMB_WIDTH} title={t`Preview of ${name}`} />
+              </span>
+            ) : render.isError || design.isError ? (
+              <span className="grid h-full place-items-center text-faint">
+                <LayoutTemplateIcon className="size-6" />
+              </span>
+            ) : (
+              <Skeleton className="h-full w-full rounded-none" />
+            )}
+          </span>
+          {d.archived_at && (
+            <span className="absolute top-2.5 end-2.5 inline-flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-caption text-muted-foreground">
+              <ArchiveIcon className="size-3" />
+              <Trans>Archived</Trans>
+            </span>
+          )}
+        </span>
+        <span className="flex min-w-0 flex-col px-1 leading-snug">
+          <span className="truncate text-body font-medium">{d.name}</span>
+          <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+            {inbox && (
+              <>
+                <Dot color={inbox.branding.color} className="size-[6px] shrink-0 rounded-[2px]" />
+                <span className="truncate">{inbox.name}</span>
+                <span aria-hidden>·</span>
+              </>
+            )}
+            <span className="shrink-0">{formatRelative(d.updated_at, i18n.locale)}</span>
+          </span>
+        </span>
+      </Link>
+    </li>
+  )
+}
+
+function MyDesigns() {
+  const [inboxId] = useInboxFilter()
+  const [archived] = useShowArchivedDesigns()
+  const designs = useDesigns(inboxId, "", archived)
+  const items = designs.data?.pages.flatMap((p) => p.items) ?? []
+  if (designs.isPending)
+    return (
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-4">
+        {[0, 1, 2].map((i) => (
+          <Skeleton key={i} className="h-72 rounded-2xl" />
+        ))}
+      </div>
+    )
+  return (
+    <>
+      <ErrorLine error={designs.error} />
+      {items.length === 0 ? (
+        <div
+          className="flex flex-col items-center gap-3 rounded-2xl border border-dashed px-6 py-12 text-center"
+          data-testid="designs-home-empty"
+        >
+          <LayoutTemplateIcon className="size-6 text-faint" />
+          <p className="max-w-md text-body text-muted-foreground">
+            <Trans>A design is the look of a mail: start from a template, then use it for your broadcasts.</Trans>
+          </p>
+          <Button size="sm" variant="outline" render={<Link to="/broadcasts/designs/new" />}>
+            <Trans>Browse the gallery</Trans>
+          </Button>
+        </div>
+      ) : (
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-x-4 gap-y-6" data-testid="design-grid">
+          {items.map((d) => (
+            <DesignCard key={d.id} d={d} />
+          ))}
+        </ul>
+      )}
+      {designs.hasNextPage && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="self-center"
+          onClick={() => void designs.fetchNextPage()}
+          disabled={designs.isFetchingNextPage}
+        >
+          <Trans>Load more</Trans>
+        </Button>
+      )}
+    </>
+  )
+}
+
 export default function GalleryPage() {
   const { t, i18n } = useLingui()
   const { canManage } = useSession()
@@ -208,6 +340,7 @@ export default function GalleryPage() {
   const slug = params.get("template")
   const asked = slug ? templates.data?.find((x) => x.slug === slug) : undefined
   const unknown = !!slug && !!templates.data && !asked
+  const gallery = useLocation().pathname.endsWith("/new")
   if (!canManage)
     return (
       <PaneEmpty icon={LayoutTemplateIcon} title={<Trans>E-mail designs</Trans>} testId="designs-read-only">
@@ -219,30 +352,43 @@ export default function GalleryPage() {
     setChoice(null)
     if (slug) setParams({}, { replace: true })
   }
+  const tabs = [
+    { key: "mine", to: "/broadcasts/designs", label: t`Mine`, testId: "designs-tab-mine" },
+    { key: "gallery", to: "/broadcasts/designs/new", label: t`Gallery`, testId: "designs-tab-gallery" },
+  ]
   return (
-    <Pane wide testId="design-gallery">
-      <header className="flex flex-col">
-        <PaneBack to="/broadcasts/designs" label={t`Designs`} />
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div className="min-w-0">
-            <h1 className="text-page">
+    <Pane wide testId="design-gallery" className="gap-6">
+      <PaneBack to="/broadcasts/designs" label={t`Designs`} />
+      <PageHeader
+        back={false}
+        title={<Trans>Designs</Trans>}
+        description={
+          gallery ? (
+            <Trans>
+              Start from a template or an empty page. Every design gets the footer the law asks for, and you can change
+              everything else.
+            </Trans>
+          ) : (
+            <Trans>E-mail layouts you reuse across broadcasts.</Trans>
+          )
+        }
+        action={
+          gallery ? (
+            <Segmented
+              value={locale}
+              onChange={setLocale}
+              label={t`Template language`}
+              items={localeNames.map((l) => ({ ...l, testId: `template-locale-${l.value}` }))}
+            />
+          ) : (
+            <Button size="sm" render={<Link to="/broadcasts/designs/new" />} data-testid="designs-home-new">
+              <PlusIcon />
               <Trans>New design</Trans>
-            </h1>
-            <p className="mt-1.5 max-w-2xl text-reading text-muted-foreground">
-              <Trans>
-                Start from a template or an empty page. Every design gets the footer the law asks for, and you can
-                change everything else.
-              </Trans>
-            </p>
-          </div>
-          <Segmented
-            value={locale}
-            onChange={setLocale}
-            label={t`Template language`}
-            items={localeNames.map((l) => ({ ...l, testId: `template-locale-${l.value}` }))}
-          />
-        </div>
-      </header>
+            </Button>
+          )
+        }
+        tabs={<PageTabs label={t`Designs`} items={tabs} current={gallery ? "gallery" : "mine"} />}
+      />
       {unknown && (
         <Notice tone="warning" icon={TriangleAlertIcon} data-testid="template-unknown">
           <p>
@@ -250,34 +396,37 @@ export default function GalleryPage() {
           </p>
         </Notice>
       )}
-      <ul className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-4" data-testid="template-grid">
-        <li>
-          <button
-            type="button"
-            onClick={() => setChoice({ template: null })}
-            className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed text-center text-muted-foreground outline-none transition-colors hover:border-brand hover:bg-brand-wash/50 hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
-            data-testid="template-blank"
-          >
-            <FilePlusIcon className="size-7" />
-            <span className="text-body font-semibold">
-              <Trans>Empty page</Trans>
-            </span>
-            <span className="max-w-44 text-small">
-              <Trans>Build it yourself from blocks</Trans>
-            </span>
-          </button>
-        </li>
-        {templates.isPending
-          ? Array.from({ length: 6 }, (_, i) => (
-              <li key={i}>
-                <Skeleton className={cn("aspect-[4/5] w-full rounded-2xl")} />
-              </li>
-            ))
-          : (templates.data ?? []).map((tpl) => (
-              <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => setChoice({ template: tpl })} />
-            ))}
-      </ul>
-      <ErrorLine error={templates.error} />
+      {!gallery && <MyDesigns />}
+      {gallery && (
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-4" data-testid="template-grid">
+          <li>
+            <button
+              type="button"
+              onClick={() => setChoice({ template: null })}
+              className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed text-center text-muted-foreground outline-none transition-colors hover:border-brand hover:bg-brand-wash/50 hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
+              data-testid="template-blank"
+            >
+              <FilePlusIcon className="size-7" />
+              <span className="text-body font-semibold">
+                <Trans>Empty page</Trans>
+              </span>
+              <span className="max-w-44 text-small">
+                <Trans>Build it yourself from blocks</Trans>
+              </span>
+            </button>
+          </li>
+          {templates.isPending
+            ? Array.from({ length: 6 }, (_, i) => (
+                <li key={i}>
+                  <Skeleton className={cn("aspect-[4/5] w-full rounded-2xl")} />
+                </li>
+              ))
+            : (templates.data ?? []).map((tpl) => (
+                <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => setChoice({ template: tpl })} />
+              ))}
+        </ul>
+      )}
+      {gallery && <ErrorLine error={templates.error} />}
       {open && <CreateDialog key={open.template?.slug ?? "blank"} choice={open} locale={locale} onClose={close} />}
     </Pane>
   )

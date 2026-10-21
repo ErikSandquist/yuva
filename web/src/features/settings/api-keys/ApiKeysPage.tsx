@@ -9,6 +9,7 @@ import { API_KEY_SCOPES, formatDateTime, useEnumText } from "@/components/common
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { ApiKeyDialog } from "@/features/settings/api-keys/ApiKeyDialog"
+import { DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
 import { Card, EmptyRow, PageHeader, Row, Rows, Section, StatusTag, ToggleRow } from "@/features/settings/ui"
 import { api, unwrap, type ApiKey } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -160,7 +161,8 @@ export function ApiKeysPage() {
   return (
     <>
       <PageHeader
-        title={<Trans>API keys</Trans>}
+        title={<DeveloperTitle />}
+        tabs={<DeveloperTabs current="api-keys" />}
         description={
           <Trans>
             For your backends, scripts and bots. A key acts on this workspace only, within its scopes, and cannot manage

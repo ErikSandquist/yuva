@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} taslak"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} / {total} kayıt yayımlandı"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} yayında"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} zamanlandı"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Zamanı değiştir"
 msgid "Changelog"
 msgstr "Değişiklik günlüğü"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Değişiklik günlükleri"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Görsel seç"
@@ -86,8 +102,13 @@ msgstr "Değişiklik günlüğünün sayfa görüntülemelerini çerezsiz sayar.
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Değişiklik günlüğü oluştur"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Değişiklik günlüğü oluştur ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Tüm çeviriler silinir. Kayıttan hazırlanan bültenler kalır."
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Düzeltildi"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Nasıl görünür"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "{0} içinde nasıl görünür"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Eşleşen kayıt yok."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Değişiklik günlüğü gösterilecek gelen kutusu yok."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Henüz metin yok."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Yayında"
 msgid "Publishing on schedule failed."
 msgstr "Zamanlanmış yayımlama başarısız oldu."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Ürünlerinizde, web'de ve e-postada gösterilen sürüm notları."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Kaldır"
@@ -396,6 +434,10 @@ msgstr "Ayarlar"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Göster"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Sohbet penceresinde ve {host} adresinde gösterilir."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Bu kayıt yayından kaldırılsın mı?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Yayında değil"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Değişiklik günlüğünü görüntüle"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

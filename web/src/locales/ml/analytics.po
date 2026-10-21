@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: 1,000 കാഴ്ചകൾക്ക�
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ഈ മാസം {limit} അനലിറ്റിക്സ് ഇവന്റുകളിൽ {used} ഉപയോഗിച്ചു. പരിധി കവിയുന്ന ഇവന്റുകൾ മാസം അവസാനിക്കുന്നതുവരെ ഉപേക്ഷിക്കപ്പെടും."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} സന്ദർശകർ"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "മാറ്റം പുതിയ ഇവന്റുകൾക്ക് ബാധകമാണ്. ഇതിനകം എണ്ണിയ ദിവസങ്ങൾ അവയുടെ മേഖല നിലനിർത്തുന്നു."
@@ -176,6 +180,10 @@ msgstr "ഒരു പുതിയ കീ ഉണ്ടാക്കി"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "പുതിയ പാസ്‌വേഡ് ലിങ്ക് അൺലോക്ക് ചെയ്ത എല്ലാവരെയും സൈൻ ഔട്ട് ചെയ്യുന്നു."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "ഒരു പേജ് വ്യൂ, ഒരു ഇവന്റ് അല്ലെങ്കിൽ സ്ക്രോൾ ആഴം"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "കൺവേർഷൻ നിരക്ക്"
 msgid "Conversions"
 msgstr "കൺവേർഷനുകൾ"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "കാലക്രമേണയുള്ള കൺവേർഷനുകൾ"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "100 സന്ദർശകർക്ക് കൺവേർഷനുകൾ."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "നിങ്ങളുടെ സൈറ്റുകളുടെയും ആപ്പുകളുടെയും സന്ദർശകർ, കുക്കികളില്ലാതെ."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "പൊതുവായത്"
 msgid "Go to goals"
 msgstr "ലക്ഷ്യങ്ങളിലേക്ക് പോകുക"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "ലക്ഷ്യം"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "പ്രതിമാസ പരിധി"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "മാസങ്ങൾ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "കൂടുതൽ"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "സെർവർ തിരക്കിലാണ്"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "ക്രമീകരണങ്ങൾ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "പങ്കിടുക"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

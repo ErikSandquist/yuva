@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: sv\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} utkast"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} av {total} inlägg publicerade"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} publicerade"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} schemalagda"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Ändra tiden"
 msgid "Changelog"
 msgstr "Ändringslogg"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Ändringsloggar"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Välj en bild"
@@ -86,8 +102,13 @@ msgstr "Räknar sidvisningar för ändringsloggen utan cookies."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Skapa ändringslogg"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Skapa ändringslogg ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Alla översättningar tas bort. Utskick som gjorts från det finns kvar.
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Åtgärdat"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Så ser det ut"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Så ser det ut i {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Inget inlägg matchar."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Ingen inkorg att visa en ändringslogg för."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Ingen text ännu."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Publicerad"
 msgid "Publishing on schedule failed."
 msgstr "Den schemalagda publiceringen misslyckades."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Versionsinformation som visas i dina produkter, på webben och via e-post."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Ta bort"
@@ -396,6 +434,10 @@ msgstr "Inställningar"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Visa"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Visas i chattwidgeten och på {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Dra tillbaka det här inlägget?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Opublicerad"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Visa ändringsloggen"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

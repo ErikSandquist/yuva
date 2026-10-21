@@ -58,11 +58,16 @@ function Body({
         <Trans>Contact</Trans>
       </span>
       <span className="flex gap-1">
-        <Button variant="outline" render={<Link to={`/contacts/${contactId}`} />} data-testid="open-contact-page">
+        <Button
+          variant="outline"
+          size="sm"
+          render={<Link to={`/contacts/${contactId}`} />}
+          data-testid="open-contact-page"
+        >
           <Trans>Open page</Trans>
           <ArrowUpRightIcon />
         </Button>
-        <Button variant="ghost" size="icon" onClick={onClose} aria-label={t`Close`}>
+        <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label={t`Close`}>
           <XIcon />
         </Button>
       </span>
@@ -95,12 +100,15 @@ function Body({
   return (
     <>
       {top}
-      <div className="flex flex-col items-center gap-1.5 border-b px-5 pt-3 pb-4 text-center">
-        <ContactAvatar id={c.id} name={name} className="size-16" />
-        <Title className="mt-1 max-w-full truncate text-title" data-testid="contact-sheet-name">
+      <div className="flex flex-col items-start gap-0.5 border-b px-4 pt-3 pb-4">
+        <ContactAvatar id={c.id} name={name} className="size-12" />
+        <Title className="mt-2 max-w-full truncate text-reading font-semibold" data-testid="contact-sheet-name">
           {name}
         </Title>
-        <Description className="text-small text-muted-foreground">
+        {c.emails[0] && c.emails[0] !== name && (
+          <span className="max-w-full truncate text-small text-muted-foreground">{c.emails[0]}</span>
+        )}
+        <Description className="text-small text-faint">
           <Trans>Contact since {since}</Trans>
         </Description>
         <Presence contactId={c.id} />
@@ -115,7 +123,7 @@ function Body({
         value={tab}
         onChange={setTab}
         className="mx-4 mt-3 w-auto"
-        itemClassName="flex-auto shrink-0 px-2"
+        itemClassName="flex-auto shrink-0 px-1.5"
         items={[
           { value: "info", label: t`Info`, testId: "contact-tab-info" },
           {

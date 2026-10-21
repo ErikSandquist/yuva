@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} 篇文章中已发布 {published} 篇"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} 篇已发布"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 到 48 个字母、数字和连字符。在此服务器上唯一。"
@@ -80,6 +84,7 @@ msgstr "把常见问题只回答一次，写成文字。选择某个收件箱的
 msgid "Any state"
 msgstr "任意状态"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "文章"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "文章浏览量"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "文章"
@@ -112,6 +118,10 @@ msgstr "文章可以用这些语言撰写和发布。访客有自己的语言时
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "此集合中的文章"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "用户联系你之前会阅读的文章"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "所有翻译及其修订和计数器都会删除。"
 msgid "Formatting"
 msgstr "格式"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "无结果 · 7 天"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "入门"
@@ -312,11 +326,11 @@ msgstr "将文章分组，方便访客浏览。一个集合可以包含一层子
 msgid "Heading"
 msgstr "标题"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "帮助"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "帮助中心"
 msgid "Help centers are turned off on this server."
 msgstr "此服务器已关闭帮助中心。"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "有帮助"
@@ -384,6 +399,10 @@ msgstr "语言"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "最近 {d} 天"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "最近 7 天"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "搜索标题（{findKey}）"
 msgid "Search words"
 msgstr "搜索词"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "搜索过但无结果"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "搜索"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "搜索 · 7 天"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "未发布，只有你的团队可以预览"
 msgid "Unsaved changes"
 msgstr "未保存的更改"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "更新时间"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "请使用 3 到 48 个字母、数字和中间的连字符。"
@@ -893,6 +924,10 @@ msgstr "查看帮助中心"
 msgid "Views"
 msgstr "浏览量"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "浏览 · 7 天"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "访客阅读和搜索的内容。浏览量为近似值，数据会在一分钟内到达此页面。"
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "访客输入但没有找到结果的词。为每个词写一篇新文章是最快的解决办法。"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "撰写"
 

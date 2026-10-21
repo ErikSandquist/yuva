@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "Satu reka bentuk boleh mengandungi paling banyak 200 blok."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Reka bentuk ialah rupa mel: mulakan daripada templat, kemudian gunakannya untuk siaran anda."
 
@@ -123,6 +124,10 @@ msgstr "Arkib"
 msgid "Archive this design?"
 msgstr "Arkibkan reka bentuk ini?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Diarkibkan"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Kunci atribut"
@@ -163,6 +168,10 @@ msgstr "Bawah"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Jenama"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Layari galeri"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "Alamat e-mel"
 msgid "E-mail designs"
 msgstr "Reka bentuk e-mel"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "Susun atur e-mel yang anda guna semula dalam siaran."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Mudah dibaca: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Nama penuh"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Lebar penuh"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Galeri"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "Nama senarai"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Muatkan lagi"
 
@@ -702,6 +720,10 @@ msgstr "Medan gabung"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Medan gabung hanya boleh berada dalam bahagian pautan selepas tanda soal."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Saya"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Pautan keutamaan"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Pratonton"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "Pratonton {name}"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

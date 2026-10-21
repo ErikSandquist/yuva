@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "Опубликовано статей: {published} из {total}"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "Опубликовано: {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "От 3 до 48 букв, цифр и дефисов. Уникальный на этом сервере."
@@ -80,6 +84,7 @@ msgstr "Ответьте на частые вопросы один раз, пи�
 msgid "Any state"
 msgstr "Любое состояние"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Статья"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Просмотры статей"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Статьи"
@@ -112,6 +118,10 @@ msgstr "Статьи можно писать и публиковать на эт
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Статьи в этой коллекции"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Статьи, которые люди читают, прежде чем написать вам"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Все переводы, их ревизии и счётчики уда�
 msgid "Formatting"
 msgstr "Форматирование"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Ничего не найдено · 7 дней"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Начало работы"
@@ -312,11 +326,11 @@ msgstr "Сгруппируйте статьи, чтобы посетители �
 msgid "Heading"
 msgstr "Заголовок"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Справка"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Центры справки"
 msgid "Help centers are turned off on this server."
 msgstr "Центры справки отключены на этом сервере."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Полезно"
@@ -384,6 +399,10 @@ msgstr "Языки"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Последние {d} дн."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "последние 7 дней"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Искать в заголовках ({findKey})"
 msgid "Search words"
 msgstr "Слова для поиска"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Искали, ничего не нашли"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Поиски"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Поиски · 7 дней"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Не опубликовано, предпросмотр доступен
 msgid "Unsaved changes"
 msgstr "Несохранённые изменения"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Обновлено"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Используйте от 3 до 48 букв, цифр и внутренних дефисов."
@@ -893,6 +924,10 @@ msgstr "Открыть центр справки"
 msgid "Views"
 msgstr "Просмотры"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Просмотры · 7 дней"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Что посетители читают и ищут. Просмотры приблизительные, а цифры доходят сюда в течение минуты."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Слова, которые вводили посетители и ничего не нашли. Новая статья для каждого — самое быстрое решение."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Писать"
 

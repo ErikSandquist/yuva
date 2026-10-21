@@ -139,6 +139,10 @@ msgstr "إخفاء"
 msgid "Idea started"
 msgstr "تم إنشاء الفكرة"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "أفكار يصوّت عليها عملاؤك، مع الملاحظات التي تقف وراءها"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "أفكار وأصوات ومراحل {inboxName}، مع الملاحظات وراء كل فكرة. تبقى خاصة إلى أن تجعلها عامة."
@@ -302,6 +306,10 @@ msgstr "الصفحة العامة"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "لا يستطيع القراء اقتراح أفكار. لا تزال الأصوات والردود تعمل."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "اقترح القراء أفكارًا جديدة. راجعها قبل أن تظهر على اللوحة العامة."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

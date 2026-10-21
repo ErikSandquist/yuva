@@ -4,7 +4,7 @@ import { ExternalLinkIcon, KanbanIcon } from "lucide-react"
 import { useState } from "react"
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router"
 
-import { Dot, ErrorLine, Segmented } from "@/components/common"
+import { ErrorLine, InboxMark } from "@/components/common"
 import { PaneBack, PaneEmpty } from "@/components/common/Column"
 import { keyLabel, ROADMAP_KEYS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { Board } from "@/features/roadmap/Board"
 import { IdeaPane } from "@/features/roadmap/IdeaPane"
 import { boardLink, ideaLink, useBoard, useUpdateBoard } from "@/features/roadmap/queries"
 import { Settings } from "@/features/roadmap/Settings"
+import { PageHeader, PageTabs } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Discussion, IdeaStage } from "@/lib/api"
@@ -107,14 +108,32 @@ export function BoardPane() {
   return (
     <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-background" data-testid="roadmap-board" key={board.id}>
       {(!showIdea || split) && (
-        <header className="flex flex-col gap-3 px-6 pt-6 pb-4 phone:px-4 phone:pt-3">
-          <div>
-            <PaneBack to="/board" label={t`Roadmap`} />
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <h1 className="min-w-0 text-page break-words" data-testid="board-name">
-                {board.name}
-              </h1>
-              <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col px-6 pt-6 pb-5 phone:px-4 phone:pt-3">
+          <PaneBack to="/board" label={t`Roadmap`} />
+          <PageHeader
+            back={false}
+            title={<span data-testid="board-name">{board.name}</span>}
+            description={
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                {inbox && (
+                  <>
+                    <span className="inline-flex items-center gap-1.5">
+                      <InboxMark name={inbox.name} color={inbox.branding.color} className="size-4 text-[9px]" />
+                      {inbox.name}
+                    </span>
+                    <span aria-hidden>·</span>
+                  </>
+                )}
+                <span data-testid="board-visibility">
+                  {board.public ? <Trans>Public</Trans> : <Trans>Private, only your team sees it</Trans>}
+                </span>
+                <span className="basis-full">
+                  <Trans>Ideas your customers vote on, with the feedback behind them</Trans>
+                </span>
+              </span>
+            }
+            action={
+              <>
                 {board.public && (
                   <Button
                     variant="outline"
@@ -138,38 +157,29 @@ export function BoardPane() {
                     {board.public ? <Trans>Make private</Trans> : <Trans>Make public</Trans>}
                   </Button>
                 )}
-              </div>
-            </div>
-            <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
-              {inbox && (
-                <>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-                    {inbox.name}
-                  </span>
-                  <span aria-hidden>·</span>
-                </>
-              )}
-              <span data-testid="board-visibility">
-                {board.public ? <Trans>Public</Trans> : <Trans>Private, only your team sees it</Trans>}
-              </span>
-            </p>
+              </>
+            }
+            tabs={
+              canManage && (
+                <PageTabs
+                  label={t`Roadmap`}
+                  current={tab}
+                  items={[
+                    { key: "board", to: boardLink(board.id), label: t`Board`, testId: "board-tab-board" },
+                    {
+                      key: "settings",
+                      to: boardLink(board.id, "settings"),
+                      label: t`Settings`,
+                      testId: "board-tab-settings",
+                    },
+                  ]}
+                />
+              )
+            }
+          >
             <ErrorLine error={patch.error} className="mt-2" />
-          </div>
-          {canManage && (
-            <div className="-mx-1 -my-3 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
-              <Segmented
-                value={tab}
-                onChange={setTab}
-                label={t`Roadmap`}
-                items={[
-                  { value: "board", label: t`Board`, testId: "board-tab-board" },
-                  { value: "settings", label: t`Settings`, testId: "board-tab-settings" },
-                ]}
-              />
-            </div>
-          )}
-        </header>
+          </PageHeader>
+        </div>
       )}
       {tab === "settings" && canManage && (
         <div className="min-h-0 flex-1 overflow-y-auto pt-4">

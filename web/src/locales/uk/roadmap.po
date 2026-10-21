@@ -139,6 +139,10 @@ msgstr "Приховати"
 msgid "Idea started"
 msgstr "Ідею створено"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Ідеї, за які голосують ваші клієнти, разом із відгуками за ними"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ідеї, голоси та етапи для {inboxName} з відгуками, що стоять за кожною ідеєю. Дошка лишається закритою, доки ви не зробите її публічною."
@@ -302,6 +306,10 @@ msgstr "Публічна сторінка"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Читачі не можуть пропонувати ідеї. Голоси та відповіді й надалі працюють."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Читачі запропонували нові ідеї. Перегляньте їх, перш ніж вони з’являться на публічній дошці."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

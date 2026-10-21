@@ -19,7 +19,7 @@ import {
 } from "lucide-react"
 import { useLocation, useNavigate } from "react-router"
 
-import { inboxRoot, isChats, sectionOf, type Section } from "@/app/shell"
+import { inboxRoot, isChats, isFullPage, sectionOf, type Section } from "@/app/shell"
 import { UserMenu } from "@/app/UserMenu"
 import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
@@ -43,7 +43,7 @@ export function useUnreadCount() {
   return (list.data?.pages.flatMap((p) => p.items) ?? []).filter((c) => c.unread).length
 }
 
-function useEntries(): Entry[] {
+export function useEntries(): Entry[] {
   const { t } = useLingui()
   const unread = useUnreadCount()
   const feedback = Number(useCounts().data?.feedback ?? 0)
@@ -117,7 +117,7 @@ export function useGo() {
     } else if (key === "conversations" || key === "assistants") {
       setRailView(key)
       if (!isChats(pathname, canManage)) navigate(inboxRoot(canManage))
-    } else if (section !== key) {
+    } else if (section !== key || (isFullPage(key) && pathname !== `/${key}`)) {
       navigate(`/${key}`)
     }
   }
@@ -138,7 +138,7 @@ function Badge({ n, id, className }: { n: number; id: string; className?: string
   )
 }
 
-function moveFocus(e: React.KeyboardEvent<HTMLElement>) {
+export function moveFocus(e: React.KeyboardEvent<HTMLElement>) {
   if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return
   const items = Array.from(e.currentTarget.querySelectorAll<HTMLElement>("[data-rail-item]"))
   const i = items.indexOf(document.activeElement as HTMLElement)

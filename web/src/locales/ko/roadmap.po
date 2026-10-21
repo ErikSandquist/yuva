@@ -139,6 +139,10 @@ msgstr "숨기기"
 msgid "Idea started"
 msgstr "아이디어를 만들었습니다"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "고객이 투표하는 아이디어와 그 바탕이 된 피드백"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName}의 아이디어, 투표, 단계와 각 아이디어 뒤에 있는 의견입니다. 공개로 바꾸기 전까지는 비공개로 유지됩니다."
@@ -302,6 +306,10 @@ msgstr "공개 페이지"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "독자는 아이디어를 제안할 수 없습니다. 투표와 답글은 계속 작동합니다."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "독자가 새 아이디어를 제안했습니다. 공개 보드에 표시되기 전에 검토하세요."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

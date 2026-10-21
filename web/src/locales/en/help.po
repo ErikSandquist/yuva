@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{published} of {total} articles published"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} published"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -80,6 +84,7 @@ msgstr "Answer common questions once, in writing. Pick an inbox’s help center 
 msgid "Any state"
 msgstr "Any state"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Article"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Article views"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Articles"
@@ -112,6 +118,10 @@ msgstr "Articles can be written and published in these languages. Visitors see t
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Articles in this collection"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Articles people read before they write to you"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Every translation, its revisions and its counters are deleted."
 msgid "Formatting"
 msgstr "Formatting"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Found nothing · 7 days"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Getting started"
@@ -312,11 +326,11 @@ msgstr "Group articles so visitors can browse. A collection can hold one level o
 msgid "Heading"
 msgstr "Heading"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Help"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Help centers"
 msgid "Help centers are turned off on this server."
 msgstr "Help centers are turned off on this server."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Helpful"
@@ -384,6 +399,10 @@ msgstr "Languages"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Last {d} days"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "last 7 days"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Search titles ({findKey})"
 msgid "Search words"
 msgstr "Search words"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Searched for, found nothing"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Searches"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Searches · 7 days"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Unpublished, only your team can preview it"
 msgid "Unsaved changes"
 msgstr "Unsaved changes"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Updated"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Use 3 to 48 letters, numbers and inner hyphens."
@@ -893,6 +924,10 @@ msgstr "View help center"
 msgid "Views"
 msgstr "Views"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Views · 7 days"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Words visitors typed that found nothing. A new article for each is the fastest fix."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Write"
 

@@ -10,6 +10,8 @@ import { CategoryChip, ProgressChip, ScoreMark } from "@/features/conversation/F
 import { IdeaMark } from "@/features/conversation/IdeaChip"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
+import { FilterChip, ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
+import { ProductTag } from "@/features/inbox/ProductTag"
 import { useListCursor } from "@/features/inbox/listCursor"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
 import { useConversations, useCounts } from "@/features/inbox/queries"
@@ -40,33 +42,6 @@ function useDebounced(value: string, ms: number) {
   return v
 }
 
-function Pill({
-  active,
-  onClick,
-  children,
-  testId,
-}: {
-  active: boolean
-  onClick: () => void
-  children: React.ReactNode
-  testId: string
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      onClick={onClick}
-      className={cn(
-        "inline-flex h-7 shrink-0 items-center gap-1.5 rounded-full px-3 text-small font-medium transition-colors",
-        active ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
-      )}
-      data-testid={testId}
-    >
-      {children}
-    </button>
-  )
-}
-
 function Row({
   c,
   current,
@@ -93,7 +68,7 @@ function Row({
       type="button"
       onClick={onOpen}
       className={cn(
-        "group flex w-full items-center gap-3 ps-3 text-start outline-none transition-colors",
+        "flex w-full items-start gap-3 border-b px-4 py-3 text-start outline-none transition-colors",
         current ? "bg-muted" : "hover:bg-muted/60",
         cursor && !current && "bg-muted/60",
         cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
@@ -103,36 +78,27 @@ function Row({
       data-conversation-id={c.id}
       data-unread={c.unread || undefined}
     >
-      <span className="shrink-0 py-2.5">
-        {visitor ? (
-          <VisitorAvatar className="size-10" />
-        ) : (
-          <ContactAvatar id={c.contact.id} name={name} className="size-10" />
-        )}
-      </span>
-      <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-3 group-last:border-transparent">
-        <span className="flex min-w-0 items-center gap-2">
-          {f && <CategoryChip category={f.category} />}
-          <ScoreMark score={f?.score} />
-          <span
-            className={cn("min-w-0 flex-1 truncate text-small", c.unread ? "font-semibold" : "text-muted-foreground")}
-          >
-            {name}
-          </span>
-          <time
-            className={cn("shrink-0 text-caption", c.unread ? "font-medium text-brand" : "text-faint")}
-            dateTime={c.last_activity_at}
-          >
-            {formatShort(c.last_activity_at, i18n.locale)}
-          </time>
-        </span>
-        <span className={cn("line-clamp-2 text-reading", c.unread ? "font-semibold" : "font-medium")}>
+      {f && <CategoryChip category={f.category} className="mt-px w-20 justify-center rounded-full border py-px" />}
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className={cn("line-clamp-2 text-body", c.unread ? "font-semibold" : "font-medium")}>
           {f?.text || c.subject}
         </span>
-        <span className="flex min-w-0 items-center gap-2 text-caption text-faint">
-          <span className="min-w-0 flex-1 truncate">{where}</span>
-          {c.idea && <IdeaMark idea={c.idea} className="max-w-[45%]" />}
-          {f?.progress && <ProgressChip progress={f.progress} />}
+        <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+          <ProductTag id={c.inbox_id} />
+          <span className="flex shrink-0 items-center gap-1 text-muted-foreground">
+            {visitor ? (
+              <VisitorAvatar className="size-4" />
+            ) : (
+              <ContactAvatar id={c.contact.id} name={name} className="size-4 text-[8px]" />
+            )}
+            <span className="max-w-28 truncate">{name}</span>
+          </span>
+          {where && (
+            <>
+              <span aria-hidden>·</span>
+              <span className="min-w-0 truncate">{where}</span>
+            </>
+          )}
           {!!f?.attachment_count && (
             <span
               className="inline-flex shrink-0 items-center gap-0.5"
@@ -149,10 +115,27 @@ function Row({
               <Trans>Answered</Trans>
             </span>
           )}
-          {c.unread && (
-            <span className="size-2.5 shrink-0 rounded-full bg-brand" aria-label={t`Unread`} data-testid="row-unread" />
-          )}
         </span>
+        {(c.idea || f?.score) && (
+          <span className="flex min-w-0 items-center gap-2 text-caption text-faint">
+            <ScoreMark score={f?.score} />
+            {c.idea && <IdeaMark idea={c.idea} className="max-w-full" />}
+          </span>
+        )}
+      </span>
+      <span className="flex shrink-0 flex-col items-end gap-1">
+        <span className="flex items-center gap-1.5">
+          {c.unread && (
+            <span className="size-2 shrink-0 rounded-full bg-brand" aria-label={t`Unread`} data-testid="row-unread" />
+          )}
+          <time
+            className={cn("text-caption", c.unread ? "font-medium text-brand" : "text-faint")}
+            dateTime={c.last_activity_at}
+          >
+            {formatShort(c.last_activity_at, i18n.locale)}
+          </time>
+        </span>
+        {f?.progress && <ProgressChip progress={f.progress} />}
       </span>
     </button>
   )
@@ -232,77 +215,87 @@ export function FeedbackList({ currentId, onOpen }: { currentId: string | null; 
 
   return (
     <nav aria-label={t`Feedback`} className="flex h-full min-h-0 flex-col bg-background" data-testid="feedback-list">
-      <div className="flex h-15 shrink-0 items-center gap-2 ps-4 pe-3">
-        <h1 className="min-w-0 flex-1 truncate text-title">
-          <Trans>Feedback</Trans>
-        </h1>
-      </div>
-      <div className="flex shrink-0 items-center gap-1 px-3 pb-2">
-        <InputGroup className="h-9 flex-1 rounded-xl border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
-          <InputGroupAddon>
-            <SearchIcon className="size-[15px] text-faint" />
-          </InputGroupAddon>
-          <InputGroupInput
-            ref={search}
-            name="list-search"
-            value={query}
-            onChange={(e) => {
-              setListQuery(e.target.value)
-              setCursorId(null)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-                e.preventDefault()
-                moveCursor(e.key === "ArrowDown" ? 1 : -1)
-              } else if (e.key === "Enter") {
-                e.preventDefault()
-                openCursor()
-              } else if (e.key === "Escape") {
-                if (query) setListQuery("")
-                else e.currentTarget.blur()
-              }
-            }}
-            placeholder={t`Search`}
-            aria-label={t`Search feedback`}
-            data-testid="list-search"
+      <ListHead
+        title={<Trans>Feedback</Trans>}
+        sub={<Trans>Bugs, ideas and praise sent from your apps and pages</Trans>}
+      >
+        <div data-testid="feedback-tabs">
+          <UnderlineTabs
+            value={tab}
+            onChange={setTab}
+            label={t`Status`}
+            items={[
+              {
+                value: "open",
+                label: <Trans>Open</Trans>,
+                count: inboxId ? undefined : counts?.feedback,
+                testId: "feedback-tab-open",
+              },
+              { value: "resolved", label: <Trans>Resolved</Trans>, testId: "feedback-tab-resolved" },
+            ]}
           />
-          <InputGroupAddon align="inline-end">
-            {query ? (
-              <InputGroupButton size="icon-xs" onClick={() => setListQuery("")} aria-label={t`Clear the search`}>
-                <XIcon />
-              </InputGroupButton>
-            ) : (
-              <Kbd className="phone:hidden">/</Kbd>
-            )}
-          </InputGroupAddon>
-        </InputGroup>
-        <InboxPicker className="max-w-44" />
-      </div>
-      <div
-        className="flex shrink-0 gap-1.5 px-3 pb-2"
-        role="toolbar"
-        aria-label={t`Status`}
-        data-testid="feedback-tabs"
-      >
-        <Pill active={tab === "open"} onClick={() => setTab("open")} testId="feedback-tab-open">
-          <Trans>Open</Trans>
-        </Pill>
-        <Pill active={tab === "resolved"} onClick={() => setTab("resolved")} testId="feedback-tab-resolved">
-          <Trans>Resolved</Trans>
-        </Pill>
-      </div>
-      <div
-        className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"
-        role="toolbar"
-        aria-label={t`Category`}
-        data-testid="feedback-categories"
-      >
-        {CATEGORIES.map((k) => (
-          <Pill key={k} active={category === k} onClick={() => setCategory(k)} testId={`feedback-category-${k}`}>
-            {categoryLabels[k]}
-            {open(k) > 0 && <span className="tabular-nums opacity-70">{fmt.format(open(k))}</span>}
-          </Pill>
-        ))}
+        </div>
+      </ListHead>
+      <div className="flex shrink-0 flex-col gap-2 border-b px-3 py-2">
+        <div className="flex items-center gap-1.5">
+          <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
+            <InputGroupAddon>
+              <SearchIcon className="size-[15px] text-faint" />
+            </InputGroupAddon>
+            <InputGroupInput
+              ref={search}
+              name="list-search"
+              value={query}
+              onChange={(e) => {
+                setListQuery(e.target.value)
+                setCursorId(null)
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                  e.preventDefault()
+                  moveCursor(e.key === "ArrowDown" ? 1 : -1)
+                } else if (e.key === "Enter") {
+                  e.preventDefault()
+                  openCursor()
+                } else if (e.key === "Escape") {
+                  if (query) setListQuery("")
+                  else e.currentTarget.blur()
+                }
+              }}
+              placeholder={t`Search`}
+              aria-label={t`Search feedback`}
+              data-testid="list-search"
+            />
+            <InputGroupAddon align="inline-end">
+              {query ? (
+                <InputGroupButton size="icon-xs" onClick={() => setListQuery("")} aria-label={t`Clear the search`}>
+                  <XIcon />
+                </InputGroupButton>
+              ) : (
+                <Kbd className="phone:hidden">/</Kbd>
+              )}
+            </InputGroupAddon>
+          </InputGroup>
+          <InboxPicker className="max-w-36" />
+        </div>
+        <div
+          className="flex flex-wrap gap-1.5"
+          role="toolbar"
+          aria-label={t`Category`}
+          data-testid="feedback-categories"
+        >
+          {CATEGORIES.map((k) => (
+            <FilterChip
+              key={k}
+              active={category === k}
+              onClick={() => setCategory(k)}
+              testId={`feedback-category-${k}`}
+            >
+              {categoryLabels[k]}
+              {!inboxId && open(k) > 0 && <span className="tabular-nums opacity-60">{fmt.format(open(k))}</span>}
+            </FilterChip>
+          ))}
+        </div>
       </div>
       <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto" data-testid="list">
         {list.isPending ? (

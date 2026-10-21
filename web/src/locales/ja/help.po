@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} 件中 {published} 件の記事を公開済み"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "公開済み {published} 件"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3〜48 文字の英数字とハイフン。このサーバー内で一意です。"
@@ -80,6 +84,7 @@ msgstr "よくある質問に一度だけ文章で答えましょう。受信ト
 msgid "Any state"
 msgstr "すべての状態"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "記事"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "記事の閲覧数"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "記事"
@@ -112,6 +118,10 @@ msgstr "記事はこれらの言語で書いて公開できます。訪問者に
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "このコレクション内の記事"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "問い合わせる前に読まれる記事"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "すべての翻訳、そのリビジョンとカウンターが削除さ
 msgid "Formatting"
 msgstr "書式"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "該当なし · 7 日間"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "はじめに"
@@ -312,11 +326,11 @@ msgstr "訪問者が閲覧しやすいように記事をグループ化します
 msgid "Heading"
 msgstr "見出し"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "ヘルプ"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "ヘルプセンター"
 msgid "Help centers are turned off on this server."
 msgstr "このサーバーではヘルプセンターがオフになっています。"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "役に立った"
@@ -384,6 +399,10 @@ msgstr "言語"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "過去 {d} 日間"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "過去 7 日間"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "タイトルを検索 ({findKey})"
 msgid "Search words"
 msgstr "検索ワード"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "検索されたが該当なし"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "検索"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "検索 · 7 日間"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "未公開。プレビューできるのはチームだけです"
 msgid "Unsaved changes"
 msgstr "未保存の変更"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "更新日"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3〜48 文字の英数字と、途中のハイフンを使ってください。"
@@ -893,6 +924,10 @@ msgstr "ヘルプセンターを表示"
 msgid "Views"
 msgstr "閲覧数"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "閲覧 · 7 日間"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "訪問者が読んだものと検索したもの。閲覧数は概算で、数は 1 分以内にこのページに反映されます。"
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "訪問者が入力して何も見つからなかった言葉。それぞれに新しい記事を書くのが最も早い対処です。"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "書く"
 

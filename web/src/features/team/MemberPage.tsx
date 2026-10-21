@@ -42,7 +42,7 @@ export function MemberPage() {
   if (!m) {
     return (
       <Pane testId="member-page">
-        <PaneBack to="/team" label={t`Team`} />
+        <PaneBack to="/team" label={t`Team`} always />
         {members.isPending ? (
           <Skeleton className="h-16 w-full rounded-2xl" />
         ) : (
@@ -60,7 +60,7 @@ export function MemberPage() {
   return (
     <Pane testId="member-page">
       <header className="flex flex-col">
-        <PaneBack to="/team" label={t`Team`} />
+        <PaneBack to="/team" label={t`Team`} always />
         <div className="flex flex-wrap items-center gap-4">
           <MemberAvatar name={name} online={m.online} away={m.availability === "away"} className="size-16" />
           <div className="min-w-0 flex-1">

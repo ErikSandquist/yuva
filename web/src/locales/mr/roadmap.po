@@ -139,6 +139,10 @@ msgstr "लपवा"
 msgid "Idea started"
 msgstr "कल्पना सुरू झाली"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "कल्पना ज्यांना तुमचे ग्राहक मत देतात, त्यामागच्या फीडबॅकसह"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} साठी कल्पना, मते आणि टप्पे, प्रत्येक कल्पनेमागील फीडबॅकसह. तुम्ही सार्वजनिक करेपर्यंत ते खाजगी राहते."
@@ -302,6 +306,10 @@ msgstr "सार्वजनिक पेज"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "वाचक कल्पना सुचवू शकत नाहीत. मते आणि उत्तरे तरीही काम करतात."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "वाचकांनी नवीन कल्पना सुचवल्या. सार्वजनिक बोर्डवर दिसण्याआधी त्यांचे पुनरावलोकन करा."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

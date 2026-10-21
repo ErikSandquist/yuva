@@ -139,6 +139,10 @@ msgstr "Ocultar"
 msgid "Idea started"
 msgstr "Idea creada"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Ideas que votan tus clientes, con los comentarios que las respaldan"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ideas, votos y etapas de {inboxName}, con los comentarios detrás de cada idea. Sigue siendo privado hasta que lo hagas público."
@@ -302,6 +306,10 @@ msgstr "Página pública"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Los lectores no pueden proponer ideas. Los votos y las respuestas siguen funcionando."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Los lectores sugirieron nuevas ideas. Revísalas antes de que aparezcan en el tablero público."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

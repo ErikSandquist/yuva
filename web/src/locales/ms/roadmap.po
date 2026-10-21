@@ -139,6 +139,10 @@ msgstr "Sembunyi"
 msgid "Idea started"
 msgstr "Idea dicipta"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Idea yang diundi pelanggan anda, dengan maklum balas di sebaliknya"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Idea, undi dan peringkat untuk {inboxName}, bersama maklum balas di sebalik setiap idea. Ia kekal persendirian sehingga anda menjadikannya awam."
@@ -302,6 +306,10 @@ msgstr "Halaman awam"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Pembaca tidak boleh mencadangkan idea. Undi dan balasan masih berfungsi."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Pembaca mencadangkan idea baharu. Semak sebelum ia dipaparkan pada papan awam."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

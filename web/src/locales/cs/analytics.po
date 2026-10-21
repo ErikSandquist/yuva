@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # konverzace na 1 000 zobrazení, opr
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Tento měsíc využito {used} z {limit} analytických událostí. Události nad limit se do konce měsíce zahazují."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} návštěvníků"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Změna platí pro nové události. Už započítané dny si ponechají své pásmo."
@@ -176,6 +180,10 @@ msgstr "Byl vytvořen nový klíč"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Nové heslo odhlásí všechny, kdo odkaz odemkli."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Zobrazení stránky, událost nebo hloubka posunu"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Míra konverze"
 msgid "Conversions"
 msgstr "Konverze"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konverze v čase"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konverze na 100 návštěvníků."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Návštěvníci vašich webů a aplikací, bez cookies."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Obecné"
 msgid "Go to goals"
 msgstr "Přejít na cíle"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Cíl"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Měsíční limit"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Měsíce"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Více"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Server je vytížený"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Nastavení"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Sdílet"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

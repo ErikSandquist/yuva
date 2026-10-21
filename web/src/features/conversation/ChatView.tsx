@@ -39,7 +39,7 @@ import { Beaten, TypingCollision } from "@/features/conversation/Collision"
 import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
 import { ConversationMenu } from "@/features/conversation/ConversationMenu"
-import { CategoryChip } from "@/features/conversation/Feedback"
+import { CategoryChip, ProgressStrip } from "@/features/conversation/Feedback"
 import { IdeaChip } from "@/features/conversation/IdeaChip"
 import { IncidentChips } from "@/features/status/IncidentChips"
 import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
@@ -382,6 +382,7 @@ function Loaded({
   })
 
   const sep = <span aria-hidden>·</span>
+  const subject = c.kind === "feedback" ? "" : c.subject.trim()
   return (
     <section
       aria-label={name}
@@ -443,15 +444,32 @@ function Loaded({
             )}
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-reading font-medium" data-testid="person-name">
-              {name}
-            </span>
+            {subject ? (
+              <span className="block truncate text-reading font-semibold" data-testid="header-subject">
+                {subject}
+              </span>
+            ) : (
+              <span className="block truncate text-reading font-semibold" data-testid="person-name">
+                {name}
+              </span>
+            )}
             <span
               className={cn(
                 "flex min-w-0 items-center gap-x-1.5 truncate text-caption text-faint",
                 phone && "flex-wrap gap-y-0.5 whitespace-normal"
               )}
             >
+              {subject && (
+                <>
+                  <span
+                    className="max-w-[60%] shrink-0 truncate font-medium text-muted-foreground"
+                    data-testid="person-name"
+                  >
+                    {name}
+                  </span>
+                  <span aria-hidden>·</span>
+                </>
+              )}
               {source && <SourceBadge source={source} />}
               {place && (
                 <span className={cn("min-w-0 truncate", !phone && "@max-xl/person:hidden")} data-testid="header-place">
@@ -604,6 +622,7 @@ function Loaded({
           <Watchers conversationId={c.id} />
         </div>
       )}
+      {c.kind === "feedback" && !phone && <ProgressStrip progress={c.feedback?.progress} update={update} />}
       {finding && (
         <div
           className="flex shrink-0 items-center gap-1 border-b bg-background py-1.5 ps-3 pe-2"

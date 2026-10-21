@@ -4,7 +4,7 @@ import { EyeIcon, ExternalLinkIcon, LifeBuoyIcon, LoaderIcon } from "lucide-reac
 import { useState } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router"
 
-import { Dot, Segmented } from "@/components/common"
+import { Dot } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { HELP_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
@@ -16,6 +16,7 @@ import { centerLink, useHelpCenter, useHelpPreview, useUpdateHelpCenter } from "
 import { ReportTab } from "@/features/help/ReportTab"
 import { SettingsTab } from "@/features/help/SettingsTab"
 import { ErrorLine } from "@/features/help/text"
+import { UnderlineTabs } from "@/features/inbox/ListHead"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { HelpCenter } from "@/lib/api"
 import { useSession } from "@/lib/session"
@@ -193,11 +194,12 @@ export function CenterPane() {
         </p>
         <ErrorLine error={patch.error} className="mt-2" />
       </header>
-      <div className="-mx-1 -my-3 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
-        <Segmented
+      <div className="-mt-5 border-b">
+        <UnderlineTabs
           value={tab}
           onChange={setTab}
           label={t`Help center`}
+          className="mt-0"
           items={TABS.filter((v) => v !== "settings" || canManage).map((v) => ({
             value: v,
             label: names[v],

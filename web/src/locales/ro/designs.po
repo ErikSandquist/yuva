@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "Un design poate avea cel mult 200 de blocuri."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Un design este aspectul unui e-mail: pornește de la un șablon, apoi folosește-l pentru mesajele tale în masă."
 
@@ -123,6 +124,10 @@ msgstr "Arhivează"
 msgid "Archive this design?"
 msgstr "Arhivezi acest design?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Arhivat"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Cheia atributului"
@@ -163,6 +168,10 @@ msgstr "Jos"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Brand"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Răsfoiește galeria"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "Adresă de e-mail"
 msgid "E-mail designs"
 msgstr "Designuri de e-mail"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "Machete de e-mail pe care le refolosești în mesajele în masă."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Ușor de citit: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Nume complet"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Lățime completă"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Galerie"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "Numele listei"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Încarcă mai multe"
 
@@ -702,6 +720,10 @@ msgstr "Câmp de îmbinare"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Câmpurile de îmbinare pot sta doar în partea unui link de după semnul întrebării."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Ale mele"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Link de preferințe"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Previzualizare"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "Previzualizare {name}"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

@@ -95,9 +95,15 @@ msgstr "{1}-ൽ {0}"
 
 #. placeholder {0}: fmt.format(s.replies)
 #. placeholder {1}: fmt.format(s.closed)
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "{0} replies · {1} closed"
 msgstr "{0} മറുപടികൾ · {1} അടച്ചു"
+
+#. placeholder {0}: fmt.format(replies)
+#: src/features/team/TeamColumn.tsx
+msgid "{0} replies today"
+msgstr "ഇന്ന് {0} മറുപടികൾ"
 
 #. placeholder {0}: done.scopes.length
 #. placeholder {0}: scopes.length
@@ -280,9 +286,14 @@ msgstr "{total} വരികളിൽ {done}"
 msgid "{doneParts} of {totalParts} parts"
 msgstr "{totalParts} ഭാഗങ്ങളിൽ {doneParts}"
 
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "{doneText} of {total}"
 msgstr "{total}-ൽ {doneText}"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{down, plural, one {# down} other {# down}}"
+msgstr "{down, plural, one {# ഡൗൺ} other {# ഡൗൺ}}"
 
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
@@ -327,6 +338,10 @@ msgstr "{from}-ന് SPF റെക്കോർഡ് ഇല്ല. നിങ്
 #: src/features/contact/ContactDetails.tsx
 msgid "{good} good"
 msgstr "{good} നല്ലത്"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{here, plural, =0 {Nobody is online right now.} one {# person is online right now.} other {# people are online right now.}}"
+msgstr "{here, plural, =0 {ഇപ്പോൾ ആരും ഓൺലൈനിലില്ല.} one {ഇപ്പോൾ # പേർ ഓൺലൈനിലുണ്ട്.} other {ഇപ്പോൾ # പേർ ഓൺലൈനിലുണ്ട്.}}"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "{hidden, plural, one {# earlier message} other {# earlier messages}}"
@@ -511,7 +526,16 @@ msgstr "{name} വെബ്സൈറ്റ്"
 msgid "{names} will be notified"
 msgstr "{names}-നെ അറിയിക്കും"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "{notOk, plural, one {# not operational} other {# not operational}}"
+msgstr "{notOk, plural, one {# പ്രവർത്തിക്കുന്നില്ല} other {# പ്രവർത്തിക്കുന്നില്ല}}"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{open, plural, one {# open now} other {# open now}}"
+msgstr "{open, plural, one {ഇപ്പോൾ # തുറന്നിരിക്കുന്നു} other {ഇപ്പോൾ # തുറന്നിരിക്കുന്നു}}"
+
 #: src/components/common/Linked.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# തുറന്നിരിക്കുന്നു} other {# തുറന്നിരിക്കുന്നു}}"
@@ -527,6 +551,10 @@ msgstr "{pct} സംതൃപ്തർ"
 #: src/features/docs/DocsColumn.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} പോസ്റ്റുകൾ അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "{pending} waiting · {unsubscribed} unsubscribed"
+msgstr "{pending} കാത്തിരിക്കുന്നു · {unsubscribed} അൺസബ്സ്ക്രൈബ്"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -687,6 +715,10 @@ msgstr "{all}-ൽ {sent} പൂർത്തിയായി"
 msgid "{share} helpful"
 msgstr "{share} സഹായകം"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "{share} uptime"
+msgstr "{share} അപ്‌ടൈം"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{size} · pick another file"
 msgstr "{size} · മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക്കുക"
@@ -696,13 +728,30 @@ msgstr "{size} · മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക
 msgid "{subscribed} subscribed"
 msgstr "{subscribed} സബ്സ്ക്രൈബ് ചെയ്തു"
 
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "{subscribed} subscribers"
+msgstr "{subscribed} സബ്സ്ക്രൈബർമാർ"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{threads} open discussions"
 msgstr "{threads} തുറന്ന ചർച്ചകൾ"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "{unsubscribed} unsubscribed"
+msgstr "{unsubscribed} അൺസബ്സ്ക്രൈബ്"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{up, plural, one {# up} other {# up}}"
+msgstr "{up, plural, one {# ലഭ്യം} other {# ലഭ്യം}}"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} സഹായകം"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{updates, plural, one {# update} other {# updates}}"
+msgstr "{updates, plural, one {# അപ്ഡേറ്റ്} other {# അപ്ഡേറ്റുകൾ}}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
@@ -718,9 +767,9 @@ msgstr "{views, plural, one {# കാഴ്ച} other {# കാഴ്ചകൾ}}
 msgid "{votes} votes"
 msgstr "{votes} വോട്ടുകൾ"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "{who} in {contact}"
-msgstr "{contact}-ൽ {who}"
+#: src/features/home/HomePage.tsx
+msgid "{waiting, plural, one {# person is waiting for a reply.} other {# people are waiting for a reply.}}"
+msgstr "{waiting, plural, one {# ആൾ മറുപടിക്കായി കാത്തിരിക്കുന്നു.} other {# പേർ മറുപടിക്കായി കാത്തിരിക്കുന്നു.}}"
 
 #: src/features/account/AccountPage.tsx
 msgid "{who} replied in <0>{title}</0>"
@@ -738,6 +787,10 @@ msgstr "*@example.com മറ്റൊരു ചാനലിനും ഇല്�
 #: src/features/contact/ContactDetails.tsx
 msgid "+ Add address"
 msgstr "+ വിലാസം ചേർക്കുക"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "+{added} in 30 days"
+msgstr "30 ദിവസത്തിൽ +{added}"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "<0>{domain}</0> is not a verified identity in the server’s Amazon SES account. Mail goes out without tenant isolation and broadcasts are blocked. Ask the server’s operator to verify the domain."
@@ -792,6 +845,7 @@ msgstr "2. അത് എത്തിയോ എന്ന് പരിശോധി
 msgid "200 to 299 by default."
 msgstr "ഡിഫോൾട്ടായി 200 മുതൽ 299 വരെ."
 
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "24 hours"
 msgstr "24 മണിക്കൂർ"
@@ -1221,6 +1275,10 @@ msgstr "Acme Support"
 msgid "Active"
 msgstr "സജീവം"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Activity"
+msgstr "പ്രവർത്തനം"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1277,6 +1335,10 @@ msgstr "ഒരു സബ്സ്ക്രൈബറെ ചേർക്കുക"
 msgid "Add a subscriber to {listName}"
 msgstr "{listName}-ലേക്ക് ഒരു സബ്സ്ക്രൈബറെ ചേർക്കുക"
 
+#: src/app/Sidebar.tsx
+msgid "Add a website"
+msgstr "ഒരു വെബ്സൈറ്റ് ചേർക്കുക"
+
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Add a website chat in the inbox settings"
 msgstr "ഇൻബോക്സ് ക്രമീകരണങ്ങളിൽ ഒരു വെബ്സൈറ്റ് ചാറ്റ് ചേർക്കുക"
@@ -1314,6 +1376,7 @@ msgid "Add at least one origin."
 msgstr "കുറഞ്ഞത് ഒരു ഒറിജിൻ ചേർക്കുക."
 
 #: src/features/settings/channels/ApiChannelDialog.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Add channel"
 msgstr "ചാനൽ ചേർക്കുക"
 
@@ -1353,6 +1416,10 @@ msgstr "മോണിറ്റർ ചേർക്കുക ({addKey})"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "കുറിപ്പ് ചേർക്കുക"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add product"
+msgstr "ഉൽപ്പന്നം ചേർക്കുക"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -1439,6 +1506,10 @@ msgstr "അഡ്മിൻ"
 msgid "Admin routing"
 msgstr "അഡ്മിൻ റൂട്ടിംഗ്"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Affects"
+msgstr "ബാധിക്കുന്നത്"
+
 #: src/components/common/text.ts
 msgid "Agent"
 msgstr "ഏജന്റ്"
@@ -1468,6 +1539,7 @@ msgstr "ടാബ് പശ്ചാത്തലത്തിലായിരി�
 msgid "Alertmanager"
 msgstr "Alertmanager"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1485,12 +1557,15 @@ msgstr "എല്ലാം"
 msgid "All components"
 msgstr "എല്ലാ ഘടകങ്ങളും"
 
+#: src/features/status/IncidentPane.tsx
+msgid "All good"
+msgstr "എല്ലാം ശരിയാണ്"
+
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
 msgstr "എല്ലാ ഇറക്കുമതികളും"
 
 #: src/app/Palette.tsx
-#: src/features/inbox/InboxPicker.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
@@ -1510,9 +1585,18 @@ msgstr "എല്ലാം വായിച്ചതായി അടയാളപ�
 msgid "All of its conversations are deleted with it."
 msgstr "ഇതിന്റെ എല്ലാ സംഭാഷണങ്ങളും ഇതോടൊപ്പം ഇല്ലാതാക്കപ്പെടും."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "all operational"
+msgstr "എല്ലാം പ്രവർത്തനക്ഷമം"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "എല്ലാ ഭാഗങ്ങളും എത്തി. ഫയൽ വായിക്കുന്നു…"
+
+#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "All products"
+msgstr "എല്ലാ ഉൽപ്പന്നങ്ങളും"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
@@ -1523,6 +1607,10 @@ msgstr "എല്ലാ സ്കോപ്പുകളും"
 #: src/features/docs/DocsColumn.tsx
 msgid "All sites"
 msgstr "എല്ലാ സൈറ്റുകളും"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "all up"
+msgstr "എല്ലാം ലഭ്യം"
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Allow"
@@ -1582,6 +1670,10 @@ msgstr "സൈൻ-ഇൻ, അറിയിപ്പ് ഇമെയിലുക�
 #: src/features/settings/webhooks/events.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "അംഗങ്ങളുടെ ആന്തരിക കുറിപ്പുകൾക്കും message.created അയയ്ക്കുക. ആന്തരിക ഇവന്റുകൾ ഒരിക്കലും അയയ്ക്കില്ല."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Always open"
+msgstr "എപ്പോഴും തുറന്നിരിക്കും"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
@@ -1858,6 +1950,12 @@ msgstr "ഈ കീ ഉപയോഗിക്കുന്ന എല്ലാം �
 msgid "API"
 msgstr "API"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/DeveloperTabs.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "API & MCP"
+msgstr "API, MCP"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API ചാനൽ"
@@ -1867,7 +1965,7 @@ msgid "API key"
 msgstr "API കീ"
 
 #: src/app/Palette.tsx
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "API കീകൾ"
@@ -1899,6 +1997,7 @@ msgid "Appear online only in business hours"
 msgstr "ബിസിനസ് സമയത്ത് മാത്രം ഓൺലൈൻ ആയി കാണിക്കുക"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -2002,6 +2101,10 @@ msgstr "{address} {provider}-ന് പകരം താഴെയുള്ള വ
 #: src/features/migrations/SwitchStep.tsx
 msgid "Ask the admin of your mail server to forward {address} to the address below on the server, keeping delivery to the mailbox."
 msgstr "{address} സെർവറിൽ താഴെയുള്ള വിലാസത്തിലേക്ക് ഫോർവേഡ് ചെയ്യാൻ, മെയിൽബോക്സിലേക്കുള്ള ഡെലിവറി നിലനിർത്തിക്കൊണ്ട്, നിങ്ങളുടെ മെയിൽ സെർവറിന്റെ അഡ്മിനോട് ആവശ്യപ്പെടുക."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Asked after closing"
+msgstr "അടച്ചതിന് ശേഷം ചോദിക്കുന്നു"
 
 #: src/components/common/text.ts
 msgid "Asked to subscribe"
@@ -2355,11 +2458,16 @@ msgstr "മറ്റെവിടെയെങ്കിലും ഇതിനക�
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "നിങ്ങൾ ഇന്ന് മറുപടി നൽകുന്ന ഒരു മെയിൽബോക്സിന്റെ ചരിത്രം കൊണ്ടുവരിക, തുടർന്ന് അതിന്റെ മെയിൽ മാറ്റുക. Yuva മെയിൽബോക്സ് വായിക്കുക മാത്രം ചെയ്യുന്നു; അവിടെ ഒന്നും മാറില്ല."
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Bring your mail history"
+msgstr "നിങ്ങളുടെ മെയിൽ ചരിത്രം കൊണ്ടുവരൂ"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "നിങ്ങളുടെ പഴയ മെയിൽ കൊണ്ടുവരിക"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
 msgstr "ബ്രോഡ്കാസ്റ്റ്"
 
@@ -2371,10 +2479,12 @@ msgstr "ബ്രോഡ്കാസ്റ്റ് അയയ്ക്കൽ"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
@@ -2401,7 +2511,12 @@ msgstr "ബ്രൗസർ"
 msgid "Bug"
 msgstr "ബഗ്"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Bugs, ideas and praise sent from your apps and pages"
+msgstr "നിങ്ങളുടെ ആപ്പുകളിൽ നിന്നും പേജുകളിൽ നിന്നും അയച്ച ബഗുകൾ, ആശയങ്ങൾ, അഭിനന്ദനങ്ങൾ"
+
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Business hours"
 msgstr "ബിസിനസ് സമയം"
 
@@ -2409,11 +2524,18 @@ msgstr "ബിസിനസ് സമയം"
 msgid "By"
 msgstr "അയച്ചത്"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "by e-mail"
+msgstr "ഇമെയിൽ വഴി"
+
 #: src/features/conversation/Feedback.tsx
 msgid "By e-mail"
 msgstr "ഇമെയിൽ വഴി"
 
 #: src/features/reports/ReportPages.tsx
+msgid "By inbox"
+msgstr "ഇൻബോക്സ് അനുസരിച്ച്"
+
 #: src/features/reports/ReportsColumn.tsx
 msgid "By member"
 msgstr "അംഗം അനുസരിച്ച്"
@@ -2430,10 +2552,6 @@ msgstr "ലിങ്കുകളിലെ ക്യാമ്പെയ്ൻ"
 #: src/features/broadcasts/Composer.tsx
 msgid "Campaign name"
 msgstr "ക്യാമ്പെയ്ൻ പേര്"
-
-#: src/features/auth/AuthLayout.tsx
-msgid "Can I schedule a newsletter for each subscriber?"
-msgstr "ഓരോ സബ്സ്ക്രൈബർക്കും ഒരു ന്യൂസ്‌ലെറ്റർ ഷെഡ്യൂൾ ചെയ്യാമോ?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/Linked.tsx
@@ -2516,6 +2634,7 @@ msgid "Cancelled. What was added before stays."
 msgstr "റദ്ദാക്കി. മുമ്പ് ചേർത്തത് നിലനിൽക്കും."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/conversation/composer/CannedMenu.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
@@ -2539,6 +2658,10 @@ msgstr "From വിലാസമില്ലാത്ത ക്യാച്ച്
 #: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "വിഭാഗം"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Cause found"
+msgstr "കാരണം കണ്ടെത്തി"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Cc: {cc}"
@@ -2613,6 +2736,11 @@ msgstr "ചാനൽ ചേർത്തു"
 #: src/features/settings/channels/sections.tsx
 msgid "Channel removed"
 msgstr "ചാനൽ നീക്കം ചെയ്തു"
+
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Channels"
+msgstr "ചാനലുകൾ"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2802,6 +2930,7 @@ msgstr "ക്ലിക്ക് ട്രാക്കിംഗ്"
 msgid "clicked"
 msgstr "ക്ലിക്ക് ചെയ്തു"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Clicked"
 msgstr "ക്ലിക്ക് ചെയ്തു"
@@ -2812,6 +2941,10 @@ msgstr "ഒരു ലിങ്ക് ക്ലിക്ക് ചെയ്തു
 
 #: src/features/home/HomePage.tsx
 msgid "clicks not tracked"
+msgstr "ക്ലിക്കുകൾ ട്രാക്ക് ചെയ്യുന്നില്ല"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Clicks not tracked"
 msgstr "ക്ലിക്കുകൾ ട്രാക്ക് ചെയ്യുന്നില്ല"
 
 #: src/features/migrations/SignInConnectStep.tsx
@@ -2876,10 +3009,6 @@ msgstr "തിരയൽ അടയ്ക്കുക"
 msgid "Close the search (Esc)"
 msgstr "തിരയൽ അടയ്ക്കുക (Esc)"
 
-#: src/features/reports/ReportPages.tsx
-msgid "closed"
-msgstr "അടച്ചു"
-
 #: src/components/common/text.ts
 #: src/features/reports/ReportPages.tsx
 msgid "Closed"
@@ -2909,6 +3038,14 @@ msgstr "CNAME റെക്കോർഡ്"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "കോഡ്"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collapse or expand the sidebar"
+msgstr "സൈഡ്‌ബാർ ചുരുക്കുക അല്ലെങ്കിൽ വികസിപ്പിക്കുക"
+
+#: src/app/TopBar.tsx
+msgid "Collapse the sidebar"
+msgstr "സൈഡ്‌ബാർ ചുരുക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Collections"
@@ -2967,6 +3104,7 @@ msgstr "ഘടകം ഇല്ലാതാക്കി"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
 msgstr "ഘടകങ്ങൾ"
@@ -3013,6 +3151,7 @@ msgid "Confirmation and welcome mails, and every broadcast to the list, go out t
 msgstr "സ്ഥിരീകരണ, സ്വാഗത മെയിലുകളും ലിസ്റ്റിലേക്കുള്ള ഓരോ ബ്രോഡ്കാസ്റ്റും ഒരു ഇമെയിൽ ചാനൽ വഴി പോകുന്നു."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Confirmation asked"
 msgstr "സ്ഥിരീകരണം ആവശ്യപ്പെട്ടു"
 
@@ -3084,9 +3223,10 @@ msgid "Connected {created}"
 msgstr "{created} കണക്റ്റ് ചെയ്തു"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
-#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "കണക്റ്റ് ചെയ്ത ആപ്പുകൾ"
@@ -3230,6 +3370,7 @@ msgid "Conversation reopened"
 msgstr "സംഭാഷണം വീണ്ടും തുറന്നു"
 
 #: src/features/contact/ContactPage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "സംഭാഷണങ്ങൾ"
 
@@ -3251,6 +3392,14 @@ msgstr "സംഭാഷണങ്ങൾ"
 #: src/features/migrations/parts.tsx
 msgid "Conversations copied"
 msgstr "സംഭാഷണങ്ങൾ പകർത്തി"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations from every product"
+msgstr "എല്ലാ ഉൽപ്പന്നങ്ങളിൽ നിന്നുമുള്ള സംഭാഷണങ്ങൾ"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations in {product}"
+msgstr "{product} ലെ സംഭാഷണങ്ങൾ"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3418,6 +3567,7 @@ msgid "Create status page"
 msgstr "സ്റ്റാറ്റസ് പേജ് സൃഷ്ടിക്കുക"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Create status page ({newKey})"
 msgstr "സ്റ്റാറ്റസ് പേജ് സൃഷ്ടിക്കുക ({newKey})"
 
@@ -3482,9 +3632,9 @@ msgstr "CSV ഫയൽ"
 msgid "Custom"
 msgstr "കസ്റ്റം"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Custom domain still shows as unverified"
-msgstr "കസ്റ്റം ഡൊമെയ്ൻ ഇപ്പോഴും സ്ഥിരീകരിക്കാത്തതായി കാണിക്കുന്നു"
+#: src/app/Sidebar.tsx
+msgid "Customers"
+msgstr "ഉപഭോക്താക്കൾ"
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3524,13 +3674,13 @@ msgstr "തീമിനോട് ചേരുംവിധം നിറങ്ങ�
 msgid "Data retention"
 msgstr "ഡാറ്റ നിലനിർത്തൽ"
 
-#: src/features/settings/SettingsColumn.tsx
-msgid "Data retention and deleting the workspace"
-msgstr "ഡാറ്റ നിലനിർത്തലും വർക്ക്സ്പേസ് ഇല്ലാതാക്കലും"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "Database upgrade"
 msgstr "ഡാറ്റാബേസ് അപ്ഗ്രേഡ്"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Date"
+msgstr "തീയതി"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
@@ -3701,6 +3851,10 @@ msgstr "ഈ സബ്സ്ക്രിപ്ഷൻ ഇല്ലാതാക്�
 msgid "Delete this workspace"
 msgstr "ഈ വർക്ക്സ്പേസ് ഇല്ലാതാക്കുക"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Delete workspace…"
+msgstr "വർക്ക്‌സ്‌പെയ്‌സ് ഇല്ലാതാക്കുക…"
+
 #: src/features/account/AccountPage.tsx
 msgid "Delete your account"
 msgstr "നിങ്ങളുടെ അക്കൗണ്ട് ഇല്ലാതാക്കുക"
@@ -3788,6 +3942,7 @@ msgstr "വിവരണം (ഓപ്ഷണൽ)"
 msgid "Design"
 msgstr "ഡിസൈൻ"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "Designs"
 msgstr "ഡിസൈനുകൾ"
@@ -3810,10 +3965,6 @@ msgstr "വിശദാംശങ്ങൾ"
 #: src/features/status/SettingsTab.tsx
 msgid "Deutsch"
 msgstr "Deutsch"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Developer"
-msgstr "ഡെവലപ്പർ"
 
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
@@ -3989,6 +4140,7 @@ msgstr "ഡൊമെയ്ൻ സ്ഥിരീകരിച്ചിട്ട�
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "കഴിഞ്ഞു"
@@ -4068,6 +4220,7 @@ msgid "Draft:"
 msgstr "ഡ്രാഫ്റ്റ്:"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Drafts"
@@ -4076,6 +4229,10 @@ msgstr "ഡ്രാഫ്റ്റുകൾ"
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "കാത്തിരിക്കുന്ന ഡ്രാഫ്റ്റുകൾ"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Drafts waiting for review and the assistants you connected"
+msgstr "അവലോകനത്തിനായി കാത്തിരിക്കുന്ന ഡ്രാഫ്റ്റുകളും നിങ്ങൾ കണക്റ്റ് ചെയ്ത അസിസ്റ്റന്റുകളും"
 
 #: src/features/migrations/text.ts
 msgid "Drafts, never imported"
@@ -4096,7 +4253,6 @@ msgstr "തിരഞ്ഞെടുത്ത ബ്ലോക്ക് ഡ്യ�
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
-#: src/features/auth/AuthLayout.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
@@ -4154,17 +4310,21 @@ msgstr "ഇ-മെയിൽ സബ്സ്ക്രൈബർമാർ ഓഫാ
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "ഇ-മെയിൽ സബ്സ്ക്രൈബർമാർ ഓഫാണ്. ആർക്കും സബ്സ്ക്രൈബ് ചെയ്യാനാകില്ല, അറിയിപ്പുകളും പോകില്ല, പക്ഷേ പട്ടിക സൂക്ഷിക്കും."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "E-mail subscriptions are off"
+msgstr "ഇമെയിൽ സബ്സ്ക്രിപ്ഷനുകൾ ഓഫാണ്"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
 msgstr "ഇമെയിൽ കാഴ്ച"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "E-mail, live chat and in-app messages"
-msgstr "ഇമെയിൽ, ലൈവ് ചാറ്റ്, ആപ്പിനുള്ളിലെ സന്ദേശങ്ങൾ"
-
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "E-mail: {label}"
 msgstr "ഇമെയിൽ: {label}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "E-mails to the people who signed up for them."
+msgstr "സൈൻ അപ്പ് ചെയ്തവർക്കുള്ള ഇമെയിലുകൾ."
 
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the incident is open."
@@ -4182,6 +4342,10 @@ msgstr "മറുപടിക്ക് ശേഷം ഓരോ സംഭാഷണ
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "ഓരോ സംഭാഷണവും {provider} റിപ്പോർട്ട് ചെയ്യുന്ന സ്റ്റാറ്റസ് നിലനിർത്തുന്നു: തുറന്നത്, തീർപ്പാക്കാത്തത് അല്ലെങ്കിൽ അടച്ചത്."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Each day’s uptime shows here once the page is published."
+msgstr "പേജ് പ്രസിദ്ധീകരിച്ചാൽ ഓരോ ദിവസത്തെയും അപ്‌ടൈം ഇവിടെ കാണാം."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
 msgstr "ഓരോന്നും അതിന്റെ വിലാസത്തിനായുള്ള ഇൻബോക്സിന്റെ ഇമെയിൽ ചാനലിൽ പോകുന്നു, ഇല്ലെങ്കിൽ ആ ഇൻബോക്സിന്റെ ഏറ്റവും പഴയ ഇമെയിൽ ചാനലിൽ, അങ്ങനെ മറുപടികൾ ഉപഭോക്താവിന് എത്തും. ഇമെയിൽ ചാനൽ ഇല്ലാത്ത ഇൻബോക്സ് അവ ചരിത്രമായി മാത്രം സൂക്ഷിക്കുന്നു."
@@ -4195,6 +4359,10 @@ msgstr "തത്സമയം വരുന്ന മെയിലിനെപ്�
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "ഓരോ പുതിയ ഇമെയിലും ഒരു സംഭാഷണം ആരംഭിക്കുന്നു; മറുപടികൾ അത് തുടരുന്നു."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Each product has its own inbox, branding, hours and channels."
+msgstr "ഓരോ ഉൽപ്പന്നത്തിനും സ്വന്തം ഇൻബോക്സ്, ബ്രാൻഡിംഗ്, സമയം, ചാനലുകൾ എന്നിവയുണ്ട്."
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4410,10 +4578,6 @@ msgstr "കഴിഞ്ഞ 30 ദിവസത്തെ എല്ലാ സിഗ
 msgid "Every check of the last 30 days, newest first."
 msgstr "കഴിഞ്ഞ 30 ദിവസത്തെ ഓരോ പരിശോധനയും, പുതിയത് ആദ്യം."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Every customer conversation, in one place."
-msgstr "ഓരോ ഉപഭോക്തൃ സംഭാഷണവും, ഒരിടത്ത്."
-
 #: src/features/migrations/MapStep.tsx
 msgid "Every imported conversation is closed."
 msgstr "ഇറക്കുമതി ചെയ്ത എല്ലാ സംഭാഷണങ്ങളും അടച്ചിരിക്കുന്നു."
@@ -4479,6 +4643,10 @@ msgstr "ഈ ഫയലിലെ എല്ലാവരും {inboxName}-ൽ ന�
 msgid "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
 msgstr "ലിസ്റ്റുകളിലെ എല്ലാവരും. നിബന്ധനകൾ ആട്രിബ്യൂട്ടുകൾ പൊരുത്തപ്പെടുന്ന കോൺടാക്റ്റുകളെ മാത്രം നിലനിർത്തുന്നു, എല്ലാം പൊരുത്തപ്പെടണം."
 
+#: src/features/contact/ContactsColumn.tsx
+msgid "Everyone who has written to your products"
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾക്ക് എഴുതിയ എല്ലാവരും"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "നിങ്ങൾ സ്പാം എന്ന് അടയാളപ്പെടുത്തിയ രചയിതാക്കളുടേത് ഒഴികെ എല്ലാവരുടെയും പോസ്റ്റുകൾ ഉടൻ പ്രസിദ്ധീകരിക്കപ്പെടും."
@@ -4511,6 +4679,10 @@ msgstr "എല്ലായിടത്തും"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Example Ltd."
 msgstr "Example Ltd."
+
+#: src/app/TopBar.tsx
+msgid "Expand the sidebar"
+msgstr "സൈഡ്‌ബാർ വികസിപ്പിക്കുക"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Expected every"
@@ -4721,11 +4893,15 @@ msgid "First name"
 msgstr "ആദ്യ പേര്"
 
 #: src/features/reports/ReportPages.tsx
-msgid "first replies"
+msgid "First replies"
 msgstr "ആദ്യ മറുപടികൾ"
 
 #: src/features/contact/ContactPage.tsx
 msgid "first reply"
+msgstr "ആദ്യ മറുപടി"
+
+#: src/features/reports/ReportPages.tsx
+msgid "First reply"
 msgstr "ആദ്യ മറുപടി"
 
 #: src/app/TeamMenu.tsx
@@ -4743,6 +4919,10 @@ msgstr "ആദ്യ അപ്ഡേറ്റ്"
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "ആദ്യം, ഒരു ഇമെയിൽ വിലാസം"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Fix is out"
+msgstr "പരിഹാരം പുറത്തിറങ്ങി"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
@@ -4933,6 +5113,10 @@ msgstr "From വിലാസം (ഓപ്ഷണൽ)"
 msgid "From blocked contacts"
 msgstr "തടഞ്ഞ കോൺടാക്റ്റുകളിൽ നിന്ന്"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "From Gmail, Outlook, Yandex or any IMAP server, read only from the source."
+msgstr "Gmail, Outlook, Yandex അല്ലെങ്കിൽ ഏതെങ്കിലും IMAP സെർവറിൽ നിന്ന്, ഉറവിടത്തിൽ വായന മാത്രം."
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
 msgstr "ടെർമിനലിൽ നിന്ന്"
@@ -4971,8 +5155,11 @@ msgstr "Fumadocs / React"
 msgid "Further copies of the same message"
 msgstr "അതേ സന്ദേശത്തിന്റെ കൂടുതൽ പകർപ്പുകൾ"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "പൊതുവായത്"
 
@@ -5031,6 +5218,18 @@ msgstr "ലിസ്റ്റുകളിലേക്ക് പോകുക"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Goes out through {via}"
 msgstr "{via} വഴി പോകുന്നു"
+
+#: src/features/home/HomePage.tsx
+msgid "Good afternoon, {first}"
+msgstr "ശുഭ ഉച്ച, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good evening, {first}"
+msgstr "ശുഭ സായാഹ്നം, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good morning, {first}"
+msgstr "സുപ്രഭാതം, {first}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -5129,6 +5328,7 @@ msgstr "സഹായ ലേഖനം"
 msgid "Help articles"
 msgstr "സഹായ ലേഖനങ്ങൾ"
 
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help center"
 msgstr "സഹായ കേന്ദ്രം"
@@ -5254,6 +5454,10 @@ msgstr "ഹോസ്റ്റ്നെയിം"
 msgid "Hostname and certificate"
 msgstr "ഹോസ്റ്റ്നെയിമും സർട്ടിഫിക്കറ്റും"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Hours"
+msgstr "സമയം"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "അവർ എങ്ങനെ സമ്മതിച്ചു?"
@@ -5270,6 +5474,10 @@ msgstr "ആളുകൾ എങ്ങനെ സൈൻ അപ്പ് ചെയ�
 msgid "How far back"
 msgstr "എത്ര പിന്നിലേക്ക്"
 
+#: src/features/reports/ReportPages.tsx
+msgid "How fast and how well your team answers."
+msgstr "നിങ്ങളുടെ ടീം എത്ര വേഗത്തിലും എത്ര നന്നായും മറുപടി നൽകുന്നു."
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML ഇമെയിലുകൾ എങ്ങനെ തുറക്കുന്നു. ഓരോ സന്ദേശത്തിനും നിങ്ങൾക്ക് ഇപ്പോഴും മാറ്റാം."
@@ -5281,6 +5489,10 @@ msgstr "ഒരു സിഗ്നൽ എത്ര വൈകാം."
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "മെയിൽ Yuva-യിൽ എങ്ങനെ എത്തുന്നു"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "How messages reach each product."
+msgstr "സന്ദേശങ്ങൾ ഓരോ ഉൽപ്പന്നത്തിലും എങ്ങനെ എത്തുന്നു."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
@@ -5491,6 +5703,14 @@ msgstr "ഇറക്കുമതികൾ"
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
 msgstr "വർക്ക്സ്പേസിൽ ഇറക്കുമതികൾ ഒന്നൊന്നായി പ്രവർത്തിക്കുന്നു. മറ്റേത് തീരുമ്പോൾ വീണ്ടും ശ്രമിക്കുക."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact}"
+msgstr "{contact} നൊപ്പം"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact} · {subject}"
+msgstr "{contact} നൊപ്പം · {subject}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 മണിക്കൂറിൽ"
@@ -5584,15 +5804,12 @@ msgstr "Yandex Mail ക്രമീകരണങ്ങളിൽ, Mail clients-ന
 msgid "In Zoho Mail, open Settings › Mail accounts › IMAP access and turn IMAP on."
 msgstr "Zoho Mail-ൽ Settings › Mail accounts › IMAP access തുറന്ന് IMAP ഓണാക്കുക."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "In-app"
-msgstr "ആപ്പിൽ"
-
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/webhooks/sections.tsx
@@ -5608,14 +5825,9 @@ msgstr "ഇൻബോക്സ് നിറം"
 msgid "Inbox for {name}"
 msgstr "{name}-നുള്ള ഇൻബോക്സ്"
 
-#: src/features/home/HomePage.tsx
-msgid "Inbox today"
-msgstr "ഇന്നത്തെ ഇൻബോക്സ്"
-
 #: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/settings/SettingsColumn.tsx
 msgid "Inboxes"
 msgstr "ഇൻബോക്സുകൾ"
 
@@ -5640,6 +5852,10 @@ msgstr "കുറിപ്പുകൾ ഉൾപ്പെടുത്തുക"
 #: src/features/contact/ContactSheet.tsx
 msgid "Info"
 msgstr "വിവരം"
+
+#: src/app/Sidebar.tsx
+msgid "Insights"
+msgstr "വിശകലനം"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
@@ -5673,6 +5889,7 @@ msgid "Investigating"
 msgstr "അന്വേഷിക്കുന്നു"
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Invite"
 msgstr "ക്ഷണിക്കുക"
 
@@ -5683,6 +5900,10 @@ msgstr "ക്ഷണത്തിന്റെ ഭാഷ"
 #: src/features/setup/WaitStep.tsx
 msgid "Invite your team"
 msgstr "നിങ്ങളുടെ ടീമിനെ ക്ഷണിക്കുക"
+
+#: src/features/team/TeamColumn.tsx
+msgid "Invited, not joined yet"
+msgstr "ക്ഷണിച്ചു, ഇതുവരെ ചേർന്നിട്ടില്ല"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invites"
@@ -5879,6 +6100,7 @@ msgid "Kept with every subscription from this file, as the record of their conse
 msgstr "ഈ ഫയലിൽ നിന്നുള്ള ഓരോ സബ്സ്ക്രിപ്ഷനോടൊപ്പവും, അവരുടെ സമ്മതത്തിന്റെ രേഖയായി സൂക്ഷിക്കുന്നു."
 
 #: src/app/Palette.tsx
+#: src/app/TopBar.tsx
 #: src/app/UserMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
@@ -5926,6 +6148,7 @@ msgid "Label only: its mail comes from All mail, and its conversations get the l
 msgstr "ലേബൽ മാത്രം: അതിന്റെ മെയിൽ എല്ലാ മെയിലിൽ നിന്ന് വരുന്നു, അതിന്റെ സംഭാഷണങ്ങൾക്ക് ലേബൽ ലഭിക്കുന്നു."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -5946,6 +6169,7 @@ msgstr "ലേബലുകൾ (L)"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
@@ -5967,6 +6191,14 @@ msgstr "ഈ സെർവറിന്റെ പരിധിയേക്കാൾ 
 #: src/features/migrations/text.ts
 msgid "Larger than this server's limit for one message"
 msgstr "ഒരു സന്ദേശത്തിനുള്ള ഈ സെർവറിന്റെ പരിധിയേക്കാൾ വലുത്"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 30 days"
+msgstr "കഴിഞ്ഞ 30 ദിവസം"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 7 days"
+msgstr "കഴിഞ്ഞ 7 ദിവസം"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
@@ -6211,10 +6443,12 @@ msgstr "മെയിലിനായി ശ്രദ്ധിക്കുന്�
 msgid "Listing the tickets…"
 msgstr "ടിക്കറ്റുകൾ പട്ടികപ്പെടുത്തുന്നു…"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "ലിസ്റ്റുകൾ"
@@ -6224,7 +6458,6 @@ msgid "Live"
 msgstr "ലൈവ്"
 
 #: src/components/common/Source.tsx
-#: src/features/auth/AuthLayout.tsx
 msgid "Live chat"
 msgstr "ലൈവ് ചാറ്റ്"
 
@@ -6240,6 +6473,7 @@ msgstr "ചിത്രങ്ങൾ ലോഡ് ചെയ്യുക"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -6307,6 +6541,10 @@ msgstr "പഴയ സന്ദേശങ്ങളിൽ നോക്കുക"
 #: src/app/TeamMenu.tsx
 msgid "Looking at {where}"
 msgstr "{where} നോക്കുന്നു"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Looking into it"
+msgstr "ഞങ്ങൾ പരിശോധിക്കുന്നു"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Looking up the provider…"
@@ -6410,7 +6648,7 @@ msgstr "zip-ലെ Maildir"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactPage.tsx
 msgid "Mailing lists"
 msgstr "മെയിലിംഗ് ലിസ്റ്റുകൾ"
@@ -6571,6 +6809,10 @@ msgstr "മീഡിയ"
 msgid "Media, links and docs"
 msgstr "മീഡിയ, ലിങ്കുകൾ, ഡോക്സ്"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median"
+msgstr "മീഡിയൻ"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Median"
 msgstr "മീഡിയൻ"
@@ -6580,14 +6822,20 @@ msgstr "മീഡിയൻ"
 msgid "median first reply"
 msgstr "ശരാശരി ആദ്യ മറുപടി"
 
+#: src/features/home/HomePage.tsx
+msgid "Median first reply"
+msgstr "ശരാശരി ആദ്യ മറുപടി"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "അംഗം"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/members/MembersPage.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Members"
 msgstr "അംഗങ്ങൾ"
@@ -6662,6 +6910,10 @@ msgstr "സന്ദേശങ്ങൾ പകർത്തി"
 msgid "Messages imported"
 msgstr "സന്ദേശങ്ങൾ ഇറക്കുമതി ചെയ്തു"
 
+#: src/features/reports/ReportPages.tsx
+msgid "messages sent"
+msgstr "അയച്ച സന്ദേശങ്ങൾ"
+
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "കീ അയയ്ക്കുന്ന സന്ദേശങ്ങൾ അതിന്റെ ബോട്ട് പേരും ചിത്രവും കാണിക്കുന്നു."
@@ -6714,6 +6966,7 @@ msgstr "മൈഗ്രേഷൻ റദ്ദാക്കി"
 msgid "Migration steps"
 msgstr "മൈഗ്രേഷൻ ഘട്ടങ്ങൾ"
 
+#: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Mine"
 msgstr "എന്റേത്"
@@ -6750,6 +7003,7 @@ msgid "Monitoring"
 msgstr "നിരീക്ഷണത്തിൽ"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Monitors"
 msgstr "മോണിറ്ററുകൾ"
@@ -6872,8 +7126,10 @@ msgstr "ഇൻബോക്സിലേക്ക് നീക്കുക"
 msgid "Move to the previous or next stage"
 msgstr "മുമ്പത്തെ അല്ലെങ്കിൽ അടുത്ത ഘട്ടത്തിലേക്ക് നീക്കുക"
 
+#: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Yuva-യിലേക്ക് മാറുക"
 
@@ -6978,6 +7234,10 @@ msgstr "ശ്രദ്ധ വേണം"
 msgid "Needs the operator’s approval"
 msgstr "ഓപ്പറേറ്ററുടെ അംഗീകാരം വേണം"
 
+#: src/features/home/HomePage.tsx
+msgid "Needs you"
+msgstr "നിങ്ങളെ കാത്തിരിക്കുന്നവ"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Never"
@@ -7027,10 +7287,12 @@ msgstr "പുതിയ ലേഖനം"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "പുതിയ ബ്രോഡ്കാസ്റ്റ്"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast ({newKey})"
 msgstr "പുതിയ ബ്രോഡ്കാസ്റ്റ് ({newKey})"
 
@@ -7134,6 +7396,7 @@ msgid "New label “{folder}”"
 msgstr "പുതിയ ലേബൽ “{folder}”"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New list"
 msgstr "പുതിയ ലിസ്റ്റ്"
 
@@ -7154,6 +7417,10 @@ msgstr "നിയോഗിക്കാത്ത സംഭാഷണത്തി�
 msgid "New migration"
 msgstr "പുതിയ മൈഗ്രേഷൻ"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "New page"
+msgstr "പുതിയ പേജ്"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "New password"
 msgstr "പുതിയ പാസ്‌വേഡ്"
@@ -7169,6 +7436,14 @@ msgstr "പുതിയ സൈനിംഗ് സീക്രട്ട്"
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "പുതിയ സബ്സ്ക്രൈബർമാരെ ചേർത്തു"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "New subscriptions per day, last 30 days"
+msgstr "പ്രതിദിനം പുതിയ സബ്സ്ക്രിപ്ഷനുകൾ, കഴിഞ്ഞ 30 ദിവസം"
+
+#: src/features/status/IncidentPane.tsx
+msgid "New update · {stage}"
+msgstr "പുതിയ അപ്ഡേറ്റ് · {stage}"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "New value"
@@ -7234,6 +7509,10 @@ msgstr "അടുത്ത പരിശോധന {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "ഈ ബ്രോഡ്കാസ്റ്റിന്റെ വേഗതയിൽ, അടുത്ത മെയിൽ {local} ({utc} UTC)-ന്."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Next send"
+msgstr "അടുത്ത അയയ്ക്കൽ"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "അടുത്തതായി, എന്ത് കൊണ്ടുവരണമെന്ന് തിരഞ്ഞെടുക്കുക. സ്കാൻ ഫയൽ ഒരിക്കൽ വായിക്കുന്നു."
@@ -7275,6 +7554,7 @@ msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP
 msgstr "App passwords പേജ് ഇല്ലേ? നിങ്ങളുടെ അഡ്മിൻ Google Admin console-ൽ 2-Step Verification-ഉം IMAP-ഉം അനുവദിക്കണം."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No archived lists"
 msgstr "ആർക്കൈവ് ചെയ്ത ലിസ്റ്റുകളില്ല"
 
@@ -7295,6 +7575,7 @@ msgid "No broadcast has gone out yet. When one has, its recipients, clicks and r
 msgstr "ഇതുവരെ ഒരു ബ്രോഡ്കാസ്റ്റും പോയിട്ടില്ല. പോയാൽ, അതിന്റെ സ്വീകർത്താക്കൾ, ക്ലിക്കുകൾ, മറുപടികൾ എന്നിവ ഇവിടെ കാണിക്കും."
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "ഇതുവരെ ബ്രോഡ്കാസ്റ്റുകളില്ല"
 
@@ -7318,12 +7599,14 @@ msgstr "അയയ്ക്കാൻ കഴിയുന്ന ചാനലൊന�
 msgid "No channel yet"
 msgstr "ഇതുവരെ ചാനൽ ഇല്ല"
 
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "No channels yet"
 msgstr "ഇതുവരെ ചാനലുകളില്ല"
 
 #. placeholder {0}: inbox.name
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "ഇതുവരെ ചാനലുകളില്ല. ഉപഭോക്താക്കൾക്ക് {0}-ലേക്ക് എഴുതാൻ ഒന്ന് ചേർക്കുക."
 
@@ -7340,6 +7623,7 @@ msgid "No components yet. Add the parts of your product that customers depend on
 msgstr "ഇതുവരെ ഘടകങ്ങളില്ല. ഉപഭോക്താക്കൾ ആശ്രയിക്കുന്ന നിങ്ങളുടെ ഉൽപ്പന്നത്തിന്റെ ഭാഗങ്ങൾ ചേർക്കുക."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No confirmation"
 msgstr "സ്ഥിരീകരണമില്ല"
 
@@ -7486,6 +7770,7 @@ msgid "No mail server was found for {domain}. Pick your provider below, or “Ot
 msgstr "{domain}-ന് മെയിൽ സെർവർ ഒന്നും കണ്ടെത്തിയില്ല. താഴെ നിങ്ങളുടെ ദാതാവിനെ, അല്ലെങ്കിൽ “മറ്റൊരു IMAP സെർവർ” തിരഞ്ഞെടുത്ത് അടുത്ത ഘട്ടത്തിൽ സെർവർ നൽകുക."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No mailing lists yet"
 msgstr "ഇതുവരെ മെയിലിംഗ് ലിസ്റ്റുകളില്ല"
 
@@ -7513,10 +7798,6 @@ msgstr "കഴിഞ്ഞ 90 ദിവസത്തിൽ അറിയിപ്�
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "ഇതുവരെ ആരും ഒരു കുറിപ്പിൽ നിങ്ങളെ പരാമർശിച്ചിട്ടില്ല. ഒരു സഹപ്രവർത്തകൻ @ എന്നും നിങ്ങളുടെ പേരും എഴുതുമ്പോൾ, കുറിപ്പ് ഇവിടെ കാണിക്കും."
 
-#: src/features/home/HomePage.tsx
-msgid "No open conversations. New ones show up here and in the inbox as they arrive."
-msgstr "തുറന്ന സംഭാഷണങ്ങളില്ല. പുതിയവ വരുമ്പോൾ ഇവിടെയും ഇൻബോക്സിലും കാണിക്കും."
-
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
 msgstr "No open feedback."
@@ -7537,9 +7818,17 @@ msgstr "ഇതുവരെ പേജുകളില്ല"
 msgid "No pending invites."
 msgstr "തീർപ്പാക്കാത്ത ക്ഷണങ്ങളില്ല."
 
+#: src/features/settings/ProductsPage.tsx
+msgid "No products yet. Add one for each product or brand you answer for."
+msgstr "ഇതുവരെ ഉൽപ്പന്നങ്ങളില്ല. നിങ്ങൾ മറുപടി നൽകുന്ന ഓരോ ഉൽപ്പന്നത്തിനും ബ്രാൻഡിനും ഒന്ന് ചേർക്കുക."
+
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
 msgstr "പ്രസിദ്ധീകരിച്ച ലേഖനം കണ്ടെത്തിയില്ല."
+
+#: src/features/reports/ReportPages.tsx
+msgid "No ratings in this period."
+msgstr "ഈ കാലയളവിൽ റേറ്റിംഗുകളില്ല."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -7548,10 +7837,6 @@ msgstr "ഈ ശ്രേണിയിൽ റേറ്റിംഗുകളില�
 #: src/features/reports/ReportsColumn.tsx
 msgid "No ratings today"
 msgstr "ഇന്ന് റേറ്റിംഗുകളില്ല"
-
-#: src/features/reports/ReportPages.tsx
-msgid "No ratings today."
-msgstr "ഇന്ന് റേറ്റിംഗുകളില്ല."
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7601,6 +7886,7 @@ msgid "No subject"
 msgstr "വിഷയമില്ല"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "ഇതുവരെ വിഷയമില്ല"
 
@@ -7657,8 +7943,8 @@ msgid "Nobody else can see this inbox yet."
 msgstr "ഈ ഇൻബോക്സ് ഇതുവരെ മറ്റാർക്കും കാണാൻ കഴിയില്ല."
 
 #: src/features/reports/ReportPages.tsx
-msgid "Nobody has replied or closed anything yet today."
-msgstr "ഇന്ന് ഇതുവരെ ആരും മറുപടി നൽകുകയോ ഒന്നും അടയ്ക്കുകയോ ചെയ്തിട്ടില്ല."
+msgid "Nobody has replied or closed anything in this period."
+msgstr "ഈ കാലയളവിൽ ആരും മറുപടി നൽകുകയോ ഒന്നും അടയ്ക്കുകയോ ചെയ്തില്ല."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody is on the list of recipients yet."
@@ -7691,6 +7977,7 @@ msgstr "ആർക്കും ഈ മെയിൽ ലഭിക്കില്ല
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/contact/MergePreview.tsx
+#: src/features/conversation/Feedback.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -7786,6 +8073,10 @@ msgstr "ഈ സെർവറിൽ ലഭ്യമല്ല"
 msgid "Not on any mailing list."
 msgstr "ഒരു മെയിലിംഗ് ലിസ്റ്റിലും ഇല്ല."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "not public yet"
+msgstr "ഇതുവരെ പൊതുവല്ല"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
 msgstr "തയ്യാറല്ല"
@@ -7840,6 +8131,10 @@ msgstr "ഇതുവരെ അപ്‌ലോഡ് ചെയ്തിട്ട�
 msgid "Not used yet"
 msgstr "ഇതുവരെ ഉപയോഗിച്ചിട്ടില്ല"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Note"
+msgstr "കുറിപ്പ്"
+
 #: src/features/contact/ContactNotes.tsx
 msgid "Note about this contact"
 msgstr "ഈ കോൺടാക്റ്റിനെക്കുറിച്ചുള്ള കുറിപ്പ്"
@@ -7856,9 +8151,9 @@ msgstr "കുറിപ്പ്, ടീമിന് മാത്രം കാ�
 msgid "Notes"
 msgstr "കുറിപ്പുകൾ"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Notes stopped syncing after the update"
-msgstr "അപ്ഡേറ്റിന് ശേഷം കുറിപ്പുകളുടെ സമന്വയം നിലച്ചു"
+#: src/features/inbox/SidePanels.tsx
+msgid "Notes where a teammate mentioned you"
+msgstr "ഒരു സഹപ്രവർത്തകൻ നിങ്ങളെ പരാമർശിച്ച കുറിപ്പുകൾ"
 
 #: src/features/settings/notifications/events.ts
 msgid "Nothing"
@@ -7883,6 +8178,10 @@ msgstr "ഇതുവരെ ഒന്നും എത്തിയിട്ടി�
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "ഇതുവരെ ഒന്നും സംഭവിച്ചിട്ടില്ല."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Nothing here."
+msgstr "ഇവിടെ ഒന്നുമില്ല."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
@@ -7930,6 +8229,10 @@ msgstr "ഒന്നും സ്നൂസ് ചെയ്തിട്ടില�
 msgid "Nothing is waiting for approval."
 msgstr "ഒന്നും അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നില്ല."
 
+#: src/features/home/HomePage.tsx
+msgid "Nothing is waiting."
+msgstr "ഒന്നും കാത്തിരിക്കുന്നില്ല."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
 msgstr "ഈ ഫിൽട്ടറുകളുമായി ഒന്നും പൊരുത്തപ്പെടുന്നില്ല."
@@ -7938,6 +8241,10 @@ msgstr "ഈ ഫിൽട്ടറുകളുമായി ഒന്നും പ
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "നിങ്ങളുടെ തിരയലുമായി ഇവിടെ ഒന്നും പൊരുത്തപ്പെടുന്നില്ല."
+
+#: src/features/home/HomePage.tsx
+msgid "Nothing needs you"
+msgstr "ഒന്നും നിങ്ങളെ കാത്തിരിക്കുന്നില്ല"
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -7948,6 +8255,7 @@ msgid "Notices to subscribers"
 msgstr "സബ്സ്ക്രൈബർമാർക്കുള്ള അറിയിപ്പുകൾ"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7985,6 +8293,7 @@ msgstr "ഒക്ടോബർ ന്യൂസ്‌ലെറ്റർ"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "Off"
 msgstr "ഓഫ്"
@@ -8089,7 +8398,6 @@ msgstr "ഒരു ടെസ്റ്റ് സന്ദേശം എത്തി
 msgid "One e-mail a month about what is new."
 msgstr "പുതിയതെന്താണെന്ന് മാസത്തിൽ ഒരു ഇമെയിൽ."
 
-#: src/features/auth/AuthLayout.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "One inbox"
 msgstr "ഒരു ഇൻബോക്സ്"
@@ -8247,18 +8555,16 @@ msgstr "ഈ ബ്രൗസറിൽ പാനൽ തുറന്നിരിക
 msgid "Only your team sees it."
 msgstr "നിങ്ങളുടെ ടീമിന് മാത്രം കാണാം."
 
-#: src/features/home/HomePage.tsx
-msgid "open"
-msgstr "തുറന്നത്"
-
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "തുറക്കുക"
@@ -8489,6 +8795,10 @@ msgstr "മറുപടി തുറക്കുക"
 msgid "Open the status page"
 msgstr "സ്റ്റാറ്റസ് പേജ് തുറക്കുക"
 
+#: src/features/home/HomePage.tsx
+msgid "Open the team"
+msgstr "ടീം തുറക്കുക"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "വർക്ക്സ്പേസ് ക്രമീകരണങ്ങൾ തുറക്കുക"
@@ -8645,6 +8955,7 @@ msgid "Owner"
 msgstr "ഉടമ"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "ഉടമകളും അഡ്മിനുകളും ലിസ്റ്റുകൾ ഉണ്ടാക്കുകയും സബ്സ്ക്രൈബർമാരെ ചേർക്കുകയും ബ്രോഡ്കാസ്റ്റുകൾ അയയ്ക്കുകയും ചെയ്യുന്നു."
 
@@ -8815,6 +9126,10 @@ msgstr "തീർപ്പാക്കാത്തത്"
 msgid "Pending deliveries are dropped with it."
 msgstr "തീർപ്പാക്കാത്ത ഡെലിവറികൾ ഇതോടൊപ്പം ഉപേക്ഷിക്കപ്പെടും."
 
+#: src/features/reports/ReportPages.tsx
+msgid "people answered"
+msgstr "മറുപടി ലഭിച്ചവർ"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "ആളുകൾ സബ്സ്ക്രൈബ് ഫോമിൽ ചേരുന്നു, അല്ലെങ്കിൽ അവരുടെ സമ്മതത്തോടെ ചേർക്കപ്പെടുന്നു. ബ്രോഡ്കാസ്റ്റുകൾ ലിസ്റ്റുകളിലേക്ക് പോകുന്നു."
@@ -8865,6 +9180,10 @@ msgstr "ഇൻബോക്സിന്"
 msgid "Per month (30 days)"
 msgstr "മാസത്തിൽ (30 ദിവസം)"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Period"
+msgstr "കാലയളവ്"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Permission to send"
 msgstr "അയയ്ക്കാനുള്ള അനുമതി"
@@ -8912,14 +9231,6 @@ msgstr "Pick a piece of feedback"
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "ക്രമീകരണങ്ങളിൽ ഒരു അയയ്ക്കുന്നയാളെ തിരഞ്ഞെടുക്കുക"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Pick a setting on the left."
-msgstr "ഇടതുവശത്ത് ഒരു ക്രമീകരണം തിരഞ്ഞെടുക്കുക."
-
-#: src/features/team/TeamColumn.tsx
-msgid "Pick a teammate"
-msgstr "ഒരു സഹപ്രവർത്തകനെ തിരഞ്ഞെടുക്കുക"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Pick a time in the next 90 days, in your time zone, {zone}."
@@ -9072,6 +9383,7 @@ msgid "Plan maintenance ({maintenanceKey})"
 msgstr "അറ്റകുറ്റപ്പണി ആസൂത്രണം ചെയ്യുക ({maintenanceKey})"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentPane.tsx
 msgid "Planned"
 msgstr "Planned"
 
@@ -9108,7 +9420,6 @@ msgid "Port"
 msgstr "പോർട്ട്"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Post an update"
 msgstr "അപ്ഡേറ്റ് പ്രസിദ്ധീകരിക്കുക"
 
@@ -9121,6 +9432,7 @@ msgid "Post feedback for your app's users"
 msgstr "നിങ്ങളുടെ ആപ്പിന്റെ ഉപയോക്താക്കൾക്കുള്ള ഫീഡ്ബാക്ക് പോസ്റ്റ് ചെയ്യുക"
 
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Post update"
 msgstr "അപ്ഡേറ്റ് അയയ്ക്കുക"
 
@@ -9194,12 +9506,17 @@ msgstr "മുൻഗണന, ഇൻബോക്സ്, സ്പാം എന്�
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Private"
 msgstr "സ്വകാര്യം"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "pro, team"
 msgstr "pro, team"
+
+#: src/features/inbox/InboxPicker.tsx
+msgid "Product"
+msgstr "ഉൽപ്പന്നം"
 
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
@@ -9210,21 +9527,37 @@ msgstr "ഉൽപ്പന്നത്തിന്റെ പേര്"
 msgid "Product news"
 msgstr "ഉൽപ്പന്ന വാർത്തകൾ"
 
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "Product: {label}"
+msgstr "ഉൽപ്പന്നം: {label}"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Production backend"
 msgstr "പ്രൊഡക്ഷൻ ബാക്കെൻഡ്"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "Products"
+msgstr "ഉൽപ്പന്നങ്ങൾ"
+
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "പ്രൊഫൈൽ"
 
+#: src/features/conversation/Feedback.tsx
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "പുരോഗതി"
+
+#: src/features/conversation/Feedback.tsx
+msgid "Progress · the person sees this"
+msgstr "പുരോഗതി · ആ വ്യക്തി ഇത് കാണും"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Progress (O)"
@@ -9237,6 +9570,7 @@ msgstr "Proton Mail-ൽ IMAP വഴി എത്താൻ കഴിയുന്�
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Public"
 msgstr "പൊതു"
 
@@ -9248,6 +9582,10 @@ msgstr "പൊതു വിലാസം"
 msgid "Public key"
 msgstr "പൊതു കീ"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Public pages that tell your customers whether your products work."
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ പ്രവർത്തിക്കുന്നുണ്ടോ എന്ന് ഉപഭോക്താക്കളോട് പറയുന്ന പൊതു പേജുകൾ."
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Public threads under your documentation pages, in every state."
 msgstr "നിങ്ങളുടെ ഡോക്യുമെന്റേഷൻ പേജുകൾക്ക് കീഴിലെ പൊതു ത്രെഡുകൾ, എല്ലാ അവസ്ഥയിലും."
@@ -9256,6 +9594,11 @@ msgstr "നിങ്ങളുടെ ഡോക്യുമെന്റേഷൻ �
 #: src/features/status/StatusPagePane.tsx
 msgid "Publish"
 msgstr "പ്രസിദ്ധീകരിക്കുക"
+
+#: src/app/Sidebar.tsx
+msgctxt "sidebar group"
+msgid "Publish"
+msgstr "പ്രസിദ്ധീകരണം"
 
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9394,6 +9737,7 @@ msgstr "റേറ്റിംഗ്"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Ratings"
 msgstr "റേറ്റിംഗുകൾ"
 
@@ -9568,6 +9912,7 @@ msgstr "സ്വീകർത്താക്കൾ"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Recipients"
@@ -9740,6 +10085,10 @@ msgstr "ഈ പാസ്‌കീ നീക്കം ചെയ്യണോ?"
 msgid "Remove Yuva's access in Microsoft"
 msgstr "Microsoft-ൽ Yuva-യുടെ ആക്‌സസ് നീക്കം ചെയ്യുക"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Removes every inbox, conversation and contact for everyone."
+msgstr "എല്ലാവർക്കുമായി ഓരോ ഇൻബോക്സും സംഭാഷണവും കോൺടാക്റ്റും നീക്കംചെയ്യുന്നു."
+
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Removes you from every workspace. Messages you wrote stay, shown as from a deleted member."
 msgstr "നിങ്ങളെ എല്ലാ വർക്ക്സ്പേസിൽ നിന്നും നീക്കം ചെയ്യുന്നു. നിങ്ങൾ എഴുതിയ സന്ദേശങ്ങൾ നിലനിൽക്കും, ഇല്ലാതാക്കിയ അംഗത്തിൽ നിന്നുള്ളതായി കാണിക്കും."
@@ -9782,6 +10131,7 @@ msgstr "മാറ്റിസ്ഥാപിക്കുക"
 msgid "replied"
 msgstr "മറുപടി നൽകി"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Replied"
 msgstr "മറുപടി നൽകി"
@@ -9793,10 +10143,6 @@ msgstr "<0>{title}</0>-ന്റെ ത്രെഡിൽ മറുപടി ന
 #: src/features/conversation/RelatedLine.tsx
 msgid "Replied in the thread of another conversation"
 msgstr "മറ്റൊരു സംഭാഷണത്തിന്റെ ത്രെഡിൽ മറുപടി നൽകി"
-
-#: src/features/reports/ReportPages.tsx
-msgid "replies"
-msgstr "മറുപടികൾ"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
@@ -9811,7 +10157,6 @@ msgstr "മറുപടികൾ"
 msgid "Replies and answers in the discussions you follow"
 msgstr "നിങ്ങൾ പിന്തുടരുന്ന ചർച്ചകളിലെ മറുപടികളും ഉത്തരങ്ങളും"
 
-#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "മറുപടികളും അടയ്ക്കലുകളും"
@@ -9848,6 +10193,10 @@ msgstr "ഇന്ന് മറുപടികൾ"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "മറുപടികൾ ഇതിലൂടെ"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "replies within {within}"
+msgstr "{within} നുള്ളിൽ മറുപടി"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -9930,10 +10279,6 @@ msgstr "തിരഞ്ഞെടുത്ത പോസ്റ്റിന് മ�
 msgid "Reply with a quote"
 msgstr "ഉദ്ധരണിയോടെ മറുപടി നൽകുക"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Reply, assign and follow up together, across all of your products."
-msgstr "നിങ്ങളുടെ എല്ലാ ഉൽപ്പന്നങ്ങളിലുടനീളം ഒരുമിച്ച് മറുപടി നൽകുക, നിയോഗിക്കുക, പിന്തുടരുക."
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Replying to {to}"
 msgstr "{to}-ന് മറുപടി നൽകുന്നു"
@@ -10006,6 +10351,10 @@ msgstr "{took} കൊണ്ട് പ്രതികരിച്ചു"
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "പ്രതികരണ സമയം"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Response time, last 24 hours"
+msgstr "പ്രതികരണ സമയം, കഴിഞ്ഞ 24 മണിക്കൂർ"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -10271,6 +10620,7 @@ msgstr "എൻട്രി ഷെഡ്യൂൾ ചെയ്യുക"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "ഷെഡ്യൂൾ ചെയ്തു"
@@ -10373,6 +10723,10 @@ msgstr "ഈ സംഭാഷണത്തിൽ തിരയുക ({0})"
 msgid "Search incidents"
 msgstr "സംഭവങ്ങൾ തിരയുക"
 
+#: src/app/TopBar.tsx
+msgid "Search or jump to…"
+msgstr "തിരയുക അല്ലെങ്കിൽ പോകുക…"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "ആളുകളെയോ പ്രവർത്തനങ്ങളെയോ ക്രമീകരണങ്ങളെയോ തിരയുക"
@@ -10410,12 +10764,9 @@ msgid "Secret"
 msgstr "സീക്രട്ട്"
 
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "വിഭാഗങ്ങൾ"
-
-#: src/features/team/TeamColumn.tsx
-msgid "See where they are, what they hold open and what they did today."
-msgstr "അവർ എവിടെയാണെന്നും എന്താണ് തുറന്നുവച്ചിരിക്കുന്നതെന്നും ഇന്ന് എന്ത് ചെയ്തുവെന്നും കാണുക."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Select conversations"
@@ -10508,6 +10859,10 @@ msgstr "ഒരു ടെസ്റ്റ് അറിയിപ്പ് അയയ
 msgid "Send a test notification to {name}"
 msgstr "{name}-ന് ഒരു ടെസ്റ്റ് അറിയിപ്പ് അയയ്ക്കുക"
 
+#: src/features/team/TeamColumn.tsx
+msgid "Send again"
+msgstr "വീണ്ടും അയയ്ക്കുക"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Send an auto-reply"
 msgstr "ഒരു ഓട്ടോ-മറുപടി അയയ്ക്കുക"
@@ -10581,6 +10936,11 @@ msgstr "സ്ഥിരീകരണം വീണ്ടും അയയ്ക്�
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Send the e-mail after"
 msgstr "ഇതിന് ശേഷം ഇമെയിൽ അയയ്ക്കുക"
+
+#. placeholder {0}: invite.email
+#: src/features/team/TeamColumn.tsx
+msgid "Send the invite for {0} again"
+msgstr "{0} ന് ക്ഷണം വീണ്ടും അയയ്ക്കുക"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Send the reply"
@@ -10682,6 +11042,18 @@ msgstr "അയയ്ക്കുന്നു, പിന്നെ അടയ്ക
 msgid "Sending…"
 msgstr "അയയ്ക്കുന്നു…"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when}"
+msgstr "{when} അയയ്ക്കും"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to}"
+msgstr "{when} {to} ലേക്ക് അയയ്ക്കും"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to} · {people} people"
+msgstr "{when} {to} ലേക്ക് അയയ്ക്കും · {people} പേർ"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
 msgid "Sends from"
@@ -10708,9 +11080,11 @@ msgstr "അയച്ചു"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Sent"
 msgstr "അയച്ചു"
 
@@ -10727,6 +11101,10 @@ msgstr "അയച്ചു"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "ഈ വിലാസത്തിൽ നിന്ന് {count} സന്ദേശങ്ങൾ അയച്ചു"
+
+#: src/features/team/TeamColumn.tsx
+msgid "sent {sent}"
+msgstr "അയച്ചത് {sent}"
 
 #: src/features/home/HomePage.tsx
 msgid "Sent {sentAt}"
@@ -10850,12 +11228,14 @@ msgstr "സജ്ജീകരിക്കുന്നു…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -10902,10 +11282,12 @@ msgstr "കുറുക്കുവഴി"
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Show"
 msgstr "കാണിക്കുക"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Show archived lists"
 msgstr "ആർക്കൈവ് ചെയ്ത ലിസ്റ്റുകൾ കാണിക്കുക"
 
@@ -11193,6 +11575,10 @@ msgstr "മുതൽ"
 msgid "Since {since}"
 msgstr "{since} മുതൽ"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "since {started}"
+msgstr "ആരംഭിച്ചത് {started}"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "മുതൽ…"
@@ -11378,6 +11764,10 @@ msgstr "{spfDomain}-ന് SPF വിജയിക്കുന്നു, അയ�
 msgid "SPF passes for {spfDomain}."
 msgstr "{spfDomain}-ന് SPF വിജയിക്കുന്നു."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Stage"
+msgstr "ഘട്ടം"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Start"
 msgstr "ആരംഭിക്കുക"
@@ -11389,6 +11779,10 @@ msgstr "ഒരു ചർച്ച ആരംഭിക്കുക"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "ഒരു മെയിലിംഗ് ലിസ്റ്റ് ആരംഭിക്കുക"
+
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Start a move"
+msgstr "മാറ്റം ആരംഭിക്കുക"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -11417,6 +11811,10 @@ msgstr "നിങ്ങളുടെ മെയിലിംഗ് ലിസ്റ�
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "ആരംഭിച്ചു"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Started {started}"
+msgstr "ആരംഭിച്ചത് {started}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Started {when}"
@@ -11449,7 +11847,6 @@ msgstr "STARTTLS (പോർട്ട് 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "അവസ്ഥ"
 
@@ -11470,6 +11867,7 @@ msgstr "നിലച്ചാലുള്ള അവസ്ഥ"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
@@ -11488,6 +11886,7 @@ msgstr "സ്റ്റാറ്റസ് പേജ്"
 msgid "Status page deleted"
 msgstr "സ്റ്റാറ്റസ് പേജ് ഇല്ലാതാക്കി"
 
+#: src/app/Sidebar.tsx
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Status pages"
@@ -11578,6 +11977,7 @@ msgstr "ഇപ്പോൾ സബ്സ്ക്രൈബ് ചെയ്തു"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "സബ്സ്ക്രൈബർമാർ"
@@ -11714,6 +12114,8 @@ msgstr "TCP പരിശോധന"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/MemberPage.tsx
 #: src/features/team/TeamColumn.tsx
@@ -11753,8 +12155,8 @@ msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/status/StatusPagePane.tsx
-msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
-msgstr "നിങ്ങളുടെ ഉൽപ്പന്നം പ്രവർത്തിക്കുന്നുണ്ടോ എന്ന് ഉപഭോക്താക്കളോട് പറയുക. സംഭവങ്ങൾ തുറക്കാനും അറ്റകുറ്റപ്പണി ആസൂത്രണം ചെയ്യാനും ഓരോ ഘടകത്തിന്റെയും അവസ്ഥ സജ്ജമാക്കാനും ഒരു ഇൻബോക്സിന്റെ പേജ് തിരഞ്ഞെടുക്കുക."
+msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നം പ്രവർത്തിക്കുന്നുണ്ടോ എന്ന് ഉപഭോക്താക്കളോട് പറയുക. ഓരോ ഇൻബോക്സിനും ഒരു പേജ് ലഭിക്കും; അവിടെ നിങ്ങൾ സംഭവങ്ങൾ തുറക്കുകയും അറ്റകുറ്റപ്പണി ആസൂത്രണം ചെയ്യുകയും ഓരോ ഘടകത്തിന്റെയും നില സജ്ജമാക്കുകയും ചെയ്യുന്നു."
 
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
@@ -11834,6 +12236,10 @@ msgstr "അപ്ഡേറ്റിന് ശേഷം ആപ്പ് എന്
 #: src/features/migrations/DoneStep.tsx
 msgid "The app registration you created for Yuva is not needed any more either: delete it in Microsoft Entra › App registrations."
 msgstr "നിങ്ങൾ Yuva-യ്ക്കായി ഉണ്ടാക്കിയ ആപ്പ് രജിസ്ട്രേഷനും ഇനി ആവശ്യമില്ല: Microsoft Entra › App registrations-ൽ അത് ഇല്ലാതാക്കുക."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The bars are the last {days} days, as visitors see them."
+msgstr "സന്ദർശകർ കാണുന്നതുപോലെ കഴിഞ്ഞ {days} ദിവസമാണ് ബാറുകൾ."
 
 #: src/components/common/text.ts
 msgid "The broadcast changed in the meantime. Look at its state and try again."
@@ -12527,10 +12933,6 @@ msgstr "സബ്സ്ക്രൈബ് ഫോം ലിസ്റ്റിന�
 msgid "The team today"
 msgstr "ഇന്ന് ടീം"
 
-#: src/features/team/TeamColumn.tsx
-msgid "The team today:"
-msgstr "ഇന്ന് ടീം:"
-
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The tenant is gone from Amazon SES. Broadcasts are blocked until the server sets it up again."
 msgstr "ടെനന്റ് Amazon SES-ൽ നിന്ന് പോയി. സെർവർ അത് വീണ്ടും സജ്ജമാക്കുന്നതുവരെ ബ്രോഡ്കാസ്റ്റുകൾ തടഞ്ഞിരിക്കുന്നു."
@@ -13105,6 +13507,7 @@ msgid "To: {emailTo}"
 msgstr "ഇവർക്ക്: {emailTo}"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Today"
 msgstr "ഇന്ന്"
@@ -13120,14 +13523,6 @@ msgstr "ഇന്ന് {at}-ന്"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Today at {at}"
 msgstr "ഇന്ന് {at}-ന്"
-
-#: src/features/reports/ReportPages.tsx
-msgid "Today since midnight, over the inboxes you can see."
-msgstr "നിങ്ങൾക്ക് കാണാവുന്ന ഇൻബോക്സുകളിൽ, ഇന്ന് അർദ്ധരാത്രി മുതൽ."
-
-#: src/features/home/HomePage.tsx
-msgid "Today, across the inboxes, websites and apps you can see."
-msgstr "നിങ്ങൾക്ക് കാണാവുന്ന ഇൻബോക്സുകൾ, വെബ്സൈറ്റുകൾ, ആപ്പുകൾ എന്നിവയിലുടനീളം ഇന്ന്."
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Tokens signed with the current secret stop working at once."
@@ -13272,9 +13667,6 @@ msgid "Unanswered"
 msgstr "മറുപടി നൽകാത്തത്"
 
 #: src/features/home/HomePage.tsx
-msgid "unassigned"
-msgstr "നിയോഗിക്കാത്തത്"
-
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "നിയോഗിക്കാത്തത്"
@@ -13394,6 +13786,7 @@ msgid "Unpublish the translation"
 msgstr "വിവർത്തനത്തിന്റെ പ്രസിദ്ധീകരണം റദ്ദാക്കുക"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Unpublished"
 msgstr "പ്രസിദ്ധീകരിച്ചിട്ടില്ല"
 
@@ -13403,6 +13796,7 @@ msgstr "പ്രസിദ്ധീകരിച്ചിട്ടില്ല, �
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Unread"
 msgstr "വായിക്കാത്തത്"
 
@@ -13526,6 +13920,10 @@ msgstr "അപ്‌ലോഡ് ചെയ്യുന്നു…"
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "അപ്‌ടൈം"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
+msgstr "ഈ പേജിൽ അപ്‌ടൈം മറച്ചിരിക്കുന്നു. ഓരോ ദിവസവും ഇവിടെ കാണാൻ ക്രമീകരണങ്ങളിൽ ഇത് ഓണാക്കുക."
 
 #: src/components/common/text.ts
 msgid "Urgent"
@@ -13788,6 +14186,7 @@ msgstr "അയയ്ക്കൽ ആരംഭിച്ചതുമുതൽ utm_
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/parts.tsx
 msgid "Waiting"
 msgstr "കാത്തിരിക്കുന്നു"
@@ -13795,10 +14194,6 @@ msgstr "കാത്തിരിക്കുന്നു"
 #: src/features/migrations/CopyStep.tsx
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "{provider}-ന്റെ പരിധിക്കായി കാത്തിരിക്കുന്നു; {waiting}-ന് തുടരും."
-
-#: src/features/home/HomePage.tsx
-msgid "waiting for a reply"
-msgstr "മറുപടിക്കായി കാത്തിരിക്കുന്നു"
 
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
@@ -13862,10 +14257,6 @@ msgstr "താഴെയുള്ള രണ്ട് DNS റെക്കോർഡ
 msgid "Waiting for validation"
 msgstr "സാധൂകരണത്തിനായി കാത്തിരിക്കുന്നു"
 
-#: src/features/home/HomePage.tsx
-msgid "Waiting longest: <0>{name}</0>"
-msgstr "ഏറ്റവും കൂടുതൽ കാത്തിരിക്കുന്നത്: <0>{name}</0>"
-
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Warn about the certificate"
 msgstr "സർട്ടിഫിക്കറ്റിനെക്കുറിച്ച് മുന്നറിയിപ്പ് നൽകുക"
@@ -13900,10 +14291,10 @@ msgid "Webhook endpoint"
 msgstr "വെബ്ഹൂക്ക് എൻഡ്‌പോയിന്റ്"
 
 #: src/app/Palette.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 msgid "Webhooks"
 msgstr "വെബ്ഹൂക്കുകൾ"
 
@@ -14157,6 +14548,10 @@ msgstr "പാനൽ തുറന്നിരിക്കുമ്പോൾ, ബ
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "നിങ്ങളുടെ സ്റ്റാറ്റസ് അകലെ ആയിരിക്കുമ്പോൾ, നിങ്ങൾക്ക് നിയോഗിച്ച സംഭാഷണങ്ങളിലെ പുതിയ സന്ദേശങ്ങളും പുതിയ നിയോഗങ്ങളും മാത്രമേ നിങ്ങളെ അറിയിക്കൂ. പാനലിൽ നിങ്ങൾ തുറന്നിരിക്കുന്ന സംഭാഷണം ഒരിക്കലും നിങ്ങളെ അറിയിക്കില്ല."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Who agreed to hear from you, with their consent recorded."
+msgstr "നിങ്ങളിൽ നിന്ന് വാർത്തകൾ ലഭിക്കാൻ സമ്മതിച്ചവർ, രേഖപ്പെടുത്തിയ സമ്മതത്തോടെ."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Who can reply"
 msgstr "ആർക്ക് മറുപടി നൽകാം"
@@ -14202,11 +14597,14 @@ msgid "With two-factor sign-in, create an app password in Zoho Accounts › Secu
 msgstr "രണ്ട്-ഘടക സൈൻ-ഇൻ ഉണ്ടെങ്കിൽ, Zoho Accounts › Security › App passwords-ൽ ആപ്പ് പാസ്‌വേഡ് ഉണ്ടാക്കുക; അല്ലെങ്കിൽ നിങ്ങളുടെ പാസ്‌വേഡ് പ്രവർത്തിക്കും."
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw"
 msgstr "പിൻവലിക്കുക"
 
 #. placeholder {0}: inv.email
+#. placeholder {0}: invite.email
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "{0}-നുള്ള ക്ഷണം പിൻവലിക്കുക"
 
@@ -14238,6 +14636,10 @@ msgstr "സ്ഥിരീകരണം ഇല്ലെങ്കിൽ ആർക�
 msgid "Won't do"
 msgstr "Won't do"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Work is going on"
+msgstr "ജോലി നടക്കുന്നു"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."
 msgstr "VS Code-ലെ ഏജന്റ് മോഡിൽ നിന്ന് സംഭാഷണങ്ങളുമായി പ്രവർത്തിക്കുക. നിങ്ങൾ അനുവദിക്കുന്ന ആക്‌സസോടെ ഇത് നിങ്ങളുടെ പേരിൽ പ്രവർത്തിക്കുന്നു."
@@ -14255,9 +14657,9 @@ msgid "Working…"
 msgstr "പ്രവർത്തിക്കുന്നു…"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/oauth/ConsentPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Workspace"
 msgstr "വർക്ക്സ്പേസ്"
 
@@ -14420,6 +14822,10 @@ msgstr "നിങ്ങൾക്ക് ഇതുവരെ പാസ്‌കീ�
 #: src/features/account/AccountPage.tsx
 msgid "You have not written in any discussion yet."
 msgstr "നിങ്ങൾ ഇതുവരെ ഒരു ചർച്ചയിലും എഴുതിയിട്ടില്ല."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "You have read every mention."
+msgstr "നിങ്ങൾ എല്ലാ പരാമർശങ്ങളും വായിച്ചു."
 
 #: src/features/inbox/ChatList.tsx
 msgid "You have read everything."
@@ -14612,6 +15018,10 @@ msgstr "Yuva {scopes} സ്കോപ്പ് ആവശ്യപ്പെടു
 #: src/features/migrations/text.ts
 msgid "Yuva can read the account now. Next, choose what to bring."
 msgstr "Yuva-യ്ക്ക് ഇപ്പോൾ അക്കൗണ്ട് വായിക്കാം. അടുത്തതായി, എന്ത് കൊണ്ടുവരണമെന്ന് തിരഞ്ഞെടുക്കുക."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Yuva counts clicks and replies. It does not track opens."
+msgstr "Yuva ക്ലിക്കുകളും മറുപടികളും എണ്ണുന്നു. തുറക്കലുകൾ ട്രാക്ക് ചെയ്യുന്നില്ല."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Yuva deleted its token {deletedAt} and can no longer read {provider}."

@@ -1,13 +1,13 @@
 import { Trans } from "@lingui/react/macro"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { ArrowUpRightIcon, BuildingIcon, ClockIcon, PlugIcon, RefreshCwIcon } from "lucide-react"
+import { ArrowUpRightIcon, BuildingIcon, ClockIcon, RefreshCwIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Navigate, useLocation, useSearchParams } from "react-router"
 
 import { CheckItem, CheckList, ErrorLine, Notice } from "@/components/common"
 import { API_KEY_SCOPES, OPT_IN_SCOPES, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { AuthLayout } from "@/features/auth/AuthLayout"
+import { AuthHeading, AuthLayout } from "@/features/auth/AuthLayout"
 import { CreateWorkspace } from "@/features/auth/CreateWorkspace"
 import { activate, i18n } from "@/i18n"
 import { api, ApiError, unwrap, useSignup, type ApiKeyScope, type OAuthRequest } from "@/lib/api"
@@ -15,8 +15,6 @@ import { signInPath } from "@/lib/next"
 import { useMe, useSignOut } from "@/lib/session"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-const heading = "text-page"
 
 function defaultScopes(req: OAuthRequest, offered: ApiKeyScope[]) {
   const asked = req.requested_scopes
@@ -26,13 +24,11 @@ function defaultScopes(req: OAuthRequest, offered: ApiKeyScope[]) {
 function Ended({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
     <AuthLayout>
-      <span className="mb-5 grid size-11 place-items-center rounded-full border text-faint">
-        <ClockIcon className="size-5" />
-      </span>
-      <h1 className={heading}>{title}</h1>
-      <p className="mt-3 text-pretty text-muted-foreground" data-testid="consent-ended">
-        {children}
-      </p>
+      <AuthHeading icon={<ClockIcon />} tone="muted" title={title} className="mb-0">
+        <div className="flex flex-col items-center gap-3" data-testid="consent-ended">
+          {children}
+        </div>
+      </AuthHeading>
     </AuthLayout>
   )
 }
@@ -88,21 +84,29 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
   const busy = approve.isPending || deny.isPending || leaving
 
   return (
-    <AuthLayout wide>
-      <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand">
-        <PlugIcon className="size-5" />
-      </span>
-      <h1 className={heading} data-testid="consent-title">
-        <Trans>Connect {clientName} to Yuva?</Trans>
-      </h1>
-      <p className="mt-3 text-pretty text-muted-foreground">
+    <AuthLayout
+      wide
+      below={
+        <p>
+          <Trans>You can disconnect it at any time in Settings, under Connected apps.</Trans>{" "}
+          <Button
+            variant="link"
+            className="text-small text-muted-foreground underline hover:text-foreground"
+            onClick={() => void signOut()}
+          >
+            <Trans>Use another account</Trans>
+          </Button>
+        </p>
+      }
+    >
+      <AuthHeading title={<Trans>Connect {clientName} to Yuva?</Trans>} titleTestId="consent-title" className="mb-6">
         <Trans>
           It will act as you, <span className="font-medium break-words text-foreground">{email}</span>, with only the
           access you allow below.
         </Trans>
-      </p>
+      </AuthHeading>
 
-      <dl className="mt-6 divide-y rounded-2xl border">
+      <dl className="divide-y rounded-xl border bg-surface">
         <Fact label={<Trans>App</Trans>} testId="consent-client">
           <span className="font-medium">{clientName}</span>
           <span className="block text-caption text-muted-foreground">
@@ -216,42 +220,24 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
       )}
 
       <ErrorLine error={error} className="mt-5" />
-      <div className="mt-6 flex flex-col gap-2.5 sm:flex-row-reverse">
+      <div className="mt-6 flex flex-col gap-2.5">
         <Button
           size="lg"
-          className="sm:flex-1"
           disabled={busy || !workspace || chosen.length === 0}
           onClick={() => approve.mutate()}
           data-testid="consent-approve"
         >
           <Trans>Allow</Trans>
         </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="sm:flex-1"
-          disabled={busy}
-          onClick={() => deny.mutate()}
-          data-testid="consent-deny"
-        >
+        <Button variant="ghost" size="lg" disabled={busy} onClick={() => deny.mutate()} data-testid="consent-deny">
           <Trans>Deny</Trans>
         </Button>
       </div>
       {leaving && (
-        <p role="status" className="mt-4 text-body text-muted-foreground">
+        <p role="status" className="mt-4 text-center text-body text-muted-foreground">
           <Trans>Returning you to {host}…</Trans>
         </p>
       )}
-      <p className="mt-6 text-caption text-faint">
-        <Trans>You can disconnect it at any time in Settings, under Connected apps.</Trans>{" "}
-        <Button
-          variant="link"
-          className="text-muted-foreground underline hover:text-foreground"
-          onClick={() => void signOut()}
-        >
-          <Trans>Use another account</Trans>
-        </Button>
-      </p>
     </AuthLayout>
   )
 }
@@ -283,7 +269,7 @@ export function ConsentPage() {
   if (me.error || request.error) {
     return (
       <Ended title={<Trans>Could not reach the server</Trans>}>
-        <Button variant="outline" className="mt-2" onClick={() => (me.error ? me.refetch() : request.refetch())}>
+        <Button variant="outline" onClick={() => (me.error ? me.refetch() : request.refetch())}>
           <RefreshCwIcon />
           <Trans>Try again</Trans>
         </Button>

@@ -139,6 +139,10 @@ msgstr "Amaga"
 msgid "Idea started"
 msgstr "Idea creada"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Idees que voten els teus clients, amb els comentaris que les avalen"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Idees, vots i etapes de {inboxName}, amb els comentaris darrere de cada idea. Continua sent privat fins que el facis públic."
@@ -302,6 +306,10 @@ msgstr "Pàgina pública"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Els lectors no poden proposar idees. Els vots i les respostes continuen funcionant."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Els lectors han suggerit idees noves. Revisa-les abans que apareguin al tauler públic."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

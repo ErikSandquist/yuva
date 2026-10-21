@@ -149,8 +149,10 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
           <button
             type="button"
             className={cn(
-              "inline-flex h-7 max-w-full min-w-0 shrink-0 items-center gap-1.5 rounded-full px-3 text-small font-medium transition-colors",
-              active ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
+              "inline-flex h-8 max-w-40 min-w-0 shrink items-center gap-1.5 rounded-lg border px-2.5 text-small transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              active
+                ? "border-brand/40 bg-brand-wash font-medium text-brand"
+                : "border-dashed text-muted-foreground hover:border-faint hover:text-foreground"
             )}
           />
         }

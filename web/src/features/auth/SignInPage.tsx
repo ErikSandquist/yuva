@@ -40,7 +40,7 @@ export function SignInPage() {
         }
         note={
           signup === "invite" && (
-            <p className="text-pretty text-body text-muted-foreground" data-testid="sign-in-invite-only">
+            <p className="text-center text-small text-pretty text-faint" data-testid="sign-in-invite-only">
               <Trans>Yuva on this server is invite only. Ask your team for an invitation.</Trans>
             </p>
           )

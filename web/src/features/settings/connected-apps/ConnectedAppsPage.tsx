@@ -12,6 +12,7 @@ import {
   type AssistantId,
 } from "@/features/settings/connected-apps/assistants"
 import { useGrants } from "@/features/settings/connected-apps/queries"
+import { DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
 import {
   Card,
   EmptyRow,
@@ -162,7 +163,8 @@ export function ConnectedAppsPage() {
   return (
     <>
       <PageHeader
-        title={<Trans>Connected apps</Trans>}
+        title={<DeveloperTitle />}
+        tabs={<DeveloperTabs current="connected-apps" />}
         description={
           canManage ? (
             <Trans>

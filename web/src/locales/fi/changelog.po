@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fi\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} luonnosta"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} / {total} merkintää julkaistu"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} julkaistu"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} ajastettu"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Muuta ajankohtaa"
 msgid "Changelog"
 msgstr "Muutosloki"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Muutoslokit"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Valitse kuva"
@@ -86,8 +102,13 @@ msgstr "Laskee muutoslokin sivunäytöt ilman evästeitä."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Luo muutosloki"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Luo muutosloki ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Kaikki käännökset poistetaan. Siitä tehdyt joukkolähetykset säilyv
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Korjattu"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Miltä se näyttää"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Miltä se näyttää kohteessa {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Mikään merkintä ei täsmää."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Ei saapuneet-kansiota, jolle muutosloki voitaisiin näyttää."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Ei vielä tekstiä."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Julkaistu"
 msgid "Publishing on schedule failed."
 msgstr "Ajastettu julkaisu epäonnistui."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Julkaisutiedot tuotteissasi, verkossa ja sähköpostissa."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Poista"
@@ -396,6 +434,10 @@ msgstr "Asetukset"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Näytä"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Näytetään chat-widgetissä ja osoitteessa {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Poistetaanko tämä merkintä julkaisusta?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Julkaisematon"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Näytä muutosloki"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

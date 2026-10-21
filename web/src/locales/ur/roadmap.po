@@ -139,6 +139,10 @@ msgstr "چھپائیں"
 msgid "Idea started"
 msgstr "خیال شروع ہو گیا"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "خیالات جن پر آپ کے صارفین ووٹ دیتے ہیں، ان کے پیچھے کی رائے کے ساتھ"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} کے خیالات، ووٹ اور مراحل، ہر خیال کے پیچھے موجود رائے سمیت۔ جب تک آپ اسے عوامی نہیں بناتے، یہ نجی رہتا ہے۔"
@@ -302,6 +306,10 @@ msgstr "عوامی صفحہ"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "قارئین خیالات تجویز نہیں کر سکتے۔ ووٹ اور جوابات اب بھی کام کرتے ہیں۔"
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "قارئین نے نئے خیالات تجویز کیے۔ عوامی بورڈ پر ظاہر ہونے سے پہلے ان کا جائزہ لیں۔"
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

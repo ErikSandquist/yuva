@@ -49,9 +49,11 @@ function statusClass(a: Availability, live: boolean) {
 export function UserMenu({
   align = "end",
   side = "bottom",
+  row,
 }: {
   align?: "start" | "end"
   side?: "bottom" | "inline-end" | "top"
+  row?: boolean
 }) {
   const { t, i18n } = useLingui()
   const { me, membership, switchWorkspace } = useSession()
@@ -71,20 +73,38 @@ export function UserMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" size="icon" className="relative" />}
+        render={
+          row ? (
+            <button
+              type="button"
+              className="flex h-11 w-full min-w-0 items-center gap-2.5 rounded-lg px-1.5 text-start outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring data-popup-open:bg-muted"
+            />
+          ) : (
+            <Button variant="ghost" size="icon" className="relative" />
+          )
+        }
         aria-label={t`${name} · ${statusText}`}
         title={statusText}
         data-testid="user-menu"
       >
-        <PersonAvatar name={name} className="size-[30px] bg-muted-foreground text-background" />
-        <span
-          className={cn(
-            "absolute end-px bottom-px size-[9px] rounded-full ring-2 ring-background",
-            statusClass(availability, live)
-          )}
-          data-testid="availability-dot"
-          data-availability={availability}
-        />
+        <span className={row ? "relative flex shrink-0" : "contents"}>
+          <PersonAvatar name={name} className="size-[30px] bg-muted-foreground text-background" />
+          <span
+            className={cn(
+              "absolute size-[9px] rounded-full ring-2",
+              row ? "end-[-1px] bottom-[-1px] ring-surface" : "end-px bottom-px ring-background",
+              statusClass(availability, live)
+            )}
+            data-testid="availability-dot"
+            data-availability={availability}
+          />
+        </span>
+        {row && (
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-body font-medium">{name}</span>
+            <span className="block truncate text-caption text-faint">{statusText}</span>
+          </span>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align} side={side} className="w-72">
         <DropdownMenuGroup>

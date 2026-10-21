@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} కథనాల్లో {published} ప్రచురితం"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} ప్రచురించినవి"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 నుండి 48 అక్షరాలు, అంకెలు మరియు హైఫన్‌లు. ఈ సర్వర్‌లో ప్రత్యేకమైనది."
@@ -80,6 +84,7 @@ msgstr "సాధారణ ప్రశ్నలకు ఒకసారి, వ�
 msgid "Any state"
 msgstr "ఏ స్థితి అయినా"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "కథనం"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "కథనం వీక్షణలు"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "కథనాలు"
@@ -112,6 +118,10 @@ msgstr "కథనాలను ఈ భాషల్లో రాసి ప్ర�
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "ఈ సేకరణలోని కథనాలు"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "మీకు రాసే ముందు ప్రజలు చదివే వ్యాసాలు"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "అన్ని అనువాదాలు, వాటి సవరణ�
 msgid "Formatting"
 msgstr "ఫార్మాటింగ్"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "ఏమీ దొరకలేదు · 7 రోజులు"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "ప్రారంభించడం"
@@ -312,11 +326,11 @@ msgstr "సందర్శకులు బ్రౌజ్ చేయడాని�
 msgid "Heading"
 msgstr "శీర్షిక"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "సహాయం"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "సహాయ కేంద్రాలు"
 msgid "Help centers are turned off on this server."
 msgstr "ఈ సర్వర్‌లో సహాయ కేంద్రాలు ఆఫ్‌లో ఉన్నాయి."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "ఉపయోగకరం"
@@ -384,6 +399,10 @@ msgstr "భాషలు"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "గత {d} రోజులు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "గత 7 రోజులు"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "శీర్షికల్లో వెతుకు ({findKey})"
 msgid "Search words"
 msgstr "శోధన పదాలు"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "వెతికారు, ఏమీ దొరకలేదు"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "శోధనలు"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "శోధనలు · 7 రోజులు"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "ప్రచురించబడలేదు, మీ టీమ్ మ�
 msgid "Unsaved changes"
 msgstr "సేవ్ చేయని మార్పులు"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "అప్‌డేట్ అయింది"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 నుండి 48 అక్షరాలు, అంకెలు, మధ్యలో హైఫన్‌లను ఉపయోగించండి."
@@ -893,6 +924,10 @@ msgstr "సహాయ కేంద్రాన్ని చూడు"
 msgid "Views"
 msgstr "వీక్షణలు"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "వ్యూలు · 7 రోజులు"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "సందర్శకులు ఏం చదువుతారో, ఏం వెతుకుతారో. వీక్షణలు సుమారుగా ఉంటాయి, సంఖ్యలు ఒక నిమిషంలో ఈ పేజీకి చేరతాయి."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "సందర్శకులు టైప్ చేసి ఏమీ దొరకని పదాలు. ప్రతిదానికి ఒక కొత్త కథనం వేగవంతమైన పరిష్కారం."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "రాయి"
 

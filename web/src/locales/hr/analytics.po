@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # razgovor na 1000 prikaza, naspram {
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Ovaj mjesec iskorišteno {used} od {limit} analitičkih događaja. Događaji preko ograničenja odbacuju se do kraja mjeseca."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} posjetitelja"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Promjena vrijedi za nove događaje. Već prebrojani dani zadržavaju svoju zonu."
@@ -176,6 +180,10 @@ msgstr "Izrađen je novi ključ"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Nova lozinka odjavljuje sve koji su otključali poveznicu."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Prikaz stranice, događaj ili dubina pomicanja"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Stopa konverzije"
 msgid "Conversions"
 msgstr "Konverzije"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konverzije kroz vrijeme"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konverzije na 100 posjetitelja."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Posjetitelji vaših web-mjesta i aplikacija, bez kolačića."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Općenito"
 msgid "Go to goals"
 msgstr "Idi na ciljeve"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Cilj"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Mjesečno ograničenje"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Mjeseci"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Više"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Poslužitelj zauzet"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Postavke"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Podijeli"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

@@ -32,13 +32,16 @@ import {
   incidentLink,
   useLastCheck,
   useMonitorMutations,
+  useMonitorSummary,
   useStatusComponents,
   useStatusMonitors,
 } from "@/features/status/queries"
 import { useStatusText } from "@/features/status/text"
+import { usePercent } from "@/features/status/UptimeBars"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { StatusComponent, StatusMonitor, StatusMonitorWithToken, StatusPage } from "@/lib/api"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 
 function overridden(m: StatusMonitor, c?: StatusComponent) {
   return (
@@ -58,6 +61,49 @@ function target(m: StatusMonitor) {
 function certDays(m: StatusMonitor) {
   if (!m.cert_expires_at) return null
   return Math.floor((Date.parse(m.cert_expires_at) - Date.now()) / 86400000)
+}
+
+function Metrics({ pageId, m }: { pageId: string; m: StatusMonitor }) {
+  const { t } = useLingui()
+  const percent = usePercent()
+  const summary = useMonitorSummary(pageId, m.id, "24h").data
+  if (!summary || summary.checks === 0) return null
+  const timed = m.kind === "http" || m.kind === "tcp"
+  const size = Math.max(1, Math.ceil(summary.buckets.length / 24))
+  const groups = Array.from({ length: Math.ceil(summary.buckets.length / size) }, (_, i) =>
+    summary.buckets.slice(i * size, i * size + size)
+  ).map((g) => ({
+    ms: Math.max(0, ...g.map((b) => b.p50_ms ?? 0)),
+    failed: g.some((b) => b.failures > 0),
+    checks: g.reduce((n, b) => n + b.checks, 0),
+  }))
+  const top = Math.max(1, ...groups.map((g) => g.ms))
+  return (
+    <div className="flex shrink-0 items-center gap-4 phone:basis-full" data-testid="status-monitor-metrics">
+      {timed && (
+        <span className="flex h-6 w-36 items-end gap-px" title={t`Response time, last 24 hours`} aria-hidden>
+          {groups.map((g, i) => (
+            <span
+              key={i}
+              className={cn(
+                "min-w-px flex-1 rounded-t-[2px]",
+                g.checks === 0 ? "bg-muted" : g.failed ? "bg-warning" : "bg-success/60"
+              )}
+              style={{ height: g.checks === 0 ? 2 : Math.max(2, Math.round((24 * g.ms) / top)) }}
+            />
+          ))}
+        </span>
+      )}
+      {summary.uptime !== undefined && (
+        <span className="w-16 text-end leading-tight">
+          <b className="block text-body font-medium tabular-nums">{percent(summary.uptime)}</b>
+          <span className="text-caption text-faint">
+            <Trans>24 hours</Trans>
+          </span>
+        </span>
+      )}
+    </div>
+  )
 }
 
 function Row({
@@ -172,6 +218,7 @@ function Row({
           </Link>
         )}
       </div>
+      <Metrics pageId={page.id} m={m} />
       <DropdownMenu>
         <DropdownMenuTrigger
           render={<Button variant="ghost" size="icon-sm" aria-label={t`More for ${name}`} />}

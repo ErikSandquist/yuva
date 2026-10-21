@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "Publikováno {published} z {total} článků"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "Publikováno: {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 až 48 písmen, číslic a spojovníků. Na tomto serveru jedinečná."
@@ -80,6 +84,7 @@ msgstr "Odpovězte na časté dotazy jednou, písemně. Vyberte centrum nápově
 msgid "Any state"
 msgstr "Libovolný stav"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Článek"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Zobrazení článků"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Články"
@@ -112,6 +118,10 @@ msgstr "Články lze psát a publikovat v těchto jazycích. Návštěvníci uvi
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Články v této kolekci"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Články, které lidé čtou, než vám napíšou"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Všechny překlady, jejich revize a počítadla se smažou."
 msgid "Formatting"
 msgstr "Formátování"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Nic nenalezeno · 7 dní"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Začínáme"
@@ -312,11 +326,11 @@ msgstr "Seskupte články, aby je návštěvníci mohli procházet. Kolekce mů�
 msgid "Heading"
 msgstr "Nadpis"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Nápověda"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Centra nápovědy"
 msgid "Help centers are turned off on this server."
 msgstr "Centra nápovědy jsou na tomto serveru vypnutá."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Užitečné"
@@ -384,6 +399,10 @@ msgstr "Jazyky"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Posledních {d} dní"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "posledních 7 dní"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Hledat v názvech ({findKey})"
 msgid "Search words"
 msgstr "Hledaná slova"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Hledáno, nic nenalezeno"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Hledání"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Hledání · 7 dní"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Nepublikováno, náhled vidí jen váš tým"
 msgid "Unsaved changes"
 msgstr "Neuložené změny"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Aktualizováno"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Použijte 3 až 48 písmen, číslic a vnitřních spojovníků."
@@ -893,6 +924,10 @@ msgstr "Zobrazit centrum nápovědy"
 msgid "Views"
 msgstr "Zobrazení"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Zobrazení · 7 dní"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Co návštěvníci čtou a hledají. Zobrazení jsou přibližná a čísla se sem dostanou do minuty."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Slova, která návštěvníci zadali a nic nenašla. Nový článek pro každé je nejrychlejší oprava."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Psát"
 

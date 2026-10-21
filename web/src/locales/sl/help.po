@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "Objavljenih {published} od {total} člankov"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "Objavljeno: {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "Od 3 do 48 črk, številk in vezajev. Edinstven na tem strežniku."
@@ -80,6 +84,7 @@ msgstr "Na pogosta vprašanja odgovorite enkrat, pisno. Izberite center za pomo�
 msgid "Any state"
 msgstr "Katero koli stanje"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Članek"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Ogledi člankov"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Članki"
@@ -112,6 +118,10 @@ msgstr "Članke je mogoče pisati in objavljati v teh jezikih. Obiskovalci vidij
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Članki v tej zbirki"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Članki, ki jih ljudje preberejo, preden vam pišejo"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Vsi prevodi, njihove revizije in števci se izbrišejo."
 msgid "Formatting"
 msgstr "Oblikovanje"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Nič najdeno · 7 dni"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Začetek"
@@ -312,11 +326,11 @@ msgstr "Združite članke, da jih lahko obiskovalci brskajo. Zbirka lahko vsebuj
 msgid "Heading"
 msgstr "Naslov"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Pomoč"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Centri za pomoč"
 msgid "Help centers are turned off on this server."
 msgstr "Centri za pomoč so na tem strežniku izklopljeni."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Koristno"
@@ -384,6 +399,10 @@ msgstr "Jeziki"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Zadnjih {d} dni"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "zadnjih 7 dni"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Išči po naslovih ({findKey})"
 msgid "Search words"
 msgstr "Iskalne besede"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Iskano, nič najdeno"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Iskanja"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Iskanja · 7 dni"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Neobjavljeno, predogled vidi samo vaša ekipa"
 msgid "Unsaved changes"
 msgstr "Neshranjene spremembe"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Posodobljeno"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Uporabite od 3 do 48 črk, številk in notranjih vezajev."
@@ -893,6 +924,10 @@ msgstr "Ogled centra za pomoč"
 msgid "Views"
 msgstr "Ogledi"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Ogledi · 7 dni"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Kaj obiskovalci berejo in iščejo. Ogledi so približni, številke pa pridejo sem v minuti."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Besede, ki so jih obiskovalci vtipkali in niso našle ničesar. Nov članek za vsako je najhitrejša rešitev."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Piši"
 

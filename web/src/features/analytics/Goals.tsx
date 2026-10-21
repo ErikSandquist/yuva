@@ -3,7 +3,7 @@ import { ArrowLeftIcon, CalendarClockIcon, PencilIcon, PlusIcon, TargetIcon, Tra
 import { useState } from "react"
 import { useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, Segmented, useConfirm } from "@/components/common"
+import { ErrorLine, Notice, Segmented, Sparkline, useConfirm } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -21,7 +21,7 @@ import {
   useSaveGoal,
   useShare,
 } from "@/features/analytics/queries"
-import { scopeOf, useView } from "@/features/analytics/state"
+import { grainFor, scopeOf, useView } from "@/features/analytics/state"
 import { formatCompact, formatMetric, num, OTHER, useAnalyticsText, type NumMetric } from "@/features/analytics/text"
 import { Field } from "@/features/settings/ui"
 import {
@@ -437,7 +437,35 @@ function GoalDetail({ goal, onBack }: { goal: AnalyticsGoal; onBack: () => void 
   )
 }
 
-function GoalList({ goals, onPick }: { goals: AnalyticsGoal[]; onPick: (id: string) => void }) {
+function GoalSpark({ goal }: { goal: AnalyticsGoal }) {
+  const { t } = useLingui()
+  const property = useCurrentProperty()
+  const { view } = useView()
+  const q = useAnalytics(property.id, {
+    metrics: ["conversions"],
+    dimensions: [grainFor(view.range, "conversions")],
+    range: view.range,
+    ...scopeOf(view),
+    goal_id: goal.id,
+  })
+  if (!q.data) return <Skeleton className="h-10 w-20" />
+  const values = q.data.rows.map((r) => num(r.metrics, "conversions") ?? 0)
+  return <Sparkline values={values.slice(-14)} label={t`Conversions over time`} className="w-20" />
+}
+
+function GoalRate({ value }: { value: string }) {
+  return <Trans>{value} of visitors</Trans>
+}
+
+function GoalList({
+  goals,
+  onPick,
+  onNew,
+}: {
+  goals: AnalyticsGoal[]
+  onPick: (id: string) => void
+  onNew?: () => void
+}) {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
   const describe = useGoalText()
@@ -447,70 +475,68 @@ function GoalList({ goals, onPick }: { goals: AnalyticsGoal[]; onPick: (id: stri
   return (
     <>
       <QueryProblem error={totals.error} />
-      <div className="overflow-hidden rounded-2xl border bg-card">
-        <table className="w-full table-fixed text-body" data-testid="goals-table">
-          <thead>
-            <tr className="border-b text-caption text-faint">
-              <th className="px-4 py-2.5 text-start font-medium">
-                <Trans>Goal</Trans>
-              </th>
-              <th className="w-28 px-2 py-2.5 text-end font-medium" title={text.metricHelp.conversions}>
-                {text.metric.conversions}
-              </th>
-              <th
-                className="w-28 px-2 py-2.5 text-end font-medium phone:hidden"
-                title={text.metricHelp.conversion_rate}
+      <ul className="grid gap-3 @lg:grid-cols-2 @2xl:grid-cols-3" data-testid="goals-table">
+        {goals.map((g) => {
+          const m = totals.data?.get(g.id)
+          return (
+            <li key={g.id}>
+              <button
+                type="button"
+                className="flex h-full w-full min-w-0 flex-col gap-3 rounded-2xl border bg-card p-4 text-start outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
+                onClick={() => onPick(g.id)}
+                data-testid="goal-row"
               >
-                {text.metric.conversion_rate}
-              </th>
-              <th className="w-40 px-4 py-2.5 text-end font-medium phone:hidden" title={text.metricHelp.revenue}>
-                {text.metric.revenue}
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {goals.map((g) => {
-              const m = totals.data?.get(g.id)
-              return (
-                <tr key={g.id} className="hover:bg-muted/50">
-                  <td className="px-4 py-2">
-                    <button
-                      type="button"
-                      className="flex max-w-full min-w-0 flex-col rounded text-start outline-none hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
-                      onClick={() => onPick(g.id)}
-                      data-testid="goal-row"
-                    >
-                      <span className="max-w-full truncate font-medium">{g.name}</span>
-                      <span className="max-w-full truncate text-small text-faint" dir="auto">
-                        {describe(g)}
+                <span className="flex min-w-0 flex-col">
+                  <span className="truncate font-medium">{g.name}</span>
+                  <span className="truncate font-mono text-caption text-faint" dir="auto">
+                    {describe(g)}
+                  </span>
+                </span>
+                <span className="mt-auto flex items-end justify-between gap-3">
+                  <span className="flex min-w-0 flex-col">
+                    <b className="text-page leading-tight tabular-nums" title={text.metricHelp.conversions}>
+                      {m ? (
+                        formatMetric("conversions", num(m, "conversions"), i18n.locale)
+                      ) : (
+                        <Dash pending={totals.isPending} />
+                      )}
+                    </b>
+                    <span className="truncate text-caption text-faint" title={text.metricHelp.conversion_rate}>
+                      {m && (
+                        <GoalRate value={formatMetric("conversion_rate", num(m, "conversion_rate"), i18n.locale)} />
+                      )}
+                    </span>
+                    {m?.revenue?.length ? (
+                      <span className="truncate text-caption text-muted-foreground tabular-nums">
+                        <RevenueAmounts revenue={m.revenue} />
                       </span>
-                    </button>
-                  </td>
-                  <td className="px-2 py-2 text-end tabular-nums">
-                    {m ? (
-                      formatMetric("conversions", num(m, "conversions"), i18n.locale)
-                    ) : (
-                      <Dash pending={totals.isPending} />
-                    )}
-                  </td>
-                  <td className="px-2 py-2 text-end tabular-nums phone:hidden">
-                    {m ? (
-                      formatMetric("conversion_rate", num(m, "conversion_rate"), i18n.locale)
-                    ) : (
-                      <Dash pending={totals.isPending} />
-                    )}
-                  </td>
-                  <td
-                    className={cn("px-4 py-2 text-end tabular-nums phone:hidden", !m?.revenue?.length && "text-faint")}
-                  >
-                    {m ? <RevenueAmounts revenue={m.revenue} /> : <Dash pending={totals.isPending} />}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
+                    ) : null}
+                  </span>
+                  <GoalSpark goal={g} />
+                </span>
+              </button>
+            </li>
+          )
+        })}
+        {onNew && (
+          <li>
+            <button
+              type="button"
+              onClick={onNew}
+              className="flex h-full min-h-36 w-full flex-col items-center justify-center gap-1 rounded-2xl border border-dashed p-4 text-center text-muted-foreground outline-none transition-colors hover:border-faint hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              data-testid="goal-new"
+            >
+              <PlusIcon className="size-5" />
+              <span className="text-body font-medium">
+                <Trans>New goal</Trans>
+              </span>
+              <span className="text-small text-faint">
+                <Trans>A page view, an event or a scroll depth</Trans>
+              </span>
+            </button>
+          </li>
+        )}
+      </ul>
     </>
   )
 }
@@ -539,7 +565,7 @@ export function GoalsView() {
   if (goals.error) return <ErrorLine error={goals.error} />
   if (picked) return <GoalDetail key={picked.id} goal={picked} onBack={() => pick(null)} />
   return (
-    <section className="flex flex-col gap-3" data-testid="analytics-goals">
+    <section className="@container flex flex-col gap-3" data-testid="analytics-goals">
       {list.length === 0 ? (
         <div
           className="flex flex-col items-center gap-2 rounded-2xl border border-dashed px-4 py-10 text-center"
@@ -567,17 +593,7 @@ export function GoalsView() {
           )}
         </div>
       ) : (
-        <>
-          {canManage && (
-            <div className="flex justify-end">
-              <Button size="sm" onClick={() => setCreating(true)} data-testid="goal-new">
-                <PlusIcon />
-                <Trans>New goal</Trans>
-              </Button>
-            </div>
-          )}
-          <GoalList goals={list} onPick={pick} />
-        </>
+        <GoalList goals={list} onPick={pick} onNew={canManage ? () => setCreating(true) : undefined} />
       )}
       {creating && <GoalDialog onClose={() => setCreating(false)} />}
     </section>

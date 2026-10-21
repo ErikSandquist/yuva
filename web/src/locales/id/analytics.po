@@ -125,6 +125,10 @@ msgstr "{rate, plural, other {{dim} {value}: # percakapan per 1.000 tayangan, di
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} dari {limit} peristiwa analitik terpakai bulan ini. Peristiwa di atas batas dibuang sampai bulan berakhir."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} dari pengunjung"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Perubahan berlaku untuk peristiwa baru. Hari yang sudah dihitung mempertahankan zonanya."
@@ -176,6 +180,10 @@ msgstr "Kunci baru dibuat"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Kata sandi baru mengeluarkan semua orang yang membuka tautan."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Tampilan halaman, peristiwa, atau kedalaman gulir"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Tingkat konversi"
 msgid "Conversions"
 msgstr "Konversi"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konversi dari waktu ke waktu"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konversi per 100 pengunjung."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Pengunjung situs dan aplikasi Anda, tanpa cookie."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Umum"
 msgid "Go to goals"
 msgstr "Ke sasaran"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Sasaran"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Batas bulanan"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Bulan"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Lainnya"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Server sibuk"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Pengaturan"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Porsi"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

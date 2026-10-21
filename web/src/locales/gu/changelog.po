@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: gu\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ડ્રાફ્ટ"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}માંથી {published} એન્ટ્રી પ્રકાશિત"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} પ્રકાશિત"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} શેડ્યૂલ કરેલા"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "સમય બદલો"
 msgid "Changelog"
 msgstr "ચેન્જલૉગ"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "ચેન્જલૉગ"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "ચિત્ર પસંદ કરો"
@@ -86,8 +102,13 @@ msgstr "કૂકી વિના ચેન્જલૉગના પેજ વ�
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "ચેન્જલૉગ બનાવો"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "ચેન્જલૉગ બનાવો ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "બધા અનુવાદ કાઢી નંખાય છે. તે
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "સુધારેલ"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "તે કેવું દેખાય છે"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "{0} માં તે કેવું દેખાય છે"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "કોઈ એન્ટ્રી મેળ ખાતી નથી."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "એવું કોઈ ઇનબૉક્સ નથી જેનો ચેન્જલૉગ બતાવી શકાય."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "હજી કોઈ લખાણ નથી."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "પ્રકાશિત"
 msgid "Publishing on schedule failed."
 msgstr "શેડ્યૂલ કરેલું પ્રકાશન નિષ્ફળ ગયું."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "રિલીઝ નોટ્સ જે તમારા પ્રોડક્ટમાં, વેબ પર અને ઇમેઇલથી દેખાય છે."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "દૂર કરો"
@@ -396,6 +434,10 @@ msgstr "સેટિંગ્સ"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "બતાવો"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "ચેટ વિજેટમાં અને {host} પર દેખાય છે."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "આ એન્ટ્રીનું પ્રકાશન પાછું
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "અપ્રકાશિત"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "ચેન્જલૉગ જુઓ"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

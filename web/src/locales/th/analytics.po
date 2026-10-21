@@ -125,6 +125,10 @@ msgstr "{rate, plural, other {{dim} {value}: # การสนทนาต่อ
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ใช้เหตุการณ์การวิเคราะห์ {used} จาก {limit} ในเดือนนี้ เหตุการณ์ที่เกินขีดจำกัดจะถูกทิ้งจนสิ้นเดือน"
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} ของผู้เข้าชม"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "การเปลี่ยนแปลงมีผลกับเหตุการณ์ใหม่ วันที่นับแล้วคงเขตเวลาเดิม"
@@ -176,6 +180,10 @@ msgstr "สร้างคีย์ใหม่แล้ว"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "รหัสผ่านใหม่ทำให้ทุกคนที่ปลดล็อกลิงก์ออกจากระบบ"
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "การดูหน้า เหตุการณ์ หรือระดับการเลื่อน"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "อัตราคอนเวอร์ชัน"
 msgid "Conversions"
 msgstr "คอนเวอร์ชัน"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "การแปลงตามช่วงเวลา"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "คอนเวอร์ชันต่อผู้เข้าชม 100 คน"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "ผู้เข้าชมเว็บไซต์และแอปของคุณ โดยไม่ใช้คุกกี้"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "ทั่วไป"
 msgid "Go to goals"
 msgstr "ไปที่เป้าหมาย"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "เป้าหมาย"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "ขีดจำกัดรายเดือน"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "เดือน"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "เพิ่มเติม"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "เซิร์ฟเวอร์ยุ่ง"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "การตั้งค่า"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "สัดส่วน"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

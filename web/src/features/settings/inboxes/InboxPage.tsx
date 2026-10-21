@@ -66,7 +66,7 @@ function channelState(ch: Channel): "ok" | "receive" | "paused" | "identity_miss
   return ses === "paused" || ses === "identity_missing" || ses === "error" ? ses : "ok"
 }
 
-function ChannelStatus({ inboxId, ch }: { inboxId: string; ch: Channel }) {
+export function ChannelStatus({ inboxId, ch }: { inboxId: string; ch: Channel }) {
   const { canManage } = useSession()
   const state = channelState(ch)
   const tag = {

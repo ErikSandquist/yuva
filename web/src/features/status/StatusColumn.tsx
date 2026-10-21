@@ -21,7 +21,9 @@ import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
 function PageRow({ p, current, cursor }: { p: StatusPage; current: boolean; cursor: boolean }) {
+  const { t, i18n } = useLingui()
   const text = useStatusText()
+  const subscribed = new Intl.NumberFormat(i18n.locale).format(p.email_subscribers.counts.subscribed)
   return (
     <li>
       <Link
@@ -43,6 +45,11 @@ function PageRow({ p, current, cursor }: { p: StatusPage; current: boolean; curs
         <span className="flex items-center gap-2 text-caption text-muted-foreground">
           <StateDot state={p.state} />
           <span className="min-w-0 flex-1 truncate">{text.component[p.state]}</span>
+          {p.email_subscribers.enabled && (
+            <span className="shrink-0 text-faint tabular-nums" title={t`${subscribed} subscribers`}>
+              {subscribed}
+            </span>
+          )}
         </span>
       </Link>
     </li>

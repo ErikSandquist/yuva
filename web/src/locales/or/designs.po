@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "ଏକ ଡିଜାଇନ୍ରେ ସର୍ବାଧିକ 200 ବ୍ଲକ୍ ଥାଇପାରେ।"
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "ଡିଜାଇନ୍ ହେଉଛି ମେଲ୍ର ରୂପ: ଏକ ଟେମ୍ପଲେଟ୍ରୁ ଆରମ୍ଭ କରନ୍ତୁ, ତା'ପରେ ଆପଣଙ୍କ ବ୍ରଡକାଷ୍ଟ ପାଇଁ ବ୍ୟବହାର କରନ୍ତୁ।"
 
@@ -123,6 +124,10 @@ msgstr "ଆର୍କାଇଭ୍ କରନ୍ତୁ"
 msgid "Archive this design?"
 msgstr "ଏହି ଡିଜାଇନ୍ ଆର୍କାଇଭ୍ କରିବେ?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "ଆର୍କାଇଭ୍ ହୋଇଛି"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "ଆଟ୍ରିବ୍ୟୁଟ୍ କୀ"
@@ -163,6 +168,10 @@ msgstr "ତଳ"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "ବ୍ରାଣ୍ଡ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "ଗ୍ୟାଲେରୀ ଦେଖନ୍ତୁ"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "ଇମେଲ୍ ଠିକଣା"
 msgid "E-mail designs"
 msgstr "ଇମେଲ୍ ଡିଜାଇନ୍"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "ଇମେଲ ଲେଆଉଟ ଯାହା ଆପଣ ବ୍ରଡକାଷ୍ଟରେ ପୁଣି ବ୍ୟବହାର କରନ୍ତି।"
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "ପଢ଼ିବାକୁ ସହଜ: {value}:1"
@@ -469,6 +482,10 @@ msgstr "ପୂରା ନାମ"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "ପୂର୍ଣ୍ଣ ଚଉଡ଼ା"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "ଗ୍ୟାଲେରୀ"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "ତାଲିକା ନାମ"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "ଆହୁରି ଲୋଡ୍ କରନ୍ତୁ"
 
@@ -702,6 +720,10 @@ msgstr "ମର୍ଜ୍ ଫିଲ୍ଡ"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "ମର୍ଜ୍ ଫିଲ୍ଡ କେବଳ ଲିଙ୍କ୍ର ପ୍ରଶ୍ନ ଚିହ୍ନ ପରବର୍ତ୍ତୀ ଅଂଶରେ ଯାଇପାରେ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "ମୋର"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "ପସନ୍ଦ ଲିଙ୍କ୍"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "ପ୍ରିଭ୍ୟୁ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "{name}ର ପ୍ରିଭ୍ୟୁ"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

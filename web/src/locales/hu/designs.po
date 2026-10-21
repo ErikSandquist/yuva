@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "Egy dizájn legfeljebb 200 blokkot tartalmazhat."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "A dizájn a levél megjelenése: kezdd egy sablonnal, majd használd a tömeges leveleidhez."
 
@@ -123,6 +124,10 @@ msgstr "Archiválás"
 msgid "Archive this design?"
 msgstr "Archiválod ezt a dizájnt?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Archivált"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Attribútumkulcs"
@@ -163,6 +168,10 @@ msgstr "Alul"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Márka"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Galéria böngészése"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "E-mail-cím"
 msgid "E-mail designs"
 msgstr "E-mail-dizájnok"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "E-mail-elrendezések, amelyeket újra felhasználsz a tömeges levelekben."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Jól olvasható: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Teljes név"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Teljes szélesség"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Galéria"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "Lista neve"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Továbbiak betöltése"
 
@@ -702,6 +720,10 @@ msgstr "Egyesítési mező"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Az egyesítési mezők csak a link kérdőjel utáni részében lehetnek."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Az enyéim"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Beállítások linkje"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Előnézet"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "{name} előnézete"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

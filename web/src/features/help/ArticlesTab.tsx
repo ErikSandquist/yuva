@@ -15,14 +15,25 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
-import { articleLink, useCreateArticle, useHelpArticles, useHelpCollections } from "@/features/help/queries"
+import {
+  articleLink,
+  useCreateArticle,
+  useHelpArticles,
+  useHelpCollections,
+  useHelpReport,
+} from "@/features/help/queries"
 import { articleTitle, collectionName, ErrorLine, useLocaleName, useStateText } from "@/features/help/text"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { HelpArticleSummary, HelpCenter, HelpCollection } from "@/lib/api"
+import { formatDateTime, formatShort } from "@/components/common/text"
+import { FilterChip } from "@/features/inbox/ListHead"
+import type { HelpArticleSummary, HelpCenter, HelpCollection, HelpReport, HelpReportArticle } from "@/lib/api"
 import type { HelpArticleFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
+
+const grid =
+  "grid grid-cols-[minmax(0,1fr)_5rem_3.5rem] gap-3 @xl:gap-4 @xl:grid-cols-[minmax(0,1fr)_6.5rem_4rem_4.5rem] @2xl:grid-cols-[minmax(0,1fr)_7rem_6.5rem_4rem_4.5rem]"
 
 type StateFilter = NonNullable<HelpArticleFilters["state"]> | "all"
 
@@ -69,18 +80,20 @@ function NewArticleDialog({
   center,
   collections,
   collectionId,
+  initialTitle = "",
   onClose,
 }: {
   center: HelpCenter
   collections: HelpCollection[]
   collectionId: string
+  initialTitle?: string
   onClose: () => void
 }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const localeName = useLocaleName()
   const create = useCreateArticle(center.id)
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState(initialTitle)
   const [locale, setLocale] = useState(center.default_locale)
   const [collection, setCollection] = useState(collectionId)
   const ok = title.trim().length >= 3
@@ -158,6 +171,99 @@ function NewArticleDialog({
   )
 }
 
+function Stat({
+  label,
+  value,
+  detail,
+  tone,
+  testId,
+}: {
+  label: React.ReactNode
+  value: string
+  detail?: React.ReactNode
+  tone?: string
+  testId: string
+}) {
+  return (
+    <div className="flex min-w-0 flex-col gap-0.5 rounded-xl border bg-card px-4 py-3" data-testid={testId}>
+      <span className="truncate text-small text-muted-foreground">{label}</span>
+      <span className={cn("text-title tabular-nums", tone)}>{value}</span>
+      {detail && <span className="truncate text-caption text-faint">{detail}</span>}
+    </div>
+  )
+}
+
+function Stats({ center, report }: { center: HelpCenter; report?: HelpReport }) {
+  const { i18n } = useLingui()
+  const n = new Intl.NumberFormat(i18n.locale)
+  const published = n.format(center.counts.published_articles)
+  const missed = report?.no_result_searches ?? 0
+  return (
+    <div className="grid grid-cols-2 gap-3 @2xl:grid-cols-4" data-testid="help-stats">
+      <Stat
+        label={<Trans>Articles</Trans>}
+        value={n.format(center.counts.articles)}
+        detail={<Trans>{published} published</Trans>}
+        testId="help-stat-articles"
+      />
+      <Stat
+        label={<Trans>Views · 7 days</Trans>}
+        value={report ? n.format(report.views) : "–"}
+        testId="help-stat-views"
+      />
+      <Stat
+        label={<Trans>Searches · 7 days</Trans>}
+        value={report ? n.format(report.searches) : "–"}
+        testId="help-stat-searches"
+      />
+      <Stat
+        label={<Trans>Found nothing · 7 days</Trans>}
+        value={report ? n.format(missed) : "–"}
+        tone={missed > 0 ? "text-warning" : undefined}
+        testId="help-stat-missed"
+      />
+    </div>
+  )
+}
+
+function Misses({ report, onWrite }: { report?: HelpReport; onWrite: (query: string) => void }) {
+  const { i18n } = useLingui()
+  const n = new Intl.NumberFormat(i18n.locale)
+  const items = (report?.no_result_queries ?? []).filter((q) => q.query !== "(scrubbed)").slice(0, 8)
+  if (items.length === 0) return null
+  return (
+    <section className="flex flex-col gap-2.5 rounded-xl border bg-card px-4 py-3.5" data-testid="help-misses">
+      <h2 className="flex items-baseline justify-between gap-2 text-body font-semibold">
+        <Trans>Searched for, found nothing</Trans>
+        <span className="text-caption font-normal text-faint">
+          <Trans>last 7 days</Trans>
+        </span>
+      </h2>
+      <ul className="flex flex-wrap gap-2">
+        {items.map((q) => (
+          <li
+            key={`${q.locale}:${q.query}`}
+            className="inline-flex items-center gap-2 rounded-full border py-0.5 ps-3 pe-0.5 text-small"
+          >
+            <span dir="auto" className="max-w-48 truncate">
+              {q.query}
+            </span>
+            <span className="text-faint tabular-nums">{n.format(q.searches)}×</span>
+            <Button
+              size="sm"
+              className="h-6 rounded-full px-2.5"
+              onClick={() => onWrite(q.query)}
+              data-testid="help-miss-write"
+            >
+              <Trans>Write</Trans>
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
 export function ArticlesTab({ center }: { center: HelpCenter }) {
   const { t, i18n } = useLingui()
   const navigate = useNavigate()
@@ -166,8 +272,9 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
   const [state, setState] = useState<StateFilter>("all")
   const [locale, setLocale] = useState(center.default_locale)
   const [collection, setCollection] = useState("")
-  const [creating, setCreating] = useState(false)
+  const [creating, setCreating] = useState<string | null>(null)
   const [cursor, setCursor] = useState(-1)
+  const report = useHelpReport(center.id, 7).data
   const search = useRef<HTMLInputElement>(null)
   const list = useRef<HTMLUListElement>(null)
   const debounced = useDebounced(q.trim(), 300)
@@ -187,7 +294,7 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
   const findKey = keyLabel(HELP_KEYS.search).join("")
 
   useHotkeys({
-    [HELP_KEYS.newArticle]: () => setCreating(true),
+    [HELP_KEYS.newArticle]: () => setCreating(""),
     [HELP_KEYS.search]: () => search.current?.focus(),
     j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
     k: () => setCursor((i) => Math.max(0, i - 1)),
@@ -201,6 +308,12 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
     if (cursor >= 0) list.current?.children[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
 
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  const percent = new Intl.NumberFormat(i18n.locale, { style: "percent", maximumFractionDigits: 0 })
+  const stats = new Map<string, HelpReportArticle>()
+  for (const r of [...(report?.most_down ?? []), ...(report?.top_articles ?? [])]) stats.set(r.article_id, r)
+  const complete = !!report && report.top_articles.length < 20
+  const maxViews = Math.max(0, ...(report?.top_articles ?? []).map((r) => r.views))
   const collectionOf = (a: HelpArticleSummary) => {
     const c = cols.find((x) => x.id === a.collection_id)
     return c ? collectionName(c, ...prefer) : undefined
@@ -214,7 +327,8 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
   ]
 
   return (
-    <div className="flex flex-col gap-4" data-testid="help-articles">
+    <div className="@container flex flex-col gap-4" data-testid="help-articles">
+      <Stats center={center} report={report} />
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative min-w-48 flex-1">
           <SearchIcon className="pointer-events-none absolute start-2.5 top-1/2 size-4 -translate-y-1/2 text-faint" />
@@ -232,19 +346,6 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
             data-testid="help-article-search"
           />
         </div>
-        <ChoiceSelect
-          value={collection}
-          onChange={(v) => {
-            setCollection(v)
-            setCursor(-1)
-          }}
-          options={[
-            ["", t`All collections`] as const,
-            ...cols.map((c) => [c.id, collectionName(c, ...prefer)] as const),
-          ]}
-          label={t`Collection`}
-          className="w-44"
-        />
         <ChoiceSelect
           value={state}
           onChange={(v) => {
@@ -264,16 +365,44 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
             className="w-36"
           />
         )}
-        <Button
-          size="sm"
-          onClick={() => setCreating(true)}
-          title={t`New article (${newKey})`}
-          data-testid="new-article"
-        >
+        <Button size="sm" onClick={() => setCreating("")} title={t`New article (${newKey})`} data-testid="new-article">
           <PlusIcon />
           <Trans>New article</Trans>
         </Button>
       </div>
+      {cols.length > 0 && (
+        <div
+          className="flex flex-wrap gap-1.5"
+          role="toolbar"
+          aria-label={t`Collection`}
+          data-testid="help-collections"
+        >
+          <FilterChip
+            active={!collection}
+            onClick={() => {
+              setCollection("")
+              setCursor(-1)
+            }}
+            testId="help-collection-all"
+          >
+            <Trans>All collections</Trans>
+          </FilterChip>
+          {cols.map((c) => (
+            <FilterChip
+              key={c.id}
+              active={collection === c.id}
+              onClick={() => {
+                setCollection(c.id)
+                setCursor(-1)
+              }}
+              testId="help-collection"
+            >
+              {collectionName(c, ...prefer)}
+              <span className="tabular-nums opacity-60">{fmt.format(c.article_count)}</span>
+            </FilterChip>
+          ))}
+        </div>
+      )}
       {articles.isPending ? (
         <div className="flex flex-col gap-2">
           <Skeleton className="h-14 w-full rounded-xl" />
@@ -297,29 +426,84 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
           </p>
         </div>
       ) : (
-        <ul ref={list} className="flex flex-col divide-y overflow-hidden rounded-2xl border bg-card">
-          {items.map((a, i) => (
-            <li
-              key={a.id}
-              className={cn("flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3", i === cursor && "bg-muted")}
-              data-testid="help-article-row"
-            >
-              <div className="min-w-0 flex-1 basis-60">
-                <Link
-                  to={articleLink(center.id, a.id, center.default_locale)}
-                  className="block truncate text-body font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+        <div className="overflow-hidden rounded-xl border bg-card">
+          <div className={cn(grid, "border-b bg-muted/50 px-4 py-2 text-caption font-medium text-faint")} aria-hidden>
+            <span>
+              <Trans>Article</Trans>
+            </span>
+            <span className="hidden @2xl:block">
+              <Trans>Collection</Trans>
+            </span>
+            <span className="text-end">
+              <Trans>Views · 7 days</Trans>
+            </span>
+            <span className="text-end">
+              <Trans>Helpful</Trans>
+            </span>
+            <span className="hidden text-end @xl:block">
+              <Trans>Updated</Trans>
+            </span>
+          </div>
+          <ul ref={list} className="flex flex-col divide-y">
+            {items.map((a, i) => {
+              const r = stats.get(a.id)
+              const votes = r ? r.helpful_up + r.helpful_down : 0
+              const views = r ? r.views : complete ? 0 : undefined
+              return (
+                <li
+                  key={a.id}
+                  className={cn(grid, "items-center px-4 py-2.5", i === cursor && "bg-muted")}
+                  data-testid="help-article-row"
                 >
-                  {articleTitle(a, ...prefer)}
-                </Link>
-                <span className="block truncate text-small text-faint">
-                  {collectionOf(a) ?? <Trans>No collection</Trans>}
-                </span>
-              </div>
-              <LocaleChips a={a} center={center} />
-            </li>
-          ))}
-        </ul>
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <Link
+                      to={articleLink(center.id, a.id, center.default_locale)}
+                      className="block truncate text-body font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {articleTitle(a, ...prefer)}
+                    </Link>
+                    <LocaleChips a={a} center={center} />
+                  </div>
+                  <span className="hidden truncate text-small text-muted-foreground @2xl:block">
+                    {collectionOf(a) ?? <span className="text-faint">–</span>}
+                  </span>
+                  <span className="flex items-center justify-end gap-2 text-small tabular-nums">
+                    {views !== undefined && maxViews > 0 && (
+                      <span className="h-1.5 w-12 overflow-hidden rounded-full bg-muted phone:hidden" aria-hidden>
+                        <span
+                          className="block h-full rounded-full bg-brand/70"
+                          style={{ width: `${(views / maxViews) * 100}%` }}
+                        />
+                      </span>
+                    )}
+                    {views !== undefined ? fmt.format(views) : <span className="text-faint">–</span>}
+                  </span>
+                  <span className="text-end text-small tabular-nums">
+                    {votes > 0 && r ? (
+                      <span
+                        className={cn(r.helpful_up / votes < 0.7 && "font-medium text-warning")}
+                        title={`${fmt.format(r.helpful_up)} / ${fmt.format(votes)}`}
+                      >
+                        {percent.format(r.helpful_up / votes)}
+                      </span>
+                    ) : (
+                      <span className="text-faint">–</span>
+                    )}
+                  </span>
+                  <time
+                    className="hidden text-end text-small text-faint @xl:block"
+                    dateTime={a.updated_at}
+                    title={formatDateTime(a.updated_at, i18n.locale)}
+                  >
+                    {formatShort(a.updated_at, i18n.locale)}
+                  </time>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       )}
+      <Misses report={report} onWrite={setCreating} />
       {articles.hasNextPage && (
         <Button
           variant="outline"
@@ -331,12 +515,13 @@ export function ArticlesTab({ center }: { center: HelpCenter }) {
           <Trans>Load more</Trans>
         </Button>
       )}
-      {creating && (
+      {creating !== null && (
         <NewArticleDialog
           center={center}
           collections={cols}
           collectionId={collection}
-          onClose={() => setCreating(false)}
+          initialTitle={creating}
+          onClose={() => setCreating(null)}
         />
       )}
     </div>

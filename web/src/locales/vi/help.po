@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "Đã xuất bản {published} trên {total} bài viết"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} đã xuất bản"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 đến 48 chữ cái, chữ số và dấu gạch nối. Duy nhất trên máy chủ này."
@@ -80,6 +84,7 @@ msgstr "Trả lời các câu hỏi thường gặp một lần, bằng văn b�
 msgid "Any state"
 msgstr "Mọi trạng thái"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Bài viết"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Lượt xem bài viết"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Bài viết"
@@ -112,6 +118,10 @@ msgstr "Có thể viết và xuất bản bài viết bằng các ngôn ngữ n�
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Bài viết trong bộ sưu tập này"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Bài viết mọi người đọc trước khi liên hệ với bạn"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Mọi bản dịch, bản sửa đổi và bộ đếm của chúng bị
 msgid "Formatting"
 msgstr "Định dạng"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Không tìm thấy · 7 ngày"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Bắt đầu"
@@ -312,11 +326,11 @@ msgstr "Nhóm các bài viết để khách truy cập có thể duyệt. Một 
 msgid "Heading"
 msgstr "Tiêu đề"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Trợ giúp"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Trung tâm trợ giúp"
 msgid "Help centers are turned off on this server."
 msgstr "Trung tâm trợ giúp bị tắt trên máy chủ này."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Hữu ích"
@@ -384,6 +399,10 @@ msgstr "Ngôn ngữ"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "{d} ngày qua"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "7 ngày qua"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Tìm trong tiêu đề ({findKey})"
 msgid "Search words"
 msgstr "Từ khóa tìm kiếm"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Đã tìm, không thấy gì"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Lượt tìm kiếm"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Lượt tìm kiếm · 7 ngày"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Chưa xuất bản, chỉ nhóm của bạn xem trước được"
 msgid "Unsaved changes"
 msgstr "Thay đổi chưa lưu"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Cập nhật"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Dùng 3 đến 48 chữ cái, chữ số và dấu gạch nối ở giữa."
@@ -893,6 +924,10 @@ msgstr "Xem trung tâm trợ giúp"
 msgid "Views"
 msgstr "Lượt xem"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Lượt xem · 7 ngày"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Những gì khách truy cập đọc và tìm. Lượt xem chỉ là ước tính, và số liệu đến trang này trong vòng một phút."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Những từ khách truy cập đã gõ mà không tìm thấy gì. Một bài viết mới cho mỗi từ là cách khắc phục nhanh nhất."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Viết"
 

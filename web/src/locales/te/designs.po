@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "ఒక డిజైన్‌లో గరిష్టంగా 200 బ్లాక్‌లు ఉండవచ్చు."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "డిజైన్ అంటే మెయిల్ రూపం: టెంప్లేట్‌తో ప్రారంభించి, దాన్ని మీ బ్రాడ్‌కాస్ట్‌ల కోసం ఉపయోగించండి."
 
@@ -123,6 +124,10 @@ msgstr "ఆర్కైవ్ చేయండి"
 msgid "Archive this design?"
 msgstr "ఈ డిజైన్‌ను ఆర్కైవ్ చేయాలా?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "ఆర్కైవ్ చేయబడింది"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "అట్రిబ్యూట్ కీ"
@@ -163,6 +168,10 @@ msgstr "కింద"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "బ్రాండ్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "గ్యాలరీ చూడండి"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "ఇమెయిల్ చిరునామా"
 msgid "E-mail designs"
 msgstr "ఇమెయిల్ డిజైన్‌లు"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "బ్రాడ్‌కాస్ట్‌లలో మీరు మళ్లీ వాడే ఈమెయిల్ లేఅవుట్‌లు."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "చదవడానికి సులభం: {value}:1"
@@ -469,6 +482,10 @@ msgstr "పూర్తి పేరు"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "పూర్తి వెడల్పు"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "గ్యాలరీ"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "లిస్ట్ పేరు"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "మరిన్ని లోడ్ చేయండి"
 
@@ -702,6 +720,10 @@ msgstr "మెర్జ్ ఫీల్డ్"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "మెర్జ్ ఫీల్డ్‌లు లింక్‌లో ప్రశ్న గుర్తు తర్వాతి భాగంలో మాత్రమే ఉండవచ్చు."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "నావి"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "ప్రాధాన్యత లింక్"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "ప్రివ్యూ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "{name} ప్రివ్యూ"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

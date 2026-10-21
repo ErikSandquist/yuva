@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # συνομιλία ανά 1.000 π�
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} από {limit} συμβάντα αναλυτικών στοιχείων χρησιμοποιήθηκαν αυτόν τον μήνα. Τα συμβάντα πάνω από το όριο απορρίπτονται μέχρι να τελειώσει ο μήνας."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} των επισκεπτών"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Μια αλλαγή ισχύει για τα νέα συμβάντα. Οι ημέρες που έχουν ήδη μετρηθεί κρατούν τη ζώνη τους."
@@ -176,6 +180,10 @@ msgstr "Δημιουργήθηκε νέο κλειδί"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Ένας νέος κωδικός αποσυνδέει όλους όσους ξεκλείδωσαν τον σύνδεσμο."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Μια προβολή σελίδας, ένα συμβάν ή ένα βάθος κύλισης"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Ποσοστό μετατροπής"
 msgid "Conversions"
 msgstr "Μετατροπές"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Μετατροπές στον χρόνο"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Μετατροπές ανά 100 επισκέπτες."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Επισκέπτες των ιστότοπων και των εφαρμογών σας, χωρίς cookies."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Γενικά"
 msgid "Go to goals"
 msgstr "Μετάβαση στους στόχους"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Στόχος"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Μηνιαίο όριο"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Μήνες"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Περισσότερα"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Ο διακομιστής είναι απασχολημένος"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Ρυθμίσεις"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Κοινοποίηση"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

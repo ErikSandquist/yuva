@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "تم نشر {published} من أصل {total} مقالة"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "المنشورة: {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "من 3 إلى 48 حرفًا وأرقامًا وواصلات. فريد على هذا الخادم."
@@ -80,6 +84,7 @@ msgstr "أجب عن الأسئلة الشائعة مرة واحدة كتابةً
 msgid "Any state"
 msgstr "أي حالة"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "مقالة"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "مشاهدات المقالات"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "المقالات"
@@ -112,6 +118,10 @@ msgstr "يمكن كتابة المقالات ونشرها بهذه اللغات.
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "المقالات في هذه المجموعة"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "مقالات يقرؤها الناس قبل أن يكتبوا إليك"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "تُحذف كل الترجمات ومراجعاتها وعداداتها
 msgid "Formatting"
 msgstr "التنسيق"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "لم يُعثر على شيء · 7 أيام"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "البدء"
@@ -312,11 +326,11 @@ msgstr "جمّع المقالات ليتصفحها الزوار. يمكن أن �
 msgid "Heading"
 msgstr "عنوان رئيسي"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "المساعدة"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "مراكز المساعدة"
 msgid "Help centers are turned off on this server."
 msgstr "مراكز المساعدة متوقفة على هذا الخادم."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "مفيد"
@@ -384,6 +399,10 @@ msgstr "اللغات"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "آخر {d} يومًا"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "آخر 7 أيام"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "البحث في العناوين ({findKey})"
 msgid "Search words"
 msgstr "كلمات البحث"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "بُحث عنه ولم يُعثر على شيء"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "عمليات البحث"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "عمليات البحث · 7 أيام"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "غير منشور، فريقك وحده يمكنه المعاينة"
 msgid "Unsaved changes"
 msgstr "تغييرات غير محفوظة"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "آخر تحديث"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "استخدم من 3 إلى 48 حرفًا وأرقامًا وواصلات داخلية."
@@ -893,6 +924,10 @@ msgstr "عرض مركز المساعدة"
 msgid "Views"
 msgstr "المشاهدات"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "المشاهدات · 7 أيام"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "ما يقرؤه الزوار ويبحثون عنه. المشاهدات تقريبية، وتصل الأرقام إلى هذه الصفحة خلال دقيقة."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "كلمات كتبها الزوار ولم تجد شيئًا. مقالة جديدة لكل منها هي أسرع حل."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "كتابة"
 

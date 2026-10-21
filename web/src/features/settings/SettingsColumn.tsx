@@ -10,14 +10,14 @@ import {
   PlugIcon,
   PlusIcon,
   QuoteIcon,
-  SettingsIcon,
   TagIcon,
   UsersIcon,
 } from "lucide-react"
 import { Outlet } from "react-router"
 
-import { Column, ColumnHeading, ColumnLink, Pane, PaneEmpty } from "@/components/common/Column"
+import { Column, ColumnHeading, ColumnLink, Pane } from "@/components/common/Column"
 import { initials, useEnumText } from "@/components/common/text"
+import { ProductsHome } from "@/features/settings/ProductsPage"
 import { RowIcon, RowText } from "@/features/settings/ui"
 import { api, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -33,11 +33,7 @@ export function SettingsPane() {
 }
 
 export function SettingsHome() {
-  return (
-    <PaneEmpty icon={SettingsIcon} title={<Trans>Settings</Trans>} testId="settings-home">
-      <Trans>Pick a setting on the left.</Trans>
-    </PaneEmpty>
-  )
+  return <ProductsHome />
 }
 
 function Group({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
@@ -74,7 +70,7 @@ function NavRow({
   )
 }
 
-function useInboxChannels() {
+export function useInboxChannels() {
   const { workspaceId: ws } = useSession()
   const inboxes = useInboxes().data ?? []
   const results = useQueries({
@@ -128,7 +124,7 @@ export function SettingsColumn() {
           <RowText title={<Trans>Appearance</Trans>} detail={<Trans>Theme and e-mail view on this device</Trans>} />
         </NavRow>
       </Group>
-      <Group title={<Trans>Inboxes</Trans>}>
+      <Group title={<Trans>Products</Trans>}>
         {inboxes.map(({ inbox, channels }) => (
           <NavRow key={inbox.id} to={`/settings/inboxes/${inbox.id}`} testId="inbox-row">
             <RowIcon>
@@ -175,6 +171,24 @@ export function SettingsColumn() {
           </RowIcon>
           <RowText title={<Trans>Labels</Trans>} detail={<Trans>Sort conversations your way</Trans>} />
         </NavRow>
+      </Group>
+      <Group title={<Trans>API & MCP</Trans>}>
+        {canManage && (
+          <>
+            <NavRow to="/settings/api-keys" value={list(apiKeys.data?.length)}>
+              <RowIcon>
+                <KeyRoundIcon />
+              </RowIcon>
+              <RowText title={<Trans>API keys</Trans>} detail={<Trans>Connect your servers and bots to Yuva</Trans>} />
+            </NavRow>
+            <NavRow to="/settings/webhooks" value={hooks.data ? hooks.data.length || t`None` : ""}>
+              <RowIcon>
+                <ArrowUpRightIcon />
+              </RowIcon>
+              <RowText title={<Trans>Webhooks</Trans>} detail={<Trans>Send events to your own server</Trans>} />
+            </NavRow>
+          </>
+        )}
         <NavRow to="/settings/connected-apps">
           <RowIcon>
             <PlugIcon />
@@ -185,31 +199,12 @@ export function SettingsColumn() {
           />
         </NavRow>
       </Group>
-      {canManage && (
-        <Group title={<Trans>Developer</Trans>}>
-          <NavRow to="/settings/api-keys" value={list(apiKeys.data?.length)}>
-            <RowIcon>
-              <KeyRoundIcon />
-            </RowIcon>
-            <RowText title={<Trans>API keys</Trans>} detail={<Trans>Connect your servers and bots to Yuva</Trans>} />
-          </NavRow>
-          <NavRow to="/settings/webhooks" value={hooks.data ? hooks.data.length || t`None` : ""}>
-            <RowIcon>
-              <ArrowUpRightIcon />
-            </RowIcon>
-            <RowText title={<Trans>Webhooks</Trans>} detail={<Trans>Send events to your own server</Trans>} />
-          </NavRow>
-        </Group>
-      )}
       <Group title={<Trans>Workspace</Trans>}>
         <NavRow to="/settings/workspace">
           <RowIcon>
             <BuildingIcon />
           </RowIcon>
-          <RowText
-            title={membership.workspace.name}
-            detail={<Trans>Data retention and deleting the workspace</Trans>}
-          />
+          <RowText title={<Trans>General</Trans>} detail={membership.workspace.name} />
         </NavRow>
         {canManage && (
           <NavRow to="/settings/migrations" testId="settings-migrations">

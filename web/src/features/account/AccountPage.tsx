@@ -35,9 +35,10 @@ import {
   useUpdateReaderAccount,
 } from "@/features/account/queries"
 import { DeleteAccountButton } from "@/features/auth/DeleteAccountButton"
+import { AuthLayout } from "@/features/auth/AuthLayout"
 import { SignInForm } from "@/features/auth/SignInForm"
 import { pageLabel } from "@/features/docs/PageContext"
-import { Card, EmptyRow, Field, Section, ToggleRow } from "@/features/settings/ui"
+import { Card, EmptyRow, Field, pageTabClass, Section, ToggleRow } from "@/features/settings/ui"
 import type { ReaderAccount, ReaderDiscussion, ReaderNotification } from "@/lib/api"
 import { useMe, useSignOut } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -408,13 +409,13 @@ function AccountHome() {
   return (
     <AccountLayout>
       {account.isPending ? (
-        <Skeleton className="h-20 rounded-2xl" />
+        <Skeleton className="h-20 rounded-xl" />
       ) : !a ? (
         <ErrorLine error={account.error} />
       ) : (
         <div className="flex flex-col gap-7" data-testid="account">
           <header className="flex flex-wrap items-center gap-4">
-            <InitialsAvatar initials={a.initials} className="size-14 text-title" />
+            <InitialsAvatar initials={a.initials} className="size-12 text-title" />
             <div className="flex min-w-0 flex-1 flex-col">
               <h1 className="truncate text-page">{a.name || <Trans>Your account</Trans>}</h1>
               <p className="truncate text-body text-muted-foreground">{a.email}</p>
@@ -433,7 +434,7 @@ function AccountHome() {
             </div>
           </header>
           <nav
-            className="-mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0"
+            className="-mx-4 -mt-2 flex gap-5 overflow-x-auto border-b px-4 sm:mx-0 sm:px-1"
             aria-label={t`Account`}
             data-testid="account-tabs"
           >
@@ -444,14 +445,14 @@ function AccountHome() {
                 aria-pressed={tab === k}
                 onClick={() => setParams(k === "notifications" ? {} : { tab: k }, { replace: true })}
                 className={cn(
-                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3.5 text-body font-medium transition-colors",
-                  tab === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
+                  pageTabClass,
+                  "aria-pressed:font-medium aria-pressed:text-foreground aria-pressed:shadow-[inset_0_-2px_0_currentColor]"
                 )}
                 data-testid={`account-tab-${k}`}
               >
                 {labels[k]}
                 {k === "notifications" && unread > 0 && (
-                  <span className="min-w-5 rounded-full bg-brand px-1.5 text-caption text-white tabular-nums">
+                  <span className="min-w-5 rounded-full bg-brand px-1.5 text-center text-caption font-medium text-white tabular-nums">
                     {unread}
                   </span>
                 )}
@@ -475,7 +476,7 @@ export function AccountPage() {
   if (me.error && !me.data) return <Unreachable onRetry={() => void me.refetch()} />
   if (!me.data)
     return (
-      <AccountLayout narrow>
+      <AuthLayout>
         <SignInForm
           reader
           title={<Trans>Your Yuva account</Trans>}
@@ -486,7 +487,7 @@ export function AccountPage() {
             </Trans>
           }
         />
-      </AccountLayout>
+      </AuthLayout>
     )
   return <AccountHome />
 }

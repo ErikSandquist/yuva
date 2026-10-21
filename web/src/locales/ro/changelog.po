@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ro\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ciorne"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} din {total} intrări publicate"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} publicate"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} programate"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Schimbă ora"
 msgid "Changelog"
 msgstr "Jurnal de modificări"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Jurnale de modificări"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Alege o imagine"
@@ -86,8 +102,13 @@ msgstr "Numără vizualizările paginilor jurnalului de modificări fără cooki
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Creează jurnal de modificări"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Creează jurnalul de modificări ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Toate traducerile se șterg. Mesajele în masă create din ea rămân."
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Remediat"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Cum arată"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Cum arată în {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Nicio intrare nu se potrivește."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Nu există nicio căsuță pentru care să se afișeze un jurnal de modificări."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Încă nu există text."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Publicată"
 msgid "Publishing on schedule failed."
 msgstr "Publicarea programată a eșuat."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Note de lansare afișate în produsele tale, pe web și prin e-mail."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Elimină"
@@ -396,6 +434,10 @@ msgstr "Setări"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Arată"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Afișat în widgetul de chat și pe {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Retragi această intrare?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Nepublicată"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Vezi jurnalul de modificări"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

@@ -131,7 +131,7 @@ export function ChatsPage({ section = "conversations" }: { section?: "conversati
         <ChatView key={id} id={id} panel={panel} inlinePanel={roomy} onPanel={setPanel} />
       </div>
       {inline && (
-        <div className="flex w-[360px] shrink-0 flex-col border-s">
+        <div className="flex w-[320px] shrink-0 flex-col border-s" data-contact-panel>
           <ContactPanel key={contactId} contactId={contactId} conversationId={id} onClose={() => setPanel(false)} />
         </div>
       )}

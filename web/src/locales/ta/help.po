@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} கட்டுரைகளில் {published} வெளியிடப்பட்டன"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} வெளியிடப்பட்டவை"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 முதல் 48 எழுத்துகள், எண்கள் மற்றும் இணைப்புக்கோடுகள். இந்தச் சேவையகத்தில் தனித்துவமானது."
@@ -80,6 +84,7 @@ msgstr "பொதுவான கேள்விகளுக்கு ஒரு�
 msgid "Any state"
 msgstr "எந்த நிலையும்"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "கட்டுரை"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "கட்டுரைப் பார்வைகள்"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "கட்டுரைகள்"
@@ -112,6 +118,10 @@ msgstr "கட்டுரைகளை இந்த மொழிகளில் 
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "இந்தத் தொகுப்பிலுள்ள கட்டுரைகள்"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "உங்களுக்கு எழுதும் முன் மக்கள் படிக்கும் கட்டுரைகள்"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "அனைத்து மொழிபெயர்ப்புகள், 
 msgid "Formatting"
 msgstr "வடிவமைப்பு"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "எதுவும் கிடைக்கவில்லை · 7 நாட்கள்"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "தொடங்குதல்"
@@ -312,11 +326,11 @@ msgstr "பார்வையாளர்கள் உலாவ கட்டு�
 msgid "Heading"
 msgstr "தலைப்பு"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "உதவி"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "உதவி மையங்கள்"
 msgid "Help centers are turned off on this server."
 msgstr "இந்தச் சேவையகத்தில் உதவி மையங்கள் அணைக்கப்பட்டுள்ளன."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "பயனுள்ளது"
@@ -384,6 +399,10 @@ msgstr "மொழிகள்"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "கடந்த {d} நாட்கள்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "கடந்த 7 நாட்கள்"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "தலைப்புகளில் தேடு ({findKey})"
 msgid "Search words"
 msgstr "தேடல் சொற்கள்"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "தேடப்பட்டது, எதுவும் கிடைக்கவில்லை"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "தேடல்கள்"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "தேடல்கள் · 7 நாட்கள்"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "வெளியிடப்படவில்லை, உங்கள் 
 msgid "Unsaved changes"
 msgstr "சேமிக்கப்படாத மாற்றங்கள்"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "புதுப்பிக்கப்பட்டது"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 முதல் 48 எழுத்துகள், எண்கள், இடையிலுள்ள இணைப்புக்கோடுகளைப் பயன்படுத்துங்கள்."
@@ -893,6 +924,10 @@ msgstr "உதவி மையத்தைப் பார்"
 msgid "Views"
 msgstr "பார்வைகள்"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "பார்வைகள் · 7 நாட்கள்"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "பார்வையாளர்கள் படிப்பதும் தேடுவதும். பார்வைகள் தோராயமானவை, எண்கள் ஒரு நிமிடத்தில் இந்தப் பக்கத்தை அடையும்."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "பார்வையாளர்கள் தட்டச்சு செய்து எதுவும் கிடைக்காத சொற்கள். ஒவ்வொன்றுக்கும் ஒரு புதிய கட்டுரை வேகமான தீர்வு."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "எழுது"
 

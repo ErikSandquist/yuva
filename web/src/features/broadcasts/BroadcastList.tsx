@@ -55,7 +55,7 @@ export function BroadcastSteps() {
   )
 }
 
-function when(b: Broadcast) {
+export function broadcastWhen(b: Broadcast) {
   if (b.state === "scheduled") return b.scheduled_at
   if (FINISHED.includes(b.state)) return b.finished_at ?? b.started_at ?? b.updated_at
   if (isActive(b)) return b.started_at ?? b.scheduled_at ?? b.updated_at
@@ -66,7 +66,7 @@ function Row({ b, current, cursor }: { b: Broadcast; current: boolean; cursor: b
   const { t, i18n } = useLingui()
   const num = useNumber()
   const inbox = (useInboxes().data ?? []).find((i) => i.id === b.inbox_id)
-  const at = when(b)
+  const at = broadcastWhen(b)
   const { done, total } = progressOf(b)
   const recipients = num(b.counts.recipients)
   const sent = num(done)

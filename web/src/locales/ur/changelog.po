@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ur\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} مسودے"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total} میں سے {published} اندراجات شائع ہوئے"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} شائع شدہ"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} شیڈول شدہ"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "وقت تبدیل کریں"
 msgid "Changelog"
 msgstr "چینج لاگ"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "چینج لاگز"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "تصویر منتخب کریں"
@@ -86,8 +102,13 @@ msgstr "کوکیز کے بغیر چینج لاگ کے صفحات کے ملاحظ
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "چینج لاگ بنائیں"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "چینج لاگ بنائیں ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "تمام تراجم حذف ہو جاتے ہیں۔ اس سے بنے بر�
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "درست کیا گیا"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "یہ کیسا دکھتا ہے"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "{0} میں یہ کیسا دکھتا ہے"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "کوئی اندراج مطابقت نہیں رکھتا۔"
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "کوئی ان باکس نہیں ہے جس کا چینج لاگ دکھایا جا سکے۔"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "ابھی کوئی متن نہیں۔"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "شائع شدہ"
 msgid "Publishing on schedule failed."
 msgstr "شیڈول شدہ اشاعت ناکام رہی۔"
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "ریلیز نوٹس جو آپ کے پروڈکٹس میں، ویب پر اور ای میل سے دکھائے جاتے ہیں۔"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "ہٹائیں"
@@ -396,6 +434,10 @@ msgstr "ترتیبات"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "دکھائیں"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "چیٹ وجیٹ میں اور {host} پر دکھایا جاتا ہے۔"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "کیا اس اندراج کی اشاعت واپس لیں؟"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "غیر شائع شدہ"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "چینج لاگ دیکھیں"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

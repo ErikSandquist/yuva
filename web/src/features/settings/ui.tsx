@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowLeftIcon, ChevronRightIcon } from "lucide-react"
-import { Link } from "react-router"
+import { Link, type To } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ export function PageHeader({
   back,
   action,
   eyebrow,
+  tabs,
   children,
 }: {
   title: React.ReactNode
@@ -21,6 +22,7 @@ export function PageHeader({
   eyebrow?: React.ReactNode
   back?: { to: string; label: string } | false
   action?: React.ReactNode
+  tabs?: React.ReactNode
   children?: React.ReactNode
 }) {
   const { t } = useLingui()
@@ -41,13 +43,104 @@ export function PageHeader({
         </Link>
       )}
       {eyebrow && <p className="mb-2.5 text-small text-faint">{eyebrow}</p>}
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <h1 className="min-w-0 text-page break-words">{title}</h1>
-        {action}
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+        <div className="min-w-0 flex-1 basis-64">
+          <h1 className="min-w-0 text-page break-words">{title}</h1>
+          {description && <p className="mt-1.5 max-w-2xl text-reading text-muted-foreground">{description}</p>}
+        </div>
+        {action && <div className="flex shrink-0 flex-wrap items-center gap-2">{action}</div>}
       </div>
-      {description && <p className="mt-1.5 max-w-2xl text-reading text-muted-foreground">{description}</p>}
+      {tabs && <div className="mt-5">{tabs}</div>}
       {children}
     </header>
+  )
+}
+
+export type PageTab = {
+  key: string
+  to: To
+  label: React.ReactNode
+  count?: number
+  testId?: string
+}
+
+export const pageTabClass =
+  "flex items-center gap-1.5 rounded-sm pt-1 pb-2.5 text-body whitespace-nowrap text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:shadow-[inset_0_-2px_0_currentColor]"
+
+export function PageTabs({
+  items,
+  current,
+  label,
+  extra,
+}: {
+  items: PageTab[]
+  current: string
+  label: string
+  extra?: React.ReactNode
+}) {
+  const { i18n } = useLingui()
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  return (
+    <nav aria-label={label} className="-mx-1 overflow-x-auto border-b px-1" data-testid="page-tabs">
+      <ul className="flex gap-5">
+        {items.map((tab) => (
+          <li key={tab.key} className="shrink-0">
+            <Link
+              to={tab.to}
+              aria-current={tab.key === current ? "page" : undefined}
+              className={pageTabClass}
+              data-testid={tab.testId}
+            >
+              {tab.label}
+              {tab.count !== undefined && (
+                <span className="text-caption font-normal text-faint tabular-nums">{fmt.format(tab.count)}</span>
+              )}
+            </Link>
+          </li>
+        ))}
+        {extra && <li className="shrink-0">{extra}</li>}
+      </ul>
+    </nav>
+  )
+}
+
+export function StatTile({
+  label,
+  value,
+  hint,
+  live,
+  testId,
+  title,
+}: {
+  label: React.ReactNode
+  value: React.ReactNode
+  hint?: React.ReactNode
+  live?: boolean
+  testId?: string
+  title?: string
+}) {
+  return (
+    <div
+      className="flex min-w-0 flex-col gap-1 rounded-2xl border bg-card px-4 py-3.5"
+      title={title}
+      data-testid={testId}
+    >
+      <span className="flex min-w-0 items-center gap-1.5 text-small text-faint">
+        {live && <span className="size-2 shrink-0 rounded-full bg-success" aria-hidden />}
+        <span className="truncate">{label}</span>
+      </span>
+      <b className="text-page leading-tight tabular-nums">{value}</b>
+      {hint && <span className="truncate text-caption text-faint">{hint}</span>}
+    </div>
+  )
+}
+
+export function CardHead({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
+  return (
+    <div className="flex min-h-12 items-center gap-2 border-b px-4 py-2.5">
+      <h2 className="min-w-0 flex-1 truncate text-body font-medium">{children}</h2>
+      {action}
+    </div>
   )
 }
 

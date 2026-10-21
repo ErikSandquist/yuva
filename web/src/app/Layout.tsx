@@ -2,7 +2,10 @@ import { lazy, Suspense, useCallback, useEffect } from "react"
 import { Outlet, useLocation, useMatch, useNavigate } from "react-router"
 
 import { Rail, TabBar, useSection } from "@/app/Rail"
-import { isInboxRoot, isSectionHome } from "@/app/shell"
+import { isFullPage, isInboxRoot, isSectionHome } from "@/app/shell"
+import { Sidebar } from "@/app/Sidebar"
+import { useSidebarCollapsed } from "@/app/sidebarState"
+import { TopBar } from "@/app/TopBar"
 import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
 import { DocsColumn } from "@/features/docs/DocsColumn"
@@ -28,9 +31,8 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
   const navigate = useNavigate()
   const currentId = useMatch("/conversations/:conversationId")?.params.conversationId ?? null
   const open = useCallback((id: string) => navigate(`/conversations/${id}`), [navigate])
-  const feedbackId = useMatch("/feedback/:conversationId")?.params.conversationId ?? null
-  const openFeedback = useCallback((id: string) => navigate(`/feedback/${id}`), [navigate])
   const chats = section === "conversations"
+  const columns = !keepList || !isFullPage(section)
   return (
     <>
       {(chats || keepList) && (
@@ -38,6 +40,18 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
           <ChatList currentId={currentId} onOpen={open} active={chats} />
         </div>
       )}
+      {columns && <SectionColumn />}
+    </>
+  )
+}
+
+function SectionColumn() {
+  const section = useSection()
+  const navigate = useNavigate()
+  const feedbackId = useMatch("/feedback/:conversationId")?.params.conversationId ?? null
+  const openFeedback = useCallback((id: string) => navigate(`/feedback/${id}`), [navigate])
+  return (
+    <>
       {section === "feedback" && <FeedbackList currentId={feedbackId} onOpen={openFeedback} />}
       {section === "mentions" && <MentionsPanel />}
       {section === "assistants" && <AssistantsPanel />}
@@ -80,20 +94,41 @@ function useMentionsView(pathname: string, manager: boolean) {
   }, [pathname, view, manager])
 }
 
+function Desktop({ children }: { children: React.ReactNode }) {
+  const [collapsed] = useSidebarCollapsed()
+  return (
+    <div className="flex h-svh min-h-0" data-testid="shell">
+      {collapsed ? <Rail /> : <Sidebar />}
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <TopBar />
+        <div className="flex min-h-0 flex-1">{children}</div>
+      </div>
+    </div>
+  )
+}
+
 export function Layout() {
   const phone = useIsPhone()
   const { pathname } = useLocation()
   const { canManage } = useSession()
   const section = useSection()
   useMentionsView(pathname, canManage)
-  if (section === "home") {
+  if (section === "home" && !phone) {
     return (
-      <div className={cn("flex h-svh min-h-0", phone && "flex-col")} data-testid="shell">
-        {!phone && <Rail />}
+      <Desktop>
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Outlet />
         </div>
-        {phone && <TabBar />}
+      </Desktop>
+    )
+  }
+  if (section === "home") {
+    return (
+      <div className="flex h-svh min-h-0 flex-col" data-testid="shell">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <Outlet />
+        </div>
+        <TabBar />
       </div>
     )
   }
@@ -114,15 +149,22 @@ export function Layout() {
       </div>
     )
   }
+  const full = isFullPage(section)
   return (
-    <div className="flex h-svh min-h-0" data-testid="shell">
-      <Rail />
-      <div className="flex w-[clamp(288px,30vw,420px)] shrink-0 flex-col border-e">
-        <LeftColumn keepList />
+    <Desktop>
+      <div className="group/cols flex min-w-0 flex-1">
+        <div
+          className={cn(
+            "flex w-[clamp(288px,30vw,420px)] shrink-0 flex-col border-e group-has-[[data-contact-panel]]/cols:w-[clamp(272px,20vw,360px)]",
+            full && "hidden"
+          )}
+        >
+          <LeftColumn keepList />
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <Outlet />
+        </div>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <Outlet />
-      </div>
-    </div>
+    </Desktop>
   )
 }

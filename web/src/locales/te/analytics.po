@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: 1,000 వీక్షణలకు # �
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "ఈ నెల {limit} లో {used} అనలిటిక్స్ ఈవెంట్‌లు ఉపయోగించబడ్డాయి. పరిమితి దాటిన ఈవెంట్‌లు నెల ముగిసే వరకు వదిలివేయబడతాయి."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} సందర్శకులు"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "మార్పు కొత్త ఈవెంట్‌లకు వర్తిస్తుంది. ఇప్పటికే లెక్కించిన రోజులు తమ జోన్‌ను ఉంచుకుంటాయి."
@@ -176,6 +180,10 @@ msgstr "కొత్త కీ తయారైంది"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "కొత్త పాస్‌వర్డ్ లింక్‌ను అన్‌లాక్ చేసిన ప్రతి ఒక్కరినీ సైన్ అవుట్ చేస్తుంది."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "ఒక పేజీ వ్యూ, ఒక ఈవెంట్ లేదా స్క్రోల్ లోతు"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "కన్వర్షన్ రేటు"
 msgid "Conversions"
 msgstr "కన్వర్షన్‌లు"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "కాలక్రమేణా కన్వర్షన్లు"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "100 మంది సందర్శకులకు కన్వర్షన్‌లు."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "మీ సైట్‌లు మరియు యాప్‌ల సందర్శకులు, కుకీలు లేకుండా."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "సాధారణం"
 msgid "Go to goals"
 msgstr "లక్ష్యాలకు వెళ్లండి"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "లక్ష్యం"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "నెలవారీ పరిమితి"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "నెలలు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "మరిన్ని"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "సర్వర్ బిజీ"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "సెట్టింగ్‌లు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "షేర్ చేయండి"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

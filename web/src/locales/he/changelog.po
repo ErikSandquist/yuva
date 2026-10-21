@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: he\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "טיוטות: {drafts}"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} מתוך {total} רשומות פורסמו"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "פורסמו: {published}"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "מתוזמנות: {scheduled}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "שינוי השעה"
 msgid "Changelog"
 msgstr "יומן שינויים"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "יומני שינויים"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "בחירת תמונה"
@@ -86,8 +102,13 @@ msgstr "סופר צפיות בדפי יומן השינויים בלי עוגיו
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "יצירת יומן שינויים"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "יצירת יומן שינויים ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "כל התרגומים נמחקים. שליחות המוניות שנוצ
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "תוקן"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "איך זה נראה"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "איך זה נראה ב-{0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "אף רשומה לא תואמת."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "אין תיבה שאפשר להציג עבורה יומן שינויים."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "אין עדיין טקסט."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "מפורסם"
 msgid "Publishing on schedule failed."
 msgstr "הפרסום המתוזמן נכשל."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "הערות גרסה שמוצגות במוצרים שלך, ברשת ובדואר."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "הסרה"
@@ -396,6 +434,10 @@ msgstr "הגדרות"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "הצגה"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "מוצג בווידג׳ט הצ׳אט וב-{host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "לבטל את הפרסום של הרשומה הזו?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "לא מפורסם"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "הצגת יומן השינויים"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

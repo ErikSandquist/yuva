@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ms\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} draf"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} daripada {total} entri diterbitkan"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} diterbitkan"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} dijadualkan"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Tukar masa"
 msgid "Changelog"
 msgstr "Changelog"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Log perubahan"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Pilih imej"
@@ -86,8 +102,13 @@ msgstr "Mengira paparan halaman changelog tanpa kuki."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Cipta changelog"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Cipta log perubahan ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Semua terjemahan dipadam. Siaran yang dibuat daripadanya kekal."
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Dibetulkan"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Rupanya"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Rupanya dalam {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Tiada entri yang sepadan."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Tiada peti masuk untuk memaparkan changelog."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Belum ada teks."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Diterbitkan"
 msgid "Publishing on schedule failed."
 msgstr "Penerbitan berjadual gagal."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Nota keluaran yang dipaparkan dalam produk anda, di web dan melalui e-mel."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Alih keluar"
@@ -396,6 +434,10 @@ msgstr "Tetapan"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Tunjuk"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Dipaparkan dalam widget sembang dan di {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Tarik balik entri ini?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Belum diterbitkan"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Lihat changelog"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

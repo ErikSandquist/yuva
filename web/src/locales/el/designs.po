@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "Ένα σχέδιο μπορεί να έχει το πολύ 200 μπλοκ."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Ένα σχέδιο είναι η εμφάνιση ενός e-mail: ξεκινήστε από ένα πρότυπο και μετά χρησιμοποιήστε το για τις μαζικές αποστολές σας."
 
@@ -123,6 +124,10 @@ msgstr "Αρχειοθέτηση"
 msgid "Archive this design?"
 msgstr "Αρχειοθέτηση αυτού του σχεδίου;"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Αρχειοθετημένο"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Κλειδί χαρακτηριστικού"
@@ -163,6 +168,10 @@ msgstr "Κάτω"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Επωνυμία"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Περιήγηση στη συλλογή"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "Διεύθυνση e-mail"
 msgid "E-mail designs"
 msgstr "Σχέδια e-mail"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "Διατάξεις e-mail που επαναχρησιμοποιείτε στις μαζικές αποστολές."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Εύκολο στην ανάγνωση: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Πλήρες όνομα"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Πλήρες πλάτος"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Συλλογή"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "Όνομα λίστας"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Φόρτωση περισσότερων"
 
@@ -702,6 +720,10 @@ msgstr "Πεδίο συγχώνευσης"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Τα πεδία συγχώνευσης μπορούν να μπουν μόνο στο τμήμα ενός συνδέσμου μετά το ερωτηματικό."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Δικές μου"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Σύνδεσμος προτιμήσεων"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Προεπισκόπηση"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "Προεπισκόπηση του {name}"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

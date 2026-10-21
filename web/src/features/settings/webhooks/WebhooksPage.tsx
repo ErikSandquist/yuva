@@ -1,6 +1,6 @@
-import { Trans } from "@lingui/react/macro"
 import { Navigate } from "react-router"
 
+import { DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
 import { PageHeader } from "@/features/settings/ui"
 import { WebhookList } from "@/features/settings/webhooks/WebhookList"
 import { useSession } from "@/lib/session"
@@ -10,7 +10,7 @@ export function WebhooksPage() {
   if (!canManage) return <Navigate to="/settings/profile" replace />
   return (
     <>
-      <PageHeader title={<Trans>Webhooks</Trans>} />
+      <PageHeader title={<DeveloperTitle />} tabs={<DeveloperTabs current="webhooks" />} />
       <WebhookList />
     </>
   )

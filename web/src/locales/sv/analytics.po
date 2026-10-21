@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # konversation per 1 000 visningar, m
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} av {limit} analytics-händelser använda den här månaden. Händelser över gränsen kasseras tills månaden slutar."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} av besökarna"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "En ändring gäller nya händelser. Dagar som redan räknats behåller sin zon."
@@ -176,6 +180,10 @@ msgstr "En ny nyckel skapades"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Ett nytt lösenord loggar ut alla som låste upp länken."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "En sidvisning, en händelse eller ett scrolldjup"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Konverteringsgrad"
 msgid "Conversions"
 msgstr "Konverteringar"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konverteringar över tid"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konverteringar per 100 besökare."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Besökare på dina webbplatser och appar, utan cookies."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Allmänt"
 msgid "Go to goals"
 msgstr "Gå till mål"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Mål"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Månadsgräns"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Månader"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Mer"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Servern upptagen"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Inställningar"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Dela"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

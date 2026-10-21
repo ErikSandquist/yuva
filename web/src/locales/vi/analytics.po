@@ -125,6 +125,10 @@ msgstr "{rate, plural, other {{dim} {value}: # cuộc trò chuyện trên 1.000 
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Đã dùng {used} trên {limit} sự kiện phân tích trong tháng này. Sự kiện vượt giới hạn bị bỏ cho đến hết tháng."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} khách truy cập"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Thay đổi áp dụng cho sự kiện mới. Các ngày đã đếm giữ múi giờ của chúng."
@@ -176,6 +180,10 @@ msgstr "Một khóa mới đã được tạo"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Mật khẩu mới đăng xuất mọi người đã mở khóa liên kết."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Một lượt xem trang, một sự kiện hoặc độ sâu cuộn"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Tỷ lệ chuyển đổi"
 msgid "Conversions"
 msgstr "Lượt chuyển đổi"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Chuyển đổi theo thời gian"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Lượt chuyển đổi trên 100 khách truy cập."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Khách truy cập trên các trang web và ứng dụng của bạn, không dùng cookie."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Chung"
 msgid "Go to goals"
 msgstr "Đi tới mục tiêu"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Mục tiêu"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Giới hạn hằng tháng"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Tháng"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Thêm"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Máy chủ bận"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Cài đặt"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Tỷ lệ"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router"
 
 import { ErrorLine, TypeToConfirmDialog } from "@/components/common"
 import { Button } from "@/components/ui/button"
-import { Card, Section } from "@/features/settings/ui"
+import { Card, RowText, Section } from "@/features/settings/ui"
 import { api, setWorkspace, unwrap } from "@/lib/api"
 import { meKey, useSession } from "@/lib/session"
 
@@ -36,8 +36,16 @@ export function DeleteWorkspace() {
       }
     >
       <Card tone="danger">
-        {membership.role === "owner" ? (
-          <div>
+        <div className="flex flex-wrap items-center gap-3">
+          <RowText
+            title={
+              <span className="font-medium text-destructive">
+                <Trans>Delete this workspace</Trans>
+              </span>
+            }
+            detail={<Trans>Removes every inbox, conversation and contact for everyone.</Trans>}
+          />
+          {membership.role === "owner" ? (
             <Button
               type="button"
               variant="destructive"
@@ -48,14 +56,14 @@ export function DeleteWorkspace() {
               }}
               data-testid="delete-workspace"
             >
-              <Trans>Delete this workspace</Trans>
+              <Trans>Delete workspace…</Trans>
             </Button>
-          </div>
-        ) : (
-          <p className="text-body text-muted-foreground">
-            <Trans>Only owners can delete the workspace.</Trans>
-          </p>
-        )}
+          ) : (
+            <p className="text-small text-faint">
+              <Trans>Only owners can delete the workspace.</Trans>
+            </p>
+          )}
+        </div>
       </Card>
       <TypeToConfirmDialog
         open={open}

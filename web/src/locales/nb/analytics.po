@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # samtale per 1 000 visninger, mot {s
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} av {limit} analytics-hendelser brukt denne måneden. Hendelser over grensen forkastes til måneden er over."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} av de besøkende"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "En endring gjelder nye hendelser. Dager som allerede er talt, beholder sin sone."
@@ -176,6 +180,10 @@ msgstr "En ny nøkkel ble laget"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Et nytt passord logger ut alle som låste opp lenken."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "En sidevisning, en hendelse eller en rulledybde"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Konverteringsrate"
 msgid "Conversions"
 msgstr "Konverteringer"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konverteringer over tid"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konverteringer per 100 besøkende."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Besøkende på nettstedene og appene dine, uten informasjonskapsler."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Generelt"
 msgid "Go to goals"
 msgstr "Gå til mål"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Mål"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Månedsgrense"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Måneder"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Mere"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Serveren er opptatt"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Innstillinger"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Del"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

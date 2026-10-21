@@ -95,9 +95,15 @@ msgstr "{0} / {1}"
 
 #. placeholder {0}: fmt.format(s.replies)
 #. placeholder {1}: fmt.format(s.closed)
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "{0} replies · {1} closed"
 msgstr "{0} válasz · {1} lezárva"
+
+#. placeholder {0}: fmt.format(replies)
+#: src/features/team/TeamColumn.tsx
+msgid "{0} replies today"
+msgstr "Ma {0} válasz"
 
 #. placeholder {0}: done.scopes.length
 #. placeholder {0}: scopes.length
@@ -280,9 +286,14 @@ msgstr "{done} / {total} sor"
 msgid "{doneParts} of {totalParts} parts"
 msgstr "{doneParts} / {totalParts} rész"
 
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "{doneText} of {total}"
 msgstr "{doneText} / {total}"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{down, plural, one {# down} other {# down}}"
+msgstr "{down, plural, one {# nem elérhető} other {# nem elérhető}}"
 
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
@@ -327,6 +338,10 @@ msgstr "A(z) {from} domainnek nincs SPF-rekordja. Tegyél közzé egyet, amely t
 #: src/features/contact/ContactDetails.tsx
 msgid "{good} good"
 msgstr "{good} jó"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{here, plural, =0 {Nobody is online right now.} one {# person is online right now.} other {# people are online right now.}}"
+msgstr "{here, plural, =0 {Most senki sincs online.} one {Most # ember van online.} other {Most # ember van online.}}"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "{hidden, plural, one {# earlier message} other {# earlier messages}}"
@@ -511,7 +526,16 @@ msgstr "{name} webhely"
 msgid "{names} will be notified"
 msgstr "Értesül: {names}"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "{notOk, plural, one {# not operational} other {# not operational}}"
+msgstr "{notOk, plural, one {# nem működik} other {# nem működik}}"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{open, plural, one {# open now} other {# open now}}"
+msgstr "{open, plural, one {most # nyitott} other {most # nyitott}}"
+
 #: src/components/common/Linked.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# nyitott} other {# nyitott}}"
@@ -527,6 +551,10 @@ msgstr "{pct} elégedett"
 #: src/features/docs/DocsColumn.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} bejegyzés vár jóváhagyásra"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "{pending} waiting · {unsubscribed} unsubscribed"
+msgstr "{pending} várakozik · {unsubscribed} leiratkozott"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -687,6 +715,10 @@ msgstr "{sent} / {all} kész"
 msgid "{share} helpful"
 msgstr "{share} hasznos"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "{share} uptime"
+msgstr "{share} rendelkezésre állás"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{size} · pick another file"
 msgstr "{size} · válassz másik fájlt"
@@ -696,13 +728,30 @@ msgstr "{size} · válassz másik fájlt"
 msgid "{subscribed} subscribed"
 msgstr "{subscribed} feliratkozott"
 
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "{subscribed} subscribers"
+msgstr "{subscribed} feliratkozó"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{threads} open discussions"
 msgstr "{threads} nyitott vita"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "{unsubscribed} unsubscribed"
+msgstr "{unsubscribed} leiratkozott"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{up, plural, one {# up} other {# up}}"
+msgstr "{up, plural, one {# elérhető} other {# elérhető}}"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} hasznos"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{updates, plural, one {# update} other {# updates}}"
+msgstr "{updates, plural, one {# frissítés} other {# frissítés}}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
@@ -718,9 +767,9 @@ msgstr "{views, plural, one {# megtekintés} other {# megtekintés}}"
 msgid "{votes} votes"
 msgstr "{votes} szavazat"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "{who} in {contact}"
-msgstr "{who} itt: {contact}"
+#: src/features/home/HomePage.tsx
+msgid "{waiting, plural, one {# person is waiting for a reply.} other {# people are waiting for a reply.}}"
+msgstr "{waiting, plural, one {# ember vár válaszra.} other {# ember vár válaszra.}}"
 
 #: src/features/account/AccountPage.tsx
 msgid "{who} replied in <0>{title}</0>"
@@ -738,6 +787,10 @@ msgstr "A *@example.com fogadja a domain minden olyan címét, amellyel más csa
 #: src/features/contact/ContactDetails.tsx
 msgid "+ Add address"
 msgstr "+ Cím hozzáadása"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "+{added} in 30 days"
+msgstr "+{added} 30 nap alatt"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "<0>{domain}</0> is not a verified identity in the server’s Amazon SES account. Mail goes out without tenant isolation and broadcasts are blocked. Ask the server’s operator to verify the domain."
@@ -792,6 +845,7 @@ msgstr "2. Ellenőrizd, hogy megérkezik-e"
 msgid "200 to 299 by default."
 msgstr "Alapértelmezés szerint 200-tól 299-ig."
 
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "24 hours"
 msgstr "24 óra"
@@ -1221,6 +1275,10 @@ msgstr "Acme Support"
 msgid "Active"
 msgstr "Aktív"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Activity"
+msgstr "Tevékenység"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1277,6 +1335,10 @@ msgstr "Feliratkozó hozzáadása"
 msgid "Add a subscriber to {listName}"
 msgstr "Feliratkozó hozzáadása ehhez: {listName}"
 
+#: src/app/Sidebar.tsx
+msgid "Add a website"
+msgstr "Webhely hozzáadása"
+
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Add a website chat in the inbox settings"
 msgstr "Adj hozzá webhelycsevegést a postafiók beállításaiban"
@@ -1314,6 +1376,7 @@ msgid "Add at least one origin."
 msgstr "Adj hozzá legalább egy origint."
 
 #: src/features/settings/channels/ApiChannelDialog.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Add channel"
 msgstr "Csatorna hozzáadása"
 
@@ -1353,6 +1416,10 @@ msgstr "Figyelő hozzáadása ({addKey})"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "Megjegyzés hozzáadása"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add product"
+msgstr "Termék hozzáadása"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -1439,6 +1506,10 @@ msgstr "Admin"
 msgid "Admin routing"
 msgstr "Admin útválasztás"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Affects"
+msgstr "Érinti"
+
 #: src/components/common/text.ts
 msgid "Agent"
 msgstr "Ügynök"
@@ -1468,6 +1539,7 @@ msgstr "Figyelmeztess, amíg a lap a háttérben van"
 msgid "Alertmanager"
 msgstr "Alertmanager"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1485,12 +1557,15 @@ msgstr "Összes"
 msgid "All components"
 msgstr "Minden összetevő"
 
+#: src/features/status/IncidentPane.tsx
+msgid "All good"
+msgstr "Minden rendben"
+
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
 msgstr "Minden import"
 
 #: src/app/Palette.tsx
-#: src/features/inbox/InboxPicker.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
@@ -1510,9 +1585,18 @@ msgstr "Minden olvasottnak jelölve"
 msgid "All of its conversations are deleted with it."
 msgstr "Az összes beszélgetése törlődik vele együtt."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "all operational"
+msgstr "minden működik"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "Minden rész megérkezett. A fájl olvasása…"
+
+#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "All products"
+msgstr "Minden termék"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
@@ -1523,6 +1607,10 @@ msgstr "Minden hatókör"
 #: src/features/docs/DocsColumn.tsx
 msgid "All sites"
 msgstr "Minden webhely"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "all up"
+msgstr "minden elérhető"
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Allow"
@@ -1582,6 +1670,10 @@ msgstr "A bejelentkezési és értesítési e-mailekhez is"
 #: src/features/settings/webhooks/events.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "A message.created küldése a tagok belső jegyzeteihez is. A belső eseményeket soha nem küldjük."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Always open"
+msgstr "Mindig nyitva"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
@@ -1858,6 +1950,12 @@ msgstr "Minden, ami ezt a kulcsot használja, azonnal leáll."
 msgid "API"
 msgstr "API"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/DeveloperTabs.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "API & MCP"
+msgstr "API és MCP"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "API-csatorna"
@@ -1867,7 +1965,7 @@ msgid "API key"
 msgstr "API-kulcs"
 
 #: src/app/Palette.tsx
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "API-kulcsok"
@@ -1899,6 +1997,7 @@ msgid "Appear online only in business hours"
 msgstr "Csak munkaidőben jelenjen meg online"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -2002,6 +2101,10 @@ msgstr "Kérd meg a levelezőszervered adminját, hogy a(z) {address} címet az 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Ask the admin of your mail server to forward {address} to the address below on the server, keeping delivery to the mailbox."
 msgstr "Kérd meg a levelezőszervered adminját, hogy a(z) {address} címet a szerveren az alábbi címre irányítsa át, a postafiókba kézbesítést megtartva."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Asked after closing"
+msgstr "Lezárás után kérdezzük"
 
 #: src/components/common/text.ts
 msgid "Asked to subscribe"
@@ -2355,11 +2458,16 @@ msgstr "Hozd át azokat a feliratkozókat, akik máshol már beleegyeztek. Minde
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "Hozd át annak a postafióknak az előzményeit, amelyből ma válaszolsz, majd állítsd át a levelezését. A Yuva csak olvassa a postafiókot; semmi sem változik benne."
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Bring your mail history"
+msgstr "Hozd magaddal a levelezési előzményeidet"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "Hozd át a régi leveleidet"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
 msgstr "Tömeges levél"
 
@@ -2371,10 +2479,12 @@ msgstr "Tömeges küldés"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
@@ -2401,7 +2511,12 @@ msgstr "Böngésző"
 msgid "Bug"
 msgstr "Hiba"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Bugs, ideas and praise sent from your apps and pages"
+msgstr "Hibák, ötletek és dicséretek az alkalmazásaidból és oldalaidról"
+
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Business hours"
 msgstr "Munkaidő"
 
@@ -2409,11 +2524,18 @@ msgstr "Munkaidő"
 msgid "By"
 msgstr "Szerző"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "by e-mail"
+msgstr "e-mailben"
+
 #: src/features/conversation/Feedback.tsx
 msgid "By e-mail"
 msgstr "E-mailben"
 
 #: src/features/reports/ReportPages.tsx
+msgid "By inbox"
+msgstr "Postafiókonként"
+
 #: src/features/reports/ReportsColumn.tsx
 msgid "By member"
 msgstr "Tagok szerint"
@@ -2430,10 +2552,6 @@ msgstr "Kampány a linkekben"
 #: src/features/broadcasts/Composer.tsx
 msgid "Campaign name"
 msgstr "Kampány neve"
-
-#: src/features/auth/AuthLayout.tsx
-msgid "Can I schedule a newsletter for each subscriber?"
-msgstr "Ütemezhetek hírlevelet minden feliratkozónak külön?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/Linked.tsx
@@ -2516,6 +2634,7 @@ msgid "Cancelled. What was added before stays."
 msgstr "Megszakítva. Ami előtte hozzáadódott, megmarad."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/conversation/composer/CannedMenu.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
@@ -2539,6 +2658,10 @@ msgstr "Gyűjtőcím Feladó cím nélkül"
 #: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategória"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Cause found"
+msgstr "Megvan az ok"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Cc: {cc}"
@@ -2613,6 +2736,11 @@ msgstr "Csatorna hozzáadva"
 #: src/features/settings/channels/sections.tsx
 msgid "Channel removed"
 msgstr "Csatorna eltávolítva"
+
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Channels"
+msgstr "Csatornák"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2802,6 +2930,7 @@ msgstr "Kattintáskövetés"
 msgid "clicked"
 msgstr "kattintott"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Clicked"
 msgstr "Kattintott"
@@ -2813,6 +2942,10 @@ msgstr "rákattintott egy linkre, nagyjából"
 #: src/features/home/HomePage.tsx
 msgid "clicks not tracked"
 msgstr "a kattintásokat nem követjük"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Clicks not tracked"
+msgstr "A kattintásokat nem követjük"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -2876,10 +3009,6 @@ msgstr "Keresés bezárása"
 msgid "Close the search (Esc)"
 msgstr "Keresés bezárása (Esc)"
 
-#: src/features/reports/ReportPages.tsx
-msgid "closed"
-msgstr "lezárva"
-
 #: src/components/common/text.ts
 #: src/features/reports/ReportPages.tsx
 msgid "Closed"
@@ -2909,6 +3038,14 @@ msgstr "CNAME-rekord"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kód"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collapse or expand the sidebar"
+msgstr "Oldalsáv összecsukása vagy kibontása"
+
+#: src/app/TopBar.tsx
+msgid "Collapse the sidebar"
+msgstr "Oldalsáv összecsukása"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Collections"
@@ -2967,6 +3104,7 @@ msgstr "Az összetevő törölve"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
 msgstr "Összetevők"
@@ -3013,6 +3151,7 @@ msgid "Confirmation and welcome mails, and every broadcast to the list, go out t
 msgstr "A megerősítő és üdvözlő e-mailek, valamint a listának küldött minden tömeges küldés e-mail-csatornán keresztül megy ki."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Confirmation asked"
 msgstr "Megerősítést kértek"
 
@@ -3084,9 +3223,10 @@ msgid "Connected {created}"
 msgstr "Csatlakoztatva: {created}"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
-#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "Csatlakoztatott alkalmazások"
@@ -3230,6 +3370,7 @@ msgid "Conversation reopened"
 msgstr "Beszélgetés újranyitva"
 
 #: src/features/contact/ContactPage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "beszélgetés"
 
@@ -3251,6 +3392,14 @@ msgstr "Beszélgetések"
 #: src/features/migrations/parts.tsx
 msgid "Conversations copied"
 msgstr "Beszélgetések átmásolva"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations from every product"
+msgstr "Beszélgetések minden termékből"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations in {product}"
+msgstr "Beszélgetések itt: {product}"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3418,6 +3567,7 @@ msgid "Create status page"
 msgstr "Állapotoldal létrehozása"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Create status page ({newKey})"
 msgstr "Állapotoldal létrehozása ({newKey})"
 
@@ -3482,9 +3632,9 @@ msgstr "CSV-fájl"
 msgid "Custom"
 msgstr "Egyéni"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Custom domain still shows as unverified"
-msgstr "Az egyéni domain még mindig ellenőrizetlenként látszik"
+#: src/app/Sidebar.tsx
+msgid "Customers"
+msgstr "Ügyfelek"
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3524,13 +3674,13 @@ msgstr "Színek sötétítése a témához illően"
 msgid "Data retention"
 msgstr "Adatmegőrzés"
 
-#: src/features/settings/SettingsColumn.tsx
-msgid "Data retention and deleting the workspace"
-msgstr "Adatmegőrzés és a munkaterület törlése"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "Database upgrade"
 msgstr "Adatbázis-frissítés"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Date"
+msgstr "Dátum"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
@@ -3701,6 +3851,10 @@ msgstr "Törlöd ezt a feliratkozást?"
 msgid "Delete this workspace"
 msgstr "Munkaterület törlése"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Delete workspace…"
+msgstr "Munkaterület törlése…"
+
 #: src/features/account/AccountPage.tsx
 msgid "Delete your account"
 msgstr "Fiók törlése"
@@ -3788,6 +3942,7 @@ msgstr "Leírás (nem kötelező)"
 msgid "Design"
 msgstr "Dizájn"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "Designs"
 msgstr "Dizájnok"
@@ -3810,10 +3965,6 @@ msgstr "Részletek"
 #: src/features/status/SettingsTab.tsx
 msgid "Deutsch"
 msgstr "Deutsch"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Developer"
-msgstr "Fejlesztő"
 
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
@@ -3989,6 +4140,7 @@ msgstr "A domain nincs ellenőrizve"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Kész"
@@ -4068,6 +4220,7 @@ msgid "Draft:"
 msgstr "Piszkozat:"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Drafts"
@@ -4076,6 +4229,10 @@ msgstr "Piszkozatok"
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "Várakozó piszkozatok"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Drafts waiting for review and the assistants you connected"
+msgstr "Ellenőrzésre váró piszkozatok és a csatlakoztatott asszisztensek"
 
 #: src/features/migrations/text.ts
 msgid "Drafts, never imported"
@@ -4096,7 +4253,6 @@ msgstr "A kijelölt blokk megkettőzése"
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
-#: src/features/auth/AuthLayout.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
@@ -4154,17 +4310,21 @@ msgstr "Az e-mail-feliratkozók ki vannak kapcsolva"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "Az e-mail-feliratkozók ki vannak kapcsolva. Senki nem iratkozhat fel, és nem megy ki értesítés, de a lista megmarad."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "E-mail subscriptions are off"
+msgstr "Az e-mailes feliratkozás ki van kapcsolva"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
 msgstr "E-mail nézet"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "E-mail, live chat and in-app messages"
-msgstr "E-mail, élő csevegés és alkalmazáson belüli üzenetek"
-
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "E-mails to the people who signed up for them."
+msgstr "E-mailek azoknak, akik feliratkoztak rájuk."
 
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the incident is open."
@@ -4182,6 +4342,10 @@ msgstr "Minden beszélgetés lezárul a válasz után. Az ügyfelek azonnal megk
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Minden beszélgetés megtartja azt az állapotot, amelyet a(z) {provider} jelent hozzá: nyitott, függőben vagy lezárt."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Each day’s uptime shows here once the page is published."
+msgstr "Az egyes napok rendelkezésre állása itt jelenik meg, ha az oldal közzé van téve."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
 msgstr "Mindegyik a postafiókja e-mail-csatornájába megy a saját címéhez, különben a postafiók legrégebbi e-mail-csatornájába, hogy a válaszok elérjék az ügyfelet. E-mail-csatorna nélküli postafiók csak előzményként őrzi meg őket."
@@ -4195,6 +4359,10 @@ msgstr "Minden üzenet eredeti forrása tárolásra kerül, mint az élőben ér
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Minden új e-mail beszélgetést indít; a válaszok folytatják."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Each product has its own inbox, branding, hours and channels."
+msgstr "Minden terméknek saját postafiókja, arculata, nyitvatartása és csatornái vannak."
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4410,10 +4578,6 @@ msgstr "Minden jel, kihagyott jel és elküldött állapot az elmúlt 30 napból
 msgid "Every check of the last 30 days, newest first."
 msgstr "Az elmúlt 30 nap minden ellenőrzése, a legújabb elöl."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Every customer conversation, in one place."
-msgstr "Minden ügyfélbeszélgetés egy helyen."
-
 #: src/features/migrations/MapStep.tsx
 msgid "Every imported conversation is closed."
 msgstr "Minden importált beszélgetés lezárt."
@@ -4479,6 +4643,10 @@ msgstr "Mindenki ebben a fájlban beleegyezett, hogy megkapja a(z) {listName} li
 msgid "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
 msgstr "Mindenki a listákon. A feltételek csak azokat a kontaktokat tartják meg, akiknek az attribútumai egyeznek, mindegyik."
 
+#: src/features/contact/ContactsColumn.tsx
+msgid "Everyone who has written to your products"
+msgstr "Mindenki, aki írt a termékeidnek"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Mindenki bejegyzései azonnal megjelennek, kivéve azokét a szerzőkét, akiket spamnek jelöltél."
@@ -4511,6 +4679,10 @@ msgstr "Mindenhol"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Example Ltd."
 msgstr "Példa Kft."
+
+#: src/app/TopBar.tsx
+msgid "Expand the sidebar"
+msgstr "Oldalsáv kibontása"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Expected every"
@@ -4721,12 +4893,16 @@ msgid "First name"
 msgstr "Keresztnév"
 
 #: src/features/reports/ReportPages.tsx
-msgid "first replies"
-msgstr "első válaszok"
+msgid "First replies"
+msgstr "Első válaszok"
 
 #: src/features/contact/ContactPage.tsx
 msgid "first reply"
 msgstr "első válasz"
+
+#: src/features/reports/ReportPages.tsx
+msgid "First reply"
+msgstr "Első válasz"
 
 #: src/app/TeamMenu.tsx
 msgid "first reply in {first}"
@@ -4743,6 +4919,10 @@ msgstr "Első frissítés"
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Először egy e-mail-cím"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Fix is out"
+msgstr "A javítás kint van"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
@@ -4933,6 +5113,10 @@ msgstr "Feladó cím (nem kötelező)"
 msgid "From blocked contacts"
 msgstr "Letiltott kontaktoktól"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "From Gmail, Outlook, Yandex or any IMAP server, read only from the source."
+msgstr "Gmailből, Outlookból, Yandexből vagy bármely IMAP-szerverről, a forrásnál csak olvasással."
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
 msgstr "A terminálból"
@@ -4971,8 +5155,11 @@ msgstr "Fumadocs / React"
 msgid "Further copies of the same message"
 msgstr "Ugyanazon üzenet további másolatai"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "Általános"
 
@@ -5031,6 +5218,18 @@ msgstr "Ugrás a listákhoz"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Goes out through {via}"
 msgstr "Ezen keresztül megy ki: {via}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good afternoon, {first}"
+msgstr "Szép délutánt, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good evening, {first}"
+msgstr "Jó estét, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good morning, {first}"
+msgstr "Jó reggelt, {first}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -5129,6 +5328,7 @@ msgstr "Súgócikk"
 msgid "Help articles"
 msgstr "Súgócikkek"
 
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help center"
 msgstr "Súgóközpont"
@@ -5254,6 +5454,10 @@ msgstr "Gazdagépnév"
 msgid "Hostname and certificate"
 msgstr "Gazdagépnév és tanúsítvány"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Hours"
+msgstr "Nyitvatartás"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Hogyan egyeztek bele?"
@@ -5270,6 +5474,10 @@ msgstr "Hogyan iratkoznak fel az emberek?"
 msgid "How far back"
 msgstr "Mennyire messzire vissza"
 
+#: src/features/reports/ReportPages.tsx
+msgid "How fast and how well your team answers."
+msgstr "Milyen gyorsan és milyen jól válaszol a csapatod."
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Hogyan nyílnak meg a HTML-e-mailek. Minden üzenetnél továbbra is átválthatsz."
@@ -5281,6 +5489,10 @@ msgstr "Mennyit késhet egy jel."
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Hogyan érkeznek a levelek a Yuvába"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "How messages reach each product."
+msgstr "Hogyan jutnak el az üzenetek az egyes termékekhez."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
@@ -5491,6 +5703,14 @@ msgstr "Importok"
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
 msgstr "A munkaterületben az importok egyenként futnak. Próbáld újra, ha a másik véget ér."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact}"
+msgstr "– {contact}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact} · {subject}"
+msgstr "– {contact} · {subject}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 óra múlva"
@@ -5584,15 +5804,12 @@ msgstr "A Yandex Mail beállításaiban, a Mail clients alatt engedélyezd az IM
 msgid "In Zoho Mail, open Settings › Mail accounts › IMAP access and turn IMAP on."
 msgstr "A Zoho Mailben nyisd meg a Settings › Mail accounts › IMAP access részt, és kapcsold be az IMAP-ot."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "In-app"
-msgstr "Alkalmazáson belül"
-
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/webhooks/sections.tsx
@@ -5608,14 +5825,9 @@ msgstr "Postafiók színe"
 msgid "Inbox for {name}"
 msgstr "Postafiók: {name}"
 
-#: src/features/home/HomePage.tsx
-msgid "Inbox today"
-msgstr "Postafiók ma"
-
 #: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/settings/SettingsColumn.tsx
 msgid "Inboxes"
 msgstr "Postafiókok"
 
@@ -5640,6 +5852,10 @@ msgstr "Jegyzetek belefoglalása"
 #: src/features/contact/ContactSheet.tsx
 msgid "Info"
 msgstr "Infó"
+
+#: src/app/Sidebar.tsx
+msgid "Insights"
+msgstr "Elemzések"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
@@ -5673,6 +5889,7 @@ msgid "Investigating"
 msgstr "Kivizsgálás alatt"
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Invite"
 msgstr "Meghívás"
 
@@ -5683,6 +5900,10 @@ msgstr "Meghívó nyelve"
 #: src/features/setup/WaitStep.tsx
 msgid "Invite your team"
 msgstr "Hívd meg a csapatodat"
+
+#: src/features/team/TeamColumn.tsx
+msgid "Invited, not joined yet"
+msgstr "Meghívva, még nem csatlakozott"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invites"
@@ -5879,6 +6100,7 @@ msgid "Kept with every subscription from this file, as the record of their conse
 msgstr "Az ebből a fájlból származó minden feliratkozás mellett megmarad a hozzájárulásuk feljegyzéseként."
 
 #: src/app/Palette.tsx
+#: src/app/TopBar.tsx
 #: src/app/UserMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
@@ -5926,6 +6148,7 @@ msgid "Label only: its mail comes from All mail, and its conversations get the l
 msgstr "Csak címke: a levelei az Összes levélből jönnek, és a beszélgetései megkapják a címkét."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -5946,6 +6169,7 @@ msgstr "Címkék (L)"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
@@ -5967,6 +6191,14 @@ msgstr "Nagyobb a szerver korlátjánál"
 #: src/features/migrations/text.ts
 msgid "Larger than this server's limit for one message"
 msgstr "Nagyobb a szerver egy üzenetre vonatkozó korlátjánál"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 30 days"
+msgstr "Elmúlt 30 nap"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 7 days"
+msgstr "Elmúlt 7 nap"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
@@ -6211,10 +6443,12 @@ msgstr "Várakozás a levélre…"
 msgid "Listing the tickets…"
 msgstr "Jegyek listázása…"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Listák"
@@ -6224,7 +6458,6 @@ msgid "Live"
 msgstr "Élő"
 
 #: src/components/common/Source.tsx
-#: src/features/auth/AuthLayout.tsx
 msgid "Live chat"
 msgstr "Élő csevegés"
 
@@ -6240,6 +6473,7 @@ msgstr "Képek betöltése"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -6307,6 +6541,10 @@ msgstr "Keresés a régebbi üzenetekben"
 #: src/app/TeamMenu.tsx
 msgid "Looking at {where}"
 msgstr "Nézi: {where}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Looking into it"
+msgstr "Vizsgáljuk"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Looking up the provider…"
@@ -6410,7 +6648,7 @@ msgstr "Maildir zipben"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactPage.tsx
 msgid "Mailing lists"
 msgstr "Levelezési listák"
@@ -6571,6 +6809,10 @@ msgstr "Média"
 msgid "Media, links and docs"
 msgstr "Média, linkek és dokumentumok"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median"
+msgstr "medián"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Median"
 msgstr "Medián"
@@ -6580,14 +6822,20 @@ msgstr "Medián"
 msgid "median first reply"
 msgstr "első válasz mediánja"
 
+#: src/features/home/HomePage.tsx
+msgid "Median first reply"
+msgstr "Első válasz mediánja"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "Tag"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/members/MembersPage.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Members"
 msgstr "Tagok"
@@ -6662,6 +6910,10 @@ msgstr "Üzenetek átmásolva"
 msgid "Messages imported"
 msgstr "Üzenetek importálva"
 
+#: src/features/reports/ReportPages.tsx
+msgid "messages sent"
+msgstr "elküldött üzenet"
+
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "A kulcs által küldött üzeneteken a bot neve és képe látszik."
@@ -6714,6 +6966,7 @@ msgstr "Átvitel megszakítva"
 msgid "Migration steps"
 msgstr "Átviteli lépések"
 
+#: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Mine"
 msgstr "Az enyéim"
@@ -6750,6 +7003,7 @@ msgid "Monitoring"
 msgstr "Megfigyelés alatt"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Monitors"
 msgstr "Figyelők"
@@ -6872,8 +7126,10 @@ msgstr "Áthelyezés a postafiókba"
 msgid "Move to the previous or next stage"
 msgstr "Áthelyezés az előző vagy a következő szakaszba"
 
+#: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Költözés a Yuvába"
 
@@ -6978,6 +7234,10 @@ msgstr "Figyelmet igényel"
 msgid "Needs the operator’s approval"
 msgstr "Az üzemeltető jóváhagyását igényli"
 
+#: src/features/home/HomePage.tsx
+msgid "Needs you"
+msgstr "Rád vár"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Never"
@@ -7027,10 +7287,12 @@ msgstr "Új cikk"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "Új tömeges levél"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast ({newKey})"
 msgstr "Új tömeges levél ({newKey})"
 
@@ -7134,6 +7396,7 @@ msgid "New label “{folder}”"
 msgstr "Új „{folder}” címke"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New list"
 msgstr "Új lista"
 
@@ -7154,6 +7417,10 @@ msgstr "Új üzenet egy hozzá nem rendelt beszélgetésben"
 msgid "New migration"
 msgstr "Új átvitel"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "New page"
+msgstr "Új oldal"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "New password"
 msgstr "Új jelszó"
@@ -7169,6 +7436,14 @@ msgstr "Új aláírási titok"
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "Új feliratkozók hozzáadva"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "New subscriptions per day, last 30 days"
+msgstr "Új feliratkozások naponta, elmúlt 30 nap"
+
+#: src/features/status/IncidentPane.tsx
+msgid "New update · {stage}"
+msgstr "Új frissítés · {stage}"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "New value"
@@ -7234,6 +7509,10 @@ msgstr "Következő ellenőrzés: {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "Következő levél: {local} ({utc} UTC), ennek a tömeges levélnek a tempójában."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Next send"
+msgstr "Következő küldés"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Ezután válaszd ki, mit hozz át. Az átvizsgálás egyszer olvassa a fájlt."
@@ -7275,6 +7554,7 @@ msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP
 msgstr "Nincs Alkalmazásjelszavak oldal? Az adminodnak engedélyeznie kell a kétlépcsős ellenőrzést és az IMAP-ot a Google Admin konzolon."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No archived lists"
 msgstr "Nincs archivált lista"
 
@@ -7295,6 +7575,7 @@ msgid "No broadcast has gone out yet. When one has, its recipients, clicks and r
 msgstr "Még egy tömeges levél sem ment ki. Ha lesz, a címzettjei, kattintásai és válaszai itt jelennek meg."
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "Még nincs tömeges levél"
 
@@ -7318,12 +7599,14 @@ msgstr "Nincs kiválasztva küldésre képes csatorna. Amíg nincs ilyen, senki 
 msgid "No channel yet"
 msgstr "Még nincs csatorna"
 
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "No channels yet"
 msgstr "Még nincsenek csatornák"
 
 #. placeholder {0}: inbox.name
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "Még nincs csatorna. Adj hozzá egyet, hogy az ügyfelek írhassanak ide: {0}."
 
@@ -7340,6 +7623,7 @@ msgid "No components yet. Add the parts of your product that customers depend on
 msgstr "Még nincs összetevő. Add hozzá a termékednek azokat a részeit, amelyektől az ügyfelek függenek."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No confirmation"
 msgstr "Megerősítés nélkül"
 
@@ -7486,6 +7770,7 @@ msgid "No mail server was found for {domain}. Pick your provider below, or “Ot
 msgstr "A(z) {domain} domainhez nem található levelezőszerver. Válaszd ki alább a szolgáltatódat, vagy a „Másik IMAP-szerver” lehetőséget, és add meg a szervert a következő lépésben."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No mailing lists yet"
 msgstr "Még nincsenek levelezési listák"
 
@@ -7513,10 +7798,6 @@ msgstr "Az elmúlt 90 napban nincs értesítés."
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "Még senki sem említett meg egy jegyzetben. Amikor egy kolléga @-ot és a neved írja, a jegyzet itt jelenik meg."
 
-#: src/features/home/HomePage.tsx
-msgid "No open conversations. New ones show up here and in the inbox as they arrive."
-msgstr "Nincsenek nyitott beszélgetések. Az újak itt és a postafiókban jelennek meg, ahogy érkeznek."
-
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
 msgstr "Nincs nyitott visszajelzés."
@@ -7537,9 +7818,17 @@ msgstr "Még nincsenek oldalak"
 msgid "No pending invites."
 msgstr "Nincsenek függő meghívók."
 
+#: src/features/settings/ProductsPage.tsx
+msgid "No products yet. Add one for each product or brand you answer for."
+msgstr "Még nincs termék. Adj hozzá egyet minden termékhez vagy márkához, amelynek nevében válaszolsz."
+
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
 msgstr "Nem található közzétett cikk."
+
+#: src/features/reports/ReportPages.tsx
+msgid "No ratings in this period."
+msgstr "Ebben az időszakban nincs értékelés."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -7548,10 +7837,6 @@ msgstr "Ebben az időszakban nincsenek értékelések."
 #: src/features/reports/ReportsColumn.tsx
 msgid "No ratings today"
 msgstr "Ma nincsenek értékelések"
-
-#: src/features/reports/ReportPages.tsx
-msgid "No ratings today."
-msgstr "Ma nincsenek értékelések."
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7601,6 +7886,7 @@ msgid "No subject"
 msgstr "Nincs tárgy"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "Még nincs tárgy"
 
@@ -7657,8 +7943,8 @@ msgid "Nobody else can see this inbox yet."
 msgstr "Ezt a postafiókot még senki más nem látja."
 
 #: src/features/reports/ReportPages.tsx
-msgid "Nobody has replied or closed anything yet today."
-msgstr "Ma még senki sem válaszolt vagy zárt le semmit."
+msgid "Nobody has replied or closed anything in this period."
+msgstr "Ebben az időszakban senki nem válaszolt és nem zárt le semmit."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody is on the list of recipients yet."
@@ -7691,6 +7977,7 @@ msgstr "Senki sem kapná meg ezt a levelet. Válassz feliratkozókkal rendelkez�
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/contact/MergePreview.tsx
+#: src/features/conversation/Feedback.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -7786,6 +8073,10 @@ msgstr "Ezen a szerveren nem érhető el"
 msgid "Not on any mailing list."
 msgstr "Egyetlen levelezési listán sincs rajta."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "not public yet"
+msgstr "még nem nyilvános"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
 msgstr "Nincs kész"
@@ -7840,6 +8131,10 @@ msgstr "Még nincs feltöltve"
 msgid "Not used yet"
 msgstr "Még nincs használva"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Note"
+msgstr "Jegyzet"
+
 #: src/features/contact/ContactNotes.tsx
 msgid "Note about this contact"
 msgstr "Megjegyzés erről a kontaktról"
@@ -7856,9 +8151,9 @@ msgstr "Megjegyzés, csak a csapat látja"
 msgid "Notes"
 msgstr "Jegyzetek"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Notes stopped syncing after the update"
-msgstr "A jegyzetek a frissítés után nem szinkronizálódtak"
+#: src/features/inbox/SidePanels.tsx
+msgid "Notes where a teammate mentioned you"
+msgstr "Jegyzetek, amelyekben egy csapattárs megemlített"
 
 #: src/features/settings/notifications/events.ts
 msgid "Nothing"
@@ -7883,6 +8178,10 @@ msgstr "Még semmi sem érkezett."
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Még nem történt semmi."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Nothing here."
+msgstr "Itt nincs semmi."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
@@ -7930,6 +8229,10 @@ msgstr "Semmi sincs elhalasztva."
 msgid "Nothing is waiting for approval."
 msgstr "Semmi sem vár jóváhagyásra."
 
+#: src/features/home/HomePage.tsx
+msgid "Nothing is waiting."
+msgstr "Semmi sem vár."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
 msgstr "Semmi sem egyezik ezekkel a szűrőkkel."
@@ -7938,6 +8241,10 @@ msgstr "Semmi sem egyezik ezekkel a szűrőkkel."
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Semmi sem egyezik itt a kereséseddel."
+
+#: src/features/home/HomePage.tsx
+msgid "Nothing needs you"
+msgstr "Semmi sem vár rád"
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -7948,6 +8255,7 @@ msgid "Notices to subscribers"
 msgstr "Értesítések a feliratkozóknak"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7985,6 +8293,7 @@ msgstr "Októberi hírlevél"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "Off"
 msgstr "Ki"
@@ -8089,7 +8398,6 @@ msgstr "Amint megérkezik egy tesztüzenet, a Yuva {hours} órát vár. Ha ezala
 msgid "One e-mail a month about what is new."
 msgstr "Havonta egy e-mail az újdonságokról."
 
-#: src/features/auth/AuthLayout.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "One inbox"
 msgstr "Egy postafiók"
@@ -8247,18 +8555,16 @@ msgstr "Csak amíg a panel meg van nyitva ebben a böngészőben. Távollétedbe
 msgid "Only your team sees it."
 msgstr "Csak a csapatod látja."
 
-#: src/features/home/HomePage.tsx
-msgid "open"
-msgstr "nyitott"
-
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Nyitott"
@@ -8489,6 +8795,10 @@ msgstr "Válasz megnyitása"
 msgid "Open the status page"
 msgstr "Az állapotoldal megnyitása"
 
+#: src/features/home/HomePage.tsx
+msgid "Open the team"
+msgstr "Csapat megnyitása"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Munkaterület-beállítások megnyitása"
@@ -8645,6 +8955,7 @@ msgid "Owner"
 msgstr "Tulajdonos"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "A tulajdonosok és adminok listákat hoznak létre, feliratkozókat adnak hozzá, és tömeges leveleket küldenek."
 
@@ -8815,6 +9126,10 @@ msgstr "Függőben"
 msgid "Pending deliveries are dropped with it."
 msgstr "A függő kézbesítések elvetésre kerülnek vele."
 
+#: src/features/reports/ReportPages.tsx
+msgid "people answered"
+msgstr "megválaszolt ember"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Az emberek feliratkozási űrlapon csatlakoznak hozzá, vagy a hozzájárulásukkal kerülnek hozzáadásra. A tömeges levelek a listákra mennek."
@@ -8865,6 +9180,10 @@ msgstr "Postafiókonként"
 msgid "Per month (30 days)"
 msgstr "Havonta (30 nap)"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Period"
+msgstr "Időszak"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Permission to send"
 msgstr "Küldési engedély"
@@ -8912,14 +9231,6 @@ msgstr "Válasszon egy visszajelzést"
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Válassz feladót a beállításokban"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Pick a setting on the left."
-msgstr "Válassz egy beállítást balra."
-
-#: src/features/team/TeamColumn.tsx
-msgid "Pick a teammate"
-msgstr "Válassz kollégát"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Pick a time in the next 90 days, in your time zone, {zone}."
@@ -9072,6 +9383,7 @@ msgid "Plan maintenance ({maintenanceKey})"
 msgstr "Karbantartás tervezése ({maintenanceKey})"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentPane.tsx
 msgid "Planned"
 msgstr "Tervezett"
 
@@ -9108,7 +9420,6 @@ msgid "Port"
 msgstr "Port"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Post an update"
 msgstr "Frissítés közzététele"
 
@@ -9121,6 +9432,7 @@ msgid "Post feedback for your app's users"
 msgstr "Gyűjts visszajelzéseket az alkalmazásod felhasználóitól"
 
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Post update"
 msgstr "Frissítés elküldése"
 
@@ -9194,12 +9506,17 @@ msgstr "Prioritás, beérkezett, spam és más"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Private"
 msgstr "Privát"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "pro, team"
 msgstr "pro, csapat"
+
+#: src/features/inbox/InboxPicker.tsx
+msgid "Product"
+msgstr "Termék"
 
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
@@ -9210,21 +9527,37 @@ msgstr "Termék neve"
 msgid "Product news"
 msgstr "Termékhírek"
 
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "Product: {label}"
+msgstr "Termék: {label}"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Production backend"
 msgstr "Éles háttérrendszer"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "Products"
+msgstr "Termékek"
+
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profil"
 
+#: src/features/conversation/Feedback.tsx
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Haladás"
+
+#: src/features/conversation/Feedback.tsx
+msgid "Progress · the person sees this"
+msgstr "Előrehaladás · az illető látja"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Progress (O)"
@@ -9237,6 +9570,7 @@ msgstr "A Proton Mail IMAP-on csak a saját számítógépeden futó Proton Mail
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Public"
 msgstr "Nyilvános"
 
@@ -9248,12 +9582,21 @@ msgstr "Nyilvános cím"
 msgid "Public key"
 msgstr "Nyilvános kulcs"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Public pages that tell your customers whether your products work."
+msgstr "Nyilvános oldalak, amelyek megmutatják az ügyfeleidnek, hogy működnek-e a termékeid."
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Nyilvános szálak a dokumentációs oldalaid alatt, minden állapotban."
 
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
+msgid "Publish"
+msgstr "Közzététel"
+
+#: src/app/Sidebar.tsx
+msgctxt "sidebar group"
 msgid "Publish"
 msgstr "Közzététel"
 
@@ -9394,6 +9737,7 @@ msgstr "Értékelés"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Ratings"
 msgstr "Értékelések"
 
@@ -9568,6 +9912,7 @@ msgstr "címzettek"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Recipients"
@@ -9740,6 +10085,10 @@ msgstr "Eltávolítod ezt a hozzáférési kulcsot?"
 msgid "Remove Yuva's access in Microsoft"
 msgstr "A Yuva hozzáférésének eltávolítása a Microsoftban"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Removes every inbox, conversation and contact for everyone."
+msgstr "Mindenki számára töröl minden postafiókot, beszélgetést és kapcsolatot."
+
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Removes you from every workspace. Messages you wrote stay, shown as from a deleted member."
 msgstr "Eltávolít téged minden munkaterületről. Az általad írt üzenetek megmaradnak, törölt tagtól származóként megjelenítve."
@@ -9782,6 +10131,7 @@ msgstr "Csere"
 msgid "replied"
 msgstr "válaszolt"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Replied"
 msgstr "Válaszolt"
@@ -9793,10 +10143,6 @@ msgstr "Válaszolt a(z) <0>{title}</0> szálában"
 #: src/features/conversation/RelatedLine.tsx
 msgid "Replied in the thread of another conversation"
 msgstr "Válaszolt egy másik beszélgetés szálában"
-
-#: src/features/reports/ReportPages.tsx
-msgid "replies"
-msgstr "válasz"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
@@ -9811,7 +10157,6 @@ msgstr "Válaszok"
 msgid "Replies and answers in the discussions you follow"
 msgstr "Válaszok és megoldások a követett vitákban"
 
-#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "Válaszok és lezárások"
@@ -9848,6 +10193,10 @@ msgstr "válasz ma"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "Válaszok ezen keresztül"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "replies within {within}"
+msgstr "{within} alatt válaszol"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -9930,10 +10279,6 @@ msgstr "Válasz a kijelölt bejegyzésre"
 msgid "Reply with a quote"
 msgstr "Válasz idézettel"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Reply, assign and follow up together, across all of your products."
-msgstr "Válaszoljatok, rendeljetek hozzá és kövessétek együtt, az összes termékeden át."
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Replying to {to}"
 msgstr "Válasz neki: {to}"
@@ -10006,6 +10351,10 @@ msgstr "Válaszidő: {took}"
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "Válaszidő"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Response time, last 24 hours"
+msgstr "Válaszidő, elmúlt 24 óra"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -10271,6 +10620,7 @@ msgstr "A bejegyzés ütemezése"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Ütemezve"
@@ -10373,6 +10723,10 @@ msgstr "Keresés ebben a beszélgetésben ({0})"
 msgid "Search incidents"
 msgstr "Incidensek keresése"
 
+#: src/app/TopBar.tsx
+msgid "Search or jump to…"
+msgstr "Keresés vagy ugrás ide…"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Emberek, műveletek vagy beállítások keresése"
@@ -10410,12 +10764,9 @@ msgid "Secret"
 msgstr "Titok"
 
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Szakaszok"
-
-#: src/features/team/TeamColumn.tsx
-msgid "See where they are, what they hold open and what they did today."
-msgstr "Nézd meg, hol vannak, mit tartanak nyitva, és mit tettek ma."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Select conversations"
@@ -10508,6 +10859,10 @@ msgstr "Tesztértesítés küldése"
 msgid "Send a test notification to {name}"
 msgstr "Tesztértesítés küldése neki: {name}"
 
+#: src/features/team/TeamColumn.tsx
+msgid "Send again"
+msgstr "Újraküldés"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Send an auto-reply"
 msgstr "Automatikus válasz küldése"
@@ -10581,6 +10936,11 @@ msgstr "Megerősítés újraküldése"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Send the e-mail after"
 msgstr "E-mail küldése ennyi idő után:"
+
+#. placeholder {0}: invite.email
+#: src/features/team/TeamColumn.tsx
+msgid "Send the invite for {0} again"
+msgstr "Meghívó újraküldése neki: {0}"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Send the reply"
@@ -10682,6 +11042,18 @@ msgstr "Küldés, majd bezárás…"
 msgid "Sending…"
 msgstr "Küldés…"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when}"
+msgstr "Küldés: {when}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to}"
+msgstr "Küldés: {when}, címzett: {to}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to} · {people} people"
+msgstr "Küldés: {when}, címzett: {to} · {people} fő"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
 msgid "Sends from"
@@ -10708,9 +11080,11 @@ msgstr "elküldve"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -10727,6 +11101,10 @@ msgstr "Elküldve"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "{count} üzenetet küldött erről a címről"
+
+#: src/features/team/TeamColumn.tsx
+msgid "sent {sent}"
+msgstr "elküldve: {sent}"
 
 #: src/features/home/HomePage.tsx
 msgid "Sent {sentAt}"
@@ -10850,12 +11228,14 @@ msgstr "Beállítás…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -10902,10 +11282,12 @@ msgstr "Gyorsbillentyű"
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Show"
 msgstr "Megjelenítés"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Show archived lists"
 msgstr "Archivált listák megjelenítése"
 
@@ -11193,6 +11575,10 @@ msgstr "Mióta"
 msgid "Since {since}"
 msgstr "{since} óta"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "since {started}"
+msgstr "kezdete: {started}"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "Mióta…"
@@ -11378,6 +11764,10 @@ msgstr "Az SPF átmegy a(z) {spfDomain} domainre, nem a(z) {from} küldési doma
 msgid "SPF passes for {spfDomain}."
 msgstr "Az SPF átmegy a(z) {spfDomain} domainre."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Stage"
+msgstr "Szakasz"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Start"
 msgstr "Indítás"
@@ -11389,6 +11779,10 @@ msgstr "Vita indítása"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "Levelezési lista indítása"
+
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Start a move"
+msgstr "Költözés indítása"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -11417,6 +11811,10 @@ msgstr "Indítsd el a levelezési listádat"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "Elindítva"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Started {started}"
+msgstr "Kezdete: {started}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Started {when}"
@@ -11449,7 +11847,6 @@ msgstr "STARTTLS (587-es port)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Állapot"
 
@@ -11470,6 +11867,7 @@ msgstr "Állapot leálláskor"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
@@ -11488,6 +11886,7 @@ msgstr "Állapotoldal"
 msgid "Status page deleted"
 msgstr "Állapotoldal törölve"
 
+#: src/app/Sidebar.tsx
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Status pages"
@@ -11578,6 +11977,7 @@ msgstr "most feliratkozott"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Feliratkozók"
@@ -11714,6 +12114,8 @@ msgstr "TCP-ellenőrzés"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/MemberPage.tsx
 #: src/features/team/TeamColumn.tsx
@@ -11753,8 +12155,8 @@ msgid "teammate@company.com"
 msgstr "kollega@ceg.hu"
 
 #: src/features/status/StatusPagePane.tsx
-msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
-msgstr "Mondd el az ügyfeleknek, működik-e a terméked. Válaszd ki egy postaláda oldalát, hogy incidenseket nyiss, karbantartást tervezz és beállítsd az egyes összetevők állapotát."
+msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "Mondd meg az ügyfeleidnek, működik-e a terméked. Minden postafiók kap egy oldalt, ahol incidenseket nyitsz, karbantartást tervezel, és beállítod az egyes összetevők állapotát."
 
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
@@ -11834,6 +12236,10 @@ msgstr "Az alkalmazás a frissítés után kijelentkeztet."
 #: src/features/migrations/DoneStep.tsx
 msgid "The app registration you created for Yuva is not needed any more either: delete it in Microsoft Entra › App registrations."
 msgstr "A Yuvához létrehozott alkalmazásregisztrációra sincs már szükség: töröld a Microsoft Entra › App registrations alatt."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The bars are the last {days} days, as visitors see them."
+msgstr "Az oszlopok az elmúlt {days} napot mutatják, ahogy a látogatók látják."
 
 #: src/components/common/text.ts
 msgid "The broadcast changed in the meantime. Look at its state and try again."
@@ -12527,10 +12933,6 @@ msgstr "A feliratkozási űrlap a lista nevét és leírását mutatja."
 msgid "The team today"
 msgstr "A csapat ma"
 
-#: src/features/team/TeamColumn.tsx
-msgid "The team today:"
-msgstr "A csapat ma:"
-
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The tenant is gone from Amazon SES. Broadcasts are blocked until the server sets it up again."
 msgstr "A bérlő eltűnt az Amazon SES-ből. A tömeges levelek le vannak tiltva, amíg a szerver újra be nem állítja."
@@ -13105,6 +13507,7 @@ msgid "To: {emailTo}"
 msgstr "Címzett: {emailTo}"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Today"
 msgstr "Ma"
@@ -13120,14 +13523,6 @@ msgstr "ma ekkor: {at}"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Today at {at}"
 msgstr "Ma ekkor: {at}"
-
-#: src/features/reports/ReportPages.tsx
-msgid "Today since midnight, over the inboxes you can see."
-msgstr "Ma éjfél óta, a látható postafiókokból."
-
-#: src/features/home/HomePage.tsx
-msgid "Today, across the inboxes, websites and apps you can see."
-msgstr "Ma, a látható postafiókokból, webhelyekről és alkalmazásokból."
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Tokens signed with the current secret stop working at once."
@@ -13272,9 +13667,6 @@ msgid "Unanswered"
 msgstr "Megválaszolatlan"
 
 #: src/features/home/HomePage.tsx
-msgid "unassigned"
-msgstr "nincs hozzárendelve"
-
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "Nincs hozzárendelve"
@@ -13394,6 +13786,7 @@ msgid "Unpublish the translation"
 msgstr "A fordítás közzétételének visszavonása"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Unpublished"
 msgstr "Nincs közzétéve"
 
@@ -13403,6 +13796,7 @@ msgstr "Nincs közzétéve, csak a csapatod nézheti meg az előnézetet"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Unread"
 msgstr "Olvasatlan"
 
@@ -13526,6 +13920,10 @@ msgstr "Feltöltés…"
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "Rendelkezésre állás"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
+msgstr "A rendelkezésre állás rejtve van ezen az oldalon. Kapcsold be a beállításokban, hogy itt lásd az egyes napokat."
 
 #: src/components/common/text.ts
 msgid "Urgent"
@@ -13788,6 +14186,7 @@ msgstr "Látogatások a webhelyeiden utm_campaign={campaign} paraméterrel a kü
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/parts.tsx
 msgid "Waiting"
 msgstr "Várakozik"
@@ -13795,10 +14194,6 @@ msgstr "Várakozik"
 #: src/features/migrations/CopyStep.tsx
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "Várakozás a(z) {provider} korlátjára; folytatódik: {waiting}."
-
-#: src/features/home/HomePage.tsx
-msgid "waiting for a reply"
-msgstr "válaszra vár"
 
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
@@ -13862,10 +14257,6 @@ msgstr "Várakozás az alábbi két DNS-rekordra. Adja hozzá őket ott, ahol a 
 msgid "Waiting for validation"
 msgstr "Várakozás az érvényesítésre"
 
-#: src/features/home/HomePage.tsx
-msgid "Waiting longest: <0>{name}</0>"
-msgstr "Legrégebben vár: <0>{name}</0>"
-
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Warn about the certificate"
 msgstr "Figyelmeztetés a tanúsítványról"
@@ -13900,10 +14291,10 @@ msgid "Webhook endpoint"
 msgstr "Webhook-végpont"
 
 #: src/app/Palette.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 msgid "Webhooks"
 msgstr "Webhookok"
 
@@ -14157,6 +14548,10 @@ msgstr "Amíg a panel nyitva van, munkaidőben"
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "Amíg az állapotod Távol, csak a hozzád rendelt beszélgetések új üzenetei és az új hozzárendelések értesítenek. A panelen megnyitott beszélgetés soha nem értesít."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Who agreed to hear from you, with their consent recorded."
+msgstr "Akik beleegyeztek, hogy hírt kapjanak tőled, rögzített hozzájárulással."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Who can reply"
 msgstr "Ki válaszolhat"
@@ -14202,11 +14597,14 @@ msgid "With two-factor sign-in, create an app password in Zoho Accounts › Secu
 msgstr "Kétlépcsős bejelentkezésnél hozz létre alkalmazásjelszót a Zoho Accounts › Security › App passwords alatt; egyébként a jelszavad működik."
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw"
 msgstr "Visszavonás"
 
 #. placeholder {0}: inv.email
+#. placeholder {0}: invite.email
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "Meghívó visszavonása neki: {0}"
 
@@ -14238,6 +14636,10 @@ msgstr "Megerősítés nélkül bárki beírhatja valaki más címét az űrlapo
 msgid "Won't do"
 msgstr "Nem lesz megvalósítva"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Work is going on"
+msgstr "Munka folyik"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."
 msgstr "Dolgozz a beszélgetésekkel a VS Code ügynökmódjából. Úgy jár el, mint te, az engedélyezett hozzáféréssel."
@@ -14255,9 +14657,9 @@ msgid "Working…"
 msgstr "Dolgozik…"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/oauth/ConsentPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Workspace"
 msgstr "Munkaterület"
 
@@ -14420,6 +14822,10 @@ msgstr "Még nincs hozzáférési kulcsod."
 #: src/features/account/AccountPage.tsx
 msgid "You have not written in any discussion yet."
 msgstr "Még egyetlen vitába sem írtál."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "You have read every mention."
+msgstr "Minden említést elolvastál."
 
 #: src/features/inbox/ChatList.tsx
 msgid "You have read everything."
@@ -14612,6 +15018,10 @@ msgstr "A Yuva a(z) {scopes} hatókört kéri, és elutasítja azt a bejelentkez
 #: src/features/migrations/text.ts
 msgid "Yuva can read the account now. Next, choose what to bring."
 msgstr "A Yuva most már olvashatja a fiókot. Ezután válaszd ki, mit hozz át."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Yuva counts clicks and replies. It does not track opens."
+msgstr "A Yuva a kattintásokat és a válaszokat számolja. A megnyitásokat nem követi."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Yuva deleted its token {deletedAt} and can no longer read {provider}."

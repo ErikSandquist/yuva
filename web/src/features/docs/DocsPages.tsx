@@ -2,7 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { BookOpenTextIcon, ExternalLinkIcon, GlobeIcon } from "lucide-react"
 import { Link, useSearchParams } from "react-router"
 
-import { ContactAvatar, Dot, ErrorLine, hostOf } from "@/components/common"
+import { ContactAvatar, ErrorLine, hostOf, InboxMark } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { formatShort, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,7 @@ import { pageLabel, PageRatingMark } from "@/features/docs/PageContext"
 import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary } from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useConversations } from "@/features/inbox/queries"
-import { Card, EmptyRow, Section } from "@/features/settings/ui"
+import { Card, EmptyRow, PageHeader, Section } from "@/features/settings/ui"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useAnalytics } from "@/features/analytics/queries"
 import type { AnalyticsFilter, ConversationListItem, DocsPageDay } from "@/lib/api"
@@ -72,26 +72,27 @@ export function DocsOverview() {
   const fmt = new Intl.NumberFormat(i18n.locale)
   const s = summary.data
   return (
-    <Pane testId="docs-overview">
-      <header className="flex flex-col">
-        <PaneBack to="/docs" label={t`Docs`} />
-        <h1 className="min-w-0 text-page break-words">
-          <Trans>Documentation pages</Trans>
-        </h1>
-        <p className="mt-1.5 text-reading text-muted-foreground">
-          <Plural
-            value={days}
-            one="The last day, over the inboxes you can see."
-            other="The last # days, over the inboxes you can see."
-          />
-        </p>
-        {site && (
-          <p className="mt-1 inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
-            <GlobeIcon className="size-4 text-faint" />
-            <span dir="ltr">{hostOf(site)}</span>
-          </p>
-        )}
-      </header>
+    <Pane wide testId="docs-overview" className="gap-6">
+      <PaneBack to="/docs" label={t`Docs`} />
+      <PageHeader
+        back={false}
+        title={<Trans>Documentation pages</Trans>}
+        description={
+          <span className="flex flex-col gap-1">
+            <Plural
+              value={days}
+              one="The last day, over the inboxes you can see."
+              other="The last # days, over the inboxes you can see."
+            />
+            {site && (
+              <span className="inline-flex items-center gap-1.5 text-body" data-testid="docs-site">
+                <GlobeIcon className="size-4 text-faint" />
+                <span dir="ltr">{hostOf(site)}</span>
+              </span>
+            )}
+          </span>
+        }
+      />
       <DocsSitePicker className="hidden phone:flex" />
       <DocsWindow className="hidden phone:flex" />
       {summary.isPending && <Skeleton className="h-28 rounded-2xl" />}
@@ -332,30 +333,33 @@ export function DocsPagePane() {
       ]
     : []
   return (
-    <Pane testId="docs-page" key={`${inboxId} ${page}`}>
-      <header className="flex flex-col">
-        <PaneBack to="/docs" label={t`Docs`} />
-        <h1 className="min-w-0 text-page break-words">{d?.title || pageLabel(page)}</h1>
-        <p className="mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
-          {inbox && (
-            <span className="inline-flex items-center gap-1.5">
-              <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-              {inbox.name}
-            </span>
-          )}
-          <a
-            href={page}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-w-0 items-center gap-1 break-all text-brand underline-offset-4 hover:underline"
-            dir="ltr"
-            data-testid="docs-page-url"
-          >
-            {page}
-            <ExternalLinkIcon className="size-3.5 shrink-0" />
-          </a>
-        </p>
-      </header>
+    <Pane wide testId="docs-page" key={`${inboxId} ${page}`} className="gap-6">
+      <PaneBack to="/docs" label={t`Docs`} />
+      <PageHeader
+        back={false}
+        title={d?.title || pageLabel(page)}
+        description={
+          <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body">
+            {inbox && (
+              <span className="inline-flex items-center gap-1.5">
+                <InboxMark name={inbox.name} color={inbox.branding.color} className="size-4 text-[9px]" />
+                {inbox.name}
+              </span>
+            )}
+            <a
+              href={page}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-w-0 items-center gap-1 break-all text-brand underline-offset-4 hover:underline"
+              dir="ltr"
+              data-testid="docs-page-url"
+            >
+              {page}
+              <ExternalLinkIcon className="size-3.5 shrink-0" />
+            </a>
+          </span>
+        }
+      />
       <DocsWindow className="hidden phone:flex" />
       {detail.isPending && <Skeleton className="h-28 rounded-2xl" />}
       <ErrorLine error={detail.error} />

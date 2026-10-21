@@ -125,6 +125,10 @@ msgstr "{rate, plural, zero {{dim} {value}: # محادثة لكل 1,000 مشاه
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "استُخدم {used} من {limit} حدث تحليلات هذا الشهر. تُسقَط الأحداث فوق الحد حتى ينتهي الشهر."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} من الزوار"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "يسري التغيير على الأحداث الجديدة. تحتفظ الأيام المحتسبة بالفعل بمنطقتها."
@@ -176,6 +180,10 @@ msgstr "أُنشئ مفتاح جديد"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "تسجّل كلمة المرور الجديدة خروج كل من فتح الرابط."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "مشاهدة صفحة أو حدث أو عمق تمرير"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "معدل التحويل"
 msgid "Conversions"
 msgstr "التحويلات"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "التحويلات عبر الزمن"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "التحويلات لكل 100 زائر."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "زوار مواقعك وتطبيقاتك، من دون ملفات تعريف الارتباط."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "عام"
 msgid "Go to goals"
 msgstr "الانتقال إلى الأهداف"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "الهدف"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "الحد الشهري"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "الأشهر"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "المزيد"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "الخادم مشغول"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "الإعدادات"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "مشاركة"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

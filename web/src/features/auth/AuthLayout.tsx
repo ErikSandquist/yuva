@@ -1,99 +1,94 @@
-import { Trans, useLingui } from "@lingui/react/macro"
-import { MailIcon, MessageCircleIcon, SmartphoneIcon } from "lucide-react"
+import { Trans } from "@lingui/react/macro"
 
 import { YuvaMark } from "@/components/common"
 import { LanguageMenu } from "@/components/common/LanguageMenu"
 import { useVersion } from "@/lib/api"
+import { cn } from "@/lib/utils"
 
-export function AuthLayout({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
+export const authField = "h-10 px-3.5"
+export const authAlert =
+  "rounded-xl border border-destructive/25 bg-destructive/5 px-3.5 py-2.5 text-body text-destructive"
+
+export function AuthLayout({
+  children,
+  wide,
+  below,
+}: {
+  children: React.ReactNode
+  wide?: boolean
+  below?: React.ReactNode
+}) {
   const version = useVersion().data?.version
   return (
-    <div className="grid min-h-svh bg-background lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-      <div className="flex min-w-0 flex-col px-5 sm:px-8">
-        <header className="flex h-16 shrink-0 items-center justify-between gap-4">
-          <span className="flex items-center gap-2.5">
-            <YuvaMark className="size-[26px]" />
-            <span className="text-title">Yuva</span>
-          </span>
-          <LanguageMenu />
-        </header>
-        <main className="flex flex-1 items-start justify-center pt-[8vh] pb-10 sm:items-center sm:py-16">
-          <div className={wide ? "w-full max-w-[26rem]" : "w-full max-w-[22rem]"}>{children}</div>
-        </main>
-        <footer className="flex h-14 shrink-0 items-center text-caption text-faint">
-          {version && <Trans>Yuva {version}</Trans>}
-        </footer>
-      </div>
-      <BrandPanel />
+    <div className="flex min-h-svh flex-col bg-surface" data-testid="auth-layout">
+      <header className="flex h-13 shrink-0 items-center justify-end px-4 sm:px-6">
+        <LanguageMenu />
+      </header>
+      <main className="flex flex-1 flex-col items-center px-4 pt-[2vh] pb-10 sm:pt-[7vh]">
+        <span className="mb-6 flex items-center gap-2.5">
+          <YuvaMark className="size-8" />
+          <span className="text-title">Yuva</span>
+        </span>
+        <div className={cn("flex w-full flex-col gap-5", wide ? "max-w-[30rem]" : "max-w-[25rem]")}>
+          <div className="rounded-2xl border bg-card px-5 py-7 shadow-[0_1px_2px_rgb(15_23_42/0.04)] sm:px-8 sm:py-8">
+            {children}
+          </div>
+          {below && (
+            <div className="flex flex-col items-center gap-2 px-2 text-center text-small text-faint">{below}</div>
+          )}
+        </div>
+      </main>
+      <footer className="flex h-12 shrink-0 items-center justify-center text-caption text-faint">
+        {version && <Trans>Yuva {version}</Trans>}
+      </footer>
     </div>
   )
 }
 
-const rows = [
-  { name: "Priya Raman", product: "Fieldnote", dot: "bg-emerald-500", icon: SmartphoneIcon, unread: true },
-  { name: "Lina Haddad", product: "Paperboat", dot: "bg-sky-500", icon: MessageCircleIcon, unread: true },
-  { name: "Amara Okafor", product: "Tally", dot: "bg-violet-500", icon: MailIcon, unread: false },
-] as const
-
-function BrandPanel() {
-  const { t } = useLingui()
-  const text = [
-    { channel: t`In-app`, subject: t`Notes stopped syncing after the update` },
-    { channel: t`Live chat`, subject: t`Can I schedule a newsletter for each subscriber?` },
-    { channel: t`E-mail`, subject: t`Custom domain still shows as unverified` },
-  ]
+export function AuthHeading({
+  icon,
+  tone = "brand",
+  title,
+  children,
+  titleTestId,
+  className,
+}: {
+  icon?: React.ReactNode
+  tone?: "brand" | "muted" | "success" | "danger"
+  title: React.ReactNode
+  children?: React.ReactNode
+  titleTestId?: string
+  className?: string
+}) {
   return (
-    <aside className="hidden p-3 lg:flex" aria-hidden="true">
-      <div className="flex flex-1 flex-col justify-between gap-12 overflow-hidden rounded-[1.75rem] bg-surface p-12">
-        <p className="flex items-center gap-2 text-body text-muted-foreground">
-          <span className="size-1.5 rounded-full bg-brand" />
-          <Trans>E-mail, live chat and in-app messages</Trans>
-        </p>
-        <div className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border bg-card shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_60px_-28px_rgb(15_23_42/0.35)]">
-          <div className="flex items-center justify-between border-b px-5 py-3.5">
-            <p className="text-body font-medium">
-              <Trans>One inbox</Trans>
-            </p>
-            <ul className="flex items-center gap-3">
-              {rows.map((r) => (
-                <li key={r.product} className="flex items-center gap-1.5 text-caption text-muted-foreground">
-                  <span className={`size-1.5 rounded-full ${r.dot}`} />
-                  {r.product}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <ul className="divide-y">
-            {rows.map((r, i) => (
-              <li key={r.name} className="flex items-start gap-3.5 px-5 py-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-full border text-muted-foreground">
-                  <r.icon className="size-4" />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 text-body">
-                    <span className="truncate font-medium">{r.name}</span>
-                    <span className="flex shrink-0 items-center gap-1.5 text-muted-foreground">
-                      <span className={`size-1.5 rounded-full ${r.dot}`} />
-                      {r.product}
-                    </span>
-                    <span className="ms-auto shrink-0 text-caption text-muted-foreground">{text[i]!.channel}</span>
-                    {r.unread && <span className="size-2 shrink-0 rounded-full bg-brand" />}
-                  </div>
-                  <p className="mt-1 truncate text-body text-muted-foreground">{text[i]!.subject}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="max-w-md">
-          <p className="text-page text-balance">
-            <Trans>Every customer conversation, in one place.</Trans>
-          </p>
-          <p className="mt-3 text-muted-foreground">
-            <Trans>Reply, assign and follow up together, across all of your products.</Trans>
-          </p>
-        </div>
-      </div>
-    </aside>
+    <div className={cn("mb-7 flex flex-col items-center text-center", className)}>
+      {icon && (
+        <span
+          className={cn(
+            "mb-4 grid size-10 place-items-center rounded-full [&_svg]:size-[18px]",
+            tone === "brand" && "bg-brand-wash text-brand",
+            tone === "muted" && "border text-faint",
+            tone === "success" && "bg-success/10 text-success",
+            tone === "danger" && "bg-destructive/10 text-destructive"
+          )}
+        >
+          {icon}
+        </span>
+      )}
+      <h1 className="text-title text-balance break-words" data-testid={titleTestId}>
+        {title}
+      </h1>
+      {children && <div className="mt-2 text-body text-pretty text-muted-foreground">{children}</div>}
+    </div>
+  )
+}
+
+export function AuthDivider({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 text-caption text-faint">
+      <span className="h-px flex-1 bg-border" />
+      {children}
+      <span className="h-px flex-1 bg-border" />
+    </div>
   )
 }

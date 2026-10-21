@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{published} dari {total} artikel dipublikasikan"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} diterbitkan"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 sampai 48 huruf, angka, dan tanda hubung. Unik di server ini."
@@ -80,6 +84,7 @@ msgstr "Jawab pertanyaan umum sekali saja, secara tertulis. Pilih pusat bantuan 
 msgid "Any state"
 msgstr "Status apa pun"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Artikel"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Tayangan artikel"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Artikel"
@@ -112,6 +118,10 @@ msgstr "Artikel dapat ditulis dan dipublikasikan dalam bahasa-bahasa ini. Pengun
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Artikel dalam koleksi ini"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Artikel yang dibaca orang sebelum menghubungi Anda"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Semua terjemahan, revisinya, dan penghitungnya dihapus."
 msgid "Formatting"
 msgstr "Pemformatan"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Tidak ditemukan · 7 hari"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Memulai"
@@ -312,11 +326,11 @@ msgstr "Kelompokkan artikel agar pengunjung dapat menelusuri. Sebuah koleksi dap
 msgid "Heading"
 msgstr "Judul"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Bantuan"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Pusat bantuan"
 msgid "Help centers are turned off on this server."
 msgstr "Pusat bantuan dimatikan di server ini."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Membantu"
@@ -384,6 +399,10 @@ msgstr "Bahasa"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "{d} hari terakhir"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "7 hari terakhir"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Cari di judul ({findKey})"
 msgid "Search words"
 msgstr "Kata pencarian"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Dicari, tidak ditemukan"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Pencarian"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Pencarian · 7 hari"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Belum dipublikasikan, hanya tim Anda yang dapat melihat pratinjau"
 msgid "Unsaved changes"
 msgstr "Perubahan belum disimpan"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Diperbarui"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Gunakan 3 sampai 48 huruf, angka, dan tanda hubung di tengah."
@@ -893,6 +924,10 @@ msgstr "Lihat pusat bantuan"
 msgid "Views"
 msgstr "Tayangan"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Dilihat · 7 hari"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Apa yang dibaca dan dicari pengunjung. Tayangan bersifat perkiraan, dan angka sampai di halaman ini dalam satu menit."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Kata yang diketik pengunjung dan tidak menemukan apa pun. Artikel baru untuk masing-masing adalah perbaikan tercepat."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Tulis"
 

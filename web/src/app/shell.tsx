@@ -66,6 +66,12 @@ export function sectionOf(pathname: string, view: Section, manager: boolean): Se
   return isInboxRoot(pathname, manager) && view === "mentions" ? "conversations" : view
 }
 
+const fullPage: Section[] = ["team", "reports", "broadcasts", "status", "updates", "analytics", "settings"]
+
+export function isFullPage(section: Section) {
+  return fullPage.includes(section)
+}
+
 export function isSectionHome(pathname: string) {
   return (
     pathname === "/" ||

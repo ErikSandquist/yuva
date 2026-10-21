@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fr-CA\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} brouillons"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} entrées publiées sur {total}"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} publiées"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} programmées"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Modifier l’heure"
 msgid "Changelog"
 msgstr "Journal des modifications"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Journaux des modifications"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Choisir une image"
@@ -86,8 +102,13 @@ msgstr "Compte les pages vues du journal des modifications sans cookies."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Créer un journal des modifications"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Créer le journal des modifications ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Toutes les traductions sont supprimées. Les envois en masse créés à 
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Corrigé"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Aperçu du rendu"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Aperçu du rendu dans {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Aucune entrée ne correspond."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Aucune boîte de réception pour laquelle afficher un journal des modifications."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Pas encore de texte."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Publiée"
 msgid "Publishing on schedule failed."
 msgstr "La publication programmée a échoué."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Notes de version affichées dans vos produits, sur le Web et par courriel."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Retirer"
@@ -396,6 +434,10 @@ msgstr "Paramètres"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Afficher"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Affiché dans le widget de clavardage et sur {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Dépublier cette entrée ?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Non publiée"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Voir le journal des modifications"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

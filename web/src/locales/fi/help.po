@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{published} / {total} artikkelia julkaistu"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} julkaistu"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3–48 kirjainta, numeroa ja tavuviivaa. Yksilöllinen tällä palvelimella."
@@ -80,6 +84,7 @@ msgstr "Vastaa usein kysyttyihin kysymyksiin kerran kirjallisesti. Valitse saapu
 msgid "Any state"
 msgstr "Mikä tahansa tila"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Artikkeli"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Artikkelien katselut"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Artikkelit"
@@ -112,6 +118,10 @@ msgstr "Artikkeleita voi kirjoittaa ja julkaista näillä kielillä. Kävijät n
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Tämän kokoelman artikkelit"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Artikkelit, joita ihmiset lukevat ennen kuin kirjoittavat sinulle"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Kaikki käännökset, niiden versiot ja laskurit poistetaan."
 msgid "Formatting"
 msgstr "Muotoilu"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Ei tuloksia · 7 päivää"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Aloitus"
@@ -312,11 +326,11 @@ msgstr "Ryhmittele artikkelit, jotta kävijät voivat selata. Kokoelmassa voi ol
 msgid "Heading"
 msgstr "Otsikko"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Ohje"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Ohjekeskukset"
 msgid "Help centers are turned off on this server."
 msgstr "Ohjekeskukset on poistettu käytöstä tällä palvelimella."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Hyödyllinen"
@@ -384,6 +399,10 @@ msgstr "Kielet"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Viimeiset {d} päivää"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "viimeiset 7 päivää"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Hae otsikoista ({findKey})"
 msgid "Search words"
 msgstr "Hakusanat"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Haettu, ei tuloksia"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Haut"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Haut · 7 päivää"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Julkaisematon, vain tiimisi voi esikatsella"
 msgid "Unsaved changes"
 msgstr "Tallentamattomat muutokset"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Päivitetty"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Käytä 3–48 kirjainta, numeroa ja sisäisiä tavuviivoja."
@@ -893,6 +924,10 @@ msgstr "Näytä ohjekeskus"
 msgid "Views"
 msgstr "Katselut"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Katselut · 7 päivää"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Mitä kävijät lukevat ja hakevat. Katselut ovat likimääräisiä, ja luvut päätyvät tälle sivulle minuutin kuluessa."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Sanat, joita kävijät kirjoittivat ja jotka eivät tuottaneet tulosta. Uusi artikkeli kutakin varten on nopein korjaus."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Kirjoita"
 

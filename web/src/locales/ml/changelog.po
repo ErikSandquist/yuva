@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ml\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} ഡ്രാഫ്റ്റുകൾ"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}-ൽ {published} എൻട്രികൾ പ്രസിദ്ധീകരിച്ചു"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} പ്രസിദ്ധീകരിച്ചവ"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} ഷെഡ്യൂൾ ചെയ്തവ"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "സമയം മാറ്റുക"
 msgid "Changelog"
 msgstr "ചേഞ്ച്‌ലോഗ്"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "ചേഞ്ച്‌ലോഗുകൾ"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "ചിത്രം തിരഞ്ഞെടുക്കുക"
@@ -86,8 +102,13 @@ msgstr "കുക്കികളില്ലാതെ ചേഞ്ച്‌ല�
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "ചേഞ്ച്‌ലോഗ് ഉണ്ടാക്കുക"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "ചേഞ്ച്‌ലോഗ് സൃഷ്ടിക്കുക ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "എല്ലാ വിവർത്തനങ്ങളും ഇല്ല�
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "പരിഹരിച്ചു"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "ഇത് എങ്ങനെ കാണപ്പെടുന്നു"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "{0} ൽ ഇത് എങ്ങനെ കാണപ്പെടുന്നു"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "ഒരു എൻട്രിയും യോജിക്കുന്ന�
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "ചേഞ്ച്‌ലോഗ് കാണിക്കാൻ ഇൻബോക്സ് ഒന്നുമില്ല."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "ഇതുവരെ ടെക്സ്റ്റ് ഇല്ല."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "പ്രസിദ്ധീകരിച്ചത്"
 msgid "Publishing on schedule failed."
 msgstr "ഷെഡ്യൂൾ ചെയ്ത പ്രസിദ്ധീകരണം പരാജയപ്പെട്ടു."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങളിലും വെബിലും ഇമെയിലിലും കാണിക്കുന്ന റിലീസ് നോട്ടുകൾ."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "നീക്കം ചെയ്യുക"
@@ -396,6 +434,10 @@ msgstr "ക്രമീകരണങ്ങൾ"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "കാണിക്കുക"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "ചാറ്റ് വിജറ്റിലും {host} ലും കാണിക്കുന്നു."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "ഈ എൻട്രിയുടെ പ്രസിദ്ധീകരണ�
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "പ്രസിദ്ധീകരിച്ചിട്ടില്ല"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "ചേഞ്ച്‌ലോഗ് കാണുക"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

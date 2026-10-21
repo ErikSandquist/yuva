@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { Link, useMatch, useNavigate } from "react-router"
 
 import { Dot } from "@/components/common"
-import { Column, ColumnHeading } from "@/components/common/Column"
+import { ColumnHeading } from "@/components/common/Column"
 import { HELP_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -14,6 +14,7 @@ import { centerLink, useHelpCenters } from "@/features/help/queries"
 import { ErrorLine } from "@/features/help/text"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
+import { ListHead } from "@/features/inbox/ListHead"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
 import type { HelpCenter, Inbox } from "@/lib/api"
@@ -94,13 +95,13 @@ export default function HelpColumn() {
   let index = 0
   return (
     <>
-      <Column
-        title={<Trans>Help</Trans>}
-        testId="help-panel"
-        actions={<InboxPicker className="max-w-40" />}
-        bodyClassName="px-2"
-      >
-        <nav aria-label={t`Help centers`} className="flex flex-col" ref={list}>
+      <section className="flex h-full min-h-0 flex-col bg-background" data-testid="help-panel">
+        <ListHead
+          title={<Trans>Help center</Trans>}
+          sub={<Trans>Articles people read before they write to you</Trans>}
+          action={<InboxPicker className="max-w-36" />}
+        />
+        <nav aria-label={t`Help centers`} className="flex min-h-0 flex-1 flex-col overflow-y-auto px-2 pb-4" ref={list}>
           {centers.isPending || inboxQuery.isPending ? (
             <div className="flex flex-col gap-2 p-2">
               <Skeleton className="h-14 w-full" />
@@ -147,7 +148,7 @@ export default function HelpColumn() {
             ))
           )}
         </nav>
-      </Column>
+      </section>
       {creating && (
         <CreateCenterDialog
           inboxId={creating.id}

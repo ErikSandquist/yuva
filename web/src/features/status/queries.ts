@@ -10,6 +10,7 @@ import {
   type StatusMonitorCreate,
   type StatusMonitorUpdate,
   type StatusNotice,
+  type StatusPage,
   type StatusPageCreate,
   type StatusPageUpdate,
 } from "@/lib/api"
@@ -93,6 +94,17 @@ export function useStatusPreview(id: string, enabled: boolean) {
     },
     enabled,
     gcTime: 0,
+  })
+}
+
+export function usePublicStatus(page: StatusPage | undefined) {
+  const { workspaceId: ws } = useSession()
+  const slug = page?.slug ?? ""
+  return useQuery({
+    queryKey: [...keys.statusPage(ws, page?.id ?? ""), "public", slug],
+    queryFn: () => unwrap(api.GET("/client/v1/status/{slug}", { params: { path: { slug } }, cache: "no-cache" })),
+    enabled: !!page?.published && page.show_uptime,
+    retry: false,
   })
 }
 

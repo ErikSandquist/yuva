@@ -138,7 +138,7 @@ export function SetupHub() {
         !home.error && (
           <div className="flex flex-col gap-2.5">
             {Array.from({ length: 6 }, (_, i) => (
-              <Skeleton key={i} className="h-[74px] rounded-2xl" />
+              <Skeleton key={i} className="h-[68px] rounded-2xl" />
             ))}
           </div>
         )
@@ -150,7 +150,7 @@ export function SetupHub() {
                 to={hubTarget(item, places)}
                 state={item.done ? undefined : ({ back: "/setup" } satisfies SetupState)}
                 className={cn(
-                  "group flex w-full items-center gap-4 rounded-2xl border bg-card px-4 py-4 text-start transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30",
+                  "group flex w-full items-center gap-3.5 rounded-2xl border bg-card px-4 py-3.5 text-start transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30",
                   focus === item.id && "border-faint"
                 )}
                 onMouseEnter={() => setFocus(item.id)}
@@ -160,8 +160,8 @@ export function SetupHub() {
               >
                 <span
                   className={cn(
-                    "grid size-10 shrink-0 place-items-center rounded-xl bg-surface text-muted-foreground [&_svg]:size-[18px]",
-                    item.done && "bg-success/10 text-success"
+                    "grid size-9 shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground [&_svg]:size-4",
+                    item.done && "border-success/20 bg-success/10 text-success"
                   )}
                 >
                   {item.done ? <CheckIcon /> : <HubIcon id={item.id} />}

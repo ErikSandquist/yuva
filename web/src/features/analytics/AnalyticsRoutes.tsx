@@ -1,12 +1,13 @@
 import "@/features/analytics/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ChartLineIcon, PlusIcon } from "lucide-react"
+import { ChartLineIcon, ChevronDownIcon, PlusIcon, Share2Icon } from "lucide-react"
 import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router"
 
 import { Dot, ErrorLine } from "@/components/common"
-import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
+import { Pane, PaneBack } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { UsageBanner } from "@/features/analytics/AnalyticsColumn"
 import { BreakdownView } from "@/features/analytics/Breakdown"
@@ -24,8 +25,8 @@ import { SettingsView } from "@/features/analytics/Settings"
 import { SupportView } from "@/features/analytics/Support"
 import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
-import { Segmented } from "@/components/common"
 import { useIsPhone } from "@/hooks/use-media-query"
+import { PageHeader, PageTabs, pageTabClass } from "@/features/settings/ui"
 import type { SetupState } from "@/features/setup/setup"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
@@ -46,6 +47,8 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
+const PRIMARY: ViewKey[] = ["overview", "support", "goals", "realtime"]
+
 function AnalyticsHome() {
   const { canManage } = useSession()
   const phone = useIsPhone()
@@ -53,20 +56,33 @@ function AnalyticsHome() {
   const first = list.data?.items[0]
   if (first && !phone) return <Navigate to={`/analytics/${first.id}`} replace />
   return (
-    <PaneEmpty icon={ChartLineIcon} title={<Trans>Count your website’s visitors</Trans>} testId="analytics-home">
-      <p>
-        <Trans>
-          Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner
-          where the law allows it.
-        </Trans>
-      </p>
-      {canManage && (
-        <Button className="mt-4" render={<Link to="/analytics/new" />} data-testid="analytics-home-add">
-          <PlusIcon />
-          <Trans>Add a website</Trans>
-        </Button>
-      )}
-    </PaneEmpty>
+    <Pane wide testId="analytics-home" className="gap-6">
+      <PageHeader
+        back={false}
+        title={<Trans>Analytics</Trans>}
+        description={<Trans>Cookieless visitors across your sites and apps.</Trans>}
+      />
+      <div className="flex flex-col items-center gap-2 rounded-2xl border bg-card px-6 py-12 text-center">
+        <span className="mb-2 grid size-12 place-items-center rounded-2xl bg-brand-wash text-brand">
+          <ChartLineIcon className="size-6" />
+        </span>
+        <p className="text-title">
+          <Trans>Count your website’s visitors</Trans>
+        </p>
+        <p className="max-w-md text-body text-muted-foreground">
+          <Trans>
+            Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent
+            banner where the law allows it.
+          </Trans>
+        </p>
+        {canManage && (
+          <Button className="mt-3" render={<Link to="/analytics/new" />} data-testid="analytics-home-add">
+            <PlusIcon />
+            <Trans>Add a website</Trans>
+          </Button>
+        )}
+      </div>
+    </Pane>
   )
 }
 
@@ -76,6 +92,7 @@ function PropertyLayout() {
   const { propertyId = "" } = useParams()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const { canManage } = useSession()
   const search = useViewSearch(true)
   const property = useProperty(propertyId)
   const usage = useAnalyticsProperties().data?.usage
@@ -106,36 +123,79 @@ function PropertyLayout() {
     )
   }
   const controls = current !== "realtime" && current !== "settings" && current !== "retention"
+  const to = (v: ViewKey) => `/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`
+  const more = VIEWS.filter((v) => !PRIMARY.includes(v))
+  const inMore = more.includes(current)
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
-      <header className="flex flex-col">
+      <div className="flex flex-col">
         <PaneBack to="/analytics" label={t`Analytics`} />
-        <h1 className="min-w-0 text-page break-words" data-testid="analytics-property-name">
-          {p.name}
-        </h1>
-        <p className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
-          {inbox && (
-            <span className="inline-flex items-center gap-1.5">
-              <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-              {inbox.name}
+        <PageHeader
+          back={false}
+          title={<span data-testid="analytics-property-name">{p.name}</span>}
+          description={
+            <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+              {inbox && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
+                  {inbox.name}
+                </span>
+              )}
+              <span className="min-w-0 truncate" dir="ltr">
+                {p.domains.join(", ")}
+              </span>
+              <span aria-hidden>·</span>
+              <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
             </span>
-          )}
-          <span className="min-w-0 truncate" dir="ltr">
-            {p.domains.join(", ")}
-          </span>
-          <span aria-hidden>·</span>
-          <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
-        </p>
-      </header>
-      {usage && <UsageBanner usage={usage} />}
-      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
-        <Segmented
-          value={current}
-          onChange={(v) => navigate(`/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`)}
-          label={t`Analytics views`}
-          items={VIEWS.map((v) => ({ value: v, label: names[v], testId: `analytics-tab-${v}` }))}
+          }
+          action={
+            canManage && (
+              <Button
+                variant="outline"
+                size="sm"
+                render={<Link to={`/analytics/${p.id}/settings?tab=sharing`} />}
+                data-testid="analytics-share"
+              >
+                <Share2Icon />
+                <Trans>Share</Trans>
+              </Button>
+            )
+          }
+          tabs={
+            <PageTabs
+              label={t`Analytics views`}
+              current={current}
+              items={PRIMARY.map((v) => ({ key: v, to: to(v), label: names[v], testId: `analytics-tab-${v}` }))}
+              extra={
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    className={pageTabClass}
+                    aria-current={inMore ? "page" : undefined}
+                    data-testid="analytics-tab-more"
+                  >
+                    {inMore ? names[current] : <Trans>More</Trans>}
+                    <ChevronDownIcon className="size-3.5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    {more.map((v) => (
+                      <DropdownMenuItem
+                        key={v}
+                        onClick={() => navigate(to(v))}
+                        aria-current={v === current ? "page" : undefined}
+                        className="aria-[current=page]:font-medium"
+                        data-testid={`analytics-tab-${v}`}
+                      >
+                        {names[v]}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              }
+            />
+          }
         />
       </div>
+      {usage && <UsageBanner usage={usage} />}
       {!p.first_event_at && current !== "settings" && <WaitForFirstEvent propertyId={p.id} />}
       {controls && (
         <Controls

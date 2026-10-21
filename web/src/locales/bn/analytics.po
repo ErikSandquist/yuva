@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: প্রতি 1,000 ভিউতে
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "এই মাসে {limit}-এর মধ্যে {used}টি অ্যানালিটিক্স ইভেন্ট ব্যবহৃত হয়েছে। সীমার বেশি ইভেন্ট মাস শেষ না হওয়া পর্যন্ত বাদ যায়।"
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} ভিজিটর"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "পরিবর্তন নতুন ইভেন্টে প্রযোজ্য। যে দিন আগেই গোনা হয়েছে তারা নিজের জোন রাখে।"
@@ -176,6 +180,10 @@ msgstr "একটি নতুন কী তৈরি করা হয়েছ�
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "নতুন পাসওয়ার্ড যারা লিংক আনলক করেছে সবাইকে সাইন আউট করে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "একটি পেজ ভিউ, একটি ইভেন্ট বা স্ক্রল গভীরতা"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "কনভার্সন রেট"
 msgid "Conversions"
 msgstr "কনভার্সন"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "সময়ের সাথে কনভার্শন"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "প্রতি 100 ভিজিটরে কনভার্সন।"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "আপনার সাইট ও অ্যাপের ভিজিটর, কুকি ছাড়া।"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "সাধারণ"
 msgid "Go to goals"
 msgstr "গোলে যান"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "গোল"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "মাসিক সীমা"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "মাস"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "আরও"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "সার্ভার ব্যস্ত"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "সেটিংস"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "শেয়ার করুন"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

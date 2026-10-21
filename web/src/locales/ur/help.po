@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} میں سے {published} مضامین شائع"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} شائع شدہ"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 سے 48 حروف، ہندسے اور ہائفن۔ اس سرور پر منفرد۔"
@@ -80,6 +84,7 @@ msgstr "عام سوالات کا جواب ایک بار، تحریری طور پ
 msgid "Any state"
 msgstr "کوئی بھی حالت"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "مضمون"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "مضامین کے ملاحظات"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "مضامین"
@@ -112,6 +118,10 @@ msgstr "مضامین ان زبانوں میں لکھے اور شائع کیے ج
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "اس مجموعے کے مضامین"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "مضامین جو لوگ آپ کو لکھنے سے پہلے پڑھتے ہیں"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "تمام تراجم، ان کی ترامیم اور کاؤنٹر حذف 
 msgid "Formatting"
 msgstr "فارمیٹنگ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "کچھ نہیں ملا · 7 دن"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "آغاز"
@@ -312,11 +326,11 @@ msgstr "مضامین کو گروپ کریں تاکہ زائرین براؤز ک�
 msgid "Heading"
 msgstr "سرخی"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "مدد"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "مدد مراکز"
 msgid "Help centers are turned off on this server."
 msgstr "اس سرور پر مدد مراکز بند ہیں۔"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "مفید"
@@ -384,6 +399,10 @@ msgstr "زبانیں"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "پچھلے {d} دن"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "پچھلے 7 دن"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "عنوانات میں تلاش کریں ({findKey})"
 msgid "Search words"
 msgstr "تلاش کے الفاظ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "تلاش کیا، کچھ نہیں ملا"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "تلاشیں"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "تلاشیں · 7 دن"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "غیر شائع، صرف آپ کی ٹیم پیش منظر دیکھ سک�
 msgid "Unsaved changes"
 msgstr "غیر محفوظ تبدیلیاں"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "اپ ڈیٹ ہوا"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 سے 48 حروف، ہندسے اور درمیان کے ہائفن استعمال کریں۔"
@@ -893,6 +924,10 @@ msgstr "مدد مرکز دیکھیں"
 msgid "Views"
 msgstr "ملاحظات"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "ملاحظات · 7 دن"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "زائرین کیا پڑھتے اور تلاش کرتے ہیں۔ ملاحظات اندازاً ہیں، اور اعداد و شمار ایک منٹ میں اس صفحے تک پہنچتے ہیں۔"
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "وہ الفاظ جو زائرین نے ٹائپ کیے اور کچھ نہیں ملا۔ ہر ایک کے لیے نیا مضمون سب سے تیز حل ہے۔"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "لکھیں"
 

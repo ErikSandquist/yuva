@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: 1,000 பார்வைகளுக�
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "இந்த மாதம் {limit}-இல் {used} பகுப்பாய்வு நிகழ்வுகள் பயன்படுத்தப்பட்டன. வரம்பைத் தாண்டிய நிகழ்வுகள் மாதம் முடியும் வரை கைவிடப்படும்."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} பார்வையாளர்கள்"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "மாற்றம் புதிய நிகழ்வுகளுக்குப் பொருந்தும். ஏற்கெனவே எண்ணிய நாட்கள் தம் மண்டலத்தையே வைத்திருக்கும்."
@@ -176,6 +180,10 @@ msgstr "புதிய விசை உருவாக்கப்பட்ட�
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "புதிய கடவுச்சொல் இணைப்பைத் திறந்த அனைவரையும் வெளியேற்றும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "ஒரு பக்கப் பார்வை, ஒரு நிகழ்வு அல்லது உருட்டல் ஆழம்"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "மாற்ற விகிதம்"
 msgid "Conversions"
 msgstr "மாற்றங்கள்"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "காலப்போக்கில் மாற்றங்கள்"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "100 பார்வையாளர்களுக்கு மாற்றங்கள்."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "உங்கள் தளங்கள் மற்றும் ஆப்களின் பார்வையாளர்கள், குக்கீகள் இல்லாமல்."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "பொது"
 msgid "Go to goals"
 msgstr "இலக்குகளுக்குச் செல்"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "இலக்கு"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "மாதாந்திர வரம்பு"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "மாதங்கள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "மேலும்"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "சேவையகம் பரபரப்பு"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "அமைப்புகள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "பகிர்"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

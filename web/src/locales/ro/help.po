@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{published} din {total} articole publicate"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} publicate"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "De la 3 la 48 de litere, cifre și cratime. Unică pe acest server."
@@ -80,6 +84,7 @@ msgstr "Răspunde o dată la întrebările frecvente, în scris. Alege centrul d
 msgid "Any state"
 msgstr "Orice stare"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Articol"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Vizualizări de articole"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Articole"
@@ -112,6 +118,10 @@ msgstr "Articolele pot fi scrise și publicate în aceste limbi. Vizitatorii o v
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Articole din această colecție"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Articole pe care oamenii le citesc înainte să-ți scrie"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Toate traducerile, reviziile și contoarele lor se șterg."
 msgid "Formatting"
 msgstr "Formatare"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Nimic găsit · 7 zile"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Primii pași"
@@ -312,11 +326,11 @@ msgstr "Grupează articolele ca vizitatorii să poată răsfoi. O colecție poat
 msgid "Heading"
 msgstr "Titlu"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Ajutor"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Centre de ajutor"
 msgid "Help centers are turned off on this server."
 msgstr "Centrele de ajutor sunt dezactivate pe acest server."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Util"
@@ -384,6 +399,10 @@ msgstr "Limbi"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Ultimele {d} zile"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "ultimele 7 zile"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Caută în titluri ({findKey})"
 msgid "Search words"
 msgstr "Cuvinte de căutare"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Căutat, nimic găsit"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Căutări"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Căutări · 7 zile"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Nepublicat, doar echipa ta îl poate previzualiza"
 msgid "Unsaved changes"
 msgstr "Modificări nesalvate"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Actualizat"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Folosește de la 3 la 48 de litere, cifre și cratime interioare."
@@ -893,6 +924,10 @@ msgstr "Vezi centrul de ajutor"
 msgid "Views"
 msgstr "Vizualizări"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Vizualizări · 7 zile"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Ce citesc și ce caută vizitatorii. Vizualizările sunt aproximative, iar cifrele ajung aici într-un minut."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Cuvinte scrise de vizitatori care nu au găsit nimic. Un articol nou pentru fiecare este cea mai rapidă soluție."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Scrie"
 

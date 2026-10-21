@@ -139,6 +139,10 @@ msgstr "Απόκρυψη"
 msgid "Idea started"
 msgstr "Η ιδέα δημιουργήθηκε"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Ιδέες που ψηφίζουν οι πελάτες σας, με τα σχόλια που τις στηρίζουν"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ιδέες, ψήφοι και στάδια για το {inboxName}, με τα σχόλια πίσω από κάθε ιδέα. Παραμένει ιδιωτικός μέχρι να τον κάνετε δημόσιο."
@@ -302,6 +306,10 @@ msgstr "Δημόσια σελίδα"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Οι αναγνώστες δεν μπορούν να προτείνουν ιδέες. Οι ψήφοι και οι απαντήσεις λειτουργούν κανονικά."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Οι αναγνώστες πρότειναν νέες ιδέες. Ελέγξτε τις πριν εμφανιστούν στον δημόσιο πίνακα."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

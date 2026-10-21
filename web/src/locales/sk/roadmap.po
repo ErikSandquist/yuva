@@ -139,6 +139,10 @@ msgstr "Skryť"
 msgid "Idea started"
 msgstr "Nápad vytvorený"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Nápady, za ktoré hlasujú vaši zákazníci, so spätnou väzbou, ktorá za nimi stojí"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Nápady, hlasy a fázy pre {inboxName} so spätnou väzbou za každým nápadom. Zostáva súkromná, kým ju nezverejníte."
@@ -302,6 +306,10 @@ msgstr "Verejná stránka"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Čitatelia nemôžu navrhovať nápady. Hlasy a odpovede fungujú ďalej."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Čitatelia navrhli nové nápady. Skontrolujte ich skôr, než sa objavia na verejnej nástenke."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

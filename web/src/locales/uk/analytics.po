@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # розмова на 1000 перег
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Цього місяця використано подій аналітики: {used} із {limit}. Події понад ліміт відкидаються до кінця місяця."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} відвідувачів"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Зміна застосовується до нових подій. Уже пораховані дні зберігають свій часовий пояс."
@@ -176,6 +180,10 @@ msgstr "Створено новий ключ"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Новий пароль розлогінює всіх, хто відкрив посилання."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Перегляд сторінки, подія або глибина прокручування"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Коефіцієнт конверсії"
 msgid "Conversions"
 msgstr "Конверсії"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Конверсії в часі"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Конверсій на 100 відвідувачів."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Відвідувачі ваших сайтів і застосунків, без cookie."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Загальні"
 msgid "Go to goals"
 msgstr "Перейти до цілей"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Ціль"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Місячний ліміт"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Місяці"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Ще"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Сервер зайнятий"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Налаштування"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Поділитися"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

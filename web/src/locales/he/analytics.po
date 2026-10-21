@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: שיחה # לכל 1,000 צפיות, �
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "נעשה שימוש ב-{used} מתוך {limit} אירועי אנליטיקה החודש. אירועים מעבר למגבלה נזרקים עד שהחודש מסתיים."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} מהמבקרים"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "שינוי חל על אירועים חדשים. ימים שכבר נספרו שומרים על האזור שלהם."
@@ -176,6 +180,10 @@ msgstr "נוצר מפתח חדש"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "סיסמה חדשה מנתקת את כל מי שפתח את הקישור."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "צפייה בדף, אירוע או עומק גלילה"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "שיעור המרה"
 msgid "Conversions"
 msgstr "המרות"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "המרות לאורך זמן"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "המרות לכל 100 מבקרים."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "מבקרים באתרים ובאפליקציות שלך, בלי עוגיות."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "כללי"
 msgid "Go to goals"
 msgstr "מעבר ליעדים"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "יעד"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "מגבלה חודשית"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "חודשים"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "עוד"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "השרת עסוק"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "הגדרות"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "שיתוף"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

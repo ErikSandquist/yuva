@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ar\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "المسودات: {drafts}"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "نُشر {published} من {total} إدخالاً"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "المنشورة: {published}"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "المجدولة: {scheduled}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "تغيير الوقت"
 msgid "Changelog"
 msgstr "سجل التغييرات"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "سجلات التغييرات"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "اختيار صورة"
@@ -86,8 +102,13 @@ msgstr "يحسب مشاهدات صفحات سجل التغييرات دون مل
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "إنشاء سجل تغييرات"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "إنشاء سجل التغييرات ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "تُحذف كل الترجمات. تبقى الرسائل الجماعي
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "تم الإصلاح"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "كيف يبدو"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "كيف يبدو في {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "لا يوجد إدخال مطابق."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "لا يوجد صندوق وارد لعرض سجل تغييرات له."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "لا يوجد نص بعد."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "منشورة"
 msgid "Publishing on schedule failed."
 msgstr "فشل النشر المجدول."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "ملاحظات الإصدار المعروضة في منتجاتك وعلى الويب وعبر البريد."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "إزالة"
@@ -396,6 +434,10 @@ msgstr "الإعدادات"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "إظهار"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "يظهر في أداة الدردشة وعلى {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "هل تريد إلغاء نشر هذا الإدخال؟"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "غير منشورة"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "عرض سجل التغييرات"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

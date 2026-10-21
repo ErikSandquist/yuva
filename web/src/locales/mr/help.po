@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} पैकी {published} लेख प्रकाशित"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} प्रकाशित"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 ते 48 अक्षरे, अंक आणि हायफन. या सर्व्हरवर अद्वितीय."
@@ -80,6 +84,7 @@ msgstr "सामान्य प्रश्नांना एकदाच, �
 msgid "Any state"
 msgstr "कोणतीही स्थिती"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "लेख"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "लेख पाहिले गेलेल्या वेळा"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "लेख"
@@ -112,6 +118,10 @@ msgstr "हे लेख या भाषांमध्ये लिहित�
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "या संग्रहातील लेख"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "लेख जे लोक तुम्हाला लिहिण्याआधी वाचतात"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "सर्व भाषांतरे, त्यांच्या स�
 msgid "Formatting"
 msgstr "स्वरूपन"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "काहीच सापडले नाही · 7 दिवस"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "सुरुवात करणे"
@@ -312,11 +326,11 @@ msgstr "लेख गटबद्ध करा म्हणजे अभ्य�
 msgid "Heading"
 msgstr "मथळा"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "मदत"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "मदत केंद्रे"
 msgid "Help centers are turned off on this server."
 msgstr "या सर्व्हरवर मदत केंद्रे बंद आहेत."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "उपयुक्त"
@@ -384,6 +399,10 @@ msgstr "भाषा"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "मागील {d} दिवस"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "मागील 7 दिवस"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "शीर्षकांमध्ये शोधा ({findKey})"
 msgid "Search words"
 msgstr "शोध शब्द"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "शोधले, काहीच सापडले नाही"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "शोध"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "शोध · 7 दिवस"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "अप्रकाशित, फक्त तुमचा संघ प�
 msgid "Unsaved changes"
 msgstr "जतन न केलेले बदल"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "अपडेट केले"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 ते 48 अक्षरे, अंक आणि आतील हायफन वापरा."
@@ -893,6 +924,10 @@ msgstr "मदत केंद्र पहा"
 msgid "Views"
 msgstr "व्ह्यू"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "व्ह्यू · 7 दिवस"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "अभ्यागत काय वाचतात आणि शोधतात. व्ह्यू अंदाजे आहेत, आणि आकडे एका मिनिटात या पेजवर पोहोचतात."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "अभ्यागतांनी टाइप केलेले आणि काहीही न सापडलेले शब्द. प्रत्येकासाठी नवीन लेख हा सर्वात जलद उपाय आहे."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "लिहा"
 

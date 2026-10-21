@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "เผยแพร่แล้ว {published} จาก {total} บทความ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "เผยแพร่แล้ว {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "ตัวอักษร ตัวเลข และขีดกลาง 3 ถึง 48 ตัว ไม่ซ้ำกันบนเซิร์ฟเวอร์นี้"
@@ -80,6 +84,7 @@ msgstr "ตอบคำถามที่พบบ่อยเพียงคร
 msgid "Any state"
 msgstr "สถานะใดก็ได้"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "บทความ"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "จำนวนการดูบทความ"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "บทความ"
@@ -112,6 +118,10 @@ msgstr "เขียนและเผยแพร่บทความได้
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "บทความในคอลเลกชันนี้"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "บทความที่ผู้คนอ่านก่อนเขียนถึงคุณ"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "คำแปลทั้งหมด การแก้ไข และ�
 msgid "Formatting"
 msgstr "การจัดรูปแบบ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "ไม่พบผลลัพธ์ · 7 วัน"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "เริ่มต้นใช้งาน"
@@ -312,11 +326,11 @@ msgstr "จัดกลุ่มบทความให้ผู้เข้า
 msgid "Heading"
 msgstr "หัวเรื่อง"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "ความช่วยเหลือ"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "ศูนย์ช่วยเหลือ"
 msgid "Help centers are turned off on this server."
 msgstr "ศูนย์ช่วยเหลือปิดอยู่บนเซิร์ฟเวอร์นี้"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "เป็นประโยชน์"
@@ -384,6 +399,10 @@ msgstr "ภาษา"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "{d} วันที่ผ่านมา"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "7 วันที่ผ่านมา"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "ค้นหาในชื่อ ({findKey})"
 msgid "Search words"
 msgstr "คำค้นหา"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "ค้นหาแล้วไม่พบ"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "การค้นหา"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "การค้นหา · 7 วัน"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "ยังไม่เผยแพร่ มีเพียงทีม�
 msgid "Unsaved changes"
 msgstr "การเปลี่ยนแปลงที่ยังไม่บันทึก"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "อัปเดตเมื่อ"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "ใช้ตัวอักษร ตัวเลข และขีดกลางภายใน 3 ถึง 48 ตัว"
@@ -893,6 +924,10 @@ msgstr "ดูศูนย์ช่วยเหลือ"
 msgid "Views"
 msgstr "การดู"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "การดู · 7 วัน"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "สิ่งที่ผู้เข้าชมอ่านและค้นหา จำนวนการดูเป็นค่าโดยประมาณ และตัวเลขจะมาถึงหน้านี้ภายในหนึ่งนาที"
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "คำที่ผู้เข้าชมพิมพ์แล้วไม่พบอะไรเลย การเขียนบทความใหม่สำหรับแต่ละคำเป็นวิธีแก้ที่เร็วที่สุด"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "เขียน"
 

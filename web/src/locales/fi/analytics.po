@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # keskustelu 1 000 näyttöä kohden,
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} / {limit} analytiikkatapahtumaa käytetty tässä kuussa. Rajan ylittävät tapahtumat hylätään kuun loppuun asti."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} kävijöistä"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Muutos koskee uusia tapahtumia. Jo lasketut päivät säilyttävät vyöhykkeensä."
@@ -176,6 +180,10 @@ msgstr "Uusi avain luotiin"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Uusi salasana kirjaa ulos kaikki, jotka avasivat linkin."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Sivun katselu, tapahtuma tai vierityssyvyys"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Konversioprosentti"
 msgid "Conversions"
 msgstr "Konversiot"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Konversiot ajan mittaan"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Konversiot 100 kävijää kohden."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Sivustojesi ja sovellustesi kävijät ilman evästeitä."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "Yleiset"
 msgid "Go to goals"
 msgstr "Siirry tavoitteisiin"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Tavoite"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Kuukausiraja"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Kuukaudet"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Lisää"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Palvelin kiireinen"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Asetukset"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Jaa"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

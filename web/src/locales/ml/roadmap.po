@@ -139,6 +139,10 @@ msgstr "മറയ്ക്കുക"
 msgid "Idea started"
 msgstr "ആശയം ആരംഭിച്ചു"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "നിങ്ങളുടെ ഉപഭോക്താക്കൾ വോട്ട് ചെയ്യുന്ന ആശയങ്ങൾ, അവയ്ക്ക് പിന്നിലെ ഫീഡ്‌ബാക്കോടെ"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName}-നുള്ള ആശയങ്ങൾ, വോട്ടുകൾ, ഘട്ടങ്ങൾ, ഓരോ ആശയത്തിനും പിന്നിലെ ഫീഡ്ബാക്ക് സഹിതം. നിങ്ങൾ പൊതുവാക്കുന്നതുവരെ ഇത് സ്വകാര്യമായി തുടരും."
@@ -302,6 +306,10 @@ msgstr "പൊതു പേജ്"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "വായനക്കാർക്ക് ആശയങ്ങൾ നിർദ്ദേശിക്കാൻ കഴിയില്ല. വോട്ടുകളും മറുപടികളും ഇപ്പോഴും പ്രവർത്തിക്കും."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "വായനക്കാർ പുതിയ ആശയങ്ങൾ നിർദ്ദേശിച്ചു. പൊതു ബോർഡിൽ കാണിക്കുന്നതിന് മുമ്പ് അവ അവലോകനം ചെയ്യുക."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

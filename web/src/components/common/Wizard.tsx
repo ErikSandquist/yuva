@@ -38,7 +38,14 @@ export function Stepper({
   const step = index + 1
   return (
     <div className={className}>
-      <ol className="flex gap-1.5" aria-label={label}>
+      <p className="mb-2.5 text-small text-faint" data-testid={testId}>
+        <Trans>
+          Step {step} of {count}
+        </Trans>
+        <span aria-hidden="true"> · </span>
+        <span className="text-muted-foreground">{steps[index]?.label}</span>
+      </p>
+      <ol className="flex gap-1" aria-label={label}>
         {steps.map((s, i) => {
           const href = i < index ? stepHref?.(s.key) : undefined
           return (
@@ -61,13 +68,6 @@ export function Stepper({
           )
         })}
       </ol>
-      <p className="mt-3 text-small text-faint" data-testid={testId}>
-        <Trans>
-          Step {step} of {count}
-        </Trans>
-        <span aria-hidden="true"> · </span>
-        {steps[index]?.label}
-      </p>
     </div>
   )
 }
@@ -82,16 +82,16 @@ export function StepHeader({
   icon?: React.ReactNode
 }) {
   return (
-    <div className="mb-8">
+    <div className="mb-7">
       {icon && (
-        <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand [&_svg]:size-5">
+        <span className="mb-4 grid size-10 place-items-center rounded-full bg-brand-wash text-brand [&_svg]:size-[18px]">
           {icon}
         </span>
       )}
       <h1 className="text-page text-balance outline-none" tabIndex={-1} data-wizard-heading="">
         {title}
       </h1>
-      {children && <p className="mt-3 text-pretty text-muted-foreground">{children}</p>}
+      {children && <p className="mt-2 text-reading text-pretty text-muted-foreground">{children}</p>}
     </div>
   )
 }
@@ -144,33 +144,33 @@ export function WizardFrame({
   }, [current])
 
   return (
-    <div className="grid min-h-svh bg-background lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]" data-testid="setup">
-      <div className="flex min-w-0 flex-col px-5 sm:px-8">
-        <header className="flex h-16 shrink-0 items-center justify-between gap-3">
-          <span className="flex min-w-0 items-center gap-2.5">
-            <YuvaMark className="size-[26px] shrink-0" />
-            <span className="hidden truncate text-title sm:inline">{membership.workspace.name}</span>
-          </span>
-          <span className="flex shrink-0 items-center gap-1">
-            <LanguageMenu />
-            {leave !== undefined
-              ? leave
-              : steps &&
-                index >= 0 &&
-                index < steps.length - 1 && (
-                  <Button variant="ghost" size="sm" onClick={later} data-testid="setup-later">
-                    {state.back ? <Trans>Cancel</Trans> : <Trans>Do this later</Trans>}
-                  </Button>
-                )}
-          </span>
-        </header>
-        <main ref={main} className="flex flex-1 justify-center pt-[5vh] pb-10 lg:pt-[12vh] lg:pb-16">
+    <div className="flex min-h-svh flex-col bg-background" data-testid="setup">
+      <header className="sticky top-0 z-10 flex h-13 shrink-0 items-center justify-between gap-3 border-b bg-background px-4 sm:px-6">
+        <span className="flex min-w-0 items-center gap-2.5">
+          <YuvaMark className="size-6 shrink-0" />
+          <span className="truncate text-body font-semibold">{membership.workspace.name}</span>
+        </span>
+        <span className="flex shrink-0 items-center gap-1">
+          <LanguageMenu />
+          {leave !== undefined
+            ? leave
+            : steps &&
+              index >= 0 &&
+              index < steps.length - 1 && (
+                <Button variant="ghost" size="sm" onClick={later} data-testid="setup-later">
+                  {state.back ? <Trans>Cancel</Trans> : <Trans>Do this later</Trans>}
+                </Button>
+              )}
+        </span>
+      </header>
+      <div className="grid flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <main ref={main} className="flex min-w-0 justify-center px-4 pt-8 pb-12 sm:px-8 lg:pt-[9vh] lg:pb-16">
           <div className="w-full max-w-[30rem]">
             {back && (
               <Link
                 to={back}
                 state={state}
-                className="mb-6 inline-flex w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground"
+                className="mb-5 inline-flex w-fit items-center gap-1.5 text-small text-faint transition-colors hover:text-foreground"
                 data-testid="setup-back"
               >
                 <ArrowLeftIcon className="size-3.5 rtl:rotate-180" />
@@ -184,7 +184,7 @@ export function WizardFrame({
                 stepHref={stepHref}
                 label={stepsLabel}
                 testId="setup-step"
-                className="mb-8"
+                className="mb-7"
               />
             )}
             {children}
@@ -204,20 +204,20 @@ export function WizardFrame({
                   </Button>
                 )}
                 {(previewOpen || shown) && (
-                  <div className="mt-3 overflow-hidden rounded-[1.5rem] bg-surface p-4 sm:p-6">{preview}</div>
+                  <div className="mt-3 overflow-hidden rounded-2xl border bg-surface p-4 sm:p-6">{preview}</div>
                 )}
               </section>
             )}
           </div>
         </main>
+        {wide && (
+          <aside className="flex border-s bg-surface" aria-label={t`Preview`}>
+            <div className="sticky top-13 flex h-[calc(100svh-3.25rem)] flex-1 flex-col items-center justify-center overflow-hidden p-10 xl:p-14">
+              {preview}
+            </div>
+          </aside>
+        )}
       </div>
-      {wide && (
-        <aside className="flex p-3" aria-label={t`Preview`}>
-          <div className="sticky top-3 flex max-h-[calc(100svh-1.5rem)] min-h-[calc(100svh-1.5rem)] flex-1 flex-col items-center justify-center overflow-hidden rounded-[1.75rem] bg-surface p-12">
-            {preview}
-          </div>
-        </aside>
-      )}
     </div>
   )
 }
@@ -241,7 +241,7 @@ export function StepActions({
 }) {
   return (
     <div className="sticky bottom-0 -mx-5 flex flex-wrap items-center gap-3 border-t bg-background px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:static sm:mx-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-0 sm:pb-0">
-      <Button type={type} disabled={disabled || pending} onClick={onClick} data-testid={testId}>
+      <Button type={type} size="lg" disabled={disabled || pending} onClick={onClick} data-testid={testId}>
         {pending && <Spinner />}
         {children}
         <ArrowRightIcon className="rtl:rotate-180" />
@@ -252,7 +252,7 @@ export function StepActions({
 }
 
 const rowClass =
-  "group flex w-full items-center gap-4 rounded-2xl border bg-card px-4 py-4 text-start transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30"
+  "group flex w-full items-center gap-3.5 rounded-2xl border bg-card px-4 py-3.5 text-start transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30"
 
 export type Choice = {
   value: string
@@ -271,7 +271,7 @@ export type Choice = {
 function ChoiceBody({ choice, chevron }: { choice: Choice; chevron: boolean }) {
   return (
     <>
-      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-surface text-muted-foreground [&_svg]:size-[18px]">
+      <span className="grid size-9 shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground [&_svg]:size-4">
         {choice.icon}
       </span>
       <span className="min-w-0 flex-1">

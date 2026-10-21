@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: # conversación por 1000 vistas, fren
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} de {limit} eventos de analítica usados este mes. Los eventos por encima del límite se descartan hasta que termine el mes."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} de los visitantes"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Un cambio se aplica a los eventos nuevos. Los días ya contados conservan su zona."
@@ -176,6 +180,10 @@ msgstr "Se creó una clave nueva"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "Una contraseña nueva cierra la sesión de todos los que desbloquearon el enlace."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "Una página vista, un evento o una profundidad de desplazamiento"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "Tasa de conversión"
 msgid "Conversions"
 msgstr "Conversiones"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "Conversiones a lo largo del tiempo"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "Conversiones por 100 visitantes."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "Visitantes de tus sitios y apps, sin cookies."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "General"
 msgid "Go to goals"
 msgstr "Ir a objetivos"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "Objetivo"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "Límite mensual"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "Meses"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "Más"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "Servidor ocupado"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Ajustes"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "Compartir"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

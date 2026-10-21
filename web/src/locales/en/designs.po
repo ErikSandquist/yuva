@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "A design can hold at most 200 blocks."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "A design is the look of a mail: start from a template, then use it for your broadcasts."
 
@@ -123,6 +124,10 @@ msgstr "Archive"
 msgid "Archive this design?"
 msgstr "Archive this design?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Archived"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Attribute key"
@@ -163,6 +168,10 @@ msgstr "Bottom"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Brand"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Browse the gallery"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "E-mail address"
 msgid "E-mail designs"
 msgstr "E-mail designs"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "E-mail layouts you reuse across broadcasts."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Easy to read: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Full name"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Full width"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Gallery"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "List name"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Load more"
 
@@ -702,6 +720,10 @@ msgstr "Merge field"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Merge fields can only go in the part of a link after the question mark."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Mine"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Preferences link"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Preview"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "Preview of {name}"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

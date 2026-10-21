@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "Návrh může mít nejvýše 200 bloků."
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Návrh je vzhled zprávy: začněte šablonou a pak ho použijte pro své hromadné zprávy."
 
@@ -123,6 +124,10 @@ msgstr "Archivovat"
 msgid "Archive this design?"
 msgstr "Archivovat tento návrh?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "Archivováno"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "Klíč atributu"
@@ -163,6 +168,10 @@ msgstr "Dole"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "Značka"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "Procházet galerii"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "E-mailová adresa"
 msgid "E-mail designs"
 msgstr "E-mailové návrhy"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "E-mailová rozvržení, která znovu používáte v hromadných zprávách."
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "Snadno čitelné: {value}:1"
@@ -469,6 +482,10 @@ msgstr "Celé jméno"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "Plná šířka"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "Galerie"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "Název skupiny"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Načíst další"
 
@@ -702,6 +720,10 @@ msgstr "Slučovací pole"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "Slučovací pole mohou být jen v části odkazu za otazníkem."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "Moje"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "Odkaz na předvolby"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "Náhled"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "Náhled: {name}"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

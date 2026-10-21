@@ -32,6 +32,7 @@ msgid "A design can hold at most 200 blocks."
 msgstr "一个设计最多可包含 200 个区块。"
 
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "设计是邮件的外观:从模板开始,然后用于你的群发。"
 
@@ -123,6 +124,10 @@ msgstr "归档"
 msgid "Archive this design?"
 msgstr "归档此设计?"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Archived"
+msgstr "已归档"
+
 #: src/features/designs/designer/editor.tsx
 msgid "Attribute key"
 msgstr "属性键"
@@ -163,6 +168,10 @@ msgstr "下"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Brand"
 msgstr "品牌"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Browse the gallery"
+msgstr "浏览模板库"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Build it yourself from blocks"
@@ -408,6 +417,10 @@ msgstr "电子邮件地址"
 msgid "E-mail designs"
 msgstr "邮件设计"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail layouts you reuse across broadcasts."
+msgstr "在群发中重复使用的邮件版式。"
+
 #: src/features/designs/designer/controls.tsx
 msgid "Easy to read: {value}:1"
 msgstr "易读:{value}:1"
@@ -469,6 +482,10 @@ msgstr "全名"
 #: src/features/designs/designer/Inspector.tsx
 msgid "Full width"
 msgstr "全宽"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Gallery"
+msgstr "模板库"
 
 #: src/features/designs/text.ts
 msgid "Geometric"
@@ -664,6 +681,7 @@ msgstr "列表名称"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 #: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "加载更多"
 
@@ -702,6 +720,10 @@ msgstr "合并字段"
 #: src/features/designs/text.ts
 msgid "Merge fields can only go in the part of a link after the question mark."
 msgstr "合并字段只能放在链接中问号之后的部分。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Mine"
+msgstr "我的"
 
 #: src/features/designs/text.ts
 msgid "Monospace"
@@ -843,6 +865,10 @@ msgstr "偏好设置链接"
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
 msgstr "预览"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {name}"
+msgstr "{name} 预览"
 
 #: src/features/designs/GalleryPage.tsx
 msgid "Preview of {title}"

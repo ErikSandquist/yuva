@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-Hant\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} 篇草稿"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "已發布 {published} / {total} 個項目"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} 篇已發布"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} 篇已排程"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "更改時間"
 msgid "Changelog"
 msgstr "更新日誌"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "更新日誌"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "選擇圖片"
@@ -86,8 +102,13 @@ msgstr "不使用 Cookie 統計更新日誌的頁面瀏覽量。"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "建立更新日誌"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "建立更新日誌 ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "所有翻譯都會刪除。由它建立的群發會保留。"
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "已修正"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "顯示效果"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "在 {0} 中的顯示效果"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "沒有符合的項目。"
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "沒有可顯示更新日誌的收件匣。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "還沒有文字。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "已發布"
 msgid "Publishing on schedule failed."
 msgstr "依排程發布失敗。"
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "在你的產品、網頁和郵件中顯示的版本說明。"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "移除"
@@ -396,6 +434,10 @@ msgstr "設定"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "顯示"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "顯示在聊天小工具和 {host} 上。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "要撤回此項目嗎？"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "未發布"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "查看更新日誌"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

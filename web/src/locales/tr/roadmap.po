@@ -139,6 +139,10 @@ msgstr "Gizle"
 msgid "Idea started"
 msgstr "Fikir başlatıldı"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Müşterilerinizin oy verdiği fikirler, arkasındaki geri bildirimlerle"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} için fikirler, oylar ve aşamalar; her fikrin arkasındaki geri bildirimlerle birlikte. Herkese açık yapana kadar özel kalır."
@@ -302,6 +306,10 @@ msgstr "Herkese açık sayfa"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Okurlar fikir öneremez. Oylar ve yanıtlar yine de çalışır."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Okuyucular yeni fikirler önerdi. Herkese açık panoda görünmeden önce onları inceleyin."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: th\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "ฉบับร่าง {drafts}"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "เผยแพร่แล้ว {published} จาก {total} รายการ"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "เผยแพร่แล้ว {published}"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "ตั้งเวลาไว้ {scheduled}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "เปลี่ยนเวลา"
 msgid "Changelog"
 msgstr "บันทึกการเปลี่ยนแปลง"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "บันทึกการเปลี่ยนแปลง"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "เลือกรูปภาพ"
@@ -86,8 +102,13 @@ msgstr "นับการเข้าชมหน้าของบันทึ
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "สร้างบันทึกการเปลี่ยนแปลง"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "สร้างบันทึกการเปลี่ยนแปลง ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "คำแปลทั้งหมดจะถูกลบ บรอด�
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "แก้ไขแล้ว"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "หน้าตาที่แสดง"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "หน้าตาที่แสดงใน {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "ไม่มีรายการที่ตรงกัน"
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "ไม่มีกล่องจดหมายที่จะแสดงบันทึกการเปลี่ยนแปลง"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "ยังไม่มีข้อความ"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "เผยแพร่แล้ว"
 msgid "Publishing on schedule failed."
 msgstr "การเผยแพร่ตามเวลาที่ตั้งไว้ไม่สำเร็จ"
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "บันทึกประจำรุ่นที่แสดงในผลิตภัณฑ์ บนเว็บ และทางอีเมล"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "นำออก"
@@ -396,6 +434,10 @@ msgstr "การตั้งค่า"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "แสดง"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "แสดงในวิดเจ็ตแชทและบน {host}"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "ยกเลิกการเผยแพร่รายการนี
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "ยังไม่เผยแพร่"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "ดูบันทึกการเปลี่ยนแปลง"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

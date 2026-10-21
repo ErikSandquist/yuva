@@ -95,9 +95,15 @@ msgstr "{0} daripada {1}"
 
 #. placeholder {0}: fmt.format(s.replies)
 #. placeholder {1}: fmt.format(s.closed)
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "{0} replies · {1} closed"
 msgstr "{0} balasan · {1} ditutup"
+
+#. placeholder {0}: fmt.format(replies)
+#: src/features/team/TeamColumn.tsx
+msgid "{0} replies today"
+msgstr "{0} balasan hari ini"
 
 #. placeholder {0}: done.scopes.length
 #. placeholder {0}: scopes.length
@@ -280,9 +286,14 @@ msgstr "{done} daripada {total} baris"
 msgid "{doneParts} of {totalParts} parts"
 msgstr "{doneParts} daripada {totalParts} bahagian"
 
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "{doneText} of {total}"
 msgstr "{doneText} daripada {total}"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{down, plural, one {# down} other {# down}}"
+msgstr "{down, plural, other {# terputus}}"
 
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
@@ -327,6 +338,10 @@ msgstr "{from} tiada rekod SPF. Terbitkan satu yang menyertakan penyedia SMTP an
 #: src/features/contact/ContactDetails.tsx
 msgid "{good} good"
 msgstr "{good} baik"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{here, plural, =0 {Nobody is online right now.} one {# person is online right now.} other {# people are online right now.}}"
+msgstr "{here, plural, =0 {Tiada sesiapa dalam talian sekarang.} other {# orang dalam talian sekarang.}}"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "{hidden, plural, one {# earlier message} other {# earlier messages}}"
@@ -511,7 +526,16 @@ msgstr "Tapak web {name}"
 msgid "{names} will be notified"
 msgstr "{names} akan dimaklumkan"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "{notOk, plural, one {# not operational} other {# not operational}}"
+msgstr "{notOk, plural, other {# tidak beroperasi}}"
+
+#: src/features/team/TeamColumn.tsx
+msgid "{open, plural, one {# open now} other {# open now}}"
+msgstr "{open, plural, other {# terbuka sekarang}}"
+
 #: src/components/common/Linked.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# terbuka}}"
@@ -527,6 +551,10 @@ msgstr "{pct} berpuas hati"
 #: src/features/docs/DocsColumn.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} siaran menunggu kelulusan"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "{pending} waiting · {unsubscribed} unsubscribed"
+msgstr "{pending} menunggu · {unsubscribed} berhenti langgan"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -687,6 +715,10 @@ msgstr "{sent} daripada {all} selesai"
 msgid "{share} helpful"
 msgstr "{share} mendapati membantu"
 
+#: src/features/status/ComponentsTab.tsx
+msgid "{share} uptime"
+msgstr "{share} masa operasi"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{size} · pick another file"
 msgstr "{size} · pilih fail lain"
@@ -696,13 +728,30 @@ msgstr "{size} · pilih fail lain"
 msgid "{subscribed} subscribed"
 msgstr "{subscribed} melanggan"
 
+#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "{subscribed} subscribers"
+msgstr "{subscribed} pelanggan"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{threads} open discussions"
 msgstr "{threads} perbincangan terbuka"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "{unsubscribed} unsubscribed"
+msgstr "{unsubscribed} berhenti langgan"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{up, plural, one {# up} other {# up}}"
+msgstr "{up, plural, other {# aktif}}"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} membantu"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "{updates, plural, one {# update} other {# updates}}"
+msgstr "{updates, plural, other {# kemas kini}}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
@@ -718,9 +767,9 @@ msgstr "{views, plural, other {# paparan}}"
 msgid "{votes} votes"
 msgstr "{votes} undi"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "{who} in {contact}"
-msgstr "{who} dalam {contact}"
+#: src/features/home/HomePage.tsx
+msgid "{waiting, plural, one {# person is waiting for a reply.} other {# people are waiting for a reply.}}"
+msgstr "{waiting, plural, other {# orang menunggu balasan.}}"
 
 #: src/features/account/AccountPage.tsx
 msgid "{who} replied in <0>{title}</0>"
@@ -738,6 +787,10 @@ msgstr "*@example.com menerima setiap alamat domain yang tiada saluran lain; bal
 #: src/features/contact/ContactDetails.tsx
 msgid "+ Add address"
 msgstr "+ Tambah alamat"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "+{added} in 30 days"
+msgstr "+{added} dalam 30 hari"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "<0>{domain}</0> is not a verified identity in the server’s Amazon SES account. Mail goes out without tenant isolation and broadcasts are blocked. Ask the server’s operator to verify the domain."
@@ -792,6 +845,7 @@ msgstr "2. Semak ia sampai"
 msgid "200 to 299 by default."
 msgstr "Secara lalai 200 hingga 299."
 
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "24 hours"
 msgstr "24 jam"
@@ -1221,6 +1275,10 @@ msgstr "Sokongan Acme"
 msgid "Active"
 msgstr "Aktif"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Activity"
+msgstr "Aktiviti"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
@@ -1277,6 +1335,10 @@ msgstr "Tambah pelanggan"
 msgid "Add a subscriber to {listName}"
 msgstr "Tambah pelanggan ke {listName}"
 
+#: src/app/Sidebar.tsx
+msgid "Add a website"
+msgstr "Tambah tapak web"
+
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Add a website chat in the inbox settings"
 msgstr "Tambah sembang tapak web dalam tetapan peti masuk"
@@ -1314,6 +1376,7 @@ msgid "Add at least one origin."
 msgstr "Tambah sekurang-kurangnya satu origin."
 
 #: src/features/settings/channels/ApiChannelDialog.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Add channel"
 msgstr "Tambah saluran"
 
@@ -1353,6 +1416,10 @@ msgstr "Tambah monitor ({addKey})"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "Tambah nota"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add product"
+msgstr "Tambah produk"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -1439,6 +1506,10 @@ msgstr "Pentadbir"
 msgid "Admin routing"
 msgstr "Penghalaan pentadbir"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Affects"
+msgstr "Menjejaskan"
+
 #: src/components/common/text.ts
 msgid "Agent"
 msgstr "Ejen"
@@ -1468,6 +1539,7 @@ msgstr "Beri amaran saya semasa tab berada di latar belakang"
 msgid "Alertmanager"
 msgstr "Alertmanager"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1485,12 +1557,15 @@ msgstr "Semua"
 msgid "All components"
 msgstr "Semua komponen"
 
+#: src/features/status/IncidentPane.tsx
+msgid "All good"
+msgstr "Semua baik"
+
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
 msgstr "Semua import"
 
 #: src/app/Palette.tsx
-#: src/features/inbox/InboxPicker.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
@@ -1510,9 +1585,18 @@ msgstr "Semua ditanda sebagai dibaca"
 msgid "All of its conversations are deleted with it."
 msgstr "Semua perbualannya dipadam bersamanya."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "all operational"
+msgstr "semua beroperasi"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "Semua bahagian telah tiba. Membaca fail…"
+
+#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "All products"
+msgstr "Semua produk"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
@@ -1523,6 +1607,10 @@ msgstr "Semua skop"
 #: src/features/docs/DocsColumn.tsx
 msgid "All sites"
 msgstr "Semua tapak"
+
+#: src/features/status/IncidentsTab.tsx
+msgid "all up"
+msgstr "semua aktif"
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Allow"
@@ -1582,6 +1670,10 @@ msgstr "Juga untuk e-mel log masuk dan pemberitahuan"
 #: src/features/settings/webhooks/events.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Hantar juga message.created untuk nota dalaman ahli. Peristiwa dalaman tidak pernah dihantar."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Always open"
+msgstr "Sentiasa dibuka"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
@@ -1858,6 +1950,12 @@ msgstr "Apa-apa yang menggunakan kunci ini berhenti berfungsi serta-merta."
 msgid "API"
 msgstr "API"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/DeveloperTabs.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "API & MCP"
+msgstr "API & MCP"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "API channel"
 msgstr "Saluran API"
@@ -1867,7 +1965,7 @@ msgid "API key"
 msgstr "Kunci API"
 
 #: src/app/Palette.tsx
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "Kunci API"
@@ -1899,6 +1997,7 @@ msgid "Appear online only in business hours"
 msgstr "Tampil dalam talian hanya pada waktu perniagaan"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -2002,6 +2101,10 @@ msgstr "Minta pentadbir pelayan mel anda menghantar {address} ke alamat di bawah
 #: src/features/migrations/SwitchStep.tsx
 msgid "Ask the admin of your mail server to forward {address} to the address below on the server, keeping delivery to the mailbox."
 msgstr "Minta pentadbir pelayan mel anda memajukan {address} ke alamat di bawah pada pelayan, sambil mengekalkan penghantaran ke peti mel."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Asked after closing"
+msgstr "Ditanya selepas ditutup"
 
 #: src/components/common/text.ts
 msgid "Asked to subscribe"
@@ -2355,11 +2458,16 @@ msgstr "Bawa masuk pelanggan yang sudah bersetuju di tempat lain. Setiap alamat 
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "Bawa masuk sejarah peti mel yang anda jawab hari ini, kemudian alihkan melnya. Yuva hanya membaca peti mel; tiada apa diubah di sana."
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Bring your mail history"
+msgstr "Bawa sejarah mel anda"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "Bawa masuk mel lama anda"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
 msgstr "Siaran"
 
@@ -2371,10 +2479,12 @@ msgstr "Penghantaran siaran"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
@@ -2401,7 +2511,12 @@ msgstr "Pelayar"
 msgid "Bug"
 msgstr "Pepijat"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Bugs, ideas and praise sent from your apps and pages"
+msgstr "Pepijat, idea dan pujian yang dihantar dari aplikasi dan halaman anda"
+
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Business hours"
 msgstr "Waktu perniagaan"
 
@@ -2409,11 +2524,18 @@ msgstr "Waktu perniagaan"
 msgid "By"
 msgstr "Oleh"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "by e-mail"
+msgstr "melalui e-mel"
+
 #: src/features/conversation/Feedback.tsx
 msgid "By e-mail"
 msgstr "Melalui e-mel"
 
 #: src/features/reports/ReportPages.tsx
+msgid "By inbox"
+msgstr "Mengikut peti masuk"
+
 #: src/features/reports/ReportsColumn.tsx
 msgid "By member"
 msgstr "Mengikut ahli"
@@ -2430,10 +2552,6 @@ msgstr "Kempen dalam pautan"
 #: src/features/broadcasts/Composer.tsx
 msgid "Campaign name"
 msgstr "Nama kempen"
-
-#: src/features/auth/AuthLayout.tsx
-msgid "Can I schedule a newsletter for each subscriber?"
-msgstr "Bolehkah saya menjadualkan surat berita untuk setiap pelanggan?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/Linked.tsx
@@ -2516,6 +2634,7 @@ msgid "Cancelled. What was added before stays."
 msgstr "Dibatalkan. Apa yang ditambah sebelum ini kekal."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/conversation/composer/CannedMenu.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
@@ -2539,6 +2658,10 @@ msgstr "Tangkap semua tanpa alamat Daripada"
 #: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategori"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Cause found"
+msgstr "Punca ditemui"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Cc: {cc}"
@@ -2613,6 +2736,11 @@ msgstr "Saluran ditambah"
 #: src/features/settings/channels/sections.tsx
 msgid "Channel removed"
 msgstr "Saluran dialih keluar"
+
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Channels"
+msgstr "Saluran"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2802,6 +2930,7 @@ msgstr "Penjejakan klik"
 msgid "clicked"
 msgstr "mengklik"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Clicked"
 msgstr "Mengklik"
@@ -2813,6 +2942,10 @@ msgstr "mengklik pautan, kira-kira"
 #: src/features/home/HomePage.tsx
 msgid "clicks not tracked"
 msgstr "klik tidak dijejaki"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Clicks not tracked"
+msgstr "Klik tidak dijejaki"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -2876,10 +3009,6 @@ msgstr "Tutup carian"
 msgid "Close the search (Esc)"
 msgstr "Tutup carian (Esc)"
 
-#: src/features/reports/ReportPages.tsx
-msgid "closed"
-msgstr "ditutup"
-
 #: src/components/common/text.ts
 #: src/features/reports/ReportPages.tsx
 msgid "Closed"
@@ -2909,6 +3038,14 @@ msgstr "Rekod CNAME"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kod"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Collapse or expand the sidebar"
+msgstr "Kuncupkan atau kembangkan bar sisi"
+
+#: src/app/TopBar.tsx
+msgid "Collapse the sidebar"
+msgstr "Kuncupkan bar sisi"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Collections"
@@ -2967,6 +3104,7 @@ msgstr "Komponen dipadam"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
 msgstr "Komponen"
@@ -3013,6 +3151,7 @@ msgid "Confirmation and welcome mails, and every broadcast to the list, go out t
 msgstr "Mel pengesahan dan alu-aluan, dan setiap siaran ke senarai, dihantar melalui saluran e-mel."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Confirmation asked"
 msgstr "Pengesahan diminta"
 
@@ -3084,9 +3223,10 @@ msgid "Connected {created}"
 msgstr "Disambungkan {created}"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
-#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "Apl disambungkan"
@@ -3230,6 +3370,7 @@ msgid "Conversation reopened"
 msgstr "Perbualan dibuka semula"
 
 #: src/features/contact/ContactPage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "perbualan"
 
@@ -3251,6 +3392,14 @@ msgstr "Perbualan"
 #: src/features/migrations/parts.tsx
 msgid "Conversations copied"
 msgstr "Perbualan disalin"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations from every product"
+msgstr "Perbualan daripada setiap produk"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Conversations in {product}"
+msgstr "Perbualan dalam {product}"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3418,6 +3567,7 @@ msgid "Create status page"
 msgstr "Cipta halaman status"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Create status page ({newKey})"
 msgstr "Cipta halaman status ({newKey})"
 
@@ -3482,9 +3632,9 @@ msgstr "Fail CSV"
 msgid "Custom"
 msgstr "Tersuai"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Custom domain still shows as unverified"
-msgstr "Domain tersuai masih ditunjukkan sebagai belum disahkan"
+#: src/app/Sidebar.tsx
+msgid "Customers"
+msgstr "Pelanggan"
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3524,13 +3674,13 @@ msgstr "Gelapkan warna supaya sepadan dengan tema"
 msgid "Data retention"
 msgstr "Pengekalan data"
 
-#: src/features/settings/SettingsColumn.tsx
-msgid "Data retention and deleting the workspace"
-msgstr "Pengekalan data dan memadam ruang kerja"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "Database upgrade"
 msgstr "Naik taraf pangkalan data"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Date"
+msgstr "Tarikh"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Dates"
@@ -3701,6 +3851,10 @@ msgstr "Padam langganan ini?"
 msgid "Delete this workspace"
 msgstr "Padam ruang kerja ini"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Delete workspace…"
+msgstr "Padam ruang kerja…"
+
 #: src/features/account/AccountPage.tsx
 msgid "Delete your account"
 msgstr "Padam akaun anda"
@@ -3788,6 +3942,7 @@ msgstr "Penerangan (pilihan)"
 msgid "Design"
 msgstr "Reka bentuk"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "Designs"
 msgstr "Reka bentuk"
@@ -3810,10 +3965,6 @@ msgstr "Butiran"
 #: src/features/status/SettingsTab.tsx
 msgid "Deutsch"
 msgstr "Deutsch"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Developer"
-msgstr "Pembangun"
 
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
@@ -3989,6 +4140,7 @@ msgstr "Domain belum disahkan"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Selesai"
@@ -4068,6 +4220,7 @@ msgid "Draft:"
 msgstr "Draf:"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Drafts"
@@ -4076,6 +4229,10 @@ msgstr "Draf"
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "Draf menunggu"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Drafts waiting for review and the assistants you connected"
+msgstr "Draf yang menunggu semakan dan pembantu yang anda sambungkan"
 
 #: src/features/migrations/text.ts
 msgid "Drafts, never imported"
@@ -4096,7 +4253,6 @@ msgstr "Gandakan blok yang dipilih"
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
-#: src/features/auth/AuthLayout.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
@@ -4154,17 +4310,21 @@ msgstr "Pelanggan e-mel dimatikan"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "Pelanggan e-mel dimatikan. Tiada sesiapa boleh melanggan dan tiada notis dihantar, tetapi senarai dikekalkan."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "E-mail subscriptions are off"
+msgstr "Langganan e-mel dimatikan"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
 msgstr "Paparan e-mel"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "E-mail, live chat and in-app messages"
-msgstr "E-mel, sembang langsung dan mesej dalam apl"
-
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "E-mail: {label}"
 msgstr "E-mel: {label}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "E-mails to the people who signed up for them."
+msgstr "E-mel kepada orang yang mendaftar untuknya."
 
 #: src/features/status/IncidentDialog.tsx
 msgid "Each component gets this state while the incident is open."
@@ -4182,6 +4342,10 @@ msgstr "Setiap perbualan ditutup selepas balasan. Pelanggan menerimanya serta-me
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Setiap perbualan mengekalkan status yang dilaporkan {provider} untuknya: terbuka, belum selesai atau ditutup."
 
+#: src/features/status/ComponentsTab.tsx
+msgid "Each day’s uptime shows here once the page is published."
+msgstr "Masa operasi setiap hari dipaparkan di sini sebaik halaman diterbitkan."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
 msgstr "Setiap satu masuk ke saluran e-mel peti masuknya untuk alamatnya, jika tidak ke saluran e-mel tertua peti masuk itu, supaya balasan sampai kepada pelanggan. Peti masuk tanpa saluran e-mel menyimpannya sebagai sejarah sahaja."
@@ -4195,6 +4359,10 @@ msgstr "Sumber asal setiap mesej disimpan, seperti untuk mel yang tiba secara la
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Setiap e-mel baharu memulakan perbualan; balasan menyambungnya."
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Each product has its own inbox, branding, hours and channels."
+msgstr "Setiap produk mempunyai peti masuk, penjenamaan, waktu dan saluran sendiri."
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4410,10 +4578,6 @@ msgstr "Setiap isyarat, isyarat terlepas dan status dihantar dalam 30 hari lepas
 msgid "Every check of the last 30 days, newest first."
 msgstr "Setiap semakan dalam 30 hari lepas, yang terbaharu dahulu."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Every customer conversation, in one place."
-msgstr "Setiap perbualan pelanggan, di satu tempat."
-
 #: src/features/migrations/MapStep.tsx
 msgid "Every imported conversation is closed."
 msgstr "Setiap perbualan diimport ditutup."
@@ -4479,6 +4643,10 @@ msgstr "Semua orang dalam fail ini bersetuju menerima {listName} daripada {inbox
 msgid "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
 msgstr "Semua orang dalam senarai. Syarat hanya mengekalkan kenalan yang atributnya sepadan, kesemuanya."
 
+#: src/features/contact/ContactsColumn.tsx
+msgid "Everyone who has written to your products"
+msgstr "Semua orang yang pernah menulis kepada produk anda"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Siaran semua orang diterbitkan serta-merta, kecuali siaran penulis yang anda tanda sebagai spam."
@@ -4511,6 +4679,10 @@ msgstr "Di mana-mana"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Example Ltd."
 msgstr "Example Sdn. Bhd."
+
+#: src/app/TopBar.tsx
+msgid "Expand the sidebar"
+msgstr "Kembangkan bar sisi"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Expected every"
@@ -4721,12 +4893,16 @@ msgid "First name"
 msgstr "Nama pertama"
 
 #: src/features/reports/ReportPages.tsx
-msgid "first replies"
-msgstr "balasan pertama"
+msgid "First replies"
+msgstr "Balasan pertama"
 
 #: src/features/contact/ContactPage.tsx
 msgid "first reply"
 msgstr "balasan pertama"
+
+#: src/features/reports/ReportPages.tsx
+msgid "First reply"
+msgstr "Balasan pertama"
 
 #: src/app/TeamMenu.tsx
 msgid "first reply in {first}"
@@ -4743,6 +4919,10 @@ msgstr "Kemas kini pertama"
 #: src/features/setup/NewsletterStep.tsx
 msgid "First, an e-mail address"
 msgstr "Pertama, alamat e-mel"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Fix is out"
+msgstr "Pembetulan sudah keluar"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
@@ -4933,6 +5113,10 @@ msgstr "Alamat Daripada (pilihan)"
 msgid "From blocked contacts"
 msgstr "Daripada kenalan yang disekat"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "From Gmail, Outlook, Yandex or any IMAP server, read only from the source."
+msgstr "Daripada Gmail, Outlook, Yandex atau mana-mana pelayan IMAP, hanya baca daripada sumber."
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
 msgstr "Daripada terminal"
@@ -4971,8 +5155,11 @@ msgstr "Fumadocs / React"
 msgid "Further copies of the same message"
 msgstr "Salinan lanjut mesej yang sama"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "Umum"
 
@@ -5031,6 +5218,18 @@ msgstr "Pergi ke senarai"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Goes out through {via}"
 msgstr "Keluar melalui {via}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good afternoon, {first}"
+msgstr "Selamat petang, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good evening, {first}"
+msgstr "Selamat malam, {first}"
+
+#: src/features/home/HomePage.tsx
+msgid "Good morning, {first}"
+msgstr "Selamat pagi, {first}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -5129,6 +5328,7 @@ msgstr "Artikel bantuan"
 msgid "Help articles"
 msgstr "Artikel bantuan"
 
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help center"
 msgstr "Pusat bantuan"
@@ -5254,6 +5454,10 @@ msgstr "Nama hos"
 msgid "Hostname and certificate"
 msgstr "Nama hos dan sijil"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Hours"
+msgstr "Waktu"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Bagaimana mereka bersetuju?"
@@ -5270,6 +5474,10 @@ msgstr "Bagaimana orang mendaftar?"
 msgid "How far back"
 msgstr "Sejauh mana ke belakang"
 
+#: src/features/reports/ReportPages.tsx
+msgid "How fast and how well your team answers."
+msgstr "Sepantas dan sebaik mana pasukan anda menjawab."
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Bagaimana e-mel HTML dibuka. Anda masih boleh menukar setiap mesej."
@@ -5281,6 +5489,10 @@ msgstr "Berapa lewat isyarat dibenarkan."
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Bagaimana mel sampai ke Yuva"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "How messages reach each product."
+msgstr "Cara mesej sampai ke setiap produk."
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
@@ -5491,6 +5703,14 @@ msgstr "Import"
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
 msgstr "Import berjalan satu demi satu dalam ruang kerja. Cuba lagi apabila yang lain tamat."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact}"
+msgstr "dalam {contact}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "in {contact} · {subject}"
+msgstr "dalam {contact} · {subject}"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "Dalam 1 jam"
@@ -5584,15 +5804,12 @@ msgstr "Dalam tetapan Yandex Mail, di bawah Mail clients, benarkan akses melalui
 msgid "In Zoho Mail, open Settings › Mail accounts › IMAP access and turn IMAP on."
 msgstr "Dalam Zoho Mail, buka Settings › Mail accounts › IMAP access dan hidupkan IMAP."
 
-#: src/features/auth/AuthLayout.tsx
-msgid "In-app"
-msgstr "Dalam apl"
-
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/InboxPicker.tsx
+#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/webhooks/sections.tsx
@@ -5608,14 +5825,9 @@ msgstr "Warna peti masuk"
 msgid "Inbox for {name}"
 msgstr "Peti masuk untuk {name}"
 
-#: src/features/home/HomePage.tsx
-msgid "Inbox today"
-msgstr "Peti masuk hari ini"
-
 #: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
-#: src/features/settings/SettingsColumn.tsx
 msgid "Inboxes"
 msgstr "Peti masuk"
 
@@ -5640,6 +5852,10 @@ msgstr "Sertakan nota"
 #: src/features/contact/ContactSheet.tsx
 msgid "Info"
 msgstr "Maklumat"
+
+#: src/app/Sidebar.tsx
+msgid "Insights"
+msgstr "Analitis"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
@@ -5673,6 +5889,7 @@ msgid "Investigating"
 msgstr "Sedang disiasat"
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Invite"
 msgstr "Jemput"
 
@@ -5683,6 +5900,10 @@ msgstr "Bahasa jemputan"
 #: src/features/setup/WaitStep.tsx
 msgid "Invite your team"
 msgstr "Jemput pasukan anda"
+
+#: src/features/team/TeamColumn.tsx
+msgid "Invited, not joined yet"
+msgstr "Dijemput, belum menyertai"
 
 #: src/features/settings/members/Invites.tsx
 msgid "Invites"
@@ -5879,6 +6100,7 @@ msgid "Kept with every subscription from this file, as the record of their conse
 msgstr "Disimpan bersama setiap langganan daripada fail ini, sebagai rekod persetujuan mereka."
 
 #: src/app/Palette.tsx
+#: src/app/TopBar.tsx
 #: src/app/UserMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
@@ -5926,6 +6148,7 @@ msgid "Label only: its mail comes from All mail, and its conversations get the l
 msgstr "Label sahaja: melnya datang daripada Semua mel, dan perbualannya mendapat label."
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -5946,6 +6169,7 @@ msgstr "Label (L)"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
@@ -5967,6 +6191,14 @@ msgstr "Lebih besar daripada had pelayan ini"
 #: src/features/migrations/text.ts
 msgid "Larger than this server's limit for one message"
 msgstr "Lebih besar daripada had pelayan ini untuk satu mesej"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 30 days"
+msgstr "30 hari lepas"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Last 7 days"
+msgstr "7 hari lepas"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
@@ -6211,10 +6443,12 @@ msgstr "Mendengar mel…"
 msgid "Listing the tickets…"
 msgstr "Menyenaraikan tiket…"
 
+#: src/app/Sidebar.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Senarai"
@@ -6224,7 +6458,6 @@ msgid "Live"
 msgstr "Langsung"
 
 #: src/components/common/Source.tsx
-#: src/features/auth/AuthLayout.tsx
 msgid "Live chat"
 msgstr "Sembang langsung"
 
@@ -6240,6 +6473,7 @@ msgstr "Muatkan imej"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -6307,6 +6541,10 @@ msgstr "Cari dalam mesej lebih lama"
 #: src/app/TeamMenu.tsx
 msgid "Looking at {where}"
 msgstr "Melihat {where}"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Looking into it"
+msgstr "Sedang disiasat"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Looking up the provider…"
@@ -6410,7 +6648,7 @@ msgstr "Maildir dalam zip"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactPage.tsx
 msgid "Mailing lists"
 msgstr "Senarai mel"
@@ -6571,6 +6809,10 @@ msgstr "Media"
 msgid "Media, links and docs"
 msgstr "Media, pautan dan dokumen"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median"
+msgstr "median"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Median"
 msgstr "Median"
@@ -6580,14 +6822,20 @@ msgstr "Median"
 msgid "median first reply"
 msgstr "median balasan pertama"
 
+#: src/features/home/HomePage.tsx
+msgid "Median first reply"
+msgstr "Median balasan pertama"
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "Ahli"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/members/MembersPage.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Members"
 msgstr "Ahli"
@@ -6662,6 +6910,10 @@ msgstr "Mesej disalin"
 msgid "Messages imported"
 msgstr "Mesej diimport"
 
+#: src/features/reports/ReportPages.tsx
+msgid "messages sent"
+msgstr "mesej dihantar"
+
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Messages the key sends show its bot name and picture."
 msgstr "Mesej yang dihantar kunci menunjukkan nama dan gambar botnya."
@@ -6714,6 +6966,7 @@ msgstr "Pemindahan dibatalkan"
 msgid "Migration steps"
 msgstr "Langkah pemindahan"
 
+#: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Mine"
 msgstr "Saya"
@@ -6750,6 +7003,7 @@ msgid "Monitoring"
 msgstr "Dipantau"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Monitors"
 msgstr "Monitor"
@@ -6872,8 +7126,10 @@ msgstr "Alih ke peti masuk"
 msgid "Move to the previous or next stage"
 msgstr "Alihkan ke peringkat sebelumnya atau seterusnya"
 
+#: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Pindah ke Yuva"
 
@@ -6978,6 +7234,10 @@ msgstr "Perlu perhatian"
 msgid "Needs the operator’s approval"
 msgstr "Memerlukan kelulusan pengendali"
 
+#: src/features/home/HomePage.tsx
+msgid "Needs you"
+msgstr "Menunggu anda"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Never"
@@ -7027,10 +7287,12 @@ msgstr "Artikel baharu"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "Siaran baharu"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New broadcast ({newKey})"
 msgstr "Siaran baharu ({newKey})"
 
@@ -7134,6 +7396,7 @@ msgid "New label “{folder}”"
 msgstr "Label baharu “{folder}”"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "New list"
 msgstr "Senarai baharu"
 
@@ -7154,6 +7417,10 @@ msgstr "Mesej baharu dalam perbualan yang belum ditugaskan"
 msgid "New migration"
 msgstr "Pemindahan baharu"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "New page"
+msgstr "Halaman baharu"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "New password"
 msgstr "Kata laluan baharu"
@@ -7169,6 +7436,14 @@ msgstr "Rahsia tandatangan baharu"
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "Pelanggan baharu ditambah"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "New subscriptions per day, last 30 days"
+msgstr "Langganan baharu sehari, 30 hari lepas"
+
+#: src/features/status/IncidentPane.tsx
+msgid "New update · {stage}"
+msgstr "Kemas kini baharu · {stage}"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "New value"
@@ -7234,6 +7509,10 @@ msgstr "Semakan seterusnya {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "Mel seterusnya pada {local} ({utc} UTC), pada kadar siaran ini."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Next send"
+msgstr "Penghantaran seterusnya"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Seterusnya, pilih apa yang hendak dibawa. Imbasan membaca fail sekali."
@@ -7275,6 +7554,7 @@ msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP
 msgstr "Tiada halaman App passwords? Pentadbir anda mesti membenarkan 2-Step Verification dan IMAP dalam konsol Google Admin."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No archived lists"
 msgstr "Tiada senarai diarkibkan"
 
@@ -7295,6 +7575,7 @@ msgid "No broadcast has gone out yet. When one has, its recipients, clicks and r
 msgstr "Belum ada siaran dihantar. Apabila ada, penerima, klik dan balasannya muncul di sini."
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "Belum ada siaran"
 
@@ -7318,12 +7599,14 @@ msgstr "Tiada saluran yang boleh menghantar dipilih. Selagi belum ada, tiada ses
 msgid "No channel yet"
 msgstr "Belum ada saluran"
 
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "No channels yet"
 msgstr "Belum ada saluran"
 
 #. placeholder {0}: inbox.name
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "Belum ada saluran. Tambah satu supaya pelanggan boleh menulis kepada {0}."
 
@@ -7340,6 +7623,7 @@ msgid "No components yet. Add the parts of your product that customers depend on
 msgstr "Belum ada komponen. Tambah bahagian produk anda yang menjadi sandaran pelanggan."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No confirmation"
 msgstr "Tiada pengesahan"
 
@@ -7486,6 +7770,7 @@ msgid "No mail server was found for {domain}. Pick your provider below, or “Ot
 msgstr "Tiada pelayan mel ditemui untuk {domain}. Pilih penyedia anda di bawah, atau “Other IMAP server” dan masukkan pelayan pada langkah seterusnya."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No mailing lists yet"
 msgstr "Belum ada senarai mel"
 
@@ -7513,10 +7798,6 @@ msgstr "Tiada pemberitahuan dalam 90 hari lepas."
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "Belum ada sesiapa menyebut anda dalam nota. Apabila rakan sepasukan menulis @ dan nama anda, nota muncul di sini."
 
-#: src/features/home/HomePage.tsx
-msgid "No open conversations. New ones show up here and in the inbox as they arrive."
-msgstr "Tiada perbualan terbuka. Yang baharu muncul di sini dan dalam peti masuk apabila tiba."
-
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
 msgstr "Tiada maklum balas terbuka."
@@ -7537,9 +7818,17 @@ msgstr "Belum ada halaman"
 msgid "No pending invites."
 msgstr "Tiada jemputan belum selesai."
 
+#: src/features/settings/ProductsPage.tsx
+msgid "No products yet. Add one for each product or brand you answer for."
+msgstr "Belum ada produk. Tambah satu untuk setiap produk atau jenama yang anda layani."
+
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
 msgstr "Tiada artikel diterbitkan ditemui."
+
+#: src/features/reports/ReportPages.tsx
+msgid "No ratings in this period."
+msgstr "Tiada penilaian dalam tempoh ini."
 
 #: src/features/docs/DocsPages.tsx
 msgid "No ratings in this window."
@@ -7548,10 +7837,6 @@ msgstr "Tiada penilaian dalam tempoh ini."
 #: src/features/reports/ReportsColumn.tsx
 msgid "No ratings today"
 msgstr "Tiada penilaian hari ini"
-
-#: src/features/reports/ReportPages.tsx
-msgid "No ratings today."
-msgstr "Tiada penilaian hari ini."
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7601,6 +7886,7 @@ msgid "No subject"
 msgstr "Tiada subjek"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "Belum ada subjek"
 
@@ -7657,8 +7943,8 @@ msgid "Nobody else can see this inbox yet."
 msgstr "Belum ada orang lain boleh melihat peti masuk ini."
 
 #: src/features/reports/ReportPages.tsx
-msgid "Nobody has replied or closed anything yet today."
-msgstr "Belum ada sesiapa membalas atau menutup apa-apa hari ini."
+msgid "Nobody has replied or closed anything in this period."
+msgstr "Tiada sesiapa membalas atau menutup apa-apa dalam tempoh ini."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody is on the list of recipients yet."
@@ -7691,6 +7977,7 @@ msgstr "Tiada sesiapa akan mendapat mel ini. Pilih senarai yang ada pelanggan, a
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/contact/MergePreview.tsx
+#: src/features/conversation/Feedback.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -7786,6 +8073,10 @@ msgstr "Tidak ditawarkan pada pelayan ini"
 msgid "Not on any mailing list."
 msgstr "Tiada dalam mana-mana senarai mel."
 
+#: src/features/status/IncidentsTab.tsx
+msgid "not public yet"
+msgstr "belum awam"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
 msgstr "Belum sedia"
@@ -7840,6 +8131,10 @@ msgstr "Belum dimuat naik"
 msgid "Not used yet"
 msgstr "Belum digunakan"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Note"
+msgstr "Nota"
+
 #: src/features/contact/ContactNotes.tsx
 msgid "Note about this contact"
 msgstr "Nota tentang kenalan ini"
@@ -7856,9 +8151,9 @@ msgstr "Nota, hanya pasukan melihatnya"
 msgid "Notes"
 msgstr "Nota"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Notes stopped syncing after the update"
-msgstr "Nota berhenti disegerakkan selepas kemas kini"
+#: src/features/inbox/SidePanels.tsx
+msgid "Notes where a teammate mentioned you"
+msgstr "Nota tempat rakan sepasukan menyebut anda"
 
 #: src/features/settings/notifications/events.ts
 msgid "Nothing"
@@ -7883,6 +8178,10 @@ msgstr "Belum ada yang tiba."
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Belum ada apa yang berlaku."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Nothing here."
+msgstr "Tiada apa-apa di sini."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
@@ -7930,6 +8229,10 @@ msgstr "Tiada apa ditangguhkan."
 msgid "Nothing is waiting for approval."
 msgstr "Tiada apa menunggu kelulusan."
 
+#: src/features/home/HomePage.tsx
+msgid "Nothing is waiting."
+msgstr "Tiada apa-apa yang menunggu."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
 msgstr "Tiada apa sepadan dengan penapis ini."
@@ -7938,6 +8241,10 @@ msgstr "Tiada apa sepadan dengan penapis ini."
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Tiada apa sepadan dengan carian anda di sini."
+
+#: src/features/home/HomePage.tsx
+msgid "Nothing needs you"
+msgstr "Tiada apa-apa menunggu anda"
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -7948,6 +8255,7 @@ msgid "Notices to subscribers"
 msgstr "Notis kepada pelanggan"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7985,6 +8293,7 @@ msgstr "Surat berita Oktober"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "Off"
 msgstr "Mati"
@@ -8089,7 +8398,6 @@ msgstr "Setelah mesej ujian tiba, Yuva menunggu {hours} jam. Jika tiada apa samp
 msgid "One e-mail a month about what is new."
 msgstr "Satu e-mel sebulan tentang yang terbaharu."
 
-#: src/features/auth/AuthLayout.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "One inbox"
 msgstr "Satu peti masuk"
@@ -8247,18 +8555,16 @@ msgstr "Hanya semasa panel dibuka dalam pelayar ini. Semasa tiada, anda hanya di
 msgid "Only your team sees it."
 msgstr "Hanya pasukan anda melihatnya."
 
-#: src/features/home/HomePage.tsx
-msgid "open"
-msgstr "terbuka"
-
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/IncidentsTab.tsx
 msgid "Open"
 msgstr "Terbuka"
@@ -8489,6 +8795,10 @@ msgstr "Buka balasan"
 msgid "Open the status page"
 msgstr "Buka halaman status"
 
+#: src/features/home/HomePage.tsx
+msgid "Open the team"
+msgstr "Buka pasukan"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Buka tetapan ruang kerja"
@@ -8645,6 +8955,7 @@ msgid "Owner"
 msgstr "Pemilik"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "Pemilik dan pentadbir mencipta senarai, menambah pelanggan dan menghantar siaran."
 
@@ -8815,6 +9126,10 @@ msgstr "Belum selesai"
 msgid "Pending deliveries are dropped with it."
 msgstr "Penghantaran belum selesai digugurkan bersamanya."
 
+#: src/features/reports/ReportPages.tsx
+msgid "people answered"
+msgstr "orang dijawab"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Orang menyertainya pada borang langganan atau ditambah dengan persetujuan mereka. Siaran pergi ke senarai."
@@ -8865,6 +9180,10 @@ msgstr "Setiap peti masuk"
 msgid "Per month (30 days)"
 msgstr "Sebulan (30 hari)"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Period"
+msgstr "Tempoh"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Permission to send"
 msgstr "Kebenaran untuk menghantar"
@@ -8912,14 +9231,6 @@ msgstr "Pilih satu maklum balas"
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Pilih penghantar dalam tetapan"
-
-#: src/features/settings/SettingsColumn.tsx
-msgid "Pick a setting on the left."
-msgstr "Pilih tetapan di sebelah kiri."
-
-#: src/features/team/TeamColumn.tsx
-msgid "Pick a teammate"
-msgstr "Pilih rakan sepasukan"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Pick a time in the next 90 days, in your time zone, {zone}."
@@ -9072,6 +9383,7 @@ msgid "Plan maintenance ({maintenanceKey})"
 msgstr "Rancang penyelenggaraan ({maintenanceKey})"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentPane.tsx
 msgid "Planned"
 msgstr "Dirancang"
 
@@ -9108,7 +9420,6 @@ msgid "Port"
 msgstr "Port"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Post an update"
 msgstr "Terbitkan kemas kini"
 
@@ -9121,6 +9432,7 @@ msgid "Post feedback for your app's users"
 msgstr "Kumpul maklum balas pengguna apl anda"
 
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentsTab.tsx
 msgid "Post update"
 msgstr "Hantar kemas kini"
 
@@ -9194,12 +9506,17 @@ msgstr "Keutamaan, peti masuk, spam dan lagi"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Private"
 msgstr "Persendirian"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "pro, team"
 msgstr "pro, team"
+
+#: src/features/inbox/InboxPicker.tsx
+msgid "Product"
+msgstr "Produk"
 
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
@@ -9210,21 +9527,37 @@ msgstr "Nama produk"
 msgid "Product news"
 msgstr "Berita produk"
 
+#: src/features/inbox/ProductSwitcher.tsx
+msgid "Product: {label}"
+msgstr "Produk: {label}"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Production backend"
 msgstr "Bahagian belakang pengeluaran"
 
+#: src/app/Sidebar.tsx
+#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/SettingsColumn.tsx
+msgid "Products"
+msgstr "Produk"
+
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profil"
 
+#: src/features/conversation/Feedback.tsx
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Kemajuan"
+
+#: src/features/conversation/Feedback.tsx
+msgid "Progress · the person sees this"
+msgstr "Kemajuan · orang itu melihat ini"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Progress (O)"
@@ -9237,6 +9570,7 @@ msgstr "Proton Mail boleh dicapai melalui IMAP hanya melalui Proton Mail Bridge 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Public"
 msgstr "Awam"
 
@@ -9248,6 +9582,10 @@ msgstr "Alamat awam"
 msgid "Public key"
 msgstr "Kunci awam"
 
+#: src/features/status/StatusPagePane.tsx
+msgid "Public pages that tell your customers whether your products work."
+msgstr "Halaman awam yang memberitahu pelanggan sama ada produk anda berfungsi."
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Utas awam di bawah halaman dokumentasi anda, dalam setiap keadaan."
@@ -9256,6 +9594,11 @@ msgstr "Utas awam di bawah halaman dokumentasi anda, dalam setiap keadaan."
 #: src/features/status/StatusPagePane.tsx
 msgid "Publish"
 msgstr "Terbitkan"
+
+#: src/app/Sidebar.tsx
+msgctxt "sidebar group"
+msgid "Publish"
+msgstr "Penerbitan"
 
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -9394,6 +9737,7 @@ msgstr "Penilaian"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
+#: src/features/settings/ProductsPage.tsx
 msgid "Ratings"
 msgstr "Penilaian"
 
@@ -9568,6 +9912,7 @@ msgstr "penerima"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Recipients"
@@ -9740,6 +10085,10 @@ msgstr "Alih keluar kunci laluan ini?"
 msgid "Remove Yuva's access in Microsoft"
 msgstr "Alih keluar akses Yuva dalam Microsoft"
 
+#: src/features/settings/workspace/DeleteWorkspace.tsx
+msgid "Removes every inbox, conversation and contact for everyone."
+msgstr "Membuang setiap peti masuk, perbualan dan kenalan untuk semua orang."
+
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Removes you from every workspace. Messages you wrote stay, shown as from a deleted member."
 msgstr "Mengalih keluar anda daripada setiap ruang kerja. Mesej yang anda tulis kekal, ditunjukkan sebagai daripada ahli yang dipadam."
@@ -9782,6 +10131,7 @@ msgstr "Ganti"
 msgid "replied"
 msgstr "membalas"
 
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 msgid "Replied"
 msgstr "Dibalas"
@@ -9793,10 +10143,6 @@ msgstr "Membalas dalam utas <0>{title}</0>"
 #: src/features/conversation/RelatedLine.tsx
 msgid "Replied in the thread of another conversation"
 msgstr "Membalas dalam utas perbualan lain"
-
-#: src/features/reports/ReportPages.tsx
-msgid "replies"
-msgstr "balasan"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
@@ -9811,7 +10157,6 @@ msgstr "Balasan"
 msgid "Replies and answers in the discussions you follow"
 msgstr "Balasan dan jawapan dalam perbincangan yang anda ikuti"
 
-#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "Balasan dan penutupan"
@@ -9848,6 +10193,10 @@ msgstr "balasan hari ini"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "Balasan melalui"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "replies within {within}"
+msgstr "membalas dalam {within}"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -9930,10 +10279,6 @@ msgstr "Balas siaran yang dipilih"
 msgid "Reply with a quote"
 msgstr "Balas dengan petikan"
 
-#: src/features/auth/AuthLayout.tsx
-msgid "Reply, assign and follow up together, across all of your products."
-msgstr "Balas, tugaskan dan susul bersama, merentas semua produk anda."
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Replying to {to}"
 msgstr "Membalas kepada {to}"
@@ -10006,6 +10351,10 @@ msgstr "Bertindak balas dalam {took}"
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "Masa tindak balas"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Response time, last 24 hours"
+msgstr "Masa tindak balas, 24 jam lepas"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -10271,6 +10620,7 @@ msgstr "Jadualkan entri"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/status/text.tsx
 msgid "Scheduled"
 msgstr "Dijadualkan"
@@ -10373,6 +10723,10 @@ msgstr "Cari dalam perbualan ini ({0})"
 msgid "Search incidents"
 msgstr "Cari insiden"
 
+#: src/app/TopBar.tsx
+msgid "Search or jump to…"
+msgstr "Cari atau pergi ke…"
+
 #: src/app/Palette.tsx
 msgid "Search people, actions or settings"
 msgstr "Cari orang, tindakan atau tetapan"
@@ -10410,12 +10764,9 @@ msgid "Secret"
 msgstr "Rahsia"
 
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Bahagian"
-
-#: src/features/team/TeamColumn.tsx
-msgid "See where they are, what they hold open and what they did today."
-msgstr "Lihat di mana mereka berada, apa yang mereka buka dan apa yang mereka lakukan hari ini."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Select conversations"
@@ -10508,6 +10859,10 @@ msgstr "Hantar pemberitahuan ujian"
 msgid "Send a test notification to {name}"
 msgstr "Hantar pemberitahuan ujian kepada {name}"
 
+#: src/features/team/TeamColumn.tsx
+msgid "Send again"
+msgstr "Hantar semula"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Send an auto-reply"
 msgstr "Hantar balasan automatik"
@@ -10581,6 +10936,11 @@ msgstr "Hantar pengesahan semula"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Send the e-mail after"
 msgstr "Hantar e-mel selepas"
+
+#. placeholder {0}: invite.email
+#: src/features/team/TeamColumn.tsx
+msgid "Send the invite for {0} again"
+msgstr "Hantar semula jemputan untuk {0}"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Send the reply"
@@ -10682,6 +11042,18 @@ msgstr "Menghantar, kemudian menutup…"
 msgid "Sending…"
 msgstr "Menghantar…"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when}"
+msgstr "Dihantar {when}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to}"
+msgstr "Dihantar {when} kepada {to}"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Sends {when} to {to} · {people} people"
+msgstr "Dihantar {when} kepada {to} · {people} orang"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
 msgid "Sends from"
@@ -10708,9 +11080,11 @@ msgstr "dihantar"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Sent"
 msgstr "Dihantar"
 
@@ -10727,6 +11101,10 @@ msgstr "Dihantar"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "Menghantar {count} mesej daripada alamat ini"
+
+#: src/features/team/TeamColumn.tsx
+msgid "sent {sent}"
+msgstr "dihantar {sent}"
 
 #: src/features/home/HomePage.tsx
 msgid "Sent {sentAt}"
@@ -10850,12 +11228,14 @@ msgstr "Menyediakan…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
+#: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
 #: src/features/status/StatusPagePane.tsx
@@ -10902,10 +11282,12 @@ msgstr "Pintasan"
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Show"
 msgstr "Tunjuk"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "Show archived lists"
 msgstr "Tunjuk senarai diarkibkan"
 
@@ -11193,6 +11575,10 @@ msgstr "Sejak"
 msgid "Since {since}"
 msgstr "Sejak {since}"
 
+#: src/features/status/IncidentsTab.tsx
+msgid "since {started}"
+msgstr "sejak {started}"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "Sejak…"
@@ -11378,6 +11764,10 @@ msgstr "SPF lulus untuk {spfDomain}, bukan untuk domain penghantaran {from}, jad
 msgid "SPF passes for {spfDomain}."
 msgstr "SPF lulus untuk {spfDomain}."
 
+#: src/features/status/IncidentPane.tsx
+msgid "Stage"
+msgstr "Peringkat"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Start"
 msgstr "Mula"
@@ -11389,6 +11779,10 @@ msgstr "Mulakan perbincangan"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "Mulakan senarai mel"
+
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Start a move"
+msgstr "Mulakan pemindahan"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -11417,6 +11811,10 @@ msgstr "Mulakan senarai mel anda"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "Bermula"
+
+#: src/features/status/IncidentPane.tsx
+msgid "Started {started}"
+msgstr "Bermula {started}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Started {when}"
@@ -11449,7 +11847,6 @@ msgstr "STARTTLS (port 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "State"
 msgstr "Keadaan"
 
@@ -11470,6 +11867,7 @@ msgstr "Status apabila tumbang"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
@@ -11488,6 +11886,7 @@ msgstr "Halaman status"
 msgid "Status page deleted"
 msgstr "Halaman status dipadam"
 
+#: src/app/Sidebar.tsx
 #: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Status pages"
@@ -11578,6 +11977,7 @@ msgstr "baru melanggan"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Pelanggan"
@@ -11714,6 +12114,8 @@ msgstr "Semakan TCP"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/MemberPage.tsx
 #: src/features/team/TeamColumn.tsx
@@ -11753,8 +12155,8 @@ msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/status/StatusPagePane.tsx
-msgid "Tell your customers whether your product works. Pick an inbox’s page to open incidents, plan maintenance and set the state of each component."
-msgstr "Beritahu pelanggan anda sama ada produk anda berfungsi. Pilih halaman sebuah peti masuk untuk membuka insiden, merancang penyelenggaraan dan menetapkan keadaan setiap komponen."
+msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "Beritahu pelanggan sama ada produk anda berfungsi. Setiap peti masuk mendapat satu halaman, tempat anda membuka insiden, merancang penyelenggaraan dan menetapkan keadaan setiap komponen."
 
 #: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
@@ -11834,6 +12236,10 @@ msgstr "Apl melog keluar saya selepas kemas kini."
 #: src/features/migrations/DoneStep.tsx
 msgid "The app registration you created for Yuva is not needed any more either: delete it in Microsoft Entra › App registrations."
 msgstr "Pendaftaran apl yang anda cipta untuk Yuva juga tidak diperlukan lagi: padam dalam Microsoft Entra › App registrations."
+
+#: src/features/status/ComponentsTab.tsx
+msgid "The bars are the last {days} days, as visitors see them."
+msgstr "Bar menunjukkan {days} hari lepas, seperti yang dilihat pelawat."
 
 #: src/components/common/text.ts
 msgid "The broadcast changed in the meantime. Look at its state and try again."
@@ -12527,10 +12933,6 @@ msgstr "Borang langganan menunjukkan nama dan penerangan senarai."
 msgid "The team today"
 msgstr "Pasukan hari ini"
 
-#: src/features/team/TeamColumn.tsx
-msgid "The team today:"
-msgstr "Pasukan hari ini:"
-
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The tenant is gone from Amazon SES. Broadcasts are blocked until the server sets it up again."
 msgstr "Penyewa telah hilang daripada Amazon SES. Siaran disekat sehingga pelayan menyediakannya semula."
@@ -13105,6 +13507,7 @@ msgid "To: {emailTo}"
 msgstr "Kepada: {emailTo}"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "Today"
 msgstr "Hari ini"
@@ -13120,14 +13523,6 @@ msgstr "hari ini pada {at}"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Today at {at}"
 msgstr "Hari ini pada {at}"
-
-#: src/features/reports/ReportPages.tsx
-msgid "Today since midnight, over the inboxes you can see."
-msgstr "Hari ini sejak tengah malam, merentas peti masuk yang anda boleh lihat."
-
-#: src/features/home/HomePage.tsx
-msgid "Today, across the inboxes, websites and apps you can see."
-msgstr "Hari ini, merentas peti masuk, tapak web dan apl yang anda boleh lihat."
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Tokens signed with the current secret stop working at once."
@@ -13272,9 +13667,6 @@ msgid "Unanswered"
 msgstr "Belum dijawab"
 
 #: src/features/home/HomePage.tsx
-msgid "unassigned"
-msgstr "belum ditugaskan"
-
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "Belum ditugaskan"
@@ -13394,6 +13786,7 @@ msgid "Unpublish the translation"
 msgstr "Batalkan penerbitan terjemahan"
 
 #: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Unpublished"
 msgstr "Belum diterbitkan"
 
@@ -13403,6 +13796,7 @@ msgstr "Belum diterbitkan, hanya pasukan anda boleh melihat pratontonnya"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Unread"
 msgstr "Belum dibaca"
 
@@ -13526,6 +13920,10 @@ msgstr "Memuat naik…"
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "Masa aktif"
+
+#: src/features/status/ComponentsTab.tsx
+msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
+msgstr "Masa operasi disembunyikan pada halaman ini. Hidupkan dalam tetapan untuk melihat setiap hari di sini."
 
 #: src/components/common/text.ts
 msgid "Urgent"
@@ -13788,6 +14186,7 @@ msgstr "Lawatan ke tapak anda dengan utm_campaign={campaign} sejak penghantaran 
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/parts.tsx
 msgid "Waiting"
 msgstr "Menunggu"
@@ -13795,10 +14194,6 @@ msgstr "Menunggu"
 #: src/features/migrations/CopyStep.tsx
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "Menunggu had {provider}; bersambung pada {waiting}."
-
-#: src/features/home/HomePage.tsx
-msgid "waiting for a reply"
-msgstr "menunggu balasan"
 
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
@@ -13862,10 +14257,6 @@ msgstr "Menunggu dua rekod DNS di bawah. Tambahkannya di tempat anda mengurus do
 msgid "Waiting for validation"
 msgstr "Menunggu pengesahan"
 
-#: src/features/home/HomePage.tsx
-msgid "Waiting longest: <0>{name}</0>"
-msgstr "Menunggu paling lama: <0>{name}</0>"
-
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Warn about the certificate"
 msgstr "Beri amaran tentang sijil"
@@ -13900,10 +14291,10 @@ msgid "Webhook endpoint"
 msgstr "Titik akhir webhook"
 
 #: src/app/Palette.tsx
+#: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 msgid "Webhooks"
 msgstr "Webhook"
 
@@ -14157,6 +14548,10 @@ msgstr "Semasa panel dibuka, pada waktu perniagaan"
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "Semasa status anda Tiada, hanya mesej baharu dalam perbualan yang ditugaskan kepada anda dan tugasan baharu memberitahu anda. Perbualan yang anda buka dalam panel tidak pernah memberitahu anda."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "Who agreed to hear from you, with their consent recorded."
+msgstr "Orang yang bersetuju menerima berita daripada anda, dengan persetujuan direkodkan."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Who can reply"
 msgstr "Siapa boleh membalas"
@@ -14202,11 +14597,14 @@ msgid "With two-factor sign-in, create an app password in Zoho Accounts › Secu
 msgstr "Dengan log masuk dua faktor, cipta kata laluan apl dalam Zoho Accounts › Security › App passwords; jika tidak kata laluan anda berfungsi."
 
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw"
 msgstr "Tarik balik"
 
 #. placeholder {0}: inv.email
+#. placeholder {0}: invite.email
 #: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamColumn.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "Tarik balik jemputan untuk {0}"
 
@@ -14238,6 +14636,10 @@ msgstr "Tanpa pengesahan sesiapa boleh menaip alamat orang lain ke dalam borang 
 msgid "Won't do"
 msgstr "Tidak akan dibuat"
 
+#: src/features/status/IncidentPane.tsx
+msgid "Work is going on"
+msgstr "Kerja sedang dijalankan"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."
 msgstr "Bekerja dengan perbualan daripada mod ejen dalam VS Code. Ia bertindak sebagai anda, dengan akses yang anda benarkan."
@@ -14255,9 +14657,9 @@ msgid "Working…"
 msgstr "Bekerja…"
 
 #: src/app/Palette.tsx
+#: src/app/Sidebar.tsx
 #: src/features/oauth/ConsentPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Workspace"
 msgstr "Ruang kerja"
 
@@ -14420,6 +14822,10 @@ msgstr "Anda belum mempunyai kunci laluan."
 #: src/features/account/AccountPage.tsx
 msgid "You have not written in any discussion yet."
 msgstr "Anda belum menulis dalam mana-mana perbincangan."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "You have read every mention."
+msgstr "Anda telah membaca setiap sebutan."
 
 #: src/features/inbox/ChatList.tsx
 msgid "You have read everything."
@@ -14612,6 +15018,10 @@ msgstr "Yuva meminta skop {scopes} dan menolak log masuk yang memberi lebih."
 #: src/features/migrations/text.ts
 msgid "Yuva can read the account now. Next, choose what to bring."
 msgstr "Yuva kini boleh membaca akaun. Seterusnya, pilih apa yang hendak dibawa."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "Yuva counts clicks and replies. It does not track opens."
+msgstr "Yuva mengira klik dan balasan. Ia tidak menjejaki bukaan."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Yuva deleted its token {deletedAt} and can no longer read {provider}."

@@ -139,6 +139,10 @@ msgstr "Sakrij"
 msgid "Idea started"
 msgstr "Ideja je izrađena"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "Ideje za koje glasaju vaši klijenti, s povratnim informacijama iza njih"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ideje, glasovi i faze za {inboxName} s povratnim informacijama iza svake ideje. Ostaje privatna dok je ne učinite javnom."
@@ -302,6 +306,10 @@ msgstr "Javna stranica"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "Čitatelji ne mogu predlagati ideje. Glasovi i odgovori i dalje rade."
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "Čitatelji su predložili nove ideje. Pregledajte ih prije nego što se pojave na javnoj ploči."
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

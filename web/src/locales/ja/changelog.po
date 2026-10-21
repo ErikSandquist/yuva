@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ja\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "下書き {drafts} 件"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}件中{published}件のエントリを公開済み"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "公開済み {published} 件"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "予約済み {scheduled} 件"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "時刻を変更"
 msgid "Changelog"
 msgstr "更新履歴"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "変更履歴"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "画像を選択"
@@ -86,8 +102,13 @@ msgstr "Cookieを使わずに更新履歴のページビューを数えます。
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "更新履歴を作成"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "変更履歴を作成 ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "すべての翻訳が削除されます。このエントリから作成
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "修正"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "表示イメージ"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "{0} での表示イメージ"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "一致するエントリはありません。"
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "更新履歴を表示できる受信トレイがありません。"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "まだテキストがありません。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "公開中"
 msgid "Publishing on schedule failed."
 msgstr "予約公開に失敗しました。"
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "製品内、ウェブ、メールで表示されるリリースノート。"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "削除"
@@ -396,6 +434,10 @@ msgstr "設定"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "表示"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "チャットウィジェットと {host} に表示されます。"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "このエントリを非公開にしますか？"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "非公開"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "更新履歴を見る"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

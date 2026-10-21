@@ -3,6 +3,7 @@ import { LoaderIcon, PlusIcon, SparklesIcon, TriangleAlertIcon } from "lucide-re
 import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router"
 
+import { InboxMark } from "@/components/common"
 import { CHANGELOG_KEYS } from "@/components/common/ShortcutSheet"
 import { formatDate, formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -16,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
-import { entryLink, useCreateEntry, useEntries } from "@/features/changelog/queries"
+import { entryLink, useCreateEntry, useEntries, useEntry } from "@/features/changelog/queries"
 import {
   entryTitle,
   EntryLabel,
@@ -34,6 +35,7 @@ import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { Changelog, ChangelogEntrySummary, ChangelogLabel } from "@/lib/api"
 import type { ChangelogEntryFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
+import { useInboxes } from "@/lib/workspace"
 
 type StateFilter = NonNullable<ChangelogEntryFilters["state"]> | "all"
 
@@ -174,6 +176,93 @@ function NewEntryDialog({ changelog, onClose }: { changelog: Changelog; onClose:
   )
 }
 
+function plain(md: string) {
+  return md
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[#>*_`~-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function DateBlock({ iso }: { iso: string }) {
+  const { i18n } = useLingui()
+  const d = new Date(iso)
+  return (
+    <time
+      dateTime={iso}
+      className="flex w-11 shrink-0 flex-col items-center rounded-lg border bg-card py-1 leading-tight"
+      title={formatDate(iso, i18n.locale)}
+    >
+      <span className="sr-only">{formatDate(iso, i18n.locale)}</span>
+      <span className="text-[10px] font-medium text-faint uppercase" aria-hidden>
+        {new Intl.DateTimeFormat(i18n.locale, { month: "short" }).format(d)}
+      </span>
+      <span className="text-body font-semibold tabular-nums" aria-hidden>
+        {new Intl.DateTimeFormat(i18n.locale, { day: "numeric" }).format(d)}
+      </span>
+    </time>
+  )
+}
+
+function Preview({ changelog, entry }: { changelog: Changelog; entry: ChangelogEntrySummary }) {
+  const { i18n } = useLingui()
+  const inbox = (useInboxes().data ?? []).find((i) => i.id === changelog.inbox_id)
+  const full = useEntry(changelog.id, entry.id).data
+  const tr =
+    full?.translations.find((x) => x.locale === i18n.locale) ??
+    full?.translations.find((x) => x.locale === changelog.default_locale) ??
+    full?.translations[0]
+  const title =
+    tr?.published?.title ?? tr?.title ?? entryTitle(entry.translations, i18n.locale, changelog.default_locale)
+  const body = tr?.published?.excerpt || plain(tr?.body ?? "")
+  const color = inbox?.branding.color ?? "var(--brand)"
+  const host = changelog.url.replace(/^https?:\/\//, "").replace(/\/$/, "")
+  return (
+    <aside className="flex flex-col gap-3" aria-label={title} data-testid="entry-preview">
+      <h3 className="text-caption font-medium tracking-wide text-faint uppercase">
+        {inbox ? <Trans>How it looks in {inbox.name}</Trans> : <Trans>How it looks</Trans>}
+      </h3>
+      <div className="overflow-hidden rounded-2xl border bg-card shadow-[0_10px_30px_-12px_rgb(0_0_0/0.18)]">
+        <div className="flex items-center gap-2 border-b px-4 py-3">
+          {inbox && <InboxMark name={inbox.name} color={inbox.branding.color} className="size-5" />}
+          <span className="flex-1 text-body font-semibold">
+            <Trans>What’s new</Trans>
+          </span>
+        </div>
+        {entry.image ? (
+          <img src={entry.image.url} alt="" className="aspect-[2/1] w-full object-cover" />
+        ) : (
+          <div
+            className="aspect-[2/1] w-full"
+            style={{ background: `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 35%, transparent))` }}
+          />
+        )}
+        <div className="flex flex-col gap-2 p-4">
+          {entry.labels.length > 0 && (
+            <span className="flex flex-wrap gap-1">
+              {entry.labels.map((l) => (
+                <EntryLabel key={l} label={l} />
+              ))}
+            </span>
+          )}
+          <p className="text-title break-words">{title}</p>
+          {body ? (
+            <p className="line-clamp-6 text-body break-words text-muted-foreground">{body}</p>
+          ) : (
+            <p className="text-body text-faint">
+              <Trans>No text yet.</Trans>
+            </p>
+          )}
+        </div>
+      </div>
+      <p className="text-small text-faint">
+        <Trans>Shown in the chat widget and on {host}.</Trans>
+      </p>
+    </aside>
+  )
+}
+
 export function EntriesTab({ changelog }: { changelog: Changelog }) {
   const { t, i18n } = useLingui()
   const navigate = useNavigate()
@@ -185,6 +274,7 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
   const [label, setLabel] = useState<ChangelogLabel | "">("")
   const [creating, setCreating] = useState(false)
   const [cursor, setCursor] = useState(-1)
+  const [picked, setPicked] = useState("")
   const list = useRef<HTMLUListElement>(null)
   const filters: ChangelogEntryFilters = {
     state: state === "all" ? undefined : state,
@@ -193,6 +283,7 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
   const entries = useEntries(changelog.id, filters)
   const items = entries.data?.pages.flatMap((p) => p.items) ?? []
   const prefer = [i18n.locale, changelog.default_locale]
+  const shown = items[cursor] ?? items.find((e) => e.id === picked) ?? items[0]
 
   useHotkeys({
     [CHANGELOG_KEYS.newEntry]: () => setCreating(true),
@@ -217,7 +308,7 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
   ]
 
   return (
-    <div className="flex flex-col gap-4" data-testid="changelog-entries">
+    <div className="@container flex flex-col gap-4" data-testid="changelog-entries">
       <div className="flex flex-wrap items-center gap-2">
         <ChoiceSelect
           value={state}
@@ -268,56 +359,69 @@ export function EntriesTab({ changelog }: { changelog: Changelog }) {
           </p>
         </div>
       ) : (
-        <ul ref={list} className="flex flex-col divide-y overflow-hidden rounded-2xl border bg-card">
-          {items.map((e, i) => (
-            <li
-              key={e.id}
-              className={cn("flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3", i === cursor && "bg-muted")}
-              data-testid="entry-row"
-            >
-              <div className="flex min-w-0 flex-1 basis-60 flex-col gap-1">
-                <Link
-                  to={entryLink(changelog.id, e.id, changelog.default_locale)}
-                  className="block truncate text-body font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {entryTitle(e.translations, ...prefer)}
-                </Link>
-                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span
-                    className={cn("inline-flex rounded-full px-2 py-px text-caption font-medium", stateTone(e.state))}
-                    data-testid="entry-state"
-                    data-state={e.state}
-                  >
-                    {stateText[e.state]}
-                  </span>
-                  {e.state === "scheduled" && e.publish_at && (
-                    <span className="text-small text-muted-foreground">
-                      {formatDateTime(e.publish_at, i18n.locale)}
-                    </span>
-                  )}
-                  {e.state === "published" && e.published_at && (
-                    <span className="text-small text-muted-foreground">{formatDate(e.published_at, i18n.locale)}</span>
-                  )}
-                  {e.labels.map((l) => (
-                    <EntryLabel key={l} label={l} />
-                  ))}
-                </span>
-                {e.schedule_failed && (
-                  <span
-                    className="flex items-center gap-1.5 text-small text-warning"
-                    data-testid="entry-schedule-failed"
-                  >
-                    <TriangleAlertIcon className="size-3.5 shrink-0" />
-                    <span>
-                      <Trans>Publishing on schedule failed.</Trans> {failureText[e.schedule_failed.reason]}
-                    </span>
-                  </span>
+        <div className="grid items-start gap-6 @min-[720px]:grid-cols-[minmax(0,1fr)_300px]">
+          <ul ref={list} className="flex flex-col divide-y overflow-hidden rounded-2xl border bg-card">
+            {items.map((e, i) => (
+              <li
+                key={e.id}
+                className={cn(
+                  "flex flex-wrap items-center gap-x-3.5 gap-y-1.5 px-4 py-3 transition-colors",
+                  (i === cursor || (cursor < 0 && e.id === shown?.id)) &&
+                    "bg-muted/60 shadow-[inset_2px_0_0_var(--brand)]"
                 )}
-              </div>
-              <LocaleChips e={e} changelog={changelog} />
-            </li>
-          ))}
-        </ul>
+                onClick={() => {
+                  setPicked(e.id)
+                  setCursor(-1)
+                }}
+                data-testid="entry-row"
+              >
+                <DateBlock iso={e.published_at ?? e.publish_at ?? e.created_at} />
+                <div className="flex min-w-0 flex-1 basis-48 flex-col gap-1">
+                  <Link
+                    to={entryLink(changelog.id, e.id, changelog.default_locale)}
+                    className="block truncate text-body font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {entryTitle(e.translations, ...prefer)}
+                  </Link>
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span
+                      className={cn("inline-flex rounded-full px-2 py-px text-caption font-medium", stateTone(e.state))}
+                      data-testid="entry-state"
+                      data-state={e.state}
+                    >
+                      {stateText[e.state]}
+                    </span>
+                    {e.state === "scheduled" && e.publish_at && (
+                      <span className="text-small text-muted-foreground">
+                        {formatDateTime(e.publish_at, i18n.locale)}
+                      </span>
+                    )}
+                    {e.labels.map((l) => (
+                      <EntryLabel key={l} label={l} />
+                    ))}
+                  </span>
+                  {e.schedule_failed && (
+                    <span
+                      className="flex items-center gap-1.5 text-small text-warning"
+                      data-testid="entry-schedule-failed"
+                    >
+                      <TriangleAlertIcon className="size-3.5 shrink-0" />
+                      <span>
+                        <Trans>Publishing on schedule failed.</Trans> {failureText[e.schedule_failed.reason]}
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <LocaleChips e={e} changelog={changelog} />
+              </li>
+            ))}
+          </ul>
+          {shown && (
+            <div className="hidden @min-[720px]:block">
+              <Preview changelog={changelog} entry={shown} />
+            </div>
+          )}
+        </div>
       )}
       {entries.hasNextPage && (
         <Button

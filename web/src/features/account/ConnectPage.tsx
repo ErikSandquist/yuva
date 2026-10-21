@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleCheckIcon, LinkIcon, TriangleAlertIcon } from "lucide-react"
+import { CircleCheckIcon, TriangleAlertIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 
@@ -10,8 +10,9 @@ import { useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AccountLayout, Unreachable, usePersonLocale } from "@/features/account/AccountLayout"
+import { Unreachable, usePersonLocale } from "@/features/account/AccountLayout"
 import { accountKeys, useReaderAccount } from "@/features/account/queries"
+import { AuthHeading, AuthLayout, authField } from "@/features/auth/AuthLayout"
 import { SignInForm } from "@/features/auth/SignInForm"
 import { Field } from "@/features/settings/ui"
 import { api, ApiError, unwrap, type ReaderAccount, type ReaderToken } from "@/lib/api"
@@ -73,18 +74,10 @@ function Message({
   children?: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col" data-testid="connect-message" data-tone={tone}>
-      <span
-        className={
-          tone === "success"
-            ? "mb-5 grid size-11 place-items-center rounded-full bg-success/10 text-success"
-            : "mb-5 grid size-11 place-items-center rounded-full bg-destructive/10 text-destructive"
-        }
-      >
-        <Icon className="size-5" />
-      </span>
-      <h1 className="text-page">{title}</h1>
-      {children && <div className="mt-3 text-pretty text-muted-foreground">{children}</div>}
+    <div data-testid="connect-message" data-tone={tone}>
+      <AuthHeading icon={<Icon />} tone={tone} title={title} className="mb-0">
+        {children}
+      </AuthHeading>
     </div>
   )
 }
@@ -143,25 +136,19 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
         </p>
       </Message>
     )
-  if (auto && (connect.isPending || connect.isIdle)) return <Skeleton className="h-40 rounded-2xl" />
+  if (auto && (connect.isPending || connect.isIdle)) return <Skeleton className="h-40 rounded-xl" />
 
   const shown = account.name || name.trim() || t`Reader`
   const email = account.email
   return (
     <div className="flex flex-col" data-testid="connect-consent">
-      <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand">
-        <LinkIcon className="size-5" />
-      </span>
-      <h1 className="text-page break-words" data-testid="connect-title">
-        <Trans>Connect to {host}</Trans>
-      </h1>
-      <p className="mt-3 text-pretty text-muted-foreground">
+      <AuthHeading title={<Trans>Connect to {host}</Trans>} titleTestId="connect-title" className="mb-6">
         <Trans>
           You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail
           address when you write; other readers see only your name.
         </Trans>
-      </p>
-      <div className="mt-6 flex items-center gap-3 rounded-2xl border px-4 py-3">
+      </AuthHeading>
+      <div className="flex items-center gap-3 rounded-xl border bg-surface px-4 py-3">
         <InitialsAvatar initials={account.initials} />
         <span className="flex min-w-0 flex-col">
           <span className="truncate text-body font-medium">{shown}</span>
@@ -181,6 +168,7 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
             maxLength={200}
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
+            className={authField}
             data-testid="connect-name"
           />
         </Field>
@@ -204,11 +192,13 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
           <Trans>Cancel</Trans>
         </Button>
       </div>
-      <p className="mt-6 flex flex-wrap gap-x-1.5 text-small text-faint">
-        <span>
-          <Trans>Not {email}?</Trans>
-        </span>
-        <button type="button" className="text-brand underline-offset-4 hover:underline" onClick={() => void signOut()}>
+      <p className="mt-6 border-t pt-4 text-center text-small break-words text-faint">
+        <Trans>Not {email}?</Trans>{" "}
+        <button
+          type="button"
+          className="text-muted-foreground underline underline-offset-4 hover:text-foreground"
+          onClick={() => void signOut()}
+        >
           <Trans>Use another address</Trans>
         </button>
       </p>
@@ -218,7 +208,7 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
 
 function Connected({ target }: { target: ReturnType<typeof useTarget> }) {
   const account = useReaderAccount()
-  if (account.isPending) return <Skeleton className="h-40 rounded-2xl" />
+  if (account.isPending) return <Skeleton className="h-40 rounded-xl" />
   if (!account.data) return <ErrorLine error={account.error} />
   return <Consent account={account.data} {...target} />
 }
@@ -231,7 +221,7 @@ export function ConnectPage() {
   if (me.isPending) return <div className="min-h-svh bg-background" />
   if (me.error && !me.data) return <Unreachable onRetry={() => void me.refetch()} />
   return (
-    <AccountLayout narrow>
+    <AuthLayout>
       {!target.channel || !target.origin ? (
         <Message icon={TriangleAlertIcon} tone="danger" title={<Trans>This link is incomplete</Trans>}>
           <p>
@@ -252,6 +242,6 @@ export function ConnectPage() {
       ) : (
         <Connected target={target} />
       )}
-    </AccountLayout>
+    </AuthLayout>
   )
 }

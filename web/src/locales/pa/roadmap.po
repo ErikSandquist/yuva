@@ -139,6 +139,10 @@ msgstr "ਲੁਕਾਓ"
 msgid "Idea started"
 msgstr "ਵਿਚਾਰ ਸ਼ੁਰੂ ਹੋ ਗਿਆ"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "ਵਿਚਾਰ ਜਿਨ੍ਹਾਂ ’ਤੇ ਤੁਹਾਡੇ ਗਾਹਕ ਵੋਟ ਦਿੰਦੇ ਹਨ, ਉਹਨਾਂ ਪਿੱਛੇ ਦੀ ਫੀਡਬੈਕ ਨਾਲ"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} ਲਈ ਵਿਚਾਰ, ਵੋਟਾਂ ਅਤੇ ਪੜਾਅ, ਹਰ ਵਿਚਾਰ ਪਿੱਛੇ ਦੇ ਫੀਡਬੈਕ ਸਮੇਤ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਇਸਨੂੰ ਜਨਤਕ ਨਹੀਂ ਕਰਦੇ, ਇਹ ਨਿੱਜੀ ਰਹਿੰਦਾ ਹੈ।"
@@ -302,6 +306,10 @@ msgstr "ਜਨਤਕ ਪੰਨਾ"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "ਪਾਠਕ ਵਿਚਾਰ ਨਹੀਂ ਸੁਝਾ ਸਕਦੇ। ਵੋਟਾਂ ਅਤੇ ਜਵਾਬ ਫਿਰ ਵੀ ਕੰਮ ਕਰਦੇ ਹਨ।"
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "ਪਾਠਕਾਂ ਨੇ ਨਵੇਂ ਵਿਚਾਰ ਸੁਝਾਏ। ਜਨਤਕ ਬੋਰਡ ’ਤੇ ਦਿਖਣ ਤੋਂ ਪਹਿਲਾਂ ਉਹਨਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ।"
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

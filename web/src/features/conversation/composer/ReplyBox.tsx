@@ -356,7 +356,7 @@ export const ReplyBox = forwardRef<
   return (
     <div
       className={cn(
-        "@container/composer relative rounded-2xl border bg-card transition-colors focus-within:border-brand/45",
+        "@container/composer relative rounded-xl border bg-card transition-colors focus-within:border-brand/45",
         note && "border-note-border bg-note focus-within:border-note-ink/40",
         className
       )}
@@ -367,7 +367,7 @@ export const ReplyBox = forwardRef<
           <TabsList aria-label={t`Message type`}>
             {(["message", "note"] as const).map((m) => (
               <TabsTrigger key={m} value={m} className={cn("flex-none px-3", note && "data-active:text-note-ink")}>
-                {m === "message" ? <Trans>Reply</Trans> : <Trans>Team note</Trans>}
+                {m === "message" ? <Trans>Reply</Trans> : <Trans>Note</Trans>}
               </TabsTrigger>
             ))}
           </TabsList>

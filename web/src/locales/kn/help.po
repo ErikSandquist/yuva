@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} ಲೇಖನಗಳಲ್ಲಿ {published} ಪ್ರಕಟವಾಗಿವೆ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} ಪ್ರಕಟಿತ"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಸಂಖ್ಯೆಗಳು ಮತ್ತು ಹೈಫನ್‌ಗಳು. ಈ ಸರ್ವರ್‌ನಲ್ಲಿ ಅನನ್ಯ."
@@ -80,6 +84,7 @@ msgstr "ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳಿಗೆ ಒಮ್ಮ�
 msgid "Any state"
 msgstr "ಯಾವುದೇ ಸ್ಥಿತಿ"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "ಲೇಖನ"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "ಲೇಖನ ವೀಕ್ಷಣೆಗಳು"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "ಲೇಖನಗಳು"
@@ -112,6 +118,10 @@ msgstr "ಈ ಭಾಷೆಗಳಲ್ಲಿ ಲೇಖನಗಳನ್ನು ಬರ
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "ಈ ಸಂಗ್ರಹದ ಲೇಖನಗಳು"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "ನಿಮಗೆ ಬರೆಯುವ ಮೊದಲು ಜನರು ಓದುವ ಲೇಖನಗಳು"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "ಎಲ್ಲಾ ಅನುವಾದಗಳು, ಅವುಗಳ ಪರಿ�
 msgid "Formatting"
 msgstr "ಫಾರ್ಮ್ಯಾಟಿಂಗ್"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "ಏನೂ ಸಿಗಲಿಲ್ಲ · 7 ದಿನಗಳು"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "ಪ್ರಾರಂಭಿಸುವುದು"
@@ -312,11 +326,11 @@ msgstr "ಸಂದರ್ಶಕರು ಬ್ರೌಸ್ ಮಾಡಲು ಅನು
 msgid "Heading"
 msgstr "ಶೀರ್ಷಿಕೆ"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "ಸಹಾಯ"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "ಸಹಾಯ ಕೇಂದ್ರಗಳು"
 msgid "Help centers are turned off on this server."
 msgstr "ಈ ಸರ್ವರ್‌ನಲ್ಲಿ ಸಹಾಯ ಕೇಂದ್ರಗಳು ಆಫ್ ಆಗಿವೆ."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "ಉಪಯುಕ್ತ"
@@ -384,6 +399,10 @@ msgstr "ಭಾಷೆಗಳು"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "ಕಳೆದ {d} ದಿನಗಳು"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "ಕಳೆದ 7 ದಿನಗಳು"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ಹುಡುಕಿ ({findKey}
 msgid "Search words"
 msgstr "ಹುಡುಕಾಟ ಪದಗಳು"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "ಹುಡುಕಲಾಗಿದೆ, ಏನೂ ಸಿಗಲಿಲ್ಲ"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "ಹುಡುಕಾಟಗಳು"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "ಹುಡುಕಾಟಗಳು · 7 ದಿನಗಳು"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "ಪ್ರಕಟವಾಗಿಲ್ಲ, ನಿಮ್ಮ ತಂಡ ಮಾ�
 msgid "Unsaved changes"
 msgstr "ಉಳಿಸದ ಬದಲಾವಣೆಗಳು"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "ನವೀಕರಿಸಲಾಗಿದೆ"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 ರಿಂದ 48 ಅಕ್ಷರಗಳು, ಸಂಖ್ಯೆಗಳು ಮತ್ತು ನಡುವಿನ ಹೈಫನ್‌ಗಳನ್ನು ಬಳಸಿ."
@@ -893,6 +924,10 @@ msgstr "ಸಹಾಯ ಕೇಂದ್ರ ವೀಕ್ಷಿಸಿ"
 msgid "Views"
 msgstr "ವೀಕ್ಷಣೆಗಳು"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "ವೀಕ್ಷಣೆಗಳು · 7 ದಿನಗಳು"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "ಸಂದರ್ಶಕರು ಏನು ಓದುತ್ತಾರೆ ಮತ್ತು ಹುಡುಕುತ್ತಾರೆ. ವೀಕ್ಷಣೆಗಳು ಅಂದಾಜು, ಮತ್ತು ಸಂಖ್ಯೆಗಳು ಒಂದು ನಿಮಿಷದಲ್ಲಿ ಈ ಪುಟ ತಲುಪುತ್ತವೆ."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "ಸಂದರ್ಶಕರು ಟೈಪ್ ಮಾಡಿ ಏನೂ ಸಿಗದ ಪದಗಳು. ಪ್ರತಿಯೊಂದಕ್ಕೂ ಹೊಸ ಲೇಖನ ವೇಗದ ಪರಿಹಾರ."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "ಬರೆಯಿರಿ"
 

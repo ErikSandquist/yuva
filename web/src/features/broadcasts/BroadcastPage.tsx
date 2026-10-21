@@ -4,7 +4,6 @@ import {
   CircleAlertIcon,
   GaugeIcon,
   LoaderIcon,
-  MegaphoneIcon,
   PauseIcon,
   PlayIcon,
   Trash2Icon,
@@ -14,13 +13,14 @@ import {
 import { useState } from "react"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 
-import { Dot, ErrorLine, Notice, Segmented, useConfirm } from "@/components/common"
-import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
+import { ErrorLine, InboxMark, Notice, useConfirm } from "@/components/common"
+import { Pane, PaneBack } from "@/components/common/Column"
 import { BROADCAST_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { formatDateTime, formatDuration, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
+  broadcastLink,
   FINISHED,
   isActive,
   useBroadcast,
@@ -29,7 +29,6 @@ import {
   useReview,
   type BroadcastAction,
 } from "@/features/broadcasts/broadcastQueries"
-import { BroadcastSteps } from "@/features/broadcasts/BroadcastList"
 import {
   progressOf,
   ProgressBar,
@@ -47,19 +46,13 @@ import { Deliveries, Report } from "@/features/broadcasts/Report"
 import { paceGap, PaceDialog, usePaceSummary } from "@/features/broadcasts/Pace"
 import { useTestSend } from "@/features/broadcasts/TestSend"
 import { designLink } from "@/features/designs/queries"
-import { Card, Section } from "@/features/settings/ui"
+import { Card, PageHeader, PageTabs, Section } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { Broadcast } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes, useMemberMap } from "@/lib/workspace"
 
-export function BroadcastsHome() {
-  return (
-    <PaneEmpty icon={MegaphoneIcon} title={<Trans>Broadcasts</Trans>} testId="broadcasts-home">
-      <BroadcastSteps />
-    </PaneEmpty>
-  )
-}
+export { BroadcastsOverview as BroadcastsHome } from "@/features/broadcasts/Overview"
 
 function hint(label: string, key: string) {
   return `${label} (${keyLabel(key).join("")})`
@@ -396,31 +389,55 @@ export function BroadcastPage() {
   if (!b) {
     return (
       <Pane wide>
-        <PaneBack to="/broadcasts" label={t`Broadcasts`} />
+        <PaneBack to="/broadcasts" label={t`Broadcasts`} always />
         <ErrorLine error={broadcast.error} />
       </Pane>
     )
   }
   return (
-    <Pane wide testId="broadcast-page" key={b.id} className="@container">
-      <header className="flex flex-col">
-        <PaneBack to="/broadcasts" label={t`Broadcasts`} />
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <h1 className="min-w-0 text-page break-words" data-testid="broadcast-name-heading">
-            {b.name}
-          </h1>
-          {canManage && <Actions b={b} run={run} pending={action.isPending} onDelete={onDelete} />}
-        </div>
-        <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
-          <StateBadge state={b.state} />
-          {inbox && (
-            <span className="inline-flex items-center gap-1.5">
-              <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-              {inbox.name}
-            </span>
-          )}
-        </p>
-      </header>
+    <Pane wide testId="broadcast-page" key={b.id} className="@container gap-6">
+      <PaneBack to="/broadcasts" label={t`Broadcasts`} always />
+      <PageHeader
+        back={false}
+        title={<span data-testid="broadcast-name-heading">{b.name}</span>}
+        description={
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <StateBadge state={b.state} />
+            {inbox && (
+              <span className="inline-flex items-center gap-1.5">
+                <InboxMark name={inbox.name} color={inbox.branding.color} className="size-4 text-[9px]" />
+                {inbox.name}
+              </span>
+            )}
+            {b.subject && (
+              <>
+                <span aria-hidden>·</span>
+                <span className="min-w-0 truncate">{b.subject}</span>
+              </>
+            )}
+          </span>
+        }
+        action={canManage && <Actions b={b} run={run} pending={action.isPending} onDelete={onDelete} />}
+        tabs={
+          !draft &&
+          b.state !== "scheduled" &&
+          canManage && (
+            <PageTabs
+              label={t`Broadcast`}
+              current={tab}
+              items={[
+                { key: "report", to: broadcastLink(b.id), label: t`Report`, testId: "broadcast-tab-report" },
+                {
+                  key: "recipients",
+                  to: broadcastLink(b.id, "recipients"),
+                  label: t`Recipients`,
+                  testId: "broadcast-tab-recipients",
+                },
+              ]}
+            />
+          )
+        }
+      />
       <ErrorLine error={action.error ?? remove.error} />
       {draft && <StatusNotice />}
       {b.state === "failed" && (
@@ -437,17 +454,6 @@ export function BroadcastPage() {
         <>
           {b.state === "scheduled" && <Scheduled b={b} />}
           {isActive(b) && <Sending b={b} at={broadcast.dataUpdatedAt} />}
-          {b.state !== "scheduled" && canManage && (
-            <Segmented
-              value={tab}
-              onChange={setTab}
-              label={t`Broadcast`}
-              items={[
-                { value: "report", label: t`Report`, testId: "broadcast-tab-report" },
-                { value: "recipients", label: t`Recipients`, testId: "broadcast-tab-recipients" },
-              ]}
-            />
-          )}
           {b.state !== "scheduled" && (tab === "report" ? <Report b={b} /> : <Deliveries b={b} />)}
           <Summary b={b} />
         </>

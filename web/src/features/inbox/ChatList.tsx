@@ -69,6 +69,8 @@ import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { ImportBanner } from "@/features/migrations/ImportBanner"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
+import { ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
+import { ProductTag, useProductTag } from "@/features/inbox/ProductTag"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
 import { SourceFilter, sourceFilters, useSourceFilter } from "@/features/inbox/SourceFilter"
@@ -80,7 +82,7 @@ import { useSetAvailability } from "@/lib/availability"
 import { useSession } from "@/lib/session"
 import { useTyping } from "@/lib/typing"
 import { cn } from "@/lib/utils"
-import { useChannelMap, useMemberMap } from "@/lib/workspace"
+import { useChannelMap, useInboxes, useMemberMap } from "@/lib/workspace"
 
 export type Chip = "all" | "unread" | "mine" | "unassigned" | "snoozed" | "done"
 const CHIPS: Chip[] = ["all", "unread", "mine", "unassigned", "snoozed", "done"]
@@ -211,13 +213,14 @@ function Row({
   const source = sourceOf(c, channel)
   const place = placeOf(c, channel)
   const rating = currentRating(c)
+  const product = useProductTag()
   return (
     <ContextMenu>
       <ContextMenuTrigger
         render={<button type="button" />}
         onClick={onOpen}
         className={cn(
-          "group flex w-full items-center gap-3 ps-3 text-start outline-none transition-colors",
+          "group flex w-full items-center gap-3 ps-4 text-start outline-none transition-colors",
           current ? "bg-muted" : "hover:bg-muted/60",
           cursor && !current && "bg-muted/60",
           cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
@@ -242,23 +245,23 @@ function Row({
             {checked && <CheckIcon className="size-3.5" strokeWidth={3} />}
           </span>
         )}
-        <span className="relative shrink-0 py-2.5">
+        <span className="relative shrink-0 self-start pt-3">
           {visitor ? (
-            <VisitorAvatar className="size-12" />
+            <VisitorAvatar className="size-9" />
           ) : (
-            <ContactAvatar id={c.contact.id} name={name} className="size-12" />
+            <ContactAvatar id={c.contact.id} name={name} className="size-9" />
           )}
           {live && (
             <span
-              className="absolute end-0 bottom-3 size-3 rounded-full border-2 border-background bg-success"
+              className="absolute -end-0.5 bottom-0 size-3 rounded-full border-2 border-background bg-success"
               title={t`Online now`}
               data-testid="row-live"
             />
           )}
         </span>
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-3 group-last:border-transparent">
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-4 group-last:border-transparent">
           <span className="flex min-w-0 items-baseline gap-2">
-            <span className={cn("min-w-0 flex-1 truncate text-reading", c.unread ? "font-semibold" : "font-medium")}>
+            <span className={cn("min-w-0 flex-1 truncate text-body", c.unread ? "font-semibold" : "font-medium")}>
               {name}
             </span>
             {c.pinned_at && (
@@ -275,8 +278,18 @@ function Row({
               {formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
-          {(source || place || c.broadcast_id || c.imported) && (
-            <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
+          <span className="flex min-w-0 items-center gap-1.5 text-small text-muted-foreground">
+            {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
+            <span className="flex min-w-0 flex-1">
+              <Preview c={c} current={current} receipts={channel?.kind === "chat" || channel?.kind === "app"} />
+            </span>
+            {c.unread && (
+              <span className="size-2 shrink-0 rounded-full bg-brand" aria-label={t`Unread`} data-testid="row-unread" />
+            )}
+          </span>
+          {(source || place || c.broadcast_id || c.imported || rating || assignee || product(c.inbox_id)) && (
+            <span className="mt-1 flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
+              <ProductTag id={c.inbox_id} />
               {c.imported && <ImportedChip at={c.imported.at} />}
               {source && <SourceBadge source={source} />}
               {c.broadcast_id && (
@@ -287,27 +300,15 @@ function Row({
                 />
               )}
               {place && <span className="min-w-0 truncate">{place}</span>}
+              <span className="flex-1" />
+              {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
+              {assignee && (
+                <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
+                  <MemberAvatar name={assignee.name || assignee.email} className="size-[18px]" />
+                </span>
+              )}
             </span>
           )}
-          <span className="flex min-w-0 items-center gap-1.5 text-small text-muted-foreground">
-            {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
-            <span className="flex min-w-0 flex-1">
-              <Preview c={c} current={current} receipts={channel?.kind === "chat" || channel?.kind === "app"} />
-            </span>
-            {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
-            {assignee && (
-              <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
-                <MemberAvatar name={assignee.name || assignee.email} className="size-[18px]" />
-              </span>
-            )}
-            {c.unread && (
-              <span
-                className="size-2.5 shrink-0 rounded-full bg-brand"
-                aria-label={t`Unread`}
-                data-testid="row-unread"
-              />
-            )}
-          </span>
         </span>
       </ContextMenuTrigger>
       <ContextMenuContent className="min-w-52" data-testid="row-menu">
@@ -434,89 +435,123 @@ function StartConversation({ open, onOpenChange }: { open: boolean; onOpenChange
   )
 }
 
-function ListHeader({ onSelect }: { onSelect: () => void }) {
+function ListHeader({ onSelect, children }: { onSelect: () => void; children: React.ReactNode }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { membership, canManage } = useSession()
   const { openPalette, openShortcuts } = useShell()
   const [starting, setStarting] = useState(false)
   const phone = useIsPhone()
-  return (
-    <div className={cn("flex h-15 shrink-0 items-center gap-1 pe-1.5", phone ? "ps-2" : "ps-4")}>
-      {phone && <UserMenu align="start" />}
-      <span className="min-w-0 flex-1 truncate ps-1 text-title" data-testid="workspace-name">
-        {membership.workspace.name}
-      </span>
-      {phone && <TeamMenu />}
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        onClick={() => setStarting(true)}
-        aria-label={t`New conversation`}
-        title={t`New conversation`}
-        data-testid="new-conversation"
+  const [inboxId] = useInboxFilter()
+  const product = useInboxes().data?.find((i) => i.id === inboxId)?.name
+  const menu = (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" size="icon-sm" />}
+        aria-label={t`Menu`}
+        title={t`Menu`}
+        data-testid="list-menu"
       >
-        <MessageSquarePlusIcon />
-      </Button>
-      {phone && (
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          render={<Link to="/settings" />}
-          aria-label={t`Settings`}
-          title={t`Settings (${mod},)`}
-          data-testid="open-settings"
-        >
+        <EllipsisVerticalIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-56">
+        <DropdownMenuItem onClick={() => navigate("/contacts")} data-testid="open-contacts">
+          <BookUserIcon />
+          <Trans>Contacts</Trans>
+          <DropdownMenuShortcut>{keyLabel(SHORTCUTS.contacts).join(" ")}</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/settings")}>
           <SettingsIcon />
-        </Button>
-      )}
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-sm" />}
-          aria-label={t`Menu`}
-          title={t`Menu`}
-          data-testid="list-menu"
-        >
-          <EllipsisVerticalIcon />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-56">
-          <DropdownMenuItem onClick={() => navigate("/contacts")} data-testid="open-contacts">
-            <BookUserIcon />
-            <Trans>Contacts</Trans>
-            <DropdownMenuShortcut>{keyLabel(SHORTCUTS.contacts).join(" ")}</DropdownMenuShortcut>
+          <Trans>Settings</Trans>
+          <DropdownMenuShortcut>{mod} ,</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        {canManage && (
+          <DropdownMenuItem onClick={() => navigate("/setup/new")}>
+            <InboxIcon />
+            <Trans>Add an inbox</Trans>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/settings")}>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={onSelect} data-testid="select-conversations">
+          <ListChecksIcon />
+          <Trans>Select conversations</Trans>
+          <DropdownMenuShortcut>{keyLabel(SHORTCUTS.select).join(" ")}</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={openPalette}>
+          <CommandIcon />
+          <Trans>Everything</Trans>
+          <DropdownMenuShortcut>{mod} K</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={openShortcuts}>
+          <KeyboardIcon />
+          <Trans>Keyboard shortcuts</Trans>
+          <DropdownMenuShortcut>?</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+  const start = <StartConversation open={starting} onOpenChange={setStarting} />
+  if (phone) {
+    return (
+      <div className="flex shrink-0 flex-col border-b">
+        <div className="flex h-15 shrink-0 items-center gap-1 ps-2 pe-1.5">
+          <UserMenu align="start" />
+          <span className="min-w-0 flex-1 truncate ps-1 text-title" data-testid="workspace-name">
+            {membership.workspace.name}
+          </span>
+          <TeamMenu />
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => setStarting(true)}
+            aria-label={t`New conversation`}
+            title={t`New conversation`}
+            data-testid="new-conversation"
+          >
+            <MessageSquarePlusIcon />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            render={<Link to="/settings" />}
+            aria-label={t`Settings`}
+            title={t`Settings (${mod},)`}
+            data-testid="open-settings"
+          >
             <SettingsIcon />
-            <Trans>Settings</Trans>
-            <DropdownMenuShortcut>{mod} ,</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          {canManage && (
-            <DropdownMenuItem onClick={() => navigate("/setup/new")}>
-              <InboxIcon />
-              <Trans>Add an inbox</Trans>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={onSelect} data-testid="select-conversations">
-            <ListChecksIcon />
-            <Trans>Select conversations</Trans>
-            <DropdownMenuShortcut>{keyLabel(SHORTCUTS.select).join(" ")}</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={openPalette}>
-            <CommandIcon />
-            <Trans>Everything</Trans>
-            <DropdownMenuShortcut>{mod} K</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={openShortcuts}>
-            <KeyboardIcon />
-            <Trans>Keyboard shortcuts</Trans>
-            <DropdownMenuShortcut>?</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <StartConversation open={starting} onOpenChange={setStarting} />
-    </div>
+          </Button>
+          {menu}
+        </div>
+        <div className="px-3 [&>[role=toolbar]]:mt-0">{children}</div>
+        {start}
+      </div>
+    )
+  }
+  return (
+    <ListHead
+      title={<Trans>Inbox</Trans>}
+      sub={product ? <Trans>Conversations in {product}</Trans> : <Trans>Conversations from every product</Trans>}
+      action={
+        <>
+          <Button
+            size="sm"
+            onClick={() => setStarting(true)}
+            title={t`New conversation`}
+            data-testid="new-conversation"
+          >
+            <MessageSquarePlusIcon />
+            <span className="@max-sm/list:sr-only">
+              <Trans>New conversation</Trans>
+            </span>
+          </Button>
+          {menu}
+        </>
+      }
+    >
+      {children}
+      {start}
+    </ListHead>
   )
 }
 
@@ -552,6 +587,7 @@ export function ChatList({
     q: q || undefined,
   }
   const list = useConversations(filters)
+  const counts = useCounts(["conversation"]).data
   const pinnedList = useConversations({ ...filters, pinned: true })
   const loaded = useMemo(() => list.data?.pages.flatMap((p) => p.items) ?? [], [list.data])
   const pinnedLoaded = useMemo(() => pinnedList.data?.pages.flatMap((p) => p.items) ?? [], [pinnedList.data])
@@ -643,10 +679,60 @@ export function ChatList({
   }
 
   return (
-    <nav aria-label={t`Conversations`} className="flex h-full min-h-0 flex-col bg-background" data-testid="chat-list">
-      <ListHeader onSelect={() => setSelecting(true)} />
-      <div className="flex shrink-0 items-center gap-1 px-3 pb-2">
-        <InputGroup className="h-9 flex-1 rounded-xl border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
+    <nav
+      aria-label={t`Conversations`}
+      className="@container/list flex h-full min-h-0 flex-col bg-background"
+      data-testid="chat-list"
+    >
+      <ListHeader onSelect={() => setSelecting(true)}>
+        {selecting ? (
+          <div
+            className="flex h-11.5 shrink-0 items-center gap-1.5"
+            role="toolbar"
+            aria-label={t`Selection`}
+            data-testid="selection-bar"
+          >
+            <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
+              {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
+            </span>
+            <Button
+              size="sm"
+              disabled={chosen.length === 0}
+              onClick={() => setLinking(true)}
+              title={t`Link to an incident (${linkKey})`}
+              data-testid="link-selected"
+            >
+              <FlameIcon />
+              <Trans>Link to an incident</Trans>
+            </Button>
+            <Button variant="ghost" size="sm" onClick={stopSelecting} title={t`Clear the selection (Esc)`}>
+              <Trans>Cancel</Trans>
+            </Button>
+          </div>
+        ) : (
+          <div data-testid="chips">
+            <UnderlineTabs
+              value={chip}
+              onChange={setChip}
+              label={t`Filter`}
+              items={CHIPS.map((k) => ({
+                value: k,
+                label: labels[k],
+                count: inboxId
+                  ? undefined
+                  : k === "mine"
+                    ? counts?.mine
+                    : k === "unassigned"
+                      ? counts?.unassigned
+                      : undefined,
+                testId: `chip-${k}`,
+              }))}
+            />
+          </div>
+        )}
+      </ListHeader>
+      <div className="flex shrink-0 items-center gap-1.5 border-b px-3 py-2">
+        <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
           <InputGroupAddon>
             <SearchIcon className="size-[15px] text-faint" />
           </InputGroupAddon>
@@ -684,63 +770,15 @@ export function ChatList({
             )}
           </InputGroupAddon>
         </InputGroup>
-        <InboxPicker className="max-w-44" />
+        <InboxPicker className="max-w-36" />
+        <SourceFilter
+          inboxId={inboxId}
+          onChange={() => {
+            setCursorId(null)
+            scroller.current?.scrollTo({ top: 0 })
+          }}
+        />
       </div>
-      {selecting ? (
-        <div
-          className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pb-2.5"
-          role="toolbar"
-          aria-label={t`Selection`}
-          data-testid="selection-bar"
-        >
-          <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
-            {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
-          </span>
-          <Button
-            size="sm"
-            disabled={chosen.length === 0}
-            onClick={() => setLinking(true)}
-            title={t`Link to an incident (${linkKey})`}
-            data-testid="link-selected"
-          >
-            <FlameIcon />
-            <Trans>Link to an incident</Trans>
-          </Button>
-          <Button variant="ghost" size="sm" onClick={stopSelecting} title={t`Clear the selection (Esc)`}>
-            <Trans>Cancel</Trans>
-          </Button>
-        </div>
-      ) : (
-        <div
-          className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"
-          role="toolbar"
-          aria-label={t`Filter`}
-          data-testid="chips"
-        >
-          {CHIPS.map((k) => (
-            <button
-              key={k}
-              type="button"
-              aria-pressed={chip === k}
-              onClick={() => setChip(k)}
-              className={cn(
-                "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-                chip === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
-              )}
-              data-testid={`chip-${k}`}
-            >
-              {labels[k]}
-            </button>
-          ))}
-          <SourceFilter
-            inboxId={inboxId}
-            onChange={() => {
-              setCursorId(null)
-              scroller.current?.scrollTo({ top: 0 })
-            }}
-          />
-        </div>
-      )}
       <AwayBanner />
       <CleanupBanner onReview={onOpen} />
       <ImportBanner />

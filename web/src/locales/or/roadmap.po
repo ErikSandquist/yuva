@@ -139,6 +139,10 @@ msgstr "ଲୁଚାନ୍ତୁ"
 msgid "Idea started"
 msgstr "ଧାରଣା ଆରମ୍ଭ ହେଲା"
 
+#: src/features/roadmap/pages.tsx
+msgid "Ideas your customers vote on, with the feedback behind them"
+msgstr "ଧାରଣା ଯାହା ଉପରେ ଆପଣଙ୍କ ଗ୍ରାହକ ଭୋଟ ଦିଅନ୍ତି, ତା ପଛର ମତାମତ ସହିତ"
+
 #: src/features/roadmap/CreateBoardDialog.tsx
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} ପାଇଁ ଧାରଣା, ଭୋଟ୍ ଓ ପର୍ଯ୍ୟାୟ, ପ୍ରତ୍ୟେକ ଧାରଣା ପଛର ମତାମତ ସହ। ଆପଣ ସାର୍ବଜନୀନ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଏହା ବ୍ୟକ୍ତିଗତ ରହେ।"
@@ -302,6 +306,10 @@ msgstr "ସାର୍ବଜନୀନ ପୃଷ୍ଠା"
 #: src/features/roadmap/Settings.tsx
 msgid "Readers cannot suggest ideas. Votes and replies still work."
 msgstr "ପାଠକମାନେ ଧାରଣା ପ୍ରସ୍ତାବ କରିପାରିବେ ନାହିଁ। ଭୋଟ୍ ଓ ଉତ୍ତର ତଥାପି କାମ କରେ।"
+
+#: src/features/roadmap/Board.tsx
+msgid "Readers suggested new ideas. Review them before they show on the public board."
+msgstr "ପାଠକମାନେ ନୂଆ ଧାରଣା ପରାମର୍ଶ ଦେଇଛନ୍ତି। ସାର୍ବଜନୀନ ବୋର୍ଡରେ ଦେଖାଯିବା ପୂର୍ବରୁ ସେଗୁଡ଼ିକର ସମୀକ୍ଷା କରନ୍ତୁ।"
 
 #: src/features/roadmap/pages.tsx
 #: src/features/roadmap/RoadmapColumn.tsx

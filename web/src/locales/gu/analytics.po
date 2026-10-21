@@ -125,6 +125,10 @@ msgstr "{rate, plural, one {{dim} {value}: 1,000 વ્યૂ દીઠ # વા
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "આ મહિને {limit} માંથી {used} ઍનાલિટિક્સ ઇવેન્ટ વપરાઈ. મર્યાદા ઉપરની ઇવેન્ટ મહિનો પૂરો થાય ત્યાં સુધી છોડી દેવાય છે."
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} મુલાકાતીઓ"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "ફેરફાર નવી ઇવેન્ટ પર લાગુ પડે છે. જે દિવસો ગણાઈ ગયા તે પોતાનો ઝોન રાખે છે."
@@ -176,6 +180,10 @@ msgstr "નવી કી બનાવાઈ"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "નવો પાસવર્ડ લિંક અનલૉક કરનાર દરેકને સાઇન આઉટ કરે છે."
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "એક પેજ વ્યૂ, એક ઇવેન્ટ અથવા સ્ક્રોલ ઊંડાઈ"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "કન્વર્ઝન દર"
 msgid "Conversions"
 msgstr "કન્વર્ઝન"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "સમય સાથે કન્વર્ઝન"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "100 મુલાકાતીઓ દીઠ કન્વર્ઝન."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "તમારી સાઇટ્સ અને ઍપના મુલાકાતીઓ, કૂકી વિના."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "સામાન્ય"
 msgid "Go to goals"
 msgstr "ધ્યેય પર જાઓ"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "ધ્યેય"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "માસિક મર્યાદા"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "મહિના"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "વધુ"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "સર્વર વ્યસ્ત"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "સેટિંગ્સ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "શેર કરો"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

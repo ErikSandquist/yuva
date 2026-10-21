@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} ലേഖനങ്ങളിൽ {published} പ്രസിദ്ധീകരിച്ചു"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} പ്രസിദ്ധീകരിച്ചവ"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3 മുതൽ 48 വരെ അക്ഷരങ്ങൾ, അക്കങ്ങൾ, ഹൈഫനുകൾ. ഈ സെർവറിൽ അദ്വിതീയം."
@@ -80,6 +84,7 @@ msgstr "പതിവ് ചോദ്യങ്ങൾക്ക് ഒരിക്�
 msgid "Any state"
 msgstr "ഏത് അവസ്ഥയും"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "ലേഖനം"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "ലേഖന കാഴ്ചകൾ"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "ലേഖനങ്ങൾ"
@@ -112,6 +118,10 @@ msgstr "ലേഖനങ്ങൾ ഈ ഭാഷകളിൽ എഴുതി പ�
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "ഈ ശേഖരത്തിലെ ലേഖനങ്ങൾ"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "നിങ്ങൾക്ക് എഴുതുന്നതിന് മുമ്പ് ആളുകൾ വായിക്കുന്ന ലേഖനങ്ങൾ"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "എല്ലാ വിവർത്തനങ്ങളും അവയു�
 msgid "Formatting"
 msgstr "ഫോർമാറ്റിംഗ്"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "ഒന്നും കണ്ടെത്തിയില്ല · 7 ദിവസം"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "തുടങ്ങാം"
@@ -312,11 +326,11 @@ msgstr "സന്ദർശകർക്ക് ബ്രൗസ് ചെയ്യ�
 msgid "Heading"
 msgstr "തലക്കെട്ട്"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "സഹായം"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "സഹായ കേന്ദ്രങ്ങൾ"
 msgid "Help centers are turned off on this server."
 msgstr "ഈ സെർവറിൽ സഹായ കേന്ദ്രങ്ങൾ ഓഫാണ്."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "ഉപകാരപ്രദം"
@@ -384,6 +399,10 @@ msgstr "ഭാഷകൾ"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "കഴിഞ്ഞ {d} ദിവസം"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "കഴിഞ്ഞ 7 ദിവസം"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "തലക്കെട്ടുകളിൽ തിരയുക ({findKey}
 msgid "Search words"
 msgstr "തിരയൽ വാക്കുകൾ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "തിരഞ്ഞു, ഒന്നും കണ്ടെത്തിയില്ല"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "തിരയലുകൾ"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "തിരയലുകൾ · 7 ദിവസം"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "പ്രസിദ്ധീകരിച്ചിട്ടില്ല, �
 msgid "Unsaved changes"
 msgstr "സംരക്ഷിക്കാത്ത മാറ്റങ്ങൾ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "അപ്ഡേറ്റ് ചെയ്തു"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "3 മുതൽ 48 വരെ അക്ഷരങ്ങൾ, അക്കങ്ങൾ, ഉള്ളിലെ ഹൈഫനുകൾ ഉപയോഗിക്കുക."
@@ -893,6 +924,10 @@ msgstr "സഹായ കേന്ദ്രം കാണുക"
 msgid "Views"
 msgstr "കാഴ്ചകൾ"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "കാഴ്ചകൾ · 7 ദിവസം"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "സന്ദർശകർ എന്ത് വായിക്കുകയും തിരയുകയും ചെയ്യുന്നു. കാഴ്ചകൾ ഏകദേശമാണ്, കണക്കുകൾ ഒരു മിനിറ്റിനുള്ളിൽ ഈ പേജിൽ എത്തും."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "സന്ദർശകർ ടൈപ്പ് ചെയ്തിട്ടും ഒന്നും കിട്ടാത്ത വാക്കുകൾ. ഓരോന്നിനും ഒരു പുതിയ ലേഖനം ഏറ്റവും വേഗത്തിലുള്ള പരിഹാരം."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "എഴുതുക"
 

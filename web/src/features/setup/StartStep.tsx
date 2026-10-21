@@ -38,7 +38,7 @@ export function StartStep({ kind }: { kind: SetupKind }) {
       </StepHeader>
       <ErrorLine error={inboxes.error} />
       {!list ? (
-        !inboxes.error && <Skeleton className="h-[74px] rounded-2xl" />
+        !inboxes.error && <Skeleton className="h-[68px] rounded-2xl" />
       ) : (
         <ChoiceCards
           testId="setup-start"

@@ -1,19 +1,17 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { ArrowLeftIcon, ArrowRightIcon, BuildingIcon, LogOutIcon, UserRoundIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, LogOutIcon, UserRoundIcon } from "lucide-react"
 import { useState } from "react"
 import { Link, Navigate, useNavigate } from "react-router"
 
 import { useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { AuthLayout } from "@/features/auth/AuthLayout"
+import { AuthHeading, AuthLayout, authAlert as alert, authField as field } from "@/features/auth/AuthLayout"
 import { Field } from "@/features/settings/ui"
 import { api, ApiError, unwrap, useSignup, type Me } from "@/lib/api"
 import { meKey, useSession, useSignOut } from "@/lib/session"
 
-const field = "h-11 rounded-xl px-3.5"
-const alert = "rounded-xl border border-destructive/25 bg-destructive/5 px-3.5 py-2.5 text-body text-destructive"
 const SECOND_LEVEL = new Set(["com", "co", "org", "net", "edu", "gov", "ac", "gen", "biz", "info", "bel", "k12"])
 const MAILBOX_PROVIDERS = new Set([
   "gmail",
@@ -87,30 +85,22 @@ export function CreateWorkspace({
           : error && errorText(error)
 
   return (
-    <AuthLayout>
+    <AuthLayout below={!back && <FirstWorkspaceFooter />}>
       {back && (
         <Link
           to={back}
-          className="mb-6 inline-flex w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground"
+          className="mb-5 inline-flex w-fit items-center gap-1.5 text-small text-faint transition-colors hover:text-foreground"
           data-testid="create-workspace-back"
         >
           <ArrowLeftIcon className="size-3.5 rtl:rotate-180" />
           <Trans>Back</Trans>
         </Link>
       )}
-      <div className="mb-8">
-        <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand">
-          <BuildingIcon className="size-5" />
-        </span>
-        <h1 className="text-page">
-          <Trans>Create your workspace</Trans>
-        </h1>
-        <p className="mt-3 text-pretty text-muted-foreground">
-          <Trans>
-            A workspace holds your team, inboxes and conversations. You are its owner and can invite others later.
-          </Trans>
-        </p>
-      </div>
+      <AuthHeading title={<Trans>Create your workspace</Trans>}>
+        <Trans>
+          A workspace holds your team, inboxes and conversations. You are its owner and can invite others later.
+        </Trans>
+      </AuthHeading>
       <form
         className="flex flex-col gap-5"
         onSubmit={(e) => {
@@ -170,7 +160,6 @@ export function CreateWorkspace({
           <ArrowRightIcon className="rtl:rotate-180" />
         </Button>
       </form>
-      {!back && <FirstWorkspaceFooter />}
     </AuthLayout>
   )
 }
@@ -179,10 +168,13 @@ function FirstWorkspaceFooter() {
   const signOut = useSignOut()
   const navigate = useNavigate()
   return (
-    <div className="mt-8 flex flex-col items-start gap-3 border-t pt-5 text-body text-muted-foreground">
+    <>
       <p>
         <Trans>Here to follow discussions on documentation sites?</Trans>{" "}
-        <Link to="/account" className="inline-flex items-center gap-1 text-brand underline-offset-4 hover:underline">
+        <Link
+          to="/account"
+          className="inline-flex items-center gap-1 text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
           <UserRoundIcon className="size-3.5" />
           <Trans>Open your reader account</Trans>
         </Link>
@@ -191,7 +183,7 @@ function FirstWorkspaceFooter() {
         type="button"
         variant="ghost"
         size="sm"
-        className="-ms-2.5"
+        className="text-faint"
         onClick={async () => {
           await signOut()
           navigate("/sign-in", { replace: true })
@@ -200,7 +192,7 @@ function FirstWorkspaceFooter() {
         <LogOutIcon />
         <Trans>Sign out</Trans>
       </Button>
-    </div>
+    </>
   )
 }
 

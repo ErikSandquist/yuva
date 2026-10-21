@@ -12,12 +12,12 @@ import {
   MessageSquareMoreIcon,
 } from "lucide-react"
 
-import { useCopy } from "@/components/common"
+import { Segmented, useCopy } from "@/components/common"
 import { SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { Feedback, FeedbackCategory, FeedbackProgress } from "@/lib/api"
+import type { ConversationUpdate, Feedback, FeedbackCategory, FeedbackProgress } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 const categoryIcons: Record<FeedbackCategory, React.ComponentType<{ className?: string }>> = {
@@ -163,6 +163,42 @@ export function FeedbackDetails({ feedback }: { feedback: Feedback }) {
       <span className="sr-only" role="status">
         {copied && <Trans>Copied</Trans>}
       </span>
+    </div>
+  )
+}
+
+const STEPS = ["none", "planned", "in_progress", "done", "wont_do"] as const
+
+export function ProgressStrip({
+  progress,
+  update,
+}: {
+  progress?: FeedbackProgress
+  update: (body: ConversationUpdate) => void
+}) {
+  const { t } = useLingui()
+  const text = useEnumText()
+  return (
+    <div
+      className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1.5 border-b bg-background px-4 py-2"
+      data-testid="progress-strip"
+    >
+      <span className="text-caption text-faint">
+        <Trans>Progress · the person sees this</Trans>
+      </span>
+      <div className="max-w-full overflow-x-auto">
+        <Segmented
+          value={progress ?? "none"}
+          onChange={(v) => update({ feedback_progress: v === "none" ? null : v })}
+          label={t`Progress`}
+          itemClassName="px-2.5"
+          items={STEPS.map((p) => ({
+            value: p,
+            label: p === "none" ? t`None` : text.progress[p],
+            testId: `progress-step-${p}`,
+          }))}
+        />
+      </div>
     </div>
   )
 }

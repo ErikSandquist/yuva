@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "Опубліковано статей: {published} з {total}"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "Опубліковано: {published}"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "Від 3 до 48 літер, цифр і дефісів. Унікальна на цьому сервері."
@@ -80,6 +84,7 @@ msgstr "Дайте відповідь на поширені запитання �
 msgid "Any state"
 msgstr "Будь-який стан"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Стаття"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Перегляди статей"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Статті"
@@ -112,6 +118,10 @@ msgstr "Статті можна писати й публікувати цими 
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Статті в цій колекції"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Статті, які люди читають, перш ніж написати вам"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Усі переклади, їхні ревізії та лічильни
 msgid "Formatting"
 msgstr "Форматування"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Нічого не знайдено · 7 днів"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Початок роботи"
@@ -312,11 +326,11 @@ msgstr "Згрупуйте статті, щоб відвідувачі могл�
 msgid "Heading"
 msgstr "Заголовок"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Довідка"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Центри довідки"
 msgid "Help centers are turned off on this server."
 msgstr "Центри довідки вимкнено на цьому сервері."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Корисно"
@@ -384,6 +399,10 @@ msgstr "Мови"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Останні {d} дн."
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "останні 7 днів"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Шукати в заголовках ({findKey})"
 msgid "Search words"
 msgstr "Слова для пошуку"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Шукали, нічого не знайшли"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Пошуки"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Пошуки · 7 днів"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Не опубліковано, попередній перегляд д�
 msgid "Unsaved changes"
 msgstr "Незбережені зміни"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Оновлено"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Використайте від 3 до 48 літер, цифр і внутрішніх дефісів."
@@ -893,6 +924,10 @@ msgstr "Відкрити центр довідки"
 msgid "Views"
 msgstr "Перегляди"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Перегляди · 7 днів"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Що відвідувачі читають і шукають. Перегляди приблизні, а цифри доходять сюди протягом хвилини."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Слова, які вводили відвідувачі й нічого не знайшли. Нова стаття для кожного — найшвидше рішення."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Писати"
 

@@ -11,6 +11,10 @@ msgstr ""
 msgid "{published} of {total} articles published"
 msgstr "{total} cikkből {published} megjelent"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "{published} published"
+msgstr "{published} közzétéve"
+
 #: src/features/help/CreateCenterDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
 msgstr "3–48 betű, szám és kötőjel. Egyedi ezen a szerveren."
@@ -80,6 +84,7 @@ msgstr "Válaszoljon a gyakori kérdésekre egyszer, írásban. Válassza ki egy
 msgid "Any state"
 msgstr "Bármely állapot"
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Article"
 msgstr "Cikk"
@@ -101,6 +106,7 @@ msgid "Article views"
 msgstr "Cikkmegtekintések"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/pages.tsx
 msgid "Articles"
 msgstr "Cikkek"
@@ -112,6 +118,10 @@ msgstr "A cikkek ezeken a nyelveken írhatók és tehetők közzé. A látogató
 #: src/features/help/CollectionsTab.tsx
 msgid "Articles in this collection"
 msgstr "Cikkek ebben a gyűjteményben"
+
+#: src/features/help/HelpColumn.tsx
+msgid "Articles people read before they write to you"
+msgstr "Cikkek, amelyeket az emberek elolvasnak, mielőtt írnának neked"
 
 #: src/features/help/CreateCenterDialog.tsx
 msgid "Articles that answer your customers’ questions for {inboxName}. It stays unpublished until you publish it."
@@ -296,6 +306,10 @@ msgstr "Minden fordítás, a változataik és a számlálóik törlődnek."
 msgid "Formatting"
 msgstr "Formázás"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Found nothing · 7 days"
+msgstr "Nincs találat · 7 nap"
+
 #: src/features/help/CollectionsTab.tsx
 msgid "Getting started"
 msgstr "Első lépések"
@@ -312,11 +326,11 @@ msgstr "Csoportosítsa a cikkeket, hogy a látogatók böngészhessenek. Egy gy�
 msgid "Heading"
 msgstr "Címsor"
 
-#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "Help"
 msgstr "Súgó"
 
+#: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
@@ -335,6 +349,7 @@ msgstr "Súgóközpontok"
 msgid "Help centers are turned off on this server."
 msgstr "A súgóközpontok ki vannak kapcsolva ezen a szerveren."
 
+#: src/features/help/ArticlesTab.tsx
 #: src/features/help/ReportTab.tsx
 msgid "Helpful"
 msgstr "Hasznos"
@@ -384,6 +399,10 @@ msgstr "Nyelvek"
 #: src/features/help/ReportTab.tsx
 msgid "Last {d} days"
 msgstr "Az elmúlt {d} nap"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "last 7 days"
+msgstr "elmúlt 7 nap"
 
 #: src/features/help/EditorToolbar.tsx
 msgid "Link"
@@ -689,9 +708,17 @@ msgstr "Keresés a címekben ({findKey})"
 msgid "Search words"
 msgstr "Keresőszavak"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Searched for, found nothing"
+msgstr "Keresték, nincs találat"
+
 #: src/features/help/ReportTab.tsx
 msgid "Searches"
 msgstr "Keresések"
+
+#: src/features/help/ArticlesTab.tsx
+msgid "Searches · 7 days"
+msgstr "Keresések · 7 nap"
 
 #: src/features/help/ReportTab.tsx
 msgid "Searches with no result"
@@ -865,6 +892,10 @@ msgstr "Nincs közzétéve, csak a csapata tekintheti meg"
 msgid "Unsaved changes"
 msgstr "Nem mentett módosítások"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Updated"
+msgstr "Frissítve"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
 msgstr "Használjon 3–48 betűt, számot és belső kötőjelet."
@@ -893,6 +924,10 @@ msgstr "Súgóközpont megtekintése"
 msgid "Views"
 msgstr "Megtekintések"
 
+#: src/features/help/ArticlesTab.tsx
+msgid "Views · 7 days"
+msgstr "Megtekintések · 7 nap"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Mit olvasnak és keresnek a látogatók. A megtekintések hozzávetőlegesek, a számok egy percen belül ideérnek."
@@ -906,6 +941,7 @@ msgid "Words visitors typed that found nothing. A new article for each is the fa
 msgstr "Szavak, amelyeket a látogatók beírtak, és nem találtak semmit. Mindegyikre új cikket írni a leggyorsabb megoldás."
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/ArticlesTab.tsx
 msgid "Write"
 msgstr "Írás"
 

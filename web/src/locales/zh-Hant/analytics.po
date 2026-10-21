@@ -125,6 +125,10 @@ msgstr "{rate, plural, other {{dim} {value}:每 1,000 次瀏覽 # 個對話,所�
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "本月已使用 {used} 個分析事件,上限為 {limit} 個。超出上限的事件會被丟棄,直到月底。"
 
+#: src/features/analytics/Goals.tsx
+msgid "{value} of visitors"
+msgstr "{value} 的訪客"
+
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "更改適用於新事件。已經統計過的日子保持其時區。"
@@ -176,6 +180,10 @@ msgstr "已建立新金鑰"
 #: src/features/analytics/Sharing.tsx
 msgid "A new password signs out everyone who unlocked the link."
 msgstr "新密碼會讓所有解鎖過該連結的人退出登入。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A page view, an event or a scroll depth"
+msgstr "頁面瀏覽、事件或捲動深度"
 
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
@@ -556,9 +564,17 @@ msgstr "轉化率"
 msgid "Conversions"
 msgstr "轉化"
 
+#: src/features/analytics/Goals.tsx
+msgid "Conversions over time"
+msgstr "轉換趨勢"
+
 #: src/features/analytics/text.ts
 msgid "Conversions per 100 visitors."
 msgstr "每 100 位訪客的轉化數。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Cookieless visitors across your sites and apps."
+msgstr "不使用 Cookie 統計你的網站和應用程式的訪客。"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
@@ -1093,10 +1109,6 @@ msgstr "常規"
 msgid "Go to goals"
 msgstr "前往目標"
 
-#: src/features/analytics/Goals.tsx
-msgid "Goal"
-msgstr "目標"
-
 #. placeholder {0}: a.text
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
@@ -1368,6 +1380,10 @@ msgstr "每月上限"
 #: src/features/analytics/Retention.tsx
 msgid "Months"
 msgstr "月"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "More"
+msgstr "更多"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -2171,6 +2187,10 @@ msgstr "伺服器繁忙"
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "設定"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Share"
+msgstr "佔比"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"

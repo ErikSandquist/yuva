@@ -7,9 +7,21 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: nl\n"
 
+#: src/features/changelog/pages.tsx
+msgid "{drafts} drafts"
+msgstr "{drafts} concepten"
+
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} van {total} items gepubliceerd"
+
+#: src/features/changelog/pages.tsx
+msgid "{published} published"
+msgstr "{published} gepubliceerd"
+
+#: src/features/changelog/pages.tsx
+msgid "{scheduled} scheduled"
+msgstr "{scheduled} ingepland"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "3 to 48 letters, numbers and hyphens. It is unique on this server."
@@ -76,6 +88,10 @@ msgstr "Tijdstip wijzigen"
 msgid "Changelog"
 msgstr "Changelog"
 
+#: src/features/changelog/pages.tsx
+msgid "Changelogs"
+msgstr "Changelogs"
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Choose a picture"
 msgstr "Kies een afbeelding"
@@ -86,8 +102,13 @@ msgstr "Telt paginaweergaven van de changelog zonder cookies."
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Changelog aanmaken"
+
+#: src/features/changelog/pages.tsx
+msgid "Create changelog ({createKey})"
+msgstr "Changelog maken ({createKey})"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Create draft broadcast"
@@ -164,6 +185,15 @@ msgstr "Alle vertalingen worden verwijderd. Mailings die ervan zijn gemaakt, bli
 #: src/features/changelog/text.tsx
 msgid "Fixed"
 msgstr "Opgelost"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks"
+msgstr "Zo ziet het eruit"
+
+#. placeholder {0}: inbox.name
+#: src/features/changelog/EntriesTab.tsx
+msgid "How it looks in {0}"
+msgstr "Zo ziet het eruit in {0}"
 
 #: src/features/changelog/text.tsx
 msgid "Improved"
@@ -253,6 +283,10 @@ msgstr "Geen item komt overeen."
 #: src/features/changelog/ChangelogColumn.tsx
 msgid "No inbox to show a changelog for."
 msgstr "Geen inbox waarvoor een changelog kan worden getoond."
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "No text yet."
+msgstr "Nog geen tekst."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "None"
@@ -350,6 +384,10 @@ msgstr "Gepubliceerd"
 msgid "Publishing on schedule failed."
 msgstr "Het ingeplande publiceren is mislukt."
 
+#: src/features/changelog/pages.tsx
+msgid "Release notes shown in your products, on the web and by mail."
+msgstr "Release notes in je producten, op het web en per e-mail."
+
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Verwijderen"
@@ -396,6 +434,10 @@ msgstr "Instellingen"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Tonen"
+
+#: src/features/changelog/EntriesTab.tsx
+msgid "Shown in the chat widget and on {host}."
+msgstr "Wordt getoond in de chatwidget en op {host}."
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Shown under the name on the home page."
@@ -530,6 +572,7 @@ msgstr "Dit item intrekken?"
 
 #: src/features/changelog/ChangelogColumn.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Niet gepubliceerd"
 
@@ -566,6 +609,7 @@ msgid "View changelog"
 msgstr "Changelog bekijken"
 
 #: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "What’s new"

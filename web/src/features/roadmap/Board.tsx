@@ -36,6 +36,14 @@ import { cn } from "@/lib/utils"
 
 type Move = { idea: Discussion; to: IdeaStage }
 
+const STAGE_DOT: Record<IdeaStage, string> = {
+  ideas: "bg-faint",
+  planned: "bg-blue-600 dark:bg-blue-400",
+  in_progress: "bg-warning",
+  shipped: "bg-success",
+  closed: "bg-muted-foreground/40",
+}
+
 function Card({
   idea,
   board,
@@ -60,7 +68,7 @@ function Card({
     <li
       ref={setNodeRef}
       className={cn(
-        "group flex items-start gap-1 rounded-xl border bg-card py-2.5 ps-1 pe-1.5 transition-colors",
+        "group flex items-start gap-1 rounded-xl border bg-card py-2.5 ps-1 pe-1.5 transition-colors hover:border-faint",
         current && "border-brand",
         cursor && "ring-2 ring-ring",
         isDragging && "opacity-40"
@@ -77,7 +85,18 @@ function Card({
       >
         <GripVerticalIcon className="size-4" />
       </button>
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+      <span
+        className="flex w-10 shrink-0 flex-col items-center rounded-lg border bg-background py-1 leading-tight tabular-nums"
+        title={t`${votes} votes`}
+        data-testid="idea-card-votes"
+      >
+        <ArrowBigUpIcon className="size-3.5 text-faint" aria-hidden />
+        <span className="sr-only">{t`${votes} votes`}</span>
+        <span className="text-body font-semibold" aria-hidden>
+          {votes}
+        </span>
+      </span>
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5 ps-1.5">
         <Link
           to={ideaLink(board, idea.id)}
           className="line-clamp-3 text-body font-medium break-words outline-none hover:underline focus-visible:underline"
@@ -86,11 +105,6 @@ function Card({
           {idea.title}
         </Link>
         <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-caption text-muted-foreground tabular-nums">
-          <span className="inline-flex items-center gap-1" title={t`${votes} votes`}>
-            <ArrowBigUpIcon className="size-3.5" />
-            <span className="sr-only">{t`${votes} votes`}</span>
-            <span aria-hidden>{votes}</span>
-          </span>
           <span className="inline-flex items-center gap-1" title={t`${replies} replies`}>
             <MessageSquareIcon className="size-3.5" />
             <span className="sr-only">{t`${replies} replies`}</span>
@@ -165,14 +179,16 @@ function StageColumn({
     <section
       ref={setNodeRef}
       className={cn(
-        "flex w-72 shrink-0 snap-start flex-col gap-2 rounded-2xl bg-muted/50 p-2 transition-colors phone:w-[82vw]",
+        "flex min-w-56 flex-1 basis-0 snap-start flex-col gap-2 rounded-2xl border bg-surface p-2 transition-colors phone:min-w-[82vw]",
+        stage === "closed" && "opacity-80",
         isOver && "bg-brand-wash"
       )}
       aria-label={text.stage[stage]}
       data-testid="stage-column"
       data-stage={stage}
     >
-      <h2 className="flex items-center gap-2 px-1.5 pt-1 text-small font-medium">
+      <h2 className="flex items-center gap-2 px-1.5 pt-1 pb-0.5 text-body font-semibold">
+        <span aria-hidden className={cn("size-2 shrink-0 rounded-full", STAGE_DOT[stage])} />
         <span className="min-w-0 flex-1 truncate">{text.stage[stage]}</span>
         <span className="text-caption text-faint tabular-nums" data-testid="stage-count">
           {count}
@@ -216,13 +232,17 @@ function Pending({ board }: { board: RoadmapBoard }) {
   if (items.length === 0) return null
   return (
     <section
-      className="flex flex-col gap-2 rounded-2xl border border-warning/40 bg-warning/5 p-3"
+      className="flex flex-col gap-3 rounded-2xl border p-3 ps-4"
       aria-label={t`Waiting for approval`}
       data-testid="pending-strip"
     >
-      <h2 className="flex items-center gap-1.5 text-small font-medium text-warning">
-        <HourglassIcon className="size-4" />
-        <Trans>Waiting for approval</Trans>
+      <h2 className="flex items-center gap-2.5 text-body">
+        <span className="grid h-5.5 min-w-5.5 place-items-center rounded-full bg-brand px-1.5 text-caption font-semibold text-white tabular-nums">
+          {items.length}
+        </span>
+        <span className="font-medium">
+          <Trans>Readers suggested new ideas. Review them before they show on the public board.</Trans>
+        </span>
       </h2>
       <ul className="flex gap-2 overflow-x-auto pb-1">
         {items.map((idea) => (

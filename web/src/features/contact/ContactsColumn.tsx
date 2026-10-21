@@ -11,6 +11,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Skeleton } from "@/components/ui/skeleton"
 import { useContactDirectory, type DirectoryFilter } from "@/features/contact/queries"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
+import { ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
 import { contactName } from "@/features/contact/Section"
 import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
@@ -29,16 +30,16 @@ function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boo
       <Link
         to={`/contacts/${c.id}`}
         className={cn(
-          "flex items-center gap-3 rounded-xl px-2.5 py-2.5 outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",
-          current && "bg-muted",
-          cursor && "ring-2 ring-ring"
+          "flex items-start gap-3 border-b px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60",
+          current && "bg-muted hover:bg-muted",
+          cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
         )}
         aria-current={current ? "page" : undefined}
         data-testid="contact-row"
       >
-        <ContactAvatar id={c.id} name={name} className="size-10 shrink-0" />
-        <span className="min-w-0 flex-1">
-          <span className="flex items-center gap-2">
+        <ContactAvatar id={c.id} name={name} className="size-9 shrink-0" />
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="flex items-baseline gap-2">
             <span className="min-w-0 flex-1 truncate text-body font-medium">{name}</span>
             {last && (
               <time
@@ -50,23 +51,25 @@ function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boo
               </time>
             )}
           </span>
-          <span className="flex items-center gap-2">
-            <span className="min-w-0 flex-1 truncate text-small text-muted-foreground">
-              {c.emails[0] && c.emails[0] !== name ? (
-                c.emails[0]
-              ) : known ? (
-                (c.external_ids[0]?.external_id ?? "")
-              ) : (
-                <Trans>Visitor</Trans>
-              )}
-            </span>
-            {c.activity && c.activity.open_conversations > 0 && (
-              <span className="shrink-0 text-caption text-brand">
-                <Plural value={c.activity.open_conversations} one="# open" other="# open" />
-              </span>
+          <span className="truncate text-small text-muted-foreground">
+            {c.emails[0] && c.emails[0] !== name ? (
+              c.emails[0]
+            ) : known ? (
+              (c.external_ids[0]?.external_id ?? "")
+            ) : (
+              <Trans>Visitor</Trans>
             )}
           </span>
-          <InboxBadges inboxes={c.inboxes} max={2} className="mt-1" />
+          {(c.inboxes.length > 0 || (c.activity && c.activity.open_conversations > 0)) && (
+            <span className="mt-1 flex min-w-0 items-center gap-2">
+              <InboxBadges inboxes={c.inboxes} max={2} className="min-w-0 flex-1" />
+              {c.activity && c.activity.open_conversations > 0 && (
+                <span className="shrink-0 text-caption text-brand">
+                  <Plural value={c.activity.open_conversations} one="# open" other="# open" />
+                </span>
+              )}
+            </span>
+          )}
         </span>
       </Link>
     </li>
@@ -113,13 +116,16 @@ export function ContactsColumn() {
 
   return (
     <nav aria-label={t`Contacts`} className="flex h-full min-h-0 flex-col bg-background" data-testid="contacts-page">
-      <div className="flex h-15 shrink-0 items-center ps-4 pe-2">
-        <h2 className="min-w-0 flex-1 truncate text-title">
-          <Trans>Contacts</Trans>
-        </h2>
-      </div>
-      <div className="shrink-0 px-3 pb-2">
-        <InputGroup className="h-9 rounded-xl border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
+      <ListHead title={<Trans>Contacts</Trans>} sub={<Trans>Everyone who has written to your products</Trans>}>
+        <UnderlineTabs
+          value={filter}
+          onChange={setFilter}
+          label={t`Show`}
+          items={FILTERS.map((k) => ({ value: k, label: labels[k], title: titles[k], testId: `contacts-filter-${k}` }))}
+        />
+      </ListHead>
+      <div className="flex shrink-0 items-center gap-1.5 border-b px-3 py-2">
+        <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
           <InputGroupAddon>
             <SearchIcon className="size-[15px] text-faint" />
           </InputGroupAddon>
@@ -153,26 +159,8 @@ export function ContactsColumn() {
             </InputGroupAddon>
           )}
         </InputGroup>
-      </div>
-      <div className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pb-2.5" role="toolbar" aria-label={t`Show`}>
-        {FILTERS.map((k) => (
-          <button
-            key={k}
-            type="button"
-            aria-pressed={filter === k}
-            title={titles[k]}
-            onClick={() => setFilter(k)}
-            className={cn(
-              "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-              filter === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
-            )}
-            data-testid={`contacts-filter-${k}`}
-          >
-            {labels[k]}
-          </button>
-        ))}
         <InboxPicker
-          className="ms-auto"
+          className="max-w-36"
           value={inboxId}
           onChange={(id) =>
             setParams(
@@ -187,7 +175,7 @@ export function ContactsColumn() {
           }
         />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-4">
+      <div className="min-h-0 flex-1 overflow-y-auto pb-4">
         {directory.isPending ? (
           <div className="flex flex-col gap-2 p-2">
             <Skeleton className="h-12 w-full" />

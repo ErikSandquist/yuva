@@ -27,13 +27,18 @@ import { ComponentDialog, GroupDialog } from "@/features/status/ComponentDialogs
 import {
   useComponentMutations,
   useGroupMutations,
+  usePublicStatus,
   useStatusComponents,
   useStatusGroups,
 } from "@/features/status/queries"
 import { StateSelect } from "@/features/status/StateSelect"
+import { UptimeBars, usePercent } from "@/features/status/UptimeBars"
 import { Card, EmptyRow, Rows } from "@/features/settings/ui"
 import { useSession } from "@/lib/session"
 import type { StatusComponent, StatusComponentGroup, StatusPage } from "@/lib/api"
+import type { components } from "@/lib/schema.gen"
+
+type PublicComponent = components["schemas"]["PublicStatusComponent"]
 
 type Section = { group: StatusComponentGroup | null; items: StatusComponent[] }
 
@@ -44,9 +49,11 @@ function Row({
   count,
   onEdit,
   onMove,
+  uptime,
 }: {
   page: StatusPage
   c: StatusComponent
+  uptime?: PublicComponent
   index: number
   count: number
   onEdit: () => void
@@ -57,6 +64,8 @@ function Row({
   const m = useComponentMutations(page.id)
   const [confirm, dialog] = useConfirm()
   const since = formatDateTime(c.state_since, i18n.locale)
+  const percent = usePercent()
+  const share = uptime?.uptime === undefined ? "" : percent(uptime.uptime)
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3" data-testid="status-component">
       <div className="min-w-0 flex-1 basis-48">
@@ -81,6 +90,11 @@ function Row({
         </p>
       </div>
       <div className="flex items-center gap-1 phone:w-full">
+        {share && (
+          <span className="me-2 shrink-0 text-small text-faint tabular-nums" data-testid="status-component-uptime">
+            <Trans>{share} uptime</Trans>
+          </span>
+        )}
         <StateSelect
           value={c.state}
           label={t`State of ${c.name}`}
@@ -133,6 +147,9 @@ function Row({
           </DropdownMenu>
         )}
       </div>
+      {uptime?.days && uptime.days.length > 0 && (
+        <UptimeBars days={uptime.days} count={page.history_days} className="basis-full" />
+      )}
       <ErrorLine error={m.setState.error ?? m.update.error ?? m.remove.error} className="basis-full text-caption" />
       {dialog}
     </li>
@@ -147,6 +164,9 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
   const gm = useGroupMutations(page.id)
   const cm = useComponentMutations(page.id)
   const [confirm, dialog] = useConfirm()
+  const pub = usePublicStatus(page)
+  const uptime = new Map((pub.data?.components ?? []).map((c) => [c.id, c]))
+  const days = page.history_days
   const [dialogState, setDialog] = useState<
     | { kind: "component"; edit?: StatusComponent; group?: string }
     | { kind: "group"; edit?: StatusComponentGroup }
@@ -176,9 +196,20 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
   return (
     <div className="flex flex-col gap-4" data-testid="status-components">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="min-w-60 flex-1 text-body text-muted-foreground">
-          <Trans>The parts of your product. Set a state by hand, or let an incident do it.</Trans>
-        </p>
+        <div className="min-w-60 flex-1">
+          <p className="text-body text-muted-foreground">
+            <Trans>The parts of your product. Set a state by hand, or let an incident do it.</Trans>
+          </p>
+          <p className="mt-0.5 text-small text-faint" data-testid="status-uptime-note">
+            {!page.show_uptime ? (
+              <Trans>Uptime is hidden on this page. Turn it on in the settings to see each day here.</Trans>
+            ) : !page.published ? (
+              <Trans>Each day’s uptime shows here once the page is published.</Trans>
+            ) : (
+              <Trans>The bars are the last {days} days, as visitors see them.</Trans>
+            )}
+          </p>
+        </div>
         {canManage && (
           <div className="flex gap-2">
             <Button
@@ -274,6 +305,7 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
                       count={s.items.length}
                       onEdit={() => setDialog({ kind: "component", edit: c })}
                       onMove={(dir) => moveComponent(s.items, i, dir)}
+                      uptime={uptime.get(c.id)}
                     />
                   ))}
                 </Rows>
