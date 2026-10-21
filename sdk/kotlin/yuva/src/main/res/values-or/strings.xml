@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">ସର୍ବଶେଷକୁ ଯାଆନ୍ତୁ</string>
     <string name="yuva_thread_open_image">ଛବି ଖୋଲନ୍ତୁ</string>
     <string name="yuva_thread_close">ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="yuva_shake_title">Send feedback?</string>
+    <string name="yuva_shake_message">A screenshot of this screen is attached.</string>
 </resources>

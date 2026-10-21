@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Gå til nyeste</string>
     <string name="yuva_thread_open_image">Åbn billede</string>
     <string name="yuva_thread_close">Luk</string>
+    <string name="yuva_shake_title">Send feedback?</string>
+    <string name="yuva_shake_message">Et skærmbillede af denne skærm vedhæftes.</string>
 </resources>

@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Jump to latest</string>
     <string name="yuva_thread_open_image">Open image</string>
     <string name="yuva_thread_close">Close</string>
+    <string name="yuva_shake_title">Send feedback?</string>
+    <string name="yuva_shake_message">A screenshot of this screen is attached.</string>
 </resources>

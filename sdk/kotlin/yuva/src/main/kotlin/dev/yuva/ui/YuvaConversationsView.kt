@@ -90,6 +90,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.background
 import dev.yuva.R
+import dev.yuva.TrackOpen
 import dev.yuva.YuvaAuthorType
 import dev.yuva.YuvaClient
 import dev.yuva.YuvaConversation
@@ -200,6 +201,7 @@ fun YuvaConversationsView(
     onClose: (() -> Unit)? = null,
     section: YuvaConversationsSection? = null,
 ) {
+    TrackOpen()
     val state = remember(client) { ConversationsState(client) }
     var route by remember { mutableStateOf<Route?>(null) }
     var tab by remember {

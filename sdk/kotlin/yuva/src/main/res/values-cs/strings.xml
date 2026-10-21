@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Přejít na nejnovější</string>
     <string name="yuva_thread_open_image">Otevřít obrázek</string>
     <string name="yuva_thread_close">Zavřít</string>
+    <string name="yuva_shake_title">Odeslat zpětnou vazbu?</string>
+    <string name="yuva_shake_message">Připojí se snímek této obrazovky.</string>
 </resources>

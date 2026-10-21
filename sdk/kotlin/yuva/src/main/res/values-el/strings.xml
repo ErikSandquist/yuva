@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Μετάβαση στα πιο πρόσφατα</string>
     <string name="yuva_thread_open_image">Άνοιγμα εικόνας</string>
     <string name="yuva_thread_close">Κλείσιμο</string>
+    <string name="yuva_shake_title">Αποστολή σχολίων;</string>
+    <string name="yuva_shake_message">Θα επισυναφθεί στιγμιότυπο αυτής της οθόνης.</string>
 </resources>

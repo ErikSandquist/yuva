@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">מעבר להודעה האחרונה</string>
     <string name="yuva_thread_open_image">פתיחת תמונה</string>
     <string name="yuva_thread_close">סגירה</string>
+    <string name="yuva_shake_title">לשלוח משוב?</string>
+    <string name="yuva_shake_message">צילום מסך של מסך זה יצורף.</string>
 </resources>

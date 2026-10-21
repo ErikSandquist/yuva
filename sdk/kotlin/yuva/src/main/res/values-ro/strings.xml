@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Salt la cele mai recente</string>
     <string name="yuva_thread_open_image">Deschide imaginea</string>
     <string name="yuva_thread_close">Închide</string>
+    <string name="yuva_shake_title">Trimiți feedback?</string>
+    <string name="yuva_shake_message">Se va atașa o captură a acestui ecran.</string>
 </resources>

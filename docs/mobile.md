@@ -100,6 +100,33 @@ yuva.unsubscribe(list.id)
 
 Closed conversations show a rating card when the inbox asks for ratings.
 
+### Shake to send feedback
+
+Opt-in. One call turns it on; shaking the device then captures a screenshot of the current screen,
+asks "Send feedback?" and opens the feedback form with the screenshot and a `screen` value.
+
+```swift
+Yuva.enableShakeToFeedback(client: client, screen: { currentRouteName }, isEnabled: { settings.shakeFeedback })
+Yuva.disableShakeToFeedback()
+```
+
+```kotlin
+Yuva.enableShakeToFeedback(application, client, screen = { currentRoute }, isEnabled = { prefs.shake })
+Yuva.disableShakeToFeedback()
+```
+
+- `screen` returns the value stored with the feedback, for example your current route name. Without
+  it the SDK uses the top view controller's class name (iOS) or the activity name (Android).
+- `isEnabled` is asked at every shake; return `false` to ignore it, for example from a setting.
+- Nothing happens while a text field has focus (iOS uses shake for Undo there; on Android while the
+  keyboard is up), while `YuvaFeedbackView` or `YuvaConversationsView` is showing, or when
+  `isEnabled` returns `false`.
+- iOS hooks `motionShake` on the app's windows. Android listens to the accelerometer while an
+  activity of your app is in the foreground and shows the confirmation and form in an SDK activity;
+  pass `theme` (a composable wrapping its content, for example your app theme) to use your own
+  Material theme there.
+- Call it again with a new client after `signOut()` or when you replace the client.
+
 ### Client
 
 | Member | Meaning |

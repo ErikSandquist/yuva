@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">नवीनतम पर जाएं</string>
     <string name="yuva_thread_open_image">छवि खोलें</string>
     <string name="yuva_thread_close">बंद करें</string>
+    <string name="yuva_shake_title">फ़ीडबैक भेजें?</string>
+    <string name="yuva_shake_message">इस स्क्रीन का स्क्रीनशॉट संलग्न किया जाएगा।</string>
 </resources>

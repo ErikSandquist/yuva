@@ -23,6 +23,11 @@ struct ExampleConfig {
     }
 }
 
+@MainActor
+enum ExampleRoute {
+    static var name = "example.support"
+}
+
 @main
 struct YuvaExampleApp: App {
     private let config = ExampleConfig.load()
@@ -47,6 +52,9 @@ struct YuvaExampleApp: App {
                     AnalyticsView(config: config)
                         .tabItem { Label("Analytics", systemImage: "chart.bar") }
                         .tag("analytics")
+                }
+                .onChange(of: tab, initial: true) { _, tab in
+                    ExampleRoute.name = "example." + tab
                 }
             } else {
                 ContentUnavailableView(

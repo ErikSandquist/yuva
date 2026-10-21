@@ -102,6 +102,36 @@ yuva.unsubscribe(list.id)
 
 Geschlossene Unterhaltungen zeigen eine Bewertungskarte, wenn der Posteingang um Bewertungen bittet.
 
+### Schütteln, um Feedback zu senden
+
+Optional. Ein Aufruf schaltet es ein; beim Schütteln des Geräts nimmt das SDK einen Screenshot des
+aktuellen Bildschirms auf, fragt „Feedback senden?“ und öffnet das Feedback-Formular mit dem
+Screenshot und einem `screen`-Wert.
+
+```swift
+Yuva.enableShakeToFeedback(client: client, screen: { currentRouteName }, isEnabled: { settings.shakeFeedback })
+Yuva.disableShakeToFeedback()
+```
+
+```kotlin
+Yuva.enableShakeToFeedback(application, client, screen = { currentRoute }, isEnabled = { prefs.shake })
+Yuva.disableShakeToFeedback()
+```
+
+- `screen` liefert den Wert, der mit dem Feedback gespeichert wird, zum Beispiel Ihren aktuellen
+  Routennamen. Ohne ihn nimmt das SDK den Klassennamen des obersten View Controllers (iOS) oder den
+  Namen der Activity (Android).
+- `isEnabled` wird bei jedem Schütteln abgefragt; geben Sie `false` zurück, um es zu ignorieren,
+  zum Beispiel aus einer Einstellung.
+- Nichts passiert, solange ein Textfeld den Fokus hat (iOS nutzt Schütteln dort für Widerrufen; unter
+  Android solange die Tastatur offen ist), solange `YuvaFeedbackView` oder `YuvaConversationsView`
+  angezeigt wird oder wenn `isEnabled` `false` liefert.
+- iOS greift `motionShake` an den Fenstern der App ab. Android lauscht auf den Beschleunigungssensor,
+  solange eine Activity Ihrer App im Vordergrund ist, und zeigt Bestätigung und Formular in einer
+  SDK-Activity; übergeben Sie `theme` (ein Composable, das den Inhalt umschließt, zum Beispiel Ihr
+  App-Theme), um dort Ihr eigenes Material-Theme zu verwenden.
+- Rufen Sie es nach `signOut()` oder beim Austauschen des Clients erneut mit dem neuen Client auf.
+
 ### Client
 
 | Member | Bedeutung |

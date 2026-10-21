@@ -81,6 +81,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.yuva.R
+import dev.yuva.TrackOpen
 import dev.yuva.YuvaClient
 import dev.yuva.YuvaConversation
 import dev.yuva.YuvaEvent
@@ -103,6 +104,7 @@ fun YuvaFeedbackView(
     onViewFeedback: ((YuvaConversation) -> Unit)? = null,
     onDone: () -> Unit = {},
 ) {
+    TrackOpen()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var categories by remember { mutableStateOf(YuvaFeedbackCategory.entries.toList()) }

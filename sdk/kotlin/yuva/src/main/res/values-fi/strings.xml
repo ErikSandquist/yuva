@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Siirry uusimpaan</string>
     <string name="yuva_thread_open_image">Avaa kuva</string>
     <string name="yuva_thread_close">Sulje</string>
+    <string name="yuva_shake_title">Lähetetäänkö palaute?</string>
+    <string name="yuva_shake_message">Tämän näytön kuvakaappaus liitetään mukaan.</string>
 </resources>

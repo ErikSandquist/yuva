@@ -1,5 +1,6 @@
 package dev.yuva.sample
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -33,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -40,6 +42,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -122,6 +125,7 @@ private fun Sample(context: Context, request: Request?) {
     }
     var yuva by remember { mutableStateOf<YuvaClient?>(client(context, identified, userId)) }
     var screenshot by remember { mutableStateOf<YuvaUpload?>(null) }
+    val current = yuva
     val view = LocalView.current
     val scope = rememberCoroutineScope()
     val swap = remember { Mutex() }
@@ -137,6 +141,19 @@ private fun Sample(context: Context, request: Request?) {
         }
     }
 
+    val currentScreen by rememberUpdatedState(screen)
+    DisposableEffect(current) {
+        if (current != null) {
+            Yuva.enableShakeToFeedback(
+                context.applicationContext as Application,
+                current,
+                screen = { "sample." + (currentScreen ?: "home") },
+                theme = { content -> SampleTheme(content) },
+            )
+        }
+        onDispose { Yuva.disableShakeToFeedback() }
+    }
+
     LaunchedEffect(identified, userId) {
         prefs.edit().putBoolean("identified", identified).putString("user_id", userId).apply()
     }
@@ -145,7 +162,6 @@ private fun Sample(context: Context, request: Request?) {
         Text("Copy sample/yuva.properties.example to sample/yuva.properties and rebuild.", Modifier.padding(32.dp))
         return
     }
-    val current = yuva
     val shown = screen.takeIf { it == "analytics" || current != null }
     AnimatedContent(
         targetState = shown,

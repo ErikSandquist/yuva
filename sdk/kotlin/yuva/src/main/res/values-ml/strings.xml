@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">ഏറ്റവും പുതിയതിലേക്ക് പോകുക</string>
     <string name="yuva_thread_open_image">ചിത്രം തുറക്കുക</string>
     <string name="yuva_thread_close">അടയ്ക്കുക</string>
+    <string name="yuva_shake_title">Send feedback?</string>
+    <string name="yuva_shake_message">A screenshot of this screen is attached.</string>
 </resources>

@@ -101,6 +101,33 @@ yuva.unsubscribe(list.id)
 
 Gelen kutusu değerlendirme istiyorsa kapalı konuşmalarda bir değerlendirme kartı görünür.
 
+### Sallayarak geri bildirim gönderme
+
+İsteğe bağlıdır. Tek bir çağrı açar; cihaz sallandığında SDK o anki ekranın ekran görüntüsünü alır,
+"Geri bildirim gönderilsin mi?" diye sorar ve geri bildirim formunu ekran görüntüsü ile bir `screen`
+değeriyle açar.
+
+```swift
+Yuva.enableShakeToFeedback(client: client, screen: { currentRouteName }, isEnabled: { settings.shakeFeedback })
+Yuva.disableShakeToFeedback()
+```
+
+```kotlin
+Yuva.enableShakeToFeedback(application, client, screen = { currentRoute }, isEnabled = { prefs.shake })
+Yuva.disableShakeToFeedback()
+```
+
+- `screen`, geri bildirimle birlikte saklanan değeri döndürür; örneğin mevcut rota adınız. Verilmezse
+  SDK en üstteki view controller'ın sınıf adını (iOS) ya da activity adını (Android) kullanır.
+- `isEnabled` her sallamada sorulur; yok saymak için `false` döndürün, örneğin bir ayardan.
+- Şu durumlarda hiçbir şey olmaz: bir metin alanı odaktayken (iOS bunun için sallamayı Geri Al olarak
+  kullanır; Android'de klavye açıkken), `YuvaFeedbackView` ya da `YuvaConversationsView` görünürken
+  veya `isEnabled` `false` döndürürken.
+- iOS, uygulamanın pencerelerinde `motionShake` olayını dinler. Android, uygulamanızın bir activity'si
+  ön plandayken ivmeölçeri dinler; onay ve form bir SDK activity'sinde gösterilir. Kendi Material
+  temanızı kullanmak için `theme` verin (içeriği saran bir composable, örneğin uygulama temanız).
+- `signOut()` sonrasında ya da istemciyi değiştirdiğinizde yeni istemciyle tekrar çağırın.
+
 ### Yuva istemcisi
 
 | Üye | Anlamı |

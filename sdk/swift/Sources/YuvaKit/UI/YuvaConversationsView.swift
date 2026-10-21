@@ -183,6 +183,7 @@ public struct YuvaConversationsView: View {
                     path = [.conversation(conversation.id)]
                 })
         }
+        .countsAsOpen()
         .task { await model.load() }
         .task { await model.listen() }
         .onChange(of: openConversationId, initial: true) { _, id in

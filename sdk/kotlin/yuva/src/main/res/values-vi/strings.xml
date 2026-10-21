@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Đến tin mới nhất</string>
     <string name="yuva_thread_open_image">Mở hình ảnh</string>
     <string name="yuva_thread_close">Đóng</string>
+    <string name="yuva_shake_title">Gửi phản hồi?</string>
+    <string name="yuva_shake_message">Ảnh chụp màn hình này sẽ được đính kèm.</string>
 </resources>

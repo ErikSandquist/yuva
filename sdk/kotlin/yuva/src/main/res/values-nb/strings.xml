@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Gå til nyeste</string>
     <string name="yuva_thread_open_image">Åpne bilde</string>
     <string name="yuva_thread_close">Lukk</string>
+    <string name="yuva_shake_title">Send tilbakemelding?</string>
+    <string name="yuva_shake_message">Et skjermbilde av denne skjermen legges ved.</string>
 </resources>

@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">跳到最新</string>
     <string name="yuva_thread_open_image">打开图片</string>
     <string name="yuva_thread_close">关闭</string>
+    <string name="yuva_shake_title">发送反馈？</string>
+    <string name="yuva_shake_message">将附上此屏幕的截图。</string>
 </resources>

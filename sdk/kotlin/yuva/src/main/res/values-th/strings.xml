@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">ไปที่ล่าสุด</string>
     <string name="yuva_thread_open_image">เปิดรูปภาพ</string>
     <string name="yuva_thread_close">ปิด</string>
+    <string name="yuva_shake_title">ส่งความคิดเห็นไหม</string>
+    <string name="yuva_shake_message">จะแนบภาพหน้าจอของหน้านี้ไปด้วย</string>
 </resources>

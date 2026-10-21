@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">সর্বশেষে যান</string>
     <string name="yuva_thread_open_image">ছবি খুলুন</string>
     <string name="yuva_thread_close">বন্ধ করুন</string>
+    <string name="yuva_shake_title">মতামত পাঠাবেন?</string>
+    <string name="yuva_shake_message">এই স্ক্রিনের একটি স্ক্রিনশট সংযুক্ত করা হবে।</string>
 </resources>

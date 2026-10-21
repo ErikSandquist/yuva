@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Lompat ke terkini</string>
     <string name="yuva_thread_open_image">Buka imej</string>
     <string name="yuva_thread_close">Tutup</string>
+    <string name="yuva_shake_title">Hantar maklum balas?</string>
+    <string name="yuva_shake_message">Tangkapan skrin bagi skrin ini akan dilampirkan.</string>
 </resources>

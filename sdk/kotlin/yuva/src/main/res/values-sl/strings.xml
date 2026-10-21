@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Skoči na najnovejše</string>
     <string name="yuva_thread_open_image">Odpri sliko</string>
     <string name="yuva_thread_close">Zapri</string>
+    <string name="yuva_shake_title">Pošljem povratne informacije?</string>
+    <string name="yuva_shake_message">Priložen bo posnetek tega zaslona.</string>
 </resources>

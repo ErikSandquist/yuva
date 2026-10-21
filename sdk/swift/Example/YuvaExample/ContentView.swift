@@ -110,6 +110,7 @@ struct ContentView: View {
             replaceClient(signOut: false)
         }
         .onAppear {
+            enableShake()
             let defaults = UserDefaults.standard
             openConversationId = defaults.string(forKey: "YuvaThread")
             screen = Screen(launchArgument: defaults.string(forKey: "YuvaOpen"))
@@ -122,11 +123,18 @@ struct ContentView: View {
         let pending = swap
         client = nil
         screen = nil
+        Yuva.disableShakeToFeedback()
         swap = Task {
             await pending?.value
             if signOut, let old = client ?? previous { await old.signOut() }
             client = Self.makeClient(config: config, identified: identified, userId: userId)
+            enableShake()
         }
+    }
+
+    private func enableShake() {
+        guard let client else { return }
+        Yuva.enableShakeToFeedback(client: client, screen: { ExampleRoute.name })
     }
 
     private static func makeClient(config: ExampleConfig, identified: Bool, userId user: String) -> YuvaClient {

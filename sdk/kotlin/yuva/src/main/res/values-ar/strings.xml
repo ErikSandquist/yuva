@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">الانتقال إلى الأحدث</string>
     <string name="yuva_thread_open_image">فتح الصورة</string>
     <string name="yuva_thread_close">إغلاق</string>
+    <string name="yuva_shake_title">إرسال ملاحظات؟</string>
+    <string name="yuva_shake_message">سيتم إرفاق لقطة شاشة لهذه الشاشة.</string>
 </resources>

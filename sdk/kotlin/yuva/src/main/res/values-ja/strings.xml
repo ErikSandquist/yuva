@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">最新へ移動</string>
     <string name="yuva_thread_open_image">画像を開く</string>
     <string name="yuva_thread_close">閉じる</string>
+    <string name="yuva_shake_title">フィードバックを送信しますか？</string>
+    <string name="yuva_shake_message">この画面のスクリーンショットが添付されます。</string>
 </resources>

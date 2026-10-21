@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">नवीनतमकडे जा</string>
     <string name="yuva_thread_open_image">प्रतिमा उघडा</string>
     <string name="yuva_thread_close">बंद करा</string>
+    <string name="yuva_shake_title">अभिप्राय पाठवायचा?</string>
+    <string name="yuva_shake_message">या स्क्रीनचा स्क्रीनशॉट जोडला जाईल.</string>
 </resources>

@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">К последним</string>
     <string name="yuva_thread_open_image">Открыть изображение</string>
     <string name="yuva_thread_close">Закрыть</string>
+    <string name="yuva_shake_title">Отправить отзыв?</string>
+    <string name="yuva_shake_message">К отзыву будет приложен снимок этого экрана.</string>
 </resources>

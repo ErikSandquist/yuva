@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">Przejdź do najnowszych</string>
     <string name="yuva_thread_open_image">Otwórz obraz</string>
     <string name="yuva_thread_close">Zamknij</string>
+    <string name="yuva_shake_title">Wysłać opinię?</string>
+    <string name="yuva_shake_message">Zostanie dołączony zrzut tego ekranu.</string>
 </resources>

@@ -73,6 +73,7 @@ public struct YuvaFeedbackView: View {
                 }
             }
         }
+        .countsAsOpen()
         .task {
             guard let session = try? await client.start() else { return }
             offer(session.inbox.feedbackCategories)

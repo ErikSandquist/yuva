@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">최신 메시지로 이동</string>
     <string name="yuva_thread_open_image">이미지 열기</string>
     <string name="yuva_thread_close">닫기</string>
+    <string name="yuva_shake_title">의견을 보낼까요?</string>
+    <string name="yuva_shake_message">이 화면의 스크린샷이 첨부됩니다.</string>
 </resources>

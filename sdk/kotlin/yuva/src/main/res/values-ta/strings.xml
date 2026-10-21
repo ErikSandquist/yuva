@@ -87,4 +87,6 @@
     <string name="yuva_thread_scroll_bottom">சமீபத்தியதுக்குச் செல்</string>
     <string name="yuva_thread_open_image">படத்தைத் திற</string>
     <string name="yuva_thread_close">மூடு</string>
+    <string name="yuva_shake_title">கருத்தை அனுப்பவா?</string>
+    <string name="yuva_shake_message">இந்தத் திரையின் ஸ்கிரீன்ஷாட் இணைக்கப்படும்.</string>
 </resources>
