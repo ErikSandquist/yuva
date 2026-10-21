@@ -1,6 +1,6 @@
 module github.com/productdevbook/yuva/sdk/go
 
-go 1.27.2
+go 1.27.3
 
 require (
 	github.com/oapi-codegen/nullable v1.2.0

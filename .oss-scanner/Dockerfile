@@ -1,6 +1,6 @@
 # Build environment for Anthropic's OSS Scanner. The audit runs without network, so every
 # dependency is fetched here: Go modules, the panel's npm packages and the SDK's bun packages.
-FROM golang:1.27.2-trixie
+FROM golang:1.27.3-trixie
 
 ENV DEBIAN_FRONTEND=noninteractive \
     GOTOOLCHAIN=local
