@@ -85,8 +85,8 @@ msgstr "{0} మూసివేయబడ్డాయి"
 msgid "{0} events"
 msgstr "{0} ఈవెంట్‌లు"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} మంచివి"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} స్పామ్‌గా గుర్తించబడ్డాయి · జవాబు అవసరం లేదు"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} కొత్తవి"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {ఇంకా రేటింగ్‌లు లే�
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# రేటింగ్} other {# రేటింగ్‌లు}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} రేటింగ్‌లు"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} గ్రహీతలు · {failed} మెయిల్ సర్వర్ తిరస్కరించింది · {left} దాటవేయబడ్డాయి · {auto} ఆటోమేటిక్ జవాబులు, లెక్కించడం మాత్రమే"
@@ -825,6 +824,14 @@ msgstr "{subscribed} సబ్‌స్క్రైబర్‌లు"
 msgid "{threads} open discussions"
 msgstr "{threads} తెరిచి ఉన్న చర్చలు"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "మొత్తం {total}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{totalText} లో {unseenText} చదవనివి"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} అన్‌సబ్‌స్క్రైబ్"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {# మానిటర్ గమనిస్తో
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · {name} జవాబిచ్చారు"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} {contact} లో మిమ్మల్ని ప్రస్తావించారు, {subject}. సంభాషణను తెరవండి"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} {contact} లో మిమ్మల్ని ప్రస్తావించారు. సంభాషణను తెరవండి"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "అన్ని భాగాలు వచ్చాయి. ఫైల్‌ను చదువుతోంది…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "అన్ని ఉత్పత్తులు"
 
@@ -2580,6 +2597,10 @@ msgstr "మీ లిస్ట్‌కు తిరిగి"
 msgid "Bad"
 msgstr "చెడు"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "చెడ్డవి మాత్రమే"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "సంకేతం"
@@ -2823,10 +2844,6 @@ msgstr "ఇమెయిల్ ద్వారా"
 msgid "By member"
 msgstr "సభ్యుని వారీగా"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "ఉత్పత్తి వారీగా"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "బృందం ద్వారా"
@@ -2860,6 +2877,7 @@ msgstr "ప్రచారం పేరు"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "నిలిచిపోయింది"
 msgid "Down since {since}"
 msgstr "{since} నుండి నిలిచిపోయింది"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "డౌన్‌లోడ్"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "దిగువ ఉన్నవన్నీ {sourceName} నుండి
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "ఈ వర్క్‌స్పేస్‌లోని ప్రతిదీ ప్రతి సభ్యునికి తొలగించబడుతుంది, మరియు దాని విడ్జెట్‌లు, యాప్‌లు, ఇమెయిల్ చిరునామాలు మరియు API కీలు వెంటనే పనిచేయడం ఆగిపోతాయి."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "అన్నీ చదివారు"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "అన్నీ సెటప్ అయ్యాయి. మార్చడానికి ఏ భాగాన్నైనా తెరవండి, లేదా దాని సెట్టింగ్‌ల నుండి మరొకటి జోడించండి."
@@ -5224,7 +5250,6 @@ msgstr "గడువు (ఐచ్ఛికం)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "ఎగుమతి"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "మొదటి పేరు"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "మొదటి జవాబు"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "{via} ద్వారా వెళ్తుంది"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "మంచివి"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "మంచిది"
 
@@ -5817,6 +5845,10 @@ msgstr "శుభ సాయంత్రం, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "శుభోదయం, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "మంచివి మాత్రమే"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "మ్యాప్"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "అన్నీ చదివినవిగా గుర్తించండి"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "జవాబుగా గుర్తించండి"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "చదివినదిగా గుర్తించండి"
 
@@ -7556,6 +7590,10 @@ msgstr "మొదటి జవాబు మధ్యస్థం"
 msgid "median today"
 msgstr "ఈ రోజు మధ్యస్థం"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "మధ్యస్థం, మొదటి సందేశం నుండి మూసివేత వరకు"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "సహచరుడిని ప్రస్తావించండి"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "మిమ్మల్ని ప్రస్తావించారు, ఇక్కడ:"
+msgid "mentioned you"
+msgstr "మిమ్మల్ని ప్రస్తావించారు"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "సరిపోలికలు లేవు"
 msgid "No media, links or documents in this conversation yet."
 msgstr "ఈ సంభాషణలో ఇంకా మీడియా, లింక్‌లు లేదా పత్రాలు లేవు."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "ఇక్కడ ప్రస్తావనలు లేవు."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "ఇంకా సందేశాలు లేవు"
@@ -8703,10 +8737,6 @@ msgstr "ఇంకా మానిటర్లు లేవు. ఒక తని�
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "గత 90 రోజుల్లో నోటిఫికేషన్‌లు లేవు."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "ఇంకా ఎవరూ గమనికలో మిమ్మల్ని ప్రస్తావించలేదు. సహచరుడు @ మరియు మీ పేరు రాసినప్పుడు, గమనిక ఇక్కడ కనిపిస్తుంది."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "ప్రచురించిన కథనం ఏదీ కనుగొనబడలేదు."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "ఈ కాలంలో రేటింగ్‌లు లేవు."
+msgid "No ratings in this period"
+msgstr "ఈ కాలంలో రేటింగ్‌లు లేవు"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "స్వాగత లేదా నిర్ధారణ మెయిల
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "మరెవరూ ఇంకా ఈ ఇన్‌బాక్స్‌ను చూడలేరు."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "ఇంకా ఎవరూ మిమ్మల్ని ప్రస్తావించలేదు"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "ప్రతి ఉత్పత్తి లేదా బ్రాండ
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "ఒకసారి రాసిన ఒక జవాబు {title} కు లింక్ అయిన ప్రతి తెరిచిన సంభాషణకు మీ పేరుతో, ప్రతి సంభాషణ సొంత ఛానెల్ ద్వారా వెళ్తుంది."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "మొత్తానికి ఒక వరుస, ప్రతి ఉత్పత్తికి ఒకటి, ప్రతి సభ్యునికి ఒకటి, {range} కోసం {scope} లో."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ఒక్కో ఈవెంట్‌కు ఒక అడ్డు వరుస, పాతది ముందుగా: ఎవరు అంగీకరించారు లేదా వెళ్లిపోయారు, ఎప్పుడు, ఎలా, ఏ పేజీ మరియు IP చిరునామా నుండి, మరియు వారు చూసిన పదాలు. దీన్ని సమ్మతికి రుజువుగా (GDPR Art. 7, KVKK) ఉంచండి, మీ వద్ద ఏముందో అడిగే వ్యక్తికి జవాబివ్వడానికి, లేదా సమ్మతులను İYS లో మీరే నమోదు చేయడానికి. CSV లోని స్ప్రెడ్‌షీట్ ఫార్ములాలు హానిరహితంగా చేయబడతాయి."
@@ -9648,10 +9686,6 @@ msgstr "ChatGPT ప్లగిన్‌లను తెరవండి"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Claude కనెక్టర్‌లను తెరవండి"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "సంభాషణను తెరవండి"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "కాలక్రమేణా"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "అవలోకనం"
@@ -10215,6 +10250,10 @@ msgstr "పెండింగ్ డెలివరీలు దానితో 
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "ప్రజలు సబ్‌స్క్రైబ్ ఫారమ్‌లో అందులో చేరతారు లేదా వారి సమ్మతితో జోడించబడతారు. బ్రాడ్‌కాస్ట్‌లు లిస్ట్‌లకు వెళ్తాయి."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "సంభాషణ మూసివేసినప్పుడు కాంటాక్ట్‌లు బొటనవేలుతో రేటింగ్ ఇస్తారు. ఎక్కువ కాలాన్ని ప్రయత్నించండి."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "మంచిదిగా రేట్ చేయబడింది"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "రేటింగ్"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "రేటింగ్ అంటే సభ్యుడు సమాధానమిచ్చిన రేట్ చేసిన సంభాషణల్లో మంచివిగా గుర్తించినవాటి వాటా, అన్ని ఉత్పత్తుల్లో."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "జవాబు ఖాతా"
 msgid "Reply and resolve"
 msgstr "Reply and resolve"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "నోట్‌లో జవాబివ్వండి"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "జవాబు పోస్ట్ చేయబడింది"
@@ -11585,6 +11625,10 @@ msgstr "Resolved"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "{endedAt} కి పరిష్కారమైంది"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "పరిష్కరించడానికి పట్టిన సమయం"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "సీక్రెట్"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "విభాగాలు"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "అన్ని ప్రస్తావనలను చూడండి"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "షార్ట్‌కట్"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "పంపేవారు ఎంచుకున్న రంగులన�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "సంభాషణ స్క్రీన్‌ను చూపండి"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "గత 30 రోజులను చూపండి"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "కొత్త సందేశం వచ్చినప్పుడు,
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "సహచరుడు @ తో మిమ్మల్ని గమనికకు జోడించినప్పుడు."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "సహోద్యోగి నోట్‌లో @ మరియు మీ పేరు రాసినప్పుడు నోట్ ఇక్కడ కనిపిస్తుంది."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

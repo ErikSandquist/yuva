@@ -85,8 +85,8 @@ msgstr "{0} 个已关闭"
 msgid "{0} events"
 msgstr "{0} 个事件"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} 个良好"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} 个标记为垃圾邮件 · 无需回复"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} 个新增"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {暂无评分} other {# 个评分}}"
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {# 个评分}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} 条评价"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} 位收件人 · {failed} 位被邮件服务器拒绝 · {left} 位已跳过 · {auto} 封自动回复,仅计数"
@@ -825,6 +824,14 @@ msgstr "{subscribed} 位订阅者"
 msgid "{threads} open discussions"
 msgstr "{threads} 个未关闭的讨论"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "共 {total}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{totalText} 条中有 {unseenText} 条未读"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} 人已退订"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, other {由 # 个监控监视中}}"
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · 由 {name} 回复"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} 在 {contact} 中提到了你，{subject}。打开会话"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} 在 {contact} 中提到了你。打开会话"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "所有部分都已到达。正在读取文件…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "所有产品"
 
@@ -2580,6 +2597,10 @@ msgstr "返回你的列表"
 msgid "Bad"
 msgstr "差"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "仅差评"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "心跳信号"
@@ -2823,10 +2844,6 @@ msgstr "通过电子邮件"
 msgid "By member"
 msgstr "按成员"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "按产品"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "由团队"
@@ -2860,6 +2877,7 @@ msgstr "活动名称"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "故障"
 msgid "Down since {since}"
 msgstr "自 {since} 起宕机"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "下载"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "下面的所有内容都会从 {sourceName} 移到 {targetName},并且 {
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "此工作区中的一切都会为所有成员删除,其小部件、应用、电子邮件地址和 API 密钥会立即失效。"
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "全部已读"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "一切就绪。打开任意部分即可更改,或在其设置中添加另一个。"
@@ -5224,7 +5250,6 @@ msgstr "过期时间(可选)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "导出"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "名"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "首次回复"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "通过 {via} 发出"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "好评"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "良好"
 
@@ -5817,6 +5845,10 @@ msgstr "晚上好，{first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "早上好，{first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "仅好评"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "映射"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "全部标为已读"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "标为回答"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "标为已读"
 
@@ -7556,6 +7590,10 @@ msgstr "首次回复中位数"
 msgid "median today"
 msgstr "今日中位数"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "中位数，从第一条消息到关闭"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "提及团队成员"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "提到了你，位于"
+msgid "mentioned you"
+msgstr "提到了你"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "无匹配项"
 msgid "No media, links or documents in this conversation yet."
 msgstr "此对话中还没有媒体、链接或文档。"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "这里没有提及。"
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "还没有消息"
@@ -8703,10 +8737,6 @@ msgstr "还没有监控项。添加一个,让检查、任务或你自己的监�
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "最近 90 天没有通知。"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "还没有人在备注中提及你。当团队成员输入 @ 和你的名字时,该备注会显示在这里。"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "未找到已发布的文章。"
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "此期间没有评分。"
+msgid "No ratings in this period"
+msgstr "此期间没有评价"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "不会发送欢迎或确认邮件。每个订阅都会保留你声明的
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "还没有其他人能看到此收件箱。"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "还没有人提到过你"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "每个产品或品牌一个"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "只需写一次的回复，会以你的名义，通过各对话自己的渠道，发送到每个关联到 {title} 的进行中对话。"
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "一行总计、每个产品一行、每位成员一行，时间范围为{range}，范围为{scope}。"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "每个事件一行,最早的在前:谁同意或退订、何时、如何、来自哪个页面和 IP 地址,以及他们看到的文字。可保留作为同意凭证(GDPR 第 7 条、KVKK),用于回答询问你持有什么数据的人,或自行向 İYS 登记同意。CSV 中的电子表格公式已被处理为无害。"
@@ -9648,10 +9686,6 @@ msgstr "打开 ChatGPT 插件"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "打开 Claude 连接器"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "打开对话"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "随时间变化"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "概览"
@@ -10215,6 +10250,10 @@ msgstr "待处理的投递也会随之丢弃。"
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "人们通过订阅表单加入,或在获得其同意后被添加。群发发送到列表。"
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "联系人会在会话关闭时用大拇指评价。试试更长的时间段。"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro、team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "评为好"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "评分"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "评分是成员处理过的已评价会话中被评为好评的比例，涵盖所有产品。"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "回复账号"
 msgid "Reply and resolve"
 msgstr "回复并解决"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "以备注回复"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "回复已发布"
@@ -11585,6 +11625,10 @@ msgstr "已解决"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "已于 {endedAt} 解决"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "解决用时"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "密钥"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "版块"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "查看全部提及"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "快捷键"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "在白色背景上显示发件人选择的颜色"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "显示对话界面"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "显示最近 30 天"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "新消息到达时,会出现在列表中。"
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "当团队成员在备注中用 @ 添加你时。"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "当队友在备注中输入 @ 和你的名字时，该备注会显示在这里。"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

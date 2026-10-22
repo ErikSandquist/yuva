@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { BotAvatar, ContactAvatar, ErrorLine, PersonAvatar } from "@/components/common"
+import { EmptyBox } from "@/components/common/EmptyBox"
 import { ColumnHeading } from "@/components/common/Column"
 import { formatRelative } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -14,7 +15,7 @@ import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { FilterChip, ListHead, UnderlineTabs } from "@/features/inbox/ListHead"
 import { Ago, FrameTabs, look, PageBody, PageTop } from "@/features/inbox/PageFrame"
 import { ProductTag } from "@/features/inbox/ProductTag"
-import { useDrafts, useMentions } from "@/features/inbox/queries"
+import { useDrafts, useMarkAllMentionsSeen, useMarkMentionSeen, useMentions } from "@/features/inbox/queries"
 import { ASSISTANTS } from "@/features/settings/connected-apps/assistants"
 import { useGrants } from "@/features/settings/connected-apps/queries"
 import type { DraftAuthorKind, DraftItem, Member, Mention, MessageAuthor } from "@/lib/api"
@@ -65,96 +66,115 @@ export function MoreButton({
   )
 }
 
-function MentionRow({ item }: { item: Mention }) {
-  const { i18n } = useLingui()
-  const label = useAuthorLabel()
-  const who = label(item.note.author)
-  const contact = item.conversation.contact.name || item.conversation.contact.email || ""
-  const subject = item.conversation.subject
-  return (
-    <li data-testid="mention-row" data-seen={item.seen}>
-      <Link
-        to={messageLink(item.conversation.id, item.note.id)}
-        className="flex gap-3 rounded-xl border bg-card p-3 outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        <AuthorFace author={item.note.author} label={who} />
-        <span className="flex min-w-0 flex-1 flex-col gap-2">
-          <span className="flex min-w-0 flex-col">
-            <span className="flex min-w-0 items-center gap-2">
-              <span className={cn("min-w-0 flex-1 truncate text-body", !item.seen && "font-semibold")}>{who}</span>
-              {!item.seen && (
-                <span className="size-2 shrink-0 rounded-full bg-brand" aria-hidden data-testid="mention-unseen" />
-              )}
-              <time className="shrink-0 text-caption text-faint" dateTime={item.note.created_at}>
-                {formatRelative(item.note.created_at, i18n.locale)}
-              </time>
-            </span>
-            <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
-              <ProductTag id={item.conversation.inbox_id} />
-              <span className="min-w-0 truncate">
-                {subject ? (
-                  <Trans>
-                    in {contact} · {subject}
-                  </Trans>
-                ) : (
-                  <Trans>in {contact}</Trans>
-                )}
-              </span>
-            </span>
-          </span>
-          <span className="line-clamp-3 rounded-lg border border-note-border bg-note px-3 py-2 text-small text-foreground">
-            {item.note.text}
-          </span>
-        </span>
-      </Link>
-    </li>
-  )
-}
-
 type MentionTab = "unread" | "all"
 
-export function MentionsPanel() {
-  const { t } = useLingui()
+function useMentionsView() {
   const mentions = useMentions()
   const all = mentions.data?.pages.flatMap((p) => p.items) ?? []
   const unseen = Number(mentions.data?.pages[0]?.unseen ?? 0)
   const [picked, setPicked] = useState<MentionTab | null>(null)
   const tab: MentionTab = picked ?? (unseen > 0 ? "unread" : "all")
   const items = tab === "unread" ? all.filter((m) => !m.seen) : all
+  return { mentions, all, unseen, tab, setPicked, items }
+}
+
+function MentionsList({ view }: { view: ReturnType<typeof useMentionsView> }) {
+  const { t, i18n } = useLingui()
+  const markAll = useMarkAllMentionsSeen()
+  const { mentions, all, unseen, items, setPicked } = view
+  const unseenText = new Intl.NumberFormat(i18n.locale).format(unseen)
+  const totalText = new Intl.NumberFormat(i18n.locale).format(all.length)
+  return (
+    <>
+      {mentions.isPending && <Skeleton className="h-32 rounded-xl" />}
+      <ErrorLine error={mentions.error} />
+      <ErrorLine error={markAll.error} />
+      {all.length > 0 && (
+        <div className="flex items-center gap-3">
+          <span className="min-w-0 flex-1 text-caption text-faint" data-testid="mentions-summary">
+            {unseen > 0 ? (
+              <Trans>
+                {unseenText} unread of {totalText}
+              </Trans>
+            ) : (
+              <Trans>Everything is read</Trans>
+            )}
+          </span>
+          <Button
+            variant="outline"
+            className={cn(look.btnSm, "shrink-0")}
+            disabled={unseen === 0 || markAll.isPending}
+            onClick={() => markAll.mutate()}
+            data-testid="mentions-mark-all"
+          >
+            <Trans>Mark all as read</Trans>
+          </Button>
+        </div>
+      )}
+      {mentions.data && all.length === 0 && (
+        <EmptyBox title={<Trans>Nobody has mentioned you yet</Trans>}>
+          <Trans>When a teammate writes @ and your name in a note, the note shows up here.</Trans>
+        </EmptyBox>
+      )}
+      {mentions.data && all.length > 0 && items.length === 0 && (
+        <EmptyBox
+          title={<Trans>You have read every mention.</Trans>}
+          testId="mentions-read"
+          actions={
+            <Button
+              variant="outline"
+              className={look.btnSm}
+              onClick={() => setPicked("all")}
+              data-testid="mentions-see-all"
+            >
+              <Trans>See all mentions</Trans>
+            </Button>
+          }
+        />
+      )}
+      <ul className="flex flex-col gap-2.5" aria-label={t`Mentions`} data-testid="mention-list">
+        {items.map((m) => (
+          <MentionCard key={m.note.id} item={m} />
+        ))}
+      </ul>
+      <MoreButton query={mentions} />
+    </>
+  )
+}
+
+function MentionsTabs({ view }: { view: ReturnType<typeof useMentionsView> }) {
+  const { t } = useLingui()
+  return (
+    <FrameTabs
+      label={t`Show`}
+      value={view.tab}
+      onChange={view.setPicked}
+      items={[
+        { key: "unread", label: <Trans>Unread</Trans>, count: view.unseen, testId: "mentions-tab-unread" },
+        { key: "all", label: <Trans>All</Trans>, testId: "mentions-tab-all" },
+      ]}
+    />
+  )
+}
+
+export function MentionsPanel() {
+  const { t } = useLingui()
+  const view = useMentionsView()
   return (
     <section className="flex h-full min-h-0 flex-col bg-background" data-testid="mentions-panel">
       <ListHead title={<Trans>Mentions</Trans>} sub={<Trans>Notes where a teammate mentioned you</Trans>}>
         <UnderlineTabs
-          value={tab}
-          onChange={setPicked}
+          value={view.tab}
+          onChange={view.setPicked}
           label={t`Show`}
           items={[
-            { value: "unread", label: <Trans>Unread</Trans>, count: unseen, testId: "mentions-tab-unread" },
+            { value: "unread", label: <Trans>Unread</Trans>, count: view.unseen, testId: "mentions-tab-unread" },
             { value: "all", label: <Trans>All</Trans>, testId: "mentions-tab-all" },
           ]}
         />
       </ListHead>
-      <div className="min-h-0 flex-1 overflow-y-auto p-3 pb-4">
-        {mentions.isPending && <Skeleton className="h-24 rounded-xl" />}
-        <ErrorLine error={mentions.error} className="px-1" />
-        {mentions.data && all.length === 0 && (
-          <p className="px-2 pt-2 text-body text-faint">
-            <Trans>
-              No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here.
-            </Trans>
-          </p>
-        )}
-        {mentions.data && all.length > 0 && items.length === 0 && (
-          <p className="px-2 pt-2 text-body text-faint" data-testid="mentions-read">
-            <Trans>You have read every mention.</Trans>
-          </p>
-        )}
-        <ul className="flex flex-col gap-2" data-testid="mention-list">
-          {items.map((m) => (
-            <MentionRow key={m.note.id} item={m} />
-          ))}
-        </ul>
-        <MoreButton query={mentions} />
+      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3 pb-4">
+        <MentionsList view={view} />
       </div>
     </section>
   )
@@ -170,7 +190,7 @@ function DraftRow({ item }: { item: DraftItem }) {
     <li data-testid="draft-row">
       <Item
         render={<Link to={messageLink(item.conversation.id, d.id)} />}
-        size="xs"
+
         className="flex-nowrap items-start gap-3"
       >
         <ContactAvatar id={item.conversation.contact.id} name={contact} className="size-9" />
@@ -293,7 +313,7 @@ export function AssistantsPanel() {
               <li key={g.id}>
                 <Item
                   render={<Link to={a ? `/settings/connected-apps/${a.id}` : "/settings/connected-apps"} />}
-                  size="xs"
+
                   className="flex-nowrap gap-3"
                 >
                   <span className="grid size-9 shrink-0 place-items-center rounded-full border text-faint">
@@ -316,100 +336,118 @@ export function AssistantsPanel() {
   )
 }
 
+function Highlighted({ text }: { text: string }) {
+  return text.split(/(@[^\s@,.?!]+)/).map((part, i) =>
+    part.startsWith("@") ? (
+      <span key={i} className="font-medium text-brand">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  )
+}
+
 function MentionCard({ item }: { item: Mention }) {
+  const { t } = useLingui()
   const navigate = useNavigate()
+  const seen = useMarkMentionSeen()
   const label = useAuthorLabel()
   const who = label(item.note.author)
   const contact = item.conversation.contact.name || item.conversation.contact.email || ""
   const subject = item.conversation.subject
   const to = messageLink(item.conversation.id, item.note.id)
+  const aria = subject
+    ? t`${who} mentioned you in ${contact}, ${subject}. Open the conversation`
+    : t`${who} mentioned you in ${contact}. Open the conversation`
+  const open = () => {
+    if (!item.seen) seen.mutate(item.note.id)
+    navigate(to)
+  }
   return (
-    <li className="flex gap-3.5 rounded-xl border bg-background p-4" data-testid="mention-row" data-seen={item.seen}>
-      <AuthorFace author={item.note.author} label={who} large />
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
-          <span className="font-semibold">{who}</span>
-          <span className="text-muted-foreground">
-            <Trans>mentioned you in</Trans>
+    <li
+      className={cn(
+        "relative flex gap-2 rounded-xl border bg-background p-3.5 transition-colors focus-within:border-faint hover:border-faint",
+        !item.seen && "border-input"
+      )}
+      data-testid="mention-row"
+      data-seen={item.seen}
+    >
+      <button
+        type="button"
+        onClick={open}
+        aria-label={aria}
+        className={cn(
+          "flex min-w-0 flex-1 gap-3 rounded-lg text-start outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          !item.seen && "pb-8 phone:pb-9"
+        )}
+        data-testid="mention-open"
+      >
+        <AuthorFace author={item.note.author} label={who} large />
+        <span className="flex min-w-0 flex-1 flex-col gap-2">
+          <span className="flex min-w-0 flex-col leading-[1.35]">
+            <span className="flex min-w-0 items-center gap-2">
+              <span className={cn("min-w-0 truncate", item.seen ? "font-medium" : "font-semibold")}>{who}</span>
+              <span className="shrink-0 text-muted-foreground">
+                <Trans>mentioned you</Trans>
+              </span>
+              <span className="flex-1" />
+              {!item.seen && (
+                <span
+                  className="size-2 shrink-0 rounded-full bg-brand"
+                  role="img"
+                  aria-label={t`Unread`}
+                  data-testid="mention-unseen"
+                />
+              )}
+              <Ago iso={item.note.created_at} className={cn(look.faint, "shrink-0")} />
+            </span>
+            <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+              <ProductTag id={item.conversation.inbox_id} />
+              <span className="min-w-0 truncate">
+                {subject ? (
+                  <Trans>
+                    in {contact} · {subject}
+                  </Trans>
+                ) : (
+                  <Trans>in {contact}</Trans>
+                )}
+              </span>
+            </span>
           </span>
-          <Link to={to} className="min-w-0 truncate font-medium outline-none hover:underline focus-visible:underline">
-            {subject ? `${contact} · ${subject}` : contact}
-          </Link>
-          <ProductTag id={item.conversation.inbox_id} />
-          <span className="flex-1" />
-          {!item.seen && (
-            <span className="size-2 shrink-0 rounded-full bg-brand" aria-hidden data-testid="mention-unseen" />
-          )}
-          <Ago iso={item.note.created_at} className={look.faint} />
-        </div>
-        <p className="rounded-[10px] border border-note-border bg-note px-3 py-2.5 whitespace-pre-line">
-          {item.note.text}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" className={look.btnSm} render={<Link to={to} />} data-testid="mention-open">
-            <Trans>Open conversation</Trans>
-          </Button>
-          <Button
-            variant="outline"
-            className={look.btnSm}
-            onClick={() => navigate(`${to}&compose=note`)}
-            data-testid="mention-reply"
-          >
-            <Trans>Reply in note</Trans>
-          </Button>
-        </div>
-      </div>
+          <span className="block rounded-[10px] border border-note-border bg-note px-3 py-2.5 whitespace-pre-line">
+            <Highlighted text={item.note.text} />
+          </span>
+        </span>
+      </button>
+      {!item.seen && (
+        <Button
+          variant="outline"
+
+          className="absolute end-3.5 bottom-3 h-[26px] rounded-md border-input px-2.5 font-normal text-muted-foreground"
+          onClick={() => seen.mutate(item.note.id)}
+          disabled={seen.isPending}
+          data-testid="mention-read"
+        >
+          <Trans>Mark as read</Trans>
+        </Button>
+      )}
     </li>
   )
 }
 
 export function MentionsPage() {
-  const { t } = useLingui()
-  const mentions = useMentions()
-  const all = mentions.data?.pages.flatMap((p) => p.items) ?? []
-  const unseen = Number(mentions.data?.pages[0]?.unseen ?? 0)
-  const [picked, setPicked] = useState<MentionTab | null>(null)
-  const tab: MentionTab = picked ?? (unseen > 0 ? "unread" : "all")
-  const items = tab === "unread" ? all.filter((m) => !m.seen) : all
+  const view = useMentionsView()
   return (
     <main className="flex min-h-0 flex-1 flex-col" data-testid="mentions-panel">
       <PageTop
         title={<Trans>Mentions</Trans>}
         sub={<Trans>Notes where a teammate mentioned you</Trans>}
-        tabs={
-          <FrameTabs
-            label={t`Show`}
-            value={tab}
-            onChange={setPicked}
-            items={[
-              { key: "unread", label: <Trans>Unread</Trans>, testId: "mentions-tab-unread" },
-              { key: "all", label: <Trans>All</Trans>, testId: "mentions-tab-all" },
-            ]}
-          />
-        }
+        tabs={<MentionsTabs view={view} />}
       />
       <PageBody>
-        <div className="flex max-w-[908px] flex-col gap-3.5 p-6">
-          {mentions.isPending && <Skeleton className="h-32 rounded-xl" />}
-          <ErrorLine error={mentions.error} />
-          {mentions.data && items.length === 0 && (
-            <p className="p-12 text-center text-faint" data-testid={all.length ? "mentions-read" : undefined}>
-              {all.length ? (
-                <Trans>No mentions here.</Trans>
-              ) : (
-                <Trans>
-                  No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up
-                  here.
-                </Trans>
-              )}
-            </p>
-          )}
-          <ul className="flex flex-col gap-4" data-testid="mention-list">
-            {items.map((m) => (
-              <MentionCard key={m.note.id} item={m} />
-            ))}
-          </ul>
-          <MoreButton query={mentions} />
+        <div className="flex max-w-[908px] flex-col gap-4 p-6">
+          <MentionsList view={view} />
         </div>
       </PageBody>
     </main>

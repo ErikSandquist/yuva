@@ -85,8 +85,8 @@ msgstr "{0} ditutup"
 msgid "{0} events"
 msgstr "{0} peristiwa"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} bagus"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} ditandai sebagai spam · tidak perlu dibalas"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} baru"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {belum ada penilaian} other {# penilaian}}"
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {# penilaian}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} dinilai"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} penerima · {failed} ditolak server email · {left} dilewati · {auto} balasan otomatis, hanya dihitung"
@@ -825,6 +824,14 @@ msgstr "{subscribed} pelanggan"
 msgid "{threads} open discussions"
 msgstr "{threads} diskusi terbuka"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} total"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} belum dibaca dari {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} berhenti berlangganan"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, other {Dipantau oleh # monitor}}"
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · dijawab oleh {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} menyebut Anda di {contact}, {subject}. Buka percakapan"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} menyebut Anda di {contact}. Buka percakapan"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Semua bagian sudah tiba. Membaca file…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "semua produk"
 
@@ -2580,6 +2597,10 @@ msgstr "Kembali ke milis Anda"
 msgid "Bad"
 msgstr "Buruk"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Hanya buruk"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Sinyal"
@@ -2823,10 +2844,6 @@ msgstr "Lewat email"
 msgid "By member"
 msgstr "Per anggota"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Per produk"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Oleh tim"
@@ -2860,6 +2877,7 @@ msgstr "Nama kampanye"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Mati"
 msgid "Down since {since}"
 msgstr "Mati sejak {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Unduh"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Semua di bawah ini dipindahkan dari {sourceName} ke {targetName}, dan {s
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Semua yang ada di ruang kerja ini dihapus untuk setiap anggota, dan widget, aplikasi, alamat email, serta kunci API-nya langsung berhenti bekerja."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Semua sudah dibaca"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Semua sudah disiapkan. Buka bagian mana pun untuk mengubahnya, atau tambahkan yang lain dari pengaturannya."
@@ -5224,7 +5250,6 @@ msgstr "Kedaluwarsa (opsional)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Ekspor"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Nama depan"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "balasan pertama"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Keluar lewat {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "baik"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Bagus"
 
@@ -5817,6 +5845,10 @@ msgstr "Selamat malam, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Selamat pagi, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Hanya baik"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Petakan"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Tandai semua sudah dibaca"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Tandai sebagai jawaban"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Tandai sudah dibaca"
 
@@ -7556,6 +7590,10 @@ msgstr "median balasan pertama"
 msgid "median today"
 msgstr "median hari ini"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "median, dari pesan pertama sampai ditutup"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Sebut rekan tim"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "menyebut Anda di"
+msgid "mentioned you"
+msgstr "menyebut Anda"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Tidak ada yang cocok"
 msgid "No media, links or documents in this conversation yet."
 msgstr "Belum ada media, tautan, atau dokumen di percakapan ini."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Tidak ada sebutan di sini."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Belum ada pesan"
@@ -8703,10 +8737,6 @@ msgstr "Belum ada monitor. Tambahkan satu agar pemeriksaan, tugas, atau pemantau
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Tidak ada notifikasi dalam 90 hari terakhir."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Belum ada yang menyebut Anda di catatan. Saat rekan tim menulis @ dan nama Anda, catatannya muncul di sini."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Tidak ada artikel yang dipublikasikan."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "Tidak ada penilaian dalam periode ini."
+msgid "No ratings in this period"
+msgstr "Tidak ada penilaian pada periode ini"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Tidak ada email sambutan atau konfirmasi yang dikirim. Setiap langganan 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Belum ada orang lain yang dapat melihat kotak masuk ini."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Belum ada yang menyebut Anda"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Satu per produk atau merek"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Satu balasan, ditulis sekali, dikirim ke setiap percakapan terbuka yang terhubung ke {title}, atas nama Anda, lewat saluran masing-masing percakapan."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Satu baris untuk total, satu per produk, dan satu per anggota, untuk {range} di {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Satu baris per peristiwa, terlama dulu: siapa yang setuju atau keluar, kapan, bagaimana, dari halaman dan alamat IP mana, dan kata-kata yang mereka lihat. Simpan sebagai bukti persetujuan (GDPR Pasal 7, KVKK), untuk menjawab orang yang menanyakan apa yang Anda simpan, atau untuk mendaftarkan persetujuan ke İYS sendiri. Rumus spreadsheet di CSV dibuat tidak berbahaya."
@@ -9648,10 +9686,6 @@ msgstr "Buka plugin ChatGPT"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Buka konektor Claude"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Buka percakapan"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "Dari waktu ke waktu"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Ringkasan"
@@ -10215,6 +10250,10 @@ msgstr "Pengiriman tertunda ikut dibuang."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Orang bergabung lewat formulir berlangganan atau ditambahkan dengan persetujuan mereka. Siaran massal dikirim ke milis."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Kontak menilai percakapan dengan jempol saat ditutup. Coba periode yang lebih panjang."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Dinilai bagus"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Penilaian"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Penilaian adalah persentase percakapan ternilai yang dijawab seorang anggota dan ditandai baik, di semua produk."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Akun balasan"
 msgid "Reply and resolve"
 msgstr "Balas dan selesaikan"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Balas di catatan"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Balasan diposting"
@@ -11585,6 +11625,10 @@ msgstr "Terselesaikan"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Terselesaikan pada {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Selesai dalam"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Rahasia"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Bagian"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Lihat semua sebutan"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Pintasan"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Tampilkan warna yang dipilih pengirim, di atas putih"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Tampilkan layar percakapan"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Tampilkan 30 hari terakhir"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Saat pesan baru tiba, pesan itu akan ada di daftar."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Saat rekan tim menambahkan Anda ke catatan dengan @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Saat rekan tim menulis @ dan nama Anda di catatan, catatan itu muncul di sini."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

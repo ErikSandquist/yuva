@@ -85,8 +85,8 @@ msgstr "{0} zaprtih"
 msgid "{0} events"
 msgstr "{0} dogodkov"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} dobrih"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} označenih kot vsiljena pošta · odgovor ni potreben"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} novih"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {še ni ocen} one {# ocena} two {# oceni} few {# ocen
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# ocena} two {# oceni} few {# ocene} other {# ocen}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} ocenjenih"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "Prejemnikov: {recipients} · zavrnil poštni strežnik: {failed} · preskočenih: {left} · samodejnih odgovorov, samo prešteto: {auto}"
@@ -825,6 +824,14 @@ msgstr "Naročniki: {subscribed}"
 msgid "{threads} open discussions"
 msgstr "Odprtih razprav: {threads}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} skupaj"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} neprebranih od {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "Odjavljeni: {unsubscribed}"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Nadzira # monitor} two {Nadzirata # monitorja} f
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · odgovoril(a) {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} vas je omenil(a) v pogovoru {contact}, {subject}. Odpri pogovor"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} vas je omenil(a) v pogovoru {contact}. Odpri pogovor"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Vsi deli so prispeli. Branje datoteke …"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "vsi izdelki"
 
@@ -2580,6 +2597,10 @@ msgstr "Nazaj na vaš seznam"
 msgid "Bad"
 msgstr "Slabo"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Samo slabe"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Signal"
@@ -2823,10 +2844,6 @@ msgstr "Po e-pošti"
 msgid "By member"
 msgstr "Po članu"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Po izdelkih"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Ekipa"
@@ -2860,6 +2877,7 @@ msgstr "Ime kampanje"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Ne deluje"
 msgid "Down since {since}"
 msgstr "Nedosegljivo od {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Prenesi"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Vse spodaj se premakne iz {sourceName} v {targetName}, {sourceName} pa s
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Vse v tem delovnem prostoru se izbriše za vse člane, njegovi pripomočki, aplikacije, e-poštni naslovi in ključi API pa takoj prenehajo delovati."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Vse je prebrano"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Vse je nastavljeno. Odprite katerikoli del, da ga spremenite, ali dodajte drugega iz njegovih nastavitev."
@@ -5224,7 +5250,6 @@ msgstr "Poteče (neobvezno)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Izvozi"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Ime"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "prvi odgovor"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Odide prek {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "dobro"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Dobro"
 
@@ -5817,6 +5845,10 @@ msgstr "Dober večer, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Dobro jutro, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Samo dobre"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Preslikaj"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Označi vse kot prebrano"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Označi kot odgovor"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Označi kot prebrano"
 
@@ -7556,6 +7590,10 @@ msgstr "mediana prvega odgovora"
 msgid "median today"
 msgstr "mediana danes"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "mediana, od prvega sporočila do zaprtja"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Omeni sodelavca"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "te je omenil(a) v"
+msgid "mentioned you"
+msgstr "vas je omenil(a)"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Ni zadetkov"
 msgid "No media, links or documents in this conversation yet."
 msgstr "V tem pogovoru še ni medijev, povezav ali dokumentov."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Tu ni omemb."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Še ni sporočil"
@@ -8703,10 +8737,6 @@ msgstr "Še ni nadzornikov. Dodajte enega, da stanje komponente nastavi preverja
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "V zadnjih 90 dneh ni obvestil."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Nihče vas še ni omenil v opombi. Ko sodelavec napiše @ in vaše ime, se opomba prikaže tukaj."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Objavljenega članka ni mogoče najti."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "V tem obdobju ni ocen."
+msgid "No ratings in this period"
+msgstr "V tem obdobju ni ocen"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Pozdravno ali potrditveno sporočilo se ne pošlje. Vsaka naročnina obd
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Tega nabiralnika še ne vidi nihče drug."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Nihče vas še ni omenil"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Eden na izdelek ali znamko"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "En odgovor, napisan enkrat, gre v vašem imenu v vsak odprt pogovor, povezan z incidentom {title}, po lastnem kanalu vsakega pogovora."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Ena vrstica za skupni seštevek, ena na izdelek in ena na člana, za {range}, {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Ena vrstica na dogodek, od najstarejšega: kdo je privolil ali odšel, kdaj, kako, s katere strani in naslova IP ter besede, ki jih je videl. Hranite jo kot dokaz o soglasju (GDPR čl. 7, KVKK), da odgovorite osebi, ki sprašuje, kaj imate o njej, ali da soglasja sami registrirate pri İYS. Formule preglednic v CSV so narejene neškodljive."
@@ -9648,10 +9686,6 @@ msgstr "Odpri vtičnike ChatGPT"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Odpri povezovalnike Claude"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Odpri pogovor"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "Skozi čas"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Pregled"
@@ -10215,6 +10250,10 @@ msgstr "Čakajoče dostave se z njim zavržejo."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Pridružijo se mu prek naročniškega obrazca ali so dodani s svojim soglasjem. Množična sporočila gredo na sezname."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Stiki ocenijo pogovor s palcem, ko je zaprt. Poskusite z daljšim obdobjem."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, ekipa"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Ocenjeno kot dobro"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Ocena"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Ocena je delež ocenjenih pogovorov, ki jih je član obravnaval in so bili označeni kot dobri, v vseh izdelkih."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Račun za odgovore"
 msgid "Reply and resolve"
 msgstr "Odgovori in reši"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Odgovori z opombo"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Odgovor objavljen"
@@ -11585,6 +11625,10 @@ msgstr "Rešeno"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Rešeno ob {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Rešeno v"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Skrivnost"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Razdelki"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Prikaži vse omembe"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Bližnjica"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Pokaži barve, ki jih je izbral pošiljatelj, na belem"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Pokaži zaslon pogovora"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Prikaži zadnjih 30 dni"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Ko prispe novo sporočilo, bo na seznamu."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Ko vas sodelavec doda v opombo z @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Ko kolega v zapisek napiše @ in vaše ime, se zapisek prikaže tukaj."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

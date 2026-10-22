@@ -85,8 +85,8 @@ msgstr "{0} tancades"
 msgid "{0} events"
 msgstr "{0} esdeveniments"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} bones"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} marcades com a brossa · no cal respondre"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} noves"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {encara sense valoracions} one {# valoració} other {
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# valoració} other {# valoracions}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} valorades"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} destinataris · {failed} rebutjats pel servidor de correu · {left} omesos · {auto} respostes automàtiques, només comptades"
@@ -825,6 +824,14 @@ msgstr "{subscribed} subscriptors"
 msgid "{threads} open discussions"
 msgstr "{threads} debats oberts"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} en total"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} sense llegir de {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} baixes"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Vigilada per # monitor} many {Vigilada per # de 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · respost per {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} t'ha esmentat a {contact}, {subject}. Obre la conversa"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} t'ha esmentat a {contact}. Obre la conversa"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Han arribat totes les parts. Llegint el fitxer…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "tots els productes"
 
@@ -2580,6 +2597,10 @@ msgstr "Torna a la teva llista"
 msgid "Bad"
 msgstr "Dolenta"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Només dolentes"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Senyal"
@@ -2823,10 +2844,6 @@ msgstr "Per correu electrònic"
 msgid "By member"
 msgstr "Per membre"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Per producte"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Per l'equip"
@@ -2860,6 +2877,7 @@ msgstr "Nom de la campanya"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Caigut"
 msgid "Down since {since}"
 msgstr "Caigut des de les {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Baixa"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Tot el que hi ha a sota passa de {sourceName} a {targetName}, i {sourceN
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Tot en aquest espai de treball s'elimina per a tots els membres, i els seus ginys, aplicacions, adreces electròniques i claus d'API deixen de funcionar de seguida."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Tot llegit"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Tot està configurat. Obre qualsevol part per canviar-la o n'afegeix una altra des de la seva configuració."
@@ -5224,7 +5250,6 @@ msgstr "Caduca (opcional)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Exporta"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Nom"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "primera resposta"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Surt per {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "bones"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Bona"
 
@@ -5817,6 +5845,10 @@ msgstr "Bon vespre, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Bon dia, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Només bones"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Assignació"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Marca-ho tot com a llegit"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Marca com a resposta"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Marca com a llegit"
 
@@ -7556,6 +7590,10 @@ msgstr "mediana de la primera resposta"
 msgid "median today"
 msgstr "mediana d’avui"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "mitjana, del primer missatge al tancament"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Esmenta un company"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "t’ha esmentat a"
+msgid "mentioned you"
+msgstr "t'ha esmentat"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Cap coincidència"
 msgid "No media, links or documents in this conversation yet."
 msgstr "Encara no hi ha multimèdia, enllaços ni documents en aquesta conversa."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "No hi ha mencions aquí."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Encara cap missatge"
@@ -8703,10 +8737,6 @@ msgstr "Encara no hi ha monitors. Afegeix-ne un perquè una comprovació, una ta
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Cap notificació en els últims 90 dies."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Encara ningú t'ha esmentat en una nota. Quan un company escriu @ i el teu nom, la nota apareix aquí."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "No s’ha trobat cap article publicat."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "No hi ha valoracions en aquest període."
+msgid "No ratings in this period"
+msgstr "Cap valoració en aquest període"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "No s'envia cap correu de benvinguda ni de confirmació. Cada subscripci�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Ningú més pot veure aquesta safata encara."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Encara ningú t'ha esmentat"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Una per producte o marca"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Una resposta, escrita una sola vegada, arriba a cada conversa oberta vinculada a {title}, com a tu, pel canal propi de cada conversa."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Una fila pel total, una per producte i una per membre, per a {range} a {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Una fila per esdeveniment, del més antic al més recent: qui ha acceptat o ha marxat, quan, com, des de quina pàgina i adreça IP, i les paraules que va veure. Conserva-ho com a prova de consentiment (RGPD art. 7, KVKK), per respondre una persona que demana què en tens o per registrar tu mateix els consentiments a İYS. Les fórmules de full de càlcul del CSV es fan inofensives."
@@ -9648,10 +9686,6 @@ msgstr "Obre els plugins de ChatGPT"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Obre els connectors de Claude"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Obre la conversa"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "Amb el temps"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Visió general"
@@ -10215,6 +10250,10 @@ msgstr "Els lliuraments pendents es descarten amb ell."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "S'hi uneixen amb un formulari de subscripció o s'hi afegeixen amb el seu consentiment. Els enviaments massius van a llistes."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Els contactes valoren una conversa amb un polzer quan es tanca. Prova un període més llarg."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, equip"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Valorat com a bo"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Valoració"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "La valoració és la part de les converses valorades que ha atès un membre i que s'han marcat com a bones, en tots els productes."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Compte de respostes"
 msgid "Reply and resolve"
 msgstr "Respon i resol"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Respon en nota"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Resposta publicada"
@@ -11585,6 +11625,10 @@ msgstr "Resolt"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Resolt a les {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Resolt en"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Secret"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Seccions"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Mostra totes les mencions"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Drecera"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Mostra els colors que ha triat el remitent, sobre blanc"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Mostra la pantalla de conversa"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Mostra els últims 30 dies"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Quan arribi un missatge nou, serà a la llista."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Quan un company t'afegeix a una nota amb @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Quan un company escriu @ i el teu nom en una nota, la nota apareix aquí."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

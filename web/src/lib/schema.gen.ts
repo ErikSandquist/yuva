@@ -460,6 +460,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/mentions/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark all your mentions seen
+         * @description Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+         *     seen, without opening the conversations. It records the mentions only: the read cursors
+         *     and "marked unread" flags of the conversations stay as they are, so messages around a
+         *     mention stay unread. Nothing is sent over realtime. Member sessions only.
+         */
+        post: operations["markMentionsSeen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/mentions/{noteId}/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark one mention seen
+         * @description Marks one mention seen without opening its conversation; the read cursor and "marked
+         *     unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+         *     Answers `404 not_found` when the note does not mention the member, was written by the
+         *     member, or is in a conversation the member cannot see or in another workspace.
+         *     Opening the conversation still marks its mentions seen through the read cursor. Member
+         *     sessions only.
+         */
+        post: operations["markMentionSeen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/account": {
         parameters: {
             query?: never;
@@ -11370,6 +11418,18 @@ export interface components {
              */
             unseen: number;
         };
+        MentionsSeen: {
+            /**
+             * Format: int64
+             * @description Mentions that were unseen and are marked now.
+             */
+            marked: number;
+            /**
+             * Format: int64
+             * @description Unseen mentions left over all pages.
+             */
+            unseen: number;
+        };
         /**
          * @description `bot`: written with an API key. `assistant`: written by a member through an OAuth client.
          *     `member`: written by a member in the panel.
@@ -11424,6 +11484,14 @@ export interface components {
              * @description Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
              */
             median_first_reply_seconds?: number;
+            /**
+             * Format: int64
+             * @description Median seconds, over conversations closed in the window, from the first message the
+             *     contact sent after the conversation's previous close (the first one ever when it was
+             *     never closed before) to the last close in the window. Conversations without such a
+             *     message are left out. Follows `inbox_id`; absent when none was closed.
+             */
+            median_resolution_seconds?: number;
             ratings: components["schemas"]["RatingStats"];
             /** @description Per member, by member id. */
             members: components["schemas"]["MemberStats"][];
@@ -21544,6 +21612,63 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+        };
+    };
+    markMentionsSeen: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description How many mentions were marked. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MentionsSeen"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    markMentionSeen: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                noteId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The result, with the unseen mentions left. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MentionsSeen"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     getReaderAccount: {

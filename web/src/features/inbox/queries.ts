@@ -70,6 +70,24 @@ export function useMentions(enabled = true) {
   })
 }
 
+export function useMarkMentionSeen() {
+  const { workspaceId: ws } = useSession()
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (noteId: string) => unwrap(api.POST("/v1/me/mentions/{noteId}/seen", { params: { path: { noteId } } })),
+    onSettled: () => qc.invalidateQueries({ queryKey: keys.mentions(ws) }),
+  })
+}
+
+export function useMarkAllMentionsSeen() {
+  const { workspaceId: ws } = useSession()
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: () => unwrap(api.POST("/v1/me/mentions/seen")),
+    onSettled: () => qc.invalidateQueries({ queryKey: keys.mentions(ws) }),
+  })
+}
+
 export function useDrafts(filters: DraftFilters) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({

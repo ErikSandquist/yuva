@@ -85,8 +85,8 @@ msgstr "{0} uzavřených"
 msgid "{0} events"
 msgstr "{0} událostí"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} dobrých"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} označených jako spam · odpověď není potřeba"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} nových"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {zatím žádná hodnocení} one {# hodnocení} few {
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# hodnocení} few {# hodnocení} many {# hodnocení} other {# hodnocení}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} ohodnoceno"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "Příjemců: {recipients} · odmítnuto poštovním serverem: {failed} · přeskočeno: {left} · automatických odpovědí, jen započítáno: {auto}"
@@ -825,6 +824,14 @@ msgstr "Odběratelé: {subscribed}"
 msgid "{threads} open discussions"
 msgstr "Otevřených diskusí: {threads}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} celkem"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} nepřečtených z {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "Odhlášeno: {unsubscribed}"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Sleduje # monitor} few {Sledují # monitory} man
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · odpověděl(a) {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} vás zmínil(a) v konverzaci {contact}, {subject}. Otevřít konverzaci"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} vás zmínil(a) v konverzaci {contact}. Otevřít konverzaci"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Všechny části dorazily. Čtu soubor…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "všechny produkty"
 
@@ -2580,6 +2597,10 @@ msgstr "Zpět na vaši skupinu"
 msgid "Bad"
 msgstr "Špatné"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Jen špatné"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Signál"
@@ -2823,10 +2844,6 @@ msgstr "E-mailem"
 msgid "By member"
 msgstr "Podle člena"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Podle produktu"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Týmem"
@@ -2860,6 +2877,7 @@ msgstr "Název kampaně"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Nefunguje"
 msgid "Down since {since}"
 msgstr "Nedostupné od {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Stáhnout"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Vše níže se přesune z {sourceName} do {targetName} a {sourceName} se
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Vše v tomto pracovním prostoru se smaže pro každého člena a jeho widgety, aplikace, e-mailové adresy a klíče API okamžitě přestanou fungovat."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Vše je přečteno"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Vše je nastaveno. Otevřete libovolnou část a změňte ji, nebo přidejte další z jejího nastavení."
@@ -5224,7 +5250,6 @@ msgstr "Vyprší (volitelné)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Exportovat"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Jméno"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "první odpověď"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Odchází přes {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "dobré"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Dobré"
 
@@ -5817,6 +5845,10 @@ msgstr "Dobrý večer, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Dobré ráno, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Jen dobré"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Mapovat"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Označit vše jako přečtené"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Označit jako odpověď"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Označit jako přečtené"
 
@@ -7556,6 +7590,10 @@ msgstr "medián první odpovědi"
 msgid "median today"
 msgstr "medián dnes"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "medián, od první zprávy po uzavření"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Zmínit kolegu"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "vás zmínil(a) v"
+msgid "mentioned you"
+msgstr "vás zmínil(a)"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Žádné shody"
 msgid "No media, links or documents in this conversation yet."
 msgstr "V této konverzaci zatím nejsou žádná média, odkazy ani dokumenty."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Žádné zmínky."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Zatím žádné zprávy"
@@ -8703,10 +8737,6 @@ msgstr "Zatím žádné monitory. Přidejte jeden, aby stav komponenty nastavova
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Za posledních 90 dní žádná oznámení."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Nikdo vás zatím nezmínil v poznámce. Když kolega napíše @ a vaše jméno, poznámka se zobrazí zde."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Nenalezen žádný publikovaný článek."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "V tomto období žádná hodnocení."
+msgid "No ratings in this period"
+msgstr "V tomto období nejsou žádná hodnocení"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Žádná uvítací ani potvrzovací zpráva se neposílá. Každý odbě
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Tuto schránku zatím nikdo jiný nevidí."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Nikdo vás zatím nezmínil"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Jedna na produkt nebo značku"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Jedna odpověď, napsaná jen jednou, jde vaším jménem do každé otevřené konverzace propojené s incidentem {title}, vlastním kanálem každé konverzace."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Jeden řádek pro součet, jeden na produkt a jeden na člena, pro {range}, {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Jeden řádek na událost, od nejstarší: kdo souhlasil nebo odešel, kdy, jak, z jaké stránky a adresy IP a slova, která viděl. Uchovejte ho jako důkaz souhlasu (GDPR čl. 7, KVKK), abyste mohli odpovědět osobě, která se ptá, co o ní máte, nebo abyste souhlasy sami zaregistrovali v İYS. Vzorce tabulkového procesoru v CSV jsou zneškodněny."
@@ -9648,10 +9686,6 @@ msgstr "Otevřít pluginy ChatGPT"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Otevřít konektory Claude"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Otevřít konverzaci"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "V čase"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Přehled"
@@ -10215,6 +10250,10 @@ msgstr "Čekající doručení se s ním zahodí."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Lidé se k ní připojují přes formulář k odběru nebo jsou přidáni se svým souhlasem. Hromadné zprávy jdou skupinám."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Kontakty hodnotí konverzaci palcem, když je uzavřena. Zkuste delší období."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, tým"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Hodnoceno jako dobré"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Hodnocení"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Hodnocení je podíl ohodnocených konverzací, které člen vyřídil a které byly označeny jako dobré, napříč všemi produkty."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Účet pro odpovědi"
 msgid "Reply and resolve"
 msgstr "Odpovědět a vyřešit"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Odpovědět poznámkou"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Odpověď zveřejněna"
@@ -11585,6 +11625,10 @@ msgstr "Vyřešeno"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Vyřešeno v {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Vyřešeno za"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Tajný klíč"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Sekce"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Zobrazit všechny zmínky"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Zkratka"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Zobrazit barvy zvolené odesílatelem, na bílé"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Zobrazit obrazovku konverzace"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Zobrazit posledních 30 dní"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Když přijde nová zpráva, bude v seznamu."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Když vás kolega přidá do poznámky přes @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Když kolega napíše do poznámky @ a vaše jméno, poznámka se zobrazí tady."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

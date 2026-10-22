@@ -85,8 +85,8 @@ msgstr "{0} बंद"
 msgid "{0} events"
 msgstr "{0} इवेंट"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} अच्छी"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} स्पैम के रूप में चिह्नित · जवाब की ज़रूरत नहीं"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} नई"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {अभी कोई रेटिंग नहीं}
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# रेटिंग} other {# रेटिंग}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} रेटिंग"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} प्राप्तकर्ता · {failed} मेल सर्वर ने अस्वीकार किए · {left} छोड़े गए · {auto} स्वचालित जवाब, सिर्फ़ गिने गए"
@@ -825,6 +824,14 @@ msgstr "{subscribed} सब्सक्राइबर"
 msgid "{threads} open discussions"
 msgstr "{threads} खुली चर्चाएँ"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "कुल {total}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{totalText} में से {unseenText} अपठित"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} अनसब्सक्राइब"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {# मॉनिटर नज़र रख रह�
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · {name} ने जवाब दिया"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} ने {contact} में आपका उल्लेख किया, {subject}। बातचीत खोलें"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} ने {contact} में आपका उल्लेख किया। बातचीत खोलें"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "सभी भाग पहुँच गए। फ़ाइल पढ़ी जा रही है…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "सभी उत्पाद"
 
@@ -2580,6 +2597,10 @@ msgstr "अपनी लिस्ट पर वापस"
 msgid "Bad"
 msgstr "खराब"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "सिर्फ़ खराब"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "संकेत"
@@ -2823,10 +2844,6 @@ msgstr "ई-मेल से"
 msgid "By member"
 msgstr "सदस्य के अनुसार"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "उत्पाद के अनुसार"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "टीम द्वारा"
@@ -2860,6 +2877,7 @@ msgstr "कैंपेन का नाम"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "बंद"
 msgid "Down since {since}"
 msgstr "{since} से बंद"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "डाउनलोड करें"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "नीचे सब कुछ {sourceName} से {targetName} में
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "इस वर्कस्पेस में सब कुछ हर सदस्य के लिए हटा दिया जाता है, और इसके विजेट, ऐप, ई-मेल पते और API कुंजियाँ तुरंत काम करना बंद कर देती हैं।"
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "सब पढ़ लिया गया"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "सब कुछ सेट अप है। बदलने के लिए कोई भी हिस्सा खोलें, या उसकी सेटिंग से दूसरा जोड़ें।"
@@ -5224,7 +5250,6 @@ msgstr "समाप्ति (वैकल्पिक)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "एक्सपोर्ट"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "पहला नाम"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "पहला जवाब"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "{via} के ज़रिए जाता है"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "अच्छी"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "अच्छी"
 
@@ -5817,6 +5845,10 @@ msgstr "शुभ संध्या, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "सुप्रभात, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "सिर्फ़ अच्छी"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "मैप"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "सभी को पढ़ा हुआ चिह्नित करें"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "उत्तर के रूप में चिह्नित करें"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "पढ़ा हुआ चिह्नित करें"
 
@@ -7556,6 +7590,10 @@ msgstr "माध्य पहला जवाब"
 msgid "median today"
 msgstr "आज की मध्यिका"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "माध्यिका, पहले संदेश से बंद होने तक"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "किसी टीममेट को मेंशन करें"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "ने आपको मेंशन किया, यहाँ:"
+msgid "mentioned you"
+msgstr "ने आपका उल्लेख किया"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "कोई मेल नहीं खाता"
 msgid "No media, links or documents in this conversation yet."
 msgstr "इस बातचीत में अभी कोई मीडिया, लिंक या दस्तावेज़ नहीं।"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "यहाँ कोई मेंशन नहीं।"
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "अभी कोई संदेश नहीं"
@@ -8703,10 +8737,6 @@ msgstr "अभी कोई मॉनिटर नहीं है। एक ज
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "पिछले 90 दिनों में कोई नोटिफ़िकेशन नहीं।"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "अभी तक किसी ने नोट में आपको मेंशन नहीं किया। जब कोई टीममेट @ और आपका नाम लिखता है, नोट यहाँ दिखता है।"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "कोई प्रकाशित लेख नहीं मिला।"
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "इस अवधि में कोई रेटिंग नहीं।"
+msgid "No ratings in this period"
+msgstr "इस अवधि में कोई रेटिंग नहीं"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "कोई स्वागत या पुष्टि मेल नह�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "अभी कोई और इस इनबॉक्स को नहीं देख सकता।"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "अभी तक किसी ने आपका उल्लेख नहीं किया"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "हर उत्पाद या ब्रांड के लिए ए
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "एक बार लिखा गया एक जवाब {title} से जुड़ी हर खुली बातचीत को आपके नाम से, हर बातचीत के अपने चैनल से जाता है।"
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "कुल की एक पंक्ति, हर प्रोडक्ट की एक और हर सदस्य की एक, {range} के लिए {scope} में।"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "हर इवेंट के लिए एक पंक्ति, पुराना पहले: कौन सहमत हुआ या गया, कब, कैसे, किस पेज और IP पते से, और उन्होंने कौन से शब्द देखे। इसे सहमति के सबूत के रूप में रखें (GDPR Art. 7, KVKK), किसी पूछने वाले को बताने के लिए कि आपके पास क्या है, या खुद İYS में सहमतियाँ दर्ज करने के लिए। CSV में स्प्रेडशीट फ़ॉर्मूले हानिरहित बना दिए जाते हैं।"
@@ -9648,10 +9686,6 @@ msgstr "ChatGPT प्लगइन खोलें"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Claude कनेक्टर खोलें"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "बातचीत खोलें"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "समय के साथ"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "ओवरव्यू"
@@ -10215,6 +10250,10 @@ msgstr "लंबित डिलीवरी इसके साथ छोड�
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "लोग सब्सक्राइब फ़ॉर्म पर इसमें जुड़ते हैं या उनकी सहमति के साथ जोड़े जाते हैं। ब्रॉडकास्ट लिस्ट को जाते हैं।"
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "संपर्क बातचीत बंद होने पर अंगूठे से रेटिंग देते हैं। लंबी अवधि आज़माएँ।"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "अच्छा रेट किया"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "रेटिंग"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "रेटिंग उन रेटेड बातचीतों का हिस्सा है जिनका जवाब किसी सदस्य ने दिया और जिन्हें अच्छा चिह्नित किया गया, सभी प्रोडक्ट में।"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "जवाब वाला खाता"
 msgid "Reply and resolve"
 msgstr "Reply and resolve"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "नोट में जवाब दें"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "जवाब पोस्ट किया गया"
@@ -11585,6 +11625,10 @@ msgstr "Resolved"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "{endedAt} बजे हल हुआ"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "हल होने में समय"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "सीक्रेट"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "सेक्शन"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "सभी उल्लेख देखें"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "शॉर्टकट"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "प्रेषक के चुने रंग, सफ़ेद पर
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "बातचीत की स्क्रीन दिखाएँ"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "पिछले 30 दिन दिखाएँ"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "जब नया संदेश आएगा, वह सूची म�
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "जब कोई टीममेट आपको @ से नोट में जोड़ता है।"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "जब कोई साथी नोट में @ और आपका नाम लिखता है, तो नोट यहाँ दिखता है।"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

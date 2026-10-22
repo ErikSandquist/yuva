@@ -85,8 +85,8 @@ msgstr "{0}개 종료됨"
 msgid "{0} events"
 msgstr "이벤트 {0}개"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0}건 좋음"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0}개를 스팸으로 표시 · 답장 불필요"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0}건 새로움"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {아직 평가가 없습니다} other {평가 #개}}"
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {평가 #개}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText}개 평가"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "수신자 {recipients}명 · 메일 서버가 거부 {failed}명 · 건너뜀 {left}명 · 자동 응답 {auto}건(집계만)"
@@ -825,6 +824,14 @@ msgstr "구독자 {subscribed}명"
 msgid "{threads} open discussions"
 msgstr "열린 토론 {threads}개"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "총 {total}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{totalText}개 중 {unseenText}개 읽지 않음"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed}명 구독 취소"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, other {모니터 #개가 감시 중}}"
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · 답변자 {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who}님이 {contact}에서 회원님을 언급했습니다, {subject}. 대화 열기"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who}님이 {contact}에서 회원님을 언급했습니다. 대화 열기"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "모든 부분이 도착했습니다. 파일을 읽는 중…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "모든 제품"
 
@@ -2580,6 +2597,10 @@ msgstr "리스트로 돌아가기"
 msgid "Bad"
 msgstr "나쁨"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "나쁨만"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "비트"
@@ -2823,10 +2844,6 @@ msgstr "이메일로"
 msgid "By member"
 msgstr "멤버별"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "제품별"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "팀이"
@@ -2860,6 +2877,7 @@ msgstr "캠페인 이름"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "다운"
 msgid "Down since {since}"
 msgstr "{since}부터 중단됨"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "다운로드"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "아래의 모든 항목이 {sourceName}에서 {targetName}(으)로 이�
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "이 워크스페이스의 모든 것이 모든 멤버에게서 삭제되며, 위젯, 앱, 이메일 주소, API 키는 즉시 작동을 멈춥니다."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "모두 읽음"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "모두 설정되었습니다. 어느 부분이든 열어 변경하거나, 설정에서 다른 것을 추가하세요."
@@ -5224,7 +5250,6 @@ msgstr "만료(선택)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "내보내기"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "이름"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "첫 답장"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "{via}을(를) 통해 발송됩니다"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "좋음"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "좋음"
 
@@ -5817,6 +5845,10 @@ msgstr "좋은 저녁입니다, {first}님"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "좋은 아침입니다, {first}님"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "좋음만"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "매핑"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "모두 읽음으로 표시"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "답변으로 표시"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "읽음으로 표시"
 
@@ -7556,6 +7590,10 @@ msgstr "첫 답장 중앙값"
 msgid "median today"
 msgstr "오늘 중앙값"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "중앙값, 첫 메시지부터 종료까지"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "팀원 멘션"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "님이 회원님을 멘션함:"
+msgid "mentioned you"
+msgstr "회원님을 언급했습니다"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "일치하는 항목 없음"
 msgid "No media, links or documents in this conversation yet."
 msgstr "이 대화에는 아직 미디어, 링크, 문서가 없습니다."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "멘션이 없습니다."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "아직 메시지가 없습니다"
@@ -8703,10 +8737,6 @@ msgstr "아직 모니터가 없습니다. 확인, 작업 또는 자체 모니터
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "최근 90일간 알림이 없습니다."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "아직 메모에서 나를 멘션한 사람이 없습니다. 팀원이 @와 내 이름을 쓰면 그 메모가 여기에 표시됩니다."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "게시된 문서를 찾을 수 없습니다."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "이 기간에 평가가 없습니다."
+msgid "No ratings in this period"
+msgstr "이 기간에 평가가 없습니다"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "환영 메일과 확인 메일은 보내지 않습니다. 모든 구독�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "아직 이 받은 편지함을 볼 수 있는 사람이 없습니다."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "아직 아무도 회원님을 언급하지 않았습니다"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "제품 또는 브랜드마다 하나"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "한 번 작성한 답장이 {title}에 연결된 모든 열린 대화에 내 이름으로, 각 대화의 채널을 통해 전송됩니다."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "합계 한 줄, 제품별 한 줄, 멤버별 한 줄이 {range}({scope}) 기준으로 담깁니다."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "이벤트마다 한 행, 오래된 순: 누가 동의하거나 탈퇴했는지, 언제, 어떻게, 어느 페이지와 IP 주소에서, 그리고 본 문구. 동의 증거(GDPR 제7조, KVKK)로 보관하거나, 보유 정보를 묻는 사람에게 답하거나, İYS에 직접 동의를 등록하는 데 쓰세요. CSV의 스프레드시트 수식은 무해하게 처리됩니다."
@@ -9648,10 +9686,6 @@ msgstr "ChatGPT 플러그인 열기"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Claude 커넥터 열기"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "대화 열기"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "시간 경과"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "개요"
@@ -10215,6 +10250,10 @@ msgstr "대기 중인 전송 내역도 함께 삭제됩니다."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "구독 양식으로 가입하거나 동의를 받아 추가됩니다. 일괄 발송은 리스트로 나갑니다."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "연락처는 대화가 종료되면 엄지로 평가합니다. 더 긴 기간을 선택해 보세요."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "좋음 평가"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "평가"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "평점은 멤버가 응대한 평가된 대화 중 좋음으로 표시된 비율이며, 모든 제품 기준입니다."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "답장 계정"
 msgid "Reply and resolve"
 msgstr "답장하고 해결"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "메모로 답장"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "답글을 게시했습니다"
@@ -11585,6 +11625,10 @@ msgstr "해결됨"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "{endedAt}에 해결됨"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "해결까지 걸린 시간"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "시크릿"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "섹션"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "모든 언급 보기"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "단축키"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "보낸 사람이 고른 색상을 흰색 위에 표시"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "대화 화면 표시"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "최근 30일 보기"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "새 메시지가 도착하면 목록에 나타납니다."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "팀원이 메모에서 @로 나를 추가했을 때."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "팀원이 노트에 @와 회원님의 이름을 쓰면 노트가 여기에 표시됩니다."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

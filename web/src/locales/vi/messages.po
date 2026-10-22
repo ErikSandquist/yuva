@@ -85,8 +85,8 @@ msgstr "{0} đã đóng"
 msgid "{0} events"
 msgstr "{0} sự kiện"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} tốt"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} đã đánh dấu là thư rác · không cần trả lời"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} mới"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {chưa có đánh giá} other {# đánh giá}}"
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {# đánh giá}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} lượt đánh giá"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} người nhận · {failed} bị máy chủ thư từ chối · {left} bỏ qua · {auto} phản hồi tự động, chỉ được đếm"
@@ -825,6 +824,14 @@ msgstr "{subscribed} người đăng ký"
 msgid "{threads} open discussions"
 msgstr "{threads} cuộc thảo luận đang mở"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} tổng cộng"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} chưa đọc trong {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} đã hủy đăng ký"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, other {Được # trình giám sát theo dõi}}"
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · {name} đã trả lời"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} đã nhắc đến bạn trong {contact}, {subject}. Mở cuộc trò chuyện"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} đã nhắc đến bạn trong {contact}. Mở cuộc trò chuyện"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Đã nhận đủ các phần. Đang đọc tệp…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "tất cả sản phẩm"
 
@@ -2580,6 +2597,10 @@ msgstr "Quay lại danh sách của bạn"
 msgid "Bad"
 msgstr "Kém"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Chỉ xấu"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Tín hiệu"
@@ -2823,10 +2844,6 @@ msgstr "Qua email"
 msgid "By member"
 msgstr "Theo thành viên"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Theo sản phẩm"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Bởi nhóm"
@@ -2860,6 +2877,7 @@ msgstr "Tên chiến dịch"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Ngừng hoạt động"
 msgid "Down since {since}"
 msgstr "Ngừng hoạt động từ {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Tải xuống"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Mọi thứ bên dưới sẽ chuyển từ {sourceName} sang {targetNam
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Mọi thứ trong không gian làm việc này bị xóa với mọi thành viên, và các widget, ứng dụng, địa chỉ email và khóa API của nó ngừng hoạt động ngay lập tức."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Đã đọc hết"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Mọi thứ đã được thiết lập. Mở bất kỳ phần nào để thay đổi, hoặc thêm phần khác từ cài đặt của nó."
@@ -5224,7 +5250,6 @@ msgstr "Hết hạn (không bắt buộc)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Xuất"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Tên"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "phản hồi đầu tiên"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Được gửi qua {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "tốt"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Tốt"
 
@@ -5817,6 +5845,10 @@ msgstr "Chào buổi tối, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Chào buổi sáng, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Chỉ tốt"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Ánh xạ"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Đánh dấu tất cả là đã đọc"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Đánh dấu là câu trả lời"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Đánh dấu là đã đọc"
 
@@ -7556,6 +7590,10 @@ msgstr "thời gian phản hồi đầu tiên trung vị"
 msgid "median today"
 msgstr "trung vị hôm nay"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "trung vị, từ tin nhắn đầu tiên đến khi đóng"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Nhắc đến một đồng nghiệp"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "đã nhắc đến bạn trong"
+msgid "mentioned you"
+msgstr "đã nhắc đến bạn"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Không có kết quả khớp"
 msgid "No media, links or documents in this conversation yet."
 msgstr "Chưa có phương tiện, liên kết hay tài liệu nào trong cuộc trò chuyện này."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Không có lượt nhắc đến nào."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Chưa có tin nhắn"
@@ -8703,10 +8737,6 @@ msgstr "Chưa có trình giám sát nào. Hãy thêm một cái để một lầ
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Không có thông báo nào trong 90 ngày qua."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Chưa ai nhắc đến bạn trong ghi chú. Khi đồng nghiệp viết @ và tên bạn, ghi chú sẽ hiện ở đây."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Không tìm thấy bài viết đã xuất bản nào."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "Không có đánh giá trong khoảng thời gian này."
+msgid "No ratings in this period"
+msgstr "Không có đánh giá trong khoảng thời gian này"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Không gửi thư chào mừng hay xác nhận. Mỗi đăng ký giữ s
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Chưa ai khác thấy hộp thư này."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Chưa ai nhắc đến bạn"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Mỗi sản phẩm hoặc thương hiệu một cái"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Một câu trả lời, viết một lần, được gửi thay mặt bạn đến mọi cuộc trò chuyện đang mở liên kết với {title}, qua kênh riêng của từng cuộc trò chuyện."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Một dòng cho tổng, một dòng cho mỗi sản phẩm và một dòng cho mỗi thành viên, cho {range} trong {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Mỗi dòng một sự kiện, cũ nhất trước: ai đã đồng ý hoặc rời đi, khi nào, bằng cách nào, từ trang nào và địa chỉ IP nào, cùng nội dung họ đã thấy. Hãy giữ làm bằng chứng đồng ý (GDPR Điều 7, KVKK), để trả lời người hỏi bạn đang giữ gì, hoặc để tự đăng ký sự đồng ý với İYS. Công thức bảng tính trong CSV đã được vô hiệu hóa."
@@ -9648,10 +9686,6 @@ msgstr "Mở ChatGPT plugins"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Mở Claude connectors"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Mở cuộc trò chuyện"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "Theo thời gian"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Tổng quan"
@@ -10215,6 +10250,10 @@ msgstr "Các lượt gửi đang chờ bị bỏ cùng với nó."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Mọi người tham gia qua biểu mẫu đăng ký hoặc được thêm kèm sự đồng ý. Thư hàng loạt gửi đến các danh sách."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Liên hệ đánh giá cuộc trò chuyện bằng biểu tượng ngón tay khi nó được đóng. Hãy thử khoảng thời gian dài hơn."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Đánh giá tốt"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Đánh giá"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Điểm đánh giá là tỷ lệ cuộc trò chuyện được đánh giá mà một thành viên trả lời và được đánh dấu tốt, trên mọi sản phẩm."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Tài khoản phản hồi"
 msgid "Reply and resolve"
 msgstr "Trả lời và giải quyết"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Trả lời bằng ghi chú"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Đã đăng phản hồi"
@@ -11585,6 +11625,10 @@ msgstr "Đã giải quyết"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Đã giải quyết lúc {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Giải quyết trong"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Secret"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Các phần"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Xem tất cả lượt nhắc"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Phím tắt"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Hiện màu người gửi đã chọn, trên nền trắng"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Hiện màn hình cuộc trò chuyện"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Hiện 30 ngày qua"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Khi có tin nhắn mới đến, nó sẽ nằm trong danh sách."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Khi đồng nghiệp thêm bạn vào ghi chú bằng @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Khi đồng đội viết @ và tên bạn trong ghi chú, ghi chú sẽ hiện ở đây."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

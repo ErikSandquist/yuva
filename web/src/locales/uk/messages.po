@@ -85,8 +85,8 @@ msgstr "{0} закрито"
 msgid "{0} events"
 msgstr "{0} подій"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} хороших"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} позначено як спам · відповідь не потрібна"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} нових"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {оцінок поки немає} one {# оцінк�
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# оцінка} few {# оцінки} many {# оцінок} other {# оцінки}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} оцінок"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "Отримувачів: {recipients} · відхилено поштовим сервером: {failed} · пропущено: {left} · автовідповідей: {auto}, лише підрахунок"
@@ -825,6 +824,14 @@ msgstr "Підписників: {subscribed}"
 msgid "{threads} open discussions"
 msgstr "Відкритих обговорень: {threads}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} усього"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} непрочитаних із {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "Відписалися: {unsubscribed}"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Стежить # монітор} few {Стежа
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · відповів(ла) {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} згадав(ла) вас у розмові {contact}, {subject}. Відкрити розмову"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} згадав(ла) вас у розмові {contact}. Відкрити розмову"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Усі частини отримано. Читання файлу…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "усі продукти"
 
@@ -2580,6 +2597,10 @@ msgstr "Назад до списку"
 msgid "Bad"
 msgstr "Погано"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Лише погані"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Сигнал"
@@ -2823,10 +2844,6 @@ msgstr "Електронною поштою"
 msgid "By member"
 msgstr "За учасником"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "За продуктами"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Командою"
@@ -2860,6 +2877,7 @@ msgstr "Назва кампанії"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Не працює"
 msgid "Down since {since}"
 msgstr "Недоступний з {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Завантажити"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Усе нижче переноситься з {sourceName} до {targetN
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Усе в цьому робочому просторі видаляється для кожного учасника, а його віджети, застосунки, адреси електронної пошти й ключі API одразу перестають працювати."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Усе прочитано"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Усе налаштовано. Відкрийте будь-яку частину, щоб змінити її, або додайте ще одну в її налаштуваннях."
@@ -5224,7 +5250,6 @@ msgstr "Спливає (необов'язково)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Експорт"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Ім'я"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "перша відповідь"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Іде через {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "добре"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Добре"
 
@@ -5817,6 +5845,10 @@ msgstr "Добрий вечір, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Доброго ранку, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Лише добрі"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Зіставлення"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Позначити все як прочитане"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Позначити як рішення"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Позначити як прочитане"
 
@@ -7556,6 +7590,10 @@ msgstr "медіанний час першої відповіді"
 msgid "median today"
 msgstr "медіана за сьогодні"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "медіана, від першого повідомлення до закриття"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Згадати колегу"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "згадав(ла) вас у"
+msgid "mentioned you"
+msgstr "згадав(ла) вас"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Немає збігів"
 msgid "No media, links or documents in this conversation yet."
 msgstr "У цій розмові поки немає медіа, посилань чи документів."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Згадок немає."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Повідомлень поки немає"
@@ -8703,10 +8737,6 @@ msgstr "Моніторів поки немає. Додайте монітор, �
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Немає сповіщень за останні 90 днів."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Вас поки ніхто не згадував у нотатках. Коли колега напише @ і ваше ім'я, нотатка з'явиться тут."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Опублікованих статей не знайдено."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "За цей період оцінок немає."
+msgid "No ratings in this period"
+msgstr "Немає оцінок за цей період"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Ні вітальний лист, ні лист із підтвердж�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Більше ніхто не бачить цю скриньку."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Вас ще ніхто не згадував"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "По одній на продукт або бренд"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Одна відповідь, написана один раз, іде від вашого імені в кожну відкриту розмову, прив’язану до інциденту {title}, власним каналом кожної розмови."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Один рядок для підсумку, по одному на продукт і на учасника, за період «{range}», {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Один рядок на подію, спершу старі: хто дав згоду чи відписався, коли, як, з якої сторінки та IP-адреси і які слова бачив. Зберігайте як доказ згоди (GDPR ст. 7, KVKK), щоб відповісти людині, яка питає, що у вас зберігається, або щоб самим зареєструвати згоди в İYS. Формули електронних таблиць у CSV знешкоджено."
@@ -9648,10 +9686,6 @@ msgstr "Відкрити плагіни ChatGPT"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Відкрити конектори Claude"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Відкрити розмову"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "З часом"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Огляд"
@@ -10215,6 +10250,10 @@ msgstr "Доставки в очікуванні видаляються разо
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Люди приєднуються до нього через форму підписки або додаються з їхньої згоди. Розсилки йдуть у списки."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Контакти оцінюють розмову великим пальцем, коли вона закривається. Спробуйте довший період."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Оцінено добре"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Оцінка"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Оцінка — частка оцінених розмов учасника, які позначено як хороші, у всіх продуктах."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Обліковий запис для відповідей"
 msgid "Reply and resolve"
 msgstr "Відповісти й вирішити"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Відповісти нотаткою"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Відповідь опубліковано"
@@ -11585,6 +11625,10 @@ msgstr "Вирішено"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Вирішено о {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Розв’язано за"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Секрет"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Розділи"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Показати всі згадки"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Комбінація клавіш"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Показувати кольори, вибрані відправник
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Показати екран розмови"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Показати останні 30 днів"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Коли надійде нове повідомлення, воно з'�
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Коли колега додає вас у нотатку через @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Коли колега напише в нотатці @ і ваше ім’я, нотатка з’явиться тут."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

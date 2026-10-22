@@ -85,8 +85,8 @@ msgstr "{0} lukket"
 msgid "{0} events"
 msgstr "{0} hendelser"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} gode"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} markert som søppelpost · ikke behov for svar"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} nye"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {ingen vurderinger ennå} one {# vurdering} other {# 
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# vurdering} other {# vurderinger}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} vurdert"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} mottakere · {failed} avvist av e-postserveren · {left} hoppet over · {auto} automatiske svar, bare talt"
@@ -825,6 +824,14 @@ msgstr "{subscribed} abonnenter"
 msgid "{threads} open discussions"
 msgstr "{threads} åpne diskusjoner"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} totalt"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} uleste av {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} avmeldt"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Overvåkes av # monitor} other {Overvåkes av # 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · besvart av {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} nevnte deg i {contact}, {subject}. Åpne samtalen"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} nevnte deg i {contact}. Åpne samtalen"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Alle delene kom fram. Leser filen …"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "alle produkter"
 
@@ -2580,6 +2597,10 @@ msgstr "Tilbake til listen din"
 msgid "Bad"
 msgstr "Dårlig"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Bare dårlige"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Signal"
@@ -2823,10 +2844,6 @@ msgstr "Via e-post"
 msgid "By member"
 msgstr "Per medlem"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Per produkt"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Av teamet"
@@ -2860,6 +2877,7 @@ msgstr "Kampanjenavn"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Nede"
 msgid "Down since {since}"
 msgstr "Nede siden {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Last ned"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Alt under flyttes fra {sourceName} til {targetName}, og {sourceName} sle
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Alt i dette arbeidsområdet slettes for alle medlemmer, og widgetene, appene, e-postadressene og API-nøklene dens slutter å virke med en gang."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Alt er lest"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Alt er satt opp. Åpne en del for å endre den, eller legg til en annen fra innstillingene dens."
@@ -5224,7 +5250,6 @@ msgstr "Utløper (valgfritt)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Eksporter"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Fornavn"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "første svar"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Sendes via {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "gode"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Bra"
 
@@ -5817,6 +5845,10 @@ msgstr "God kveld, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "God morgen, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Bare gode"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Tilordne"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Marker alt som lest"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Marker som svar"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Marker som lest"
 
@@ -7556,6 +7590,10 @@ msgstr "median første svar"
 msgid "median today"
 msgstr "median i dag"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "median, fra første melding til lukking"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Nevn en kollega"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "nevnte deg i"
+msgid "mentioned you"
+msgstr "nevnte deg"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Ingen treff"
 msgid "No media, links or documents in this conversation yet."
 msgstr "Ingen medier, lenker eller dokumenter i denne samtalen ennå."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Ingen omtaler her."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Ingen meldinger ennå"
@@ -8703,10 +8737,6 @@ msgstr "Ingen overvåkere ennå. Legg til en slik at en sjekk, en jobb eller ove
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Ingen varsler de siste 90 dagene."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Ingen har nevnt deg i et notat ennå. Når en kollega skriver @ og navnet ditt, vises notatet her."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Ingen publiseret artikel fundet."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "Ingen vurderinger i denne perioden."
+msgid "No ratings in this period"
+msgstr "Ingen vurderinger i denne perioden"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Ingen velkomst- eller bekreftelses-e-post sendes. Hvert abonnement behol
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Ingen andre kan se denne postboksen ennå."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Ingen har nevnt deg ennå"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Én per produkt eller merkevare"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Ett svar, skrevet én gang, går til hver åpen samtale koblet til {title}, som deg, på hver samtales egen kanal."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Én rad for totalen, én per produkt og én per medlem, for {range} i {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Én rad per hendelse, eldste først: hvem som sa ja eller forlot, når, hvordan, fra hvilken side og IP-adresse, og ordene de så. Behold den som bevis på samtykke (GDPR art. 7, KVKK), for å svare en person som spør hva du har om dem, eller for selv å registrere samtykker hos İYS. Regnearkformler i CSV-en gjøres uskadelige."
@@ -9648,10 +9686,6 @@ msgstr "Åpne ChatGPT-plugins"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Åpne Claude-connectors"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Åpne samtalen"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "Over tid"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Oversikt"
@@ -10215,6 +10250,10 @@ msgstr "Ventende leveringer forkastes med den."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Folk melder seg på den med et påmeldingsskjema eller legges til med samtykket sitt. Utsendelser går til lister."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Kontakter vurderer en samtale med en tommel når den lukkes. Prøv en lengre periode."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Vurdert som bra"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Vurdering"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "Vurderingen er andelen vurderte samtaler en person har besvart som ble markert som gode, på tvers av alle produkter."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Svarkonto"
 msgid "Reply and resolve"
 msgstr "Svar og løs"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Svar i notat"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Svar publisert"
@@ -11585,6 +11625,10 @@ msgstr "Løst"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Løst kl. {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Løst på"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Hemmelighet"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Seksjoner"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Se alle omtaler"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Hurtigtast"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "Vis fargene avsenderen valgte, på hvitt"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Vis samtaleskjermen"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Vis de siste 30 dagene"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Når en ny melding kommer, vises den i listen."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Når en kollega legger deg til i et notat med @."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Når en kollega skriver @ og navnet ditt i et notat, vises notatet her."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

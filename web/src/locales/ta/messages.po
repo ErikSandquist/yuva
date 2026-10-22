@@ -85,8 +85,8 @@ msgstr "{0} மூடப்பட்டவை"
 msgid "{0} events"
 msgstr "{0} நிகழ்வுகள்"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} நல்லவை"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} ஸ்பேம் எனக் குறிக்கப்பட்டது · பதில் தேவையில்லை"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} புதியவை"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {இன்னும் மதிப்பீடுக
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# மதிப்பீடு} other {# மதிப்பீடுகள்}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} மதிப்பீடுகள்"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} பெறுநர்கள் · {failed} அஞ்சல் சேவையகத்தால் மறுக்கப்பட்டவை · {left} தவிர்க்கப்பட்டவை · {auto} தானியங்கி பதில்கள், எண்ணிக்கை மட்டும்"
@@ -825,6 +824,14 @@ msgstr "{subscribed} சந்தாதாரர்கள்"
 msgid "{threads} open discussions"
 msgstr "{threads} திறந்த விவாதங்கள்"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "மொத்தம் {total}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{totalText} இல் {unseenText} படிக்காதவை"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} விலகினர்"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {# கண்காணிப்பு கவனி
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · {name} பதிலளித்தார்"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} {contact} இல் உங்களைக் குறிப்பிட்டார், {subject}. உரையாடலைத் திற"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} {contact} இல் உங்களைக் குறிப்பிட்டார். உரையாடலைத் திற"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "அனைத்துப் பகுதிகளும் வந்துவிட்டன. கோப்பைப் படிக்கிறது…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "அனைத்து தயாரிப்புகள்"
 
@@ -2580,6 +2597,10 @@ msgstr "உங்கள் பட்டியலுக்குத் திர�
 msgid "Bad"
 msgstr "மோசம்"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "மோசமானவை மட்டும்"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "சமிக்ஞை"
@@ -2823,10 +2844,6 @@ msgstr "மின்னஞ்சல் வழியாக"
 msgid "By member"
 msgstr "உறுப்பினர் வாரியாக"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "தயாரிப்பு வாரியாக"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "குழுவால்"
@@ -2860,6 +2877,7 @@ msgstr "பிரசாரப் பெயர்"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "செயலிழப்பு"
 msgid "Down since {since}"
 msgstr "{since} முதல் செயலிழப்பு"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "பதிவிறக்கு"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "கீழே உள்ள அனைத்தும் {sourceName}-இ�
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "இந்தப் பணியிடத்தில் உள்ள அனைத்தும் ஒவ்வொரு உறுப்பினருக்கும் நீக்கப்படும்; அதன் விட்ஜெட்டுகள், ஆப்கள், மின்னஞ்சல் முகவரிகள், API விசைகள் உடனே வேலை செய்வதை நிறுத்தும்."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "அனைத்தும் படிக்கப்பட்டன"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "அனைத்தும் அமைக்கப்பட்டுவிட்டன. மாற்ற எந்தப் பகுதியையும் திறவுங்கள், அல்லது அதன் அமைப்புகளிலிருந்து மற்றொன்றைச் சேருங்கள்."
@@ -5224,7 +5250,6 @@ msgstr "காலாவதி (விருப்பம்)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "ஏற்றுமதி"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "முதல் பெயர்"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "முதல் பதில்"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "{via} வழியாகச் செல்கிறது"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "நல்லவை"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "நல்லது"
 
@@ -5817,6 +5845,10 @@ msgstr "மாலை வணக்கம், {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "காலை வணக்கம், {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "நல்லவை மட்டும்"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "வரைபடம்"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "அனைத்தையும் படித்ததாகக் குறி"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "பதிலாகக் குறி"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "படித்ததாகக் குறி"
 
@@ -7556,6 +7590,10 @@ msgstr "முதல் பதிலின் இடைநிலை"
 msgid "median today"
 msgstr "இன்றைய இடைநிலை"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "இடைநிலை, முதல் செய்தி முதல் மூடும் வரை"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "குழு உறுப்பினரைக் குறிப்பிடு"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "உங்களைக் குறிப்பிட்டார், இங்கே:"
+msgid "mentioned you"
+msgstr "உங்களைக் குறிப்பிட்டார்"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "பொருத்தங்கள் இல்லை"
 msgid "No media, links or documents in this conversation yet."
 msgstr "இந்த உரையாடலில் இன்னும் ஊடகம், இணைப்புகள், ஆவணங்கள் இல்லை."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "இங்கே குறிப்புகள் இல்லை."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "இன்னும் செய்திகள் இல்லை"
@@ -8703,10 +8737,6 @@ msgstr "இன்னும் கண்காணிப்பாளர்கள�
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "கடந்த 90 நாட்களில் அறிவிப்புகள் இல்லை."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "இன்னும் யாரும் குறிப்பில் உங்களைக் குறிப்பிடவில்லை. குழு உறுப்பினர் @ மற்றும் உங்கள் பெயரை எழுதும்போது, குறிப்பு இங்கே தோன்றும்."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "வெளியிடப்பட்ட கட்டுரை எதுவும் கிடைக்கவில்லை."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "இந்தக் காலத்தில் மதிப்பீடுகள் இல்லை."
+msgid "No ratings in this period"
+msgstr "இந்தக் காலத்தில் மதிப்பீடுகள் இல்லை"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "வரவேற்பு அல்லது உறுதிப்பட�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "வேறு யாரும் இன்னும் இந்த இன்பாக்ஸைப் பார்க்க முடியாது."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "இதுவரை யாரும் உங்களைக் குறிப்பிடவில்லை"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "ஒரு தயாரிப்பு அல்லது பிராண
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "ஒருமுறை எழுதிய ஒரே பதில் {title} உடன் இணைக்கப்பட்ட ஒவ்வொரு திறந்த உரையாடலுக்கும் உங்கள் பெயரில், ஒவ்வொரு உரையாடலின் சொந்த சேனல் வழியாகச் செல்கிறது."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "மொத்தத்திற்கு ஒரு வரி, ஒவ்வொரு தயாரிப்புக்கும் ஒன்று, ஒவ்வொரு உறுப்பினருக்கும் ஒன்று, {range} க்கு {scope} இல்."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ஒரு நிகழ்வுக்கு ஒரு வரிசை, பழையது முதலில்: யார் ஒப்புக்கொண்டனர் அல்லது விலகினர், எப்போது, எப்படி, எந்தப் பக்கம் மற்றும் IP முகவரியிலிருந்து, அவர்கள் பார்த்த சொற்கள். இதை ஒப்புதலுக்கான சான்றாக வைத்திருங்கள் (GDPR Art. 7, KVKK), உங்களிடம் என்ன உள்ளது எனக் கேட்பவருக்குப் பதிலளிக்க, அல்லது ஒப்புதல்களை İYS-இல் நீங்களே பதிவு செய்ய. CSV-இல் உள்ள விரிதாள் சூத்திரங்கள் பாதிப்பற்றவையாக்கப்படும்."
@@ -9648,10 +9686,6 @@ msgstr "ChatGPT செருகுநிரல்களைத் திற"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Claude இணைப்பிகளைத் திற"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "உரையாடலைத் திற"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "காலப்போக்கில்"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "மேலோட்டம்"
@@ -10215,6 +10250,10 @@ msgstr "நிலுவையில் உள்ள விநியோகங்�
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "மக்கள் சந்தா படிவத்தில் இதில் சேர்கின்றனர் அல்லது அவர்களின் ஒப்புதலுடன் சேர்க்கப்படுகின்றனர். ஒளிபரப்புகள் பட்டியல்களுக்குச் செல்லும்."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "உரையாடல் மூடப்படும்போது தொடர்புகள் கட்டைவிரலால் மதிப்பிடுகின்றன. நீண்ட காலத்தை முயற்சிக்கவும்."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "நன்று என மதிப்பிடப்பட்டது"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "மதிப்பீடு"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "மதிப்பீடு என்பது ஓர் உறுப்பினர் பதிலளித்த மதிப்பிடப்பட்ட உரையாடல்களில் நல்லது எனக் குறிக்கப்பட்டவற்றின் பங்கு, அனைத்துத் தயாரிப்புகளிலும்."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "பதில் கணக்கு"
 msgid "Reply and resolve"
 msgstr "Reply and resolve"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "குறிப்பில் பதிலளி"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "பதில் இடுகையிடப்பட்டது"
@@ -11585,6 +11625,10 @@ msgstr "Resolved"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "{endedAt} மணிக்குத் தீர்க்கப்பட்டது"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "தீர்க்க ஆன நேரம்"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "ரகசியம்"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "பிரிவுகள்"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "அனைத்து குறிப்பிடல்களையும் காண்க"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "குறுக்குவழி"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "அனுப்புநர் தேர்ந்த வண்ணங்�
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "உரையாடல் திரையைக் காட்டு"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "கடந்த 30 நாட்களைக் காட்டு"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "புதிய செய்தி வரும்போது அது
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "குழு உறுப்பினர் @ மூலம் உங்களைக் குறிப்பில் சேர்க்கும்போது."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "சக ஊழியர் குறிப்பில் @ மற்றும் உங்கள் பெயரை எழுதினால், குறிப்பு இங்கே தோன்றும்."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"

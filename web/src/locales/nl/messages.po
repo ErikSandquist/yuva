@@ -85,8 +85,8 @@ msgstr "{0} gesloten"
 msgid "{0} events"
 msgstr "{0} gebeurtenissen"
 
-#. placeholder {0}: pct.format(good / mine.length)
 #. placeholder {0}: pct.format(good)
+#. placeholder {0}: pct.format(p.share)
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
@@ -96,11 +96,6 @@ msgstr "{0} goed"
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
 msgstr "{0} als spam gemarkeerd · geen antwoord nodig"
-
-#. placeholder {0}: fmt.format(n)
-#: src/features/reports/ReportPages.tsx
-msgid "{0} new"
-msgstr "{0} nieuw"
 
 #. placeholder {0}: hitIndex + 1
 #. placeholder {1}: hits.length
@@ -755,6 +750,10 @@ msgstr "{rated, plural, =0 {nog geen beoordelingen} one {# beoordeling} other {#
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# beoordeling} other {# beoordelingen}}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{ratedText} rated"
+msgstr "{ratedText} beoordeeld"
+
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} ontvangers · {failed} geweigerd door de mailserver · {left} overgeslagen · {auto} automatische antwoorden, alleen geteld"
@@ -825,6 +824,14 @@ msgstr "{subscribed} abonnees"
 msgid "{threads} open discussions"
 msgstr "{threads} open discussies"
 
+#: src/features/reports/ReportPages.tsx
+msgid "{total} in total"
+msgstr "{total} in totaal"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{unseenText} unread of {totalText}"
+msgstr "{unseenText} ongelezen van {totalText}"
+
 #: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} afgemeld"
@@ -863,6 +870,14 @@ msgstr "{watching, plural, one {Bewaakt door # monitor} other {Bewaakt door # mo
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
 msgstr "{who} · beantwoord door {name}"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}, {subject}. Open the conversation"
+msgstr "{who} heeft je genoemd in {contact}, {subject}. Gesprek openen"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "{who} mentioned you in {contact}. Open the conversation"
+msgstr "{who} heeft je genoemd in {contact}. Gesprek openen"
 
 #. placeholder {0}: m.note.text
 #: src/features/home/HomePage.tsx
@@ -1692,6 +1707,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
@@ -1749,6 +1765,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Alle delen zijn aangekomen. Bestand lezen…"
 
 #: src/features/home/HomePage.tsx
+#: src/features/reports/ReportPages.tsx
 msgid "all products"
 msgstr "alle producten"
 
@@ -2580,6 +2597,10 @@ msgstr "Terug naar je lijst"
 msgid "Bad"
 msgstr "Slecht"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Bad only"
+msgstr "Alleen slecht"
+
 #: src/features/status/text.tsx
 msgid "Beat"
 msgstr "Signaal"
@@ -2823,10 +2844,6 @@ msgstr "Per e-mail"
 msgid "By member"
 msgstr "Per lid"
 
-#: src/features/reports/ReportPages.tsx
-msgid "By product"
-msgstr "Per product"
-
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Door het team"
@@ -2860,6 +2877,7 @@ msgstr "Campagnenaam"
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
@@ -4623,6 +4641,10 @@ msgstr "Uitgevallen"
 msgid "Down since {since}"
 msgstr "Offline sinds {since}"
 
+#: src/features/reports/ReportPages.tsx
+msgid "Download"
+msgstr "Downloaden"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -5176,6 +5198,10 @@ msgstr "Alles hieronder verhuist van {sourceName} naar {targetName}, en {sourceN
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Alles in deze werkruimte wordt voor elk lid verwijderd, en de widgets, apps, e-mailadressen en API-sleutels ervan werken meteen niet meer."
 
+#: src/features/inbox/SidePanels.tsx
+msgid "Everything is read"
+msgstr "Alles gelezen"
+
 #: src/features/setup/SetupHub.tsx
 msgid "Everything is set up. Open any part to change it, or add another from its settings."
 msgstr "Alles is ingesteld. Open een onderdeel om het te wijzigen, of voeg er in de instellingen nog een toe."
@@ -5224,7 +5250,6 @@ msgstr "Verloopt (optioneel)"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "Export"
 msgstr "Exporteren"
 
@@ -5435,7 +5460,6 @@ msgid "First name"
 msgstr "Voornaam"
 
 #: src/features/contact/ContactDetail.tsx
-#: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "eerste antwoord"
 
@@ -5803,6 +5827,10 @@ msgid "Goes out through {via}"
 msgstr "Gaat uit via {via}"
 
 #: src/features/reports/ReportPages.tsx
+msgid "good"
+msgstr "goed"
+
+#: src/features/reports/ReportPages.tsx
 msgid "Good"
 msgstr "Goed"
 
@@ -5817,6 +5845,10 @@ msgstr "Goedenavond, {first}"
 #: src/features/home/HomePage.tsx
 msgid "Good morning, {first}"
 msgstr "Goedemorgen, {first}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Good only"
+msgstr "Alleen goed"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
@@ -7447,6 +7479,7 @@ msgid "Map"
 msgstr "Koppelen"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark all as read"
 msgstr "Alles als gelezen markeren"
 
@@ -7455,6 +7488,7 @@ msgid "Mark as answer"
 msgstr "Als oplossing markeren"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SidePanels.tsx
 msgid "Mark as read"
 msgstr "Als gelezen markeren"
 
@@ -7556,6 +7590,10 @@ msgstr "mediaan eerste antwoord"
 msgid "median today"
 msgstr "mediaan vandaag"
 
+#: src/features/reports/ReportPages.tsx
+msgid "median, first message to closed"
+msgstr "mediaan, van eerste bericht tot sluiting"
+
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -7576,8 +7614,8 @@ msgid "Mention a teammate"
 msgstr "Een teamlid vermelden"
 
 #: src/features/inbox/SidePanels.tsx
-msgid "mentioned you in"
-msgstr "heeft je genoemd in"
+msgid "mentioned you"
+msgstr "heeft je genoemd"
 
 #: src/app/Rail.tsx
 #: src/app/TopBar.tsx
@@ -8680,10 +8718,6 @@ msgstr "Geen overeenkomsten"
 msgid "No media, links or documents in this conversation yet."
 msgstr "Nog geen media, links of documenten in dit gesprek."
 
-#: src/features/inbox/SidePanels.tsx
-msgid "No mentions here."
-msgstr "Geen vermeldingen hier."
-
 #: src/features/inbox/ChatList.tsx
 msgid "No messages yet"
 msgstr "Nog geen berichten"
@@ -8703,10 +8737,6 @@ msgstr "Nog geen monitors. Voeg er een toe zodat een controle, een taak of je mo
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Geen meldingen in de afgelopen 90 dagen."
-
-#: src/features/inbox/SidePanels.tsx
-msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
-msgstr "Niemand heeft je al vermeld in een notitie. Als een teamlid @ en je naam schrijft, verschijnt de notitie hier."
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "No open feedback."
@@ -8737,8 +8767,8 @@ msgid "No published article found."
 msgstr "Geen gepubliceerd artikel gevonden."
 
 #: src/features/reports/ReportPages.tsx
-msgid "No ratings in this period."
-msgstr "Geen beoordelingen in deze periode."
+msgid "No ratings in this period"
+msgstr "Geen beoordelingen in deze periode"
 
 #: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
@@ -8855,6 +8885,10 @@ msgstr "Er wordt geen welkoms- of bevestigingsmail verzonden. Elk abonnement beh
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Niemand anders kan deze mailbox al zien."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "Nobody has mentioned you yet"
+msgstr "Niemand heeft je nog genoemd"
 
 #: src/features/reports/ReportPages.tsx
 msgid "Nobody has replied or closed anything in this period."
@@ -9418,6 +9452,10 @@ msgstr "Eén per product of merk"
 msgid "One reply, written once, goes to every open conversation linked to {title}, as you, on each conversation’s own channel."
 msgstr "Eén antwoord, één keer geschreven, gaat in jouw naam naar elk open gesprek dat aan {title} is gekoppeld, via het eigen kanaal van elk gesprek."
 
+#: src/features/reports/ReportPages.tsx
+msgid "One row for the total, one per product and one per member, for {range} in {scope}."
+msgstr "Eén regel voor het totaal, één per product en één per lid, voor {range} in {scope}."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Eén rij per gebeurtenis, oudste eerst: wie instemde of vertrok, wanneer, hoe, vanaf welke pagina en welk IP-adres, en de woorden die ze zagen. Bewaar het als bewijs van toestemming (AVG art. 7, KVKK), om iemand te antwoorden die vraagt wat je van hem bewaart, of om toestemmingen zelf bij İYS te registreren. Spreadsheetformules in de CSV worden onschadelijk gemaakt."
@@ -9648,10 +9686,6 @@ msgstr "ChatGPT-plugins openen"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open Claude connectors"
 msgstr "Claude-connectors openen"
-
-#: src/features/inbox/SidePanels.tsx
-msgid "Open conversation"
-msgstr "Gesprek openen"
 
 #: src/app/Palette.tsx
 msgid "Open conversations"
@@ -9998,6 +10032,7 @@ msgstr "In de tijd"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Overzicht"
@@ -10215,6 +10250,10 @@ msgstr "Openstaande leveringen vervallen ermee."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Mensen sluiten zich erbij aan via een aanmeldformulier of worden met hun toestemming toegevoegd. Mailings gaan naar lijsten."
+
+#: src/features/reports/ReportPages.tsx
+msgid "People rate a conversation with a thumb when it is closed. Try a longer period."
+msgstr "Contacten beoordelen een gesprek met een duim als het wordt gesloten. Probeer een langere periode."
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
@@ -10678,6 +10717,7 @@ msgstr "pro, team"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
@@ -10926,6 +10966,10 @@ msgstr "Beoordeeld als goed"
 #: src/features/reports/ReportPages.tsx
 msgid "Rating"
 msgstr "Beoordeling"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Rating is the share of rated conversations a member answered that people marked good, across all products."
+msgstr "De beoordeling is het aandeel beoordeelde gesprekken van een lid dat als goed is gemarkeerd, over alle producten."
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -11439,10 +11483,6 @@ msgstr "Antwoordaccount"
 msgid "Reply and resolve"
 msgstr "Antwoorden en oplossen"
 
-#: src/features/inbox/SidePanels.tsx
-msgid "Reply in note"
-msgstr "Antwoorden in notitie"
-
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Antwoord geplaatst"
@@ -11585,6 +11625,10 @@ msgstr "Opgelost"
 #: src/features/status/IncidentDetail.tsx
 msgid "Resolved at {endedAt}"
 msgstr "Opgelost om {endedAt}"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Resolved in"
+msgstr "Opgelost in"
 
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
@@ -12072,6 +12116,10 @@ msgstr "Secret"
 #: src/app/Sidebar.tsx
 msgid "Sections"
 msgstr "Secties"
+
+#: src/features/inbox/SidePanels.tsx
+msgid "See all mentions"
+msgstr "Alle vermeldingen bekijken"
 
 #: src/features/contact/ContactCard.tsx
 msgid "Seen {seen}"
@@ -12598,6 +12646,7 @@ msgstr "Sneltoets"
 #: src/features/docs/DocsPage.tsx
 #: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/reports/ReportPages.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
@@ -12672,6 +12721,10 @@ msgstr "De door de afzender gekozen kleuren tonen, op wit"
 #: src/features/setup/InstallStep.tsx
 msgid "Show the conversation screen"
 msgstr "Het gesprekscherm tonen"
+
+#: src/features/reports/ReportPages.tsx
+msgid "Show the last 30 days"
+msgstr "Laatste 30 dagen tonen"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -16004,6 +16057,10 @@ msgstr "Als er een nieuw bericht aankomt, staat het in de lijst."
 #: src/features/settings/notifications/events.ts
 msgid "When a teammate adds you to a note with @."
 msgstr "Wanneer een teamlid je met @ aan een notitie toevoegt."
+
+#: src/features/inbox/SidePanels.tsx
+msgid "When a teammate writes @ and your name in a note, the note shows up here."
+msgstr "Als een teamgenoot @ en jouw naam in een notitie typt, verschijnt de notitie hier."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
