@@ -518,7 +518,7 @@ func (s *Server) serveOAuthAuthorize(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	now := s.now()
-	id := uuid.New()
+	id := newID()
 	if err := s.st.CreateOAuthRequest(ctx, store.CreateOAuthRequestParams{
 		ID: id, ClientID: client.ID, RedirectUri: redirect, State: optional(state), CodeChallenge: challenge,
 		Scopes: scopes, Resource: resource, CreatedAt: now, ExpiresAt: now.Add(oauthRequestTTL),

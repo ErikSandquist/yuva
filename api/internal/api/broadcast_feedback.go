@@ -298,7 +298,7 @@ func (s *Server) noteBroadcastOperator(ctx context.Context, q *store.Queries, ki
 		return nil
 	}
 	return q.CreateOperatorNotice(ctx, store.CreateOperatorNoticeParams{
-		ID: uuid.New(), Kind: kind, Email: from, WorkspaceName: &workspace, Detail: optionalText(detail, 2000), CreatedAt: s.now(),
+		ID: newID(), Kind: kind, Email: from, WorkspaceName: &workspace, Detail: optionalText(detail, 2000), CreatedAt: s.now(),
 	})
 }
 

@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"time"
-	"uuid"
 
 	"github.com/productdevbook/yuva/api/internal/mail"
 	"github.com/productdevbook/yuva/api/internal/oas"
@@ -66,7 +65,7 @@ func (s *Server) CreateInvite(ctx context.Context, req oas.CreateInviteRequestOb
 	}
 	now := s.now()
 	inv, err := s.st.UpsertInvite(ctx, store.UpsertInviteParams{
-		ID: uuid.New(), WorkspaceID: p.workspaceID, Email: email, Role: string(b.Role), Locale: string(locale),
+		ID: newID(), WorkspaceID: p.workspaceID, Email: email, Role: string(b.Role), Locale: string(locale),
 		InvitedBy: &p.memberID, CreatedAt: now, ExpiresAt: now.Add(inviteTTL),
 	})
 	if err != nil {

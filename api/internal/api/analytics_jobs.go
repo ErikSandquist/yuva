@@ -531,7 +531,7 @@ func (s *Server) RollupAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUI
 		return err
 	}
 	return s.st.CreateOperatorNotice(ctx, store.CreateOperatorNoticeParams{
-		ID: uuid.New(), Kind: noticeAnalyticsDropped, WorkspaceName: &w.Name, CreatedAt: s.now(),
+		ID: newID(), Kind: noticeAnalyticsDropped, WorkspaceName: &w.Name, CreatedAt: s.now(),
 		Detail: new(formatCount(res.Dropped) + " of " + formatCount(res.Dropped+res.Accepted) + " analytics events on " + day.Format(time.DateOnly) + " were dropped"),
 	})
 }

@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"time"
-	"uuid"
 
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -59,7 +58,7 @@ func (s *Server) CreateWorkspace(ctx context.Context, req oas.CreateWorkspaceReq
 		if n >= perIP {
 			return errSignupIPLimit
 		}
-		if ws, _, err = createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name, CreatedBy: &p.personID, CreatedIp: &ip}, p.personID); err != nil {
+		if ws, _, err = createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: newID(), Name: name, CreatedBy: &p.personID, CreatedIp: &ip}, p.personID); err != nil {
 			return err
 		}
 		if s.broadcastMode() == broadcastsApproval {

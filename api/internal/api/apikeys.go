@@ -264,7 +264,7 @@ func createAPIKey(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, 
 	}
 	prefix, secret := newAPIKey()
 	k, err := q.CreateAPIKey(ctx, store.CreateAPIKeyParams{
-		ID: uuid.New(), WorkspaceID: workspaceID, Name: name, Prefix: prefix,
+		ID: newID(), WorkspaceID: workspaceID, Name: name, Prefix: prefix,
 		SecretHash: hashSecret(secret), CreatedBy: createdBy, Scopes: scopes, InboxLimited: len(inboxes) > 0,
 		ExpiresAt: spec.ExpiresAt, BotName: botName, BotAvatarUrl: avatar,
 	})

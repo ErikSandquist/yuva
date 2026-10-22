@@ -419,7 +419,7 @@ func (s *Server) noteAnalyticsLimit(ctx context.Context, ws uuid.UUID, month tim
 			return nil
 		}
 		return q.CreateOperatorNotice(ctx, store.CreateOperatorNoticeParams{
-			ID: uuid.New(), Kind: noticeAnalyticsLimit, WorkspaceName: &w.Name, CreatedAt: s.now(),
+			ID: newID(), Kind: noticeAnalyticsLimit, WorkspaceName: &w.Name, CreatedAt: s.now(),
 			Detail: new(formatCount(total) + " analytics events in " + month.Format("January 2006") + "; the limit is " + formatCount(limit)),
 		})
 	})

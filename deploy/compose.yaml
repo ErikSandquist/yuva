@@ -2,7 +2,7 @@ name: yuva-dev
 
 services:
   db:
-    image: postgres:17
+    image: postgres:18
     environment:
       POSTGRES_USER: yuva
       POSTGRES_PASSWORD: yuva
@@ -10,7 +10,7 @@ services:
     ports:
       - "127.0.0.1:55443:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - db18:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U yuva -d yuva"]
       interval: 2s
@@ -94,5 +94,5 @@ services:
       - ${YUVA_XOAUTH2_TLS:-/tmp/yuva-xoauth2}/tls.key:/etc/dovecot/ssl/tls.key:ro
 
 volumes:
-  db:
+  db18:
   attachments:

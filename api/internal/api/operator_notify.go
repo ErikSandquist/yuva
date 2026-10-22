@@ -64,7 +64,7 @@ func (s *Server) noteOperator(ctx context.Context, q *store.Queries, kind, email
 		}
 	}
 	return q.CreateOperatorNotice(ctx, store.CreateOperatorNoticeParams{
-		ID: uuid.New(), Kind: kind, Email: email, Reader: reader, WorkspaceName: workspace, Ip: ip, Country: country, CreatedAt: s.now(),
+		ID: newID(), Kind: kind, Email: email, Reader: reader, WorkspaceName: workspace, Ip: ip, Country: country, CreatedAt: s.now(),
 	})
 }
 

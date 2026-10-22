@@ -3310,5 +3310,5 @@ now; per-channel limits can narrow them later.
 
 ## Deployment
 
-One Docker image; `deploy/compose.yaml` for a single host; the Helm chart `deploy/helm/yuva` (published as `oci://ghcr.io/productdevbook/charts/yuva`, same version as the server, no bundled database) for Kubernetes. Runs on Postgres 16+.
+One Docker image; `deploy/compose.yaml` for a single host; the Helm chart `deploy/helm/yuva` (published as `oci://ghcr.io/productdevbook/charts/yuva`, same version as the server, no bundled database) for Kubernetes. Runs on Postgres 16+; CI, the development compose file and production run Postgres 18.
 The minimal install is the binary, Postgres and an SMTP account.

@@ -109,7 +109,7 @@ func (s *Server) RequestSignInCode(ctx context.Context, req oas.RequestSignInCod
 		pageLocale = &v
 	}
 	code := newCode()
-	id := uuid.New()
+	id := newID()
 	reader := req.Body.Reader != nil && *req.Body.Reader
 	if err := s.st.CreateLoginCode(ctx, store.CreateLoginCodeParams{
 		ID: id, Email: email, CodeHash: hashCode(id, code), Ip: ip, CreatedAt: now, ExpiresAt: now.Add(codeTTL), Reader: reader, Locale: pageLocale,
@@ -289,7 +289,7 @@ func acceptInvites(ctx context.Context, q *store.Queries, email string, now time
 	}
 	for _, inv := range invites {
 		_, err := q.CreateMember(ctx, store.CreateMemberParams{
-			ID: uuid.New(), WorkspaceID: inv.WorkspaceID, PersonID: person.ID, Role: inv.Role,
+			ID: newID(), WorkspaceID: inv.WorkspaceID, PersonID: person.ID, Role: inv.Role,
 		})
 		if err != nil && !store.IsNotFound(err) {
 			return uuid.Nil(), false, err
@@ -302,7 +302,7 @@ func createPerson(ctx context.Context, q *store.Queries, email, name, locale str
 	handle := make([]byte, webauthnHandleLen)
 	_, _ = rand.Read(handle)
 	return q.CreatePerson(ctx, store.CreatePersonParams{
-		ID: uuid.New(), Email: email, Name: name, Locale: locale, WebauthnHandle: handle,
+		ID: newID(), Email: email, Name: name, Locale: locale, WebauthnHandle: handle,
 	})
 }
 

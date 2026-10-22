@@ -58,7 +58,7 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 		if err != nil {
 			return err
 		}
-		ws, m, err := createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name}, person.ID)
+		ws, m, err := createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: newID(), Name: name}, person.ID)
 		if err != nil {
 			return err
 		}
@@ -80,6 +80,6 @@ func createOwnedWorkspace(ctx context.Context, q *store.Queries, arg store.Creat
 	if err != nil {
 		return ws, store.Member{}, err
 	}
-	m, err := q.CreateMember(ctx, store.CreateMemberParams{ID: uuid.New(), WorkspaceID: ws.ID, PersonID: personID, Role: roleOwner})
+	m, err := q.CreateMember(ctx, store.CreateMemberParams{ID: newID(), WorkspaceID: ws.ID, PersonID: personID, Role: roleOwner})
 	return ws, m, err
 }

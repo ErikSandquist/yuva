@@ -180,7 +180,7 @@ func (s *Server) FinishPasskeyRegistration(ctx context.Context, req oas.FinishPa
 		return nil, err
 	}
 	pk, err := s.st.CreatePasskey(ctx, store.CreatePasskeyParams{
-		ID: uuid.New(), PersonID: personID, RpID: s.webauthn.Config.RPID, CredentialID: cred.ID, Name: name, Credential: data,
+		ID: newID(), PersonID: personID, RpID: s.webauthn.Config.RPID, CredentialID: cred.ID, Name: name, Credential: data,
 	})
 	if store.IsUniqueViolation(err) {
 		return nil, errPasskeyExists

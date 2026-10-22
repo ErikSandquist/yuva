@@ -578,7 +578,7 @@ func (s *Server) startSession(ctx context.Context, q *store.Queries, personID uu
 	now := s.now()
 	token := randomToken(32)
 	if err := q.CreateSession(ctx, store.CreateSessionParams{
-		ID:        uuid.New(),
+		ID:        newID(),
 		PersonID:  personID,
 		TokenHash: hashSecret(token),
 		Method:    method,
