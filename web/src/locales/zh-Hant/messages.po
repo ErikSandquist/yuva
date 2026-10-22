@@ -49,6 +49,7 @@ msgid "{0, plural, one {# reply} other {# replies}}"
 msgstr "{0, plural, other {# 條回覆}}"
 
 #. placeholder {0}: g.requests_this_month
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
 msgstr "{0, plural, other {本月 # 次請求}}"
@@ -201,6 +202,14 @@ msgstr "{attachments} 個檔案,{attachmentSize}"
 msgid "{attachmentsLeft} attachments are over this server's size limit or of a type it does not keep; they stay in the original message."
 msgstr "{attachmentsLeft} 個附件超過此伺服器的大小限制,或屬於伺服器不儲存的類型;它們保留在原始郵件中。"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "{attention, plural, one {# channel needs attention} other {# channels need attention}}"
+msgstr "{attention, plural, other {# 個頻道需要處理}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "{author, select, bot {No drafts by bots} assistant {No drafts by assistants} member {No drafts by members} other {No drafts by this author}}"
+msgstr "{author, select, bot {沒有機器人的草稿} assistant {沒有助手的草稿} member {沒有成員的草稿} other {沒有此作者的草稿}}"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author},傳送者 {by}"
@@ -253,6 +262,11 @@ msgstr "{count, plural, other {# 個資料夾}}"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, other {# 個信箱}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "{count, plural, one {# scope} other {# scopes}}"
+msgstr "{count, plural, other {# 項權限}}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
@@ -460,6 +474,10 @@ msgstr "{n, plural, other {# 個電子郵件地址}}"
 msgid "{n, plural, one {# mailing list} other {# mailing lists}}"
 msgstr "{n, plural, other {# 個郵件列表}}"
 
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "{n, plural, one {# open conversation} other {# open conversations}}"
+msgstr "{n, plural, other {# 個未關閉的對話}}"
+
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
 msgstr "{n, plural, other {另外 # 個對話}}"
@@ -560,6 +578,10 @@ msgstr "{name} 透過此地址接收郵件。以下是你的設定。"
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} 搶先回覆了。"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "{name} sends through its own SMTP account, so there is no Amazon SES tenant. Checks for SPF, DKIM and DMARC are on its e-mail channel."
+msgstr "{name} 透過自己的 SMTP 帳戶傳送，因此沒有 Amazon SES 租戶。SPF、DKIM 和 DMARC 檢查在它的電子郵件頻道中。"
 
 #: src/features/contact/ContactDetail.tsx
 msgid "{name} unblocked"
@@ -864,10 +886,6 @@ msgstr "*@example.com 接收該域名下其他頻道沒有的所有地址的郵�
 msgid "+ Add address"
 msgstr "+ 新增地址"
 
-#: src/features/settings/ProductsPage.tsx
-msgid "+ Add channel"
-msgstr "+ 新增管道"
-
 #: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "本月 +{added}"
@@ -1121,6 +1139,10 @@ msgstr "說明中心文章已發布"
 msgid "A help center article was unpublished"
 msgstr "說明中心文章已取消發布"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "A key lets your backend, a script or a bot read and write conversations. Limit it to the products and scopes it needs."
+msgstr "金鑰可讓你的後端、指令碼或機器人讀取和寫入對話。請將其限制在它所需的產品和權限範圍內。"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "無人負責期間聯絡人發來的後續訊息。"
@@ -1233,7 +1255,7 @@ msgstr "關於 {name} 的問題"
 msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
 msgstr "讀者的帖子會等待成員稽覈,直到其中一篇被批准。已登入你應用程式的使用者會直接釋出。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "A real address where you receive post"
 msgstr "可以收信的真實地址"
 
@@ -1330,7 +1352,6 @@ msgstr "被採納的回答"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "存取許可權"
@@ -1363,11 +1384,6 @@ msgstr "Acme 狀態"
 msgid "Acme Support"
 msgstr "Acme 支援"
 
-#. placeholder {0}: k.name
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Actions for {0}"
-msgstr "{0} 的操作"
-
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
@@ -1387,6 +1403,10 @@ msgstr "新增"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "新增區塊"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Add a channel"
+msgstr "新增頻道"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a component"
@@ -1416,6 +1436,10 @@ msgstr "新增備註(可選)"
 msgid "Add a passkey"
 msgstr "新增通行金鑰"
 
+#: src/features/settings/AddProductDialog.tsx
+msgid "Add a product"
+msgstr "新增產品"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "使用 Streamable HTTP 傳輸新增遠端伺服器,並填寫伺服器 URL。許多用戶端接受這樣的設定:"
@@ -1442,6 +1466,10 @@ msgstr "向 {listName} 新增訂閱者"
 msgid "Add a website chat in the inbox settings"
 msgstr "在收件匣設定中新增網站聊天"
 
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "Add an address on your server and pick the events Yuva should tell it about."
+msgstr "在你的伺服器上新增一個位址，並選擇 Yuva 需要通知它的事件。"
+
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "新增分析屬性"
@@ -1461,6 +1489,7 @@ msgstr "新增收件匣"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "新增一個名為「Yuva」的 OAuth 用戶端,類型為機密用戶端,並把下面的重定向 URL 填為它的重定向 URL。"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add another"
 msgstr "再新增一個"
@@ -1489,7 +1518,6 @@ msgid "Add domain"
 msgstr "新增網域"
 
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "新增端點"
@@ -1515,6 +1543,10 @@ msgstr "新增監控（{addKey}）"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "新增備註"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add one for each product or brand you answer for. Each gets its own branding, hours, team and channels."
+msgstr "為你負責的每個產品或品牌各新增一個。每個都有自己的品牌、營業時間、團隊和頻道。"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "Add product"
@@ -1657,12 +1689,25 @@ msgstr "Alertmanager"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "全部"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "All assistants"
+msgstr "所有助手"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels"
+msgstr "所有頻道"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels work"
+msgstr "所有頻道均正常"
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1678,9 +1723,7 @@ msgid "All imports"
 msgstr "所有匯入"
 
 #: src/app/Palette.tsx
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "所有收件匣"
@@ -1698,8 +1741,8 @@ msgid "All monitors"
 msgstr "所有監控"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "All of its conversations are deleted with it."
-msgstr "它的所有對話也會一併刪除。"
+msgid "All of its conversations, messages and attachments are deleted with it. Webhooks and API keys limited to it stop working."
+msgstr "它的所有對話、訊息和附件會一併刪除。限定於它的 Webhook 和 API 金鑰將停止運作。"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
@@ -1712,10 +1755,13 @@ msgstr "所有產品"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "All products"
 msgstr "所有產品"
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1797,11 +1843,11 @@ msgstr "也用於登入和通知郵件"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "也為成員的內部備註傳送 message.created。內部事件絕不會傳送。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Always"
 msgstr "永遠"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -1813,9 +1859,9 @@ msgstr "Amazon SES"
 msgid "Amazon SES · {region}"
 msgstr "Amazon SES · {region}"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Amazon SES error"
-msgstr "Amazon SES 錯誤"
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES cannot verify the sending domain yet. Publish the DNS records, then check again."
+msgstr "Amazon SES 暫時無法驗證寄件網域。請發佈 DNS 記錄，然後再次檢查。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES itself paused it; the operator has to open a case with AWS."
@@ -1824,6 +1870,10 @@ msgstr "Amazon SES 自身已將其暫停;維運人員需要向 AWS 提交工單�
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
 msgstr "Amazon SES 已暫停此收件匣的傳送。在伺服器維運人員恢復之前,它透過 SES 發出的郵件會被以「Sending disabled」拒絕。其他收件匣繼續傳送。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES paused sending. Replies and broadcasts are refused until the operator reinstates it."
+msgstr "Amazon SES 已暫停傳送。在營運方恢復之前，回覆和大量寄送都會被拒絕。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -1841,6 +1891,10 @@ msgstr "Amazon SES 暫停了此收件匣的租戶,或頻道失去了租戶隔離
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused a step of the tenant setup."
 msgstr "Amazon SES 拒絕了租戶設定的某一步。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES refused to send for this channel. Check the deliverability tab for the reason."
+msgstr "Amazon SES 拒絕為此頻道傳送。請在「送達率」分頁查看原因。"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused to set up the tenant: <0>{detail}</0>"
@@ -1893,7 +1947,7 @@ msgstr "應用程式專用密碼可能被用來修改郵件;Yuva 的連線會拒
 msgid "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
 msgstr "已歸檔的列表會保留訂閱者和記錄,但表單和偏好設定頁面不再提供它。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "An e-mail address, phone number or web address"
 msgstr "電子郵件地址、電話號碼或網址"
 
@@ -1950,6 +2004,10 @@ msgstr "某個事件已解決或某次維護已完成"
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "當對方使用傳送到該地址的驗證碼登入時,邀請即被接受。7 天后過期。"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "An mbox export of a mailbox"
+msgstr "信箱的 mbox 匯出"
+
 #: src/features/team/TeamPage.tsx
 msgid "An owner cannot be removed. Change their role first."
 msgstr "無法移除擁有者。請先變更其角色。"
@@ -1997,6 +2055,10 @@ msgstr "另一個帳號"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "此頻道接收郵件的另一個地址。請把信箱轉發到這裡,例如在其供應商處轉發到 {own};轉發到 {own} 本身會造成迴圈。"
+
+#: src/features/settings/canned/CannedReplyDialog.tsx
+msgid "Another canned reply already uses this shortcut."
+msgstr "另一個快捷回覆已在使用此快速鍵。"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
@@ -2108,12 +2170,13 @@ msgid "API"
 msgstr "API"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API & MCP"
 msgstr "API 與 MCP"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "API channel"
 msgstr "API 頻道"
 
@@ -2122,10 +2185,19 @@ msgid "API key"
 msgstr "API 金鑰"
 
 #: src/app/Palette.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "API 金鑰"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants deliver replies at once, without a member reviewing them first."
+msgstr "API 金鑰和助手會立即送出回覆，無需成員先審閱。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants will deliver replies at once. Customers receive what they write, with nobody reviewing it first. You can turn this off again at any time."
+msgstr "API 金鑰和助手將立即送出回覆。客戶會收到所寫內容，沒有人會先審閱。你可以隨時再次關閉。"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
@@ -2308,25 +2380,43 @@ msgstr "已指派給 {assignee}"
 msgid "Assigned to {assignee}, kept by name"
 msgstr "已指派給 {assignee},按名稱保留"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistant"
+msgstr "助手"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Assistants"
 msgstr "助手"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys may send replies themselves: <0>Bots may send</0> is on in this workspace."
+msgstr "助手和 API 金鑰可以自行傳送回覆：此工作區已開啟<0>允許機器人傳送</0>。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys write drafts; a member reviews and sends them. <0>Bots may send</0> is off in this workspace."
+msgstr "助手和 API 金鑰撰寫草稿，由成員審閱並傳送。此工作區已關閉<0>允許機器人傳送</0>。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Assistants and apps you connected with your sign-in. Each acts as you, only within the access you allowed."
 msgstr "你用自己的登入連線的助手和應用程式。每個都以你的身份執行,僅限你允許的存取範圍。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "Assistants work in Yuva through MCP on this server’s <0>/mcp</0>, with the access you approve."
-msgstr "助理透過 MCP 在 Yuva 中運作，位址是此伺服器的 <0>/mcp</0>，權限由你核准。"
+msgid "Assistants work in Yuva through MCP on this server. They act as the member who connected them, with only the access that member approved. Drafts wait for review in Assistants."
+msgstr "助手透過此伺服器上的 MCP 在 Yuva 中工作。它們以連線它們的成員身分行事，且僅擁有該成員核准的存取權限。草稿會在「助手」中等待審閱。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants work in Yuva through MCP, acting as the member who connected them, with only the access that member approved."
+msgstr "助手透過 MCP 在 Yuva 中工作，以連線它們的成員身分行事，且僅擁有該成員核准的存取權限。"
 
 #: src/app/Rail.tsx
 msgid "Assistants, {drafts} drafts waiting"
 msgstr "助手,{drafts} 份草稿等待中"
 
 #: src/components/common/text.ts
+#: src/features/settings/AddProductDialog.tsx
 msgid "Async"
 msgstr "非同步"
 
@@ -2368,7 +2458,6 @@ msgid "Attempt log"
 msgstr "嘗試記錄"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "嘗試次數"
 
@@ -2414,7 +2503,6 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "沒人回覆過的自動回覆、新聞簡報和送達報告。"
 
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
@@ -2569,6 +2657,7 @@ msgstr "粗體"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
@@ -2596,6 +2685,7 @@ msgstr "機器人名稱(可選)"
 msgid "Both records were found. Yuva checks them once a day; keep them in place."
 msgstr "兩筆記錄都已找到。Yuva 每天檢查一次，請保持不變。"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "機器人"
@@ -2660,10 +2750,6 @@ msgstr "匯入已在別處同意的訂閱者。每個地址會先檢查,開始�
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "匯入你目前用來回覆的信箱的歷史記錄,然後切換它的郵件。Yuva 只讀取信箱,不會更改其中任何內容。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Bring your mail and help-desk history, read only from the source"
-msgstr "匯入你的郵件與客服歷史紀錄，對來源唯讀"
-
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "匯入你的舊郵件"
@@ -2678,9 +2764,9 @@ msgstr "群發"
 msgid "Broadcast · {people} people · {when}"
 msgstr "群發 · {people} 人 · {when}"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcast sending"
 msgstr "群發傳送"
 
@@ -2692,7 +2778,6 @@ msgstr "群發傳送"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "群發"
 
@@ -2774,7 +2859,10 @@ msgstr "活動名稱"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/status/AddSubscriberDialog.tsx
@@ -2895,6 +2983,10 @@ msgstr "變更"
 msgid "Change address"
 msgstr "更改地址"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Change in API & MCP"
+msgstr "在 API 和 MCP 中變更"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
@@ -2937,12 +3029,14 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "更改傳送域名會關閉 DKIM 簽名,直到你為新域名重新啟用。"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "頻道"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "Channel added"
 msgstr "已新增頻道"
 
@@ -2955,15 +3049,22 @@ msgid "Channel settings"
 msgstr "頻道設定"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "管道"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Chat"
+msgstr "聊天"
 
 #: src/features/docs/InstallDialog.tsx
 msgid "Chat channel"
 msgstr "聊天管道"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 msgid "Check"
 msgstr "檢查"
 
@@ -2984,7 +3085,7 @@ msgstr "複製任何內容之前先檢查"
 msgid "Check deliverability and set up DKIM"
 msgstr "檢查送達率並設定 DKIM"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Check DNS"
 msgstr "檢查 DNS"
 
@@ -3300,6 +3401,8 @@ msgstr "集合"
 msgid "Color"
 msgstr "顏色"
 
+#: src/features/settings/AddProductDialog.tsx
+#: src/features/settings/inboxes/colors.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "顏色"
@@ -3332,7 +3435,7 @@ msgstr "逗號"
 msgid "Comparison of condition {n}"
 msgstr "條件 {n} 的比較"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "完成"
@@ -3429,6 +3532,7 @@ msgid "confirmed their address in the last {days} days"
 msgstr "最近 {days} 天內確認了地址"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/text.ts
 #: src/features/migrations/Wizard.tsx
@@ -3450,13 +3554,19 @@ msgstr "將 {clientName} 連線到 Yuva?"
 msgid "Connect {provider}"
 msgstr "連線 {provider}"
 
-#: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Connect an assistant"
 msgstr "連線助手"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "連線 Claude 或 ChatGPT 等助手"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connect Claude, ChatGPT, Cursor or another MCP client to let it read conversations and draft replies for you to review."
+msgstr "連線 Claude、ChatGPT、Cursor 或其他 MCP 用戶端，讓它讀取對話並撰寫回覆草稿供你審閱。"
 
 #: src/features/account/ConnectPage.tsx
 msgid "Connect to {host}"
@@ -3467,6 +3577,7 @@ msgid "Connect your servers and bots to Yuva"
 msgstr "把你的伺服器和機器人連線到 Yuva"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
@@ -3478,13 +3589,19 @@ msgstr "{created} 連線"
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "已連線的應用程式"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connected by {by} on {since}"
+msgstr "由 {by} 於 {since} 連線"
+
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected on {since}"
 msgstr "連線於 {since}"
@@ -3508,10 +3625,6 @@ msgstr "已連線到 {provider}"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
 msgstr "已連線到 {storedHost}。只有要更改密碼時才需要再次輸入。"
-
-#: src/features/settings/connected-apps/AssistantPage.tsx
-msgid "Connected under another name? All connections are in <0>Connected apps</0>."
-msgstr "用另一個名稱連線的?所有連線都在<0>已連線的應用程式</0>中。"
 
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
@@ -3547,7 +3660,7 @@ msgstr "同意記錄"
 #: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Contact"
 msgstr "聯絡人"
 
@@ -3609,6 +3722,7 @@ msgstr "內容"
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -3814,6 +3928,7 @@ msgid "Country"
 msgstr "國家/地區"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Create"
 msgstr "建立"
 
@@ -3836,6 +3951,10 @@ msgstr "在 Help Scout 中建立應用程式"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "在 Zendesk 中建立 OAuth 用戶端"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "Create and add a channel"
+msgstr "建立並新增頻道"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Create another"
@@ -3924,7 +4043,9 @@ msgstr "Cron"
 msgid "CSV file"
 msgstr "CSV 檔案"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/inboxes/colors.tsx
 msgid "Custom"
 msgstr "自訂"
 
@@ -4015,7 +4136,6 @@ msgstr "效能降低"
 #: src/features/contact/ContactNotes.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -4048,6 +4168,10 @@ msgstr "刪除 {0}?"
 msgid "Delete {name}?"
 msgstr "刪除 {name}?"
 
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete {name}…"
+msgstr "刪除 {name}…"
+
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Delete after (days)"
 msgstr "多少天后刪除"
@@ -4069,10 +4193,6 @@ msgstr "刪除草稿（{removeKey}）"
 msgid "Delete group"
 msgstr "刪除群組"
 
-#: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "Delete inbox"
-msgstr "刪除收件匣"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Delete key"
 msgstr "刪除金鑰"
@@ -4093,6 +4213,10 @@ msgstr "刪除我的帳號"
 #: src/features/status/SettingsTab.tsx
 msgid "Delete page"
 msgstr "刪除頁面"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete product"
+msgstr "刪除產品"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
@@ -4149,6 +4273,10 @@ msgstr "刪除此備註"
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note?"
 msgstr "刪除此備註?"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete this product"
+msgstr "刪除此產品"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete this subscription?"
@@ -4229,10 +4357,6 @@ msgstr "投遞記錄"
 msgid "Deliveries show up here once a subscribed event happens."
 msgstr "訂閱的事件發生後,投遞記錄會顯示在這裡。"
 
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Delivering"
-msgstr "投遞中"
-
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Delivery details"
 msgstr "投遞詳情"
@@ -4284,6 +4408,10 @@ msgstr "詳情"
 msgid "Deutsch"
 msgstr "Deutsch"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Developers"
+msgstr "開發者"
+
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "裝置"
@@ -4304,6 +4432,10 @@ msgstr "目錄(租戶)ID,可選"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "丟棄"
+
+#: src/components/common/SaveBar.tsx
+msgid "Discard changes"
+msgstr "捨棄變更"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Discard the suggested reply"
@@ -4327,7 +4459,6 @@ msgstr "討論已開始"
 #: src/features/docs/DiscussionsTab.tsx
 #: src/features/docs/DocsPage.tsx
 #: src/features/docs/PagesTab.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
@@ -4366,7 +4497,6 @@ msgstr "顯示"
 msgid "Display name"
 msgstr "顯示名稱"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
@@ -4436,7 +4566,7 @@ msgstr "文件是你在自己網站上維護並自行代管的頁面。當 Yuva 
 msgid "Documentation pages"
 msgstr "文件頁面"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Documentation site"
 msgstr "文件站點"
@@ -4536,12 +4666,14 @@ msgctxt "migration state"
 msgid "Draft"
 msgstr "草稿"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft author"
 msgstr "草稿作者"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author} 的草稿"
@@ -4568,10 +4700,12 @@ msgstr "草稿:"
 msgid "Drafts"
 msgstr "草稿"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "待處理草稿"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting for review and the assistants you connected"
 msgstr "等待審核的草稿和你連接的助理"
@@ -4601,6 +4735,7 @@ msgstr "重複項目"
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -4620,10 +4755,6 @@ msgstr "電子郵件地址"
 #: src/features/contact/MergePreview.tsx
 msgid "E-mail addresses"
 msgstr "電子郵件地址"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
-msgstr "電子郵件聯絡人會收到一封帶兩個連結的簡短郵件;聊天和應用程式聯絡人則在小部件或應用程式中詢問。"
 
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
@@ -4712,8 +4843,8 @@ msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "每封新郵件開啟一個對話;回覆會延續該對話。"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "Each product has its own name, branding, hours and channels"
-msgstr "每個產品都有自己的名稱、品牌、工作時間與管道"
+msgid "Each product has its own name, branding, hours, team and channels"
+msgstr "每個產品都有自己的名稱、品牌、營業時間、團隊和頻道"
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4740,6 +4871,10 @@ msgstr "編輯"
 #: src/features/status/MonitorsPage.tsx
 msgid "Edit ({editKey})"
 msgstr "編輯 ({editKey})"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Edit {keyName}"
+msgstr "編輯 {keyName}"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4900,6 +5035,10 @@ msgstr "輸入 SES 控制檯中的 SMTP 密碼。"
 msgid "Enter the SMTP user name from the SES console."
 msgstr "輸入 SES 控制檯中的 SMTP 使用者名稱。"
 
+#: src/features/settings/workspace/RetentionForm.tsx
+msgid "Enter whole days from 1 to 36,500, or leave it empty."
+msgstr "請輸入 1 到 36,500 之間的整數天數，或留空。"
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "輸入你的工作信箱,我們會給你發一個驗證碼。無需密碼;之後同樣用驗證碼登入。"
@@ -4922,7 +5061,6 @@ msgstr "錯誤或回答"
 
 #: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "事件"
@@ -5025,6 +5163,7 @@ msgstr "所有人的帖子都會立即釋出,但你標記為垃圾的作者除�
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "全部"
@@ -5045,7 +5184,7 @@ msgstr "一切就緒。開啟任意部分即可更改,或在其設定中新增�
 msgid "Everywhere"
 msgstr "所有位置"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Example Ltd."
 msgstr "Example Ltd."
 
@@ -5129,12 +5268,9 @@ msgid "Failed: {0}"
 msgstr "失敗:{0}"
 
 #: src/features/settings/webhooks/parts.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Failing"
 msgstr "失敗中"
-
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Failing since {since} · retrying"
-msgstr "自 {since} 起失敗 · 正在重試"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Fails the monitor at once, without waiting for the grace."
@@ -5201,6 +5337,10 @@ msgstr "檔案"
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
 msgstr "檔案與同意"
+
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Files"
+msgstr "檔案"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
@@ -5321,6 +5461,7 @@ msgid "First, an e-mail address"
 msgstr "首先,輸入電子郵件地址"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "修正"
@@ -5397,6 +5538,7 @@ msgid "For example Acme"
 msgstr "例如 Acme"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "例如 Fieldnote"
@@ -5524,14 +5666,6 @@ msgstr "來自已遮蔽的聯絡人"
 msgid "From a conversation"
 msgstr "來自一個對話"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a help desk"
-msgstr "來自客服系統"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a mailbox"
-msgstr "來自信箱"
-
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "發件地址(可選)"
@@ -5548,6 +5682,7 @@ msgstr "從終端"
 msgid "From your site or app"
 msgstr "從你的網站或應用程式"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Full API"
 msgstr "完整 API"
@@ -5588,14 +5723,10 @@ msgid "Gallery"
 msgstr "範本庫"
 
 #: src/app/Sidebar.tsx
-#: src/features/migrations/MigrationsPage.tsx
-#: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/GeneralTabs.tsx
-#: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "常規"
 
@@ -5643,9 +5774,9 @@ msgstr "Gmail 只轉發非垃圾的新郵件。如果 Workspace 管理員關閉�
 msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
 msgstr "Gmail 允許其他應用程式透過 IMAP 每天讀取約 1.5 GB,因此幾十 GB 的信箱需要好幾天。Google Takeout 會把它匯出為一個檔案,上傳速度取決於你的網速。先匯入它,再帶著應用程式專用密碼回到這裡匯入較新的郵件並完成切換。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Gmail, Outlook, Yandex, any IMAP"
-msgstr "Gmail、Outlook、Yandex、任何 IMAP"
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Gmail, Outlook, Yandex, any IMAP server"
+msgstr "Gmail、Outlook、Yandex、任何 IMAP 伺服器"
 
 #: src/features/status/IncidentDetail.tsx
 msgid "go back to operational when you post this"
@@ -5800,6 +5931,10 @@ msgstr "說明中心"
 msgid "Help center settings"
 msgstr "說明中心設定"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Help desks"
+msgstr "客服系統"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help report"
 msgstr "說明報告"
@@ -5866,6 +6001,10 @@ msgstr "隱藏 HTTP 詳細資料"
 msgid "Hide quoted text"
 msgstr "隱藏引用文字"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Hide revoked"
+msgstr "隱藏已撤銷"
+
 #: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "隱藏預覽"
@@ -5931,6 +6070,10 @@ msgstr "主機名稱和憑證"
 msgid "Hours"
 msgstr "營業時間"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Hours & team"
+msgstr "營業時間和團隊"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "他們是怎麼同意的?"
@@ -5942,6 +6085,10 @@ msgstr "你的訂閱者是怎麼同意的?"
 #: src/features/setup/NewsletterStep.tsx
 msgid "How do people sign up?"
 msgstr "大家如何註冊？"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "How do you answer?"
+msgstr "你如何回覆？"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
@@ -5963,6 +6110,10 @@ msgstr "心跳訊號可以遲到多久。"
 msgid "How mail reaches Yuva"
 msgstr "郵件如何到達 Yuva"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "How messages arrive: chat, e-mail, apps"
+msgstr "訊息如何抵達：聊天、電子郵件、應用程式"
+
 #: src/features/settings/ProductsPage.tsx
 msgid "How messages reach each product"
 msgstr "訊息如何送達每個產品"
@@ -5970,6 +6121,14 @@ msgstr "訊息如何送達每個產品"
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
 msgstr "回覆應如何發出?"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "How software connects: keys, hooks, assistants"
+msgstr "軟體如何連線：金鑰、Webhook、助手"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "How the chat opens"
+msgstr "聊天如何開啟"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -5992,10 +6151,6 @@ msgstr "如何新增"
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
 msgstr "如何傳送郵件"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "How to verify"
-msgstr "如何驗證"
 
 #: src/features/status/text.tsx
 msgid "HTTP"
@@ -6037,10 +6192,6 @@ msgstr "想法"
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "已確認"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Identity not verified"
-msgstr "身份未驗證"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Identity secret"
@@ -6249,7 +6400,7 @@ msgstr "進行中"
 msgid "In the app and by e-mail"
 msgstr "在應用程式內和透過郵件"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "In the footer"
 msgstr "在頁尾"
 
@@ -6287,7 +6438,6 @@ msgstr "在 Zoho Mail 中,開啟「設定 › 郵件帳戶 › IMAP 存取」並
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "收件匣"
@@ -6346,8 +6496,8 @@ msgstr "洞察"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "安裝"
@@ -6526,6 +6676,7 @@ msgstr "它將不再收到通知。"
 msgid "Italic"
 msgstr "斜體"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "它的存取許可權會立即結束。如需再次使用,請重新連線。"
@@ -6606,7 +6757,8 @@ msgstr "關鍵數據"
 msgid "Keyboard shortcuts"
 msgstr "鍵盤快捷鍵"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Keys"
 msgstr "金鑰"
 
@@ -6617,6 +6769,10 @@ msgstr "此工作區中,金鑰和助手不能安排群發。"
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Keys and assistants may send broadcasts"
 msgstr "金鑰和助手可以傳送群發"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Keys that can reach this product. Create and revoke them under API & MCP."
+msgstr "可存取此產品的金鑰。請在 API 和 MCP 中建立和撤銷。"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -6668,6 +6824,10 @@ msgstr "標籤"
 #: src/features/inbox/ChatList.tsx
 msgid "Labels changed"
 msgstr "標籤已變更"
+
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "Labels sort conversations by topic, such as billing or bugs."
+msgstr "標籤依主題整理對話，例如帳單或錯誤。"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6776,6 +6936,7 @@ msgstr "最後使用"
 msgid "last used {used}"
 msgstr "最近使用 {used}"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Last used {used}"
 msgstr "最近使用 {used}"
@@ -6828,9 +6989,13 @@ msgstr "被條件或語言排除"
 msgid "Left out: {left} of {total} people on the lists"
 msgstr "已排除：清單中 {total} 人裡的 {left} 人"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Legal name"
 msgstr "法定名稱"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Let bots send replies?"
+msgstr "允許機器人傳送回覆嗎？"
 
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
@@ -7002,11 +7167,12 @@ msgid "Lists"
 msgstr "列表"
 
 #: src/components/common/text.ts
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Live"
 msgstr "線上"
 
 #: src/components/common/Source.tsx
+#: src/features/settings/AddProductDialog.tsx
 msgid "Live chat"
 msgstr "線上聊天"
 
@@ -7073,7 +7239,6 @@ msgstr "已鎖定:讀者無法再在這裡發言。你仍然可以。"
 msgid "Logo URL"
 msgstr "Logo 網址"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Look"
 msgstr "檢視"
@@ -7191,6 +7356,7 @@ msgstr "信箱地址"
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Mailboxes"
 msgstr "信箱"
 
@@ -7233,6 +7399,7 @@ msgstr "產生新位址"
 msgid "Make the board public or private"
 msgstr "將看板設為公開或私有"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -7350,6 +7517,7 @@ msgstr "zip 中的 mbox 檔案"
 msgid "mbox options"
 msgstr "mbox 選項"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
 msgstr "僅 MCP"
@@ -7388,12 +7556,14 @@ msgstr "首次回覆中位數"
 msgid "median today"
 msgstr "今日中位數"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "成員"
 
 #: src/app/Palette.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7553,8 +7723,8 @@ msgid "Missed beat"
 msgstr "漏掉的心跳訊號"
 
 #: src/components/common/text.ts
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/channels/app/AppFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Mobile app"
 msgstr "移動應用程式"
@@ -7730,7 +7900,6 @@ msgstr "移到上一個或下一個階段"
 
 #: src/features/settings/GeneralTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "遷移到 Yuva"
 
@@ -7819,6 +7988,10 @@ msgstr "命名為 Yuva。在<0>連線</0>下選擇<1>公開端點</1>並貼上�
 msgid "Name of the new inbox"
 msgstr "新收件匣的名稱"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Name, colour and the first thing the chat says"
+msgstr "名稱、顏色，以及聊天說的第一句話"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Name, e-mail or id"
 msgstr "名稱、電子郵件或 ID"
@@ -7831,7 +8004,7 @@ msgstr "名稱,例如 工作筆記本"
 msgid "name@example.com"
 msgstr "name@example.com"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Needed for broadcasts"
 msgstr "群發所需"
 
@@ -7841,6 +8014,7 @@ msgstr "需要發件人"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "需要處理"
@@ -7895,6 +8069,7 @@ msgid "New addresses that get a confirmation mail"
 msgstr "會收到確認郵件的新地址"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "New API key"
 msgstr "新增 API 金鑰"
 
@@ -8081,6 +8256,10 @@ msgstr "新的更新 · {stage}"
 msgid "New value"
 msgstr "新值"
 
+#: src/features/settings/DeveloperTabs.tsx
+msgid "New webhook endpoint"
+msgstr "新的 Webhook 端點"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "較新的郵件與切換"
@@ -8145,6 +8324,10 @@ msgstr "下一封郵件將在 {local}({utc} UTC)按此群發的速度發出。"
 msgid "Next screenshot"
 msgstr "下一張截圖"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Next you pick the source and connect it. Nothing is copied until you start."
+msgstr "接下來你選擇來源並連線它。在你開始之前不會複製任何內容。"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "接下來選擇要匯入的內容。掃描只會讀取一次檔案。"
@@ -8177,9 +8360,13 @@ msgstr "無回答"
 msgid "No answer"
 msgstr "無回答"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "No API keys can reach this product yet."
+msgstr "還沒有 API 金鑰可以存取此產品。"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "No API keys yet."
-msgstr "還沒有 API 金鑰。"
+msgid "No API keys yet"
+msgstr "還沒有 API 金鑰"
 
 #: src/features/migrations/text.ts
 msgid "No API on this plan"
@@ -8192,6 +8379,10 @@ msgstr "沒有「應用程式專用密碼」頁面?你的管理員必須在 Goog
 #: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "沒有已歸檔的列表"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No assistant is connected yet"
+msgstr "還沒有連線助手"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and draft replies."
@@ -8247,7 +8438,6 @@ msgid "No channels yet"
 msgstr "還沒有頻道"
 
 #. placeholder {0}: inbox.name
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "還沒有頻道。新增一個,客戶就可以寫信到 {0}。"
@@ -8285,8 +8475,8 @@ msgid "No confirmation"
 msgstr "無需確認"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "No connected apps."
-msgstr "沒有已連線的應用程式。"
+msgid "No connected apps"
+msgstr "沒有已連線的應用程式"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
@@ -8332,6 +8522,14 @@ msgstr "沒有可選擇的對話。"
 msgid "No conversations yet."
 msgstr "還沒有對話。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "No days picked: the product counts as closed all week."
+msgstr "未選擇任何日期：該產品整週都視為關閉。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No deliveries yet"
+msgstr "還沒有投遞記錄"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "No design yet"
 msgstr "還沒有設計"
@@ -8351,6 +8549,10 @@ msgstr "還沒有討論。讀者會在你的文件頁面下發起討論。"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
 msgstr "沒有透過的 DKIM 簽名,因此無法傳送群發。請在你的 SMTP 供應商處設定 DKIM,或在下面開啟 Yuva DKIM。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No drafts are waiting"
+msgstr "沒有待處理的草稿"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -8379,6 +8581,10 @@ msgstr "尚無電子郵件訂閱者"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
 msgstr "未找到表情符號。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No endpoints yet"
+msgstr "還沒有端點"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "No endpoints yet."
@@ -8523,8 +8729,8 @@ msgid "No pending invites."
 msgstr "沒有待處理的邀請。"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "No products yet. Add one for each product or brand you answer for."
-msgstr "還沒有產品。為你負責的每個產品或品牌各新增一個。"
+msgid "No products yet"
+msgstr "還沒有產品"
 
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
@@ -8865,6 +9071,7 @@ msgstr "一分鐘後還沒收到?請檢視垃圾郵件資料夾,或在下面重�
 msgid "Not uploaded yet"
 msgstr "尚未上傳"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "尚未使用"
@@ -8911,6 +9118,10 @@ msgstr "{provider} 沒有任何更改;如果你願意,可以把該帳號保留�
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "檔案中的任何內容都不會被新增,已上傳的檔案會被刪除。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Nothing from this kind of author is waiting for review."
+msgstr "此類作者沒有待審閱的內容。"
 
 #: src/features/status/MonitorChecks.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -8991,6 +9202,10 @@ msgstr "沒有符合這些篩選條件的內容。"
 msgid "Nothing matches your search here."
 msgstr "這裡沒有符合你搜尋的內容。"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Nothing needs attention right now."
+msgstr "目前沒有需要處理的事項。"
+
 #: src/features/home/HomePage.tsx
 msgid "Nothing needs you"
 msgstr "沒有需要你處理的事"
@@ -9067,7 +9282,6 @@ msgstr "關閉"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
-#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Off"
 msgstr "關"
 
@@ -9167,10 +9381,6 @@ msgstr "在 Team 和 Enterprise 套餐中,由所有者在<0>組織設定 › 聯
 msgid "On the web"
 msgstr "在網頁上"
 
-#: src/features/settings/OnThisPage.tsx
-msgid "On this page"
-msgstr "本頁內容"
-
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
 msgstr "測試訊息到達後,Yuva 會等待 {hours} 小時。如果這段時間內沒有郵件只到達 {provider},遷移會自動完成。你也可以自己完成。"
@@ -9233,6 +9443,7 @@ msgstr "線上"
 #: src/features/contact/Presence.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Online now"
 msgstr "當前線上"
 
@@ -9424,6 +9635,11 @@ msgstr "開啟應用程式註冊"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open Apps and services"
 msgstr "開啟應用程式和服務"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Open channels"
+msgstr "開啟頻道"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -9666,6 +9882,10 @@ msgstr "未關閉,未指派"
 msgid "Opens"
 msgstr "開啟數"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Opens the conversation with the draft in the composer"
+msgstr "開啟對話，並把草稿放入輸入框"
+
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "運作正常"
@@ -9769,8 +9989,8 @@ msgid "Outlook's .pst files are not read; convert them to .mbox first."
 msgstr "不會讀取 Outlook 的 .pst 檔案;請先將其轉換為 .mbox。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Outside them the inbox counts as closed"
-msgstr "在此之外,收件匣視為已關閉"
+msgid "Outside them the product counts as closed."
+msgstr "除此之外，產品視為關閉。"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Over time"
@@ -9803,8 +10023,8 @@ msgid "Owners and admins see every inbox; agents see the inboxes they were given
 msgstr "擁有者和管理員可以查看所有收件匣；客服人員只能查看分配給自己的收件匣。只有擁有者和管理員可以邀請、變更角色或移除成員。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Owners and admins see every inbox; members see the inboxes they are given."
-msgstr "所有者和管理員能看到所有收件匣;成員只能看到指派給他們的收件匣。"
+msgid "Owners and admins see every product; agents see the products they are given."
+msgstr "擁有者和管理員可檢視所有產品；客服只能檢視分配給他們的產品。"
 
 #: src/features/team/TeamPage.tsx
 msgid "Owners can do everything, including billing and deleting the workspace."
@@ -9929,8 +10149,8 @@ msgstr "暫停或繼續監控"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
@@ -9946,10 +10166,6 @@ msgstr "已暫停,因為 Amazon SES 暫停了此收件匣的租戶,或頻道失�
 #: src/components/common/text.ts
 msgid "Paused because the workspace may not send broadcasts for now."
 msgstr "已暫停,因為工作區暫時不能傳送群發。"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Paused by Amazon SES"
-msgstr "已被 Amazon SES 暫停"
 
 #: src/components/common/text.ts
 msgid "Paused by the server's operator."
@@ -10147,6 +10363,10 @@ msgstr "請在未來 90 天內選擇一個時間,按你的時區 {zone}。"
 msgid "Pick a TLS mode."
 msgstr "請選擇 TLS 模式。"
 
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+msgid "Pick an assistant below to connect one."
+msgstr "請在下方選擇要連線的助手。"
+
 #: src/components/common/text.ts
 msgid "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 msgstr "選擇此收件匣中帶有 SMTP 帳號的郵件頻道。它會傳送確認郵件和歡迎郵件。"
@@ -10230,6 +10450,10 @@ msgstr "選擇 {provider} 的對話所屬的收件匣、每位客服對應哪位
 msgid "Pick the list the people join."
 msgstr "選擇人們要加入的清單。"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Pick the one you use. Setup steps and scopes are on API & MCP."
+msgstr "請選擇你使用的那個。設定步驟和權限在 API 和 MCP 中。"
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "選擇另一位聯絡人。它會合併到這位聯絡人中,然後被刪除。"
@@ -10237,6 +10461,10 @@ msgstr "選擇另一位聯絡人。它會合併到這位聯絡人中,然後被�
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "選擇平臺;下一步會顯示要新增到每個應用程式的程式碼。"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Pick the product and how customers reach it. The next steps set it up."
+msgstr "選擇產品以及客戶聯絡它的方式。後續步驟會進行設定。"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Pick the same file again"
@@ -10357,7 +10585,7 @@ msgstr "發布狀態更新"
 msgid "Post update"
 msgstr "發布更新"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Postal address"
 msgstr "郵寄地址"
 
@@ -10380,6 +10608,7 @@ msgstr "準備中"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
 #: src/features/status/StatusPages.tsx
@@ -10448,11 +10677,15 @@ msgstr "pro、team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "產品"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
 msgstr "產品名稱"
@@ -10461,6 +10694,11 @@ msgstr "產品名稱"
 #: src/features/setup/previews.tsx
 msgid "Product news"
 msgstr "產品動態"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Product settings"
+msgstr "產品設定"
 
 #: src/features/inbox/ProductSwitcher.tsx
 msgid "Product: {label}"
@@ -10472,10 +10710,12 @@ msgid "Production backend"
 msgstr "生產環境後端"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/TeamPage.tsx
@@ -10757,6 +10997,7 @@ msgstr "讀取說明中心、合集和文章"
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "讀取郵件列表、訂閱者和同意記錄"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "只讀"
@@ -10840,8 +11081,7 @@ msgstr "即時"
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "{when} 收到。請填入 Gmail 的轉發設定,或開啟連結。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Receives only"
 msgstr "僅接收"
 
@@ -10931,7 +11171,7 @@ msgstr "區域"
 msgid "Register an app in Microsoft Entra"
 msgstr "在 Microsoft Entra 中註冊應用程式"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Registration"
 msgstr "註冊"
 
@@ -10948,13 +11188,11 @@ msgstr "重新載入"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "遠端圖片可能會讓發件人知道你已開啟郵件。"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 #: src/features/team/TeamPage.tsx
@@ -11115,11 +11353,14 @@ msgstr "在另一個對話的對話串中回覆了"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "回覆"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
+msgstr "助手、機器人或同事撰寫的回覆會顯示在這裡，直到有人傳送或捨棄它們。"
 
 #: src/features/account/AccountPage.tsx
 msgid "Replies and answers in the discussions you follow"
@@ -11128,6 +11369,10 @@ msgstr "你關注的討論中的回覆和回答"
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "回覆和關閉"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies and ratings"
+msgstr "回覆和評價"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Replies cannot go out until you add a reply account."
@@ -11161,6 +11406,10 @@ msgstr "今日回覆"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "回覆經由"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies when available"
+msgstr "有空時回覆"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "replies within {within}"
@@ -11414,7 +11663,7 @@ msgstr "審閱並發布"
 msgid "Review and send"
 msgstr "稽覈併傳送"
 
-#: src/features/inbox/SidePanels.tsx
+#: src/features/inbox/AssistantsPage.tsx
 msgid "Review draft"
 msgstr "審閱草稿"
 
@@ -11432,14 +11681,20 @@ msgstr "稽覈,然後傳送或安排傳送"
 msgid "Revisions"
 msgstr "修訂"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
 msgstr "撤銷"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke {clientName}?"
 msgstr "撤銷 {clientName}?"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Revoke {keyName}"
+msgstr "撤銷 {keyName}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Revoke {keyName}?"
@@ -11572,6 +11827,10 @@ msgstr "儲存"
 msgid "Save as draft"
 msgstr "儲存為草稿"
 
+#: src/components/common/SaveBar.tsx
+msgid "Save changes"
+msgstr "儲存變更"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "儲存草稿"
@@ -11584,16 +11843,20 @@ msgstr "儲存後複製其識別符號和金鑰,金鑰在 Zendesk 中只顯示�
 msgid "Save now and keep a version"
 msgstr "立即儲存並保留一個版本"
 
+#: src/features/settings/canned/CannedRepliesPage.tsx
+msgid "Save the answers you write often, then insert them in the composer with a shortcut."
+msgstr "儲存你常寫的回覆，然後用快速鍵把它們插入輸入框。"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save the draft now"
 msgstr "立即儲存草稿"
 
+#: src/components/common/SaveBar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -12020,7 +12283,7 @@ msgstr "發件人"
 msgid "Sender details for the footer"
 msgstr "頁尾中的發件人資訊"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Sender identity"
 msgstr "發件人身份"
 
@@ -12029,7 +12292,6 @@ msgstr "發件人身份"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/Notices.tsx
@@ -12050,7 +12312,7 @@ msgstr "正在透過郵件傳送…"
 msgid "Sending channel"
 msgstr "傳送頻道"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Sending error"
 msgstr "傳送錯誤"
 
@@ -12078,6 +12340,10 @@ msgstr "傳送速度"
 #: src/features/broadcasts/Pace.tsx
 msgid "Sending pace of “{name}”"
 msgstr "「{name}」的傳送速度"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Sending reputation of this product, kept apart from the others"
+msgstr "此產品的寄信信譽，與其他產品分開"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -12207,8 +12473,10 @@ msgstr "伺服器回應"
 msgid "Server settings"
 msgstr "伺服器設定"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/channels/app/AppInstall.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Server URL"
 msgstr "伺服器 URL"
 
@@ -12232,6 +12500,10 @@ msgstr "設定進度"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Set the feedback progress"
 msgstr "設定回饋進度"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Set up"
+msgstr "設定"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Set up {name}"
@@ -12273,10 +12545,12 @@ msgstr "正在設定…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "設定"
@@ -12322,10 +12596,20 @@ msgstr "快捷鍵"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "顯示"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Show {nRevoked} revoked"
+msgstr "顯示 {nRevoked} 個已撤銷"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show all authors"
+msgstr "顯示所有作者"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show archived designs"
@@ -12335,9 +12619,17 @@ msgstr "顯示已歸檔的設計"
 msgid "Show as sent"
 msgstr "顯示為已傳送"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show full draft"
+msgstr "顯示完整草稿"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Show HTTP details"
 msgstr "顯示 HTTP 詳細資料"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show less"
+msgstr "收合"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12576,6 +12868,10 @@ msgid "Sign-up sheet at the spring fair"
 msgstr "春季展會的登記表"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+msgid "Signed HTTP calls to your backend for conversations, messages and feedback. Each endpoint can listen to one product or to all."
+msgstr "針對對話、訊息和回饋，向你的後端發送帶簽章的 HTTP 呼叫。每個端點可以監聽一個產品或所有產品。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
 msgstr "為此收件匣的對話、訊息和反饋向你的後端傳送已簽名的 HTTP 呼叫。"
 
@@ -12609,7 +12905,6 @@ msgid "Signing"
 msgstr "簽名"
 
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "簽名金鑰"
@@ -12655,7 +12950,6 @@ msgstr "網站連結"
 msgid "Site name"
 msgstr "站點名稱"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
@@ -12844,10 +13138,6 @@ msgstr "發起討論"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "建立郵件列表"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Start a move"
-msgstr "開始搬移"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -13077,7 +13367,7 @@ msgstr "成功"
 msgid "Successes to recover"
 msgstr "連續成功幾次後恢復"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "例如 MERSİS 編號、商業登記號或增值稅號(如果有)"
 
@@ -13108,6 +13398,7 @@ msgstr "支援"
 msgid "Support address"
 msgstr "支援地址"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Support bot"
 msgstr "客服機器人"
@@ -13353,10 +13644,12 @@ msgstr "聊天會顯示在所有帶有該程式碼片段的頁面角落。"
 msgid "The chat bubble appears on these addresses:"
 msgstr "聊天氣泡會顯示在這些地址上:"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows when you usually reply"
 msgstr "聊天中顯示你通常何時回覆"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows who is available and typing"
 msgstr "聊天中顯示誰線上以及誰正在輸入"
@@ -13400,6 +13693,10 @@ msgstr "目前的位址會立即失效。請更新所有呼叫它的地方。"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "客戶看不到這個"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The customer taps thumbs up or down when a conversation is closed. E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
+msgstr "對話關閉時，客戶會點按「讚」或「倒讚」。電子郵件聯絡人會收到一封附兩個連結的簡短郵件；聊天和應用程式聯絡人會在小工具或應用程式中被詢問。"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The deliverability check has not finished yet."
@@ -13521,6 +13818,10 @@ msgstr "該檔案的各部分已被刪除。請選擇修正後的檔案重新上
 msgid "The first line of the mail shows here when there is no preview text."
 msgstr "沒有預覽文字時,這裡顯示郵件的第一行。"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "The first message arrived. This channel works."
+msgstr "第一則訊息已送達。此頻道運作正常。"
+
 #: src/features/settings/notifications/events.ts
 msgid "The first message of a conversation in an inbox that shows a reply time."
 msgstr "在顯示回覆時間的收件匣中,對話的第一條訊息。"
@@ -13577,10 +13878,6 @@ msgstr "歷史記錄已複製,其郵件現在到達 Yuva。"
 msgid "The hostname is being set up. This takes a moment once the records are found."
 msgstr "正在設定主機名稱。找到記錄後需要一點時間。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
-msgstr "各天的時間不同;在這裡更改會為每個所選的天設定相同的時間。"
-
 #: src/features/broadcasts/Import.tsx
 msgid "The import failed, and nothing was added from the file."
 msgstr "匯入失敗,檔案中沒有新增任何內容。"
@@ -13589,7 +13886,6 @@ msgstr "匯入失敗,檔案中沒有新增任何內容。"
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "該匯入不再等待開始。請檢視其狀態。"
 
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "收件匣之後無法更改。"
@@ -13675,7 +13971,7 @@ msgstr "上次檢查的測試郵件沒有在 10 分鐘內返回。請再次檢�
 msgid "The last deliverability check found something to fix."
 msgstr "上次送達率檢查發現有需要修復的地方。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "法律要求每封營銷郵件說明發件人是誰以及如何聯絡(CAN-SPAM、CASL、土耳其商業通訊條例)。Yuva 會把這些資訊放進此收件匣每次群發的頁尾,因此請在第一次群發前填寫。"
 
@@ -13754,6 +14050,10 @@ msgstr "遷移將從中斷處繼續。"
 #: src/components/common/text.ts
 msgid "The migration moved on in the meantime. Look at its state and try again."
 msgstr "遷移在此期間有了進展。請檢視其狀態後重試。"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "The next step adds its first channel: website chat, e-mail or a mobile app."
+msgstr "下一步會新增它的第一個頻道：網頁聊天、電子郵件或行動應用程式。"
 
 #: src/components/common/text.ts
 msgid "The number of conversations changed since you looked. Check it and confirm again."
@@ -13871,6 +14171,14 @@ msgstr "之前的金鑰在 {rotatedUntil} 之前也會簽名。"
 msgid "The problem is fixed. Sorry for the trouble."
 msgstr "問題已修復。造成不便，敬請見諒。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The product always counts as open."
+msgstr "產品始終視為開放。"
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The product cannot be changed later."
+msgstr "產品之後無法變更。"
+
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
 msgstr "供應商要求放慢速度"
@@ -13943,6 +14251,10 @@ msgstr "金鑰不會再次顯示。如果你沒有複製,請在端點頁面輪�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The secret is shown once, on the next page."
 msgstr "金鑰會在下一頁顯示一次。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "The secret is shown once, when a key is made."
+msgstr "金鑰建立時只顯示一次。"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -14086,6 +14398,10 @@ msgstr "訪客在聊天中輸入了 {0},但尚未確認。這條回覆來自該�
 msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
 msgstr "沒有未讀訊息時，聊天按鈕上會顯示新動態數量。小工具的首頁一律會顯示。"
 
+#: src/features/settings/GeneralTabs.tsx
+msgid "The workspace itself: name, retention, labels, canned replies and moving in"
+msgstr "工作區本身：名稱、保留期限、標籤、快捷回覆和遷移"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "工作區暫時不能傳送群發。"
@@ -14097,6 +14413,10 @@ msgstr "工作區目前不可傳送大量郵件"
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "工作區已達到今日傳送上限。傳送將在 {local}({utc} UTC)繼續。"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "The workspace: labels, replies, data"
+msgstr "工作區：標籤、回覆、資料"
 
 #: src/components/common/text.ts
 msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
@@ -14245,6 +14565,10 @@ msgstr "此頻道沒有 Yuva DKIM 金鑰。"
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel is not isolated in an Amazon SES tenant."
 msgstr "此頻道未隔離在 Amazon SES 租戶中。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "This channel only receives mail. Add an SMTP account under Replies so you can answer from Yuva."
+msgstr "此頻道只接收郵件。請在「回覆」下新增 SMTP 帳戶，以便從 Yuva 回覆。"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel sends through Amazon SES in another account or region, so Yuva cannot isolate it in a tenant. Mail goes out without one."
@@ -14729,8 +15053,8 @@ msgid "Turn into a public discussion"
 msgstr "轉為公開討論"
 
 #: src/features/settings/webhooks/sections.tsx
-msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
-msgstr "接收端恢復正常後再開啟;失敗的投遞可以從下面的記錄中重新傳送。"
+msgid "Turn it on again once the receiver works; send failed deliveries again from the Deliveries tab."
+msgstr "接收方恢復正常後再次開啟；在「投遞記錄」分頁重新傳送失敗的投遞。"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn off"
@@ -14739,6 +15063,10 @@ msgstr "關閉"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "對現有客戶的服務通知請關閉。無論如何都需要同意;這會記錄在同意記錄匯出中。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Turn on"
+msgstr "開啟"
 
 #: src/features/migrations/text.ts
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
@@ -14768,6 +15096,10 @@ msgstr "TXT 記錄"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
 msgstr "類型"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Type {name} to confirm"
+msgstr "輸入 {name} 以確認"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
@@ -14947,6 +15279,10 @@ msgstr "未讀 · {0}"
 #: src/features/inbox/ChatList.tsx
 msgid "Unread only"
 msgstr "僅未讀"
+
+#: src/components/common/SaveBar.tsx
+msgid "Unsaved changes"
+msgstr "未儲存的變更"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribe"
@@ -15165,6 +15501,11 @@ msgstr "在此伺服器上將它用作 bearer 權杖。"
 msgid "Use letters, digits, - and _, at most 64."
 msgstr "使用字母、數字、- 和 _,最多 64 個字元。"
 
+#: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Use lowercase letters, digits and single dashes."
+msgstr "請使用小寫字母、數字和單一連字號。"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
 msgstr "使用小寫字母、數字、短橫線、下劃線和點,以字母或數字開頭。"
@@ -15213,6 +15554,10 @@ msgstr "使用你的 GMX 密碼;如果開啟了兩步登入,則使用應用程�
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Used in addresses and the widget"
 msgstr "用於地址和小部件"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Used in addresses, the widget and the SDKs"
+msgstr "用於位址、小工具和 SDK"
 
 #: src/features/contact/ContactCard.tsx
 msgid "User id: {ext}"
@@ -15322,7 +15667,6 @@ msgid "visitors"
 msgstr "訪客"
 
 #: src/features/contact/ContactsColumn.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "訪客"
@@ -15372,6 +15716,7 @@ msgstr "傳送開始以來帶有 utm_campaign={campaign} 的網站存取,由分�
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
@@ -15423,6 +15768,10 @@ msgstr "等待客戶"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "等待第一條訊息"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Waiting for the first message. It shows up here as soon as it reaches Yuva."
+msgstr "正在等待第一則訊息。它一抵達 Yuva 就會顯示在這裡。"
 
 #: src/features/status/text.tsx
 msgid "Waiting for the first result"
@@ -15507,8 +15856,8 @@ msgid "Webhooks for {0}"
 msgstr "{0} 的 Webhook"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Webhooks for this inbox"
-msgstr "此收件匣的 Webhook"
+msgid "Webhooks for this product"
+msgstr "此產品的 Webhook"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "Website"
@@ -15518,7 +15867,7 @@ msgstr "網站"
 msgid "Website addresses"
 msgstr "網站地址"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Website chat"
 msgstr "網站聊天"
@@ -15589,6 +15938,10 @@ msgid "What should Yuva bring?"
 msgstr "Yuva 應該匯入什麼?"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+msgid "What the chat promises, and what it asks after closing"
+msgstr "聊天承諾什麼，以及關閉後詢問什麼"
+
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "客戶看到的內容"
 
@@ -15628,7 +15981,6 @@ msgstr "你常寫的內容"
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
 msgstr "新動態"
@@ -15705,10 +16057,6 @@ msgstr "當你的供應商從另一個地址傳送時使用。回覆仍會發到
 #: src/features/broadcasts/Import.tsx
 msgid "Where and when did these people agree?"
 msgstr "這些人是在哪裡、什麼時候同意的?"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Where customers write from"
-msgstr "客戶從哪裡寫信"
 
 #: src/features/setup/ChannelStep.tsx
 msgid "Where do {name} customers write from?"
@@ -15790,6 +16138,10 @@ msgstr "誰傳送,關於什麼?"
 msgid "Who should take it?"
 msgstr "誰來處理?"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "Who you support: name, hours, team, sender"
+msgstr "你支援誰：名稱、營業時間、團隊、寄件者"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Windows-1252 (Western Excel)"
 msgstr "Windows-1252(西歐 Excel)"
@@ -15867,10 +16219,6 @@ msgstr "在 VS Code 的智慧體模式中處理對話。它以你的身份執行
 msgid "Work with conversations from Cursor's agent. It acts as you, with the access you allow."
 msgstr "透過 Cursor 的智慧體處理對話。它以你的身份執行,存取範圍由你授權。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Working"
-msgstr "處理中"
-
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Working…"
 msgstr "處理中…"
@@ -15888,10 +16236,6 @@ msgstr "工作區"
 msgid "Workspace name"
 msgstr "工作區名稱"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Workspace name and data"
-msgstr "工作區名稱與資料"
-
 #: src/app/Sidebar.tsx
 msgid "Workspace settings"
 msgstr "工作區設定"
@@ -15904,6 +16248,7 @@ msgstr "工作區：{name}"
 msgid "Workspaces"
 msgstr "工作區"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "寫一條訊息…"
@@ -16072,6 +16417,10 @@ msgstr "你還沒有在任何討論中發言。"
 msgid "You have read every mention."
 msgstr "你已讀完所有提及。"
 
+#: src/components/common/SaveBar.tsx
+msgid "You have unsaved changes to {what}."
+msgstr "{what} 有未儲存的變更。"
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "你將退出所有工作區,並失去你的登入、通行金鑰和通知。你寫的訊息會保留在其對話中,顯示為已刪除成員傳送。此操作無法撤銷。"
@@ -16132,7 +16481,7 @@ msgstr "你的後端用此金鑰簽發身份權杖,讓 Yuva 知道你的已登�
 msgid "Your browser opens the consent page on <0>{host}</0>. Sign in with a code or a passkey if you are not signed in already."
 msgstr "你的瀏覽器會開啟 <0>{host}</0> 上的同意頁面。如果尚未登入,請用驗證碼或通行金鑰登入。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Your company or your own name"
 msgstr "你的公司或你自己的名字"
 
@@ -16247,6 +16596,10 @@ msgstr "你的時區 {zone}。即 UTC {utc}。"
 msgid "Your website"
 msgstr "你的網站"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Your workspace name, how long closed conversations are kept, and who may send broadcasts."
+msgstr "工作區名稱、已關閉對話的保留時長，以及誰可以傳送大量寄送郵件。"
+
 #: src/features/account/AccountPage.tsx
 msgid "Your Yuva account"
 msgstr "你的 Yuva 帳號"
@@ -16339,6 +16692,10 @@ msgstr "Yuva 只讀取客服系統。歷史記錄會靜悄悄地到達:沒有通
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva 只讀取信箱。歷史記錄會靜悄悄地到達:沒有通知,沒有自動回覆。"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Yuva only reads the source; nothing there is changed."
+msgstr "Yuva 只讀取來源；不會變更其中的任何內容。"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
 msgstr "Yuva 只讀取。除登入外,其連線只會向 {provider} 傳送讀取請求,因此不會更改任何工單、客戶或設定。"
@@ -16399,6 +16756,6 @@ msgstr "Yuva 已關閉此端點。"
 msgid "Yuva's own notes cannot be changed."
 msgstr "Yuva 自帶的備註無法更改。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Zendesk, Help Scout"
 msgstr "Zendesk、Help Scout"

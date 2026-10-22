@@ -1,24 +1,37 @@
-import { useLingui } from "@lingui/react/macro"
+import { Trans, useLingui } from "@lingui/react/macro"
 
-import { PageTabs } from "@/features/settings/ui"
+import { SettingsStrip } from "@/components/common/SettingsStrip"
+import { useMigrations } from "@/features/migrations/queries"
+import { PageHeader, PageTabs } from "@/features/settings/ui"
 import { useSession } from "@/lib/session"
+import { useCannedReplies, useLabels } from "@/lib/workspace"
 
 type Tab = "workspace" | "labels" | "canned-replies" | "migrations"
 
 export function GeneralTabs({ current }: { current: Tab }) {
   const { t } = useLingui()
   const { canManage } = useSession()
+  const labels = useLabels().data
+  const canned = useCannedReplies().data
+  const moves = useMigrations().data?.pages[0]?.items
   return (
     <PageTabs
       label={t`General`}
       current={current}
       items={[
         { key: "workspace", to: "/settings/workspace", label: t`Workspace`, testId: "general-tab-workspace" },
-        { key: "labels", to: "/settings/labels", label: t`Labels`, testId: "general-tab-labels" },
+        {
+          key: "labels",
+          to: "/settings/labels",
+          label: t`Labels`,
+          count: labels?.length,
+          testId: "general-tab-labels",
+        },
         {
           key: "canned-replies",
           to: "/settings/canned-replies",
           label: t`Canned replies`,
+          count: canned?.length,
           testId: "general-tab-canned-replies",
         },
         ...(canManage
@@ -27,11 +40,34 @@ export function GeneralTabs({ current }: { current: Tab }) {
                 key: "migrations",
                 to: "/settings/migrations",
                 label: t`Move to Yuva`,
+                count: moves?.length,
                 testId: "general-tab-migrations",
               },
             ]
           : []),
       ]}
     />
+  )
+}
+
+export function GeneralHeader({ current }: { current: Tab }) {
+  return (
+    <>
+      <PageHeader
+        title={<Trans>General</Trans>}
+        description={<Trans>The workspace itself: name, retention, labels, canned replies and moving in</Trans>}
+        tabs={<GeneralTabs current={current} />}
+      />
+      <SettingsStrip current="general" />
+    </>
+  )
+}
+
+export function Intro({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <p className="min-w-0 flex-1 basis-64 text-muted-foreground">{children}</p>
+      {action}
+    </div>
   )
 }

@@ -26,10 +26,16 @@ import { useCannedReplies, useInboxes, useLabels, useMembers } from "@/lib/works
 
 const WIDE = ["/settings/api-keys", "/settings/webhooks", "/settings/connected-apps"]
 
+function isWide(pathname: string) {
+  if (WIDE.includes(pathname)) return true
+  if (pathname.startsWith("/settings/connected-apps/")) return true
+  return /^\/settings\/inboxes\/[^/]+$/.test(pathname)
+}
+
 export function SettingsPane() {
   const { pathname } = useLocation()
   return (
-    <Page testId="settings" width={WIDE.includes(pathname) ? "full" : "form"}>
+    <Page testId="settings" width={isWide(pathname) ? "full" : "form"}>
       <Outlet />
     </Page>
   )

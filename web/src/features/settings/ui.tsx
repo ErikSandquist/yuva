@@ -4,6 +4,7 @@ import { createContext, useContext } from "react"
 import { Link, type To } from "react-router"
 
 import { colorFor, ErrorLine } from "@/components/common"
+import { useSaveBarEntry } from "@/components/common/SaveBar"
 import { initials } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -482,7 +483,11 @@ function CardBody(p: CardProps) {
   return (
     <>
       <div className={cn(!p.flush && "flex flex-col gap-5 p-4")}>{p.children}</div>
-      {p.footer && <div className="flex flex-wrap items-center gap-3 border-t px-4 py-3">{p.footer}</div>}
+      {p.footer && (
+        <div className="flex flex-wrap items-center gap-3 border-t px-4 py-3 [&:not(:has(>:not([hidden])))]:hidden">
+          {p.footer}
+        </div>
+      )}
     </>
   )
 }
@@ -530,6 +535,14 @@ export function FormActions({
   disabled?: boolean
   label?: React.ReactNode
 }) {
+  const inBar = useSaveBarEntry({ enabled: !disabled && !pending, pending })
+  if (inBar)
+    return (
+      <>
+        <ErrorLine error={error} className="min-w-0 flex-1" />
+        <button type="submit" hidden ref={inBar} tabIndex={-1} aria-hidden />
+      </>
+    )
   return (
     <>
       <ErrorLine error={error} className="min-w-0 flex-1" />

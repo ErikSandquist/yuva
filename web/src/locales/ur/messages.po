@@ -49,6 +49,7 @@ msgid "{0, plural, one {# reply} other {# replies}}"
 msgstr "{0, plural, one {# جواب} other {# جوابات}}"
 
 #. placeholder {0}: g.requests_this_month
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
 msgstr "{0, plural, one {اس مہینے # درخواست} other {اس مہینے # درخواستیں}}"
@@ -201,6 +202,14 @@ msgstr "{attachments} فائلیں، {attachmentSize}"
 msgid "{attachmentsLeft} attachments are over this server's size limit or of a type it does not keep; they stay in the original message."
 msgstr "{attachmentsLeft} منسلکات اس سرور کی سائز حد سے زیادہ ہیں یا ایسی قسم کے ہیں جو یہ محفوظ نہیں کرتا؛ وہ اصل پیغام میں رہتے ہیں۔"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "{attention, plural, one {# channel needs attention} other {# channels need attention}}"
+msgstr "{attention, plural, one {# چینل کو توجہ درکار ہے} other {# چینلز کو توجہ درکار ہے}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "{author, select, bot {No drafts by bots} assistant {No drafts by assistants} member {No drafts by members} other {No drafts by this author}}"
+msgstr "{author, select, bot {بوٹس کے کوئی مسودے نہیں} assistant {اسسٹنٹس کے کوئی مسودے نہیں} member {ممبرز کے کوئی مسودے نہیں} other {اس مصنف کے کوئی مسودے نہیں}}"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}، بھیجنے والا {by}"
@@ -253,6 +262,11 @@ msgstr "{count, plural, one {# فولڈر} other {# فولڈرز}}"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, one {# میل باکس} other {# میل باکس}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "{count, plural, one {# scope} other {# scopes}}"
+msgstr "{count, plural, one {# اجازت} other {# اجازتیں}}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
@@ -460,6 +474,10 @@ msgstr "{n, plural, one {# ای میل پتہ} other {# ای میل پتے}}"
 msgid "{n, plural, one {# mailing list} other {# mailing lists}}"
 msgstr "{n, plural, one {# میلنگ لسٹ} other {# میلنگ لسٹس}}"
 
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "{n, plural, one {# open conversation} other {# open conversations}}"
+msgstr "{n, plural, one {# کھلی گفتگو} other {# کھلی گفتگوئیں}}"
+
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
 msgstr "{n, plural, one {# اور گفتگو} other {# اور گفتگوئیں}}"
@@ -560,6 +578,10 @@ msgstr "{name} اس پتے پر میل وصول کرتا ہے۔ آپ نے یہ �
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} نے آپ سے پہلے جواب دیا۔"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "{name} sends through its own SMTP account, so there is no Amazon SES tenant. Checks for SPF, DKIM and DMARC are on its e-mail channel."
+msgstr "{name} اپنے SMTP اکاؤنٹ سے بھیجتا ہے، اس لیے کوئی Amazon SES ٹیننٹ نہیں ہے۔ SPF، DKIM اور DMARC کی جانچ اس کے ای میل چینل میں ہے۔"
 
 #: src/features/contact/ContactDetail.tsx
 msgid "{name} unblocked"
@@ -864,10 +886,6 @@ msgstr "‎*@example.com ڈومین کے ہر اس پتے کا میل وصول �
 msgid "+ Add address"
 msgstr "+ پتہ شامل کریں"
 
-#: src/features/settings/ProductsPage.tsx
-msgid "+ Add channel"
-msgstr "+ چینل شامل کریں"
-
 #: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "اس مہینے +{added}"
@@ -1121,6 +1139,10 @@ msgstr "مدد مرکز کا ایک مضمون شائع کیا گیا"
 msgid "A help center article was unpublished"
 msgstr "مدد مرکز کے ایک مضمون کی اشاعت واپس لی گئی"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "A key lets your backend, a script or a bot read and write conversations. Limit it to the products and scopes it needs."
+msgstr "کلید آپ کے بیک اینڈ، اسکرپٹ یا بوٹ کو گفتگوئیں پڑھنے اور لکھنے دیتی ہے۔ اسے صرف ان پروڈکٹس اور اجازتوں تک محدود رکھیں جن کی اسے ضرورت ہے۔"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "رابطے کا بعد کا پیغام جب کوئی تفویض نہ ہو۔"
@@ -1233,7 +1255,7 @@ msgstr "{name} کے بارے میں سوال"
 msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
 msgstr "قاری کی پوسٹس ایک ممبر کے انتظار میں رہتی ہیں جب تک ان کی ایک منظور نہ ہو۔ آپ کی ایپ کے سائن ان صارفین فوراً شائع کرتے ہیں۔"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "A real address where you receive post"
 msgstr "ایک حقیقی پتہ جہاں آپ ڈاک وصول کرتے ہیں"
 
@@ -1330,7 +1352,6 @@ msgstr "قبول شدہ جواب"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "رسائی"
@@ -1363,11 +1384,6 @@ msgstr "Acme کی حالت"
 msgid "Acme Support"
 msgstr "Acme سپورٹ"
 
-#. placeholder {0}: k.name
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Actions for {0}"
-msgstr "{0} کے لیے کارروائیاں"
-
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
@@ -1387,6 +1403,10 @@ msgstr "شامل کریں"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "بلاک شامل کریں"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Add a channel"
+msgstr "چینل شامل کریں"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a component"
@@ -1416,6 +1436,10 @@ msgstr "نوٹ شامل کریں (اختیاری)"
 msgid "Add a passkey"
 msgstr "پاس کی شامل کریں"
 
+#: src/features/settings/AddProductDialog.tsx
+msgid "Add a product"
+msgstr "پروڈکٹ شامل کریں"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Streamable HTTP ٹرانسپورٹ اور سرور URL کے ساتھ ریموٹ سرور شامل کریں۔ کئی کلائنٹس ایسی کنفیگریشن لیتے ہیں:"
@@ -1442,6 +1466,10 @@ msgstr "{listName} میں سبسکرائبر شامل کریں"
 msgid "Add a website chat in the inbox settings"
 msgstr "ان باکس کی ترتیبات میں ویب سائٹ چیٹ شامل کریں"
 
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "Add an address on your server and pick the events Yuva should tell it about."
+msgstr "اپنے سرور پر ایک پتہ شامل کریں اور وہ واقعات چنیں جن کے بارے میں Yuva اسے بتائے۔"
+
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "اینالیٹکس پراپرٹی شامل کریں"
@@ -1461,6 +1489,7 @@ msgstr "ان باکس شامل کریں"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "«Yuva» نام کا OAuth کلائنٹ شامل کریں، خفیہ کلائنٹ کے طور پر، اور نیچے کا ری ڈائریکٹ URL اس کے ری ڈائریکٹ URL کے طور پر درج کریں۔"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add another"
 msgstr "ایک اور شامل کریں"
@@ -1489,7 +1518,6 @@ msgid "Add domain"
 msgstr "ڈومین شامل کریں"
 
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "اینڈ پوائنٹ شامل کریں"
@@ -1515,6 +1543,10 @@ msgstr "مانیٹر شامل کریں ({addKey})"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "نوٹ شامل کریں"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add one for each product or brand you answer for. Each gets its own branding, hours, team and channels."
+msgstr "ہر اس پروڈکٹ یا برانڈ کے لیے ایک شامل کریں جس کا آپ جواب دیتے ہیں۔ ہر ایک کی اپنی برانڈنگ، اوقات، ٹیم اور چینلز ہوتے ہیں۔"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "Add product"
@@ -1657,12 +1689,25 @@ msgstr "Alertmanager"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "سب"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "All assistants"
+msgstr "تمام اسسٹنٹس"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels"
+msgstr "تمام چینلز"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels work"
+msgstr "تمام چینلز کام کر رہے ہیں"
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1678,9 +1723,7 @@ msgid "All imports"
 msgstr "تمام درآمدات"
 
 #: src/app/Palette.tsx
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "تمام ان باکسز"
@@ -1698,8 +1741,8 @@ msgid "All monitors"
 msgstr "تمام مانیٹرز"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "All of its conversations are deleted with it."
-msgstr "اس کی تمام گفتگوئیں اس کے ساتھ حذف ہو جاتی ہیں۔"
+msgid "All of its conversations, messages and attachments are deleted with it. Webhooks and API keys limited to it stop working."
+msgstr "اس کی تمام گفتگوئیں، پیغامات اور منسلکات اس کے ساتھ حذف ہو جاتے ہیں۔ اس تک محدود ویب ہکس اور API کلیدیں کام کرنا بند کر دیتی ہیں۔"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
@@ -1712,10 +1755,13 @@ msgstr "تمام مصنوعات"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "All products"
 msgstr "تمام پروڈکٹس"
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1797,11 +1843,11 @@ msgstr "سائن ان اور اطلاعی ای میلز کے لیے بھی"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "ممبرز کے اندرونی نوٹس کے لیے بھی message.created بھیجیں۔ اندرونی واقعات کبھی نہیں بھیجے جاتے۔"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Always"
 msgstr "ہمیشہ"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -1813,9 +1859,9 @@ msgstr "Amazon SES"
 msgid "Amazon SES · {region}"
 msgstr "Amazon SES · {region}"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Amazon SES error"
-msgstr "Amazon SES کی خرابی"
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES cannot verify the sending domain yet. Publish the DNS records, then check again."
+msgstr "Amazon SES ابھی بھیجنے والے ڈومین کی تصدیق نہیں کر سکتا۔ DNS ریکارڈز شائع کریں، پھر دوبارہ جانچیں۔"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES itself paused it; the operator has to open a case with AWS."
@@ -1824,6 +1870,10 @@ msgstr "Amazon SES نے خود اسے روکا؛ آپریٹر کو AWS کے پا
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
 msgstr "Amazon SES نے اس ان باکس کی ترسیل روک دی۔ SES کے ذریعے اس کی میل «Sending disabled» کے ساتھ مسترد ہوتی ہے جب تک سرور کا آپریٹر بحال نہ کرے۔ دوسرے ان باکسز بھیجتے رہتے ہیں۔"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES paused sending. Replies and broadcasts are refused until the operator reinstates it."
+msgstr "Amazon SES نے بھیجنا روک دیا ہے۔ جب تک آپریٹر اسے بحال نہیں کرتا جوابات اور بلک ارسال مسترد ہوں گے۔"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -1841,6 +1891,10 @@ msgstr "Amazon SES نے اس ان باکس کا ٹیننٹ روک دیا، یا 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused a step of the tenant setup."
 msgstr "Amazon SES نے ٹیننٹ سیٹ اپ کا ایک مرحلہ مسترد کر دیا۔"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES refused to send for this channel. Check the deliverability tab for the reason."
+msgstr "Amazon SES نے اس چینل کے لیے بھیجنے سے انکار کر دیا۔ وجہ ڈیلیوری ٹیب میں دیکھیں۔"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused to set up the tenant: <0>{detail}</0>"
@@ -1893,7 +1947,7 @@ msgstr "ایپ پاس ورڈ سے میل بدلی جا سکتی ہے؛ Yuva کا
 msgid "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
 msgstr "آرکائیو شدہ لسٹ اپنے سبسکرائبرز اور ریکارڈز رکھتی ہے، لیکن فارمز اور ترجیحات کا صفحہ اسے پیش کرنا بند کر دیتے ہیں۔"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "An e-mail address, phone number or web address"
 msgstr "ای میل پتہ، فون نمبر یا ویب پتہ"
 
@@ -1950,6 +2004,10 @@ msgstr "کوئی واقعہ حل ہوا یا مینٹیننس مکمل ہوئی"
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "دعوت تب قبول ہوتی ہے جب شخص اس پتے پر بھیجے گئے کوڈ سے سائن ان کرے۔ یہ 7 دن بعد ختم ہو جاتی ہے۔"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "An mbox export of a mailbox"
+msgstr "ایک میل باکس کی mbox برآمد"
+
 #: src/features/team/TeamPage.tsx
 msgid "An owner cannot be removed. Change their role first."
 msgstr "مالک کو ہٹایا نہیں جا سکتا۔ پہلے ان کا کردار تبدیل کریں۔"
@@ -1997,6 +2055,10 @@ msgstr "دوسرا اکاؤنٹ"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "ایک اور پتہ جس پر یہ چینل میل وصول کرتا ہے۔ کوئی میل باکس یہاں فارورڈ کریں، مثلاً اس کے فراہم کنندہ پر {own}؛ خود {own} پر فارورڈ کرنے سے لوپ بنے گا۔"
+
+#: src/features/settings/canned/CannedReplyDialog.tsx
+msgid "Another canned reply already uses this shortcut."
+msgstr "ایک اور تیار جواب پہلے ہی یہ شارٹ کٹ استعمال کرتا ہے۔"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
@@ -2108,12 +2170,13 @@ msgid "API"
 msgstr "API"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API & MCP"
 msgstr "API اور MCP"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "API channel"
 msgstr "API چینل"
 
@@ -2122,10 +2185,19 @@ msgid "API key"
 msgstr "API کلید"
 
 #: src/app/Palette.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "API کلیدیں"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants deliver replies at once, without a member reviewing them first."
+msgstr "API کلیدیں اور اسسٹنٹس جوابات فوراً پہنچا دیتے ہیں، کسی ممبر کے پہلے جائزہ لیے بغیر۔"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants will deliver replies at once. Customers receive what they write, with nobody reviewing it first. You can turn this off again at any time."
+msgstr "API کلیدیں اور اسسٹنٹس جوابات فوراً پہنچائیں گے۔ صارفین کو وہی ملے گا جو لکھا جائے گا، پہلے کسی کے جائزہ لیے بغیر۔ آپ اسے کسی بھی وقت دوبارہ بند کر سکتے ہیں۔"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
@@ -2308,25 +2380,43 @@ msgstr "{assignee} کو تفویض"
 msgid "Assigned to {assignee}, kept by name"
 msgstr "{assignee} کو تفویض، نام سے محفوظ"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistant"
+msgstr "اسسٹنٹ"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Assistants"
 msgstr "اسسٹنٹس"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys may send replies themselves: <0>Bots may send</0> is on in this workspace."
+msgstr "اسسٹنٹس اور API کلیدیں خود جوابات بھیج سکتے ہیں: اس ورک اسپیس میں <0>بوٹس بھیج سکتے ہیں</0> آن ہے۔"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys write drafts; a member reviews and sends them. <0>Bots may send</0> is off in this workspace."
+msgstr "اسسٹنٹس اور API کلیدیں مسودے لکھتے ہیں؛ ایک ممبر انہیں دیکھ کر بھیجتا ہے۔ اس ورک اسپیس میں <0>بوٹس بھیج سکتے ہیں</0> آف ہے۔"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Assistants and apps you connected with your sign-in. Each acts as you, only within the access you allowed."
 msgstr "وہ اسسٹنٹس اور ایپس جو آپ نے اپنے سائن ان سے جوڑیں۔ ہر ایک آپ کی طرح کام کرتا ہے، صرف اس رسائی میں جو آپ نے دی۔"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "Assistants work in Yuva through MCP on this server’s <0>/mcp</0>, with the access you approve."
-msgstr "اسسٹنٹ اس سرور کے <0>/mcp</0> پر MCP کے ذریعے Yuva میں کام کرتے ہیں، اس رسائی کے ساتھ جو آپ منظور کرتے ہیں۔"
+msgid "Assistants work in Yuva through MCP on this server. They act as the member who connected them, with only the access that member approved. Drafts wait for review in Assistants."
+msgstr "اسسٹنٹس اس سرور پر MCP کے ذریعے Yuva میں کام کرتے ہیں۔ وہ اس ممبر کے طور پر عمل کرتے ہیں جس نے انہیں جوڑا، صرف اس رسائی کے ساتھ جو اس ممبر نے منظور کی۔ مسودے اسسٹنٹس میں جائزے کے منتظر رہتے ہیں۔"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants work in Yuva through MCP, acting as the member who connected them, with only the access that member approved."
+msgstr "اسسٹنٹس MCP کے ذریعے Yuva میں اس ممبر کے طور پر کام کرتے ہیں جس نے انہیں جوڑا، اور صرف اس رسائی کے ساتھ جو اس ممبر نے منظور کی۔"
 
 #: src/app/Rail.tsx
 msgid "Assistants, {drafts} drafts waiting"
 msgstr "اسسٹنٹس، {drafts} مسودے منتظر"
 
 #: src/components/common/text.ts
+#: src/features/settings/AddProductDialog.tsx
 msgid "Async"
 msgstr "غیر مطابقت پذیر"
 
@@ -2368,7 +2458,6 @@ msgid "Attempt log"
 msgstr "کوششوں کا لاگ"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "کوششیں"
 
@@ -2414,7 +2503,6 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "خودکار جوابات، نیوز لیٹرز اور ڈیلیوری رپورٹس جن کا کسی نے جواب نہیں دیا۔"
 
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
@@ -2569,6 +2657,7 @@ msgstr "بولڈ"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
@@ -2596,6 +2685,7 @@ msgstr "بوٹ کا نام (اختیاری)"
 msgid "Both records were found. Yuva checks them once a day; keep them in place."
 msgstr "دونوں ریکارڈ مل گئے۔ Yuva انہیں دن میں ایک بار جانچتا ہے؛ انہیں جوں کا توں رہنے دیں۔"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "بوٹس"
@@ -2660,10 +2750,6 @@ msgstr "وہ سبسکرائبرز لائیں جو کہیں اور پہلے رض�
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "اس میل باکس کی تاریخ لائیں جس سے آپ آج جواب دیتے ہیں، پھر اس کی میل منتقل کریں۔ Yuva صرف میل باکس پڑھتا ہے؛ وہاں کچھ نہیں بدلتا۔"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Bring your mail and help-desk history, read only from the source"
-msgstr "اپنی میل اور ہیلپ ڈیسک کی تاریخ لائیں، ماخذ سے صرف پڑھنے کے لیے"
-
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "اپنی پرانی میل لائیں"
@@ -2678,9 +2764,9 @@ msgstr "براڈکاسٹ"
 msgid "Broadcast · {people} people · {when}"
 msgstr "براڈکاسٹ · {people} افراد · {when}"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcast sending"
 msgstr "براڈکاسٹ بھیجنا"
 
@@ -2692,7 +2778,6 @@ msgstr "براڈکاسٹ بھیجنا"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "براڈکاسٹس"
 
@@ -2774,7 +2859,10 @@ msgstr "مہم کا نام"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/status/AddSubscriberDialog.tsx
@@ -2895,6 +2983,10 @@ msgstr "تبدیل کریں"
 msgid "Change address"
 msgstr "پتہ بدلیں"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Change in API & MCP"
+msgstr "API اور MCP میں تبدیل کریں"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
@@ -2937,12 +3029,14 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "بھیجنے کا ڈومین بدلنے سے DKIM دستخط بند ہو جاتے ہیں جب تک آپ نئے ڈومین کے لیے دوبارہ آن نہ کریں۔"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "چینل"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "Channel added"
 msgstr "چینل شامل ہوا"
 
@@ -2955,15 +3049,22 @@ msgid "Channel settings"
 msgstr "چینل کی ترتیبات"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "چینلز"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Chat"
+msgstr "چیٹ"
 
 #: src/features/docs/InstallDialog.tsx
 msgid "Chat channel"
 msgstr "چیٹ چینل"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 msgid "Check"
 msgstr "جانچیں"
 
@@ -2984,7 +3085,7 @@ msgstr "کچھ کاپی ہونے سے پہلے جانچیں"
 msgid "Check deliverability and set up DKIM"
 msgstr "ڈیلیوری کی جانچ کریں اور DKIM سیٹ اپ کریں"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Check DNS"
 msgstr "DNS چیک کریں"
 
@@ -3300,6 +3401,8 @@ msgstr "مجموعے"
 msgid "Color"
 msgstr "رنگ"
 
+#: src/features/settings/AddProductDialog.tsx
+#: src/features/settings/inboxes/colors.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "رنگ"
@@ -3332,7 +3435,7 @@ msgstr "کاما"
 msgid "Comparison of condition {n}"
 msgstr "شرط {n} کا موازنہ"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "مکمل"
@@ -3429,6 +3532,7 @@ msgid "confirmed their address in the last {days} days"
 msgstr "پچھلے {days} دن میں اپنے پتے کی تصدیق کی"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/text.ts
 #: src/features/migrations/Wizard.tsx
@@ -3450,13 +3554,19 @@ msgstr "{clientName} کو Yuva سے جوڑیں؟"
 msgid "Connect {provider}"
 msgstr "{provider} جوڑیں"
 
-#: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Connect an assistant"
 msgstr "اسسٹنٹ جوڑیں"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "Claude یا ChatGPT جیسا اسسٹنٹ جوڑیں"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connect Claude, ChatGPT, Cursor or another MCP client to let it read conversations and draft replies for you to review."
+msgstr "Claude، ChatGPT، Cursor یا کوئی اور MCP کلائنٹ جوڑیں تاکہ وہ گفتگوئیں پڑھے اور آپ کے جائزے کے لیے جوابات کے مسودے لکھے۔"
 
 #: src/features/account/ConnectPage.tsx
 msgid "Connect to {host}"
@@ -3467,6 +3577,7 @@ msgid "Connect your servers and bots to Yuva"
 msgstr "اپنے سرورز اور بوٹس کو Yuva سے جوڑیں"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
@@ -3478,13 +3589,19 @@ msgstr "{created} کو منسلک ہوا"
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "منسلک ایپس"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connected by {by} on {since}"
+msgstr "{by} نے {since} کو جوڑا"
+
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected on {since}"
 msgstr "{since} کو منسلک ہوا"
@@ -3508,10 +3625,6 @@ msgstr "{provider} سے منسلک"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
 msgstr "{storedHost} سے منسلک۔ پاس ورڈ صرف بدلنے کے لیے دوبارہ درج کریں۔"
-
-#: src/features/settings/connected-apps/AssistantPage.tsx
-msgid "Connected under another name? All connections are in <0>Connected apps</0>."
-msgstr "کسی اور نام سے منسلک؟ تمام کنکشنز <0>منسلک ایپس</0> میں ہیں۔"
 
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
@@ -3547,7 +3660,7 @@ msgstr "رضامندی کا ریکارڈ"
 #: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Contact"
 msgstr "رابطہ"
 
@@ -3609,6 +3722,7 @@ msgstr "مواد"
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -3814,6 +3928,7 @@ msgid "Country"
 msgstr "ملک"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Create"
 msgstr "بنائیں"
 
@@ -3836,6 +3951,10 @@ msgstr "Help Scout میں ایپ بنائیں"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "Zendesk میں OAuth کلائنٹ بنائیں"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "Create and add a channel"
+msgstr "بنائیں اور چینل شامل کریں"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Create another"
@@ -3924,7 +4043,9 @@ msgstr "Cron"
 msgid "CSV file"
 msgstr "CSV فائل"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/inboxes/colors.tsx
 msgid "Custom"
 msgstr "حسب ضرورت"
 
@@ -4015,7 +4136,6 @@ msgstr "کارکردگی میں کمی"
 #: src/features/contact/ContactNotes.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -4048,6 +4168,10 @@ msgstr "{0} حذف کریں؟"
 msgid "Delete {name}?"
 msgstr "{name} حذف کریں؟"
 
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete {name}…"
+msgstr "{name} حذف کریں…"
+
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Delete after (days)"
 msgstr "اتنے (دن) بعد حذف کریں"
@@ -4069,10 +4193,6 @@ msgstr "مسودہ حذف کریں ({removeKey})"
 msgid "Delete group"
 msgstr "گروپ حذف کریں"
 
-#: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "Delete inbox"
-msgstr "ان باکس حذف کریں"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Delete key"
 msgstr "کلید حذف کریں"
@@ -4093,6 +4213,10 @@ msgstr "میرا اکاؤنٹ حذف کریں"
 #: src/features/status/SettingsTab.tsx
 msgid "Delete page"
 msgstr "صفحہ حذف کریں"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete product"
+msgstr "پروڈکٹ حذف کریں"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
@@ -4149,6 +4273,10 @@ msgstr "یہ نوٹ حذف کریں"
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note?"
 msgstr "یہ نوٹ حذف کریں؟"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete this product"
+msgstr "یہ پروڈکٹ حذف کریں"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete this subscription?"
@@ -4229,10 +4357,6 @@ msgstr "ترسیلات"
 msgid "Deliveries show up here once a subscribed event happens."
 msgstr "سبسکرائب شدہ واقعہ ہوتے ہی ترسیلات یہاں دکھائی دیتی ہیں۔"
 
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Delivering"
-msgstr "پہنچایا جا رہا ہے"
-
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Delivery details"
 msgstr "ترسیل کی تفصیلات"
@@ -4284,6 +4408,10 @@ msgstr "تفصیلات"
 msgid "Deutsch"
 msgstr "Deutsch"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Developers"
+msgstr "ڈیولپرز"
+
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "ڈیوائس"
@@ -4304,6 +4432,10 @@ msgstr "ڈائریکٹری (ٹیننٹ) ID، اختیاری"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "رد کریں"
+
+#: src/components/common/SaveBar.tsx
+msgid "Discard changes"
+msgstr "تبدیلیاں رد کریں"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Discard the suggested reply"
@@ -4327,7 +4459,6 @@ msgstr "بحث شروع ہوئی"
 #: src/features/docs/DiscussionsTab.tsx
 #: src/features/docs/DocsPage.tsx
 #: src/features/docs/PagesTab.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
@@ -4366,7 +4497,6 @@ msgstr "ڈسپلے"
 msgid "Display name"
 msgstr "ظاہر ہونے والا نام"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
@@ -4436,7 +4566,7 @@ msgstr "دستاویزات وہ صفحات ہیں جو آپ اپنی سائٹ پ
 msgid "Documentation pages"
 msgstr "دستاویزی صفحات"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Documentation site"
 msgstr "دستاویزی سائٹ"
@@ -4536,12 +4666,14 @@ msgctxt "migration state"
 msgid "Draft"
 msgstr "مسودہ"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft author"
 msgstr "مسودے کا مصنف"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author} کا مسودہ"
@@ -4568,10 +4700,12 @@ msgstr "مسودہ:"
 msgid "Drafts"
 msgstr "مسودے"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "مسودے منتظر"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting for review and the assistants you connected"
 msgstr "جائزے کے منتظر مسودے اور وہ اسسٹنٹس جو آپ نے منسلک کیے"
@@ -4601,6 +4735,7 @@ msgstr "ڈپلیکیٹس"
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -4620,10 +4755,6 @@ msgstr "ای میل پتہ"
 #: src/features/contact/MergePreview.tsx
 msgid "E-mail addresses"
 msgstr "ای میل پتے"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
-msgstr "ای میل رابطوں کو دو لنکس والی مختصر ای میل ملتی ہے؛ چیٹ اور ایپ رابطوں سے ویجیٹ یا ایپ میں پوچھا جاتا ہے۔"
 
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
@@ -4712,8 +4843,8 @@ msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "ہر نئی ای میل گفتگو شروع کرتی ہے؛ جوابات اسے جاری رکھتے ہیں۔"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "Each product has its own name, branding, hours and channels"
-msgstr "ہر پروڈکٹ کا اپنا نام، برانڈنگ، اوقات اور چینلز ہوتے ہیں"
+msgid "Each product has its own name, branding, hours, team and channels"
+msgstr "ہر پروڈکٹ کا اپنا نام، برانڈنگ، اوقات، ٹیم اور چینلز ہوتے ہیں"
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4740,6 +4871,10 @@ msgstr "ترمیم کریں"
 #: src/features/status/MonitorsPage.tsx
 msgid "Edit ({editKey})"
 msgstr "ترمیم کریں ({editKey})"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Edit {keyName}"
+msgstr "{keyName} میں ترمیم کریں"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4900,6 +5035,10 @@ msgstr "SES کنسول سے SMTP پاس ورڈ درج کریں۔"
 msgid "Enter the SMTP user name from the SES console."
 msgstr "SES کنسول سے SMTP صارف نام درج کریں۔"
 
+#: src/features/settings/workspace/RetentionForm.tsx
+msgid "Enter whole days from 1 to 36,500, or leave it empty."
+msgstr "1 سے 36,500 کے درمیان پورے دن درج کریں، یا خالی چھوڑ دیں۔"
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "اپنی دفتری ای میل درج کریں، ہم آپ کو کوڈ بھیجتے ہیں۔ پاس ورڈ نہیں؛ وہی کوڈ بعد میں بھی سائن ان کرتا ہے۔"
@@ -4922,7 +5061,6 @@ msgstr "خرابی یا جواب"
 
 #: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "واقعات"
@@ -5025,6 +5163,7 @@ msgstr "سب کی پوسٹس فوراً شائع ہوتی ہیں، سوائے ا
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "سب کچھ"
@@ -5045,7 +5184,7 @@ msgstr "سب کچھ سیٹ اپ ہے۔ بدلنے کے لیے کوئی بھی ح
 msgid "Everywhere"
 msgstr "ہر جگہ"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Example Ltd."
 msgstr "Example لمیٹڈ"
 
@@ -5129,12 +5268,9 @@ msgid "Failed: {0}"
 msgstr "ناکام: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Failing"
 msgstr "ناکام ہو رہا ہے"
-
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Failing since {since} · retrying"
-msgstr "{since} سے ناکام · دوبارہ کوشش جاری ہے"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Fails the monitor at once, without waiting for the grace."
@@ -5201,6 +5337,10 @@ msgstr "فائل"
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
 msgstr "فائل اور رضامندی"
+
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Files"
+msgstr "فائلیں"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
@@ -5321,6 +5461,7 @@ msgid "First, an e-mail address"
 msgstr "پہلے، ایک ای میل پتہ"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "درست کریں"
@@ -5397,6 +5538,7 @@ msgid "For example Acme"
 msgstr "مثلاً Acme"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "مثلاً Fieldnote"
@@ -5524,14 +5666,6 @@ msgstr "بلاک شدہ رابطے سے"
 msgid "From a conversation"
 msgstr "گفتگو سے"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a help desk"
-msgstr "ہیلپ ڈیسک سے"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a mailbox"
-msgstr "میل باکس سے"
-
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "From پتہ (اختیاری)"
@@ -5548,6 +5682,7 @@ msgstr "ٹرمینل سے"
 msgid "From your site or app"
 msgstr "آپ کی سائٹ یا ایپ سے"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Full API"
 msgstr "مکمل API"
@@ -5588,14 +5723,10 @@ msgid "Gallery"
 msgstr "گیلری"
 
 #: src/app/Sidebar.tsx
-#: src/features/migrations/MigrationsPage.tsx
-#: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/GeneralTabs.tsx
-#: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "عمومی"
 
@@ -5643,9 +5774,9 @@ msgstr "Gmail صرف نئی میل فارورڈ کرتا ہے جو اسپام ن
 msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
 msgstr "Gmail دوسری ایپس کو IMAP پر روزانہ تقریباً 1.5 GB پڑھنے دیتا ہے، اس لیے کئی گیگابائٹ کے میل باکس میں دن لگتے ہیں۔ Google Takeout اسے ایک فائل میں ایکسپورٹ کرتا ہے جو آپ کے کنکشن کی رفتار سے اپ لوڈ ہوتی ہے۔ پہلے اسے درآمد کریں، پھر نئی میل اور منتقلی کے لیے ایپ پاس ورڈ کے ساتھ یہاں آئیں۔"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Gmail, Outlook, Yandex, any IMAP"
-msgstr "Gmail، Outlook، Yandex، کوئی بھی IMAP"
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Gmail, Outlook, Yandex, any IMAP server"
+msgstr "Gmail، Outlook، Yandex، کوئی بھی IMAP سرور"
 
 #: src/features/status/IncidentDetail.tsx
 msgid "go back to operational when you post this"
@@ -5800,6 +5931,10 @@ msgstr "مدد مرکز"
 msgid "Help center settings"
 msgstr "مدد مرکز کی ترتیبات"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Help desks"
+msgstr "ہیلپ ڈیسکس"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help report"
 msgstr "مدد کی رپورٹ"
@@ -5866,6 +6001,10 @@ msgstr "HTTP کی تفصیلات چھپائیں"
 msgid "Hide quoted text"
 msgstr "اقتباس شدہ متن چھپائیں"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Hide revoked"
+msgstr "منسوخ شدہ چھپائیں"
+
 #: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "پیش منظر چھپائیں"
@@ -5931,6 +6070,10 @@ msgstr "ہوسٹ نیم اور سرٹیفکیٹ"
 msgid "Hours"
 msgstr "اوقات"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Hours & team"
+msgstr "اوقات اور ٹیم"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "انہوں نے کیسے رضامندی دی؟"
@@ -5942,6 +6085,10 @@ msgstr "آپ کے سبسکرائبرز نے کیسے رضامندی دی؟"
 #: src/features/setup/NewsletterStep.tsx
 msgid "How do people sign up?"
 msgstr "لوگ کیسے سائن اپ کرتے ہیں؟"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "How do you answer?"
+msgstr "آپ کیسے جواب دیتے ہیں؟"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
@@ -5963,6 +6110,10 @@ msgstr "سگنل کتنی دیر سے آ سکتا ہے۔"
 msgid "How mail reaches Yuva"
 msgstr "میل Yuva تک کیسے پہنچتی ہے"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "How messages arrive: chat, e-mail, apps"
+msgstr "پیغامات کیسے پہنچتے ہیں: چیٹ، ای میل، ایپس"
+
 #: src/features/settings/ProductsPage.tsx
 msgid "How messages reach each product"
 msgstr "پیغامات ہر پروڈکٹ تک کیسے پہنچتے ہیں"
@@ -5970,6 +6121,14 @@ msgstr "پیغامات ہر پروڈکٹ تک کیسے پہنچتے ہیں"
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
 msgstr "جوابات کیسے جائیں؟"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "How software connects: keys, hooks, assistants"
+msgstr "سافٹ ویئر کیسے جڑتا ہے: کلیدیں، ویب ہکس، اسسٹنٹس"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "How the chat opens"
+msgstr "چیٹ کیسے کھلتی ہے"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -5992,10 +6151,6 @@ msgstr "کیسے شامل کریں"
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
 msgstr "میل کیسے بھیجیں"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "How to verify"
-msgstr "تصدیق کیسے کریں"
 
 #: src/features/status/text.tsx
 msgid "HTTP"
@@ -6037,10 +6192,6 @@ msgstr "خیالات"
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "وجہ معلوم ہو گئی"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Identity not verified"
-msgstr "شناخت کی تصدیق نہیں ہوئی"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Identity secret"
@@ -6249,7 +6400,7 @@ msgstr "In progress"
 msgid "In the app and by e-mail"
 msgstr "ایپ میں اور ای میل سے"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "In the footer"
 msgstr "فوٹر میں"
 
@@ -6287,7 +6438,6 @@ msgstr "Zoho Mail میں Settings › Mail accounts › IMAP access کھولیں
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "ان باکس"
@@ -6346,8 +6496,8 @@ msgstr "تجزیات"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "انسٹال کریں"
@@ -6526,6 +6676,7 @@ msgstr "اسے اب اطلاعات نہیں ملیں گی۔"
 msgid "Italic"
 msgstr "ترچھا"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "اس کی رسائی فوراً ختم ہو جاتی ہے۔ دوبارہ استعمال کے لیے اسے دوبارہ جوڑیں۔"
@@ -6606,7 +6757,8 @@ msgstr "اہم اعداد"
 msgid "Keyboard shortcuts"
 msgstr "کی بورڈ شارٹ کٹس"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Keys"
 msgstr "کلیدیں"
 
@@ -6617,6 +6769,10 @@ msgstr "اس ورک اسپیس میں کلیدیں اور اسسٹنٹس برا�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Keys and assistants may send broadcasts"
 msgstr "کلیدیں اور اسسٹنٹس براڈکاسٹ بھیج سکتے ہیں"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Keys that can reach this product. Create and revoke them under API & MCP."
+msgstr "وہ کلیدیں جو اس پروڈکٹ تک پہنچ سکتی ہیں۔ انہیں API اور MCP میں بنائیں اور منسوخ کریں۔"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -6668,6 +6824,10 @@ msgstr "لیبلز"
 #: src/features/inbox/ChatList.tsx
 msgid "Labels changed"
 msgstr "لیبلز تبدیل ہو گئے"
+
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "Labels sort conversations by topic, such as billing or bugs."
+msgstr "لیبلز گفتگوؤں کو موضوع کے مطابق ترتیب دیتے ہیں، جیسے بلنگ یا بگز۔"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6776,6 +6936,7 @@ msgstr "آخری بار استعمال ہوا"
 msgid "last used {used}"
 msgstr "آخری استعمال {used}"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Last used {used}"
 msgstr "آخری استعمال {used}"
@@ -6828,9 +6989,13 @@ msgstr "شرط یا زبان کی وجہ سے چھوڑا گیا"
 msgid "Left out: {left} of {total} people on the lists"
 msgstr "خارج: فہرستوں کے {total} افراد میں سے {left}"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Legal name"
 msgstr "قانونی نام"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Let bots send replies?"
+msgstr "کیا بوٹس کو جوابات بھیجنے دیں؟"
 
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
@@ -7002,11 +7167,12 @@ msgid "Lists"
 msgstr "لسٹس"
 
 #: src/components/common/text.ts
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Live"
 msgstr "لائیو"
 
 #: src/components/common/Source.tsx
+#: src/features/settings/AddProductDialog.tsx
 msgid "Live chat"
 msgstr "لائیو چیٹ"
 
@@ -7073,7 +7239,6 @@ msgstr "لاک شدہ: قارئین اب یہاں نہیں لکھ سکتے۔ آ�
 msgid "Logo URL"
 msgstr "لوگو کا URL"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Look"
 msgstr "ظاہری شکل"
@@ -7191,6 +7356,7 @@ msgstr "میل باکس کا پتہ"
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Mailboxes"
 msgstr "میل باکسز"
 
@@ -7233,6 +7399,7 @@ msgstr "نیا پتہ بنائیں"
 msgid "Make the board public or private"
 msgstr "بورڈ کو عوامی یا نجی بنائیں"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -7350,6 +7517,7 @@ msgstr "zip میں mbox فائلیں"
 msgid "mbox options"
 msgstr "mbox کے اختیارات"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
 msgstr "صرف MCP"
@@ -7388,12 +7556,14 @@ msgstr "درمیانی پہلا جواب"
 msgid "median today"
 msgstr "آج کا میڈین"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "ممبر"
 
 #: src/app/Palette.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7553,8 +7723,8 @@ msgid "Missed beat"
 msgstr "چھوٹا ہوا سگنل"
 
 #: src/components/common/text.ts
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/channels/app/AppFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Mobile app"
 msgstr "موبائل ایپ"
@@ -7730,7 +7900,6 @@ msgstr "پچھلے یا اگلے مرحلے میں منتقل کریں"
 
 #: src/features/settings/GeneralTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Yuva پر منتقل ہوں"
 
@@ -7819,6 +7988,10 @@ msgstr "اس کا نام Yuva رکھیں۔ <0>Connection</0> کے تحت <1>Publ
 msgid "Name of the new inbox"
 msgstr "نئے ان باکس کا نام"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Name, colour and the first thing the chat says"
+msgstr "نام، رنگ اور وہ پہلی بات جو چیٹ کہتی ہے"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Name, e-mail or id"
 msgstr "نام، ای میل یا id"
@@ -7831,7 +8004,7 @@ msgstr "نام، مثلاً دفتر کا لیپ ٹاپ"
 msgid "name@example.com"
 msgstr "name@example.com"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Needed for broadcasts"
 msgstr "براڈکاسٹس کے لیے ضروری"
 
@@ -7841,6 +8014,7 @@ msgstr "بھیجنے والا چاہیے"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "توجہ درکار ہے"
@@ -7895,6 +8069,7 @@ msgid "New addresses that get a confirmation mail"
 msgstr "نئے پتے جنہیں تصدیقی میل ملتی ہے"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "New API key"
 msgstr "نئی API کلید"
 
@@ -8081,6 +8256,10 @@ msgstr "نئی اپ ڈیٹ · {stage}"
 msgid "New value"
 msgstr "نئی قدر"
 
+#: src/features/settings/DeveloperTabs.tsx
+msgid "New webhook endpoint"
+msgstr "نیا ویب ہک اینڈ پوائنٹ"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "نئی میل اور سوئچ"
@@ -8145,6 +8324,10 @@ msgstr "اگلی میل {local} ({utc} UTC) پر، اس براڈکاسٹ کی ر
 msgid "Next screenshot"
 msgstr "اگلا اسکرین شاٹ"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Next you pick the source and connect it. Nothing is copied until you start."
+msgstr "اگلے مرحلے میں آپ ماخذ چنتے اور اسے جوڑتے ہیں۔ آپ کے شروع کرنے تک کچھ کاپی نہیں ہوتا۔"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "اب چنیں کیا لانا ہے۔ اسکین فائل کو ایک بار پڑھتا ہے۔"
@@ -8177,9 +8360,13 @@ msgstr "جواب نہیں"
 msgid "No answer"
 msgstr "جواب نہیں"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "No API keys can reach this product yet."
+msgstr "ابھی کوئی API کلید اس پروڈکٹ تک نہیں پہنچ سکتی۔"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "No API keys yet."
-msgstr "ابھی کوئی API کلید نہیں۔"
+msgid "No API keys yet"
+msgstr "ابھی کوئی API کلید نہیں"
 
 #: src/features/migrations/text.ts
 msgid "No API on this plan"
@@ -8192,6 +8379,10 @@ msgstr "App passwords کا صفحہ نہیں ہے؟ آپ کے ایڈمن کو Go
 #: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "کوئی آرکائیو شدہ لسٹ نہیں"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No assistant is connected yet"
+msgstr "ابھی کوئی اسسٹنٹ نہیں جڑا"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and draft replies."
@@ -8247,7 +8438,6 @@ msgid "No channels yet"
 msgstr "ابھی کوئی چینل نہیں"
 
 #. placeholder {0}: inbox.name
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "ابھی کوئی چینل نہیں۔ ایک شامل کریں تاکہ صارفین {0} کو لکھ سکیں۔"
@@ -8285,8 +8475,8 @@ msgid "No confirmation"
 msgstr "تصدیق نہیں"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "No connected apps."
-msgstr "کوئی منسلک ایپ نہیں۔"
+msgid "No connected apps"
+msgstr "کوئی منسلک ایپ نہیں"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
@@ -8332,6 +8522,14 @@ msgstr "چننے کے لیے کوئی گفتگو نہیں ہے۔"
 msgid "No conversations yet."
 msgstr "ابھی کوئی گفتگو نہیں۔"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "No days picked: the product counts as closed all week."
+msgstr "کوئی دن نہیں چنا گیا: پروڈکٹ پورا ہفتہ بند شمار ہوتی ہے۔"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No deliveries yet"
+msgstr "ابھی کوئی ترسیل نہیں"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "No design yet"
 msgstr "ابھی کوئی ڈیزائن نہیں"
@@ -8351,6 +8549,10 @@ msgstr "ابھی کوئی بحث نہیں۔ قارئین انہیں آپ کے د
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
 msgstr "کوئی DKIM دستخط پاس نہیں ہوا، اس لیے براڈکاسٹس نہیں بھیجے جا سکتے۔ اپنے SMTP فراہم کنندہ کے ساتھ DKIM سیٹ اپ کریں، یا نیچے Yuva DKIM آن کریں۔"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No drafts are waiting"
+msgstr "کوئی مسودہ منتظر نہیں"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -8379,6 +8581,10 @@ msgstr "ابھی کوئی ای میل سبسکرائبر نہیں"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
 msgstr "کوئی ایموجی نہیں ملا۔"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No endpoints yet"
+msgstr "ابھی کوئی اینڈ پوائنٹ نہیں"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "No endpoints yet."
@@ -8523,8 +8729,8 @@ msgid "No pending invites."
 msgstr "کوئی زیر التوا دعوت نہیں۔"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "No products yet. Add one for each product or brand you answer for."
-msgstr "ابھی کوئی پروڈکٹ نہیں۔ ہر اس پروڈکٹ یا برانڈ کے لیے ایک شامل کریں جس کی طرف سے آپ جواب دیتے ہیں۔"
+msgid "No products yet"
+msgstr "ابھی کوئی پروڈکٹ نہیں"
 
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
@@ -8865,6 +9071,7 @@ msgstr "ایک منٹ بعد بھی نہیں پہنچا؟ اپنا اسپام ی
 msgid "Not uploaded yet"
 msgstr "ابھی اپ لوڈ نہیں ہوا"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "ابھی استعمال نہیں ہوا"
@@ -8911,6 +9118,10 @@ msgstr "{provider} میں کچھ نہیں بدلا؛ چاہیں تو اکاؤن�
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "فائل سے کچھ شامل نہیں ہوتا، اور اپ لوڈ کی گئی فائل حذف ہو جاتی ہے۔"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Nothing from this kind of author is waiting for review."
+msgstr "اس قسم کے مصنف کی کوئی چیز جائزے کی منتظر نہیں۔"
 
 #: src/features/status/MonitorChecks.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -8991,6 +9202,10 @@ msgstr "ان فلٹرز سے کچھ میل نہیں کھاتا۔"
 msgid "Nothing matches your search here."
 msgstr "یہاں آپ کی تلاش سے کچھ میل نہیں کھاتا۔"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Nothing needs attention right now."
+msgstr "اس وقت کسی چیز کو توجہ درکار نہیں۔"
+
 #: src/features/home/HomePage.tsx
 msgid "Nothing needs you"
 msgstr "کچھ بھی آپ کا منتظر نہیں"
@@ -9067,7 +9282,6 @@ msgstr "بند"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
-#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Off"
 msgstr "بند"
 
@@ -9167,10 +9381,6 @@ msgstr "Team اور Enterprise پلانز میں مالک اسے <0>Organization
 msgid "On the web"
 msgstr "ویب پر"
 
-#: src/features/settings/OnThisPage.tsx
-msgid "On this page"
-msgstr "اس صفحے پر"
-
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
 msgstr "ٹیسٹ پیغام پہنچنے کے بعد Yuva {hours} گھنٹے انتظار کرتا ہے۔ اگر اس وقت میں صرف {provider} تک کچھ نہ پہنچے تو منتقلی خود مکمل ہو جاتی ہے۔ آپ اسے خود بھی مکمل کر سکتے ہیں۔"
@@ -9233,6 +9443,7 @@ msgstr "آن لائن"
 #: src/features/contact/Presence.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Online now"
 msgstr "ابھی آن لائن"
 
@@ -9424,6 +9635,11 @@ msgstr "App registrations کھولیں"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open Apps and services"
 msgstr "Apps and services کھولیں"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Open channels"
+msgstr "چینلز کھولیں"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -9666,6 +9882,10 @@ msgstr "کھلی، غیر تفویض شدہ"
 msgid "Opens"
 msgstr "کھلنا"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Opens the conversation with the draft in the composer"
+msgstr "مسودے کے ساتھ گفتگو لکھنے کے خانے میں کھولتا ہے"
+
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "چل رہا ہے"
@@ -9769,8 +9989,8 @@ msgid "Outlook's .pst files are not read; convert them to .mbox first."
 msgstr "Outlook کی .pst فائلیں نہیں پڑھی جاتیں؛ پہلے انہیں .mbox میں بدلیں۔"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Outside them the inbox counts as closed"
-msgstr "ان کے باہر ان باکس بند شمار ہوتا ہے"
+msgid "Outside them the product counts as closed."
+msgstr "ان کے باہر پروڈکٹ بند شمار ہوتی ہے۔"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Over time"
@@ -9803,8 +10023,8 @@ msgid "Owners and admins see every inbox; agents see the inboxes they were given
 msgstr "مالک اور ایڈمن ہر ان باکس دیکھتے ہیں؛ ایجنٹ وہ ان باکس دیکھتے ہیں جو انہیں دیے گئے ہیں۔ صرف مالک اور ایڈمن مدعو کر سکتے ہیں، کردار تبدیل کر سکتے ہیں یا ممبران کو ہٹا سکتے ہیں۔"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Owners and admins see every inbox; members see the inboxes they are given."
-msgstr "مالکان اور ایڈمنز ہر ان باکس دیکھتے ہیں؛ ممبرز وہ ان باکسز دیکھتے ہیں جو انہیں دیے گئے۔"
+msgid "Owners and admins see every product; agents see the products they are given."
+msgstr "مالکان اور ایڈمن ہر پروڈکٹ دیکھتے ہیں؛ ایجنٹس وہ پروڈکٹس دیکھتے ہیں جو انہیں دی گئی ہوں۔"
 
 #: src/features/team/TeamPage.tsx
 msgid "Owners can do everything, including billing and deleting the workspace."
@@ -9929,8 +10149,8 @@ msgstr "مانیٹر روکیں یا جاری رکھیں"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
@@ -9946,10 +10166,6 @@ msgstr "اس لیے رکا کہ Amazon SES نے اس ان باکس کا ٹینن
 #: src/components/common/text.ts
 msgid "Paused because the workspace may not send broadcasts for now."
 msgstr "اس لیے رکا کہ ورک اسپیس فی الحال براڈکاسٹ نہیں بھیج سکتا۔"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Paused by Amazon SES"
-msgstr "Amazon SES نے روکا"
 
 #: src/components/common/text.ts
 msgid "Paused by the server's operator."
@@ -10147,6 +10363,10 @@ msgstr "اگلے 90 دن میں وقت چنیں، اپنے ٹائم زون، {zo
 msgid "Pick a TLS mode."
 msgstr "TLS موڈ چنیں۔"
 
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+msgid "Pick an assistant below to connect one."
+msgstr "جوڑنے کے لیے نیچے سے ایک اسسٹنٹ چنیں۔"
+
 #: src/components/common/text.ts
 msgid "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 msgstr "اس ان باکس کا ایسا ای میل چینل چنیں جس کا SMTP اکاؤنٹ ہو۔ یہ تصدیقی اور خوش آمدیدی میلز بھیجتا ہے۔"
@@ -10230,6 +10450,10 @@ msgstr "{provider} کی گفتگوؤں کے ان باکسز چنیں، ہر ای
 msgid "Pick the list the people join."
 msgstr "وہ فہرست چنیں جس میں لوگ شامل ہوتے ہیں۔"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Pick the one you use. Setup steps and scopes are on API & MCP."
+msgstr "وہ چنیں جو آپ استعمال کرتے ہیں۔ سیٹ اپ کے مراحل اور اجازتیں API اور MCP میں ہیں۔"
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "دوسرا رابطہ چنیں۔ وہ اس میں ضم ہو کر حذف ہو جاتا ہے۔"
@@ -10237,6 +10461,10 @@ msgstr "دوسرا رابطہ چنیں۔ وہ اس میں ضم ہو کر حذف 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "پلیٹ فارمز چنیں؛ اگلا مرحلہ ہر ایپ میں شامل کرنے کی سطریں دکھاتا ہے۔"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Pick the product and how customers reach it. The next steps set it up."
+msgstr "پروڈکٹ چنیں اور یہ کہ صارفین اس تک کیسے پہنچتے ہیں۔ اگلے مراحل اسے ترتیب دیتے ہیں۔"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Pick the same file again"
@@ -10357,7 +10585,7 @@ msgstr "اسٹیٹس اپ ڈیٹ پوسٹ کریں"
 msgid "Post update"
 msgstr "اپ ڈیٹ بھیجیں"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Postal address"
 msgstr "ڈاک کا پتہ"
 
@@ -10380,6 +10608,7 @@ msgstr "تیاری ہو رہی ہے"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
 #: src/features/status/StatusPages.tsx
@@ -10448,11 +10677,15 @@ msgstr "pro، team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "پروڈکٹ"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
 msgstr "پروڈکٹ کا نام"
@@ -10461,6 +10694,11 @@ msgstr "پروڈکٹ کا نام"
 #: src/features/setup/previews.tsx
 msgid "Product news"
 msgstr "پروڈکٹ کی خبریں"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Product settings"
+msgstr "پروڈکٹ کی ترتیبات"
 
 #: src/features/inbox/ProductSwitcher.tsx
 msgid "Product: {label}"
@@ -10472,10 +10710,12 @@ msgid "Production backend"
 msgstr "پروڈکشن بیک اینڈ"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/TeamPage.tsx
@@ -10757,6 +10997,7 @@ msgstr "مدد مراکز، مجموعے اور مضامین پڑھیں"
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "میلنگ لسٹس، سبسکرائبرز اور رضامندی کے ریکارڈ پڑھیں"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "صرف پڑھنے کے لیے"
@@ -10840,8 +11081,7 @@ msgstr "ریئل ٹائم"
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "{when} کو موصول ہوا۔ اسے Gmail کی فارورڈنگ ترتیبات میں درج کریں، یا لنک کھولیں۔"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Receives only"
 msgstr "صرف وصول کرتا ہے"
 
@@ -10931,7 +11171,7 @@ msgstr "علاقہ"
 msgid "Register an app in Microsoft Entra"
 msgstr "Microsoft Entra میں ایپ رجسٹر کریں"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Registration"
 msgstr "رجسٹریشن"
 
@@ -10948,13 +11188,11 @@ msgstr "ری لوڈ"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "ریموٹ تصاویر بھیجنے والے کو بتا سکتی ہیں کہ آپ نے میل کھولی۔"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 #: src/features/team/TeamPage.tsx
@@ -11115,11 +11353,14 @@ msgstr "دوسری گفتگو کے تھریڈ میں جواب دیا"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "جوابات"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
+msgstr "اسسٹنٹ، بوٹ یا ساتھی کے لکھے ہوئے جوابات یہاں نظر آتے ہیں جب تک کوئی انہیں بھیج یا رد نہ کر دے۔"
 
 #: src/features/account/AccountPage.tsx
 msgid "Replies and answers in the discussions you follow"
@@ -11128,6 +11369,10 @@ msgstr "آپ کی فالو کردہ بحثوں میں جوابات اور حل"
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "جوابات اور بندشیں"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies and ratings"
+msgstr "جوابات اور ریٹنگز"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Replies cannot go out until you add a reply account."
@@ -11161,6 +11406,10 @@ msgstr "آج کے جوابات"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "جوابات بذریعہ"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies when available"
+msgstr "دستیاب ہونے پر جواب دیتا ہے"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "replies within {within}"
@@ -11414,7 +11663,7 @@ msgstr "جائزہ لیں اور پوسٹ کریں"
 msgid "Review and send"
 msgstr "جائزہ اور بھیجیں"
 
-#: src/features/inbox/SidePanels.tsx
+#: src/features/inbox/AssistantsPage.tsx
 msgid "Review draft"
 msgstr "ڈرافٹ کا جائزہ لیں"
 
@@ -11432,14 +11681,20 @@ msgstr "جائزہ لیں، پھر بھیجیں یا شیڈول کریں"
 msgid "Revisions"
 msgstr "ترامیم"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
 msgstr "منسوخ کریں"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke {clientName}?"
 msgstr "{clientName} کی رسائی منسوخ کریں؟"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Revoke {keyName}"
+msgstr "{keyName} منسوخ کریں"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Revoke {keyName}?"
@@ -11572,6 +11827,10 @@ msgstr "محفوظ کریں"
 msgid "Save as draft"
 msgstr "مسودے کے طور پر محفوظ کریں"
 
+#: src/components/common/SaveBar.tsx
+msgid "Save changes"
+msgstr "تبدیلیاں محفوظ کریں"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "مسودہ محفوظ کریں"
@@ -11584,16 +11843,20 @@ msgstr "اسے محفوظ کریں اور اس کا شناخت کنندہ اور
 msgid "Save now and keep a version"
 msgstr "ابھی محفوظ کریں اور ورژن رکھیں"
 
+#: src/features/settings/canned/CannedRepliesPage.tsx
+msgid "Save the answers you write often, then insert them in the composer with a shortcut."
+msgstr "وہ جوابات محفوظ کریں جو آپ اکثر لکھتے ہیں، پھر شارٹ کٹ سے انہیں لکھنے کے خانے میں ڈالیں۔"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save the draft now"
 msgstr "مسودہ ابھی محفوظ کریں"
 
+#: src/components/common/SaveBar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -12020,7 +12283,7 @@ msgstr "بھیجنے والا"
 msgid "Sender details for the footer"
 msgstr "فوٹر کے لیے بھیجنے والے کی تفصیلات"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Sender identity"
 msgstr "بھیجنے والے کی شناخت"
 
@@ -12029,7 +12292,6 @@ msgstr "بھیجنے والے کی شناخت"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/Notices.tsx
@@ -12050,7 +12312,7 @@ msgstr "ای میل سے بھیجا جا رہا ہے…"
 msgid "Sending channel"
 msgstr "بھیجنے کا چینل"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Sending error"
 msgstr "بھیجنے میں خرابی"
 
@@ -12078,6 +12340,10 @@ msgstr "بھیجنے کی رفتار"
 #: src/features/broadcasts/Pace.tsx
 msgid "Sending pace of “{name}”"
 msgstr "«{name}» کی بھیجنے کی رفتار"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Sending reputation of this product, kept apart from the others"
+msgstr "اس پروڈکٹ کی بھیجنے کی ساکھ، دوسروں سے الگ"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -12207,8 +12473,10 @@ msgstr "سرور کے جوابات"
 msgid "Server settings"
 msgstr "سرور کی ترتیبات"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/channels/app/AppInstall.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Server URL"
 msgstr "سرور URL"
 
@@ -12232,6 +12500,10 @@ msgstr "Set progress"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Set the feedback progress"
 msgstr "Set the feedback progress"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Set up"
+msgstr "ترتیب دیں"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Set up {name}"
@@ -12273,10 +12545,12 @@ msgstr "سیٹ اپ ہو رہا ہے…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "ترتیبات"
@@ -12322,10 +12596,20 @@ msgstr "شارٹ کٹ"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "دکھائیں"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Show {nRevoked} revoked"
+msgstr "{nRevoked} منسوخ شدہ دکھائیں"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show all authors"
+msgstr "تمام مصنفین دکھائیں"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show archived designs"
@@ -12335,9 +12619,17 @@ msgstr "آرکائیو شدہ ڈیزائنز دکھائیں"
 msgid "Show as sent"
 msgstr "بھیجا ہوا دکھائیں"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show full draft"
+msgstr "پورا مسودہ دکھائیں"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Show HTTP details"
 msgstr "HTTP کی تفصیلات دکھائیں"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show less"
+msgstr "کم دکھائیں"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12576,6 +12868,10 @@ msgid "Sign-up sheet at the spring fair"
 msgstr "بہار میلے میں سائن اپ شیٹ"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+msgid "Signed HTTP calls to your backend for conversations, messages and feedback. Each endpoint can listen to one product or to all."
+msgstr "گفتگوؤں، پیغامات اور فیڈ بیک کے لیے آپ کے بیک اینڈ کو دستخط شدہ HTTP کالز۔ ہر اینڈ پوائنٹ ایک پروڈکٹ یا سب کو سن سکتا ہے۔"
+
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
 msgstr "اس ان باکس کی گفتگوؤں، پیغامات اور رائے کے لیے آپ کے بیک اینڈ کو دستخط شدہ HTTP کالز۔"
 
@@ -12609,7 +12905,6 @@ msgid "Signing"
 msgstr "دستخط"
 
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "دستخطی سیکرٹ"
@@ -12655,7 +12950,6 @@ msgstr "سائٹ کا لنک"
 msgid "Site name"
 msgstr "سائٹ کا نام"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
@@ -12844,10 +13138,6 @@ msgstr "بحث شروع کریں"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "میلنگ لسٹ شروع کریں"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Start a move"
-msgstr "منتقلی شروع کریں"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -13077,7 +13367,7 @@ msgstr "کامیاب"
 msgid "Successes to recover"
 msgstr "بحالی تک مسلسل کامیابیاں"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "جیسے MERSİS نمبر، تجارتی رجسٹر یا VAT id، اگر ہو"
 
@@ -13108,6 +13398,7 @@ msgstr "سپورٹ"
 msgid "Support address"
 msgstr "سپورٹ کا پتہ"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Support bot"
 msgstr "سپورٹ بوٹ"
@@ -13353,10 +13644,12 @@ msgstr "چیٹ ہر اس صفحے کے کونے میں دکھائی دیتی ہ�
 msgid "The chat bubble appears on these addresses:"
 msgstr "چیٹ بلبلہ ان پتوں پر دکھائی دیتا ہے:"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows when you usually reply"
 msgstr "چیٹ دکھاتی ہے کہ آپ عموماً کب جواب دیتے ہیں"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows who is available and typing"
 msgstr "چیٹ دکھاتی ہے کہ کون دستیاب ہے اور کون لکھ رہا ہے"
@@ -13400,6 +13693,10 @@ msgstr "موجودہ پتہ فوراً کام کرنا بند کر دیتا ہے
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "صارف یہ نہیں دیکھتا"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The customer taps thumbs up or down when a conversation is closed. E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
+msgstr "گفتگو بند ہونے پر صارف انگوٹھا اوپر یا نیچے دباتا ہے۔ ای میل رابطوں کو دو لنکس والی مختصر ای میل ملتی ہے؛ چیٹ اور ایپ کے رابطوں سے ویجیٹ یا ایپ میں پوچھا جاتا ہے۔"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The deliverability check has not finished yet."
@@ -13521,6 +13818,10 @@ msgstr "فائل کے حصے حذف کر دیے گئے۔ اپ لوڈ کے لیے
 msgid "The first line of the mail shows here when there is no preview text."
 msgstr "جب پیش منظر کا متن نہ ہو تو میل کی پہلی سطر یہاں دکھائی دیتی ہے۔"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "The first message arrived. This channel works."
+msgstr "پہلا پیغام پہنچ گیا۔ یہ چینل کام کرتا ہے۔"
+
 #: src/features/settings/notifications/events.ts
 msgid "The first message of a conversation in an inbox that shows a reply time."
 msgstr "ایسے ان باکس میں گفتگو کا پہلا پیغام جو جواب کا وقت دکھاتا ہے۔"
@@ -13577,10 +13878,6 @@ msgstr "تاریخ کاپی ہو گئی اور اس کی میل اب Yuva تک �
 msgid "The hostname is being set up. This takes a moment once the records are found."
 msgstr "ہوسٹ نیم ترتیب دیا جا رہا ہے۔ ریکارڈ ملنے کے بعد اس میں تھوڑا وقت لگتا ہے۔"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
-msgstr "اوقات دن کے لحاظ سے مختلف ہیں؛ انہیں یہاں بدلنے سے ہر چنے ہوئے دن کے لیے وہی اوقات مقرر ہوتے ہیں۔"
-
 #: src/features/broadcasts/Import.tsx
 msgid "The import failed, and nothing was added from the file."
 msgstr "درآمد ناکام ہوئی، اور فائل سے کچھ شامل نہیں ہوا۔"
@@ -13589,7 +13886,6 @@ msgstr "درآمد ناکام ہوئی، اور فائل سے کچھ شامل ن
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "درآمد اب شروع ہونے کی منتظر نہیں۔ اس کی حالت دیکھیں۔"
 
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "ان باکس بعد میں نہیں بدلا جا سکتا۔"
@@ -13675,7 +13971,7 @@ msgstr "آخری جانچ کی ٹیسٹ میل 10 منٹ میں واپس نہی�
 msgid "The last deliverability check found something to fix."
 msgstr "ڈیلیوری کی آخری جانچ میں کچھ ٹھیک کرنے کو ملا۔"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "قانون ہر مارکیٹنگ میل سے مانگتا ہے کہ وہ بتائے کون بھیج رہا ہے اور اس سے کیسے رابطہ ہو (CAN-SPAM، CASL، ترکیہ کا تجارتی مواصلات کا ضابطہ)۔ Yuva اسے اس ان باکس کے ہر براڈکاسٹ کے فوٹر میں رکھتا ہے، اس لیے پہلے سے پہلے اسے بھر دیں۔"
 
@@ -13754,6 +14050,10 @@ msgstr "منتقلی وہیں سے جاری رہتی ہے جہاں رکی تھی
 #: src/components/common/text.ts
 msgid "The migration moved on in the meantime. Look at its state and try again."
 msgstr "اس دوران منتقلی آگے بڑھ گئی۔ اس کی حالت دیکھیں اور دوبارہ کوشش کریں۔"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "The next step adds its first channel: website chat, e-mail or a mobile app."
+msgstr "اگلا مرحلہ اس کا پہلا چینل شامل کرتا ہے: ویب چیٹ، ای میل یا موبائل ایپ۔"
 
 #: src/components/common/text.ts
 msgid "The number of conversations changed since you looked. Check it and confirm again."
@@ -13871,6 +14171,14 @@ msgstr "پچھلا سیکرٹ بھی {rotatedUntil} تک دستخط کرتا ہ�
 msgid "The problem is fixed. Sorry for the trouble."
 msgstr "مسئلہ حل ہو گیا ہے۔ زحمت کے لیے معذرت۔"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The product always counts as open."
+msgstr "پروڈکٹ ہمیشہ کھلی شمار ہوتی ہے۔"
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The product cannot be changed later."
+msgstr "پروڈکٹ بعد میں تبدیل نہیں ہو سکتی۔"
+
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
 msgstr "فراہم کنندہ نے رفتار کم کرنے کو کہا"
@@ -13943,6 +14251,10 @@ msgstr "سیکرٹ دوبارہ نہیں دکھایا جاتا۔ اگر آپ ن�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The secret is shown once, on the next page."
 msgstr "سیکرٹ ایک بار، اگلے صفحے پر دکھایا جاتا ہے۔"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "The secret is shown once, when a key is made."
+msgstr "راز ایک بار دکھایا جاتا ہے، جب کلید بنتی ہے۔"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -14086,6 +14398,10 @@ msgstr "وزیٹر نے چیٹ میں {0} لکھا اور ابھی تصدیق ن
 msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
 msgstr "جب تک کوئی پیغام غیر پڑھا ہوا نہ ہو، چیٹ بٹن پر نئی اپ ڈیٹس کی تعداد دکھائی دیتی ہے۔ ویجیٹ کا ہوم اسے ہمیشہ دکھاتا ہے۔"
 
+#: src/features/settings/GeneralTabs.tsx
+msgid "The workspace itself: name, retention, labels, canned replies and moving in"
+msgstr "خود ورک اسپیس: نام، رکھ رکھاؤ، لیبلز، تیار جوابات اور منتقلی"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "ورک اسپیس فی الحال براڈکاسٹ نہیں بھیج سکتا۔"
@@ -14097,6 +14413,10 @@ msgstr "ورک اسپیس اس وقت بلک میل نہیں بھیج سکتا"
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "ورک اسپیس آج کی بھیجنے کی حد تک پہنچ گیا۔ بھیجنا {local} ({utc} UTC) پر جاری رہتا ہے۔"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "The workspace: labels, replies, data"
+msgstr "ورک اسپیس: لیبلز، جوابات، ڈیٹا"
 
 #: src/components/common/text.ts
 msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
@@ -14245,6 +14565,10 @@ msgstr "اس چینل کی کوئی Yuva DKIM کلید نہیں۔"
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel is not isolated in an Amazon SES tenant."
 msgstr "یہ چینل Amazon SES ٹیننٹ میں الگ تھلگ نہیں۔"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "This channel only receives mail. Add an SMTP account under Replies so you can answer from Yuva."
+msgstr "یہ چینل صرف میل وصول کرتا ہے۔ Yuva سے جواب دینے کے لیے جوابات کے تحت SMTP اکاؤنٹ شامل کریں۔"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel sends through Amazon SES in another account or region, so Yuva cannot isolate it in a tenant. Mail goes out without one."
@@ -14729,8 +15053,8 @@ msgid "Turn into a public discussion"
 msgstr "عوامی بحث میں بدلیں"
 
 #: src/features/settings/webhooks/sections.tsx
-msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
-msgstr "وصول کنندہ کے کام کرنے پر اسے دوبارہ آن کریں؛ ناکام ترسیلات نیچے لاگ سے دوبارہ بھیجیں۔"
+msgid "Turn it on again once the receiver works; send failed deliveries again from the Deliveries tab."
+msgstr "جب وصول کنندہ کام کرنے لگے تو اسے دوبارہ آن کریں؛ ناکام ترسیلات ترسیلات ٹیب سے دوبارہ بھیجیں۔"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn off"
@@ -14739,6 +15063,10 @@ msgstr "بند کریں"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "موجودہ صارفین کو سروس کے اعلانات کے لیے بند کریں۔ رضامندی ہر صورت چاہیے؛ یہ رضامندی کی ایکسپورٹ میں درج ہوتا ہے۔"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Turn on"
+msgstr "آن کریں"
 
 #: src/features/migrations/text.ts
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
@@ -14768,6 +15096,10 @@ msgstr "TXT ریکارڈ"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
 msgstr "قسم"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Type {name} to confirm"
+msgstr "تصدیق کے لیے {name} لکھیں"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
@@ -14947,6 +15279,10 @@ msgstr "غیر پڑھی · {0}"
 #: src/features/inbox/ChatList.tsx
 msgid "Unread only"
 msgstr "صرف نہ پڑھی ہوئی"
+
+#: src/components/common/SaveBar.tsx
+msgid "Unsaved changes"
+msgstr "غیر محفوظ شدہ تبدیلیاں"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribe"
@@ -15165,6 +15501,11 @@ msgstr "اسے اس سرور کے خلاف بیئرر ٹوکن کے طور پر 
 msgid "Use letters, digits, - and _, at most 64."
 msgstr "حروف، ہندسے، - اور _ استعمال کریں، زیادہ سے زیادہ 64۔"
 
+#: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Use lowercase letters, digits and single dashes."
+msgstr "چھوٹے حروف، اعداد اور اکیلے ڈیش استعمال کریں۔"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
 msgstr "چھوٹے حروف، ہندسے، ڈیش، انڈر اسکور اور نقطے استعمال کریں، حرف یا ہندسے سے شروع کر کے۔"
@@ -15213,6 +15554,10 @@ msgstr "اپنا GMX پاس ورڈ استعمال کریں، یا اگر دو م
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Used in addresses and the widget"
 msgstr "پتوں اور ویجیٹ میں استعمال ہوتا ہے"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Used in addresses, the widget and the SDKs"
+msgstr "پتوں، ویجیٹ اور SDK میں استعمال ہوتا ہے"
 
 #: src/features/contact/ContactCard.tsx
 msgid "User id: {ext}"
@@ -15322,7 +15667,6 @@ msgid "visitors"
 msgstr "وزیٹرز"
 
 #: src/features/contact/ContactsColumn.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "وزیٹرز"
@@ -15372,6 +15716,7 @@ msgstr "بھیجنا شروع ہونے سے آپ کی سائٹس پر utm_campai
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
@@ -15423,6 +15768,10 @@ msgstr "صارف کا انتظار"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "پہلے پیغام کا انتظار ہے"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Waiting for the first message. It shows up here as soon as it reaches Yuva."
+msgstr "پہلے پیغام کا انتظار ہے۔ Yuva تک پہنچتے ہی یہ یہاں نظر آئے گا۔"
 
 #: src/features/status/text.tsx
 msgid "Waiting for the first result"
@@ -15507,8 +15856,8 @@ msgid "Webhooks for {0}"
 msgstr "{0} کے ویب ہکس"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Webhooks for this inbox"
-msgstr "اس ان باکس کے ویب ہکس"
+msgid "Webhooks for this product"
+msgstr "اس پروڈکٹ کے ویب ہکس"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "Website"
@@ -15518,7 +15867,7 @@ msgstr "ویب سائٹ"
 msgid "Website addresses"
 msgstr "ویب سائٹ کے پتے"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Website chat"
 msgstr "ویب سائٹ چیٹ"
@@ -15589,6 +15938,10 @@ msgid "What should Yuva bring?"
 msgstr "Yuva کو کیا لانا چاہیے؟"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+msgid "What the chat promises, and what it asks after closing"
+msgstr "چیٹ کیا وعدہ کرتی ہے، اور بند ہونے کے بعد کیا پوچھتی ہے"
+
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "صارف کو کیا دکھتا ہے"
 
@@ -15628,7 +15981,6 @@ msgstr "جو آپ اکثر لکھتے ہیں"
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
 msgstr "نیا کیا ہے"
@@ -15705,10 +16057,6 @@ msgstr "جب آپ کا فراہم کنندہ کسی اور پتے سے بھیج�
 #: src/features/broadcasts/Import.tsx
 msgid "Where and when did these people agree?"
 msgstr "ان لوگوں نے کہاں اور کب رضامندی دی؟"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Where customers write from"
-msgstr "صارفین کہاں سے لکھتے ہیں"
 
 #: src/features/setup/ChannelStep.tsx
 msgid "Where do {name} customers write from?"
@@ -15790,6 +16138,10 @@ msgstr "کون بھیجتا ہے، اور کس بارے میں؟"
 msgid "Who should take it?"
 msgstr "اسے کون سنبھالے؟"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "Who you support: name, hours, team, sender"
+msgstr "آپ کس کی مدد کرتے ہیں: نام، اوقات، ٹیم، بھیجنے والا"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Windows-1252 (Western Excel)"
 msgstr "Windows-1252 (مغربی Excel)"
@@ -15867,10 +16219,6 @@ msgstr "VS Code کے ایجنٹ موڈ سے گفتگوؤں پر کام کریں�
 msgid "Work with conversations from Cursor's agent. It acts as you, with the access you allow."
 msgstr "Cursor کے ایجنٹ سے گفتگوؤں پر کام کریں۔ یہ آپ کی طرح کام کرتا ہے، اس رسائی کے ساتھ جو آپ دیں۔"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Working"
-msgstr "کام جاری"
-
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Working…"
 msgstr "کام ہو رہا ہے…"
@@ -15888,10 +16236,6 @@ msgstr "ورک اسپیس"
 msgid "Workspace name"
 msgstr "ورک اسپیس کا نام"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Workspace name and data"
-msgstr "ورک اسپیس کا نام اور ڈیٹا"
-
 #: src/app/Sidebar.tsx
 msgid "Workspace settings"
 msgstr "ورک اسپیس کی ترتیبات"
@@ -15904,6 +16248,7 @@ msgstr "ورک اسپیس: {name}"
 msgid "Workspaces"
 msgstr "ورک اسپیسز"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "پیغام لکھیں…"
@@ -16072,6 +16417,10 @@ msgstr "آپ نے ابھی کسی بحث میں نہیں لکھا۔"
 msgid "You have read every mention."
 msgstr "آپ نے ہر ذکر پڑھ لیا ہے۔"
 
+#: src/components/common/SaveBar.tsx
+msgid "You have unsaved changes to {what}."
+msgstr "{what} میں آپ کی غیر محفوظ شدہ تبدیلیاں ہیں۔"
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "آپ ہر ورک اسپیس چھوڑ دیتے ہیں اور اپنے سائن انز، پاس کیز اور اطلاعات کھو دیتے ہیں۔ آپ کے لکھے پیغامات ان کی گفتگوؤں میں رہتے ہیں، حذف شدہ ممبر کی طرف سے دکھائے جاتے ہیں۔ اسے واپس نہیں کیا جا سکتا۔"
@@ -16132,7 +16481,7 @@ msgstr "آپ کا بیک اینڈ اس سیکرٹ سے شناختی ٹوکنز �
 msgid "Your browser opens the consent page on <0>{host}</0>. Sign in with a code or a passkey if you are not signed in already."
 msgstr "آپ کا براؤزر <0>{host}</0> پر رضامندی کا صفحہ کھولتا ہے۔ اگر پہلے سے سائن ان نہیں تو کوڈ یا پاس کی سے سائن ان کریں۔"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Your company or your own name"
 msgstr "آپ کی کمپنی یا آپ کا اپنا نام"
 
@@ -16247,6 +16596,10 @@ msgstr "آپ کا ٹائم زون، {zone}۔ یعنی {utc} UTC۔"
 msgid "Your website"
 msgstr "آپ کی ویب سائٹ"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Your workspace name, how long closed conversations are kept, and who may send broadcasts."
+msgstr "آپ کے ورک اسپیس کا نام، بند گفتگوئیں کتنی دیر رکھی جاتی ہیں، اور کون بلک ارسال بھیج سکتا ہے۔"
+
 #: src/features/account/AccountPage.tsx
 msgid "Your Yuva account"
 msgstr "آپ کا Yuva اکاؤنٹ"
@@ -16339,6 +16692,10 @@ msgstr "Yuva صرف ہیلپ ڈیسک پڑھتا ہے۔ تاریخ خاموشی 
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva صرف میل باکس پڑھتا ہے۔ تاریخ خاموشی سے آتی ہے: کوئی اطلاع نہیں، کوئی خودکار جواب نہیں۔"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Yuva only reads the source; nothing there is changed."
+msgstr "Yuva صرف ماخذ پڑھتا ہے؛ وہاں کچھ تبدیل نہیں ہوتا۔"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
 msgstr "Yuva صرف پڑھتا ہے۔ سائن ان کے علاوہ اس کا کنکشن {provider} کو صرف پڑھنے کی درخواستیں بھیجتا ہے، اس لیے کوئی ٹکٹ، صارف یا ترتیب نہیں بدلتی۔"
@@ -16399,6 +16756,6 @@ msgstr "Yuva نے یہ اینڈ پوائنٹ بند کر دیا۔"
 msgid "Yuva's own notes cannot be changed."
 msgstr "Yuva کے اپنے نوٹس بدلے نہیں جا سکتے۔"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Zendesk, Help Scout"
 msgstr "Zendesk، Help Scout"

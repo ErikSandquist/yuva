@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { useRequestApproval } from "@/features/broadcasts/broadcastQueries"
 import { StatusNotice, useNumber } from "@/features/broadcasts/BroadcastParts"
-import { Card, Field, FormActions, FormCard, Section, StatusTag, ToggleRow } from "@/features/settings/ui"
+import { Card, Field, FormActions, FormCard, Pill, Section, ToggleRow } from "@/features/settings/ui"
 import { api, unwrap, type BroadcastsStatus, type WorkspaceBroadcasts } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { meKey, useSession } from "@/lib/session"
@@ -151,7 +151,7 @@ export function BroadcastsSettings() {
   const since = b.status_at ? formatDateTime(b.status_at, i18n.locale) : null
   const tone = b.status === "allowed" ? "success" : b.status === "suspended" ? "danger" : "warning"
   return (
-    <Section title={<Trans>Broadcasts</Trans>}>
+    <Section title={<Trans>Broadcast sending</Trans>}>
       {b.mode === "off" ? (
         <StatusNotice settingsLink={false} />
       ) : (
@@ -162,9 +162,9 @@ export function BroadcastsSettings() {
                 <span className="text-body font-medium">
                   <Trans>Sending</Trans>
                 </span>
-                <StatusTag tone={tone} data-testid="broadcasts-status">
+                <Pill tone={tone} data-testid="broadcasts-status">
                   {statusText[b.status]}
-                </StatusTag>
+                </Pill>
               </div>
               {b.reason && b.status !== "suspended" && <p className="text-body text-muted-foreground">{b.reason}</p>}
               {since && b.status !== "allowed" && (

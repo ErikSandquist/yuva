@@ -49,6 +49,7 @@ msgid "{0, plural, one {# reply} other {# replies}}"
 msgstr "{0, plural, other {返信 # 件}}"
 
 #. placeholder {0}: g.requests_this_month
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
 msgstr "{0, plural, other {今月のリクエスト # 件}}"
@@ -201,6 +202,14 @@ msgstr "{attachments} 個のファイル、{attachmentSize}"
 msgid "{attachmentsLeft} attachments are over this server's size limit or of a type it does not keep; they stay in the original message."
 msgstr "{attachmentsLeft} 件の添付ファイルは、このサーバーのサイズ上限を超えているか、保存されない種類のため、元のメッセージに残ります。"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "{attention, plural, one {# channel needs attention} other {# channels need attention}}"
+msgstr "{attention, plural, other {#件のチャネルに対応が必要です}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "{author, select, bot {No drafts by bots} assistant {No drafts by assistants} member {No drafts by members} other {No drafts by this author}}"
+msgstr "{author, select, bot {ボットのドラフトはありません} assistant {アシスタントのドラフトはありません} member {メンバーのドラフトはありません} other {この作成者のドラフトはありません}}"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}、送信者: {by}"
@@ -253,6 +262,11 @@ msgstr "{count, plural, other {# フォルダー}}"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, other {# メールボックス}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "{count, plural, one {# scope} other {# scopes}}"
+msgstr "{count, plural, other {#件のスコープ}}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
@@ -460,6 +474,10 @@ msgstr "{n, plural, other {# 件のメールアドレス}}"
 msgid "{n, plural, one {# mailing list} other {# mailing lists}}"
 msgstr "{n, plural, other {# 件のメーリングリスト}}"
 
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "{n, plural, one {# open conversation} other {# open conversations}}"
+msgstr "{n, plural, other {未完了の会話 #件}}"
+
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
 msgstr "{n, plural, other {他の会話 # 件}}"
@@ -560,6 +578,10 @@ msgstr "{name} はこのアドレスでメールを受信します。設定内�
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} が先に返信しました。"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "{name} sends through its own SMTP account, so there is no Amazon SES tenant. Checks for SPF, DKIM and DMARC are on its e-mail channel."
+msgstr "{name} は独自の SMTP アカウントで送信するため、Amazon SES テナントはありません。SPF、DKIM、DMARC のチェックはメールチャネルにあります。"
 
 #: src/features/contact/ContactDetail.tsx
 msgid "{name} unblocked"
@@ -864,10 +886,6 @@ msgstr "*@example.com は、他のチャネルにないドメイン内のすべ�
 msgid "+ Add address"
 msgstr "+ アドレスを追加"
 
-#: src/features/settings/ProductsPage.tsx
-msgid "+ Add channel"
-msgstr "+ チャンネルを追加"
-
 #: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "今月 +{added}"
@@ -1121,6 +1139,10 @@ msgstr "ヘルプセンターの記事が公開されました"
 msgid "A help center article was unpublished"
 msgstr "ヘルプセンターの記事が非公開になりました"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "A key lets your backend, a script or a bot read and write conversations. Limit it to the products and scopes it needs."
+msgstr "キーを使うと、バックエンド、スクリプト、ボットが会話を読み書きできます。必要な製品とスコープだけに制限してください。"
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "担当者がいない間に、連絡先から後続のメッセージがあったとき。"
@@ -1233,7 +1255,7 @@ msgstr "{name} に関する質問"
 msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
 msgstr "閲覧者の投稿は、そのうち 1 件が承認されるまでメンバーの確認待ちになります。アプリのサインイン済みユーザーはすぐに公開されます。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "A real address where you receive post"
 msgstr "郵便物を受け取れる実際の住所"
 
@@ -1330,7 +1352,6 @@ msgstr "承認済みの回答"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "アクセス"
@@ -1363,11 +1384,6 @@ msgstr "Acme のステータス"
 msgid "Acme Support"
 msgstr "Acme サポート"
 
-#. placeholder {0}: k.name
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Actions for {0}"
-msgstr "{0} の操作"
-
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
@@ -1387,6 +1403,10 @@ msgstr "追加"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "ブロックを追加"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Add a channel"
+msgstr "チャネルを追加"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a component"
@@ -1416,6 +1436,10 @@ msgstr "メモを追加(任意)"
 msgid "Add a passkey"
 msgstr "パスキーを追加"
 
+#: src/features/settings/AddProductDialog.tsx
+msgid "Add a product"
+msgstr "製品を追加"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Streamable HTTP トランスポートでリモートサーバーを追加し、サーバー URL を指定します。多くのクライアントは次のような設定を受け付けます。"
@@ -1442,6 +1466,10 @@ msgstr "{listName} に登録者を追加"
 msgid "Add a website chat in the inbox settings"
 msgstr "受信トレイの設定でウェブサイトチャットを追加"
 
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "Add an address on your server and pick the events Yuva should tell it about."
+msgstr "サーバー上のアドレスを追加し、Yuva が通知するイベントを選びます。"
+
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "アナリティクスプロパティを追加"
@@ -1461,6 +1489,7 @@ msgstr "受信トレイを追加"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "「Yuva」という名前の OAuth クライアントを機密クライアントとして追加し、下のリダイレクト URL をそのリダイレクト URL に入力します。"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add another"
 msgstr "もう 1 つ追加"
@@ -1489,7 +1518,6 @@ msgid "Add domain"
 msgstr "ドメインを追加"
 
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "エンドポイントを追加"
@@ -1515,6 +1543,10 @@ msgstr "モニターを追加（{addKey}）"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "メモを追加"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add one for each product or brand you answer for. Each gets its own branding, hours, team and channels."
+msgstr "対応する製品やブランドごとに 1 つ追加します。それぞれに専用のブランド、営業時間、チーム、チャネルがあります。"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "Add product"
@@ -1657,12 +1689,25 @@ msgstr "Alertmanager"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "すべて"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "All assistants"
+msgstr "すべてのアシスタント"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels"
+msgstr "すべてのチャネル"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels work"
+msgstr "すべてのチャネルが正常です"
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1678,9 +1723,7 @@ msgid "All imports"
 msgstr "すべてのインポート"
 
 #: src/app/Palette.tsx
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "すべての受信トレイ"
@@ -1698,8 +1741,8 @@ msgid "All monitors"
 msgstr "すべてのモニター"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "All of its conversations are deleted with it."
-msgstr "その会話もすべて一緒に削除されます。"
+msgid "All of its conversations, messages and attachments are deleted with it. Webhooks and API keys limited to it stop working."
+msgstr "会話、メッセージ、添付ファイルもすべて一緒に削除されます。この製品に限定された Webhook と API キーは動作しなくなります。"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
@@ -1712,10 +1755,13 @@ msgstr "すべてのプロダクト"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "All products"
 msgstr "すべてのプロダクト"
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1797,11 +1843,11 @@ msgstr "サインインや通知メールにも使う"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "メンバーの社内メモにも message.created を送信します。社内イベントは送信されません。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Always"
 msgstr "常に"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -1813,9 +1859,9 @@ msgstr "Amazon SES"
 msgid "Amazon SES · {region}"
 msgstr "Amazon SES · {region}"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Amazon SES error"
-msgstr "Amazon SES エラー"
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES cannot verify the sending domain yet. Publish the DNS records, then check again."
+msgstr "Amazon SES が送信ドメインをまだ確認できません。DNS レコードを公開してから、もう一度確認してください。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES itself paused it; the operator has to open a case with AWS."
@@ -1824,6 +1870,10 @@ msgstr "Amazon SES 自体が停止したため、運用担当者が AWS にケ�
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
 msgstr "Amazon SES がこの受信トレイの送信を停止しました。サーバーの運用担当者が再開するまで、SES 経由のメールは「Sending disabled」で拒否されます。他の受信トレイは送信を続けます。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES paused sending. Replies and broadcasts are refused until the operator reinstates it."
+msgstr "Amazon SES が送信を一時停止しました。運営者が再開するまで、返信と一斉配信は拒否されます。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -1841,6 +1891,10 @@ msgstr "Amazon SES がこの受信トレイのテナントを停止したか、�
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused a step of the tenant setup."
 msgstr "Amazon SES がテナント設定の手順の 1 つを拒否しました。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES refused to send for this channel. Check the deliverability tab for the reason."
+msgstr "Amazon SES がこのチャネルの送信を拒否しました。理由は「配信品質」タブで確認してください。"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused to set up the tenant: <0>{detail}</0>"
@@ -1893,7 +1947,7 @@ msgstr "アプリパスワードはメールの変更に使えてしまいます
 msgid "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
 msgstr "アーカイブしたリストは登録者と記録を保持しますが、フォームと設定ページでは表示されなくなります。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "An e-mail address, phone number or web address"
 msgstr "メールアドレス、電話番号、またはウェブアドレス"
 
@@ -1950,6 +2004,10 @@ msgstr "インシデントが解決されたか、メンテナンスが完了し
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "招待は、そのアドレスに届いたコードでサインインすると承諾されます。7 日で期限切れになります。"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "An mbox export of a mailbox"
+msgstr "メールボックスの mbox エクスポート"
+
 #: src/features/team/TeamPage.tsx
 msgid "An owner cannot be removed. Change their role first."
 msgstr "オーナーは削除できません。先にロールを変更してください。"
@@ -1997,6 +2055,10 @@ msgstr "別のアカウント"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "このチャネルがメールを受信する別のアドレスです。メールボックスをここに転送してください(例: プロバイダー側で {own} へ)。{own} 自身への転送はループします。"
+
+#: src/features/settings/canned/CannedReplyDialog.tsx
+msgid "Another canned reply already uses this shortcut."
+msgstr "別の定型返信がすでにこのショートカットを使っています。"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
@@ -2108,12 +2170,13 @@ msgid "API"
 msgstr "API"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API & MCP"
 msgstr "API と MCP"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "API channel"
 msgstr "API チャネル"
 
@@ -2122,10 +2185,19 @@ msgid "API key"
 msgstr "API キー"
 
 #: src/app/Palette.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "API キー"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants deliver replies at once, without a member reviewing them first."
+msgstr "API キーとアシスタントは、メンバーが事前に確認することなく、返信をすぐに配信します。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants will deliver replies at once. Customers receive what they write, with nobody reviewing it first. You can turn this off again at any time."
+msgstr "API キーとアシスタントは返信をすぐに配信します。顧客には、誰も事前に確認しないまま書かれた内容が届きます。この設定はいつでもオフに戻せます。"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
@@ -2308,25 +2380,43 @@ msgstr "{assignee} に割り当て済み"
 msgid "Assigned to {assignee}, kept by name"
 msgstr "{assignee} に割り当て済み、名前のみ保持"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistant"
+msgstr "アシスタント"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Assistants"
 msgstr "アシスタント"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys may send replies themselves: <0>Bots may send</0> is on in this workspace."
+msgstr "アシスタントと API キーが自分で返信を送信できます。このワークスペースでは<0>ボットの送信を許可</0>がオンです。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys write drafts; a member reviews and sends them. <0>Bots may send</0> is off in this workspace."
+msgstr "アシスタントと API キーはドラフトを書き、メンバーが確認して送信します。このワークスペースでは<0>ボットの送信を許可</0>がオフです。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Assistants and apps you connected with your sign-in. Each acts as you, only within the access you allowed."
 msgstr "あなたのサインインで接続したアシスタントとアプリです。それぞれあなたとして、許可したアクセスの範囲内でのみ動作します。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "Assistants work in Yuva through MCP on this server’s <0>/mcp</0>, with the access you approve."
-msgstr "アシスタントは、このサーバーの <0>/mcp</0> から MCP 経由で Yuva を操作します。アクセス範囲はあなたが承認したものです。"
+msgid "Assistants work in Yuva through MCP on this server. They act as the member who connected them, with only the access that member approved. Drafts wait for review in Assistants."
+msgstr "アシスタントは、このサーバーの MCP 経由で Yuva を操作します。接続したメンバーとして、そのメンバーが承認した範囲のアクセスだけで動作します。ドラフトは「アシスタント」で確認を待ちます。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants work in Yuva through MCP, acting as the member who connected them, with only the access that member approved."
+msgstr "アシスタントは MCP 経由で Yuva を操作し、接続したメンバーとして、そのメンバーが承認した範囲のアクセスだけで動作します。"
 
 #: src/app/Rail.tsx
 msgid "Assistants, {drafts} drafts waiting"
 msgstr "アシスタント、ドラフト {drafts} 件が待機中"
 
 #: src/components/common/text.ts
+#: src/features/settings/AddProductDialog.tsx
 msgid "Async"
 msgstr "非同期"
 
@@ -2368,7 +2458,6 @@ msgid "Attempt log"
 msgstr "試行ログ"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "試行回数"
 
@@ -2414,7 +2503,6 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "誰も返信していない自動返信、ニュースレター、配信レポート。"
 
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
@@ -2569,6 +2657,7 @@ msgstr "太字"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
@@ -2596,6 +2685,7 @@ msgstr "ボット名(任意)"
 msgid "Both records were found. Yuva checks them once a day; keep them in place."
 msgstr "2 つのレコードが見つかりました。Yuva は 1 日に 1 回確認します。そのままにしておいてください。"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "ボット"
@@ -2660,10 +2750,6 @@ msgstr "すでに別の場所で同意した登録者を取り込みます。各
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "現在返信しているメールボックスの履歴を取り込み、その後メールの受信先を切り替えます。Yuva はメールボックスを読み取るだけで、そこには何も変更を加えません。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Bring your mail and help-desk history, read only from the source"
-msgstr "メールとヘルプデスクの履歴を取り込みます。移行元は読み取り専用です"
-
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "過去のメールを取り込む"
@@ -2678,9 +2764,9 @@ msgstr "一斉配信"
 msgid "Broadcast · {people} people · {when}"
 msgstr "一斉配信 · {people} 人 · {when}"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcast sending"
 msgstr "一斉配信の送信"
 
@@ -2692,7 +2778,6 @@ msgstr "一斉配信の送信"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "一斉配信"
 
@@ -2774,7 +2859,10 @@ msgstr "キャンペーン名"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/status/AddSubscriberDialog.tsx
@@ -2895,6 +2983,10 @@ msgstr "変更"
 msgid "Change address"
 msgstr "アドレスを変更"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Change in API & MCP"
+msgstr "API と MCP で変更"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
@@ -2937,12 +3029,14 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "送信ドメインを変更すると、新しいドメインで再度有効にするまで DKIM 署名がオフになります。"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "チャネル"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "Channel added"
 msgstr "チャネルを追加しました"
 
@@ -2955,15 +3049,22 @@ msgid "Channel settings"
 msgstr "チャンネル設定"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "チャネル"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Chat"
+msgstr "チャット"
 
 #: src/features/docs/InstallDialog.tsx
 msgid "Chat channel"
 msgstr "チャットチャネル"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 msgid "Check"
 msgstr "確認"
 
@@ -2984,7 +3085,7 @@ msgstr "コピーする前に確認"
 msgid "Check deliverability and set up DKIM"
 msgstr "配信品質を確認して DKIM を設定"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Check DNS"
 msgstr "DNS を確認"
 
@@ -3300,6 +3401,8 @@ msgstr "コレクション"
 msgid "Color"
 msgstr "色"
 
+#: src/features/settings/AddProductDialog.tsx
+#: src/features/settings/inboxes/colors.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "色"
@@ -3332,7 +3435,7 @@ msgstr "カンマ"
 msgid "Comparison of condition {n}"
 msgstr "条件 {n} の比較"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "完了"
@@ -3429,6 +3532,7 @@ msgid "confirmed their address in the last {days} days"
 msgstr "過去 {days} 日間にアドレスを確認済み"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/text.ts
 #: src/features/migrations/Wizard.tsx
@@ -3450,13 +3554,19 @@ msgstr "{clientName} を Yuva に接続しますか?"
 msgid "Connect {provider}"
 msgstr "{provider} を接続"
 
-#: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Connect an assistant"
 msgstr "アシスタントを接続"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "Claude や ChatGPT などのアシスタントを接続"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connect Claude, ChatGPT, Cursor or another MCP client to let it read conversations and draft replies for you to review."
+msgstr "Claude、ChatGPT、Cursor などの MCP クライアントを接続すると、会話を読み、確認用の返信ドラフトを作成できます。"
 
 #: src/features/account/ConnectPage.tsx
 msgid "Connect to {host}"
@@ -3467,6 +3577,7 @@ msgid "Connect your servers and bots to Yuva"
 msgstr "サーバーとボットを Yuva に接続"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
@@ -3478,13 +3589,19 @@ msgstr "{created} に接続"
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "接続済みアプリ"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connected by {by} on {since}"
+msgstr "{by} が {since} に接続"
+
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected on {since}"
 msgstr "{since} に接続"
@@ -3508,10 +3625,6 @@ msgstr "{provider} に接続済み"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
 msgstr "{storedHost} に接続済み。パスワードを変更するときだけ再入力してください。"
-
-#: src/features/settings/connected-apps/AssistantPage.tsx
-msgid "Connected under another name? All connections are in <0>Connected apps</0>."
-msgstr "別の名前で接続しましたか?すべての接続は<0>接続済みアプリ</0>にあります。"
 
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
@@ -3547,7 +3660,7 @@ msgstr "同意記録"
 #: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Contact"
 msgstr "連絡先"
 
@@ -3609,6 +3722,7 @@ msgstr "コンテンツ"
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -3814,6 +3928,7 @@ msgid "Country"
 msgstr "国"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Create"
 msgstr "作成"
 
@@ -3836,6 +3951,10 @@ msgstr "Help Scout でアプリを作成"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "Zendesk で OAuth クライアントを作成"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "Create and add a channel"
+msgstr "作成してチャネルを追加"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Create another"
@@ -3924,7 +4043,9 @@ msgstr "Cron"
 msgid "CSV file"
 msgstr "CSV ファイル"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/inboxes/colors.tsx
 msgid "Custom"
 msgstr "カスタム"
 
@@ -4015,7 +4136,6 @@ msgstr "パフォーマンス低下"
 #: src/features/contact/ContactNotes.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -4048,6 +4168,10 @@ msgstr "{0} を削除しますか?"
 msgid "Delete {name}?"
 msgstr "{name} を削除しますか?"
 
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete {name}…"
+msgstr "{name} を削除…"
+
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Delete after (days)"
 msgstr "削除までの日数"
@@ -4069,10 +4193,6 @@ msgstr "下書きを削除（{removeKey}）"
 msgid "Delete group"
 msgstr "グループを削除"
 
-#: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "Delete inbox"
-msgstr "受信トレイを削除"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Delete key"
 msgstr "キーを削除"
@@ -4093,6 +4213,10 @@ msgstr "アカウントを削除"
 #: src/features/status/SettingsTab.tsx
 msgid "Delete page"
 msgstr "ページを削除"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete product"
+msgstr "製品を削除"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
@@ -4149,6 +4273,10 @@ msgstr "このメモを削除"
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note?"
 msgstr "このメモを削除しますか?"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete this product"
+msgstr "この製品を削除"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete this subscription?"
@@ -4229,10 +4357,6 @@ msgstr "配信"
 msgid "Deliveries show up here once a subscribed event happens."
 msgstr "購読しているイベントが発生すると、ここに配信が表示されます。"
 
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Delivering"
-msgstr "配信中"
-
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Delivery details"
 msgstr "配信の詳細"
@@ -4284,6 +4408,10 @@ msgstr "詳細"
 msgid "Deutsch"
 msgstr "Deutsch"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Developers"
+msgstr "開発者"
+
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "デバイス"
@@ -4304,6 +4432,10 @@ msgstr "ディレクトリ(テナント)ID(任意)"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "破棄"
+
+#: src/components/common/SaveBar.tsx
+msgid "Discard changes"
+msgstr "変更を破棄"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Discard the suggested reply"
@@ -4327,7 +4459,6 @@ msgstr "ディスカッションが開始されました"
 #: src/features/docs/DiscussionsTab.tsx
 #: src/features/docs/DocsPage.tsx
 #: src/features/docs/PagesTab.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
@@ -4366,7 +4497,6 @@ msgstr "表示"
 msgid "Display name"
 msgstr "表示名"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
@@ -4436,7 +4566,7 @@ msgstr "ドキュメントは、自分のサイトで管理し、自分でホス
 msgid "Documentation pages"
 msgstr "ドキュメントページ"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Documentation site"
 msgstr "ドキュメントサイト"
@@ -4536,12 +4666,14 @@ msgctxt "migration state"
 msgid "Draft"
 msgstr "下書き"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft author"
 msgstr "ドラフトの作成者"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author} のドラフト"
@@ -4568,10 +4700,12 @@ msgstr "ドラフト:"
 msgid "Drafts"
 msgstr "ドラフト"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "待機中のドラフト"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting for review and the assistants you connected"
 msgstr "レビュー待ちの下書きと接続したアシスタント"
@@ -4601,6 +4735,7 @@ msgstr "重複"
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -4620,10 +4755,6 @@ msgstr "メールアドレス"
 #: src/features/contact/MergePreview.tsx
 msgid "E-mail addresses"
 msgstr "メールアドレス"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
-msgstr "メールの連絡先には、2 つのリンクが付いた短いメールを送ります。チャットとアプリの連絡先には、ウィジェットまたはアプリ内で確認します。"
 
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
@@ -4712,8 +4843,8 @@ msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "新しいメールごとに会話が始まり、返信はその会話に続きます。"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "Each product has its own name, branding, hours and channels"
-msgstr "製品ごとに名前、ブランド、営業時間、チャンネルを設定できます"
+msgid "Each product has its own name, branding, hours, team and channels"
+msgstr "各製品には、専用の名前、ブランド、営業時間、チーム、チャネルがあります"
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4740,6 +4871,10 @@ msgstr "編集"
 #: src/features/status/MonitorsPage.tsx
 msgid "Edit ({editKey})"
 msgstr "編集 ({editKey})"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Edit {keyName}"
+msgstr "{keyName} を編集"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4900,6 +5035,10 @@ msgstr "SES コンソールの SMTP パスワードを入力してください�
 msgid "Enter the SMTP user name from the SES console."
 msgstr "SES コンソールの SMTP ユーザー名を入力してください。"
 
+#: src/features/settings/workspace/RetentionForm.tsx
+msgid "Enter whole days from 1 to 36,500, or leave it empty."
+msgstr "1〜36,500 の整数の日数を入力するか、空のままにしてください。"
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "仕事用のメールアドレスを入力すると、コードをお送りします。パスワードは不要で、後からも同じコードでサインインできます。"
@@ -4922,7 +5061,6 @@ msgstr "エラーまたは回答"
 
 #: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "イベント"
@@ -5025,6 +5163,7 @@ msgstr "スパムとして記録した投稿者を除き、全員の投稿がす
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "すべて"
@@ -5045,7 +5184,7 @@ msgstr "すべて設定済みです。どの項目も開いて変更でき、設
 msgid "Everywhere"
 msgstr "すべての場所"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Example Ltd."
 msgstr "Example Ltd."
 
@@ -5129,12 +5268,9 @@ msgid "Failed: {0}"
 msgstr "失敗: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Failing"
 msgstr "失敗中"
-
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Failing since {since} · retrying"
-msgstr "{since} から失敗中 · 再試行中"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Fails the monitor at once, without waiting for the grace."
@@ -5201,6 +5337,10 @@ msgstr "ファイル"
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
 msgstr "ファイルと同意"
+
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Files"
+msgstr "ファイル"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
@@ -5321,6 +5461,7 @@ msgid "First, an e-mail address"
 msgstr "まず、メールアドレスを入力"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "修正"
@@ -5397,6 +5538,7 @@ msgid "For example Acme"
 msgstr "例: Acme"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "例: Fieldnote"
@@ -5524,14 +5666,6 @@ msgstr "ブロックした連絡先から"
 msgid "From a conversation"
 msgstr "会話から"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a help desk"
-msgstr "ヘルプデスクから"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a mailbox"
-msgstr "メールボックスから"
-
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "差出人アドレス(任意)"
@@ -5548,6 +5682,7 @@ msgstr "ターミナルから"
 msgid "From your site or app"
 msgstr "サイトまたはアプリから"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Full API"
 msgstr "フル API"
@@ -5588,14 +5723,10 @@ msgid "Gallery"
 msgstr "ギャラリー"
 
 #: src/app/Sidebar.tsx
-#: src/features/migrations/MigrationsPage.tsx
-#: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/GeneralTabs.tsx
-#: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "全般"
 
@@ -5643,9 +5774,9 @@ msgstr "Gmail が転送するのは、スパムではない新着メールのみ
 msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
 msgstr "Gmail では、IMAP 経由で他のアプリが 1 日に読み取れるのは約 1.5 GB なので、数 GB のメールボックスには何日もかかります。Google Takeout なら 1 つのファイルとしてエクスポートでき、回線の許す限りの速さでアップロードできます。まずそれをインポートし、新しいメールと切り替えのために、アプリパスワードでここに戻ってください。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Gmail, Outlook, Yandex, any IMAP"
-msgstr "Gmail、Outlook、Yandex、任意の IMAP"
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Gmail, Outlook, Yandex, any IMAP server"
+msgstr "Gmail、Outlook、Yandex、あらゆる IMAP サーバー"
 
 #: src/features/status/IncidentDetail.tsx
 msgid "go back to operational when you post this"
@@ -5800,6 +5931,10 @@ msgstr "ヘルプセンター"
 msgid "Help center settings"
 msgstr "ヘルプセンターの設定"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Help desks"
+msgstr "ヘルプデスク"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help report"
 msgstr "ヘルプレポート"
@@ -5866,6 +6001,10 @@ msgstr "HTTPの詳細を隠す"
 msgid "Hide quoted text"
 msgstr "引用部分を隠す"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Hide revoked"
+msgstr "取り消し済みを隠す"
+
 #: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "プレビューを隠す"
@@ -5931,6 +6070,10 @@ msgstr "ホスト名と証明書"
 msgid "Hours"
 msgstr "営業時間"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Hours & team"
+msgstr "営業時間とチーム"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "どのように同意しましたか?"
@@ -5942,6 +6085,10 @@ msgstr "登録者はどのように同意しましたか?"
 #: src/features/setup/NewsletterStep.tsx
 msgid "How do people sign up?"
 msgstr "どのように登録してもらいますか？"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "How do you answer?"
+msgstr "どのように返信しますか？"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
@@ -5963,6 +6110,10 @@ msgstr "ビートが遅れてよい時間です。"
 msgid "How mail reaches Yuva"
 msgstr "メールが Yuva に届く仕組み"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "How messages arrive: chat, e-mail, apps"
+msgstr "メッセージの届き方：チャット、メール、アプリ"
+
 #: src/features/settings/ProductsPage.tsx
 msgid "How messages reach each product"
 msgstr "メッセージが各製品に届く仕組み"
@@ -5970,6 +6121,14 @@ msgstr "メッセージが各製品に届く仕組み"
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
 msgstr "返信はどのように送信しますか?"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "How software connects: keys, hooks, assistants"
+msgstr "ソフトウェアの接続方法：キー、Webhook、アシスタント"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "How the chat opens"
+msgstr "チャットの開き方"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -5992,10 +6151,6 @@ msgstr "追加方法"
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
 msgstr "メールの送信方法"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "How to verify"
-msgstr "確認方法"
 
 #: src/features/status/text.tsx
 msgid "HTTP"
@@ -6037,10 +6192,6 @@ msgstr "アイデア"
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "原因特定済み"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Identity not verified"
-msgstr "ID 未確認"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Identity secret"
@@ -6249,7 +6400,7 @@ msgstr "対応中"
 msgid "In the app and by e-mail"
 msgstr "アプリ内とメールで"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "In the footer"
 msgstr "フッターに"
 
@@ -6287,7 +6438,6 @@ msgstr "Zoho Mail で、設定 › メールアカウント › IMAP アクセ�
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "受信トレイ"
@@ -6346,8 +6496,8 @@ msgstr "分析"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "インストール"
@@ -6526,6 +6676,7 @@ msgstr "通知を受け取らなくなります。"
 msgid "Italic"
 msgstr "斜体"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "アクセスはすぐに終了します。再び使うには、もう一度接続してください。"
@@ -6606,7 +6757,8 @@ msgstr "主な数値"
 msgid "Keyboard shortcuts"
 msgstr "キーボードショートカット"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Keys"
 msgstr "キー"
 
@@ -6617,6 +6769,10 @@ msgstr "このワークスペースでは、キーとアシスタントは一斉
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Keys and assistants may send broadcasts"
 msgstr "キーとアシスタントによる一斉配信を許可"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Keys that can reach this product. Create and revoke them under API & MCP."
+msgstr "この製品にアクセスできるキーです。API と MCP で作成・取り消しできます。"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -6668,6 +6824,10 @@ msgstr "ラベル"
 #: src/features/inbox/ChatList.tsx
 msgid "Labels changed"
 msgstr "ラベルを変更しました"
+
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "Labels sort conversations by topic, such as billing or bugs."
+msgstr "ラベルは、請求やバグなどのトピックで会話を整理します。"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6776,6 +6936,7 @@ msgstr "最終使用"
 msgid "last used {used}"
 msgstr "最終使用 {used}"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Last used {used}"
 msgstr "最終使用 {used}"
@@ -6828,9 +6989,13 @@ msgstr "条件または言語により除外"
 msgid "Left out: {left} of {total} people on the lists"
 msgstr "除外: リスト上の{total}人中{left}人"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Legal name"
 msgstr "正式名称"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Let bots send replies?"
+msgstr "ボットに返信の送信を許可しますか？"
 
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
@@ -7002,11 +7167,12 @@ msgid "Lists"
 msgstr "リスト"
 
 #: src/components/common/text.ts
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Live"
 msgstr "ライブ"
 
 #: src/components/common/Source.tsx
+#: src/features/settings/AddProductDialog.tsx
 msgid "Live chat"
 msgstr "ライブチャット"
 
@@ -7073,7 +7239,6 @@ msgstr "ロック中: 閲覧者はここに書き込めません。あなたは�
 msgid "Logo URL"
 msgstr "ロゴの URL"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Look"
 msgstr "表示"
@@ -7191,6 +7356,7 @@ msgstr "メールボックスのアドレス"
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Mailboxes"
 msgstr "メールボックス"
 
@@ -7233,6 +7399,7 @@ msgstr "新しいアドレスを作成"
 msgid "Make the board public or private"
 msgstr "ボードを公開または非公開にする"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -7350,6 +7517,7 @@ msgstr "zip 内の mbox ファイル"
 msgid "mbox options"
 msgstr "mbox のオプション"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
 msgstr "MCP のみ"
@@ -7388,12 +7556,14 @@ msgstr "初回返信までの中央値"
 msgid "median today"
 msgstr "今日の中央値"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "メンバー"
 
 #: src/app/Palette.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7553,8 +7723,8 @@ msgid "Missed beat"
 msgstr "欠落したビート"
 
 #: src/components/common/text.ts
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/channels/app/AppFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Mobile app"
 msgstr "モバイルアプリ"
@@ -7730,7 +7900,6 @@ msgstr "前または次のステージに移動"
 
 #: src/features/settings/GeneralTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Yuva に移行"
 
@@ -7819,6 +7988,10 @@ msgstr "名前を Yuva にします。<0>接続</0>で<1>パブリックエン�
 msgid "Name of the new inbox"
 msgstr "新しい受信トレイの名前"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Name, colour and the first thing the chat says"
+msgstr "名前、色、チャットが最初に話す内容"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Name, e-mail or id"
 msgstr "名前、メール、または ID"
@@ -7831,7 +8004,7 @@ msgstr "名前(例: 仕事用ノートPC)"
 msgid "name@example.com"
 msgstr "name@example.com"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Needed for broadcasts"
 msgstr "一斉配信に必要"
 
@@ -7841,6 +8014,7 @@ msgstr "送信元が必要"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "要確認"
@@ -7895,6 +8069,7 @@ msgid "New addresses that get a confirmation mail"
 msgstr "確認メールを送る新しいアドレス"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "New API key"
 msgstr "新しい API キー"
 
@@ -8081,6 +8256,10 @@ msgstr "新しい更新 · {stage}"
 msgid "New value"
 msgstr "新しい値"
 
+#: src/features/settings/DeveloperTabs.tsx
+msgid "New webhook endpoint"
+msgstr "新しい Webhook エンドポイント"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "新しいメールと切り替え"
@@ -8145,6 +8324,10 @@ msgstr "次のメールは {local}({utc} UTC)に、この一斉配信のペー�
 msgid "Next screenshot"
 msgstr "次のスクリーンショット"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Next you pick the source and connect it. Nothing is copied until you start."
+msgstr "次に、ソースを選んで接続します。開始するまで何もコピーされません。"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "次に、取り込む内容を選びます。スキャンではファイルを 1 回読み込みます。"
@@ -8177,9 +8360,13 @@ msgstr "回答なし"
 msgid "No answer"
 msgstr "回答なし"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "No API keys can reach this product yet."
+msgstr "この製品にアクセスできる API キーはまだありません。"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "No API keys yet."
-msgstr "API キーはまだありません。"
+msgid "No API keys yet"
+msgstr "API キーはまだありません"
 
 #: src/features/migrations/text.ts
 msgid "No API on this plan"
@@ -8192,6 +8379,10 @@ msgstr "アプリパスワードのページがありませんか?管理者が G
 #: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "アーカイブ済みのリストはありません"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No assistant is connected yet"
+msgstr "接続されたアシスタントはまだありません"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and draft replies."
@@ -8247,7 +8438,6 @@ msgid "No channels yet"
 msgstr "チャネルはまだありません"
 
 #. placeholder {0}: inbox.name
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "チャネルはまだありません。お客様が {0} に書き込めるよう、追加してください。"
@@ -8285,8 +8475,8 @@ msgid "No confirmation"
 msgstr "確認なし"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "No connected apps."
-msgstr "接続済みアプリはありません。"
+msgid "No connected apps"
+msgstr "接続済みのアプリはありません"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
@@ -8332,6 +8522,14 @@ msgstr "選べる会話がありません。"
 msgid "No conversations yet."
 msgstr "会話はまだありません。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "No days picked: the product counts as closed all week."
+msgstr "日が選ばれていません。製品は 1 週間ずっと閉まっているものとして扱われます。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No deliveries yet"
+msgstr "配信はまだありません"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "No design yet"
 msgstr "デザインはまだありません"
@@ -8351,6 +8549,10 @@ msgstr "ディスカッションはまだありません。閲覧者がドキュ
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
 msgstr "DKIM 署名が合格していないため、一斉配信は送信できません。SMTP プロバイダーで DKIM を設定するか、下の Yuva DKIM をオンにしてください。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No drafts are waiting"
+msgstr "待機中のドラフトはありません"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -8379,6 +8581,10 @@ msgstr "メール購読者はまだいません"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
 msgstr "絵文字が見つかりません。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No endpoints yet"
+msgstr "エンドポイントはまだありません"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "No endpoints yet."
@@ -8523,8 +8729,8 @@ msgid "No pending invites."
 msgstr "保留中の招待はありません。"
 
 #: src/features/settings/ProductsPage.tsx
-msgid "No products yet. Add one for each product or brand you answer for."
-msgstr "製品がまだありません。対応する製品やブランドごとに追加してください。"
+msgid "No products yet"
+msgstr "製品はまだありません"
 
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
@@ -8865,6 +9071,7 @@ msgstr "1 分経っても届きませんか?迷惑メールフォルダーを確
 msgid "Not uploaded yet"
 msgstr "未アップロード"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "未使用"
@@ -8911,6 +9118,10 @@ msgstr "{provider} には何も変更はありません。必要であればア�
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "ファイルの内容は何も追加されず、アップロードしたファイルは削除されます。"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Nothing from this kind of author is waiting for review."
+msgstr "この種類の作成者から確認待ちのものはありません。"
 
 #: src/features/status/MonitorChecks.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -8991,6 +9202,10 @@ msgstr "これらの条件に一致するものはありません。"
 msgid "Nothing matches your search here."
 msgstr "検索に一致するものはありません。"
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Nothing needs attention right now."
+msgstr "現在、対応が必要なものはありません。"
+
 #: src/features/home/HomePage.tsx
 msgid "Nothing needs you"
 msgstr "対応待ちはありません"
@@ -9067,7 +9282,6 @@ msgstr "オフ"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
-#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Off"
 msgstr "オフ"
 
@@ -9167,10 +9381,6 @@ msgstr "Team プランと Enterprise プランでは、オーナーが <0>組織
 msgid "On the web"
 msgstr "ウェブ"
 
-#: src/features/settings/OnThisPage.tsx
-msgid "On this page"
-msgstr "このページ内"
-
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
 msgstr "テストメッセージが届くと、Yuva は {hours} 時間待ちます。その間に {provider} だけに届くメールがなければ、移行は自動で完了します。自分で完了することもできます。"
@@ -9233,6 +9443,7 @@ msgstr "オンライン"
 #: src/features/contact/Presence.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Online now"
 msgstr "現在オンライン"
 
@@ -9424,6 +9635,11 @@ msgstr "アプリの登録を開く"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open Apps and services"
 msgstr "アプリとサービスを開く"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Open channels"
+msgstr "チャネルを開く"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -9666,6 +9882,10 @@ msgstr "未完了、未割り当て"
 msgid "Opens"
 msgstr "開封"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Opens the conversation with the draft in the composer"
+msgstr "ドラフトを入力欄に入れた状態で会話を開きます"
+
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "正常稼働"
@@ -9769,8 +9989,8 @@ msgid "Outlook's .pst files are not read; convert them to .mbox first."
 msgstr "Outlook の .pst ファイルは読み取れません。先に .mbox に変換してください。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Outside them the inbox counts as closed"
-msgstr "それ以外の時間帯は受信トレイを閉鎖中として扱う"
+msgid "Outside them the product counts as closed."
+msgstr "それ以外の時間は、製品は閉まっているものとして扱われます。"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Over time"
@@ -9803,8 +10023,8 @@ msgid "Owners and admins see every inbox; agents see the inboxes they were given
 msgstr "オーナーと管理者はすべての受信トレイを見ることができ、エージェントは割り当てられた受信トレイを見ます。招待、ロールの変更、メンバーの削除ができるのはオーナーと管理者だけです。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Owners and admins see every inbox; members see the inboxes they are given."
-msgstr "オーナーと管理者はすべての受信トレイを見られます。メンバーは割り当てられた受信トレイのみ見られます。"
+msgid "Owners and admins see every product; agents see the products they are given."
+msgstr "オーナーと管理者はすべての製品を見られます。エージェントは割り当てられた製品を見られます。"
 
 #: src/features/team/TeamPage.tsx
 msgid "Owners can do everything, including billing and deleting the workspace."
@@ -9929,8 +10149,8 @@ msgstr "モニターを一時停止または再開"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
@@ -9946,10 +10166,6 @@ msgstr "Amazon SES がこの受信トレイのテナントを停止したか、�
 #: src/components/common/text.ts
 msgid "Paused because the workspace may not send broadcasts for now."
 msgstr "現在ワークスペースでは一斉配信を送信できないため、一時停止しています。"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Paused by Amazon SES"
-msgstr "Amazon SES により一時停止"
 
 #: src/components/common/text.ts
 msgid "Paused by the server's operator."
@@ -10147,6 +10363,10 @@ msgstr "今後 90 日以内の時刻を、あなたのタイムゾーン {zone} 
 msgid "Pick a TLS mode."
 msgstr "TLS モードを選択してください。"
 
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+msgid "Pick an assistant below to connect one."
+msgstr "接続するアシスタントを下から選んでください。"
+
 #: src/components/common/text.ts
 msgid "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 msgstr "この受信トレイのメールチャネルから、SMTP アカウントを持つものを選択してください。確認メールとウェルカムメールはそのチャネルから送信されます。"
@@ -10230,6 +10450,10 @@ msgstr "{provider} の会話の受信トレイ、各エージェントがどの�
 msgid "Pick the list the people join."
 msgstr "人々が参加するリストを選んでください。"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Pick the one you use. Setup steps and scopes are on API & MCP."
+msgstr "お使いのものを選んでください。設定手順とスコープは API と MCP にあります。"
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "もう一方の連絡先を選択します。この連絡先に統合され、その後削除されます。"
@@ -10237,6 +10461,10 @@ msgstr "もう一方の連絡先を選択します。この連絡先に統合さ
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "プラットフォームを選択します。次の手順で、各アプリに追加するコードが表示されます。"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Pick the product and how customers reach it. The next steps set it up."
+msgstr "製品と、顧客がそこに届く方法を選びます。次の手順で設定します。"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Pick the same file again"
@@ -10357,7 +10585,7 @@ msgstr "ステータスの更新を投稿"
 msgid "Post update"
 msgstr "更新を投稿"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Postal address"
 msgstr "郵送先住所"
 
@@ -10380,6 +10608,7 @@ msgstr "準備中"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
 #: src/features/status/StatusPages.tsx
@@ -10448,11 +10677,15 @@ msgstr "pro、team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "製品"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
 msgstr "製品名"
@@ -10461,6 +10694,11 @@ msgstr "製品名"
 #: src/features/setup/previews.tsx
 msgid "Product news"
 msgstr "製品ニュース"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Product settings"
+msgstr "製品の設定"
 
 #: src/features/inbox/ProductSwitcher.tsx
 msgid "Product: {label}"
@@ -10472,10 +10710,12 @@ msgid "Production backend"
 msgstr "本番バックエンド"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/TeamPage.tsx
@@ -10757,6 +10997,7 @@ msgstr "ヘルプセンター、コレクション、記事を閲覧"
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "メーリングリスト、登録者、同意記録を読み取り"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "読み取り専用"
@@ -10840,8 +11081,7 @@ msgstr "リアルタイム"
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "{when} に受信。Gmail の転送設定に入力するか、リンクを開いてください。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Receives only"
 msgstr "受信のみ"
 
@@ -10931,7 +11171,7 @@ msgstr "リージョン"
 msgid "Register an app in Microsoft Entra"
 msgstr "Microsoft Entra でアプリを登録"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Registration"
 msgstr "登録"
 
@@ -10948,13 +11188,11 @@ msgstr "再読み込み"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "リモート画像により、メールを開いたことが送信者に伝わる場合があります。"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 #: src/features/team/TeamPage.tsx
@@ -11115,11 +11353,14 @@ msgstr "別の会話のスレッドで返信しました"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "返信"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
+msgstr "アシスタント、ボット、チームメイトが書いた返信は、誰かが送信または破棄するまでここに表示されます。"
 
 #: src/features/account/AccountPage.tsx
 msgid "Replies and answers in the discussions you follow"
@@ -11128,6 +11369,10 @@ msgstr "フォローしているディスカッションの返信と回答"
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "返信と完了"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies and ratings"
+msgstr "返信と評価"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Replies cannot go out until you add a reply account."
@@ -11161,6 +11406,10 @@ msgstr "本日の返信"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "返信の経由先"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies when available"
+msgstr "対応できるときに返信"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "replies within {within}"
@@ -11414,7 +11663,7 @@ msgstr "確認して投稿"
 msgid "Review and send"
 msgstr "確認して送信"
 
-#: src/features/inbox/SidePanels.tsx
+#: src/features/inbox/AssistantsPage.tsx
 msgid "Review draft"
 msgstr "下書きを確認"
 
@@ -11432,14 +11681,20 @@ msgstr "確認してから送信または予約"
 msgid "Revisions"
 msgstr "リビジョン"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
 msgstr "取り消す"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke {clientName}?"
 msgstr "{clientName} を取り消しますか?"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Revoke {keyName}"
+msgstr "{keyName} を取り消す"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Revoke {keyName}?"
@@ -11572,6 +11827,10 @@ msgstr "保存"
 msgid "Save as draft"
 msgstr "下書きとして保存"
 
+#: src/components/common/SaveBar.tsx
+msgid "Save changes"
+msgstr "変更を保存"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "ドラフトを保存"
@@ -11584,16 +11843,20 @@ msgstr "保存して、識別子とシークレットをコピーしてくださ
 msgid "Save now and keep a version"
 msgstr "今すぐ保存してバージョンを残す"
 
+#: src/features/settings/canned/CannedRepliesPage.tsx
+msgid "Save the answers you write often, then insert them in the composer with a shortcut."
+msgstr "よく書く返信を保存して、ショートカットで入力欄に挿入します。"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save the draft now"
 msgstr "今すぐ下書きを保存"
 
+#: src/components/common/SaveBar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -12020,7 +12283,7 @@ msgstr "送信者"
 msgid "Sender details for the footer"
 msgstr "フッター用の送信者情報"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Sender identity"
 msgstr "送信者 ID"
 
@@ -12029,7 +12292,6 @@ msgstr "送信者 ID"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/Notices.tsx
@@ -12050,7 +12312,7 @@ msgstr "メールで送信中…"
 msgid "Sending channel"
 msgstr "送信チャネル"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Sending error"
 msgstr "送信エラー"
 
@@ -12078,6 +12340,10 @@ msgstr "送信ペース"
 #: src/features/broadcasts/Pace.tsx
 msgid "Sending pace of “{name}”"
 msgstr "「{name}」の送信ペース"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Sending reputation of this product, kept apart from the others"
+msgstr "この製品の送信評価。ほかの製品とは別に管理されます"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -12207,8 +12473,10 @@ msgstr "サーバーの応答"
 msgid "Server settings"
 msgstr "サーバー設定"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/channels/app/AppInstall.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Server URL"
 msgstr "サーバー URL"
 
@@ -12232,6 +12500,10 @@ msgstr "進捗を設定"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Set the feedback progress"
 msgstr "フィードバックの進捗を設定"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Set up"
+msgstr "設定"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Set up {name}"
@@ -12273,10 +12545,12 @@ msgstr "設定中…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "設定"
@@ -12322,10 +12596,20 @@ msgstr "ショートカット"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "表示"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Show {nRevoked} revoked"
+msgstr "取り消し済み {nRevoked} 件を表示"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show all authors"
+msgstr "すべての作成者を表示"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show archived designs"
@@ -12335,9 +12619,17 @@ msgstr "アーカイブ済みのデザインを表示"
 msgid "Show as sent"
 msgstr "送信済みとして表示"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show full draft"
+msgstr "ドラフト全文を表示"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Show HTTP details"
 msgstr "HTTPの詳細を表示"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show less"
+msgstr "表示を減らす"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12576,6 +12868,10 @@ msgid "Sign-up sheet at the spring fair"
 msgstr "春のフェアでの申込用紙"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+msgid "Signed HTTP calls to your backend for conversations, messages and feedback. Each endpoint can listen to one product or to all."
+msgstr "会話、メッセージ、フィードバックについて、バックエンドへ署名付き HTTP 呼び出しを送ります。各エンドポイントは 1 つの製品またはすべての製品を対象にできます。"
+
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
 msgstr "この受信トレイの会話、メッセージ、フィードバックについて、バックエンドへ署名付き HTTP 呼び出しを行います。"
 
@@ -12609,7 +12905,6 @@ msgid "Signing"
 msgstr "署名"
 
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "署名シークレット"
@@ -12655,7 +12950,6 @@ msgstr "サイトのリンク"
 msgid "Site name"
 msgstr "サイト名"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
@@ -12844,10 +13138,6 @@ msgstr "ディスカッションを始める"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "メーリングリストを始める"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Start a move"
-msgstr "移行を開始"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -13077,7 +13367,7 @@ msgstr "成功"
 msgid "Successes to recover"
 msgstr "復旧までの連続成功回数"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "MERSİS 番号、商業登記番号、VAT ID など(お持ちの場合)"
 
@@ -13108,6 +13398,7 @@ msgstr "サポート"
 msgid "Support address"
 msgstr "サポート用アドレス"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Support bot"
 msgstr "サポートボット"
@@ -13353,10 +13644,12 @@ msgstr "スニペットを設置したすべてのページの隅にチャット
 msgid "The chat bubble appears on these addresses:"
 msgstr "チャットバブルは次のアドレスに表示されます:"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows when you usually reply"
 msgstr "チャットに通常の返信時間を表示"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows who is available and typing"
 msgstr "チャットに対応可能な人と入力中の人を表示"
@@ -13400,6 +13693,10 @@ msgstr "現在のアドレスはすぐに使えなくなります。呼び出し
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "お客様には表示されません"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The customer taps thumbs up or down when a conversation is closed. E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
+msgstr "会話がクローズされると、顧客は高評価または低評価をタップします。メールの連絡先には 2 つのリンクを含む短いメールが届き、チャットとアプリの連絡先にはウィジェットまたはアプリ内で尋ねます。"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The deliverability check has not finished yet."
@@ -13521,6 +13818,10 @@ msgstr "ファイルのパートは削除されました。修正したファイ
 msgid "The first line of the mail shows here when there is no preview text."
 msgstr "プレビューテキストがない場合は、メールの最初の行がここに表示されます。"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "The first message arrived. This channel works."
+msgstr "最初のメッセージが届きました。このチャネルは動作しています。"
+
 #: src/features/settings/notifications/events.ts
 msgid "The first message of a conversation in an inbox that shows a reply time."
 msgstr "返信時間を表示する受信トレイでの、会話の最初のメッセージ。"
@@ -13577,10 +13878,6 @@ msgstr "履歴がコピーされ、メールは Yuva に届くようになりま
 msgid "The hostname is being set up. This takes a moment once the records are found."
 msgstr "ホスト名を設定しています。レコードが見つかった後、少し時間がかかります。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
-msgstr "時間帯は曜日ごとに異なります。ここで変更すると、選択したすべての曜日に同じ時間帯が設定されます。"
-
 #: src/features/broadcasts/Import.tsx
 msgid "The import failed, and nothing was added from the file."
 msgstr "インポートに失敗し、ファイルからは何も追加されませんでした。"
@@ -13589,7 +13886,6 @@ msgstr "インポートに失敗し、ファイルからは何も追加されま
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "インポートは開始待ちではなくなりました。状態を確認してください。"
 
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "受信トレイは後から変更できません。"
@@ -13675,7 +13971,7 @@ msgstr "前回のチェックのテストメールが 10 分以内に戻って�
 msgid "The last deliverability check found something to fix."
 msgstr "前回の配信品質チェックで、修正が必要な点が見つかりました。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "法令により、すべてのマーケティングメールには、送信者と連絡方法の記載が求められます(CAN-SPAM、CASL、トルコの商業通信に関する規則)。Yuva はこの受信トレイからのすべての一斉配信のフッターにこれを記載するため、最初の配信前に入力してください。"
 
@@ -13754,6 +14050,10 @@ msgstr "移行は中断した場所から続きます。"
 #: src/components/common/text.ts
 msgid "The migration moved on in the meantime. Look at its state and try again."
 msgstr "その間に移行が進みました。状態を確認して、もう一度お試しください。"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "The next step adds its first channel: website chat, e-mail or a mobile app."
+msgstr "次の手順で最初のチャネルを追加します。ウェブチャット、メール、モバイルアプリのいずれかです。"
 
 #: src/components/common/text.ts
 msgid "The number of conversations changed since you looked. Check it and confirm again."
@@ -13871,6 +14171,14 @@ msgstr "以前のシークレットも {rotatedUntil} まで署名に使われ�
 msgid "The problem is fixed. Sorry for the trouble."
 msgstr "問題は解決しました。ご不便をおかけしました。"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The product always counts as open."
+msgstr "製品は常に営業中として扱われます。"
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The product cannot be changed later."
+msgstr "製品は後から変更できません。"
+
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
 msgstr "プロバイダーから速度を落とすよう求められました"
@@ -13943,6 +14251,10 @@ msgstr "シークレットは再表示されません。コピーしていない
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The secret is shown once, on the next page."
 msgstr "シークレットは、次のページで一度だけ表示されます。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "The secret is shown once, when a key is made."
+msgstr "シークレットはキーの作成時に一度だけ表示されます。"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -14086,6 +14398,10 @@ msgstr "訪問者はチャットに {0} と入力しましたが、まだ確認�
 msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
 msgstr "未読メッセージがない間、チャットボタンに新着情報の件数が表示されます。ウィジェットのホームには常に表示されます。"
 
+#: src/features/settings/GeneralTabs.tsx
+msgid "The workspace itself: name, retention, labels, canned replies and moving in"
+msgstr "ワークスペース自体：名前、保持期間、ラベル、定型返信、移行"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "現在ワークスペースでは一斉配信を送信できません。"
@@ -14097,6 +14413,10 @@ msgstr "現在、ワークスペースは一括メールを送信できません
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "ワークスペースが本日の送信上限に達しました。{local}({utc} UTC)に送信を再開します。"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "The workspace: labels, replies, data"
+msgstr "ワークスペース：ラベル、返信、データ"
 
 #: src/components/common/text.ts
 msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
@@ -14245,6 +14565,10 @@ msgstr "このチャネルには Yuva DKIM キーがありません。"
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel is not isolated in an Amazon SES tenant."
 msgstr "このチャネルは Amazon SES テナントに分離されていません。"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "This channel only receives mail. Add an SMTP account under Replies so you can answer from Yuva."
+msgstr "このチャネルは受信のみです。Yuva から返信できるように、「返信」で SMTP アカウントを追加してください。"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel sends through Amazon SES in another account or region, so Yuva cannot isolate it in a tenant. Mail goes out without one."
@@ -14729,8 +15053,8 @@ msgid "Turn into a public discussion"
 msgstr "公開ディスカッションにする"
 
 #: src/features/settings/webhooks/sections.tsx
-msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
-msgstr "受信側が動作するようになったら、もう一度オンにしてください。失敗した配信は、下のログから再送信できます。"
+msgid "Turn it on again once the receiver works; send failed deliveries again from the Deliveries tab."
+msgstr "受信側が動作するようになったら再びオンにして、失敗した配信は「配信」タブから再送してください。"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn off"
@@ -14739,6 +15063,10 @@ msgstr "オフにする"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "既存のお客様へのサービスのお知らせではオフにします。どちらの場合も同意は必要で、同意のエクスポートに記録されます。"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Turn on"
+msgstr "オンにする"
 
 #: src/features/migrations/text.ts
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
@@ -14768,6 +15096,10 @@ msgstr "TXT レコード"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
 msgstr "種類"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Type {name} to confirm"
+msgstr "確認のため {name} と入力してください"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
@@ -14947,6 +15279,10 @@ msgstr "未読 · {0}"
 #: src/features/inbox/ChatList.tsx
 msgid "Unread only"
 msgstr "未読のみ"
+
+#: src/components/common/SaveBar.tsx
+msgid "Unsaved changes"
+msgstr "未保存の変更"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribe"
@@ -15165,6 +15501,11 @@ msgstr "このサーバーに対するベアラートークンとして使いま
 msgid "Use letters, digits, - and _, at most 64."
 msgstr "英字、数字、- と _ を使い、最大 64 文字です。"
 
+#: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Use lowercase letters, digits and single dashes."
+msgstr "小文字、数字、単独のハイフンを使ってください。"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
 msgstr "小文字の英字、数字、ハイフン、アンダースコア、ドットを使い、先頭は英字か数字にしてください。"
@@ -15213,6 +15554,10 @@ msgstr "GMX のパスワードを使います。2 段階認証がオンの場合
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Used in addresses and the widget"
 msgstr "アドレスとウィジェットで使われます"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Used in addresses, the widget and the SDKs"
+msgstr "アドレス、ウィジェット、SDK で使われます"
 
 #: src/features/contact/ContactCard.tsx
 msgid "User id: {ext}"
@@ -15322,7 +15667,6 @@ msgid "visitors"
 msgstr "訪問者"
 
 #: src/features/contact/ContactsColumn.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "訪問者"
@@ -15372,6 +15716,7 @@ msgstr "送信開始以降の、utm_campaign={campaign} が付いたサイトへ
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
@@ -15423,6 +15768,10 @@ msgstr "お客様の返信待ち"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "最初のメッセージを待機中"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Waiting for the first message. It shows up here as soon as it reaches Yuva."
+msgstr "最初のメッセージを待っています。Yuva に届き次第ここに表示されます。"
 
 #: src/features/status/text.tsx
 msgid "Waiting for the first result"
@@ -15507,8 +15856,8 @@ msgid "Webhooks for {0}"
 msgstr "{0} の Webhook"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Webhooks for this inbox"
-msgstr "この受信トレイの Webhook"
+msgid "Webhooks for this product"
+msgstr "この製品の Webhook"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "Website"
@@ -15518,7 +15867,7 @@ msgstr "ウェブサイト"
 msgid "Website addresses"
 msgstr "ウェブサイトのアドレス"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Website chat"
 msgstr "ウェブサイトチャット"
@@ -15589,6 +15938,10 @@ msgid "What should Yuva bring?"
 msgstr "Yuva に何を取り込みますか?"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+msgid "What the chat promises, and what it asks after closing"
+msgstr "チャットが約束する内容と、クローズ後に尋ねる内容"
+
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "お客様に表示される内容"
 
@@ -15628,7 +15981,6 @@ msgstr "よく書く内容"
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
 msgstr "新着情報"
@@ -15705,10 +16057,6 @@ msgstr "プロバイダーが別のアドレスから送信する場合に使い
 #: src/features/broadcasts/Import.tsx
 msgid "Where and when did these people agree?"
 msgstr "この人たちはどこで、いつ同意しましたか?"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Where customers write from"
-msgstr "お客様が書き込む場所"
 
 #: src/features/setup/ChannelStep.tsx
 msgid "Where do {name} customers write from?"
@@ -15790,6 +16138,10 @@ msgstr "誰が送信し、何についてですか?"
 msgid "Who should take it?"
 msgstr "誰が担当しますか?"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "Who you support: name, hours, team, sender"
+msgstr "サポート対象：名前、営業時間、チーム、送信者"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Windows-1252 (Western Excel)"
 msgstr "Windows-1252(西欧 Excel)"
@@ -15867,10 +16219,6 @@ msgstr "VS Code のエージェントモードから会話を扱えます。あ�
 msgid "Work with conversations from Cursor's agent. It acts as you, with the access you allow."
 msgstr "Cursor のエージェントから会話を扱えます。あなたの権限で動作し、許可したアクセスの範囲で操作します。"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Working"
-msgstr "作業中"
-
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Working…"
 msgstr "作業中…"
@@ -15888,10 +16236,6 @@ msgstr "ワークスペース"
 msgid "Workspace name"
 msgstr "ワークスペース名"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Workspace name and data"
-msgstr "ワークスペース名とデータ"
-
 #: src/app/Sidebar.tsx
 msgid "Workspace settings"
 msgstr "ワークスペースの設定"
@@ -15904,6 +16248,7 @@ msgstr "ワークスペース: {name}"
 msgid "Workspaces"
 msgstr "ワークスペース"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "メッセージを入力…"
@@ -16072,6 +16417,10 @@ msgstr "まだどのディスカッションにも書き込んでいません。
 msgid "You have read every mention."
 msgstr "すべてのメンションを読みました。"
 
+#: src/components/common/SaveBar.tsx
+msgid "You have unsaved changes to {what}."
+msgstr "{what} に未保存の変更があります。"
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "すべてのワークスペースから退出し、サインイン、パスキー、通知が失われます。あなたが書いたメッセージは会話に残り、削除されたメンバーからのものとして表示されます。この操作は元に戻せません。"
@@ -16132,7 +16481,7 @@ msgstr "バックエンドがこのシークレットで ID トークンに署�
 msgid "Your browser opens the consent page on <0>{host}</0>. Sign in with a code or a passkey if you are not signed in already."
 msgstr "ブラウザーで <0>{host}</0> の同意ページが開きます。まだサインインしていない場合は、コードまたはパスキーでサインインしてください。"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Your company or your own name"
 msgstr "会社名または自分の名前"
 
@@ -16247,6 +16596,10 @@ msgstr "あなたのタイムゾーン {zone}。UTC {utc} です。"
 msgid "Your website"
 msgstr "あなたのウェブサイト"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Your workspace name, how long closed conversations are kept, and who may send broadcasts."
+msgstr "ワークスペース名、クローズした会話を保持する期間、一斉配信を送信できるユーザー。"
+
 #: src/features/account/AccountPage.tsx
 msgid "Your Yuva account"
 msgstr "あなたの Yuva アカウント"
@@ -16339,6 +16692,10 @@ msgstr "Yuva はヘルプデスクを読み取るだけです。履歴は静か�
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva はメールボックスを読み取るだけです。履歴は静かに届きます。通知なし、自動返信なし。"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Yuva only reads the source; nothing there is changed."
+msgstr "Yuva はソースを読み取るだけで、そこでは何も変更されません。"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
 msgstr "Yuva は読み取るだけです。サインイン以外では、接続から {provider} に読み取りリクエストしか送らないため、チケット、顧客、設定は変更されません。"
@@ -16399,6 +16756,6 @@ msgstr "Yuva はこのエンドポイントをオフにしました。"
 msgid "Yuva's own notes cannot be changed."
 msgstr "Yuva 自身のメモは変更できません。"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Zendesk, Help Scout"
 msgstr "Zendesk、Help Scout"

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { slugify } from "@/features/settings/inboxes/slugify"
 import { Field } from "@/features/settings/ui"
+import { useCannedReplies } from "@/lib/workspace"
 import { api, unwrap, type CannedReply } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
@@ -21,6 +22,10 @@ export function CannedReplyDialog({ reply, onClose }: { reply: CannedReply | nul
   const [shortcut, setShortcut] = useState(reply?.shortcut ?? "")
   const [touched, setTouched] = useState(!!reply)
   const [body, setBody] = useState(reply?.body ?? "")
+  const others = useCannedReplies().data ?? []
+  const valid = /^[a-z0-9]+(-[a-z0-9]+)*$/.test(shortcut)
+  const taken = others.some((r) => r.shortcut === shortcut && r.id !== reply?.id)
+  const problem = shortcut === "" ? null : !valid ? "invalid" : taken ? "taken" : null
   const save = useMutation({
     mutationFn: () =>
       reply
@@ -66,25 +71,38 @@ export function CannedReplyDialog({ reply, onClose }: { reply: CannedReply | nul
             label={<Trans>Shortcut</Trans>}
             htmlFor="canned-shortcut"
             hint={<Trans>Lowercase letters, digits and dashes.</Trans>}
+            error={
+              problem === "invalid" ? (
+                <Trans>Use lowercase letters, digits and single dashes.</Trans>
+              ) : problem === "taken" ? (
+                <Trans>Another canned reply already uses this shortcut.</Trans>
+              ) : undefined
+            }
           >
-            <Input
-              id="canned-shortcut"
-              required
-              pattern="[a-z0-9]+(-[a-z0-9]+)*"
-              maxLength={64}
-              value={shortcut}
-              onChange={(e) => {
-                setTouched(true)
-                setShortcut(e.target.value)
-              }}
-            />
+            <div className="relative">
+              <span aria-hidden className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-faint">
+                /
+              </span>
+              <Input
+                id="canned-shortcut"
+                required
+                maxLength={64}
+                value={shortcut}
+                aria-invalid={problem !== null || undefined}
+                className="ps-6 font-mono"
+                onChange={(e) => {
+                  setTouched(true)
+                  setShortcut(e.target.value)
+                }}
+              />
+            </div>
           </Field>
           <Field label={<Trans>Text</Trans>} htmlFor="canned-body">
             <Textarea id="canned-body" required rows={6} value={body} onChange={(e) => setBody(e.target.value)} />
           </Field>
           <ErrorLine error={save.error} />
           <DialogFooter>
-            <Button type="submit" disabled={save.isPending}>
+            <Button type="submit" disabled={save.isPending || !valid || taken}>
               <Trans>Save</Trans>
             </Button>
           </DialogFooter>

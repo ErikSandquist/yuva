@@ -1,22 +1,25 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { PlugIcon } from "lucide-react"
-import { Link } from "react-router"
+import { Link, useParams } from "react-router"
 
 import { ErrorLine, useConfirm } from "@/components/common"
+import { EmptyBox } from "@/components/common/EmptyBox"
+import { SettingsStrip } from "@/components/common/SettingsStrip"
+import { CodeLine } from "@/components/common"
 import { API_KEY_SCOPES, formatDate, formatDateTime, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   ASSISTANTS,
   grantsFor,
+  mcpUrl,
   useAssistantName,
   type AssistantId,
 } from "@/features/settings/connected-apps/assistants"
-import { useGrants } from "@/features/settings/connected-apps/queries"
-import { DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
-import { Card, EmptyRow, PageHeader, Pill, Row, Rows, Section } from "@/features/settings/ui"
-import { api, unwrap, type OAuthGrant } from "@/lib/api"
-import { keys } from "@/lib/keys"
+import { AssistantSheet } from "@/features/settings/connected-apps/AssistantPage"
+import { useGrants, useRevokeGrant } from "@/features/settings/connected-apps/queries"
+import { CreateMenu, DeveloperTabs, DeveloperTitle } from "@/features/settings/DeveloperTabs"
+import { Card, PageHeader, Pill, Row, Rows, Section } from "@/features/settings/ui"
+import type { OAuthGrant } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useMemberMap } from "@/lib/workspace"
 
@@ -110,12 +113,6 @@ function Assistants({ grants }: { grants: OAuthGrant[] | undefined }) {
   }
   return (
     <>
-      <p className="text-muted-foreground">
-        <Trans>
-          Assistants work in Yuva through MCP on this server’s <code className="font-mono">/mcp</code>, with the access
-          you approve.
-        </Trans>
-      </p>
       <ul className="grid grid-cols-3 gap-4 max-xl:grid-cols-2 phone:grid-cols-1">
         {ASSISTANTS.map((a) => {
           const Icon = a.icon
@@ -154,20 +151,17 @@ function Assistants({ grants }: { grants: OAuthGrant[] | undefined }) {
 }
 
 export function ConnectedAppsPage() {
-  const qc = useQueryClient()
-  const { workspaceId: ws, canManage } = useSession()
+  const { canManage } = useSession()
+  const { assistant } = useParams<{ assistant?: AssistantId }>()
   const [confirm, confirmDialog] = useConfirm()
   const list = useGrants()
-  const revoke = useMutation({
-    mutationFn: (id: string) =>
-      unwrap(api.DELETE("/v1/oauth/grants/{oauthGrantId}", { params: { path: { oauthGrantId: id } } })),
-    onSettled: () => qc.invalidateQueries({ queryKey: keys.oauthGrants(ws) }),
-  })
+  const revoke = useRevokeGrant()
   return (
     <>
       <PageHeader
         title={<DeveloperTitle />}
         tabs={<DeveloperTabs current="connected-apps" />}
+        action={<CreateMenu current="connected-apps" />}
         description={
           canManage ? (
             <Trans>Keys, webhooks and connected assistants</Trans>
@@ -178,14 +172,28 @@ export function ConnectedAppsPage() {
           )
         }
       />
-      <Assistants grants={list.data} />
+      <SettingsStrip current="developer" />
+      <Card>
+        <p className="text-muted-foreground">
+          <Trans>
+            Assistants work in Yuva through MCP on this server. They act as the member who connected them, with only the
+            access that member approved. Drafts wait for review in Assistants.
+          </Trans>
+        </p>
+        <div className="flex flex-col gap-2">
+          <span className="text-small font-medium text-faint">
+            <Trans>Server URL</Trans>
+          </span>
+          <CodeLine value={mcpUrl()} testId="connected-apps-url" />
+        </div>
+      </Card>
       <Section title={<Trans>Connections</Trans>}>
-        <Card flush>
-          {list.data && list.data.length === 0 ? (
-            <EmptyRow>
-              <Trans>No connected apps.</Trans>
-            </EmptyRow>
-          ) : (
+        {list.data && list.data.length === 0 ? (
+          <EmptyBox icon={PlugIcon} title={<Trans>No connected apps</Trans>} testId="connected-apps-empty">
+            <Trans>Pick an assistant below to connect one.</Trans>
+          </EmptyBox>
+        ) : (
+          <Card flush>
             <Rows>
               {(list.data ?? []).map((g) => (
                 <GrantRow
@@ -204,10 +212,14 @@ export function ConnectedAppsPage() {
                 />
               ))}
             </Rows>
-          )}
-          <ErrorLine error={list.error ?? revoke.error} className="px-5 pb-4" />
-        </Card>
+          </Card>
+        )}
+        <ErrorLine error={list.error ?? revoke.error} className="px-5 pb-4" />
       </Section>
+      <Section title={<Trans>Connect an assistant</Trans>}>
+        <Assistants grants={list.data} />
+      </Section>
+      {assistant && <AssistantSheet id={assistant} />}
       {confirmDialog}
     </>
   )

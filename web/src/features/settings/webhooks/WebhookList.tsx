@@ -1,16 +1,19 @@
 import { Trans, useLingui } from "@lingui/react/macro"
+import { useQuery } from "@tanstack/react-query"
 import { Link, useLocation, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
+import { EmptyBox } from "@/components/common/EmptyBox"
 import { formatRelative } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Card, EmptyRow, LinkRow, Rows, Section } from "@/features/settings/ui"
+import { Card, EmptyRow, headButton, LinkRow, ProductTag, Rows, Section } from "@/features/settings/ui"
 import { EndpointStatus } from "@/features/settings/webhooks/parts"
 import { useWebhooks } from "@/features/settings/webhooks/queries"
 import { SignatureHint } from "@/features/settings/webhooks/SignatureHint"
+import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
-import type { WebhookEndpoint } from "@/lib/api"
+import { api, unwrap, type WebhookEndpoint } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
@@ -26,80 +29,138 @@ function Dot({ e }: { e: WebhookEndpoint }) {
   )
 }
 
-function StatusText({ e }: { e: WebhookEndpoint }) {
+function useLastDelivery(id: string) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: [...keys.webhookDeliveries(ws, id, "all"), "last"],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/webhooks/{webhookId}/deliveries", { params: { path: { webhookId: id }, query: { limit: 1 } } })
+      ).then((r) => r.items[0]),
+  })
+}
+
+function LastDelivery({ e }: { e: WebhookEndpoint }) {
   const { i18n } = useLingui()
-  const since = e.failing_since ? formatRelative(e.failing_since, i18n.locale) : ""
-  const [status, text] =
-    !e.enabled && e.disabled_reason
-      ? ["disabled", <Trans key="d">Turned off by Yuva</Trans>]
-      : !e.enabled
-        ? ["off", <Trans key="o">Off</Trans>]
-        : e.failing_since
-          ? ["failing", <Trans key="f">Failing since {since} · retrying</Trans>]
-          : ["on", <Trans key="n">Delivering</Trans>]
+  const last = useLastDelivery(e.id).data
   return (
     <span
-      className={cn(
-        "w-56 shrink-0 truncate text-caption text-muted-foreground",
-        status === "disabled" && "text-destructive"
-      )}
-      data-testid="webhook-status"
-      data-status={status}
+      className="w-52 shrink-0 truncate text-caption text-muted-foreground max-lg:hidden"
+      data-testid="webhook-last"
     >
-      {text}
+      {last ? (
+        <>
+          <span className={last.state === "failed" ? "text-destructive" : undefined}>{last.event_type}</span>
+          {" · "}
+          {formatRelative(last.created_at, i18n.locale)}
+        </>
+      ) : (
+        <span className="text-faint">
+          <Trans>No deliveries yet</Trans>
+        </span>
+      )}
     </span>
   )
 }
 
 export function WebhookTable() {
   const { canManage } = useSession()
+  const navigate = useNavigate()
+  const location = useLocation()
   const inboxes = useInboxes().data ?? []
   const list = useWebhooks(undefined)
   if (!canManage) return null
   return (
     <>
-      <section className="overflow-hidden rounded-xl border bg-card">
-        {list.isPending ? (
-          <Skeleton className="m-4 h-10" />
-        ) : list.data && list.data.length === 0 ? (
-          <EmptyRow>
-            <Trans>No endpoints yet.</Trans>
-          </EmptyRow>
-        ) : (
-          <ul>
-            {(list.data ?? []).map((e) => {
-              const inbox = e.inbox_id ? inboxes.find((i) => i.id === e.inbox_id) : undefined
-              return (
-                <li key={e.id} className="flex items-center gap-3 border-b px-4 py-[11px] last:border-b-0">
-                  <Dot e={e} />
-                  <Link
-                    to={`/settings/webhooks/${e.id}`}
-                    className="flex min-w-0 flex-1 flex-col leading-[1.3] outline-none focus-visible:underline"
-                    data-testid="webhook-row"
-                  >
-                    <span className="truncate font-mono text-[13px]" dir="ltr">
-                      {e.url}
-                    </span>
-                    <span className="truncate text-caption text-faint">
-                      {inbox && <>{inbox.name} · </>}
-                      {e.events.join(", ")}
-                    </span>
-                  </Link>
-                  <StatusText e={e} />
-                  <Button
-                    variant="outline"
-                    className="h-[30px] rounded-lg border-input px-2.5 font-normal"
-                    render={<Link to={`/settings/webhooks/${e.id}`} />}
-                  >
-                    <Trans>Deliveries</Trans>
-                  </Button>
-                </li>
-              )
-            })}
-          </ul>
-        )}
-        <ErrorLine error={list.error} className="px-4 pb-4" />
-      </section>
+      <p className="text-muted-foreground">
+        <Trans>
+          Signed HTTP calls to your backend for conversations, messages and feedback. Each endpoint can listen to one
+          product or to all.
+        </Trans>
+      </p>
+      {list.data && list.data.length === 0 ? (
+        <EmptyBox
+          title={<Trans>No endpoints yet</Trans>}
+          testId="webhooks-empty"
+          actions={
+            <Button
+              className={headButton.primary}
+              onClick={() => navigate("/setup/webhook", { state: { back: location.pathname } })}
+            >
+              <Trans>Add endpoint</Trans>
+            </Button>
+          }
+        >
+          <Trans>Add an address on your server and pick the events Yuva should tell it about.</Trans>
+        </EmptyBox>
+      ) : (
+        <section className="overflow-hidden rounded-xl border bg-card">
+          {list.isPending ? (
+            <Skeleton className="m-4 h-10" />
+          ) : (
+            <ul>
+              {(list.data ?? []).map((e) => {
+                const inbox = e.inbox_id ? inboxes.find((i) => i.id === e.inbox_id) : undefined
+                const count = e.events.length
+                const status = !e.enabled
+                  ? e.disabled_reason
+                    ? "disabled"
+                    : "off"
+                  : e.failing_since
+                    ? "failing"
+                    : "on"
+                return (
+                  <li key={e.id} className="flex items-center gap-3 border-b px-4 py-[11px] last:border-b-0">
+                    <Dot e={e} />
+                    <Link
+                      to={`/settings/webhooks/${e.id}`}
+                      className="flex min-w-0 flex-1 flex-col leading-[1.3] outline-none focus-visible:underline"
+                      data-testid="webhook-row"
+                      data-status={status}
+                    >
+                      <span className="truncate font-mono text-[13px]" dir="ltr">
+                        {e.url}
+                      </span>
+                      <span className="truncate text-caption text-faint">
+                        {e.description && <>{e.description} · </>}
+                        {count === 1 ? <Trans>1 event</Trans> : <Trans>{count} events</Trans>}
+                        {status === "disabled" && (
+                          <span className="text-destructive">
+                            {" · "}
+                            <Trans>Turned off by Yuva</Trans>
+                          </span>
+                        )}
+                        {status === "failing" && (
+                          <span className="text-warning">
+                            {" · "}
+                            <Trans>Failing</Trans>
+                          </span>
+                        )}
+                      </span>
+                    </Link>
+                    {inbox ? (
+                      <ProductTag name={inbox.name} color={inbox.branding.color} />
+                    ) : (
+                      <span className="shrink-0 text-caption text-muted-foreground phone:hidden">
+                        <Trans>All products</Trans>
+                      </span>
+                    )}
+                    <LastDelivery e={e} />
+                    <Button
+                      variant="outline"
+                      className="h-[30px] rounded-lg border-input px-2.5 font-normal"
+                      render={<Link to={`/settings/webhooks/${e.id}?tab=deliveries`} />}
+                    >
+                      <Trans>Deliveries</Trans>
+                    </Button>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+          <ErrorLine error={list.error} className="px-4 pb-4" />
+        </section>
+      )}
       <SignatureHint />
     </>
   )

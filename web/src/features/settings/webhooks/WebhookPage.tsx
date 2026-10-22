@@ -3,20 +3,20 @@ import { Navigate, useParams } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Skeleton } from "@/components/ui/skeleton"
-import { OnThisPage, useHashScroll } from "@/features/settings/OnThisPage"
-import { PageHeader } from "@/features/settings/ui"
+import { PageHeader, PageTabs, ProductTag } from "@/features/settings/ui"
+import { useTab } from "@/features/settings/useTab"
 import { AttemptLog } from "@/features/settings/webhooks/AttemptLog"
 import { Deliveries } from "@/features/settings/webhooks/Deliveries"
 import { EndpointStatus } from "@/features/settings/webhooks/parts"
 import { useWebhook } from "@/features/settings/webhooks/queries"
 import {
+  DisabledBanner,
   EndpointSection,
   EventsSection,
   RemoveSection,
   SecretSection,
   SendingSection,
 } from "@/features/settings/webhooks/sections"
-import { SignatureHint } from "@/features/settings/webhooks/SignatureHint"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
@@ -26,17 +26,7 @@ export function WebhookPage() {
   const { canManage } = useSession()
   const inboxes = useInboxes().data ?? []
   const endpoint = useWebhook(webhookId)
-  useHashScroll(!!endpoint.data)
-  const sections: [string, string][] = [
-    ["endpoint", t`Endpoint`],
-    ["events", t`Events`],
-    ["sending", t`Sending`],
-    ["secret", t`Signing secret`],
-    ["deliveries", t`Deliveries`],
-    ["attempts", t`Attempts`],
-    ["verify", t`How to verify`],
-    ["remove", t`Remove`],
-  ]
+  const { tab, to } = useTab(["settings", "deliveries"] as const, "settings")
   if (!canManage) return <Navigate to="/settings/profile" replace />
   const e = endpoint.data
   const inbox = e?.inbox_id ? inboxes.find((i) => i.id === e.inbox_id) : undefined
@@ -55,13 +45,31 @@ export function WebhookPage() {
         }
         description={
           e && (
-            <>
-              {e.description && <>{e.description} · </>}
-              {inbox ? inbox.name : <Trans>All inboxes</Trans>}
-            </>
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              {e.description && <span>{e.description}</span>}
+              {inbox ? (
+                <ProductTag name={inbox.name} color={inbox.branding.color} />
+              ) : (
+                <span>
+                  <Trans>All products</Trans>
+                </span>
+              )}
+            </span>
           )
         }
         action={e && <EndpointStatus e={e} />}
+        tabs={
+          e && (
+            <PageTabs
+              label={t`Endpoint`}
+              current={tab}
+              items={[
+                { key: "settings", to: to("settings"), label: t`Settings`, testId: "webhook-tab-settings" },
+                { key: "deliveries", to: to("deliveries"), label: t`Deliveries`, testId: "webhook-tab-deliveries" },
+              ]}
+            />
+          )
+        }
       />
       {endpoint.isPending ? (
         <Skeleton className="h-48 w-full rounded-2xl" />
@@ -69,24 +77,21 @@ export function WebhookPage() {
         <ErrorLine error={endpoint.error} />
       ) : (
         <>
-          <OnThisPage items={sections} testId="webhook-sections" />
-          <EndpointSection e={e} />
-          <EventsSection e={e} />
-          <SendingSection e={e} />
-          <SecretSection e={e} />
-          <div id="deliveries" className="scroll-mt-4">
-            <Deliveries endpoint={e} />
-          </div>
-          <div id="attempts" className="scroll-mt-4">
-            <AttemptLog endpoint={e} />
-          </div>
-          <div id="verify" className="scroll-mt-4 flex flex-col gap-2">
-            <h2 className="mx-1 text-small font-medium text-faint">
-              <Trans>How to verify</Trans>
-            </h2>
-            <SignatureHint />
-          </div>
-          <RemoveSection e={e} />
+          <DisabledBanner e={e} />
+          {tab === "settings" ? (
+            <>
+              <EndpointSection e={e} />
+              <EventsSection e={e} />
+              <SendingSection e={e} />
+              <SecretSection e={e} />
+              <RemoveSection e={e} />
+            </>
+          ) : (
+            <>
+              <Deliveries endpoint={e} />
+              <AttemptLog endpoint={e} />
+            </>
+          )}
         </>
       )}
     </>

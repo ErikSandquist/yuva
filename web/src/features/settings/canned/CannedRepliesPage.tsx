@@ -1,13 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { PencilIcon, Trash2Icon } from "lucide-react"
+import { PencilIcon, QuoteIcon, Trash2Icon } from "lucide-react"
 import { useState } from "react"
 
 import { ErrorLine, useConfirm } from "@/components/common"
+import { EmptyBox } from "@/components/common/EmptyBox"
 import { Button } from "@/components/ui/button"
 import { CannedReplyDialog } from "@/features/settings/canned/CannedReplyDialog"
-import { GeneralTabs } from "@/features/settings/GeneralTabs"
-import { Card, EmptyRow, PageHeader, Row, Rows } from "@/features/settings/ui"
+import { GeneralHeader, Intro } from "@/features/settings/GeneralTabs"
+import { Card, headButton, Row, Rows } from "@/features/settings/ui"
 import { api, unwrap, type CannedReply } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
@@ -25,33 +26,32 @@ export function CannedRepliesPage() {
       unwrap(api.DELETE("/v1/canned-replies/{cannedReplyId}", { params: { path: { cannedReplyId: id } } })),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.cannedReplies(ws) }),
   })
+  const add = canManage && (
+    <Button className={headButton.primary} onClick={() => setEditing("new")} data-testid="canned-new">
+      <Trans>New canned reply</Trans>
+    </Button>
+  )
   return (
     <>
-      <PageHeader
-        title={<Trans>General</Trans>}
-        tabs={<GeneralTabs current="canned-replies" />}
-        description={<Trans>Type / and the shortcut in the composer to insert one.</Trans>}
-        action={
-          canManage && (
-            <Button size="sm" onClick={() => setEditing("new")}>
-              <Trans>New canned reply</Trans>
-            </Button>
-          )
-        }
-      />
-      <Card flush>
-        {replies.data && replies.data.length === 0 ? (
-          <EmptyRow>
-            <Trans>No canned replies yet</Trans>
-          </EmptyRow>
-        ) : (
+      <GeneralHeader current="canned-replies" />
+      <Intro action={replies.data && replies.data.length > 0 ? add : undefined}>
+        <Trans>Type / and the shortcut in the composer to insert one.</Trans>
+      </Intro>
+      {replies.data && replies.data.length === 0 ? (
+        <EmptyBox icon={QuoteIcon} title={<Trans>No canned replies yet</Trans>} actions={add} testId="canned-empty">
+          <Trans>Save the answers you write often, then insert them in the composer with a shortcut.</Trans>
+        </EmptyBox>
+      ) : (
+        <Card flush>
           <Rows>
             {(replies.data ?? []).map((r) => (
               <Row key={r.id} className="items-start" data-testid="canned-row">
-                <code className="mt-0.5 shrink-0 font-mono text-caption text-faint">/{r.shortcut}</code>
+                <code className="mt-0.5 shrink-0 rounded-md bg-surface px-1.5 py-px font-mono text-caption text-muted-foreground">
+                  /{r.shortcut}
+                </code>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-body font-medium">{r.title}</p>
-                  <p className="line-clamp-2 text-caption text-muted-foreground">{r.body}</p>
+                  <p className="truncate text-caption text-muted-foreground">{r.body}</p>
                 </div>
                 {canManage && (
                   <>
@@ -77,9 +77,9 @@ export function CannedRepliesPage() {
               </Row>
             ))}
           </Rows>
-        )}
-        <ErrorLine error={replies.error ?? remove.error} className="px-5 pb-4" />
-      </Card>
+          <ErrorLine error={replies.error ?? remove.error} className="px-5 pb-4" />
+        </Card>
+      )}
       {editing && <CannedReplyDialog reply={editing === "new" ? null : editing} onClose={() => setEditing(null)} />}
       {confirmDialog}
     </>

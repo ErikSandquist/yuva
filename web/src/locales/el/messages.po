@@ -49,6 +49,7 @@ msgid "{0, plural, one {# reply} other {# replies}}"
 msgstr "{0, plural, one {# απάντηση} other {# απαντήσεις}}"
 
 #. placeholder {0}: g.requests_this_month
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
 msgstr "{0, plural, one {# αίτημα αυτόν τον μήνα} other {# αιτήματα αυτόν τον μήνα}}"
@@ -201,6 +202,14 @@ msgstr "Αρχεία: {attachments}, {attachmentSize}"
 msgid "{attachmentsLeft} attachments are over this server's size limit or of a type it does not keep; they stay in the original message."
 msgstr "Συνημμένα: {attachmentsLeft}. Υπερβαίνουν το όριο μεγέθους αυτού του διακομιστή ή είναι τύπου που δεν αποθηκεύει· παραμένουν στο αρχικό μήνυμα."
 
+#: src/features/settings/ProductsPage.tsx
+msgid "{attention, plural, one {# channel needs attention} other {# channels need attention}}"
+msgstr "{attention, plural, one {# κανάλι χρειάζεται προσοχή} other {# κανάλια χρειάζονται προσοχή}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "{author, select, bot {No drafts by bots} assistant {No drafts by assistants} member {No drafts by members} other {No drafts by this author}}"
+msgstr "{author, select, bot {Κανένα πρόχειρο από bots} assistant {Κανένα πρόχειρο από βοηθούς} member {Κανένα πρόχειρο από μέλη} other {Κανένα πρόχειρο από αυτόν τον συντάκτη}}"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}, στάλθηκε από {by}"
@@ -253,6 +262,11 @@ msgstr "{count, plural, one {# φάκελος} other {# φάκελοι}}"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, one {# γραμματοκιβώτιο} other {# γραμματοκιβώτια}}"
+
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "{count, plural, one {# scope} other {# scopes}}"
+msgstr "{count, plural, one {# δικαίωμα} other {# δικαιώματα}}"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
@@ -460,6 +474,10 @@ msgstr "{n, plural, one {# διεύθυνση e-mail} other {# διευθύνσ�
 msgid "{n, plural, one {# mailing list} other {# mailing lists}}"
 msgstr "{n, plural, one {# λίστα αλληλογραφίας} other {# λίστες αλληλογραφίας}}"
 
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "{n, plural, one {# open conversation} other {# open conversations}}"
+msgstr "{n, plural, one {# ανοιχτή συνομιλία} other {# ανοιχτές συνομιλίες}}"
+
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
 msgstr "{n, plural, one {# άλλη συνομιλία} other {# άλλες συνομιλίες}}"
@@ -560,6 +578,10 @@ msgstr "Το {name} λαμβάνει αλληλογραφία σε αυτή τη
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "Ο/Η {name} απάντησε πριν από εσάς."
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "{name} sends through its own SMTP account, so there is no Amazon SES tenant. Checks for SPF, DKIM and DMARC are on its e-mail channel."
+msgstr "Το {name} στέλνει μέσω δικού του λογαριασμού SMTP, οπότε δεν υπάρχει tenant Amazon SES. Οι έλεγχοι SPF, DKIM και DMARC βρίσκονται στο κανάλι e-mail."
 
 #: src/features/contact/ContactDetail.tsx
 msgid "{name} unblocked"
@@ -864,10 +886,6 @@ msgstr "Το *@example.com λαμβάνει κάθε διεύθυνση του �
 msgid "+ Add address"
 msgstr "+ Προσθήκη διεύθυνσης"
 
-#: src/features/settings/ProductsPage.tsx
-msgid "+ Add channel"
-msgstr "+ Προσθήκη καναλιού"
-
 #: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "+{added} αυτόν τον μήνα"
@@ -1121,6 +1139,10 @@ msgstr "Ένα άρθρο του κέντρου βοήθειας δημοσιε�
 msgid "A help center article was unpublished"
 msgstr "Ένα άρθρο του κέντρου βοήθειας καταργήθηκε από τη δημοσίευση"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "A key lets your backend, a script or a bot read and write conversations. Limit it to the products and scopes it needs."
+msgstr "Ένα κλειδί επιτρέπει στο backend σας, σε ένα script ή σε ένα bot να διαβάζει και να γράφει συνομιλίες. Περιορίστε το στα προϊόντα και τα δικαιώματα που χρειάζεται."
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Ένα μεταγενέστερο μήνυμα από την επαφή ενώ δεν έχει ανατεθεί σε κανέναν."
@@ -1233,7 +1255,7 @@ msgstr "Μια ερώτηση για το {name}"
 msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
 msgstr "Οι αναρτήσεις ενός αναγνώστη περιμένουν ένα μέλος μέχρι να εγκριθεί μία δική του. Οι συνδεδεμένοι χρήστες της εφαρμογής σας δημοσιεύουν αμέσως."
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "A real address where you receive post"
 msgstr "Μια πραγματική διεύθυνση όπου λαμβάνετε αλληλογραφία"
 
@@ -1330,7 +1352,6 @@ msgstr "Αποδεκτή απάντηση"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "Πρόσβαση"
@@ -1363,11 +1384,6 @@ msgstr "Κατάσταση Acme"
 msgid "Acme Support"
 msgstr "Υποστήριξη Acme"
 
-#. placeholder {0}: k.name
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Actions for {0}"
-msgstr "Ενέργειες για {0}"
-
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
@@ -1387,6 +1403,10 @@ msgstr "Προσθήκη"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "Προσθήκη μπλοκ"
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Add a channel"
+msgstr "Προσθήκη καναλιού"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a component"
@@ -1416,6 +1436,10 @@ msgstr "Προσθήκη σημείωσης (προαιρετικά)"
 msgid "Add a passkey"
 msgstr "Προσθήκη passkey"
 
+#: src/features/settings/AddProductDialog.tsx
+msgid "Add a product"
+msgstr "Προσθήκη προϊόντος"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Προσθέστε έναν απομακρυσμένο διακομιστή με μεταφορά Streamable HTTP και τη διεύθυνση του διακομιστή. Πολλοί πελάτες δέχονται μια ρύθμιση σαν αυτή:"
@@ -1442,6 +1466,10 @@ msgstr "Προσθήκη συνδρομητή στη λίστα {listName}"
 msgid "Add a website chat in the inbox settings"
 msgstr "Προσθέστε συνομιλία ιστότοπου στις ρυθμίσεις των εισερχομένων"
 
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "Add an address on your server and pick the events Yuva should tell it about."
+msgstr "Προσθέστε μια διεύθυνση στον διακομιστή σας και διαλέξτε τα συμβάντα που θα της αναφέρει το Yuva."
+
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
 msgstr "Προσθήκη ιδιότητας αναλυτικών στοιχείων"
@@ -1461,6 +1489,7 @@ msgstr "Προσθήκη εισερχομένων"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "Προσθέστε έναν πελάτη OAuth με όνομα «Yuva», ως εμπιστευτικό πελάτη, και εισαγάγετε τη διεύθυνση ανακατεύθυνσης παρακάτω ως redirect URL του."
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add another"
 msgstr "Προσθήκη άλλου"
@@ -1489,7 +1518,6 @@ msgid "Add domain"
 msgstr "Προσθήκη domain"
 
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhooksPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Προσθήκη endpoint"
@@ -1515,6 +1543,10 @@ msgstr "Προσθήκη παρακολούθησης ({addKey})"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
 msgstr "Προσθήκη σημείωσης"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "Add one for each product or brand you answer for. Each gets its own branding, hours, team and channels."
+msgstr "Προσθέστε ένα για κάθε προϊόν ή επωνυμία που εξυπηρετείτε. Το καθένα έχει τη δική του ταυτότητα, ωράριο, ομάδα και κανάλια."
 
 #: src/features/settings/ProductsPage.tsx
 msgid "Add product"
@@ -1657,12 +1689,25 @@ msgstr "Alertmanager"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/feedback/FeedbackList.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "Όλα"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "All assistants"
+msgstr "Όλοι οι βοηθοί"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels"
+msgstr "Όλα τα κανάλια"
+
+#: src/features/settings/ProductsPage.tsx
+msgid "All channels work"
+msgstr "Όλα τα κανάλια λειτουργούν"
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1678,9 +1723,7 @@ msgid "All imports"
 msgstr "Όλες οι εισαγωγές"
 
 #: src/app/Palette.tsx
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "Όλα τα εισερχόμενα"
@@ -1698,8 +1741,8 @@ msgid "All monitors"
 msgstr "Όλες οι παρακολουθήσεις"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "All of its conversations are deleted with it."
-msgstr "Όλες οι συνομιλίες του διαγράφονται μαζί του."
+msgid "All of its conversations, messages and attachments are deleted with it. Webhooks and API keys limited to it stop working."
+msgstr "Όλες οι συνομιλίες, τα μηνύματα και τα συνημμένα του διαγράφονται μαζί του. Τα webhooks και τα κλειδιά API που περιορίζονται σε αυτό σταματούν να λειτουργούν."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
@@ -1712,10 +1755,13 @@ msgstr "όλα τα προϊόντα"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "All products"
 msgstr "Όλα τα προϊόντα"
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1797,11 +1843,11 @@ msgstr "Και για τα e-mail σύνδεσης και ειδοποιήσεω
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Να στέλνεται και το message.created για τις εσωτερικές σημειώσεις των μελών. Τα εσωτερικά συμβάντα δεν στέλνονται ποτέ."
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Always"
 msgstr "Πάντα"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -1813,9 +1859,9 @@ msgstr "Amazon SES"
 msgid "Amazon SES · {region}"
 msgstr "Amazon SES · {region}"
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Amazon SES error"
-msgstr "Σφάλμα Amazon SES"
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES cannot verify the sending domain yet. Publish the DNS records, then check again."
+msgstr "Το Amazon SES δεν μπορεί ακόμη να επαληθεύσει το domain αποστολής. Δημοσιεύστε τις εγγραφές DNS και ελέγξτε ξανά."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES itself paused it; the operator has to open a case with AWS."
@@ -1824,6 +1870,10 @@ msgstr "Το ίδιο το Amazon SES το πάγωσε· ο διαχειρισ�
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
 msgstr "Το Amazon SES πάγωσε την αποστολή για αυτά τα εισερχόμενα. Η αλληλογραφία τους μέσω SES απορρίπτεται με «Sending disabled» μέχρι ο διαχειριστής του διακομιστή να την επαναφέρει. Τα άλλα εισερχόμενα συνεχίζουν να στέλνουν."
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES paused sending. Replies and broadcasts are refused until the operator reinstates it."
+msgstr "Το Amazon SES πάγωσε την αποστολή. Οι απαντήσεις και οι μαζικές αποστολές απορρίπτονται μέχρι να την επαναφέρει ο διαχειριστής."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -1841,6 +1891,10 @@ msgstr "Το Amazon SES πάγωσε τον μισθωτή αυτών των ε�
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused a step of the tenant setup."
 msgstr "Το Amazon SES απέρριψε ένα βήμα της ρύθμισης του μισθωτή."
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Amazon SES refused to send for this channel. Check the deliverability tab for the reason."
+msgstr "Το Amazon SES αρνήθηκε να στείλει για αυτό το κανάλι. Δείτε τον λόγο στην καρτέλα Παραδοσιμότητα."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Amazon SES refused to set up the tenant: <0>{detail}</0>"
@@ -1893,7 +1947,7 @@ msgstr "Ένας κωδικός εφαρμογής θα μπορούσε να α
 msgid "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
 msgstr "Μια αρχειοθετημένη λίστα κρατά τους συνδρομητές και τις εγγραφές της, αλλά οι φόρμες και η σελίδα προτιμήσεων σταματούν να την προσφέρουν."
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "An e-mail address, phone number or web address"
 msgstr "Μια διεύθυνση e-mail, αριθμός τηλεφώνου ή διεύθυνση ιστού"
 
@@ -1950,6 +2004,10 @@ msgstr "Ένα περιστατικό επιλύθηκε ή μια συντήρ�
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "Μια πρόσκληση γίνεται δεκτή όταν το άτομο συνδεθεί με κωδικό που στάλθηκε σε αυτή τη διεύθυνση. Λήγει σε 7 ημέρες."
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "An mbox export of a mailbox"
+msgstr "Εξαγωγή mbox ενός γραμματοκιβωτίου"
+
 #: src/features/team/TeamPage.tsx
 msgid "An owner cannot be removed. Change their role first."
 msgstr "Ένας ιδιοκτήτης δεν μπορεί να αφαιρεθεί. Αλλάξτε πρώτα τον ρόλο του."
@@ -1997,6 +2055,10 @@ msgstr "Άλλος λογαριασμός"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "Μια άλλη διεύθυνση στην οποία αυτό το κανάλι λαμβάνει αλληλογραφία. Προωθήστε εδώ ένα γραμματοκιβώτιο, για παράδειγμα {own} στον πάροχό του· η προώθηση στο ίδιο το {own} θα έκανε κύκλο."
+
+#: src/features/settings/canned/CannedReplyDialog.tsx
+msgid "Another canned reply already uses this shortcut."
+msgstr "Μια άλλη έτοιμη απάντηση χρησιμοποιεί ήδη αυτήν τη συντόμευση."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
@@ -2108,12 +2170,13 @@ msgid "API"
 msgstr "API"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API & MCP"
 msgstr "API και MCP"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "API channel"
 msgstr "Κανάλι API"
 
@@ -2122,10 +2185,19 @@ msgid "API key"
 msgstr "Κλειδί API"
 
 #: src/app/Palette.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "API keys"
 msgstr "Κλειδιά API"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants deliver replies at once, without a member reviewing them first."
+msgstr "Τα κλειδιά API και οι βοηθοί παραδίδουν τις απαντήσεις αμέσως, χωρίς να τις ελέγξει πρώτα κάποιο μέλος."
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "API keys and assistants will deliver replies at once. Customers receive what they write, with nobody reviewing it first. You can turn this off again at any time."
+msgstr "Τα κλειδιά API και οι βοηθοί θα παραδίδουν τις απαντήσεις αμέσως. Οι πελάτες θα λαμβάνουν ό,τι γράφεται, χωρίς να το ελέγξει κανείς πρώτα. Μπορείτε να το απενεργοποιήσετε ξανά όποτε θέλετε."
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
@@ -2308,25 +2380,43 @@ msgstr "Ανατέθηκε σε {assignee}"
 msgid "Assigned to {assignee}, kept by name"
 msgstr "Ανατέθηκε σε {assignee}, διατηρήθηκε με όνομα"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistant"
+msgstr "Βοηθός"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Assistants"
 msgstr "Βοηθοί"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys may send replies themselves: <0>Bots may send</0> is on in this workspace."
+msgstr "Οι βοηθοί και τα κλειδιά API μπορούν να στέλνουν μόνοι τους απαντήσεις: το <0>Επιτρέπεται η αποστολή από bots</0> είναι ενεργό σε αυτόν τον χώρο εργασίας."
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants and API keys write drafts; a member reviews and sends them. <0>Bots may send</0> is off in this workspace."
+msgstr "Οι βοηθοί και τα κλειδιά API γράφουν πρόχειρα· ένα μέλος τα ελέγχει και τα στέλνει. Το <0>Επιτρέπεται η αποστολή από bots</0> είναι ανενεργό σε αυτόν τον χώρο εργασίας."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Assistants and apps you connected with your sign-in. Each acts as you, only within the access you allowed."
 msgstr "Βοηθοί και εφαρμογές που συνδέσατε με τη σύνδεσή σας. Καθένας ενεργεί ως εσείς, μόνο στο πλαίσιο της πρόσβασης που επιτρέψατε."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "Assistants work in Yuva through MCP on this server’s <0>/mcp</0>, with the access you approve."
-msgstr "Οι βοηθοί εργάζονται στο Yuva μέσω MCP στο <0>/mcp</0> αυτού του διακομιστή, με την πρόσβαση που εγκρίνετε."
+msgid "Assistants work in Yuva through MCP on this server. They act as the member who connected them, with only the access that member approved. Drafts wait for review in Assistants."
+msgstr "Οι βοηθοί δουλεύουν στο Yuva μέσω MCP σε αυτόν τον διακομιστή. Ενεργούν ως το μέλος που τους συνέδεσε, μόνο με την πρόσβαση που ενέκρινε αυτό το μέλος. Τα πρόχειρα περιμένουν έλεγχο στους Βοηθούς."
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Assistants work in Yuva through MCP, acting as the member who connected them, with only the access that member approved."
+msgstr "Οι βοηθοί δουλεύουν στο Yuva μέσω MCP, ως το μέλος που τους συνέδεσε και μόνο με την πρόσβαση που ενέκρινε αυτό το μέλος."
 
 #: src/app/Rail.tsx
 msgid "Assistants, {drafts} drafts waiting"
 msgstr "Βοηθοί, πρόχειρα σε αναμονή: {drafts}"
 
 #: src/components/common/text.ts
+#: src/features/settings/AddProductDialog.tsx
 msgid "Async"
 msgstr "Ασύγχρονα"
 
@@ -2368,7 +2458,6 @@ msgid "Attempt log"
 msgstr "Αρχείο προσπαθειών"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "Προσπάθειες"
 
@@ -2414,7 +2503,6 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Αυτόματες απαντήσεις, ενημερωτικά δελτία και αναφορές παράδοσης που δεν απάντησε κανείς."
 
 #: src/features/conversation/messages/Thread.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
@@ -2569,6 +2657,7 @@ msgstr "Έντονα"
 
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
@@ -2596,6 +2685,7 @@ msgstr "Όνομα του bot (προαιρετικά)"
 msgid "Both records were found. Yuva checks them once a day; keep them in place."
 msgstr "Βρέθηκαν και οι δύο εγγραφές. Το Yuva τις ελέγχει μία φορά την ημέρα· αφήστε τις στη θέση τους."
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "Bots"
@@ -2660,10 +2750,6 @@ msgstr "Φέρτε συνδρομητές που έχουν ήδη συναιν�
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "Φέρτε το ιστορικό ενός γραμματοκιβωτίου από το οποίο απαντάτε σήμερα και μετά αλλάξτε την αλληλογραφία του. Το Yuva μόνο διαβάζει το γραμματοκιβώτιο· τίποτα εκεί δεν αλλάζει."
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Bring your mail and help-desk history, read only from the source"
-msgstr "Φέρτε το ιστορικό αλληλογραφίας και help desk, μόνο για ανάγνωση από την πηγή"
-
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Bring your old mail"
 msgstr "Φέρτε την παλιά σας αλληλογραφία"
@@ -2678,9 +2764,9 @@ msgstr "Μαζική αποστολή"
 msgid "Broadcast · {people} people · {when}"
 msgstr "Μαζική αποστολή · {people} άτομα · {when}"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcast sending"
 msgstr "Αποστολή μαζικών αποστολών"
 
@@ -2692,7 +2778,6 @@ msgstr "Αποστολή μαζικών αποστολών"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "Μαζικές αποστολές"
 
@@ -2774,7 +2859,10 @@ msgstr "Όνομα καμπάνιας"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/status/AddSubscriberDialog.tsx
@@ -2895,6 +2983,10 @@ msgstr "Αλλαγή"
 msgid "Change address"
 msgstr "Αλλαγή διεύθυνσης"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Change in API & MCP"
+msgstr "Αλλαγή στο API και MCP"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
@@ -2937,12 +3029,14 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "Η αλλαγή του τομέα αποστολής απενεργοποιεί την υπογραφή DKIM μέχρι να την ενεργοποιήσετε ξανά για τον νέο τομέα."
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "Κανάλι"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 msgid "Channel added"
 msgstr "Το κανάλι προστέθηκε"
 
@@ -2955,15 +3049,22 @@ msgid "Channel settings"
 msgstr "Ρυθμίσεις καναλιού"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "Κανάλια"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Chat"
+msgstr "Συνομιλία"
 
 #: src/features/docs/InstallDialog.tsx
 msgid "Chat channel"
 msgstr "Κανάλι συνομιλίας"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 msgid "Check"
 msgstr "Έλεγχος"
 
@@ -2984,7 +3085,7 @@ msgstr "Έλεγχος πριν αντιγραφεί οτιδήποτε"
 msgid "Check deliverability and set up DKIM"
 msgstr "Έλεγχος παραδοσιμότητας και ρύθμιση DKIM"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Check DNS"
 msgstr "Έλεγχος DNS"
 
@@ -3300,6 +3401,8 @@ msgstr "Συλλογές"
 msgid "Color"
 msgstr "Χρώμα"
 
+#: src/features/settings/AddProductDialog.tsx
+#: src/features/settings/inboxes/colors.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "Χρώμα"
@@ -3332,7 +3435,7 @@ msgstr "κόμματα"
 msgid "Comparison of condition {n}"
 msgstr "Σύγκριση της συνθήκης {n}"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "Ολοκληρώθηκε"
@@ -3429,6 +3532,7 @@ msgid "confirmed their address in the last {days} days"
 msgstr "επιβεβαίωσαν τη διεύθυνσή τους τις τελευταίες {days} ημέρες"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/text.ts
 #: src/features/migrations/Wizard.tsx
@@ -3450,13 +3554,19 @@ msgstr "Να συνδεθεί το {clientName} με το Yuva;"
 msgid "Connect {provider}"
 msgstr "Σύνδεση του {provider}"
 
-#: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Connect an assistant"
 msgstr "Σύνδεση βοηθού"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "Συνδέστε έναν βοηθό όπως το Claude ή το ChatGPT"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connect Claude, ChatGPT, Cursor or another MCP client to let it read conversations and draft replies for you to review."
+msgstr "Συνδέστε το Claude, το ChatGPT, το Cursor ή άλλον πελάτη MCP ώστε να διαβάζει συνομιλίες και να γράφει πρόχειρες απαντήσεις για να τις ελέγξετε."
 
 #: src/features/account/ConnectPage.tsx
 msgid "Connect to {host}"
@@ -3467,6 +3577,7 @@ msgid "Connect your servers and bots to Yuva"
 msgstr "Συνδέστε τους διακομιστές και τα bots σας με το Yuva"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
@@ -3478,13 +3589,19 @@ msgstr "Συνδέθηκε {created}"
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/DeveloperTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connected apps"
 msgstr "Συνδεδεμένες εφαρμογές"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Connected by {by} on {since}"
+msgstr "Συνδέθηκε από {by} στις {since}"
+
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected on {since}"
 msgstr "Συνδέθηκε στις {since}"
@@ -3508,10 +3625,6 @@ msgstr "Συνδέθηκε στο {provider}"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
 msgstr "Συνδέθηκε στο {storedHost}. Εισαγάγετε ξανά τον κωδικό μόνο για να τον αλλάξετε."
-
-#: src/features/settings/connected-apps/AssistantPage.tsx
-msgid "Connected under another name? All connections are in <0>Connected apps</0>."
-msgstr "Συνδέθηκε με άλλο όνομα; Όλες οι συνδέσεις βρίσκονται στις <0>Συνδεδεμένες εφαρμογές</0>."
 
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
@@ -3547,7 +3660,7 @@ msgstr "Καταγραφή συναίνεσης"
 #: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Contact"
 msgstr "Επαφή"
 
@@ -3609,6 +3722,7 @@ msgstr "Περιεχόμενο"
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -3814,6 +3928,7 @@ msgid "Country"
 msgstr "Χώρα"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "Create"
 msgstr "Δημιουργία"
 
@@ -3836,6 +3951,10 @@ msgstr "Δημιουργήστε μια εφαρμογή στο Help Scout"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "Δημιουργήστε έναν πελάτη OAuth στο Zendesk"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "Create and add a channel"
+msgstr "Δημιουργία και προσθήκη καναλιού"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Create another"
@@ -3924,7 +4043,9 @@ msgstr "Cron"
 msgid "CSV file"
 msgstr "Αρχείο CSV"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
+#: src/features/settings/inboxes/colors.tsx
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
@@ -4015,7 +4136,6 @@ msgstr "Μειωμένη απόδοση"
 #: src/features/contact/ContactNotes.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -4048,6 +4168,10 @@ msgstr "Διαγραφή του {0};"
 msgid "Delete {name}?"
 msgstr "Διαγραφή του {name};"
 
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete {name}…"
+msgstr "Διαγραφή του {name}…"
+
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Delete after (days)"
 msgstr "Διαγραφή μετά από (ημέρες)"
@@ -4069,10 +4193,6 @@ msgstr "Διαγραφή πρόχειρου ({removeKey})"
 msgid "Delete group"
 msgstr "Διαγραφή ομάδας"
 
-#: src/features/settings/inboxes/InboxSecurity.tsx
-msgid "Delete inbox"
-msgstr "Διαγραφή εισερχομένων"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Delete key"
 msgstr "Διαγραφή κλειδιού"
@@ -4093,6 +4213,10 @@ msgstr "Διαγραφή του λογαριασμού μου"
 #: src/features/status/SettingsTab.tsx
 msgid "Delete page"
 msgstr "Διαγραφή σελίδας"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete product"
+msgstr "Διαγραφή προϊόντος"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
@@ -4149,6 +4273,10 @@ msgstr "Διαγραφή αυτής της σημείωσης"
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note?"
 msgstr "Διαγραφή αυτής της σημείωσης;"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Delete this product"
+msgstr "Διαγραφή αυτού του προϊόντος"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete this subscription?"
@@ -4229,10 +4357,6 @@ msgstr "Παραδόσεις"
 msgid "Deliveries show up here once a subscribed event happens."
 msgstr "Οι παραδόσεις εμφανίζονται εδώ μόλις συμβεί ένα συμβάν στο οποίο έχετε εγγραφεί."
 
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Delivering"
-msgstr "Παράδοση"
-
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Delivery details"
 msgstr "Λεπτομέρειες παράδοσης"
@@ -4284,6 +4408,10 @@ msgstr "Λεπτομέρειες"
 msgid "Deutsch"
 msgstr "Deutsch"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Developers"
+msgstr "Προγραμματιστές"
+
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "Συσκευή"
@@ -4304,6 +4432,10 @@ msgstr "Αναγνωριστικό καταλόγου (μισθωτή), προα
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "Απόρριψη"
+
+#: src/components/common/SaveBar.tsx
+msgid "Discard changes"
+msgstr "Απόρριψη αλλαγών"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Discard the suggested reply"
@@ -4327,7 +4459,6 @@ msgstr "Η συζήτηση ξεκίνησε"
 #: src/features/docs/DiscussionsTab.tsx
 #: src/features/docs/DocsPage.tsx
 #: src/features/docs/PagesTab.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
@@ -4366,7 +4497,6 @@ msgstr "Εμφάνιση"
 msgid "Display name"
 msgstr "Εμφανιζόμενο όνομα"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
@@ -4436,7 +4566,7 @@ msgstr "Η τεκμηρίωση είναι οι σελίδες που διατη
 msgid "Documentation pages"
 msgstr "Σελίδες τεκμηρίωσης"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Documentation site"
 msgstr "Ιστότοπος τεκμηρίωσης"
@@ -4536,12 +4666,14 @@ msgctxt "migration state"
 msgid "Draft"
 msgstr "Πρόχειρο"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft author"
 msgstr "Συντάκτης πρόχειρου"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Πρόχειρο από {author}"
@@ -4568,10 +4700,12 @@ msgstr "Πρόχειρο:"
 msgid "Drafts"
 msgstr "Πρόχειρα"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting"
 msgstr "Πρόχειρα σε αναμονή"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Drafts waiting for review and the assistants you connected"
 msgstr "Πρόχειρα που περιμένουν έλεγχο και οι βοηθοί που συνδέσατε"
@@ -4601,6 +4735,7 @@ msgstr "Διπλότυπα"
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -4620,10 +4755,6 @@ msgstr "Διεύθυνση e-mail"
 #: src/features/contact/MergePreview.tsx
 msgid "E-mail addresses"
 msgstr "Διευθύνσεις e-mail"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
-msgstr "Οι επαφές e-mail λαμβάνουν ένα σύντομο e-mail με δύο συνδέσμους· οι επαφές συνομιλίας και εφαρμογής ερωτώνται στο widget ή στην εφαρμογή."
 
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
@@ -4712,8 +4843,8 @@ msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Κάθε νέο e-mail ξεκινά μια συνομιλία· οι απαντήσεις τη συνεχίζουν."
 
 #: src/features/settings/ProductsPage.tsx
-msgid "Each product has its own name, branding, hours and channels"
-msgstr "Κάθε προϊόν έχει δικό του όνομα, branding, ώρες και κανάλια"
+msgid "Each product has its own name, branding, hours, team and channels"
+msgstr "Κάθε προϊόν έχει το δικό του όνομα, ταυτότητα, ωράριο, ομάδα και κανάλια"
 
 #: src/features/setup/StartStep.tsx
 msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
@@ -4740,6 +4871,10 @@ msgstr "Επεξεργασία"
 #: src/features/status/MonitorsPage.tsx
 msgid "Edit ({editKey})"
 msgstr "Επεξεργασία ({editKey})"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Edit {keyName}"
+msgstr "Επεξεργασία του {keyName}"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4900,6 +5035,10 @@ msgstr "Εισαγάγετε τον κωδικό SMTP από την κονσόλ
 msgid "Enter the SMTP user name from the SES console."
 msgstr "Εισαγάγετε το όνομα χρήστη SMTP από την κονσόλα SES."
 
+#: src/features/settings/workspace/RetentionForm.tsx
+msgid "Enter whole days from 1 to 36,500, or leave it empty."
+msgstr "Εισαγάγετε ολόκληρες ημέρες από 1 έως 36.500 ή αφήστε το κενό."
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Εισαγάγετε το e-mail εργασίας σας και σας στέλνουμε έναν κωδικό. Χωρίς κωδικό πρόσβασης· ο ίδιος κωδικός σάς συνδέει και αργότερα."
@@ -4922,7 +5061,6 @@ msgstr "Σφάλμα ή απάντηση"
 
 #: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "Συμβάντα"
@@ -5025,6 +5163,7 @@ msgstr "Οι αναρτήσεις όλων δημοσιεύονται αμέσω
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "Όλα"
@@ -5045,7 +5184,7 @@ msgstr "Όλα έχουν ρυθμιστεί. Ανοίξτε οποιοδήπο�
 msgid "Everywhere"
 msgstr "Παντού"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Example Ltd."
 msgstr "Παράδειγμα Ε.Π.Ε."
 
@@ -5129,12 +5268,9 @@ msgid "Failed: {0}"
 msgstr "Απέτυχαν: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Failing"
 msgstr "Αποτυγχάνει"
-
-#: src/features/settings/webhooks/WebhookList.tsx
-msgid "Failing since {since} · retrying"
-msgstr "Αποτυγχάνει από {since} · νέα προσπάθεια"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Fails the monitor at once, without waiting for the grace."
@@ -5201,6 +5337,10 @@ msgstr "Αρχείο"
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
 msgstr "Αρχείο και συναίνεση"
+
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Files"
+msgstr "Αρχεία"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
@@ -5321,6 +5461,7 @@ msgid "First, an e-mail address"
 msgstr "Πρώτα, μια διεύθυνση e-mail"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "Διόρθωση"
@@ -5397,6 +5538,7 @@ msgid "For example Acme"
 msgstr "Για παράδειγμα Acme"
 
 #: src/features/migrations/MapStep.tsx
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "Για παράδειγμα Fieldnote"
@@ -5524,14 +5666,6 @@ msgstr "Από αποκλεισμένη επαφή"
 msgid "From a conversation"
 msgstr "Από μια συνομιλία"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a help desk"
-msgstr "Από help desk"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "From a mailbox"
-msgstr "Από γραμματοκιβώτιο"
-
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "Διεύθυνση αποστολέα (προαιρετικά)"
@@ -5548,6 +5682,7 @@ msgstr "Από το τερματικό"
 msgid "From your site or app"
 msgstr "Από τον ιστότοπο ή την εφαρμογή σας"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Full API"
 msgstr "Πλήρες API"
@@ -5588,14 +5723,10 @@ msgid "Gallery"
 msgstr "Συλλογή"
 
 #: src/app/Sidebar.tsx
-#: src/features/migrations/MigrationsPage.tsx
-#: src/features/settings/canned/CannedRepliesPage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/GeneralTabs.tsx
-#: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "General"
 msgstr "Γενικά"
 
@@ -5643,9 +5774,9 @@ msgstr "Το Gmail προωθεί μόνο νέα αλληλογραφία πο�
 msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
 msgstr "Το Gmail αφήνει άλλες εφαρμογές να διαβάζουν περίπου 1,5 GB την ημέρα μέσω IMAP, οπότε ένα γραμματοκιβώτιο πολλών gigabyte παίρνει μέρες. Το Google Takeout το εξάγει ως ένα αρχείο που ανεβαίνει όσο γρήγορα επιτρέπει η σύνδεσή σας. Εισαγάγετέ το πρώτα και μετά γυρίστε εδώ με έναν κωδικό εφαρμογής για την πιο πρόσφατη αλληλογραφία και την αλλαγή."
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Gmail, Outlook, Yandex, any IMAP"
-msgstr "Gmail, Outlook, Yandex, οποιοδήποτε IMAP"
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Gmail, Outlook, Yandex, any IMAP server"
+msgstr "Gmail, Outlook, Yandex, οποιοσδήποτε διακομιστής IMAP"
 
 #: src/features/status/IncidentDetail.tsx
 msgid "go back to operational when you post this"
@@ -5800,6 +5931,10 @@ msgstr "Κέντρο βοήθειας"
 msgid "Help center settings"
 msgstr "Ρυθμίσεις κέντρου βοήθειας"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Help desks"
+msgstr "Helpdesk"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Help report"
 msgstr "Αναφορά βοήθειας"
@@ -5866,6 +6001,10 @@ msgstr "Απόκρυψη λεπτομερειών HTTP"
 msgid "Hide quoted text"
 msgstr "Απόκρυψη παρατιθέμενου κειμένου"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Hide revoked"
+msgstr "Απόκρυψη ανακληθέντων"
+
 #: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "Απόκρυψη της προεπισκόπησης"
@@ -5931,6 +6070,10 @@ msgstr "Όνομα κεντρικού υπολογιστή και πιστοπο
 msgid "Hours"
 msgstr "Ωράριο"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Hours & team"
+msgstr "Ωράριο και ομάδα"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
 msgstr "Πώς συναίνεσαν;"
@@ -5942,6 +6085,10 @@ msgstr "Πώς συναίνεσαν οι συνδρομητές σας;"
 #: src/features/setup/NewsletterStep.tsx
 msgid "How do people sign up?"
 msgstr "Πώς εγγράφονται οι άνθρωποι;"
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "How do you answer?"
+msgstr "Πώς απαντάτε;"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
@@ -5963,6 +6110,10 @@ msgstr "Πόσο μπορεί να καθυστερήσει ένα σήμα."
 msgid "How mail reaches Yuva"
 msgstr "Πώς φτάνει η αλληλογραφία στο Yuva"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "How messages arrive: chat, e-mail, apps"
+msgstr "Πώς φτάνουν τα μηνύματα: συνομιλία, e-mail, εφαρμογές"
+
 #: src/features/settings/ProductsPage.tsx
 msgid "How messages reach each product"
 msgstr "Πώς φτάνουν τα μηνύματα σε κάθε προϊόν"
@@ -5970,6 +6121,14 @@ msgstr "Πώς φτάνουν τα μηνύματα σε κάθε προϊόν"
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "How should replies go out?"
 msgstr "Πώς να φεύγουν οι απαντήσεις;"
+
+#: src/components/common/SettingsStrip.tsx
+msgid "How software connects: keys, hooks, assistants"
+msgstr "Πώς συνδέεται το λογισμικό: κλειδιά, webhooks, βοηθοί"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "How the chat opens"
+msgstr "Πώς ανοίγει η συνομιλία"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -5992,10 +6151,6 @@ msgstr "Πώς να τα προσθέσετε"
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
 msgstr "Πώς να στείλετε την αλληλογραφία"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "How to verify"
-msgstr "Πώς να επαληθεύσετε"
 
 #: src/features/status/text.tsx
 msgid "HTTP"
@@ -6037,10 +6192,6 @@ msgstr "Ιδέες"
 #: src/features/status/text.tsx
 msgid "Identified"
 msgstr "Εντοπίστηκε"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Identity not verified"
-msgstr "Η ταυτότητα δεν έχει επαληθευτεί"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Identity secret"
@@ -6249,7 +6400,7 @@ msgstr "Σε εξέλιξη"
 msgid "In the app and by e-mail"
 msgstr "Στην εφαρμογή και με e-mail"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "In the footer"
 msgstr "Στο υποσέλιδο"
 
@@ -6287,7 +6438,6 @@ msgstr "Στο Zoho Mail, ανοίξτε Ρυθμίσεις › Λογαριασ
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "Εισερχόμενα"
@@ -6346,8 +6496,8 @@ msgstr "Αναλύσεις"
 
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "Εγκατάσταση"
@@ -6526,6 +6676,7 @@ msgstr "Δεν θα λαμβάνει πλέον ειδοποιήσεις."
 msgid "Italic"
 msgstr "Πλάγια"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Η πρόσβασή του τερματίζεται αμέσως. Για να το χρησιμοποιήσετε ξανά, συνδέστε το ξανά."
@@ -6606,7 +6757,8 @@ msgstr "Βασικά στοιχεία"
 msgid "Keyboard shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Keys"
 msgstr "Κλειδιά"
 
@@ -6617,6 +6769,10 @@ msgstr "Τα κλειδιά και οι βοηθοί δεν μπορούν να 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Keys and assistants may send broadcasts"
 msgstr "Τα κλειδιά και οι βοηθοί μπορούν να στέλνουν μαζικές αποστολές"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Keys that can reach this product. Create and revoke them under API & MCP."
+msgstr "Κλειδιά που φτάνουν σε αυτό το προϊόν. Δημιουργήστε και ανακαλέστε τα στο API και MCP."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -6668,6 +6824,10 @@ msgstr "Ετικέτες"
 #: src/features/inbox/ChatList.tsx
 msgid "Labels changed"
 msgstr "Οι ετικέτες άλλαξαν"
+
+#: src/features/settings/labels/LabelsPage.tsx
+msgid "Labels sort conversations by topic, such as billing or bugs."
+msgstr "Οι ετικέτες ταξινομούν τις συνομιλίες ανά θέμα, όπως χρέωση ή σφάλματα."
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6776,6 +6936,7 @@ msgstr "Τελευταία χρήση"
 msgid "last used {used}"
 msgstr "τελευταία χρήση {used}"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Last used {used}"
 msgstr "Τελευταία χρήση {used}"
@@ -6828,9 +6989,13 @@ msgstr "Παραλείφθηκε λόγω συνθήκης ή γλώσσας"
 msgid "Left out: {left} of {total} people on the lists"
 msgstr "Εκτός: {left} από {total} άτομα στις λίστες"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Legal name"
 msgstr "Νομική επωνυμία"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Let bots send replies?"
+msgstr "Να επιτρέπεται στα bots να στέλνουν απαντήσεις;"
 
 #: src/app/UserMenu.tsx
 #: src/features/settings/appearance/AppearancePage.tsx
@@ -7002,11 +7167,12 @@ msgid "Lists"
 msgstr "Λίστες"
 
 #: src/components/common/text.ts
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Live"
 msgstr "Ζωντανά"
 
 #: src/components/common/Source.tsx
+#: src/features/settings/AddProductDialog.tsx
 msgid "Live chat"
 msgstr "Ζωντανή συνομιλία"
 
@@ -7073,7 +7239,6 @@ msgstr "Κλειδωμένο: οι αναγνώστες δεν μπορούν π
 msgid "Logo URL"
 msgstr "URL λογοτύπου"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Look"
 msgstr "Εμφάνιση"
@@ -7191,6 +7356,7 @@ msgstr "Διεύθυνση γραμματοκιβωτίου"
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Mailboxes"
 msgstr "Γραμματοκιβώτια"
 
@@ -7233,6 +7399,7 @@ msgstr "Δημιουργία νέας διεύθυνσης"
 msgid "Make the board public or private"
 msgstr "Δημόσιος ή ιδιωτικός πίνακας"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -7350,6 +7517,7 @@ msgstr "Αρχεία mbox σε zip"
 msgid "mbox options"
 msgstr "Επιλογές mbox"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
 msgstr "Μόνο MCP"
@@ -7388,12 +7556,14 @@ msgstr "διάμεση πρώτη απάντηση"
 msgid "median today"
 msgstr "διάμεσος σήμερα"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Member"
 msgstr "Μέλος"
 
 #: src/app/Palette.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -7553,8 +7723,8 @@ msgid "Missed beat"
 msgstr "Χαμένο σήμα"
 
 #: src/components/common/text.ts
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/settings/channels/app/AppFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Mobile app"
 msgstr "Εφαρμογή για κινητά"
@@ -7730,7 +7900,6 @@ msgstr "Μετακίνηση στο προηγούμενο ή στο επόμε�
 
 #: src/features/settings/GeneralTabs.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Move to Yuva"
 msgstr "Μετακίνηση στο Yuva"
 
@@ -7819,6 +7988,10 @@ msgstr "Ονομάστε το Yuva. Στο <0>Connection</0> επιλέξτε <1
 msgid "Name of the new inbox"
 msgstr "Όνομα των νέων εισερχομένων"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Name, colour and the first thing the chat says"
+msgstr "Όνομα, χρώμα και το πρώτο πράγμα που λέει η συνομιλία"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Name, e-mail or id"
 msgstr "Όνομα, e-mail ή αναγνωριστικό"
@@ -7831,7 +8004,7 @@ msgstr "Όνομα, π.χ. Φορητός εργασίας"
 msgid "name@example.com"
 msgstr "name@example.com"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Needed for broadcasts"
 msgstr "Απαραίτητο για μαζικές αποστολές"
 
@@ -7841,6 +8014,7 @@ msgstr "Χρειάζεται αποστολέα"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/DomainCard.tsx
 msgid "Needs attention"
 msgstr "Χρειάζεται προσοχή"
@@ -7895,6 +8069,7 @@ msgid "New addresses that get a confirmation mail"
 msgstr "Νέες διευθύνσεις που λαμβάνουν e-mail επιβεβαίωσης"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/DeveloperTabs.tsx
 msgid "New API key"
 msgstr "Νέο κλειδί API"
 
@@ -8081,6 +8256,10 @@ msgstr "Νέα ενημέρωση · {stage}"
 msgid "New value"
 msgstr "Νέα τιμή"
 
+#: src/features/settings/DeveloperTabs.tsx
+msgid "New webhook endpoint"
+msgstr "Νέο endpoint webhook"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Newer mail and the switch"
 msgstr "Νεότερη αλληλογραφία και η αλλαγή"
@@ -8145,6 +8324,10 @@ msgstr "Επόμενο e-mail στις {local} ({utc} UTC), με τον ρυθμ
 msgid "Next screenshot"
 msgstr "Επόμενο στιγμιότυπο"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Next you pick the source and connect it. Nothing is copied until you start."
+msgstr "Μετά επιλέγετε την πηγή και τη συνδέετε. Τίποτα δεν αντιγράφεται μέχρι να ξεκινήσετε."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Στη συνέχεια, επιλέξτε τι θα φέρετε. Η σάρωση διαβάζει το αρχείο μία φορά."
@@ -8177,9 +8360,13 @@ msgstr "χωρίς απάντηση"
 msgid "No answer"
 msgstr "Χωρίς απάντηση"
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "No API keys can reach this product yet."
+msgstr "Κανένα κλειδί API δεν φτάνει ακόμη σε αυτό το προϊόν."
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "No API keys yet."
-msgstr "Δεν υπάρχουν ακόμη κλειδιά API."
+msgid "No API keys yet"
+msgstr "Δεν υπάρχουν ακόμη κλειδιά API"
 
 #: src/features/migrations/text.ts
 msgid "No API on this plan"
@@ -8192,6 +8379,10 @@ msgstr "Δεν υπάρχει σελίδα Κωδικών εφαρμογών; Ο
 #: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "Δεν υπάρχουν αρχειοθετημένες λίστες"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No assistant is connected yet"
+msgstr "Δεν έχει συνδεθεί ακόμη κανένας βοηθός"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and draft replies."
@@ -8247,7 +8438,6 @@ msgid "No channels yet"
 msgstr "Κανένα κανάλι ακόμη"
 
 #. placeholder {0}: inbox.name
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "No channels yet. Add one so customers can write to {0}."
 msgstr "Κανένα κανάλι ακόμη. Προσθέστε ένα για να μπορούν οι πελάτες να γράφουν στο {0}."
@@ -8285,8 +8475,8 @@ msgid "No confirmation"
 msgstr "Χωρίς επιβεβαίωση"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
-msgid "No connected apps."
-msgstr "Δεν υπάρχουν συνδεδεμένες εφαρμογές."
+msgid "No connected apps"
+msgstr "Καμία συνδεδεμένη εφαρμογή"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
@@ -8332,6 +8522,14 @@ msgstr "Δεν υπάρχουν συνομιλίες για επιλογή."
 msgid "No conversations yet."
 msgstr "Καμία συνομιλία ακόμη."
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "No days picked: the product counts as closed all week."
+msgstr "Δεν έχουν επιλεγεί ημέρες: το προϊόν θεωρείται κλειστό όλη την εβδομάδα."
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No deliveries yet"
+msgstr "Δεν υπάρχουν ακόμη παραδόσεις"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "No design yet"
 msgstr "Κανένα σχέδιο ακόμη"
@@ -8351,6 +8549,10 @@ msgstr "Καμία συζήτηση ακόμη. Οι αναγνώστες τις
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
 msgstr "Καμία υπογραφή DKIM δεν πέρασε, οπότε δεν μπορούν να σταλούν μαζικές αποστολές. Ρυθμίστε το DKIM με τον πάροχο SMTP ή ενεργοποιήστε το DKIM του Yuva παρακάτω."
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "No drafts are waiting"
+msgstr "Κανένα πρόχειρο σε αναμονή"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -8379,6 +8581,10 @@ msgstr "Δεν υπάρχουν ακόμη συνδρομητές e-mail"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
 msgstr "Δεν βρέθηκαν emoji."
+
+#: src/features/settings/webhooks/WebhookList.tsx
+msgid "No endpoints yet"
+msgstr "Δεν υπάρχουν ακόμη endpoints"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "No endpoints yet."
@@ -8523,8 +8729,8 @@ msgid "No pending invites."
 msgstr "Δεν υπάρχουν εκκρεμείς προσκλήσεις."
 
 #: src/features/settings/ProductsPage.tsx
-msgid "No products yet. Add one for each product or brand you answer for."
-msgstr "Δεν υπάρχουν προϊόντα ακόμη. Προσθέστε ένα για κάθε προϊόν ή επωνυμία για την οποία απαντάτε."
+msgid "No products yet"
+msgstr "Δεν υπάρχουν ακόμη προϊόντα"
 
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "No published article found."
@@ -8865,6 +9071,7 @@ msgstr "Δεν έφτασε μετά από ένα λεπτό; Κοιτάξτε 
 msgid "Not uploaded yet"
 msgstr "Δεν έχει ανέβει ακόμη"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "Δεν έχει χρησιμοποιηθεί ακόμη"
@@ -8911,6 +9118,10 @@ msgstr "Τίποτα δεν άλλαξε στο {provider}· κρατήστε τ
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Τίποτα από το αρχείο δεν προστίθεται και το αρχείο που ανέβηκε διαγράφεται."
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Nothing from this kind of author is waiting for review."
+msgstr "Τίποτα από αυτό τον τύπο συντάκτη δεν περιμένει έλεγχο."
 
 #: src/features/status/MonitorChecks.tsx
 #: src/features/status/MonitorsPage.tsx
@@ -8991,6 +9202,10 @@ msgstr "Τίποτα δεν ταιριάζει με αυτά τα φίλτρα."
 msgid "Nothing matches your search here."
 msgstr "Τίποτα δεν ταιριάζει με την αναζήτησή σας εδώ."
 
+#: src/features/settings/ProductsPage.tsx
+msgid "Nothing needs attention right now."
+msgstr "Αυτή τη στιγμή τίποτα δεν χρειάζεται προσοχή."
+
 #: src/features/home/HomePage.tsx
 msgid "Nothing needs you"
 msgstr "Τίποτα δεν σας περιμένει"
@@ -9067,7 +9282,6 @@ msgstr "ανενεργό"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
-#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Off"
 msgstr "Ανενεργό"
 
@@ -9167,10 +9381,6 @@ msgstr "Στα πακέτα Team και Enterprise ένας ιδιοκτήτης
 msgid "On the web"
 msgstr "Στον ιστό"
 
-#: src/features/settings/OnThisPage.tsx
-msgid "On this page"
-msgstr "Σε αυτή τη σελίδα"
-
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
 msgstr "Μόλις φτάσει ένα δοκιμαστικό μήνυμα, το Yuva περιμένει {hours} ώρες. Αν σε αυτό το διάστημα δεν φτάσει τίποτα μόνο στο {provider}, η μεταφορά ολοκληρώνεται μόνη της. Μπορείτε και εσείς να την ολοκληρώσετε."
@@ -9233,6 +9443,7 @@ msgstr "Συνδεδεμένος"
 #: src/features/contact/Presence.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Online now"
 msgstr "Συνδεδεμένοι τώρα"
 
@@ -9424,6 +9635,11 @@ msgstr "Άνοιγμα App registrations"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open Apps and services"
 msgstr "Άνοιγμα Εφαρμογών και υπηρεσιών"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Open channels"
+msgstr "Άνοιγμα καναλιών"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -9666,6 +9882,10 @@ msgstr "ανοιχτές, χωρίς ανάθεση"
 msgid "Opens"
 msgstr "Ανοίγματα"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Opens the conversation with the draft in the composer"
+msgstr "Ανοίγει τη συνομιλία με το πρόχειρο στον επεξεργαστή"
+
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "Λειτουργεί"
@@ -9769,8 +9989,8 @@ msgid "Outlook's .pst files are not read; convert them to .mbox first."
 msgstr "Τα αρχεία .pst του Outlook δεν διαβάζονται· μετατρέψτε τα πρώτα σε .mbox."
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Outside them the inbox counts as closed"
-msgstr "Εκτός αυτών τα εισερχόμενα θεωρούνται κλειστά"
+msgid "Outside them the product counts as closed."
+msgstr "Εκτός αυτού, το προϊόν θεωρείται κλειστό."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Over time"
@@ -9803,8 +10023,8 @@ msgid "Owners and admins see every inbox; agents see the inboxes they were given
 msgstr "Οι ιδιοκτήτες και οι διαχειριστές βλέπουν κάθε εισερχόμενο· οι πράκτορες βλέπουν αυτά που τους έχουν δοθεί. Μόνο οι ιδιοκτήτες και οι διαχειριστές μπορούν να προσκαλούν, να αλλάζουν ρόλους ή να αφαιρούν μέλη."
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Owners and admins see every inbox; members see the inboxes they are given."
-msgstr "Οι ιδιοκτήτες και οι διαχειριστές βλέπουν κάθε εισερχόμενο· τα μέλη βλέπουν τα εισερχόμενα που τους δόθηκαν."
+msgid "Owners and admins see every product; agents see the products they are given."
+msgstr "Οι ιδιοκτήτες και οι διαχειριστές βλέπουν κάθε προϊόν· οι πράκτορες βλέπουν τα προϊόντα που τους έχουν ανατεθεί."
 
 #: src/features/team/TeamPage.tsx
 msgid "Owners can do everything, including billing and deleting the workspace."
@@ -9929,8 +10149,8 @@ msgstr "Παύση ή συνέχιση της παρακολούθησης"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
@@ -9946,10 +10166,6 @@ msgstr "Σε παύση επειδή το Amazon SES πάγωσε τον μισ�
 #: src/components/common/text.ts
 msgid "Paused because the workspace may not send broadcasts for now."
 msgstr "Σε παύση επειδή ο χώρος εργασίας δεν επιτρέπεται προς το παρόν να στέλνει μαζικές αποστολές."
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Paused by Amazon SES"
-msgstr "Σε παύση από το Amazon SES"
 
 #: src/components/common/text.ts
 msgid "Paused by the server's operator."
@@ -10147,6 +10363,10 @@ msgstr "Επιλέξτε ώρα στις επόμενες 90 ημέρες, στ�
 msgid "Pick a TLS mode."
 msgstr "Επιλέξτε λειτουργία TLS."
 
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
+msgid "Pick an assistant below to connect one."
+msgstr "Επιλέξτε παρακάτω έναν βοηθό για να τον συνδέσετε."
+
 #: src/components/common/text.ts
 msgid "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 msgstr "Επιλέξτε ένα κανάλι e-mail αυτών των εισερχομένων που έχει λογαριασμό SMTP. Στέλνει τα e-mail επιβεβαίωσης και καλωσορίσματος."
@@ -10230,6 +10450,10 @@ msgstr "Επιλέξτε τα εισερχόμενα για τις συνομι�
 msgid "Pick the list the people join."
 msgstr "Διαλέξτε τη λίστα στην οποία μπαίνουν οι άνθρωποι."
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Pick the one you use. Setup steps and scopes are on API & MCP."
+msgstr "Επιλέξτε αυτόν που χρησιμοποιείτε. Τα βήματα ρύθμισης και τα δικαιώματα βρίσκονται στο API και MCP."
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "Επιλέξτε την άλλη επαφή. Συγχωνεύεται σε αυτή και μετά διαγράφεται."
@@ -10237,6 +10461,10 @@ msgstr "Επιλέξτε την άλλη επαφή. Συγχωνεύεται σ
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "Επιλέξτε τις πλατφόρμες· το επόμενο βήμα δείχνει τις γραμμές που προστίθενται σε κάθε εφαρμογή."
+
+#: src/features/settings/channels/AddChannelDialog.tsx
+msgid "Pick the product and how customers reach it. The next steps set it up."
+msgstr "Επιλέξτε το προϊόν και πώς το φτάνουν οι πελάτες. Τα επόμενα βήματα το ρυθμίζουν."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Pick the same file again"
@@ -10357,7 +10585,7 @@ msgstr "Ανάρτηση ενημέρωσης κατάστασης"
 msgid "Post update"
 msgstr "Αποστολή ενημέρωσης"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Postal address"
 msgstr "Ταχυδρομική διεύθυνση"
 
@@ -10380,6 +10608,7 @@ msgstr "Προετοιμασία"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Wizard.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
 #: src/features/status/StatusPages.tsx
@@ -10448,11 +10677,15 @@ msgstr "pro, team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "Προϊόν"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Product name"
 msgstr "Όνομα προϊόντος"
@@ -10461,6 +10694,11 @@ msgstr "Όνομα προϊόντος"
 #: src/features/setup/previews.tsx
 msgid "Product news"
 msgstr "Νέα προϊόντος"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/ProductsPage.tsx
+msgid "Product settings"
+msgstr "Ρυθμίσεις προϊόντος"
 
 #: src/features/inbox/ProductSwitcher.tsx
 msgid "Product: {label}"
@@ -10472,10 +10710,12 @@ msgid "Production backend"
 msgstr "Backend παραγωγής"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/SettingsStrip.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/TeamPage.tsx
@@ -10757,6 +10997,7 @@ msgstr "Ανάγνωση κέντρων βοήθειας, συλλογών κα�
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "Ανάγνωση λιστών αλληλογραφίας, συνδρομητών και καταγραφών συναίνεσης"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Read only"
 msgstr "Μόνο ανάγνωση"
@@ -10840,8 +11081,7 @@ msgstr "Realtime"
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "Ελήφθη {when}. Εισαγάγετέ το στις ρυθμίσεις προώθησης του Gmail ή ανοίξτε τον σύνδεσμο."
 
-#: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Receives only"
 msgstr "Μόνο λαμβάνει"
 
@@ -10931,7 +11171,7 @@ msgstr "Περιοχή"
 msgid "Register an app in Microsoft Entra"
 msgstr "Καταχωρίστε μια εφαρμογή στο Microsoft Entra"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Registration"
 msgstr "Εγγραφή"
 
@@ -10948,13 +11188,11 @@ msgstr "Επαναφόρτωση"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "Οι απομακρυσμένες εικόνες μπορούν να πουν στον αποστολέα ότι ανοίξατε το e-mail."
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
 #: src/features/team/TeamPage.tsx
@@ -11115,11 +11353,14 @@ msgstr "Απάντησε στο νήμα άλλης συνομιλίας"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "Απαντήσεις"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
+msgstr "Οι απαντήσεις που γράφει ένας βοηθός, ένα bot ή ένας συνάδελφος εμφανίζονται εδώ μέχρι κάποιος να τις στείλει ή να τις απορρίψει."
 
 #: src/features/account/AccountPage.tsx
 msgid "Replies and answers in the discussions you follow"
@@ -11128,6 +11369,10 @@ msgstr "Απαντήσεις και λύσεις στις συζητήσεις �
 #: src/features/reports/ReportsColumn.tsx
 msgid "Replies and closes"
 msgstr "Απαντήσεις και κλεισίματα"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies and ratings"
+msgstr "Απαντήσεις και αξιολογήσεις"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Replies cannot go out until you add a reply account."
@@ -11161,6 +11406,10 @@ msgstr "απαντήσεις σήμερα"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Replies via"
 msgstr "Απαντήσεις μέσω"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Replies when available"
+msgstr "Απαντά όταν είναι διαθέσιμο"
 
 #: src/features/settings/ProductsPage.tsx
 msgid "replies within {within}"
@@ -11414,7 +11663,7 @@ msgstr "Έλεγχος και δημοσίευση"
 msgid "Review and send"
 msgstr "Έλεγχος και αποστολή"
 
-#: src/features/inbox/SidePanels.tsx
+#: src/features/inbox/AssistantsPage.tsx
 msgid "Review draft"
 msgstr "Έλεγχος πρόχειρου"
 
@@ -11432,14 +11681,20 @@ msgstr "Ελέγξτε και μετά στείλτε ή προγραμματί�
 msgid "Revisions"
 msgstr "Αναθεωρήσεις"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke"
 msgstr "Ανάκληση"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Revoke {clientName}?"
 msgstr "Ανάκληση του {clientName};"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Revoke {keyName}"
+msgstr "Ανάκληση του {keyName}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Revoke {keyName}?"
@@ -11572,6 +11827,10 @@ msgstr "Αποθήκευση"
 msgid "Save as draft"
 msgstr "Αποθήκευση ως πρόχειρο"
 
+#: src/components/common/SaveBar.tsx
+msgid "Save changes"
+msgstr "Αποθήκευση αλλαγών"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "Αποθήκευση πρόχειρου"
@@ -11584,16 +11843,20 @@ msgstr "Αποθηκεύστε και αντιγράψτε το αναγνωρι
 msgid "Save now and keep a version"
 msgstr "Αποθήκευση τώρα και διατήρηση έκδοσης"
 
+#: src/features/settings/canned/CannedRepliesPage.tsx
+msgid "Save the answers you write often, then insert them in the composer with a shortcut."
+msgstr "Αποθηκεύστε τις απαντήσεις που γράφετε συχνά και εισάγετέ τες στον επεξεργαστή με μια συντόμευση."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save the draft now"
 msgstr "Αποθήκευση του προχείρου τώρα"
 
+#: src/components/common/SaveBar.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/sections.tsx
@@ -12020,7 +12283,7 @@ msgstr "Αποστολέας"
 msgid "Sender details for the footer"
 msgstr "Στοιχεία αποστολέα για το υποσέλιδο"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Sender identity"
 msgstr "Ταυτότητα αποστολέα"
 
@@ -12029,7 +12292,6 @@ msgstr "Ταυτότητα αποστολέα"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/Notices.tsx
@@ -12050,7 +12312,7 @@ msgstr "Αποστολή με e-mail…"
 msgid "Sending channel"
 msgstr "Κανάλι αποστολής"
 
-#: src/features/settings/ProductsPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 msgid "Sending error"
 msgstr "Σφάλμα αποστολής"
 
@@ -12078,6 +12340,10 @@ msgstr "Ρυθμός αποστολής"
 #: src/features/broadcasts/Pace.tsx
 msgid "Sending pace of “{name}”"
 msgstr "Ρυθμός αποστολής του «{name}»"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Sending reputation of this product, kept apart from the others"
+msgstr "Η φήμη αποστολής αυτού του προϊόντος, χωριστά από των άλλων"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -12207,8 +12473,10 @@ msgstr "Απαντήσεις διακομιστή"
 msgid "Server settings"
 msgstr "Ρυθμίσεις διακομιστή"
 
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/settings/channels/app/AppInstall.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
+#: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Server URL"
 msgstr "Διεύθυνση URL διακομιστή"
 
@@ -12232,6 +12500,10 @@ msgstr "Ορισμός προόδου"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Set the feedback progress"
 msgstr "Ορισμός προόδου του σχολίου"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Set up"
+msgstr "Ρύθμιση"
 
 #: src/features/status/MonitorToken.tsx
 msgid "Set up {name}"
@@ -12273,10 +12545,12 @@ msgstr "Ρύθμιση…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/ChannelState.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "Ρυθμίσεις"
@@ -12322,10 +12596,20 @@ msgstr "Συντόμευση"
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsPage.tsx
+#: src/features/inbox/AssistantsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/settings/ProductsPage.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Εμφάνιση"
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Show {nRevoked} revoked"
+msgstr "Εμφάνιση {nRevoked} ανακληθέντων"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show all authors"
+msgstr "Εμφάνιση όλων των συντακτών"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Show archived designs"
@@ -12335,9 +12619,17 @@ msgstr "Εμφάνιση αρχειοθετημένων σχεδίων"
 msgid "Show as sent"
 msgstr "Εμφάνιση ως απεσταλμένο"
 
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show full draft"
+msgstr "Εμφάνιση ολόκληρου του πρόχειρου"
+
 #: src/features/status/MonitorDialog.tsx
 msgid "Show HTTP details"
 msgstr "Εμφάνιση λεπτομερειών HTTP"
+
+#: src/features/inbox/AssistantsPage.tsx
+msgid "Show less"
+msgstr "Εμφάνιση λιγότερων"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12576,6 +12868,10 @@ msgid "Sign-up sheet at the spring fair"
 msgstr "Φύλλο εγγραφής στην εαρινή έκθεση"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+msgid "Signed HTTP calls to your backend for conversations, messages and feedback. Each endpoint can listen to one product or to all."
+msgstr "Υπογεγραμμένες κλήσεις HTTP προς το backend σας για συνομιλίες, μηνύματα και σχόλια. Κάθε endpoint μπορεί να ακούει ένα προϊόν ή όλα."
+
+#: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
 msgstr "Υπογεγραμμένες κλήσεις HTTP στο backend σας για τις συνομιλίες, τα μηνύματα και τα σχόλια αυτών των εισερχομένων."
 
@@ -12609,7 +12905,6 @@ msgid "Signing"
 msgstr "Υπογραφή"
 
 #: src/features/settings/webhooks/sections.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "Μυστικό υπογραφής"
@@ -12655,7 +12950,6 @@ msgstr "Σύνδεσμος ιστότοπου"
 msgid "Site name"
 msgstr "Όνομα ιστότοπου"
 
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
@@ -12844,10 +13138,6 @@ msgstr "Έναρξη συζήτησης"
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Start a mailing list"
 msgstr "Δημιουργία λίστας αλληλογραφίας"
-
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Start a move"
-msgstr "Έναρξη μεταφοράς"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -13077,7 +13367,7 @@ msgstr "Επιτυχία"
 msgid "Successes to recover"
 msgstr "Επιτυχίες στη σειρά ως την αποκατάσταση"
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "Όπως αριθμός MERSİS, εμπορικό μητρώο ή ΑΦΜ, αν έχετε"
 
@@ -13108,6 +13398,7 @@ msgstr "Υποστήριξη"
 msgid "Support address"
 msgstr "Διεύθυνση υποστήριξης"
 
+#: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Support bot"
 msgstr "Bot υποστήριξης"
@@ -13353,10 +13644,12 @@ msgstr "Η συνομιλία εμφανίζεται στη γωνία κάθε 
 msgid "The chat bubble appears on these addresses:"
 msgstr "Η φυσαλίδα συνομιλίας εμφανίζεται σε αυτές τις διευθύνσεις:"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows when you usually reply"
 msgstr "Η συνομιλία δείχνει πότε συνήθως απαντάτε"
 
+#: src/features/settings/AddProductDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows who is available and typing"
 msgstr "Η συνομιλία δείχνει ποιος είναι διαθέσιμος και πληκτρολογεί"
@@ -13400,6 +13693,10 @@ msgstr "Η τρέχουσα διεύθυνση σταματά να λειτου�
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "Ο πελάτης δεν το βλέπει"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The customer taps thumbs up or down when a conversation is closed. E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app."
+msgstr "Ο πελάτης πατά τον αντίχειρα πάνω ή κάτω όταν κλείνει μια συνομιλία. Οι επαφές e-mail λαμβάνουν ένα σύντομο e-mail με δύο συνδέσμους· οι επαφές συνομιλίας και εφαρμογής ρωτιούνται στο widget ή στην εφαρμογή."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The deliverability check has not finished yet."
@@ -13521,6 +13818,10 @@ msgstr "Τα μέρη του αρχείου διαγράφηκαν. Επιλέξ
 msgid "The first line of the mail shows here when there is no preview text."
 msgstr "Η πρώτη γραμμή του e-mail εμφανίζεται εδώ όταν δεν υπάρχει κείμενο προεπισκόπησης."
 
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "The first message arrived. This channel works."
+msgstr "Το πρώτο μήνυμα έφτασε. Αυτό το κανάλι λειτουργεί."
+
 #: src/features/settings/notifications/events.ts
 msgid "The first message of a conversation in an inbox that shows a reply time."
 msgstr "Το πρώτο μήνυμα μιας συνομιλίας σε εισερχόμενα που δείχνουν χρόνο απάντησης."
@@ -13577,10 +13878,6 @@ msgstr "Το ιστορικό αντιγράφηκε και η αλληλογρ�
 msgid "The hostname is being set up. This takes a moment once the records are found."
 msgstr "Το όνομα κεντρικού υπολογιστή ρυθμίζεται. Χρειάζεται λίγη ώρα αφού βρεθούν οι εγγραφές."
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
-msgstr "Οι ώρες διαφέρουν ανά ημέρα· αν τις αλλάξετε εδώ, ορίζονται οι ίδιες ώρες για κάθε επιλεγμένη ημέρα."
-
 #: src/features/broadcasts/Import.tsx
 msgid "The import failed, and nothing was added from the file."
 msgstr "Η εισαγωγή απέτυχε και τίποτα δεν προστέθηκε από το αρχείο."
@@ -13589,7 +13886,6 @@ msgstr "Η εισαγωγή απέτυχε και τίποτα δεν προστ
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "Η εισαγωγή δεν περιμένει πλέον να ξεκινήσει. Δείτε την κατάστασή της."
 
-#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "Τα εισερχόμενα δεν αλλάζουν αργότερα."
@@ -13675,7 +13971,7 @@ msgstr "Το δοκιμαστικό e-mail του τελευταίου ελέγ�
 msgid "The last deliverability check found something to fix."
 msgstr "Ο τελευταίος έλεγχος παραδοσιμότητας βρήκε κάτι προς διόρθωση."
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Ο νόμος απαιτεί κάθε διαφημιστικό e-mail να λέει ποιος το στέλνει και πώς να επικοινωνήσετε μαζί του (CAN-SPAM, CASL, ο τουρκικός Κανονισμός Εμπορικής Επικοινωνίας). Το Yuva το βάζει στο υποσέλιδο κάθε μαζικής αποστολής από αυτά τα εισερχόμενα, οπότε συμπληρώστε το πριν από την πρώτη."
 
@@ -13754,6 +14050,10 @@ msgstr "Η μεταφορά συνεχίζεται από εκεί που στα
 #: src/components/common/text.ts
 msgid "The migration moved on in the meantime. Look at its state and try again."
 msgstr "Η μεταφορά προχώρησε στο μεταξύ. Δείτε την κατάστασή της και δοκιμάστε ξανά."
+
+#: src/features/settings/AddProductDialog.tsx
+msgid "The next step adds its first channel: website chat, e-mail or a mobile app."
+msgstr "Το επόμενο βήμα προσθέτει το πρώτο κανάλι: web chat, e-mail ή εφαρμογή για κινητά."
 
 #: src/components/common/text.ts
 msgid "The number of conversations changed since you looked. Check it and confirm again."
@@ -13871,6 +14171,14 @@ msgstr "Το προηγούμενο μυστικό υπογράφει επίση
 msgid "The problem is fixed. Sorry for the trouble."
 msgstr "Το πρόβλημα διορθώθηκε. Συγγνώμη για την ταλαιπωρία."
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The product always counts as open."
+msgstr "Το προϊόν θεωρείται πάντα ανοιχτό."
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The product cannot be changed later."
+msgstr "Το προϊόν δεν μπορεί να αλλάξει αργότερα."
+
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
 msgstr "Ο πάροχος ζήτησε να επιβραδύνετε"
@@ -13943,6 +14251,10 @@ msgstr "Το μυστικό δεν εμφανίζεται ξανά. Αλλάξτ
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The secret is shown once, on the next page."
 msgstr "Το μυστικό εμφανίζεται μία φορά, στην επόμενη σελίδα."
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "The secret is shown once, when a key is made."
+msgstr "Το μυστικό εμφανίζεται μία φορά, όταν δημιουργείται ένα κλειδί."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -14086,6 +14398,10 @@ msgstr "Ο επισκέπτης πληκτρολόγησε {0} στη συνομ
 msgid "The What’s new count shows on the chat button while no messages are unread. The widget’s Home always shows it."
 msgstr "Ο αριθμός των νέων εμφανίζεται στο κουμπί συνομιλίας όσο δεν υπάρχουν μη αναγνωσμένα μηνύματα. Η αρχική του widget τον δείχνει πάντα."
 
+#: src/features/settings/GeneralTabs.tsx
+msgid "The workspace itself: name, retention, labels, canned replies and moving in"
+msgstr "Ο ίδιος ο χώρος εργασίας: όνομα, διατήρηση, ετικέτες, έτοιμες απαντήσεις και μεταφορά"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
 msgstr "Ο χώρος εργασίας δεν επιτρέπεται προς το παρόν να στέλνει μαζικές αποστολές."
@@ -14097,6 +14413,10 @@ msgstr "Ο χώρος εργασίας δεν επιτρέπεται να στε
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Ο χώρος εργασίας έφτασε το σημερινό όριο αποστολής. Η αποστολή συνεχίζεται στις {local} ({utc} UTC)."
+
+#: src/components/common/SettingsStrip.tsx
+msgid "The workspace: labels, replies, data"
+msgstr "Ο χώρος εργασίας: ετικέτες, απαντήσεις, δεδομένα"
 
 #: src/components/common/text.ts
 msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
@@ -14245,6 +14565,10 @@ msgstr "Αυτό το κανάλι δεν έχει κλειδί DKIM του Yuva
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel is not isolated in an Amazon SES tenant."
 msgstr "Αυτό το κανάλι δεν είναι απομονωμένο σε μισθωτή Amazon SES."
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "This channel only receives mail. Add an SMTP account under Replies so you can answer from Yuva."
+msgstr "Αυτό το κανάλι μόνο λαμβάνει αλληλογραφία. Προσθέστε λογαριασμό SMTP στις Απαντήσεις για να απαντάτε από το Yuva."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "This channel sends through Amazon SES in another account or region, so Yuva cannot isolate it in a tenant. Mail goes out without one."
@@ -14729,8 +15053,8 @@ msgid "Turn into a public discussion"
 msgstr "Μετατροπή σε δημόσια συζήτηση"
 
 #: src/features/settings/webhooks/sections.tsx
-msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
-msgstr "Ενεργοποιήστε το ξανά όταν λειτουργεί ο δέκτης· στείλτε ξανά τις αποτυχημένες παραδόσεις από το αρχείο καταγραφής παρακάτω."
+msgid "Turn it on again once the receiver works; send failed deliveries again from the Deliveries tab."
+msgstr "Ενεργοποιήστε το ξανά όταν δουλέψει ο παραλήπτης· στείλτε ξανά τις αποτυχημένες παραδόσεις από την καρτέλα Παραδόσεις."
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn off"
@@ -14739,6 +15063,10 @@ msgstr "Απενεργοποίηση"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Απενεργοποιήστε το για ανακοινώσεις υπηρεσίας προς υπάρχοντες πελάτες. Η συναίνεση χρειάζεται και στις δύο περιπτώσεις· καταγράφεται στην εξαγωγή συναινέσεων."
+
+#: src/features/settings/api-keys/ApiKeysPage.tsx
+msgid "Turn on"
+msgstr "Ενεργοποίηση"
 
 #: src/features/migrations/text.ts
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
@@ -14768,6 +15096,10 @@ msgstr "Εγγραφή TXT"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Type"
 msgstr "Τύπος"
+
+#: src/features/settings/inboxes/InboxSecurity.tsx
+msgid "Type {name} to confirm"
+msgstr "Πληκτρολογήστε {name} για επιβεβαίωση"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
@@ -14947,6 +15279,10 @@ msgstr "Μη αναγνωσμένα · {0}"
 #: src/features/inbox/ChatList.tsx
 msgid "Unread only"
 msgstr "Μόνο αδιάβαστα"
+
+#: src/components/common/SaveBar.tsx
+msgid "Unsaved changes"
+msgstr "Μη αποθηκευμένες αλλαγές"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribe"
@@ -15165,6 +15501,11 @@ msgstr "Χρησιμοποιήστε το ως bearer token απέναντι σ�
 msgid "Use letters, digits, - and _, at most 64."
 msgstr "Χρησιμοποιήστε γράμματα, ψηφία, - και _, το πολύ 64."
 
+#: src/features/settings/canned/CannedReplyDialog.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Use lowercase letters, digits and single dashes."
+msgstr "Χρησιμοποιήστε πεζά γράμματα, ψηφία και μονές παύλες."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
 msgstr "Χρησιμοποιήστε πεζά γράμματα, ψηφία, παύλες, κάτω παύλες και τελείες, ξεκινώντας με γράμμα ή ψηφίο."
@@ -15213,6 +15554,10 @@ msgstr "Χρησιμοποιήστε τον κωδικό GMX ή έναν κωδ�
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Used in addresses and the widget"
 msgstr "Χρησιμοποιείται σε διευθύνσεις και στο widget"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Used in addresses, the widget and the SDKs"
+msgstr "Χρησιμοποιείται σε διευθύνσεις, στο widget και στα SDK"
 
 #: src/features/contact/ContactCard.tsx
 msgid "User id: {ext}"
@@ -15322,7 +15667,6 @@ msgid "visitors"
 msgstr "επισκέπτες"
 
 #: src/features/contact/ContactsColumn.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "Επισκέπτες"
@@ -15372,6 +15716,7 @@ msgstr "Επισκέψεις στους ιστότοπούς σας με utm_cam
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
@@ -15423,6 +15768,10 @@ msgstr "Αναμονή για τον πελάτη"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "Αναμονή για το πρώτο μήνυμα"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "Waiting for the first message. It shows up here as soon as it reaches Yuva."
+msgstr "Αναμονή για το πρώτο μήνυμα. Θα εμφανιστεί εδώ μόλις φτάσει στο Yuva."
 
 #: src/features/status/text.tsx
 msgid "Waiting for the first result"
@@ -15507,8 +15856,8 @@ msgid "Webhooks for {0}"
 msgstr "Webhooks για {0}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
-msgid "Webhooks for this inbox"
-msgstr "Webhooks για αυτά τα εισερχόμενα"
+msgid "Webhooks for this product"
+msgstr "Webhooks αυτού του προϊόντος"
 
 #: src/features/feedback/FeedbackFormDialog.tsx
 msgid "Website"
@@ -15518,7 +15867,7 @@ msgstr "Ιστότοπος"
 msgid "Website addresses"
 msgstr "Διευθύνσεις ιστότοπου"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/AddChannelDialog.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Website chat"
 msgstr "Συνομιλία ιστότοπου"
@@ -15589,6 +15938,10 @@ msgid "What should Yuva bring?"
 msgstr "Τι να φέρει το Yuva;"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+msgid "What the chat promises, and what it asks after closing"
+msgstr "Τι υπόσχεται η συνομιλία και τι ρωτά μετά το κλείσιμο"
+
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "Τι βλέπει ο πελάτης"
 
@@ -15628,7 +15981,6 @@ msgstr "Ό,τι γράφετε συχνά"
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
 msgstr "Τι νέο υπάρχει"
@@ -15705,10 +16057,6 @@ msgstr "Όταν ο πάροχός σας στέλνει από άλλη διε�
 #: src/features/broadcasts/Import.tsx
 msgid "Where and when did these people agree?"
 msgstr "Πού και πότε συμφώνησαν αυτά τα άτομα;"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Where customers write from"
-msgstr "Από πού γράφουν οι πελάτες"
 
 #: src/features/setup/ChannelStep.tsx
 msgid "Where do {name} customers write from?"
@@ -15790,6 +16138,10 @@ msgstr "Ποιος στέλνει και για τι;"
 msgid "Who should take it?"
 msgstr "Ποιος να το αναλάβει;"
 
+#: src/components/common/SettingsStrip.tsx
+msgid "Who you support: name, hours, team, sender"
+msgstr "Ποιον υποστηρίζετε: όνομα, ωράριο, ομάδα, αποστολέας"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Windows-1252 (Western Excel)"
 msgstr "Windows-1252 (δυτικό Excel)"
@@ -15867,10 +16219,6 @@ msgstr "Δουλέψτε με συνομιλίες από τη λειτουργ�
 msgid "Work with conversations from Cursor's agent. It acts as you, with the access you allow."
 msgstr "Δουλέψτε με συνομιλίες από τον πράκτορα του Cursor. Ενεργεί εξ ονόματός σας, με την πρόσβαση που επιτρέπετε."
 
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Working"
-msgstr "Σε εξέλιξη"
-
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Working…"
 msgstr "Σε εξέλιξη…"
@@ -15888,10 +16236,6 @@ msgstr "Χώρος εργασίας"
 msgid "Workspace name"
 msgstr "Όνομα χώρου εργασίας"
 
-#: src/features/settings/workspace/WorkspacePage.tsx
-msgid "Workspace name and data"
-msgstr "Όνομα και δεδομένα του χώρου εργασίας"
-
 #: src/app/Sidebar.tsx
 msgid "Workspace settings"
 msgstr "Ρυθμίσεις χώρου εργασίας"
@@ -15904,6 +16248,7 @@ msgstr "Χώρος εργασίας: {name}"
 msgid "Workspaces"
 msgstr "Χώροι εργασίας"
 
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "Γράψτε ένα μήνυμα…"
@@ -16072,6 +16417,10 @@ msgstr "Δεν έχετε γράψει ακόμη σε καμία συζήτησ
 msgid "You have read every mention."
 msgstr "Διαβάσατε όλες τις αναφορές."
 
+#: src/components/common/SaveBar.tsx
+msgid "You have unsaved changes to {what}."
+msgstr "Έχετε μη αποθηκευμένες αλλαγές στο {what}."
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "Φεύγετε από κάθε χώρο εργασίας και χάνετε τις συνδέσεις, τα passkeys και τις ειδοποιήσεις σας. Τα μηνύματα που γράψατε παραμένουν στις συνομιλίες τους, εμφανιζόμενα ως από διαγραμμένο μέλος. Δεν μπορεί να αναιρεθεί."
@@ -16132,7 +16481,7 @@ msgstr "Το backend σας υπογράφει διακριτικά ταυτότ
 msgid "Your browser opens the consent page on <0>{host}</0>. Sign in with a code or a passkey if you are not signed in already."
 msgstr "Το πρόγραμμα περιήγησής σας ανοίγει τη σελίδα συγκατάθεσης στο <0>{host}</0>. Συνδεθείτε με κωδικό ή passkey αν δεν έχετε ήδη συνδεθεί."
 
-#: src/features/settings/inboxes/SenderIdentity.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Your company or your own name"
 msgstr "Η εταιρεία σας ή το δικό σας όνομα"
 
@@ -16247,6 +16596,10 @@ msgstr "Η ζώνη ώρας σας, {zone}. Αυτό είναι {utc} UTC."
 msgid "Your website"
 msgstr "Ο ιστότοπός σας"
 
+#: src/features/settings/workspace/WorkspacePage.tsx
+msgid "Your workspace name, how long closed conversations are kept, and who may send broadcasts."
+msgstr "Το όνομα του χώρου εργασίας σας, πόσο διατηρούνται οι κλειστές συνομιλίες και ποιος μπορεί να στέλνει μαζικές αποστολές."
+
 #: src/features/account/AccountPage.tsx
 msgid "Your Yuva account"
 msgstr "Ο λογαριασμός σας στο Yuva"
@@ -16339,6 +16692,10 @@ msgstr "Το Yuva μόνο διαβάζει το help desk. Το ιστορικ�
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Το Yuva μόνο διαβάζει το γραμματοκιβώτιο. Το ιστορικό έρχεται αθόρυβα: χωρίς ειδοποιήσεις, χωρίς αυτόματες απαντήσεις."
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "Yuva only reads the source; nothing there is changed."
+msgstr "Το Yuva μόνο διαβάζει την πηγή· τίποτα δεν αλλάζει εκεί."
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
 msgstr "Το Yuva μόνο διαβάζει. Εκτός από τη σύνδεση, η σύνδεσή του στέλνει στο {provider} μόνο αιτήματα ανάγνωσης, οπότε κανένα ticket, πελάτης ή ρύθμιση δεν αλλάζει."
@@ -16399,6 +16756,6 @@ msgstr "Το Yuva απενεργοποίησε αυτό το endpoint."
 msgid "Yuva's own notes cannot be changed."
 msgstr "Οι δικές του σημειώσεις του Yuva δεν αλλάζουν."
 
-#: src/features/settings/workspace/WorkspacePage.tsx
+#: src/features/migrations/MigrationsPage.tsx
 msgid "Zendesk, Help Scout"
 msgstr "Zendesk, Help Scout"

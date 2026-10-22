@@ -10,7 +10,15 @@ import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { timeZones } from "@/lib/utils"
 
-export type InboxDraft = { name: string; locale: string; zone: string; inboxId?: string; kind?: SetupKind }
+export type InboxDraft = {
+  name: string
+  locale: string
+  zone: string
+  color?: string
+  mode?: "live" | "async"
+  inboxId?: string
+  kind?: SetupKind
+}
 
 function readInboxDraft(ws: string): Partial<InboxDraft> & { idempotencyKey?: string } {
   try {
@@ -61,8 +69,9 @@ export function useEnsureInbox() {
     const body = (slug: string) => ({
       name: d.name.trim(),
       slug,
-      mode: "async" as const,
+      mode: d.mode ?? ("async" as const),
       ask_for_rating: false,
+      ...(d.color ? { branding: { color: d.color } } : {}),
       default_locale: d.locale,
       timezone: zones.includes(d.zone) ? d.zone : browserTimeZone(),
     })

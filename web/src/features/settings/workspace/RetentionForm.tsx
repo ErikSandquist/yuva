@@ -21,6 +21,8 @@ export function RetentionForm() {
     onSuccess: () => qc.invalidateQueries({ queryKey: meKey }),
   })
   const dirty = days !== current
+  const n = Number(days)
+  const invalid = days !== "" && (!Number.isInteger(n) || n < 1 || n > 36500)
   return (
     <Block
       title={<Trans>Workspace</Trans>}
@@ -36,7 +38,7 @@ export function RetentionForm() {
                 <Trans>Saved</Trans>
               </span>
             )}
-            <Button type="submit" className={headButton.primary} disabled={save.isPending || !dirty}>
+            <Button type="submit" className={headButton.primary} disabled={save.isPending || !dirty || invalid}>
               <Trans>Save</Trans>
             </Button>
           </>
@@ -54,10 +56,16 @@ export function RetentionForm() {
         label={<Trans>Delete after (days)</Trans>}
         htmlFor="retention-days"
         hint={
-          <Trans>
-            Closed conversations untouched for this many days are deleted with their messages and attachments, and raw
-            e-mails older than this are deleted. Leave empty to keep everything.
-          </Trans>
+          invalid ? (
+            <span className="text-destructive">
+              <Trans>Enter whole days from 1 to 36,500, or leave it empty.</Trans>
+            </span>
+          ) : (
+            <Trans>
+              Closed conversations untouched for this many days are deleted with their messages and attachments, and raw
+              e-mails older than this are deleted. Leave empty to keep everything.
+            </Trans>
+          )
         }
       >
         <Input
@@ -67,6 +75,7 @@ export function RetentionForm() {
           max={36500}
           value={days}
           disabled={!isOwner}
+          aria-invalid={invalid || undefined}
           onChange={(e) => setDays(e.target.value)}
           className="h-[34px] w-[200px] rounded-lg border-input"
         />

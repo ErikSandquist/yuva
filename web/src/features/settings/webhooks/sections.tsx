@@ -12,6 +12,7 @@ import { PageSection } from "@/features/settings/channels/sections"
 import { Card, Field, FormActions, FormCard, ToggleRow } from "@/features/settings/ui"
 import { EventPicker, sortedEvents, UrlProblem, urlProblem, validUrl } from "@/features/settings/webhooks/events"
 import { useSetEndpoint } from "@/features/settings/webhooks/queries"
+import { SignatureHint } from "@/features/settings/webhooks/SignatureHint"
 import { api, unwrap, type WebhookEndpoint, type WebhookEventType } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
@@ -96,8 +97,8 @@ export function EndpointSection({ e }: { e: WebhookEndpoint }) {
             }}
           />
         </Field>
-        <Field label={<Trans>Inbox</Trans>} hint={<Trans>The inbox cannot be changed later.</Trans>}>
-          <p className="text-body">{inbox ? inbox.name : <Trans>All inboxes</Trans>}</p>
+        <Field label={<Trans>Product</Trans>} hint={<Trans>The product cannot be changed later.</Trans>}>
+          <p className="text-body">{inbox ? inbox.name : <Trans>All products</Trans>}</p>
         </Field>
       </FormCard>
     </PageSection>
@@ -155,29 +156,34 @@ export function EventsSection({ e }: { e: WebhookEndpoint }) {
   )
 }
 
+export function DisabledBanner({ e }: { e: WebhookEndpoint }) {
+  const { i18n } = useLingui()
+  const disabledAt = e.disabled_at ? formatDateTime(e.disabled_at, i18n.locale) : null
+  if (e.enabled || !e.disabled_reason) return null
+  return (
+    <Notice tone="danger" data-testid="webhook-disabled">
+      <p className="font-medium">
+        {disabledAt ? (
+          <Trans>Yuva turned this endpoint off on {disabledAt}.</Trans>
+        ) : (
+          <Trans>Yuva turned this endpoint off.</Trans>
+        )}
+      </p>
+      <p className="break-words text-muted-foreground">{e.disabled_reason}</p>
+      <p className="text-muted-foreground">
+        <Trans>Turn it on again once the receiver works; send failed deliveries again from the Deliveries tab.</Trans>
+      </p>
+    </Notice>
+  )
+}
+
 export function SendingSection({ e }: { e: WebhookEndpoint }) {
   const { t, i18n } = useLingui()
   const patch = usePatchEndpoint(e)
-  const disabledAt = e.disabled_at ? formatDateTime(e.disabled_at, i18n.locale) : null
   const failingSince = e.failing_since ? formatDateTime(e.failing_since, i18n.locale) : ""
   return (
     <PageSection id="sending" title={<Trans>Sending</Trans>}>
       <Card>
-        {!e.enabled && e.disabled_reason && (
-          <Notice tone="danger" data-testid="webhook-disabled">
-            <p className="font-medium">
-              {disabledAt ? (
-                <Trans>Yuva turned this endpoint off on {disabledAt}.</Trans>
-              ) : (
-                <Trans>Yuva turned this endpoint off.</Trans>
-              )}
-            </p>
-            <p className="break-words text-muted-foreground">{e.disabled_reason}</p>
-            <p className="text-muted-foreground">
-              <Trans>Turn it on again once the receiver works; send failed deliveries again from the log below.</Trans>
-            </p>
-          </Notice>
-        )}
         {e.enabled && e.failing_since && (
           <Notice tone="warning" data-testid="webhook-failing">
             <p>
@@ -251,6 +257,7 @@ export function SecretSection({ e }: { e: WebhookEndpoint }) {
             <Trans>The previous secret also signs until {rotatedUntil}.</Trans>
           </p>
         )}
+        <SignatureHint />
         <ErrorLine error={rotate.error} className="text-caption" />
       </Card>
       <SecretDialog

@@ -8,11 +8,20 @@ import {
   PlusIcon,
   XIcon,
 } from "lucide-react"
-import { Link, Navigate, useSearchParams } from "react-router"
+import { useState } from "react"
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router"
 
 import { ErrorLine, Notice, useConfirm } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,39 +40,101 @@ import {
 } from "@/features/migrations/parts"
 import { useDeleteMigration, useMigrations, useMigrationStep, usePresets } from "@/features/migrations/queries"
 import { guideUrl } from "@/features/migrations/text"
-import { GeneralTabs } from "@/features/settings/GeneralTabs"
-import { Card, PageHeader, RowIcon, Rows, Section } from "@/features/settings/ui"
+import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { GeneralHeader, Intro } from "@/features/settings/GeneralTabs"
+import { Card, ChoiceSelect, Field, headButton, RowIcon, Rows, Section } from "@/features/settings/ui"
 import type { Migration } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes, useMemberMap } from "@/lib/workspace"
 
 const PROGRESS_STATES = ["copying", "paused", "needs_attention", "syncing"]
 
+function NewMigrationDialog({ onClose }: { onClose: () => void }) {
+  const { t } = useLingui()
+  const navigate = useNavigate()
+  const inboxes = useInboxes().data ?? []
+  const [filter] = useInboxFilter()
+  const [inboxId, setInboxId] = useState(filter || inboxes[0]?.id || "")
+  const sources: [React.ReactNode, React.ReactNode][] = [
+    [<Trans key="m">Mailboxes</Trans>, <Trans key="mt">Gmail, Outlook, Yandex, any IMAP server</Trans>],
+    [<Trans key="h">Help desks</Trans>, <Trans key="ht">Zendesk, Help Scout</Trans>],
+    [<Trans key="f">Files</Trans>, <Trans key="ft">An mbox export of a mailbox</Trans>],
+  ]
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent data-testid="migration-new-dialog">
+        <DialogHeader>
+          <DialogTitle>
+            <Trans>New migration</Trans>
+          </DialogTitle>
+          <DialogDescription>
+            <Trans>Yuva only reads the source; nothing there is changed.</Trans>
+          </DialogDescription>
+        </DialogHeader>
+        <ul className="flex flex-col divide-y rounded-xl border">
+          {sources.map(([title, hint], i) => (
+            <li key={i} className="flex flex-col px-3.5 py-2.5 leading-[1.35]">
+              <span className="font-medium">{title}</span>
+              <span className="text-caption text-faint">{hint}</span>
+            </li>
+          ))}
+        </ul>
+        {inboxes.length > 0 && (
+          <Field label={<Trans>Product</Trans>} htmlFor="migration-product">
+            <ChoiceSelect
+              id="migration-product"
+              label={t`Product`}
+              value={inboxId}
+              onChange={setInboxId}
+              options={inboxes.map((i) => [i.id, i.name] as const)}
+              className="w-full"
+            />
+          </Field>
+        )}
+        <p className="text-caption text-faint">
+          <Trans>Next you pick the source and connect it. Nothing is copied until you start.</Trans>
+        </p>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            <Trans>Cancel</Trans>
+          </Button>
+          <Button
+            onClick={() => navigate(inboxId ? `/migrations/new?inbox=${inboxId}` : "/migrations/new")}
+            data-testid="migration-new-continue"
+          >
+            <Trans>Continue</Trans>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 export function MigrationsPage() {
   const { canManage } = useSession()
   const list = useMigrations()
-  const items = list.data?.pages.flatMap((p) => p.items) ?? []
+  const [filter] = useInboxFilter()
+  const [creating, setCreating] = useState(false)
+  const items = (list.data?.pages.flatMap((p) => p.items) ?? []).filter((m) => !filter || m.inbox_id === filter)
   const announcement = useStateAnnouncement(items)
   const [params] = useSearchParams()
   if (!canManage) return <Navigate to="/settings/profile" replace />
   return (
     <>
-      <PageHeader
-        title={<Trans>General</Trans>}
-        tabs={<GeneralTabs current="migrations" />}
-        description={
-          <Trans>
-            Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the
-            mailbox; nothing there is changed.
-          </Trans>
-        }
+      <GeneralHeader current="migrations" />
+      <Intro
         action={
-          <Button size="sm" render={<Link to="/migrations/new" />} data-testid="migration-new">
+          <Button className={headButton.primary} onClick={() => setCreating(true)} data-testid="migration-new">
             <PlusIcon />
             <Trans>New migration</Trans>
           </Button>
         }
-      />
+      >
+        <Trans>
+          Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox;
+          nothing there is changed.
+        </Trans>
+      </Intro>
       {announcement}
       {params.get("result") === "expired" && (
         <Notice tone="danger" icon={XIcon} className="mb-6" role="alert" data-testid="migration-sign-in-result">
@@ -113,6 +184,7 @@ export function MigrationsPage() {
           )}
         </Card>
       </Section>
+      {creating && <NewMigrationDialog onClose={() => setCreating(false)} />}
     </>
   )
 }
